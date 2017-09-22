@@ -143,7 +143,6 @@ class Egoi_For_Wp_Admin {
 		
 		wp_enqueue_style($this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );	
 		wp_enqueue_style('wp-color-picker');
-
 	}
 
 	/**
@@ -163,6 +162,9 @@ class Egoi_For_Wp_Admin {
 
 		wp_register_script('custom-script3', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-map.js', array('jquery'));
 		wp_enqueue_script('custom-script3');
+
+		wp_register_script('custom-script4', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-widget.js', array('jquery'));
+		wp_enqueue_script('custom-script4');
 		
 		wp_enqueue_script('wp-color-picker');
 
@@ -1049,7 +1051,7 @@ class Egoi_For_Wp_Admin {
 	/*
 	* Debug
 	*/
-	private function sendError($subject, $message){
+	private function sendError($subject, $message) {
 
 		$path = dirname(__FILE__).'/logs/';
 
@@ -1058,11 +1060,9 @@ class Egoi_For_Wp_Admin {
 		fclose($fp);
 
 		return '';
-
 	}
 
-	public function get_form_processed()
-    {
+	public function get_form_processed() {
         if(!empty($_POST)){
             $api = new Egoi_For_Wp();
             echo json_encode($api->getForms($_POST['listID']));

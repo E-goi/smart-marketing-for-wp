@@ -76,8 +76,8 @@ jQuery(document).ready(function($) {
   
 	// Dropdown toggle
 	$('.dropdown-toggle').click(function(){
-	  $(this).next('.dropdown').toggle();
-	  $('.button-primary--custom-add').hide();
+	  	$(this).next('.dropdown').toggle();
+	  	$('.button-primary--custom-add').hide();
 	});
 
 	

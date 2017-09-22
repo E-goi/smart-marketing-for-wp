@@ -1,23 +1,4 @@
 
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-	'use strict';
-
-	$('#nav-tab-settings').click(function() {
-		$('#tab-settings').show();
-		$('#tab-appearance').hide();
-		$(this).addClass('nav-tab-active');
-		$('#nav-tab-appearance').removeClass('nav-tab-active');
-	});
-
-	$('#nav-tab-appearance').click(function() {
-		$('#tab-appearance').show();
-		$('#tab-settings').hide();
-		$(this).addClass('nav-tab-active');
-		$('#nav-tab-settings').removeClass('nav-tab-active');
-	});
-});
-</script>
 <style type="text/css">
 	.nav-tab-wrapper{
 		border-bottom: 1px solid #ccc;
@@ -53,10 +34,11 @@ jQuery(document).ready(function($) {
 				</tr>
 			</table>
 			
-			<h2 class="nav-tab-wrapper" id="egoi-tabs-widget">
-				<a class="nav-tab nav-tab-widget-settings nav-tab-active" id="nav-tab-widget-settings" style="cursor: pointer;"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
-				<a class="nav-tab nav-tab-widget-appearance" id="nav-tab-widget-appearance" style="cursor: pointer;"><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
-			</h2>
+			<div class="nav-tab-wrapper" id="egoi-tabs-widget">
+				<a class="nav-tab-widget-settings nav-tab-active" id="nav-tab-widget-settings" style="cursor: pointer;"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
+				<span> | </span>
+				<a class="nav-tab-widget-appearance" id="nav-tab-widget-appearance" style="cursor: pointer;"><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
+			</div>
 
 			<div id="tab-widget-settings">
 				<table class="form-table" style="table-layout: fixed;">

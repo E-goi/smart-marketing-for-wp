@@ -81,3 +81,23 @@
 		
 		document.getElementById('nav-tab-widget').className += ' nav-tab-active';
 	}
+
+	function show_options() {
+		document.getElementById('tab-forms-options').style.display = 'block';
+
+		document.getElementById('tab-forms-appearance').style.display = 'none';
+
+		document.getElementById('nav-tab-forms-appearance').className = 'nav-tab-forms-options';
+		
+		document.getElementById('nav-tab-forms-options').className += ' nav-tab-active';
+	}
+
+	function show_appearance() {
+		document.getElementById('tab-forms-appearance').style.display = 'block';
+
+		document.getElementById('tab-forms-options').style.display = 'none';
+
+		document.getElementById('nav-tab-forms-options').className = 'nav-tab-forms-options';
+		
+		document.getElementById('nav-tab-forms-appearance').className += ' nav-tab-active';
+	}
