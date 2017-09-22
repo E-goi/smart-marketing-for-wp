@@ -17,28 +17,28 @@ defined( 'ABSPATH' ) or exit;
 		$egoiwidget['enabled'] = 0;
 	}
 
-		// forms
-		if(isset($_POST['action'])){
-			
-			$post = $_POST;
-			$post['egoi_form_sync']['form_content'] = htmlentities($_POST['egoi_form_sync']['form_content']);
-			$egoiform = $post['egoiform'];
-			update_option($egoiform, $post);
-			echo '<div class="updated notice is-dismissible"><p>';
-				_e('Options Updated!', 'egoi-for-wp');
-			echo '</p></div>';
-		}
+	// forms
+	if(isset($_POST['action'])){
+		
+		$post = $_POST;
+		$post['egoi_form_sync']['form_content'] = htmlentities($_POST['egoi_form_sync']['form_content']);
+		$egoiform = $post['egoiform'];
+		update_option($egoiform, $post);
+		echo '<div class="updated notice is-dismissible"><p>';
+			_e('Options Updated!', 'egoi-for-wp');
+		echo '</p></div>';
+	}
 
-		if(isset($_GET['del']) && ($_GET['del_form'])){
-			delete_option('egoi_form_sync_'.$form_id);
-			echo '<div class="updated notice is-dismissible"><p>';
-				_e('Form deleted successfully!', 'egoi-for-wp');
-			echo '</p></div>';
-		}
+	if(isset($_GET['del']) && ($_GET['del_form'])){
+		delete_option('egoi_form_sync_'.$form_id);
+		echo '<div class="updated notice is-dismissible"><p>';
+			_e('Form deleted successfully!', 'egoi-for-wp');
+		echo '</p></div>';
+	}
 
-		$lists = $Egoi4WpBuilderObject->getLists();
+	$lists = $Egoi4WpBuilderObject->getLists();
 
-add_thickbox();		
+	add_thickbox();	
 ?>
 
 	<!-- Header -->
@@ -85,30 +85,31 @@ add_thickbox();
 					<?php _e('HTML/CSS box styles', 'egoi-for-wp');?>	
 				</a>
 
-				<div id="tab-forms-options">
-					<!-- FORM SELECTED -->
-					<form id="e-goi-form-options" method="get" action="#">
-						<input type="hidden" name="page" value="egoi-4-wp-form">
-						<input type="hidden" name="form" value="<?php echo $form_id;?>">
-						<p class="label_span"><?php _e('Select the Form Type you want', 'egoi-for-wp');?></p>
-							<select class="e-goi-option-select-admin-forms" name="type" style="width: 250px;" id="form_choice">
-								<option value="" disabled selected>
-									<?php _e('Selected the form', 'egoi-for-wp');?>	
-								</option>
-								<option value="popup" <?php selected($_GET['type'], 'popup');?>>
-									<?php _e('E-goi Popup', 'egoi-for-wp');?>
-								</option>
-								<option value="html" <?php selected($_GET['type'], 'html');?>>
-									<?php _e('E-goi Advanced HTML', 'egoi-for-wp');?>
-								</option>
-								<option value="iframe" <?php selected($_GET['type'], 'iframe');?>><?php _e('E-goi Iframe', 'egoi-for-wp');?>
-								</option>
-							</select>
-					</form><!-- .FORM SELECTED -->
 
-					<!-- FORM SELECTED OPTIONS -->
-					<div id="egoi4wp-form-hide">
-						<form method="post" action="#" id="form-egoi">
+				<form id="e-goi-form-options" method="get" action="#">
+					<input type="hidden" name="page" value="egoi-4-wp-form">
+					<input type="hidden" name="form" value="<?php echo $form_id;?>">
+					<p class="label_span"><?php _e('Select the Form Type you want', 'egoi-for-wp');?></p>
+						<select class="e-goi-option-select-admin-forms" name="type" style="width: 250px;" id="form_choice">
+							<option value="" disabled selected>
+								<?php _e('Selected the form', 'egoi-for-wp');?>	
+							</option>
+							<option value="popup" <?php selected($_GET['type'], 'popup');?>>
+								<?php _e('E-goi Popup', 'egoi-for-wp');?>
+							</option>
+							<option value="html" <?php selected($_GET['type'], 'html');?>>
+								<?php _e('E-goi Advanced HTML', 'egoi-for-wp');?>
+							</option>
+							<option value="iframe" <?php selected($_GET['type'], 'iframe');?>><?php _e('E-goi Iframe', 'egoi-for-wp');?>
+							</option>
+						</select>
+				</form>
+
+				<!-- FORM E-GOI -->
+				<div id="egoi4wp-form-hide">
+					<form method="post" action="#" id="form-egoi">	
+						
+						<div id="tab-forms-options">	
 							<!-- Alert when submit -->
 							<?php settings_fields($FORM_OPTION);?>
 
@@ -284,33 +285,34 @@ add_thickbox();
 								</div>
 							</div>
 
-								<table class="form-table" style="table-layout: fixed;">
-									<tr valign="top">
-										<th scope="row"><?php _e( 'Enable Form', 'egoi-for-wp' ); ?></th>
-										<td class="nowrap">
-											<label>
-												<input type="radio" name="egoi_form_sync[enabled]" value="1" <?php checked($opt['egoi_form_sync']['enabled'], 1); ?> />
-												<?php _e( 'Yes', 'egoi-for-wp' ); ?>
-											</label> &nbsp;
-											<label>
-												<input type="radio" name="egoi_form_sync[enabled]" value="0" <?php checked($opt['egoi_form_sync']['enabled'], 0); ?> />
-												<?php _e( 'No', 'egoi-for-wp' ); ?>
-											</label>
-											<p class="help">
-												<?php _e( 'Select "yes" to enable this form.', 'egoi-for-wp' ); ?>
-											</p>
-										</td>
-									</tr>
-								</table>
-							<div style="display: -webkit-inline-box;">
-								<button style="margin-top: 12px;" type="submit" class="button button-primary"><?php _e('Save Changes', 'egoi-for-wp');?></button>
-							</div>
-						</form>
-					</div>
-				</div>
+							<table class="form-table" style="table-layout: fixed;">
+								<tr valign="top">
+									<th scope="row"><?php _e( 'Enable Form', 'egoi-for-wp' ); ?></th>
+									<td class="nowrap">
+										<label>
+											<input type="radio" name="egoi_form_sync[enabled]" value="1" <?php checked($opt['egoi_form_sync']['enabled'], 1); ?> />
+											<?php _e( 'Yes', 'egoi-for-wp' ); ?>
+										</label> &nbsp;
+										<label>
+											<input type="radio" name="egoi_form_sync[enabled]" value="0" <?php checked($opt['egoi_form_sync']['enabled'], 0); ?> />
+											<?php _e( 'No', 'egoi-for-wp' ); ?>
+										</label>
+										<p class="help">
+											<?php _e( 'Select "yes" to enable this form.', 'egoi-for-wp' ); ?>
+										</p>
+									</td>
+								</tr>
+							</table>
+						</div>
 
-				<div class="tab" id="tab-forms-appearance">
-					<?php include ('custom/egoi-for-wp-form-appearance.php'); ?>
+						<div class="tab" id="tab-forms-appearance">
+							<?php include ('custom/egoi-for-wp-form-appearance.php'); ?>
+						</div>
+
+						<div style="display: -webkit-inline-box;">
+							<button style="margin-top: 12px;" type="submit" class="button button-primary"><?php _e('Save Changes', 'egoi-for-wp');?></button>
+						</div>
+					</form>
 				</div>
 			</div>
 			
@@ -318,7 +320,8 @@ add_thickbox();
 		}else{ ?>
 
 			<a href="#TB_inline?width=0&height=450&inlineId=egoi-for-wp-form-choice&modal=true" id="form_type" class="thickbox button-secondary" style="display:none;"></a>
-		<!-- List -->			
+			
+			<!-- List -->			
 			<div class="main-content col col-4">
 				<h2><?php echo __('Max number of forms:', 'egoi-for-wp');?> 5</h2>
 				<table border='0' class="widefat striped">

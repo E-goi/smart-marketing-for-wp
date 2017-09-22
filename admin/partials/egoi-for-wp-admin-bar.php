@@ -1,15 +1,14 @@
 <div class="wrap" id="egoi4wp-admin" style="width:65%;">
 
-	<h2 class="nav-tab-wrapper" id="egoi-tabs-bar">
-
-		<a class="nav-tab nav-tab-preview nav-tab-active" style="cursor: pointer;" id="nav-tab-preview" onclick="preview_bar();"><?php _e( 'Preview bar', 'egoi-for-wp' ); ?></a>
-
-		<a class="nav-tab nav-tab-settings" id="nav-tab-settings" style="cursor: pointer;" onclick="tabs(this.id, 'nav-tab-appearance', 'nav-tab-messages', 'tab-settings', 'tab-appearance', 'tab-messages');"><?php _e( 'Bar Settings', 'egoi-for-wp' ); ?></a>
-		
-		<a class="nav-tab nav-tab-appearance" id="nav-tab-appearance" style="cursor: pointer;" onclick="tabs(this.id, 'nav-tab-settings', 'nav-tab-messages', 'tab-appearance', 'tab-settings','tab-messages');"><?php _e( 'Bar Appearance', 'egoi-for-wp' ); ?></a>
-		<a class="nav-tab nav-tab-messages" id="nav-tab-messages" style="cursor: pointer;" onclick="tabs(this.id, 'nav-tab-settings', 'nav-tab-appearance','tab-messages', 'tab-settings', 'tab-appearance');"><?php _e( 'Bar Messages', 'egoi-for-wp' ); ?></a>
-		
-	</h2>
+	<div id="egoi-tabs-bar">
+		<a class="nav-tab-preview nav-tab-active" style="cursor: pointer;" id="nav-tab-preview" onclick="preview_bar();"><?php _e( 'Preview bar', 'egoi-for-wp' ); ?></a>
+		<span> | </span>
+		<a class="nav-tab-settings" id="nav-tab-settings" style="cursor: pointer;" onclick="tabs(this.id, 'nav-tab-appearance', 'nav-tab-messages', 'tab-settings', 'tab-appearance', 'tab-messages');"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
+		<span> | </span>
+		<a class="nav-tab-appearance" id="nav-tab-appearance" style="cursor: pointer;" onclick="tabs(this.id, 'nav-tab-settings', 'nav-tab-messages', 'tab-appearance', 'tab-settings','tab-messages');"><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
+		<span> | </span>
+		<a class="nav-tab-messages" id="nav-tab-messages" style="cursor: pointer;" onclick="tabs(this.id, 'nav-tab-settings', 'nav-tab-appearance','tab-messages', 'tab-settings', 'tab-appearance');"><?php _e( 'Messages', 'egoi-for-wp' ); ?></a>
+	</div>
 
 	<form method="post" action="<?php echo admin_url('options.php'); ?>"><?php 
 
