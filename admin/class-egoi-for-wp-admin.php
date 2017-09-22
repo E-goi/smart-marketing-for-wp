@@ -174,6 +174,7 @@ class Egoi_For_Wp_Admin {
 
 
 	public function remove_footer_admin(){
+
 		$url = 'https://wordpress.org/support/plugin/smart-marketing-for-wp/reviews/?filter=5';
         $text = sprintf( esc_html__( 'Please rate %sSmart Marketing SMS and Newsletters Forms%s %s on %sWordPress.org%s to help us spread the word. Thank you from the E-goi team!', 'egoi-for-wp' ), '<strong>', '</strong>', '<a class="" href="' .  $url . '" target="_blank" rel="noopener noreferrer">&#9733;&#9733;&#9733;&#9733;&#9733;</a>', '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">', '</a>' );
         return $text;
@@ -279,7 +280,7 @@ class Egoi_For_Wp_Admin {
 		if (!current_user_can('manage_options')) {
 	        wp_die('You do not have sufficient permissions to access this page.');
 	    } else {
-			include_once( 'egoi-for-wp-admin-ecommerce.php' );
+			include_once( 'partials/egoi-for-wp-admin-ecommerce.php' );
 		}
 	    
 	}
