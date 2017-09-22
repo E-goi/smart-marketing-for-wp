@@ -1,0 +1,593 @@
+/* ///////////////////// */
+/* Defaults */
+/* ///////////////////// */
+
+.e-goi-dnone{
+  display:none !important;
+}
+
+
+/* ///////////////////// */
+/* Account */
+/* ///////////////////// */
+
+.postbox{
+  max-width: 800px;
+}
+
+.postbox--list{
+  max-width: 100%;
+  padding: 10px 30px 10px;
+  background-color: #ffffff;
+}
+
+.e-goi-account-apikey {
+  padding:20px 30px 10px;
+}
+
+.e-goi-account-apikey__title,
+.e-goi-account-list__title {
+  padding: 10px 0 20px !important;  
+  display: inline-block;
+}
+
+.e-goi-account-apikey__actions {
+  display: flex; 
+  align-content: center!important; 
+  align-items: baseline; 
+  padding:0 0 20px;
+}
+
+.e-goi-account-apikey__actions__form{
+  padding: 9px 12px; 
+  background: #efefef; 
+  font-size:16px; 
+  margin-right:10px; 
+  border-radius:3px;
+  color: #999999;
+  border: 1px solid #dedede;
+  width: 430px;
+  position: relative;
+}
+
+.e-goi-account-apikey__actions__form:before{
+  color: darkseagreen;
+  content: "\f147";
+  position: absolute;
+  border-radius: 50%;
+  right: 6px;
+  padding: 0px;
+  top: 4px;
+  border: 1px solid #ededed;
+  font-size: 24px;
+  background-color: #ffffff;
+  font-family: dashicons;
+}
+
+.dashicons-warning--apikeyinvalid{
+  color: #db4141 !important;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.e-goi-account-apikey__connect-failed {
+  display:flex; 
+  align-content: center; 
+  align-items: center;
+}
+
+.e-goi-account-apikey__actions__form--input{
+  padding: 8px 12px; 
+  font-size:16px; 
+  margin-right:10px;
+  border-radius: 3px;
+  outline: none;
+}
+
+.e-goi-separator{
+  border: 1px solid #efefef;
+}
+
+.e-goi-separator2{
+  border: 1px solid #dddddd;
+  margin-top: 20px;
+}
+
+.e-goi-account-apikey__actions__btn-change-account{
+  padding: 20px 30px;
+}
+  .e-goi-account-apikey__actions__btn-change-account a{
+    font-size: 14px;
+    padding: 10px 0; 
+    display: inline-block;
+  }
+
+.e-goi-account-apikey__actions__btn-change-account_2{
+  padding: 20px 30px;
+  display: inline-block;
+}
+  .e-goi-account-apikey__actions__btn-change-account_2 a{
+    font-size: 14px;
+    padding: 10px 0; 
+    display: inline-block;
+  }
+
+  .e-goi-account-apikey-dont-have-account{
+    padding: 20px 30px;
+    display: inline-block;
+  }
+
+  .e-goi-account-apikey-dont-have-account p{
+    margin: 0;
+    padding: 10px 0;
+    font-size: 14px;
+  }
+
+  .e-goi-account-apikey-dont-have-account a{
+    font-size: 14px;
+  }
+
+
+.e-goi-help-text{
+  color: #888888;
+  padding-top: 10px;
+  display: inline-block; 
+}
+
+
+/* API Btns Secondary Override*/
+.e-goi-account-btn{
+    font-size: 14px !important;
+    line-height: 34px !important;
+    height: 34px !important;
+}
+
+
+/* ///////////////////// */
+/* Alerts */
+/* ///////////////////// */
+
+.apikey-error{
+    background: #ededed;
+    font-size: 16px;
+    color: #32373c;
+    line-height: 38px;
+    padding: 6px 29px 6px;
+    margin: 13px 0 15px;
+    border-left: #db4141 4px solid;
+}
+
+/* Loading */
+.dashicons-update{
+    padding: 6px;
+    color: #ffffff;
+}
+
+.dashicons-update.spin {
+   animation: dashicons-spin 1s infinite;
+   animation-timing-function: linear;
+}
+
+@keyframes dashicons-spin {
+   0% {
+      transform: rotate( 0deg );
+   }
+   100% {
+      transform: rotate( 360deg );
+   }
+}
+
+
+/* ///////////////////// */
+/* Others */
+/* ///////////////////// */
+
+.div-error{
+ 	color: #900;
+    text-align: center;
+    background: #ddd;
+    font-size: 25px;
+    height: 26px;
+}
+.egoi_apikey_ok{
+    background: #900;
+    color: #ddd;
+    padding: 4px;
+    cursor: pointer;
+}
+
+#remove_valid{
+  position: relative;
+}
+
+/* Sessions variable */
+#session_form{
+  display: none;
+}
+
+#valid, #active{
+   display: inline-block;
+   width: 20px;
+   height: 20px;
+   background-size: 20px;
+   background: url('../img/check.png') no-repeat; 
+}
+
+#valid, #active .dashicon.dashicon-yes{
+    position: absolute;
+    right: 303px;
+    top: 89px;
+    color: darkseagreen;
+    background: url('../img/check.png') no-repeat; 
+
+}
+
+#error, #inactive{
+   background: url('../img/error.png') no-repeat;
+   display: inline-block;
+   width: 20px;
+   height: 20px;
+   background-size: 20px;
+}
+
+#load, #load_data, #load_map, #load_sync{
+   /* display: none; */
+}
+
+.sidebar{
+	width: 30%;
+	float:right;
+}
+
+.col-4{
+	width: 67%;
+	float: left;
+	max-width: 100%;
+}
+
+.egoi-box{
+	border-left:1px solid #ccc;
+	padding-left: 20px;
+}
+
+.logo{
+	background: url('../img/logo.png') no-repeat;
+	background-position: left center;
+	line-height: 32px;
+	padding-left: 40px;
+}
+
+.tab{
+	display: none;
+}
+.tab-active{
+	display: block;
+}
+
+.egoi-bar{
+    text-align: -webkit-center;
+   	box-shadow: 1px 1px 1px #666;
+   	width: 100%;
+   	padding: 6px;
+}
+
+.nav-preview{
+	cursor: pointer;
+    border-bottom: none;
+    margin-left: .5em;
+    padding: 5px 10px;
+}
+.egoi-email{
+	padding: 5px;
+}
+.egoi-label{
+	font-size: 18px;
+    padding: 5px;
+    vertical-align: text-bottom;
+}
+
+.beta, .beta:hover{
+	background: url('../img/beta.png') no-repeat !important;
+	background-size: 50px !important;
+}
+
+.egoi-premium{
+    background: #666;
+    color: #ddd;
+    text-align: -webkit-center;
+}
+
+.content{
+    text-align: -webkit-center;
+    padding: 20px;
+}
+
+.btn{
+	  display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    outline: 0;
+}
+.form-input{
+	  display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.main-form{
+	width: 80%;
+    margin-left: 10%;
+}
+
+.label-email{
+	cursor:none;
+	line-height: 40px;
+	font-size: 18px;
+}
+.label-name{
+	cursor:none;
+	line-height: 40px;
+	font-size: 18px;
+}
+
+#wp-form_content-wrap{
+  position: static !important;
+}
+
+.wp-editor-tools{
+  /* position: static !important; */
+}
+
+.egoi_sinc_users{
+    text-align:center; 
+    font-style:italic;
+}
+
+.egoi-label-fields{
+  font-weight: bold;
+  text-align: left;
+}
+
+.egoi-btn-close{
+    border: 1px solid #ccc !important;
+    background: #f7f7f7 !important;
+    -webkit-box-shadow: 0 1px 0 #ccc !important;
+    -moz-box-shadow: 0 1px 0 #ccc;
+    box-shadow: 0 1px 0 #ccc !important;
+    bottom: 10px !important;
+    right: 20px !important;
+    width: 60px !important;
+}
+
+.egoi-map-title{
+    display: block;
+    font-weight: 600;
+    font-size: 2em;
+    margin: .67em 0;
+    color: #fff;
+    padding-left: 10px;
+}
+
+
+/* Create a list */
+
+.e-goi-account--toogle {
+  margin: 20px 0;
+}
+
+.dropdown-toggle {
+}
+
+div.dropdown {
+  display:none;
+  position: absolute;
+  top: 100%;
+  margin-top: .5em;
+}
+
+.e-goi-account--create-name,
+.e-goi-account--create-lang{
+  margin-bottom: 15px;
+}
+
+.e-goi-account--create-name span:nth-child(2){
+  margin-left: 20px;
+}
+.e-goi-account--create-lang select{
+  margin-left: 17px;
+}
+
+.e-goi-delete-account--actions{
+  display: flex; 
+  align-content: center; 
+  align-items: center; 
+}
+
+.e-goi-delete-account--actions label{
+  margin-right: 20px;
+}
+
+.e-goi-delete-account p{
+  margin-top: 20px !important;
+}
+
+
+/* Tooltip e-goi */
+
+.e-goi-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.e-goi-tooltip .e-goi-tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.e-goi-tooltip .e-goi-tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #222 transparent transparent transparent;
+}
+
+.e-goi-tooltip:hover .e-goi-tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* forms */
+  #TB_ajaxContent{
+    overflow: hidden !important;
+  }
+  .form-table td{
+    width: 80%;
+  }
+  .label_span {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  #disabled {
+    background: #5B5E5F !important;
+      border-color: none !important;
+      box-shadow: none !important;
+  }
+  #disabled:hover {
+    background: #5B5E5F !important;
+    cursor: default;
+  }
+
+.small-margin{
+  margin-bottom: 20px;
+}
+
+.e-goi-form-title{
+  display:flex; 
+  align-content: center; 
+  align-items: center;
+}
+
+.e-goi-form-title--left {
+  margin-left: auto;
+}
+
+.e-goi-form-title--left span{
+  margin-right:20px;
+}
+
+.e-goi-header-textarea {
+  display:flex; 
+  align-items: center; 
+  justify-content: flex-start;
+}
+
+.e-goi-help-link-video {
+  margin-left: auto !important;
+}
+
+.e-goi-help-link-video a {
+  text-decoration: none;
+  border: 1px solid #ccc;
+  padding: 5px;
+  color: #999999;
+}
+
+.e-goi-help-link-video a:hover {
+  background-color: #ffffff;
+  color: #0073aa;
+}
+
+.e-goi-header-textarea div a:first-child{
+  margin-left: 25px;
+}
+
+.e-goi-header-textarea div a:first-child span{
+  text-decoration: none;
+}
+
+
+
+.e-goi-iframe-select-list,
+.e-goi-form-shortcode,
+.e-goi-iframe-select-form{
+  display:flex; 
+  align-content: center; 
+  align-items: center;
+}
+
+.e-goi-form-shortcode--input{
+  border:1px solid #ddd; 
+  background-color: #ffffff !important; 
+  padding:10px 20px;
+  text-align: center;
+}
+
+.e-goi-help-shortcode-text{
+  width: 300px;
+  display: inline-flex;
+  margin-left: 20px;
+}
+
+.e-goi-form-shortcode--title{
+    line-height: 1.3;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.e-goi-form-active-label,
+.e-goi-form-inactive-label{
+  color:#ffffff; 
+  background-color: #bac32c; 
+  padding:4px 10px;
+  text-transform: uppercase;
+}
+
+.e-goi-form-inactive-label{
+  background-color: #ccc; 
+}
+
+

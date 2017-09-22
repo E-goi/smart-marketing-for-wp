@@ -1,0 +1,224 @@
+.egoi-bar{
+    text-align: -webkit-center;
+    text-align: -moz-center;
+   	box-shadow: 1px 1px 1px #666;
+   	width: 100%;
+   	padding: 3px 10px !important;
+    line-height: 25px;
+    z-index: 999999;
+}
+
+.egoi-bar form, .egoi-bar input{
+    padding: 0;
+}
+
+@media screen and (max-width: 496px) and (min-width: 393px) {
+    .egoi-bar{
+        height: 90px !important;
+    }
+}
+
+@media screen and (max-width: 392px) {
+    .egoi-bar{
+        height: 120px !important;
+    }
+}
+
+.egoi-bar-error, .egoi-bar-success{
+    color: #fff;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    font-size: 16px;
+    height: 30px;
+    line-height: 16px;
+    margin-top: 10px;
+    float: left;
+}
+
+.close-bar {
+    display: inline-block;
+    float: right;
+    margin-right: 12px;
+    cursor: pointer;
+    z-index: 200;
+    clear: both;
+}
+
+.egoi-close{
+    position: relative;
+    z-index: 500;
+	width: 100%;
+    height: 10px;
+}
+
+#span-bar{
+	opacity: 0 !important;
+	display: block;
+	width: 100%;
+    height: 100%;
+	cursor: pointer;
+}
+
+.egoi-email{
+	max-width: 250px !important;
+    box-sizing: border-box !important;
+    line-height: initial !important;
+    display: inline-block !important;
+    width: 100% !important;
+    height: 30px !important;
+    padding: 5px !important;
+    margin: 6px !important;
+    float: none !important;
+}
+
+.egoi-email::placeholder{
+	max-width: 250px;
+}
+
+.egoi-label{
+	font-size: 18px;
+    padding: 5px;
+}
+
+.loader{
+	text-align:center;
+    margin-top: 10px;
+}
+
+.widget-text{
+    padding-bottom: 10px;
+}
+
+.egoi-action, .egoi-close-action{ 
+	position:fixed;
+	right:10px;
+	top:0;
+	text-align:center;
+	height:30px;
+	width:30px;
+	border-radius:0 0 2px 2px;
+	z-index:999999;
+	cursor:pointer;
+	color:#fff;
+	transition:.5s;
+}
+
+.egoi-action-error, .egoi-action-success{
+    position:absolute;
+    right:10px;
+    top:13px;
+    text-align:center;
+    height:50px;
+    width:50px;
+    border-radius:0 0 2px 2px;
+    z-index:999999;
+    cursor:pointer;
+    color:#fff;
+    transition:.5s;
+}
+
+.egoi-widget-error{
+    background: #d9534f;
+    color: #fff;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    font-size: 16px;
+    border-radius: 3px;
+    height: auto;
+    line-height: 26px;
+    border: #900 solid 1px;
+    margin-top: 10px;
+}
+
+.egoi-widget-success{
+    background: #5cb85c;
+    color: #fff;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    font-size: 16px;
+    border-radius: 3px;
+    height: auto;
+    line-height: 26px;
+    border: #066 solid 1px;
+    margin-top: 10px;
+}
+
+.egoi-action-error:before{
+    font-size:26px;
+    line-height:20px;
+    font-family:"dashicons";
+    content:"\f153";
+}
+
+.egoi-action-success:before{
+    font-size:26px;
+    line-height:20px;
+    font-family:"dashicons";
+    content:"\f147";
+}
+
+.egoi-bottom-action,.egoi-close-bottom-action{
+	position:fixed;
+	right:10px;
+	bottom:0;
+	text-align:center;
+	height:30px;
+	width:30px;
+	border-radius:0 0 2px 2px;
+	z-index:9999999;
+	cursor:pointer;
+	color:#fff;
+	transition:.5s;
+}
+
+.egoi-open-action:before, .egoi-bottom-open-action:before{
+	font-size:18px;
+	line-height:30px;
+	font-family:"dashicons";
+    content:"\f347";
+}
+
+.egoi-close-action:before, .egoi-bottom-close-action:before{ 
+	font-size:18px;
+	line-height:30px;
+	font-family:"dashicons";
+    content:"\f347";
+} 
+
+.egoi-open-action .egoi-action, .egoi-open-action .egoi-close-action{ 
+	top:5px;
+	border-radius:50%;
+	background:transparent !important;
+} 
+
+.egoi-bottom-open-action .egoi-bottom-action, .egoi-bottom-open-action .egoi-bottom-close-action{ 
+	bottom:5px;
+	border-radius:50%;
+	background:transparent !important;
+} 
+
+.egoi-open-action .egoi-action:before, .egoi-bottom-action:before, .egoi-bottom-open-action, .egoi-open-action .egoi-close-action:before{ 
+	font-size:18px;
+	line-height:30px;
+	font-family:"dashicons";
+	content:'\f347';
+} 
+
+.egoi-close-action:before, .egoi-bottom-close-action:before{
+	font-size:18px;
+	line-height:30px;
+	font-family:"dashicons";
+	content:"\f343" !important;
+}
+
+.loader_btn_egoi{
+    display: inline-block;
+    margin-top: 5px;
+    position: absolute;
+    padding: 2px 5px !important;
+}
+
+.external_content_egoi{
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
