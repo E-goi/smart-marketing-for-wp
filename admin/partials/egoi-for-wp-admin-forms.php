@@ -50,7 +50,7 @@ defined( 'ABSPATH' ) or exit;
 ?>
 
 	<!-- Header -->
-	<h1 class="logo">Smart Marketing - <?php _e('Forms', 'egoi-for-wp');?></h2>
+	<h1 class="logo">Smart Marketing - <?php _e('Forms', 'egoi-for-wp');?></h1>
 		<p class="breadcrumbs">
 			<span class="prefix"><?php echo __('You are here: ', 'egoi-for-wp'); ?></span>
 			<strong>Smart Marketing &rsaquo;<?php
@@ -63,7 +63,6 @@ defined( 'ABSPATH' ) or exit;
 		</p>
 
 	<h2 class="nav-tab-wrapper" id="egoi-tabs">
-
 		<a class="nav-tab nav-tab-forms nav-tab-active" style="cursor: pointer;" id="nav-tab-forms" onclick="show_forms();"><?php _e('E-goi Forms', 'egoi-for-wp'); ?></a>
 
 		<a class="nav-tab nav-tab-main-bar" id="nav-tab-main-bar" style="cursor: pointer;" onclick="show_bar();"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a>
@@ -329,7 +328,7 @@ defined( 'ABSPATH' ) or exit;
 			
 			<!-- List -->			
 			<div class="main-content col col-4">
-				<h2><?php echo __('Max number of forms:', 'egoi-for-wp');?> 5</h2>
+				<div><?php echo __('Max number of forms:', 'egoi-for-wp');?> <span id="rcv_e-goi_forms"></span>/5</div>
 				<table border='0' class="widefat striped">
 				<thead>
 					<tr>
@@ -344,6 +343,7 @@ defined( 'ABSPATH' ) or exit;
 
 				$form_exists = '';
 				for ($j=1; $j<=5; $j++){
+
 					$form = get_option('egoi_form_sync_'.$j);
 					if($form['egoi_form_sync']['form_id']){
 						$form_name = $form['egoi_form_sync']['form_name'];?>
@@ -372,6 +372,7 @@ defined( 'ABSPATH' ) or exit;
 
 				$count_op = count(array_filter(explode(' - ', $form_exists)));
 				if($count_op == 0){
+					echo "<span id='ct_e-goi_forms' style='display:none;'>".$count_op."</span>";
 					echo "<td colspan='3'>";
 						_e('Subscriber Forms are empty', 'egoi-for-wp');
 					echo "</td>";

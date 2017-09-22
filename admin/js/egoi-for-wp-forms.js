@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
 
 	var session_form = $('#session_form');
 
-	//$('#tab-forms').show();
+	$('#rcv_e-goi_forms').text($('#ct_e-goi_forms').text());
 
 	$('#egoi4wp-form-hide').hide();
 	$('#wp-form_content-editor-tools').append('<b>Editor</b>');
@@ -43,31 +43,7 @@ jQuery(document).ready(function($) {
 				$('#egoi4wp-form-hide').show();
 				document.getElementById("e-goi-form-options").submit();
 			}
-			
-			/*var e = document.getElementById('form_choice');
-			var option = e.options[e.selectedIndex].value;
 
-
-			if(option){
-				$('#egoi4wp-form-hide').show();
-
-				if(option == 'popup'){
-					$('#help_popup').show();
-					$('#help_html').hide();
-					$('#help_iframe').hide();
-				}else if(option == 'html'){
-					$('#help_popup').hide();
-					$('#help_iframe').hide();
-					$('#help_html').show();
-				}else if(option == 'iframe'){
-					$('#help_popup').hide();
-					$('#help_html').hide();
-					$('#help_iframe').show();
-				}
-			}
-			else{
-				$('#egoi4wp-form-hide').hide();
-			}*/
 		}else{
 			document.getElementById("e-goi-form-options").submit();
 		}
