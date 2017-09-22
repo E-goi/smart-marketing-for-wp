@@ -10,7 +10,7 @@
 		<a class="nav-tab-messages" id="nav-tab-messages" style="cursor: pointer;" onclick="tabs(this.id, 'nav-tab-settings', 'nav-tab-appearance','tab-messages', 'tab-settings', 'tab-appearance');"><?php _e( 'Messages', 'egoi-for-wp' ); ?></a>
 	</div>
 
-	<form method="post" action="<?php echo admin_url('options.php'); ?>"><?php 
+	<form method="post" name="bar_options" action="<?php echo admin_url('options.php'); ?>"><?php 
 
 		settings_fields( Egoi_For_Wp_Admin::BAR_OPTION_NAME );
 		settings_errors();
@@ -18,7 +18,7 @@
 
 		<div id="egoi-bar-preview">
 
-			<h2><?php _e( 'Preview of Subscriber Bar', 'egoi-for-wp' ); ?></h2>
+			<div class="e-goi-preview-text"><?php _e( 'Preview of Subscriber Bar', 'egoi-for-wp' ); ?></div>
 			<div class="egoi-bar" style="border:<?php echo $this->bar_post['border_px'].' solid '.$this->bar_post['border_color'].';background:'.$this->bar_post['color_bar'].';'?>">
 			
 				<label class="egoi-label" style="color:<?php echo $this->bar_post['bar_text_color']; ?>;"><?php echo $this->bar_post['text_bar']; ?></label>

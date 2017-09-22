@@ -23,15 +23,23 @@ defined( 'ABSPATH' ) or exit;
 		$post = $_POST;
 		$post['egoi_form_sync']['form_content'] = htmlentities($_POST['egoi_form_sync']['form_content']);
 		$egoiform = $post['egoiform'];
+
 		update_option($egoiform, $post);
-		echo '<div class="updated notice is-dismissible"><p>';
-			_e('Options Updated!', 'egoi-for-wp');
+
+		if(isset($post['widget'])){
+			$opt_upd = 'Widgets Settings';
+		}else{
+			$opt_upd = 'Options';
+		}
+
+		echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
+			_e($opt_upd . ' Updated!', 'egoi-for-wp');
 		echo '</p></div>';
 	}
 
 	if(isset($_GET['del']) && ($_GET['del_form'])){
 		delete_option('egoi_form_sync_'.$form_id);
-		echo '<div class="updated notice is-dismissible"><p>';
+		echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
 			_e('Form deleted successfully!', 'egoi-for-wp');
 		echo '</p></div>';
 	}
@@ -42,7 +50,7 @@ defined( 'ABSPATH' ) or exit;
 ?>
 
 	<!-- Header -->
-	<h1 class="logo">Smart Marketing - <?php _e('Forms', 'egoi-for-wp');?></h1>
+	<h1 class="logo">Smart Marketing - <?php _e('Forms', 'egoi-for-wp');?></h2>
 		<p class="breadcrumbs">
 			<span class="prefix"><?php echo __('You are here: ', 'egoi-for-wp'); ?></span>
 			<strong>Smart Marketing &rsaquo;<?php
@@ -53,7 +61,6 @@ defined( 'ABSPATH' ) or exit;
 				<span class="current-crumb"><?php _e('Forms List', 'egoi-for-wp');?></strong></span><?php
 			} ?>
 		</p>
-	<hr/> <!-- .Header -->
 
 	<h2 class="nav-tab-wrapper" id="egoi-tabs">
 
@@ -77,44 +84,43 @@ defined( 'ABSPATH' ) or exit;
 			<!-- Main Content -->
 			<div id="egoi4wp-form" class="main-content col col-4">
 
-				<a class="nav-tab-forms-options nav-tab-active" id="nav-tab-forms-options" style="cursor: pointer;" onclick="show_options();">
-					<?php _e('Opções | ', 'egoi-for-wp');?>
-				</a>
-
-				<a class="nav-tab-forms-appearance" id="nav-tab-forms-appearance" style="cursor: pointer;" onclick="show_appearance();">
-					<?php _e('HTML/CSS box styles', 'egoi-for-wp');?>	
-				</a>
-
-
 				<form id="e-goi-form-options" method="get" action="#">
 					<input type="hidden" name="page" value="egoi-4-wp-form">
 					<input type="hidden" name="form" value="<?php echo $form_id;?>">
 					<p class="label_span"><?php _e('Select the Form Type you want', 'egoi-for-wp');?></p>
-						<select class="e-goi-option-select-admin-forms" name="type" style="width: 250px;" id="form_choice">
-							<option value="" disabled selected>
-								<?php _e('Selected the form', 'egoi-for-wp');?>	
-							</option>
-							<option value="popup" <?php selected($_GET['type'], 'popup');?>>
-								<?php _e('E-goi Popup', 'egoi-for-wp');?>
-							</option>
-							<option value="html" <?php selected($_GET['type'], 'html');?>>
-								<?php _e('E-goi Advanced HTML', 'egoi-for-wp');?>
-							</option>
-							<option value="iframe" <?php selected($_GET['type'], 'iframe');?>><?php _e('E-goi Iframe', 'egoi-for-wp');?>
-							</option>
-						</select>
+					<select class="e-goi-option-select-admin-forms" name="type" style="width: 250px;" id="form_choice">
+						<option value="" disabled selected>
+							<?php _e('Selected the form', 'egoi-for-wp');?>	
+						</option>
+						<option value="popup" <?php selected($_GET['type'], 'popup');?>>
+							<?php _e('E-goi Popup', 'egoi-for-wp');?>
+						</option>
+						<option value="html" <?php selected($_GET['type'], 'html');?>>
+							<?php _e('E-goi Advanced HTML', 'egoi-for-wp');?>
+						</option>
+						<option value="iframe" <?php selected($_GET['type'], 'iframe');?>><?php _e('E-goi Iframe', 'egoi-for-wp');?>
+						</option>
+					</select>
 				</form>
 
 				<!-- FORM E-GOI -->
-				<div id="egoi4wp-form-hide">
+				<div id="egoi4wp-form-hide" style="margin-top: 20px;">
+					<a class="nav-tab-forms-options nav-tab-active" id="nav-tab-forms-options" style="cursor: pointer;" onclick="show_options();">
+						<?php _e('Opções | ', 'egoi-for-wp');?>
+					</a>
+
+					<a class="nav-tab-forms-appearance" id="nav-tab-forms-appearance" style="cursor: pointer;" onclick="show_appearance();">
+						<?php _e('HTML/CSS box styles', 'egoi-for-wp');?>	
+					</a>
+
 					<form method="post" action="#" id="form-egoi">	
 						
-						<div id="tab-forms-options">	
+						<div id="tab-forms-options">
 							<!-- Alert when submit -->
 							<?php settings_fields($FORM_OPTION);?>
 
 							<div class="e-goi-form-title">
-								<h2><?php _e('Form title', 'egoi-for-wp'); ?></h2>
+								<p><?php _e('Form title', 'egoi-for-wp'); ?></p>
 								<!-- Title - Options -->
 								<div class="e-goi-form-title--left">
 									<span><?php _e( 'Show Title', 'egoi-for-wp' ); ?></span>
@@ -163,11 +169,11 @@ defined( 'ABSPATH' ) or exit;
 												<!-- Titulo -->
 												<?php if($_GET['type'] == 'html'){ ?>
 												
-													<h2><?php _e('Advanced HTML code', 'egoi-for-wp'); ?></h2>
+													<p><?php _e('Advanced HTML code', 'egoi-for-wp'); ?></p>
 												
 												<?php } else{ ?>
 
-													<h2><?php _e('Código da janela Pop-up', 'egoi-for-wp'); ?></h2>
+													<p><?php _e('Código da janela Pop-up', 'egoi-for-wp'); ?></p>
 												
 												<?php } ?>
 

@@ -590,4 +590,14 @@ div.dropdown {
   background-color: #ccc; 
 }
 
+.e-goi-notice{
+  position: absolute;
+  top: 0;
+  width: 60%;
+}
+
+.e-goi-preview-text{
+  font-size: 21px;
+  margin: 20px;
+}
 

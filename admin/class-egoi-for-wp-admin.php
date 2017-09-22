@@ -274,6 +274,16 @@ class Egoi_For_Wp_Admin {
 	    
 	}
 
+	public function display_plugin_subscriber_ecommerce() {
+
+		if (!current_user_can('manage_options')) {
+	        wp_die('You do not have sufficient permissions to access this page.');
+	    } else {
+			include_once( 'egoi-for-wp-admin-ecommerce.php' );
+		}
+	    
+	}
+
 	public function display_plugin_integrations() {
 
 		if (!current_user_can('manage_options')) {

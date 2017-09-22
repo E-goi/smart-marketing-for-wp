@@ -11,9 +11,10 @@
 	<div class="row">
 		<div id="egoi4wp-admin" class="main-content col col-4">
 
-			<form method="post" action=""><?php
-			settings_fields($FORM_OPTION);?>
+			<form method="post" action="">
+			<?php settings_fields($FORM_OPTION);?>
 			
+			<input type="hidden" name="widget" value="1">
 			<input type="hidden" name="egoiform" value="egoi_widget">
 			<table class="form-table" style="table-layout: fixed;">
 				<tr valign="top">
