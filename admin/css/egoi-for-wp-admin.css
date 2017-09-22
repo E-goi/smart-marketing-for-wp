@@ -27,8 +27,10 @@
 
 .e-goi-account-apikey__title,
 .e-goi-account-list__title {
-  padding: 10px 0 20px !important;  
-  display: inline-block;
+    padding: 10px 0 20px !important;  
+    display: inline-block;
+    font-size: 23px;
+    font-weight: 400;
 }
 
 .e-goi-account-apikey__actions {
@@ -209,8 +211,6 @@
    display: inline-block;
    width: 20px;
    height: 20px;
-   background-size: 20px;
-   background: url('../img/check.png') no-repeat; 
 }
 
 #valid, #active .dashicon.dashicon-yes{
@@ -218,16 +218,13 @@
     right: 303px;
     top: 89px;
     color: darkseagreen;
-    background: url('../img/check.png') no-repeat; 
-
 }
 
 #error, #inactive{
-   background: url('../img/error.png') no-repeat;
-   display: inline-block;
-   width: 20px;
-   height: 20px;
-   background-size: 20px;
+    position: absolute;
+    right: 303px;
+    top: 89px;
+    color: red;
 }
 
 #load, #load_data, #load_map, #load_sync{
@@ -548,8 +545,6 @@ div.dropdown {
 .e-goi-header-textarea div a:first-child span{
   text-decoration: none;
 }
-
-
 
 .e-goi-iframe-select-list,
 .e-goi-form-shortcode,

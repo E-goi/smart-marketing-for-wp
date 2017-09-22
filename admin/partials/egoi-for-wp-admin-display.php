@@ -13,12 +13,13 @@ $api_key = $apikey['api_key'];
 		$name = $_POST['egoi_wp_title'];
 		$lang = $_POST['egoi_wp_lang'];
 		$new_list = $egoi->createList($name,$lang);
+		
 		if(is_string($new_list)){
-			echo '<div class="error notice is-dismissible"><p>';
+			echo '<div class="e-goi-notice error notice is-dismissible"><p>';
 				_e('No more lists allowed in your account!', 'egoi-for-wp');
 			echo '</p></div>';
 		}else{
-			echo '<div class="updated notice is-dismissible"><p>';
+			echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
 				_e('New list created successfully!', 'egoi-for-wp');
 			echo '</p></div>';
 		}
@@ -26,8 +27,9 @@ $api_key = $apikey['api_key'];
 		update_option('Egoi4WpBuilderObject', $egoi);
 
 	}else{
+
 		if( isset($_POST['egoi_wp_createlist']) && (empty($_POST['egoi_wp_title'])) ) {
-			echo '<div class="updated notice is-dismissible"><p>';
+			echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
 				_e('Empty data!', 'egoi-for-wp');
 			echo '</p></div>';
 		}
@@ -67,7 +69,6 @@ $api_key = $apikey['api_key'];
 
 </script>
 <style type="text/css">
-
 .form-table th{
 	padding: 15px 10px 10px 0 !important;
 }
@@ -112,6 +113,11 @@ $api_key = $apikey['api_key'];
 
 	      		}else{?>
 					
+					<style>
+					#wpfooter{
+						position: relative !important;
+					}
+					</style>
 					
 					 <!-- API Key do E-goi -->
 					<div>
@@ -122,9 +128,9 @@ $api_key = $apikey['api_key'];
 								?>
 							<div class="e-goi-account-apikey">
 								<!-- Titulo -->
-								<h1 class="e-goi-account-apikey__title" for="egoi_wp_apikey">
+								<div class="e-goi-account-apikey__title" for="egoi_wp_apikey">
 									<?php echo __('API Key do E-goi');?>
-								</h1>
+								</div>
 
 								<!-- Api key and btn -->
 								<div class="e-goi-account-apikey__actions">
@@ -151,7 +157,7 @@ $api_key = $apikey['api_key'];
 								<a href="//bo.e-goi.com/?from=<?php echo urlencode('/?action=dados_cliente&menu=sec');?>" target="_blank" class='link' id="egoi_edit_info">
 									<?php echo __('Change Account Info in E-goi?', 'egoi-for-wp');?>
 								</a>
-								<!-- <span style="font-style:italic;font-size:14px;"> &nbsp; <?php echo __('You will be redirected to E-goi', 'egoi-for-wp');?> -->
+								<?php echo __('You will be redirected to E-goi', 'egoi-for-wp');?>
 								</span>
 							</div>
 						</form>	
@@ -175,13 +181,8 @@ $api_key = $apikey['api_key'];
 
 						<!-- <label for="egoi_wp_apikey"><?php echo __('Your API key', 'egoi-for-wp');?></label> -->
 						<input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi API Key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey__actions__form--input" name='egoi_api_key[api_key]' id="egoi_api_key_input" /> 
-
-						
-
-						<div id="error" style="display:none;"></div>
 					
-						<button type="submit" class='button-primary e-goi-account-btn' id="egoi_4_wp_login" disabled="disabled"><span id="load" class="dashicons dashicons-update" style="display: none;"></span> 
-							
+						<button type="submit" class='button-primary e-goi-account-btn' id="egoi_4_wp_login" disabled="disabled"><span id="load" class="dashicons dashicons-update" style="display: none;"></span>
 							<span id="api-save-text"><?php echo __('Save and Connect', 'egoi-for-wp');?>
 							</span>
 						</button>
@@ -189,9 +190,12 @@ $api_key = $apikey['api_key'];
 						<div id="valid" style="display:none;">
 							<span class="dashicons dashicons-yes"></span>
 						</div>
+						<div id="error" style="display:none;">
+							<span class="dashicons dashicons-no-alt"></span>
+						</div>
 					
 						<p class="e-goi-help-text">
-							<?php echo __('<span class="dashicons dashicons-editor-help"></span>To retrieve your E­goi API Key you must login to your <a target="_blank" href="https://login.egoiapp.com/#/login"><span style="text-decoration:underline;">E­goi</span></a> account and click the menu “Apps”', 'egoi-for-wp');?>
+							<?php echo __('<span class="dashicons dashicons-editor-help"></span>To retrieve your E­goi API Key you must login to your <a target="_blank" href="https://login.egoiapp.com/#/login"><span style="text-decoration:underline;">E­-goi</span></a> account and click the menu “Apps”', 'egoi-for-wp');?>
 						</p>
 				</form>
 			</div>
@@ -220,12 +224,12 @@ $api_key = $apikey['api_key'];
 					<label><input type="radio" name="egoi_data[remove]" <?php checked( $opt, 0 ); ?> value="0">		<?php echo __('No', 'egoi-for-wp');?></label>
 					<a class='button-secondary' id="egoi_remove_data">
 						<?php echo __('Save option', 'egoi-for-wp');?>
-					</a>
+					</a> &nbsp;
+					<span id="remove_valid" style="display:none;color: green;"><?php echo __('Option saved', 'egoi-for-wp');?></span>
 				</div>
 
 			<p class="help"><?php echo __('Select "Yes" if you want REMOVE the plugin and delete all saved data', 'egoi-for-wp');?>
 			</p>
-			<span id="load_data" style="display:none;"></span>
-			<span id="remove_valid" style="display:none;"><?php echo __('Option saved', 'egoi-for-wp');?></span>
+			
 		</div>
 	</div><!-- .wrap -->

@@ -6,6 +6,9 @@ jQuery(document).ready(function($) {
 
 	$("#egoi_api_key_input").bind('input', function() {
 
+		var btn_submit = $("#egoi_4_wp_login");
+		btn_submit.prop('disabled', true);
+
 		var key = $(this).val();
 		if(key.length == 40){
 
@@ -19,25 +22,25 @@ jQuery(document).ready(function($) {
 			    }),
 			    success:function(data, status) {
 			        
-			        if(status=='404'){
-			        	$("#egoi_4_wp_login").attr('disabled', 'disabled');
+			        if(status == '404'){
 			        	$("#error").show();
 			        	$("#valid").hide();
 			        	$("#load").removeClass('spin').hide();
+			        	$("#api-save-text").show();
 			        }else{
-			        	$("#egoi_4_wp_login").removeAttr('disabled');
 			        	$("#valid").show();
 			        	$("#error").hide();
 			        	$("#load").removeClass('spin').hide();
 			        	$("#api-save-text").show();
+			        	btn_submit.attr('disabled', false);
 			        }
 			    },
 			    error:function(status){
 			    	if(status){
-				    	$("#egoi_4_wp_login").attr('disabled', 'disabled');
 				    	$("#valid").hide();
 				    	$("#error").show();
 				    	$("#load").removeClass('spin').hide();
+				    	$("#api-save-text").show();
 				    }
 			    }
 			});
@@ -79,6 +82,5 @@ jQuery(document).ready(function($) {
 	  	$(this).next('.dropdown').toggle();
 	  	$('.button-primary--custom-add').hide();
 	});
-
 	
 });
