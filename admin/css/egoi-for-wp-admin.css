@@ -11,6 +11,10 @@
 /* Account */
 /* ///////////////////// */
 
+a{
+  cursor: pointer !important;
+}
+
 .postbox{
   max-width: 800px;
 }

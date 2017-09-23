@@ -141,7 +141,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function enqueue_styles() {
 		
-		wp_enqueue_style($this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );	
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );	
 		wp_enqueue_style('wp-color-picker');
 	}
 
@@ -152,24 +152,23 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script($this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-admin.js', array( 'jquery' ), $this->version, false);
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
 		
-		wp_register_script('custom-script1', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-capture.js', array('jquery'));
+		wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'));
 		wp_enqueue_script('custom-script1');
 		
-		wp_register_script('custom-script2', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-forms.js', array('jquery'));
+		wp_register_script('custom-script2', plugin_dir_url(__FILE__) . 'js/forms.min.js', array('jquery'));
 		wp_enqueue_script('custom-script2');
 
-		wp_register_script('custom-script3', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-map.js', array('jquery'));
+		wp_register_script('custom-script3', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-map.js', array('jquery'));
 		wp_enqueue_script('custom-script3');
 
-		wp_register_script('custom-script4', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-widget.js', array('jquery'));
+		wp_register_script('custom-script4', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-widget.js', array('jquery'));
 		wp_enqueue_script('custom-script4');
 		
 		wp_enqueue_script('wp-color-picker');
 
-		wp_localize_script( $this->plugin_name, 'url_egoi_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); 
-
+		wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
 	}
 
 
@@ -199,19 +198,17 @@ class Egoi_For_Wp_Admin {
 
 			add_submenu_page($this->plugin_name, __('Integrations', 'egoi-for-wp'), __('Integrations', 'egoi-for-wp'), $capability, 'egoi-4-wp-integrations', array($this, 'display_plugin_integrations'));
 		}
-
 	}
 
-	public function add_action_links( $links ) {
+	public function add_action_links($links) {
 		
 		$link_account = 'egoi-4-wp-account';
 	   	$settings_link = array(
 	    '<a href="'.admin_url('admin.php?page='.$link_account).'">'.__('Settings', $this->plugin_name).'</a>');
 	   	return array_merge(  $settings_link, $links );
-
 	}
 	
-	public function del_action_link( $actions ) {
+	public function del_action_link($actions) {
 			
 		if (array_key_exists('edit', $actions )){
 			unset($actions ['edit']);
@@ -409,7 +406,6 @@ class Egoi_For_Wp_Admin {
 
 				$form_post = (array) get_option( $foption, array() );
 				$form_post = array_merge($form_defaults, $form_post);
-				//$atts = shortcode_atts(array( ));
 				return (array) apply_filters( 'egoi_form_sync', $form_post );
 			}
 	}
@@ -539,7 +535,6 @@ class Egoi_For_Wp_Admin {
 		} catch(Exception $e) {
 	    	$this->sendError('WooCommerce - Carrinho Abandonado ERROR', $e->getMessage());
 	    }
-		
 	}
 
 	public function hookWoocommercePostBilling(){
@@ -556,7 +551,6 @@ class Egoi_For_Wp_Admin {
 	    	echo $e->getMessage();
 	    	return false;
 	    }
-
 	}
 
 	public function trackEngage($data = array(), $product, $option = false) {
@@ -635,7 +629,6 @@ class Egoi_For_Wp_Admin {
 			$public = new Egoi_For_Wp_Public($this->plugin_name, $this->version);
 			return $public->getTrackEngage($te);
 		}
-
 	}
 
 	public function hookIpnResponse($data){

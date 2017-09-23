@@ -1,1 +1,6 @@
 sftp-config.json
+admin/js/egoi-for-wp-admin.js
+admin/js/egoi-for-wp-capture.js
+admin/js/egoi-for-wp-forms.js
+admin/js/egoi-for-wp-map.js
+admin/js/egoi-for-wp-widget.js

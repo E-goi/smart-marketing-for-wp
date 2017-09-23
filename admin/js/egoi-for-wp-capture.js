@@ -1,94 +1,94 @@
+jQuery(document).ready(function($) {
 
-	function tabs(id, idlink1, idlink2, element, rme, rme2, isForm){
+	'use strict';
 
-		document.getElementById(element).style.display = 'block';
-		document.getElementById(element).className += ' tab-active';
-		document.getElementById(id).className += ' nav-tab-active';
-
-		document.getElementById('egoi-bar-preview').style.display = 'none';
-
-		document.getElementById(rme).style.display = 'none';
-		document.getElementById(rme).className = 'tab';
-		document.getElementById(idlink1).className = idlink1;
-
-		document.getElementById(rme2).style.display = 'none';
-		document.getElementById(rme2).className = 'tab';
-		document.getElementById(idlink2).className = idlink2;
-
-		document.getElementById('nav-tab-preview').className = 'nav-tab-preview';
-
-	}
-
-	function preview_bar(){
-
-		document.getElementById('egoi-bar-preview').style.display = 'block';
-
-		document.getElementById('tab-settings').style.display = 'none';
-		document.getElementById('tab-appearance').style.display = 'none';
-		document.getElementById('tab-messages').style.display = 'none';
-
-		document.getElementById('nav-tab-settings').className = 'nav-tab-settings';
-		document.getElementById('nav-tab-appearance').className = 'nav-tab-appearance';
-		document.getElementById('nav-tab-messages').className = 'nav-tab-messages';
+	window.tabs = function(method, ids){
 		
-		document.getElementById('nav-tab-preview').className += ' nav-tab-active';
-	}
+		var option = 'nav-tab ';
 
-	function show_forms(){
+		switch(method) {
+			case 'preview_bar':
+				$('#egoi-bar-preview').show();
 
-		document.getElementById('tab-forms').style.display = 'block';
+			    $('#tab-settings').hide();
+			    $('#tab-appearance').hide();
+			    $('#tab-messages').hide();
 
-		document.getElementById('tab-main-bar').style.display = 'none';
-		document.getElementById('tab-widget').style.display = 'none';
+			    $('#nav-tab-settings').attr('class', 'nav-tab-settings');
+			    $('#nav-tab-appearance').attr('class', 'nav-tab-appearance');
+			    $('#nav-tab-messages').attr('class', 'nav-tab-messages');
+			    
+			    $('#nav-tab-preview').addClass('nav-tab-active');
+			    break;
 
-		document.getElementById('nav-tab-main-bar').className = 'nav-tab nav-tab-main-bar';
-		document.getElementById('nav-tab-widget').className = 'nav-tab nav-tab-widget';
-		
-		document.getElementById('nav-tab-forms').className += ' nav-tab-active';
-	}
+			case 'show_forms':
+			    $('#tab-forms').show();
+			    $('#tab-main-bar').hide();
+			    $('#tab-widget').hide();
 
-	function show_bar(){
+			    $('#nav-tab-main-bar').attr('class', option + 'nav-tab-main-bar');
+			    $('#nav-tab-widget').attr('class', option + 'nav-tab-widget');
+			    
+			    $('#nav-tab-forms').addClass('nav-tab-active');
+			    break;
 
-		document.getElementById('tab-main-bar').style.display = 'block';
+			case 'show_bar':
+				$('#tab-main-bar').show();
+			    $('#tab-forms').hide();
+			    $('#tab-widget').hide();
 
-		document.getElementById('tab-forms').style.display = 'none';
-		document.getElementById('tab-widget').style.display = 'none';
+			    $('#nav-tab-forms').attr('class', option + 'nav-tab-forms');
+			    $('#nav-tab-widget').attr('class', option + 'nav-tab-widget');
+			    
+			    $('#nav-tab-main-bar').addClass('nav-tab-active');
+			    break;
 
-		document.getElementById('nav-tab-forms').className = 'nav-tab nav-tab-main-bar';
-		document.getElementById('nav-tab-widget').className = 'nav-tab nav-tab-widget';
-		
-		document.getElementById('nav-tab-main-bar').className += ' nav-tab-active';
-	}
+			case 'show_widget':
+			    $('#tab-widget').show();
+			    $('#tab-forms').hide();
+			    $('#tab-main-bar').hide();
 
-	function show_widget(){
+			    $('#nav-tab-forms').attr('class', option + 'nav-tab-forms');
+			    $('#nav-tab-main-bar').attr('class', option + 'nav-tab-main-bar');
+			    
+			    $('#nav-tab-widget').addClass('nav-tab-active');
+			    break;
 
-		document.getElementById('tab-widget').style.display = 'block';
+			case 'show_options':
+			    $('#tab-forms-options').show();
+			    $('#tab-forms-appearance').hide();
 
-		document.getElementById('tab-main-bar').style.display = 'none';
-		document.getElementById('tab-forms').style.display = 'none';
+			    $('#nav-tab-forms-appearance').attr('class', 'nav-tab-forms');
+			    $('#nav-tab-forms-options').addClass('nav-tab-active');
+			    break;
 
-		document.getElementById('nav-tab-main-bar').className = 'nav-tab nav-tab-main-bar';
-		document.getElementById('nav-tab-forms').className = 'nav-tab nav-tab-widget';
-		
-		document.getElementById('nav-tab-widget').className += ' nav-tab-active';
-	}
+			case 'show_appearance':
+				$('#tab-forms-options').hide();
+			    $('#tab-forms-appearance').show();
 
-	function show_options() {
-		document.getElementById('tab-forms-options').style.display = 'block';
+			    $('#nav-tab-forms-options').attr('class', 'nav-tab-forms');
+			    $('#nav-tab-forms-appearance').addClass('nav-tab-active');
+			    break;
 
-		document.getElementById('tab-forms-appearance').style.display = 'none';
+			default:    
+				$('#'+ids[3]).show();
+				$('#'+ids[3]).addClass('tab-active');
+				$('#'+ids[0]).addClass('nav-tab-active');
 
-		document.getElementById('nav-tab-forms-appearance').className = 'nav-tab-forms-options';
-		
-		document.getElementById('nav-tab-forms-options').className += ' nav-tab-active';
-	}
+				$('#egoi-bar-preview').hide();
 
-	function show_appearance() {
-		document.getElementById('tab-forms-appearance').style.display = 'block';
+				$('#'+ids[4]).hide();
+				$('#'+ids[4]).attr('class', 'tab');
+				$('#'+ids[1]).attr('class', ids[1]);
 
-		document.getElementById('tab-forms-options').style.display = 'none';
+				$('#'+ids[5]).hide();
+				$('#'+ids[5]).attr('class', 'tab');
+				$('#'+ids[2]).attr('class', ids[2]);
 
-		document.getElementById('nav-tab-forms-options').className = 'nav-tab-forms-options';
-		
-		document.getElementById('nav-tab-forms-appearance').className += ' nav-tab-active';
-	}
+				$('#nav-tab-preview').attr('class', 'nav-tab-preview');
+				break;
+		} 
+		return false;
+	};
+
+});

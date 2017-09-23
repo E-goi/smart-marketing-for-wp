@@ -8,6 +8,7 @@ jQuery(document).ready(function($) {
 
 	$('#egoi4wp-form-hide').hide();
 	$('#wp-form_content-editor-tools').append('<b>Editor</b>');
+
 	var $context = $(document.getElementById('egoi4wp-form'));
 	$context.find('.color').wpColorPicker();
 
