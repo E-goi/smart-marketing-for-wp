@@ -112,7 +112,7 @@ defined( 'ABSPATH' ) or exit;
 					</a>
 
 					<a class="nav-tab-forms-appearance" id="nav-tab-forms-appearance" onclick="tabs('show_appearance');">
-						<?php _e('HTML/CSS box styles', 'egoi-for-wp');?>	
+						<?php _e('Customizing the form', 'egoi-for-wp');?>
 					</a>
 
 					<form method="post" action="#" id="form-egoi">	
@@ -180,12 +180,12 @@ defined( 'ABSPATH' ) or exit;
 
 												<!-- link -->
 												<div>
-													<a href="#"><?php _e( 'Copiar código HTML no E-goi', 'egoi-for-wp' ); ?>
+													<a target="_blank" href="<?php _e( 'https://helpdesk.e-goi.com/838402-Integrating-an-E-goi-form-with-an-external-system-via-HTML', 'egoi-for-wp' ); ?>"><?php _e( 'Copiar código HTML no E-goi', 'egoi-for-wp' ); ?>
 													<span class="dashicons dashicons-external"></span></a>
 												</div>
 												<!-- link Video -->
 												<div class="e-goi-help-link-video">
-													<a class="" href="#">
+													<a class="" target="_blank" href="<?php _e( 'https://helpdesk.e-goi.com/603920-Adding-a-sign-up-form-to-my-website', 'egoi-for-wp' ); ?>">
 														<span class="dashicons dashicons-controls-play"></span>
 														<?php _e( 'Veja aqui como fazer', 'egoi-for-wp' ); ?>
 													</a>
@@ -294,7 +294,7 @@ defined( 'ABSPATH' ) or exit;
 							<table class="form-table" style="table-layout: fixed;">
 								<tr valign="top">
 									<th scope="row"><?php _e( 'Enable Form', 'egoi-for-wp' ); ?></th>
-									<td class="nowrap">
+									<td class="nowrap nowrap--custom">
 										<label>
 											<input type="radio" name="egoi_form_sync[enabled]" value="1" <?php checked($opt['egoi_form_sync']['enabled'], 1); ?> />
 											<?php _e( 'Yes', 'egoi-for-wp' ); ?>
@@ -310,7 +310,7 @@ defined( 'ABSPATH' ) or exit;
 								</tr>
 							</table>
 						</div>
-
+@
 						<div class="tab" id="tab-forms-appearance">
 							<?php include ('custom/egoi-for-wp-form-appearance.php'); ?>
 						</div>

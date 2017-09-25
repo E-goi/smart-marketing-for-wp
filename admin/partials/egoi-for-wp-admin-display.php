@@ -141,7 +141,7 @@ $api_key = $apikey['api_key'];
 									</span>
 
 									<input type="text" class="e-goi-account-apikey__actions__form--input" style="display:none;" autofocus size="55" maxlength="40" id="apikey" name="egoi_api_key[api_key]" 
-										value="<?php echo $api_key;?>">
+										value="<?php echo substr($api_key, 1, 30).'**********';?>">
 
 									<span id="ok" class="button-primary e-goi-account-btn" style="display:none;" onclick="document.egoi_apikey_form.submit();">
 										<?php echo __('Save', 'egoi-for-wp');?>
@@ -195,10 +195,19 @@ $api_key = $apikey['api_key'];
 						<div id="error" style="display:none;">
 							<span class="dashicons dashicons-no-alt"></span>
 						</div>
-					
+
+
+					<!-- Tooltip - help -->					
 						<p class="e-goi-help-text">
-							<?php echo __('<span class="dashicons dashicons-editor-help"></span>
-							To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;"><a target="_blank" href=" https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span></a> and copy it.', 'egoi-for-wp');?>
+							<span class="e-goi-tooltip">
+								 <span class="dashicons dashicons-editor-help"></span>
+							  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Não encontra a sua API Key? Nós ajudamos » <a href="https://helpdesk.e-goi.com/858130-O-que-%C3%A9-a-API-do-E-goi-e-onde-est%C3%A1-a-API-key" target="_blank">Aqui!</a>', 'egoi-for-wp' ); ?>
+							 	</span>
+							 </span>
+							<span>To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;">
+
+							<a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span>
+							</a> and copy it.
 						</p>
 				</form>
 			</div>
@@ -218,7 +227,7 @@ $api_key = $apikey['api_key'];
 			if($lists->ERROR){ ?>
 				<div class="postbox" style="display:flex; justify-content:flex-start!important; 
 				align-items: center; max-width: 740px; padding:30px;">
-							<a type="button" class="button-primary button-primary--custom-add dropdown-toggle" 
+					<a type="button" class="button-primary button-primary--custom-add dropdown-toggle" 
 				<h3><?php echo _e('Create List +', 'egoi-for-wp');?></h3>
 			</a>
 				
@@ -246,8 +255,6 @@ $api_key = $apikey['api_key'];
 								</i></span>
 							</span>
 						</div>
-
-
 						<input type='submit' class='button-primary' name='egoi_wp_createlist' id='egoi_wp_createlist' value='<?php echo _e('Save', 'egoi-for-wp');?>' />
 						<a style="margin-left:10px;" href="" class='link cancel-toggle' ><?php echo _e('Cancelar', 'egoi-for-wp');?></a>
 				</form>

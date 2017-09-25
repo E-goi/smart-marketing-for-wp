@@ -141,6 +141,10 @@ a{
 }
 
 
+.nowrap--custom{
+  padding: 15px 0px !important;
+}
+
 /* API Btns Secondary Override*/
 .e-goi-account-btn{
     font-size: 14px !important;
@@ -451,6 +455,7 @@ div.dropdown {
 .e-goi-tooltip .e-goi-tooltiptext {
     visibility: hidden;
     width: 120px;
+    padding: 10px;
     background-color: #222;
     color: #fff;
     text-align: center;
@@ -474,6 +479,10 @@ div.dropdown {
     border-width: 5px;
     border-style: solid;
     border-color: #222 transparent transparent transparent;
+}
+
+.e-goi-tooltip .e-goi-tooltiptext.e-goi-tooltiptext--custom::after{
+    margin-left: -13px !important;
 }
 
 .e-goi-tooltip:hover .e-goi-tooltiptext {

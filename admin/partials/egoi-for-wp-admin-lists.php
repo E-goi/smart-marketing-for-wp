@@ -81,13 +81,14 @@
 								<option value='es'><?php echo _e('Spanish', 'egoi-for-wp');?></option>
 							</select>
 							<span class="e-goi-help-text-lang">
-								<span><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's <br>header and footerautomatically translated into their language", "egoi-for-wp");?>
+								<span style="display:inline-block; line-height:16px; margin-left:15px;"><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's <br>header and footerautomatically translated into their language", "egoi-for-wp");?>
 								</i></span>
 							</span>
 						</div>
 
 
 						<input type='submit' class='button-primary' name='egoi_wp_createlist' id='egoi_wp_createlist' value='<?php echo _e('Save', 'egoi-for-wp');?>' />
+						<a style="margin-left:10px;" href="" class='link cancel-toggle' ><?php echo _e('Cancelar', 'egoi-for-wp');?></a>
 				</form>
 			</div>
 		</div>
