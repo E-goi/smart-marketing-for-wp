@@ -63,11 +63,14 @@ defined( 'ABSPATH' ) or exit;
 		</p>
 
 	<h2 class="nav-tab-wrapper" id="egoi-tabs">
-		<a class="nav-tab nav-tab-forms nav-tab-active" id="nav-tab-forms" onclick="tabs('show_forms');"><?php _e('E-goi Forms', 'egoi-for-wp'); ?></a>
+		<a class="nav-tab nav-tab-forms nav-tab-active" id="nav-tab-forms" 
+		onclick="tabs('show_forms');"><?php _e('E-goi Forms', 'egoi-for-wp'); ?></a>
 
-		<a class="nav-tab nav-tab-main-bar" id="nav-tab-main-bar" onclick="tabs('show_bar');"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a>
+		<a class="nav-tab nav-tab-main-bar" id="nav-tab-main-bar" 
+		onclick="tabs('show_bar');"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a>
 
-		<a class="nav-tab nav-tab-widget" id="nav-tab-widget" onclick="tabs('show_widget');"><?php _e('Widget Options', 'egoi-for-wp'); ?></a>
+		<a class="nav-tab nav-tab-widget" id="nav-tab-widget" 
+		onclick="tabs('show_widget');"><?php _e('Widget Options', 'egoi-for-wp'); ?></a>
 	</h2>
 
 	<!-- wrap Forms -->
@@ -380,9 +383,9 @@ defined( 'ABSPATH' ) or exit;
 				<p><?php
 
 					if($count_op == 5){ ?>
-						<a id="disabled" class='button-primary'><?php _e('Create a new form', 'egoi-for-wp');?></a><?php
+						<a id="disabled" class='button-primary'><?php _e('Create form +', 'egoi-for-wp');?></a><?php
 					}else{ ?>
-						<a href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo ($count_op+1);?>&type=form" class='button-primary'><?php _e('Create a new form', 'egoi-for-wp');?></a><?php
+						<a href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo ($count_op+1);?>&type=form" class='button-primary'><?php _e('Create form +', 'egoi-for-wp');?></a><?php
 					} ?>
 				</p>
 			</div>

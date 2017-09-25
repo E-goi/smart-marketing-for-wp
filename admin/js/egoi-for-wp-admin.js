@@ -14,7 +14,6 @@ jQuery(document).ready(function($) {
 
 			$("#load").addClass('spin').show();
 			$("#api-save-text").hide();
-			
 			$.ajax({
 			    type: 'POST',
 			    data:({
@@ -81,6 +80,9 @@ jQuery(document).ready(function($) {
 	$('.dropdown-toggle').click(function(){
 	  	$(this).next('.dropdown').toggle();
 	  	$('.button-primary--custom-add').hide();
+	  	$('.help-egoi-create-list').hide();
 	});
-	
 });
+
+
+

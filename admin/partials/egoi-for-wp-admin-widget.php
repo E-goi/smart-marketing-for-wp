@@ -18,7 +18,13 @@
 			<input type="hidden" name="egoiform" value="egoi_widget">
 			<table class="form-table" style="table-layout: fixed;">
 				<tr valign="top">
-					<th scope="row"><?php _e( 'Enable Widget', 'egoi-for-wp' ); ?></th>
+					<th scope="row"><?php _e( 'Enable Widget<span class="e-goi-tooltip">
+							 <span class="dashicons dashicons-editor-help">
+							 </span>
+						  	 <span class="e-goi-tooltiptext">
+						  	 	<?php _e( "Tooltip text", "egoi-for-wp" ); ?>
+						 	</span>
+						</span>', 'egoi-for-wp' ); ?></th>
 					<td class="nowrap">
 						<label>
 							<input type="radio" name="egoi_widget[enabled]" value="1" <?php checked($egoiwidget['enabled'], 1); ?> />
@@ -28,9 +34,9 @@
 							<input type="radio" name="egoi_widget[enabled]" value="0" <?php checked($egoiwidget['enabled'], 0); ?> />
 							<?php _e( 'No', 'egoi-for-wp' ); ?>
 						</label>
-						<p class="help">
-							<?php _e( 'Select "yes" to enable forms widget.', 'egoi-for-wp' ); ?>
-						</p>
+					<!-- <p class="help">
+							<?php // _e( 'Select "yes" to enable forms widget.', 'egoi-for-wp' ); ?>
+						</p> -->
 					</td>
 				</tr>
 			</table>
@@ -46,28 +52,28 @@
 					<tr valign="top">
 						<th scope="row"><label for="egoi_form_sync_subscribed"><?php _e( 'Successfully subscribed', 'egoi-for-wp' ); ?></label></th>
 						<td>
-							<input type="text" style="width:450px;" id="egoi_form_sync_subscribed" name="egoi_widget[msg_subscribed]" value="<?php echo esc_attr($egoiwidget['msg_subscribed']);?>" />
+							<input type="text" style="width:450px;" id="egoi_form_sync_subscribed" placeholder="<?php _e( 'Your request has been successfully submitted. Thank you.', 'egoi-for-wp' ); ?>" name="egoi_widget[msg_subscribed]" value="<?php echo esc_attr($egoiwidget['msg_subscribed']);?>" />
 							<p class="help"><?php _e( 'The text that shows when an email address is successfully subscribed to the selected list.', 'egoi-for-wp' ); ?></p>
 						</td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="egoi_form_sync_invalid_email"><?php _e( 'Invalid email address', 'egoi-for-wp' ); ?></label></th>
 						<td>
-							<input type="text" style="width:450px;" id="egoi_form_sync_invalid_email" name="egoi_widget[msg_invalid]" value="<?php echo esc_attr($egoiwidget['msg_invalid']);?>" />
+							<input type="text" style="width:450px;" id="egoi_form_sync_invalid_email" placeholder="<?php _e( 'Check, please, if you wrote your e-mail address correctly.', 'egoi-for-wp' ); ?>" name="egoi_widget[msg_invalid]" value="<?php echo esc_attr($egoiwidget['msg_invalid']);?>" />
 							<p class="help"><?php _e( 'The text that shows when an invalid email address is given.', 'egoi-for-wp' ); ?></p>
 						</td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="egoi_form_sync_email_empty"><?php _e( 'Empty email address', 'egoi-for-wp' ); ?></label></th>
 						<td>
-							<input type="text" style="width:450px;" id="egoi_form_sync_email_empty" name="egoi_widget[msg_empty]" value="<?php echo esc_attr($egoiwidget['msg_empty']);?>" />
+							<input type="text" style="width:450px;" placeholder="<?php _e( '', 'egoi-for-wp' ); ?>" id="egoi_form_sync_email_empty" name="egoi_widget[msg_empty]" value="<?php echo esc_attr($egoiwidget['msg_empty']);?>" />
 							<p class="help"><?php _e( 'The text that shows when the email is empty.', 'egoi-for-wp' ); ?></p>
 						</td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="egoi_form_sync_already_subscribed"><?php _e( 'Already subscribed', 'egoi-for-wp' ); ?></label></th>
 						<td>
-							<input type="text" style="width:450px;" id="egoi_form_sync_already_subscribed" name="egoi_widget[msg_exists_subscribed]" value="<?php echo esc_attr($egoiwidget['msg_exists_subscribed']);?>" />
+							<input type="text" style="width:450px;" id="egoi_form_sync_already_subscribed" placeholder="<?php _e( 'The email address already exists in your list of contacts.', 'egoi-for-wp' ); ?>" name="egoi_widget[msg_exists_subscribed]" value="<?php echo esc_attr($egoiwidget['msg_exists_subscribed']);?>" />
 							<p class="help"><?php _e( 'The text that shows when the given email is already subscribed to the selected list.', 'egoi-for-wp' ); ?></p>
 						</td>
 					</tr>
@@ -164,15 +170,8 @@
 				</table>
 			</div>
 
-			<table class="form-table" style="table-layout: fixed;">
-				<tr valign="top">
-					<td colspan="2">
-						<div style="display: -webkit-inline-box;">
-							<button style="margin-top: 12px;" type="submit" class="button button-primary"><?php _e('Save Changes', 'egoi-for-wp');?></button>
-						</div>
-					</td>
-				</tr>
-			</table>
+			<button style="margin-top: 12px;" type="submit" class="button button-primary"><?php _e('Save', 'egoi-for-wp');?></button>
+
 			</form>
 
 		</div>

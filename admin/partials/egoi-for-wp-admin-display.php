@@ -47,6 +47,7 @@ $api_key = $apikey['api_key'];
 	$total_lists = count(array_filter(explode(' - ', $list_name)));			
 	update_option('Egoi4WpBuilderObject', $egoi);
 
+
 ?>
 <script type="text/javascript">
 	function hide_show_apikey(){
@@ -210,12 +211,53 @@ $api_key = $apikey['api_key'];
 			</div>
 
 		</div><!-- .postbox -->
-				<!-- List -->
-			<?php if($lists->response != 'NO_USERNAME_AND_PASSWORD_AND_APIKEY'){
-					  include 'egoi-for-wp-admin-lists.php';
-				} ?>
 
-			<!-- .List -->
+			<?php 
+			// display lists
+			if($lists->ERROR){ ?>
+				<div class="postbox" style="display:flex; justify-content:flex-start!important; 
+				align-items: center; max-width: 740px; padding:30px;">
+							<a type="button" class="button-primary button-primary--custom-add dropdown-toggle" 
+				<h3><?php echo _e('Create List +', 'egoi-for-wp');?></h3>
+			</a>
+				
+			<div class="dropdown" style="position:relative">
+
+				<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI']; ?>'>
+						<div class="e-goi-account--create-name">
+							<span>
+								<label for="egoi_wp_title"><?php echo _e('Name', 'egoi-for-wp');?></label>
+							</span>
+							<span>
+								<input type='text' size='60' name='egoi_wp_title' autofocus required="required" />
+							</span>
+						</div>
+						<div class="e-goi-account--create-lang" style="display:flex; align-items: center; align-content:center;">
+							<label for="egoi_wp_lang"><?php echo _e('Language', 'egoi-for-wp');?></label>
+							<select name='egoi_wp_lang'>
+								<option value='en'><?php echo _e('English', 'egoi-for-wp');?></option>
+								<option value='pt'><?php echo _e('Portuguese', 'egoi-for-wp');?></option>
+								<option value='br'><?php echo _e('Portuguese (Brasil)', 'egoi-for-wp');?></option>
+								<option value='es'><?php echo _e('Spanish', 'egoi-for-wp');?></option>
+							</select>
+							<span class="e-goi-help-text-lang">
+								<span style="display:inline-block; line-height:16px; margin-left:15px;"><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's header and <br>footerautomatically translated into their language", "egoi-for-wp");?>
+								</i></span>
+							</span>
+						</div>
+
+
+						<input type='submit' class='button-primary' name='egoi_wp_createlist' id='egoi_wp_createlist' value='<?php echo _e('Save', 'egoi-for-wp');?>' />
+						<a style="margin-left:10px;" href="" class='link cancel-toggle' ><?php echo _e('Cancelar', 'egoi-for-wp');?></a>
+				</form>
+			</div>
+				</div><?php
+			}else{
+				if($lists->response != 'NO_USERNAME_AND_PASSWORD_AND_APIKEY'){
+					  include 'egoi-for-wp-admin-lists.php';
+				}
+			}?>
+
 	</div><!-- main-content -->
 
 	<div class="e-goi-separator2"></div>
