@@ -155,9 +155,9 @@ $api_key = $apikey['api_key'];
 
 							<div class="e-goi-account-apikey__actions__btn-change-account">
 								<a href="//bo.e-goi.com/?from=<?php echo urlencode('/?action=dados_cliente&menu=sec');?>" target="_blank" class='link' id="egoi_edit_info">
-									<?php echo __('Change Account Info in E-goi?', 'egoi-for-wp');?>
+									<?php echo __('Click here if you want to change your E-goi account info', 'egoi-for-wp');?>
 								</a>
-								<?php echo __('You will be redirected to E-goi', 'egoi-for-wp');?>
+								<!-- <?php // echo __('You will be redirected to E-goi', 'egoi-for-wp');?> -->
 								</span>
 							</div>
 						</form>	
@@ -195,7 +195,8 @@ $api_key = $apikey['api_key'];
 						</div>
 					
 						<p class="e-goi-help-text">
-							<?php echo __('<span class="dashicons dashicons-editor-help"></span>To retrieve your E­goi API Key you must login to your <a target="_blank" href="https://login.egoiapp.com/#/login"><span style="text-decoration:underline;">E­-goi</span></a> account and click the menu “Apps”', 'egoi-for-wp');?>
+							<?php echo __('<span class="dashicons dashicons-editor-help"></span>
+							To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;"><a target="_blank" href=" https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span></a> and copy it.', 'egoi-for-wp');?>
 						</p>
 				</form>
 			</div>
@@ -203,7 +204,8 @@ $api_key = $apikey['api_key'];
 
 			<div class="e-goi-account-apikey-dont-have-account">
 				<p><?php echo __("Don't have an E-goi account?", "egoi-for-wp");?></p>
-				<a href="http://bo.e-goi.com/?action=registo" target="_blank"><?php echo __('Click here to create your account!</a> (takes less than 1 minute)</p>', 'egoi-for-wp');
+				<a href="http://bo.e-goi.com/?action=registo" target="_blank"><?php echo __("Click here to create your account
+				 </a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp");
 				} ?>
 			</div>
 
@@ -223,12 +225,12 @@ $api_key = $apikey['api_key'];
 					<label><input type="radio" name="egoi_data[remove]" <?php checked( $opt, 1 ); ?> value="1">		<?php echo __('Yes', 'egoi-for-wp');?></label> &nbsp;
 					<label><input type="radio" name="egoi_data[remove]" <?php checked( $opt, 0 ); ?> value="0">		<?php echo __('No', 'egoi-for-wp');?></label>
 					<a class='button-secondary' id="egoi_remove_data">
-						<?php echo __('Save option', 'egoi-for-wp');?>
+						<?php echo __('Confirm', 'egoi-for-wp');?>
 					</a> &nbsp;
 					<span id="remove_valid" style="display:none;color: green;"><?php echo __('Option saved', 'egoi-for-wp');?></span>
 				</div>
 
-			<p class="help"><?php echo __('Select "Yes" if you want REMOVE the plugin and delete all saved data', 'egoi-for-wp');?>
+			<p class="help"><?php echo __("If you stop using the plugin (as a matter of fact you'll love :) be sure to remove your data before you uninstall", "egoi-for-wp");?>
 			</p>
 			
 		</div>

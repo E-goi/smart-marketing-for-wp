@@ -1,18 +1,18 @@
 <div class="postbox--list">
 	<div class="wrap"> 
 		<h2 class="e-goi-account-list__title">
-			<?php echo __('Information about your e-goi account lists', 'egoi-for-wp'); ?>
+			<?php echo __('Information about your E-goi account lists', 'egoi-for-wp'); ?>
 		</h2>
 				<table border='0' class="widefat striped">
 				<thead>
 					<tr>
 						<th><?php echo _e('List ID', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Title', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Public Title | Internal Title', 'egoi-for-wp');?></th>
 						<th><?php echo _e('Internal Title', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Active Subscribers', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Active Contacts | All Contacts', 'egoi-for-wp');?></th>
 						<th><?php echo _e('Total Subscribers', 'egoi-for-wp');?></th>
 						<th><?php echo _e('Language', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Edit', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Settings', 'egoi-for-wp');?></th>
 					</tr>
 				</thead>
 				<?php 
@@ -58,7 +58,7 @@
 
 		<div class="e-goi-account--toogle">
 			<a type="button" class="button-primary button-primary--custom-add dropdown-toggle" 
-				<h3><?php echo _e('Add list', 'egoi-for-wp');?></h3>
+				<h3><?php echo _e('Create List +', 'egoi-for-wp');?></h3>
 			</a>
 				
 			<div class="dropdown" style="position:relative">
@@ -80,12 +80,14 @@
 								<option value='br'><?php echo _e('Portuguese (Brasil)', 'egoi-for-wp');?></option>
 								<option value='es'><?php echo _e('Spanish', 'egoi-for-wp');?></option>
 							</select>
-							<span class="e-goi-help-text"><?php echo _e('All messages sent to subscribers will be in the language selected for the list E-goi', 'egoi-for-wp');?>
+							<span class="e-goi-help-text-lang">
+								<span><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's <br>header and footerautomatically translated into their language", "egoi-for-wp");?>
+								</i></span>
 							</span>
 						</div>
 
 
-						<input type='submit' class='button-primary' name='egoi_wp_createlist' id='egoi_wp_createlist' value='<?php echo _e('Add', 'egoi-for-wp');?>' />
+						<input type='submit' class='button-primary' name='egoi_wp_createlist' id='egoi_wp_createlist' value='<?php echo _e('Save', 'egoi-for-wp');?>' />
 				</form>
 			</div>
 		</div>
