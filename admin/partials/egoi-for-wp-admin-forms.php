@@ -310,7 +310,6 @@ defined( 'ABSPATH' ) or exit;
 								</tr>
 							</table>
 						</div>
-@
 						<div class="tab" id="tab-forms-appearance">
 							<?php include ('custom/egoi-for-wp-form-appearance.php'); ?>
 						</div>

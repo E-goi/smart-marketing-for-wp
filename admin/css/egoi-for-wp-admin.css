@@ -142,7 +142,7 @@ a{
 
 
 .nowrap--custom{
-  padding: 15px 0px !important;
+  padding: 15px 0px !important@;
 }
 
 /* API Btns Secondary Override*/
@@ -422,6 +422,14 @@ div.dropdown {
 .e-goi-account--create-lang{
   margin-bottom: 15px;
 }
+
+.e-goi-account--create-lang{
+  display: flex;
+  align-items: center;
+  align-content:center;
+}
+
+
 
 .e-goi-account--create-name span:nth-child(2){
   margin-left: 20px;
