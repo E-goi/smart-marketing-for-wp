@@ -127,7 +127,7 @@ $api_key = $apikey['api_key'];
 								settings_errors();
 								?>
 							<div class="e-goi-account-apikey">
-								<!-- Titulo -->
+								<!-- Title -->
 								<div class="e-goi-account-apikey__title" for="egoi_wp_apikey">
 									<?php echo __('API Key do E-goi');?>
 								</div>
@@ -135,7 +135,9 @@ $api_key = $apikey['api_key'];
 								<!-- Api key and btn -->
 								<div class="e-goi-account-apikey__actions">
 
-									<span class="e-goi-account-apikey__actions__form" size="55" maxlength="40" id="api_key_span"><?php echo substr($api_key, 1, 30).'**********';?></span>
+									<span class="e-goi-account-apikey__actions__form" size="55" maxlength="40" id="api_key_span">
+										<?php echo substr($api_key, 1, 30).'**********';?>
+									</span>
 
 									<input type="text" class="e-goi-account-apikey__actions__form--input" style="display:none;" autofocus size="55" maxlength="40" id="apikey" name="egoi_api_key[api_key]" 
 										value="<?php echo $api_key;?>">
@@ -157,7 +159,6 @@ $api_key = $apikey['api_key'];
 								<a href="//bo.e-goi.com/?from=<?php echo urlencode('/?action=dados_cliente&menu=sec');?>" target="_blank" class='link' id="egoi_edit_info">
 									<?php echo __('Click here if you want to change your E-goi account info', 'egoi-for-wp');?>
 								</a>
-								<!-- <?php // echo __('You will be redirected to E-goi', 'egoi-for-wp');?> -->
 								</span>
 							</div>
 						</form>	
