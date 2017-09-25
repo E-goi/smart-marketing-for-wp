@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
 	});
 
 	$('#update_users').click(function() {
-		$('#valid').hide();
+		$('#e-goi_import_valid').hide();
 		$('#load').show();
 		var data = {
 	        action: 'add_users',
@@ -84,7 +84,7 @@ jQuery(document).ready(function($) {
 
 	    jQuery.post(ajaxurl, data, function(response) {
 	    	$('#load').hide();
-	    	$('#valid').show();
+	    	$('#e-goi_import_valid').show();
 	    	setTimeout(function () {
 	    		runSS(listID);
 	    	}, 5000);
@@ -208,8 +208,14 @@ jQuery(document).ready(function($) {
 							}else{ ?>
 
 								<button type="button" class="button" id="update_users"><?php echo _e('Manual Sync', 'egoi-for-wp');?></button>
-								<span id="load" style="display:none;"></span>
-								<span id="valid" style="display:none;"></span>
+								<div id="load" class="dashicons dashicons-update" style="color:#000;display:none;">
+								</div>
+								
+								<span id="e-goi_import_valid" class="dashicons dashicons-yes" style="display: none;"></span>
+
+								<div id="e-goi_import_error" style="display:none;">
+									<span class="dashicons dashicons-no-alt"></span>
+								</div>
 								<p class="help"><?php 							
 									_e('When manual sync is loading you should not do anything in this page but you can navigate to other pages in another window/tab', 'egoi-for-wp'); ?>
 								</p><?php
