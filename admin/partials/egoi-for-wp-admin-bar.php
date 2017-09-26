@@ -1,9 +1,9 @@
 <div class="wrap" id="egoi4wp-admin" style="width:65%;">
 
 	<div id="egoi-tabs-bar">
-		<!--<a class="nav-tab-preview nav-tab-active" id="nav-tab-preview" onclick="tabs('preview_bar');"><?php // _e( 'Preview bar', 'egoi-for-wp' ); ?></a> -->
-		<!-- <span> | </span> -->
-		<a class="nav-tab-settings nav-tab-active" id="nav-tab-settings" onclick="tabs('bar', [this.id, 'nav-tab-appearance', 'nav-tab-messages', 'tab-settings', 'tab-appearance', 'tab-messages']);"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
+		<a class="nav-tab-preview nav-tab-active" id="nav-tab-preview" onclick="tabs('preview_bar');"><?php _e( 'Preview bar', 'egoi-for-wp' ); ?></a>
+		<span> | </span>
+		<a class="nav-tab-settings" id="nav-tab-settings" onclick="tabs('bar', [this.id, 'nav-tab-appearance', 'nav-tab-messages', 'tab-settings', 'tab-appearance', 'tab-messages']);"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
 		<span> | </span>
 		<a class="nav-tab-appearance" id="nav-tab-appearance" onclick="tabs('bar', [this.id, 'nav-tab-settings', 'nav-tab-messages', 'tab-appearance', 'tab-settings','tab-messages']);"><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
 		<span> | </span>
@@ -15,16 +15,16 @@
 		settings_fields(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 		settings_errors(); ?>
 
-	<!--<div id="egoi-bar-preview">
+		<div id="egoi-bar-preview">
 
-			<div class="e-goi-preview-text"><?php // _e( 'Preview of Subscriber Bar', 'egoi-for-wp' ); ?></div>
-			<div class="egoi-bar" style="border:<?php // echo $this->bar_post['border_px'].' solid '.$this->bar_post['border_color'].';background:'.$this->bar_post['color_bar'].';'?>">
+			<div class="e-goi-preview-text"><?php _e( 'Preview of Subscriber Bar', 'egoi-for-wp' ); ?></div>
+			<div class="egoi-bar" style="border:<?php echo $this->bar_post['border_px'].' solid '.$this->bar_post['border_color'].';background:'.$this->bar_post['color_bar'].';'?>">
 			
-				<label class="egoi-label" style="color:<?php // echo $this->bar_post['bar_text_color']; ?>;"><?php // echo $this->bar_post['text_bar']; ?></label>
-				<input type="email" name="email" placeholder="<?php // echo $this->bar_post['text_email_placeholder']; ?>" class="egoi-email"  />
-				<input class="button" class="egoi-button" style="text-align:-webkit-center;padding:10px;height:31px;background:<?php //echo $this->bar_post['color_button']; ?>;color:<?php // echo $this->bar_post['color_button_text']; ?>;" value="<?php // echo $this->bar_post['text_button']; ?>" />
+				<label class="egoi-label" style="color:<?php echo $this->bar_post['bar_text_color']; ?>;"><?php echo $this->bar_post['text_bar']; ?></label>
+				<input type="email" name="email" placeholder="<?php echo $this->bar_post['text_email_placeholder']; ?>" class="egoi-email"  />
+				<input class="button" class="egoi-button" style="text-align:-webkit-center;padding:10px;height:31px;background:<?php echo $this->bar_post['color_button']; ?>;color:<?php echo $this->bar_post['color_button_text']; ?>;" value="<?php echo $this->bar_post['text_button']; ?>" />
 			</div>
-		</div> -->
+		</div>
 
 		<!-- Bar Settings -->
 			<div class="tab" id="tab-settings">
