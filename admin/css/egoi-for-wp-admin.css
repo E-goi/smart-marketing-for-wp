@@ -487,6 +487,10 @@ div.dropdown {
     margin-left: -120px !important;
 }
 
+.e-goi-tooltiptext--subscribe{
+  width: 240px !important;
+  left: -250% !important;
+}
 
 .e-goi-tooltip .e-goi-tooltiptext::after {
     content: "";
@@ -632,8 +636,19 @@ div.dropdown {
 }
 
 .e-goi-tooltip, .e-goi-tooltip:hover{
-    color: #000;
+    color: #222;
 }
+
+.dashicons, .dashicons-before:before{
+  color: #666;
+}
+
+.e-goi-tooltiptext--active{
+  width: 220px !important;
+  left: -200% !important;
+}
+
+
 
 .e-goi-tooltip[data-title-before]:hover:after{
     content: attr(data-title-before);
@@ -646,7 +661,7 @@ div.dropdown {
     -moz-box-shadow: 0px 0px 2px #c0c1c2;
     -webkit-box-shadow: 0px 0px 2px #c0c1c2;
     box-shadow: 0px 0px 2px #c0c1c2;
-    background-color: #000;
+    background-color: #999;
     position: absolute;
     bottom: 40px;
     right: 49px;

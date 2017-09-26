@@ -3,7 +3,7 @@
 	<div class="wrap"> 
 
 		<h2 class="e-goi-account-list__title">
-			<?php echo __('Information about your E-goi account lists', 'egoi-for-wp'); ?>
+			<?php echo __('Information from your E-goi mailing lists', 'egoi-for-wp'); ?>
 		</h2>
 		<table border='0' class="widefat striped">
 			<thead>
@@ -11,14 +11,14 @@
 					<th><?php echo _e('List ID', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Public Title | Internal Title', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Internal Title', 'egoi-for-wp');?></th>
-					<th><?php echo _e('Active Contacts | All Contacts 
+					<th><?php echo _e('Active Contacts 
  							<span class="e-goi-tooltip">
  								 <span class="dashicons dashicons-editor-help"></span>
- 							  	 <span class="e-goi-tooltiptext">
- 							  	 	Subscription states, Learn more <a target="_blank" href="https://helpdesk.e-goi.com/797063-Vejo-contatos-com-diferentes-estados-de-subscri%C3%A7%C3%A3o-O-que-%C3%A9-isso">here!</a>
+ 							  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
+ 							  	 	What are the available subscription statuses for my contacts in E-goi? <a target="_blank" href="https://helpdesk.e-goi.com/797063-Vejo-contatos-com-diferentes-estados-de-subscri%C3%A7%C3%A3o-O-que-%C3%A9-isso">See here!</a>
  							 	</span>
  							</span>', 'egoi-for-wp');?></th>
-					<th><?php echo _e('Total Subscribers', 'egoi-for-wp');?></th>
+					<th><?php echo _e('All Contacts', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Language', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Settings', 'egoi-for-wp');?></th>
 				</tr>

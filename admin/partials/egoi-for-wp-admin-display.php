@@ -182,7 +182,7 @@ $api_key = $apikey['api_key'];
 					<?php settings_fields(Egoi_For_Wp_Admin::API_OPTION); settings_errors(); ?>
 
 						<!-- <label for="egoi_wp_apikey"><?php echo __('Your API key', 'egoi-for-wp');?></label> -->
-						<input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi API Key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey__actions__form--input" name='egoi_api_key[api_key]' id="egoi_api_key_input" /> 
+						<input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi\'s API key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey__actions__form--input" name='egoi_api_key[api_key]' id="egoi_api_key_input" /> 
 					
 						<button type="submit" class='button-primary e-goi-account-btn' id="egoi_4_wp_login" disabled="disabled"><span id="load" class="dashicons dashicons-update" style="display: none;"></span>
 							<span id="api-save-text"><?php echo __('Save and Connect', 'egoi-for-wp');?>
@@ -201,13 +201,12 @@ $api_key = $apikey['api_key'];
 						<p class="e-goi-help-text">
 							<span class="e-goi-tooltip">
 								 <span class="dashicons dashicons-editor-help"></span>
-							  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Não encontra a sua API Key? Nós ajudamos » <a href="https://helpdesk.e-goi.com/858130-O-que-%C3%A9-a-API-do-E-goi-e-onde-est%C3%A1-a-API-key" target="_blank">Aqui!</a>', 'egoi-for-wp' ); ?>
+							  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/858130-O-que-%C3%A9-a-API-do-E-goi-e-onde-est%C3%A1-a-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
 							 	</span>
 							 </span>
-							<span>To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;">
-
+							<span><?php echo __('To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;">
 							<a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span>
-							</a> and copy it.
+							</a> and copy it.', 'egoi-for-wp');?>
 						</p>
 				</form>
 			</div>

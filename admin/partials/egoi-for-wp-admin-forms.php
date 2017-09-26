@@ -111,7 +111,7 @@ defined( 'ABSPATH' ) or exit;
 						<?php _e('Opções | ', 'egoi-for-wp');?>
 					</a>
 
-					<a class="nav-tab-forms-appearance" id="nav-tab-forms-appearance" onclick="tabs('show_appearance');">
+					<a style="display:inline-block; margin-bottom:15px;" class="nav-tab-forms-appearance" id="nav-tab-forms-appearance" onclick="tabs('show_appearance');">
 						<?php _e('Customizing the form', 'egoi-for-wp');?>
 					</a>
 
@@ -121,7 +121,7 @@ defined( 'ABSPATH' ) or exit;
 							<?php settings_fields($FORM_OPTION);?>
 
 							<div class="e-goi-form-title">
-								<p><?php _e('Form title', 'egoi-for-wp'); ?></p>
+								<p style="font-size:18px; line-height:16px;"><?php _e('Form title', 'egoi-for-wp'); ?></p>
 								<!-- Title - Options -->
 								<div class="e-goi-form-title--left">
 									<span><?php _e( 'Show Title', 'egoi-for-wp' ); ?></span>
@@ -137,7 +137,7 @@ defined( 'ABSPATH' ) or exit;
 								<div id="titlewrap">
 									<label class="screen-reader-text" for="title"><?php _e('Form Title', 'egoi-for-wp'); ?></label>
 									<input type="hidden" name="egoi_form_sync[form_id]" value="<?php echo $form_id;?>">
-									<input type="text" name="egoi_form_sync[form_name]" size="30" value="<?php echo $opt['egoi_form_sync']['form_name'];?>" id="title" spellcheck="true" autocomplete="off" placeholder="<?php echo __( "Form Title", 'egoi-for-wp' ); ?>" style="line-height: initial;" required pattern="\S.*\S">
+									<input type="text" name="egoi_form_sync[form_name]" size="30" value="<?php echo $opt['egoi_form_sync']['form_name'];?>" id="title" spellcheck="true" autocomplete="off" placeholder="<?php echo __( "Write here the title of your form", 'egoi-for-wp' ); ?>" style="line-height: initial;" required pattern="\S.*\S">
 									<input id="shortcode" type="hidden" name="egoiform" value="<?php echo 'egoi_form_sync_'.$form_id;?>">
 								</div>
 							</div>
@@ -170,11 +170,11 @@ defined( 'ABSPATH' ) or exit;
 												<!-- Titulo -->
 												<?php if($_GET['type'] == 'html'){ ?>
 												
-													<p><?php _e('Advanced HTML code', 'egoi-for-wp'); ?></p>
+													<p style="font-size:18px; line-height:16px;"><?php _e('Advanced HTML code', 'egoi-for-wp'); ?></p>
 												
 												<?php } else{ ?>
 
-													<p><?php _e('Código da janela Pop-up', 'egoi-for-wp'); ?></p>
+													<p style="font-size:18px; line-height:16px;"><?php _e('Código da janela Pop-up', 'egoi-for-wp'); ?></p>
 												
 												<?php } ?>
 
@@ -194,11 +194,11 @@ defined( 'ABSPATH' ) or exit;
 
 											<!-- textarea for Advanced HTML -->
 											<?php if($_GET['type'] == 'html'){ ?>
-												<textarea style="width:100%; height:300px; padding:10px; font-size:14px; font-family: Lucida Console, Monaco, monospace;" placeholder="<?php _e( 'Cole aqui o código HTML Avançado do Formulário E-goi', 'egoi-for-wp' ); ?>" name="egoi_form_sync[form_content]"></textarea>
+												<textarea style="width:100%; height:300px; padding:10px; font-size:14px; font-family: Lucida Console, Monaco, monospace;" placeholder="<?php _e( 'Paste here the Advanced HTML code of your E-goi form', 'egoi-for-wp' ); ?>" name="egoi_form_sync[form_content]"></textarea>
 											<?php } else{ ?>
 
 											<!-- textarea for Pop-up -->
-												<textarea style="width:100%; height:300px; padding:10px; font-size:14px; font-family: Lucida Console, Monaco, monospace;" placeholder="<?php _e( 'Cole aqui o código da página Pop-up do Formulário E-goi', 'egoi-for-wp' ); ?>" name="egoi_form_sync[form_content]"></textarea>
+												<textarea style="width:100%; height:300px; padding:10px; font-size:14px; font-family: Lucida Console, Monaco, monospace;" placeholder="<?php _e( 'Paste here the Pop-Up window code of your E-goi form', 'egoi-for-wp' ); ?>" name="egoi_form_sync[form_content]"></textarea>
 											<?php } ?>
 
 											<?php
@@ -208,9 +208,9 @@ defined( 'ABSPATH' ) or exit;
 												
 										<span id="session_form">1</span>
 											
-										<div class="e-goi-iframe-select-list">
+									<div class="e-goi-iframe-select-list" style="margin-bottom:20px;">
 										<!-- AREA Iframe - List to subscribe -->
-										<?php _e( 'List to Subscribe', 'egoi-for-wp' ); ?>
+										<span style="font-size:16px;"><?php _e( 'List to Subscribe', 'egoi-for-wp' ); ?></span>
 											<?php
 												if (empty($lists)) { ?>
 												
@@ -222,43 +222,47 @@ defined( 'ABSPATH' ) or exit;
 													<!-- Tooltip - help -->
 													<div class="e-goi-tooltip">
 														 <span class="dashicons dashicons-editor-help"></span>
-													  	 <span class="e-goi-tooltiptext"><?php _e( 'Tooltip text', 'egoi-for-wp' ); ?>
+													  	 <span class="e-goi-tooltiptext">
+													  	 	<span><?php _e( 'The selected mailing list will receive the contacts subscribed into the form.', 'egoi-for-wp' ); ?></span>
 													 	</span>
 													</div>
-													
-													<select name="egoi_form_sync[list]" id="egoi4wp-lists"><?php
-														$index = 1;
-														foreach($lists as $list) {
-															if($list->title!=''){ ?>
-																<option value="<?php echo esc_attr($list->listnum);?>" <?php selected($list->listnum, $opt['egoi_form_sync']['list']);?>><?php echo esc_html($list->title);?></option><?php
-															}
-															$index++;
-														} ?>
-													</select>
+													<span style="margin-left:140px;">
+														<select name="egoi_form_sync[list]" id="egoi4wp-lists"><?php
+															$index = 1;
+															foreach($lists as $list) {
+																if($list->title!=''){ ?>
+																	<option value="<?php echo esc_attr($list->listnum);?>" <?php selected($list->listnum, $opt['egoi_form_sync']['list']);?>><?php echo esc_html($list->title);?></option><?php
+																}
+																$index++;
+															} ?>
+														</select>
+													</span>	
 												<?php 
 												} ?>
 										</div><!-- .e-goi-iframe-select-list -->
 											
-											<div class="e-goi-iframe-select-form" id="egoi_form_wp">
-												<span><?php _e( 'E-goi Form to Subscribe', 'egoi-for-wp' ); ?></span>
+											<div class="e-goi-iframe-select-form" id="egoi_form_wp" style="margin-bottom:40px;">
+												<span style="font-size: 16px;">
+													<?php _e( 'E-goi Form to Subscribe', 'egoi-for-wp' ); ?></span>
 												<div class="e-goi-tooltip">
 													<span class="dashicons dashicons-editor-help"></span>
-												  	<span class="e-goi-tooltiptext"><?php _e( 'Tooltip text', 'egoi-for-wp' ); ?></span>
+												  	<span class="e-goi-tooltiptext e-goi-tooltiptext--subscribe"><?php _e( 'Need a iframe form? Simply select a form (which already exists in E-goi) and copy the shortcode to display this form on your website or blog', 'egoi-for-wp' ); ?></span>
 												</div>
-
-												<select name="egoi_form_sync[form_content]" id="formid_egoi" style="display: none;">
-													<?php
-													if ($listID) { ?>
-														<option value=""><?php _e('Select your form', 'egoi-for-wp');?></option><?php
-														foreach ($forms as $value) {
-															if($value->title){ ?>
-																<option value="<?php echo $value->id.' - '.$value->url;?>" <?php selected($value->id.' - '.$value->url, $opt['egoi_form_sync']['form_content']);?>>
-																	<?php echo $value->title;?>
-																</option><?php
+												<span style="margin-left:26px;">
+													<select name="egoi_form_sync[form_content]" id="formid_egoi" style="display: none;">
+														<?php
+														if ($listID) { ?>
+															<option value=""><?php _e('Select your form', 'egoi-for-wp');?></option><?php
+															foreach ($forms as $value) {
+																if($value->title){ ?>
+																	<option value="<?php echo $value->id.' - '.$value->url;?>" <?php selected($value->id.' - '.$value->url, $opt['egoi_form_sync']['form_content']);?>>
+																		<?php echo $value->title;?>
+																	</option><?php
+																}
 															}
-														}
-													} ?>
-												</select>
+														} ?>
+													</select>
+												</span>
 											</div>
 
 										<?php
@@ -328,8 +332,10 @@ defined( 'ABSPATH' ) or exit;
 			<a href="#TB_inline?width=0&height=450&inlineId=egoi-for-wp-form-choice&modal=true" id="form_type" class="thickbox button-secondary" style="display:none;"></a>
 			
 			<!-- List -->			
-			<div class="main-content col col-4">
-				<div><?php echo __('Max number of forms:', 'egoi-for-wp');?> <span id="rcv_e-goi_forms"></span>/5</div>
+			<div class="main-content col col-4" style="margin:20px 0;">
+				<div style="font-size:14px; margin:10px 0;">
+					<?php echo __('Max number of forms:', 'egoi-for-wp');?> <span id="rcv_e-goi_forms"></span>/5
+				</div>
 				<table border='0' class="widefat striped">
 				<thead>
 					<tr>
