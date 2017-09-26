@@ -5,6 +5,7 @@
 		<h2 class="e-goi-account-list__title">
 			<?php echo __('Information about your E-goi account lists', 'egoi-for-wp'); ?>
 		</h2>
+<<<<<<< HEAD
 		<table border='0' class="widefat striped">
 			<thead>
 				<tr>
@@ -19,6 +20,28 @@
 			</thead>
 			<?php 
 			foreach($lists as $key_list => $value_list) {
+=======
+				<table border='0' class="widefat striped">
+				<thead>
+					<tr>
+						<th><?php echo _e('List ID', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Public Title | Internal Title', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Internal Title', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Active Contacts | All Contacts 
+							<span class="e-goi-tooltip">
+								 <span class="dashicons dashicons-editor-help"></span>
+							  	 <span class="e-goi-tooltiptext">
+							  	 	Estados de subscrição, veja <a target="_blank" href="https://helpdesk.e-goi.com/797063-Vejo-contatos-com-diferentes-estados-de-subscri%C3%A7%C3%A3o-O-que-%C3%A9-isso">Saiba mais aqui!</a>
+							 	</span>
+							</span>', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Total Subscribers', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Language', 'egoi-for-wp');?></th>
+						<th><?php echo _e('Settings', 'egoi-for-wp');?></th>
+					</tr>
+				</thead>
+				<?php 
+				foreach($lists as $key_list => $value_list) {
+>>>>>>> 273892304efad0435cad20f850445df8f75937b1
 
 				if($value_list->listnum){ ?>
 						<tr>

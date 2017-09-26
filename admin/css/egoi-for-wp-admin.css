@@ -423,6 +423,14 @@ div.dropdown {
   margin-bottom: 15px;
 }
 
+.e-goi-account--create-lang{
+  display: flex;
+  align-items: center;
+  align-content:center;
+}
+
+
+
 .e-goi-account--create-name span:nth-child(2){
   margin-left: 20px;
 }
@@ -632,9 +640,5 @@ div.dropdown {
     position: absolute;
     bottom: 35px;
     right: 20px;
-}
-
-.e-goi-tooltip[data-title-after]:active{
-    content: attr(data-title-after);
 }
 
