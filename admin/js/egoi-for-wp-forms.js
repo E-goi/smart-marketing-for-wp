@@ -2,6 +2,8 @@ jQuery(document).ready(function($) {
 	
 	'use strict';
 
+	new Clipboard('#e-goi_shortcode');
+
 	var session_form = $('#session_form');
 
 	$('#rcv_e-goi_forms').text($('#ct_e-goi_forms').text());

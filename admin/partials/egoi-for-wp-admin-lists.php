@@ -1,69 +1,73 @@
+
 <div class="postbox--list">
 	<div class="wrap"> 
+
 		<h2 class="e-goi-account-list__title">
 			<?php echo __('Information about your E-goi account lists', 'egoi-for-wp'); ?>
 		</h2>
-				<table border='0' class="widefat striped">
-				<thead>
-					<tr>
-						<th><?php echo _e('List ID', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Public Title | Internal Title', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Internal Title', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Active Contacts | All Contacts', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Total Subscribers', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Language', 'egoi-for-wp');?></th>
-						<th><?php echo _e('Settings', 'egoi-for-wp');?></th>
-					</tr>
-				</thead>
-				<?php 
-				foreach($lists as $key_list => $value_list) {
+		<table border='0' class="widefat striped">
+			<thead>
+				<tr>
+					<th><?php echo _e('List ID', 'egoi-for-wp');?></th>
+					<th><?php echo _e('Public Title | Internal Title', 'egoi-for-wp');?></th>
+					<th><?php echo _e('Internal Title', 'egoi-for-wp');?></th>
+					<th><?php echo _e('Active Contacts | All Contacts', 'egoi-for-wp');?></th>
+					<th><?php echo _e('Total Subscribers', 'egoi-for-wp');?></th>
+					<th><?php echo _e('Language', 'egoi-for-wp');?></th>
+					<th><?php echo _e('Settings', 'egoi-for-wp');?></th>
+				</tr>
+			</thead>
+			<?php 
+			foreach($lists as $key_list => $value_list) {
 
-					if($value_list->listnum){ ?>
-							<tr>
-								<td>
-									<?php echo $value_list->listnum; ?>
-								</td>
-								<td>
-									<?php echo $value_list->title; ?>
-								</td>
-								<td>
-									<?php echo $value_list->title_ref; ?>
-								</td>
-								<td>
-									<?php echo $value_list->subs_activos; ?>
-								</td>
-								<td>
-									<?php echo $value_list->subs_total; ?>
-								</td>
-								<td><?php
-									if(strcmp($value_list->idioma,'pt') == 0) { 
-										echo "Português (Portugal)";
-									} else if(strcmp($value_list->idioma,'br') == 0) {
-										echo "Português (Brasil)";
-									} else if(strcmp($value_list->idioma,'es') == 0) {
-										echo "Español";
-									} else {
-										echo "English";
-									} ?>
-								</td>
-								<td>
-									<a href="https://bo.e-goi.com/?from=<?php echo urlencode('/?action=lista_definicoes_principal&list='.$value_list->listnum);?>" class='button' target="_blank" />
-									<?php _e('Change in E-goi', 'egoi-for-wp');?>
-								</a>
-								</td>
-							</tr><?php
-					}
-				} ?>
-				</table>
+				if($value_list->listnum){ ?>
+						<tr>
+							<td>
+								<?php echo $value_list->listnum; ?>
+							</td>
+							<td>
+								<?php echo $value_list->title; ?>
+							</td>
+							<td>
+								<?php echo $value_list->title_ref; ?>
+							</td>
+							<td>
+								<?php echo $value_list->subs_activos; ?>
+							</td>
+							<td>
+								<?php echo $value_list->subs_total; ?>
+							</td>
+							<td><?php
+								if(strcmp($value_list->idioma,'pt') == 0) { 
+									echo "Português (Portugal)";
+								} else if(strcmp($value_list->idioma,'br') == 0) {
+									echo "Português (Brasil)";
+								} else if(strcmp($value_list->idioma,'es') == 0) {
+									echo "Español";
+								} else {
+									echo "English";
+								} ?>
+							</td>
+							<td>
+								<a href="https://bo.e-goi.com/?from=<?php echo urlencode('/?action=lista_definicoes_principal&list='.$value_list->listnum);?>" class='button' target="_blank" />
+								<?php _e('Change in E-goi', 'egoi-for-wp');?>
+							</a>
+							</td>
+						</tr><?php
+				}
+			} ?>
+		</table>
 
 		<div class="e-goi-account--toogle">
-			<a type="button" class="button-primary button-primary--custom-add dropdown-toggle" 
-				<h3><?php echo _e('Create List +', 'egoi-for-wp');?></h3>
+			<a type="button" class="button-primary button-primary--custom-add dropdown-toggle">
+				<?php echo _e('Create List +', 'egoi-for-wp');?>
 			</a>
 				
-			<div class="dropdown" style="position:relative">
+			<div style="position:relative">
 
 				<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI']; ?>'>
+					
+					<div id="e-goi-create-list" style="display: none;">
 						<div class="e-goi-account--create-name">
 							<span>
 								<label for="egoi_wp_title"><?php echo _e('Name', 'egoi-for-wp');?></label>
@@ -86,9 +90,9 @@
 							</span>
 						</div>
 
-
 						<input type='submit' class='button-primary' name='egoi_wp_createlist' id='egoi_wp_createlist' value='<?php echo _e('Save', 'egoi-for-wp');?>' />
-						<a style="margin-left:10px;" href="" class='link cancel-toggle' ><?php echo _e('Cancelar', 'egoi-for-wp');?></a>
+						<a style="margin-left:10px;" class='link cancel-toggle'><?php echo _e('Cancelar', 'egoi-for-wp');?></a>
+					</div>
 				</form>
 			</div>
 		</div>

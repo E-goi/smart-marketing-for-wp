@@ -165,6 +165,9 @@ class Egoi_For_Wp_Admin {
 
 		wp_register_script('custom-script4', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-widget.js', array('jquery'));
 		wp_enqueue_script('custom-script4');
+
+		wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
+		wp_enqueue_script('custom-script5');
 		
 		wp_enqueue_script('wp-color-picker');
 
@@ -188,7 +191,8 @@ class Egoi_For_Wp_Admin {
 			add_submenu_page($this->plugin_name, __('Account', 'egoi-for-wp'), __('Account', 'egoi-for-wp'), $capability, 'egoi-4-wp-account', array($this, 'display_plugin_setup_page'));
 
 		$apikey = get_option('egoi_api_key');
-		if($apikey['api_key']){
+		$haslists = get_option('egoi_has_list');
+		if($apikey['api_key'] || $haslists){
 
 			add_submenu_page($this->plugin_name, __('Captura', 'egoi-for-wp'), __('Captura', 'egoi-for-wp'), $capability, 'egoi-4-wp-form', array($this, 'display_plugin_subscriber_form'));
 
@@ -382,32 +386,32 @@ class Egoi_For_Wp_Admin {
 			'border' => ''
 		);
 			
-			switch($id) {
-				case '1':
-					$foption = self::FORM_OPTION_1;
-					break;
-				case '2':
-					$foption = self::FORM_OPTION_2;
-					break;
-				case '3':
-					$foption = self::FORM_OPTION_3;
-					break;
-				case '4':
-					$foption = self::FORM_OPTION_4;
-					break;
-				case '5':
-					$foption = self::FORM_OPTION_5;
-					break;
-			}
+		switch($id) {
+			case '1':
+				$foption = self::FORM_OPTION_1;
+				break;
+			case '2':
+				$foption = self::FORM_OPTION_2;
+				break;
+			case '3':
+				$foption = self::FORM_OPTION_3;
+				break;
+			case '4':
+				$foption = self::FORM_OPTION_4;
+				break;
+			case '5':
+				$foption = self::FORM_OPTION_5;
+				break;
+		}
 
-	    	if(!get_option( $foption, array() )) {
-	    		add_option( $foption, array($form_defaults) );
-	    	}else{
+    	if(!get_option( $foption, array() )) {
+    		add_option( $foption, array($form_defaults) );
+    	}else{
 
-				$form_post = (array) get_option( $foption, array() );
-				$form_post = array_merge($form_defaults, $form_post);
-				return (array) apply_filters( 'egoi_form_sync', $form_post );
-			}
+			$form_post = (array) get_option( $foption, array() );
+			$form_post = array_merge($form_defaults, $form_post);
+			return (array) apply_filters( 'egoi_form_sync', $form_post );
+		}
 	}
 
 	/* 

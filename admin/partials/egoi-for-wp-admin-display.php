@@ -1,6 +1,6 @@
 <?php
 $egoi = new Egoi_For_Wp;
-update_option('Egoi4WpBuilderObject',$egoi);
+update_option('Egoi4WpBuilderObject', $egoi);
 
 $opt = get_option('egoi_data');
 
@@ -224,64 +224,78 @@ $api_key = $apikey['api_key'];
 
 			<?php 
 			// display lists
-			if($lists->ERROR){ ?>
+			if($lists->ERROR){
+
+				update_option('egoi_has_list', 0); ?>
+				
+				<div class="e-goi-notice error notice is-dismissible"><p>
+				<?php _e('Dont have lists in your account!', 'egoi-for-wp'); ?></p></div>
+
 				<div class="postbox" style="display:flex; justify-content:flex-start!important; 
 				align-items: center; max-width: 740px; padding:30px;">
-					<a type="button" class="button-primary button-primary--custom-add dropdown-toggle" 
-				<h3><?php echo _e('Create List +', 'egoi-for-wp');?></h3>
-			</a>
-				
-			<div class="dropdown" style="position:relative">
+					<a type="button" class="button-primary button-primary--custom-add dropdown-toggle"> 
+						<h3><?php echo _e('Create List +', 'egoi-for-wp');?></h3>
+					</a>
+					
+					<div style="position:relative">
+						<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI'];?>'>
+							
+							<div id="e-goi-create-list">
+								<div class="e-goi-account--create-name">
+									<span>
+										<label for="egoi_wp_title"><?php echo _e('Name', 'egoi-for-wp');?></label>
+									</span>
+									<span>
+										<input type='text' size='60' name='egoi_wp_title' autofocus required="required" />
+									</span>
+								</div>
 
-				<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI']; ?>'>
-						<div class="e-goi-account--create-name">
-							<span>
-								<label for="egoi_wp_title"><?php echo _e('Name', 'egoi-for-wp');?></label>
-							</span>
-							<span>
-								<input type='text' size='60' name='egoi_wp_title' autofocus required="required" />
-							</span>
-						</div>
-						<div class="e-goi-account--create-lang" style="display:flex; align-items: center; align-content:center;">
-							<label for="egoi_wp_lang"><?php echo _e('Language', 'egoi-for-wp');?></label>
-							<select name='egoi_wp_lang'>
-								<option value='en'><?php echo _e('English', 'egoi-for-wp');?></option>
-								<option value='pt'><?php echo _e('Portuguese', 'egoi-for-wp');?></option>
-								<option value='br'><?php echo _e('Portuguese (Brasil)', 'egoi-for-wp');?></option>
-								<option value='es'><?php echo _e('Spanish', 'egoi-for-wp');?></option>
-							</select>
-							<span class="e-goi-help-text-lang">
-								<span style="display:inline-block; line-height:16px; margin-left:15px;"><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's header and <br>footerautomatically translated into their language", "egoi-for-wp");?>
-								</i></span>
-							</span>
-						</div>
-						<input type='submit' class='button-primary' name='egoi_wp_createlist' id='egoi_wp_createlist' value='<?php echo _e('Save', 'egoi-for-wp');?>' />
-						<a style="margin-left:10px;" href="" class='link cancel-toggle' ><?php echo _e('Cancelar', 'egoi-for-wp');?></a>
-				</form>
-			</div>
-				</div><?php
+								<div class="e-goi-account--create-lang" style="display:flex; align-items: center; align-content:center;">
+									<label for="egoi_wp_lang"><?php echo _e('Language', 'egoi-for-wp');?></label>
+									<select name='egoi_wp_lang'>
+										<option value='en'><?php echo _e('English', 'egoi-for-wp');?></option>
+										<option value='pt'><?php echo _e('Portuguese', 'egoi-for-wp');?></option>
+										<option value='br'><?php echo _e('Portuguese (Brasil)', 'egoi-for-wp');?></option>
+										<option value='es'><?php echo _e('Spanish', 'egoi-for-wp');?></option>
+									</select>
+									<span class="e-goi-help-text-lang">
+										<span style="display:inline-block; line-height:16px; margin-left:15px;"><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's header and <br>footerautomatically translated into their language", "egoi-for-wp");?>
+										</i></span>
+									</span>
+								</div>
+
+								<input type='submit' class='button-primary' name='egoi_wp_createlist' id='egoi_wp_createlist' value='<?php echo _e('Save', 'egoi-for-wp');?>' />
+								<a href="#" style="margin-left:10px;" class='link cancel-toggle'><?php echo _e('Cancelar', 'egoi-for-wp');?></button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<?php
 			}else{
 				if($lists->response != 'NO_USERNAME_AND_PASSWORD_AND_APIKEY'){
-					  include 'egoi-for-wp-admin-lists.php';
+
+					update_option('egoi_has_list', 1);
+					include 'egoi-for-wp-admin-lists.php';
 				}
 			}?>
 
 	</div><!-- main-content -->
 
 	<div class="e-goi-separator2"></div>
-		<div class="e-goi-delete-account">
-			<p><strong><?php echo __('Remove Data', 'egoi-for-wp');?></strong></p>
-				<div class="e-goi-delete-account--actions">
-					<label><input type="radio" name="egoi_data[remove]" <?php checked( $opt, 1 ); ?> value="1">		<?php echo __('Yes', 'egoi-for-wp');?></label> &nbsp;
-					<label><input type="radio" name="egoi_data[remove]" <?php checked( $opt, 0 ); ?> value="0">		<?php echo __('No', 'egoi-for-wp');?></label>
-					<a class='button-secondary' id="egoi_remove_data">
-						<?php echo __('Confirm', 'egoi-for-wp');?>
-					</a> &nbsp;
-					<span id="remove_valid" style="display:none;color: green;"><?php echo __('Option saved', 'egoi-for-wp');?></span>
-				</div>
+	<div class="e-goi-delete-account">
+		<p><strong><?php echo __('Remove Data', 'egoi-for-wp');?></strong></p>
+			<div class="e-goi-delete-account--actions">
+				<label><input type="radio" name="egoi_data[remove]" <?php checked( $opt, 1 ); ?> value="1">		<?php echo __('Yes', 'egoi-for-wp');?></label> &nbsp;
+				<label><input type="radio" name="egoi_data[remove]" <?php checked( $opt, 0 ); ?> value="0">		<?php echo __('No', 'egoi-for-wp');?></label>
+				<a class='button-secondary' id="egoi_remove_data">
+					<?php echo __('Confirm', 'egoi-for-wp');?>
+				</a> &nbsp;
+				<span id="remove_valid" style="display:none;color: green;"><?php echo __('Option saved', 'egoi-for-wp');?></span>
+			</div>
 
-			<p class="help"><?php echo __("If you stop using the plugin (as a matter of fact you'll love :) be sure to remove your data before you uninstall", "egoi-for-wp");?>
-			</p>
-			
-		</div>
-	</div><!-- .wrap -->
+		<p class="help"><?php echo __("If you stop using the plugin (as a matter of fact you'll love :) be sure to remove your data before you uninstall", "egoi-for-wp");?>
+		</p>
+		
+	</div>
+</div><!-- .wrap -->

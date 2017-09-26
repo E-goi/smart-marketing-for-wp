@@ -77,10 +77,14 @@ jQuery(document).ready(function($) {
 	});
   
 	// Dropdown toggle
-	$('.dropdown-toggle').click(function(){
-	  	$(this).next('.dropdown').toggle();
-	  	$('.button-primary--custom-add').hide();
-	  	$('.help-egoi-create-list').hide();
+	$('.button-primary--custom-add').click(function(){
+	  	$('#e-goi-create-list').show();
+		$(this).hide();
+	});
+
+	$('.cancel-toggle').click(function(){
+		$('#e-goi-create-list').hide();
+		$('.button-primary--custom-add').show();
 	});
 });
 
