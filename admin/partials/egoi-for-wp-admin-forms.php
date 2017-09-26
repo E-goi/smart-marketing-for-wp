@@ -303,9 +303,9 @@ defined( 'ABSPATH' ) or exit;
 											<input type="radio" name="egoi_form_sync[enabled]" value="0" <?php checked($opt['egoi_form_sync']['enabled'], false); ?> />
 											<?php _e( 'No', 'egoi-for-wp' ); ?>
 										</label>
-										<!-- <p class="help">
-											<?php // _e( 'Select "yes" to enable this form.', 'egoi-for-wp' ); ?>
-										</p> -->
+										<p class="help">
+											<?php _e( 'Select "yes" to enable this form.', 'egoi-for-wp' ); ?>
+										</p>
 									</td>
 								</tr>
 							</table>
