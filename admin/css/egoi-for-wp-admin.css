@@ -145,11 +145,22 @@ a{
   padding: 15px 0px !important;
 }
 
+
+ .e-goi-account--create-lang{
+   display: flex;
+   align-items: center;
+   align-content:center;
+ }
+
 /* API Btns Secondary Override*/
 .e-goi-account-btn{
     font-size: 14px !important;
     line-height: 34px !important;
     height: 34px !important;
+}
+
+.row--custom-active{
+  width: 172px !important;
 }
 
 
@@ -470,6 +481,13 @@ div.dropdown {
     transition: opacity 0.3s;
 }
 
+.e-goi-tooltiptext--custom-widget{
+    width: 220px !important;
+    padding: 15px 10px !important;
+    margin-left: -120px !important;
+}
+
+
 .e-goi-tooltip .e-goi-tooltiptext::after {
     content: "";
     position: absolute;
@@ -568,7 +586,7 @@ div.dropdown {
 }
 
 .e-goi-form-shortcode--input{
-  border:1px solid #ddd; 
+  border:2px solid #ddd; 
   background-color: #ffffff !important; 
   padding:10px 20px;
   text-align: center;
@@ -630,11 +648,16 @@ div.dropdown {
     box-shadow: 0px 0px 2px #c0c1c2;
     background-color: #000;
     position: absolute;
-    bottom: 35px;
-    right: 20px;
+    bottom: 40px;
+    right: 49px;
 }
 
 .e-goi-tooltip[data-title-after]:active{
     content: attr(data-title-after);
+}
+
+.e-goi-form-shortcode a:active{
+  border: 2px solid #0085ba !important;
+  box-sizing: border-box;
 }
 

@@ -11,7 +11,13 @@
 					<th><?php echo _e('List ID', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Public Title | Internal Title', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Internal Title', 'egoi-for-wp');?></th>
-					<th><?php echo _e('Active Contacts | All Contacts', 'egoi-for-wp');?></th>
+					<th><?php echo _e('Active Contacts | All Contacts 
+ 							<span class="e-goi-tooltip">
+ 								 <span class="dashicons dashicons-editor-help"></span>
+ 							  	 <span class="e-goi-tooltiptext">
+ 							  	 	Subscription states, Learn more <a target="_blank" href="https://helpdesk.e-goi.com/797063-Vejo-contatos-com-diferentes-estados-de-subscri%C3%A7%C3%A3o-O-que-%C3%A9-isso">here!</a>
+ 							 	</span>
+ 							</span>', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Total Subscribers', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Language', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Settings', 'egoi-for-wp');?></th>
@@ -85,7 +91,7 @@
 								<option value='es'><?php echo _e('Spanish', 'egoi-for-wp');?></option>
 							</select>
 							<span class="e-goi-help-text-lang">
-								<span style="display:inline-block; line-height:16px; margin-left:15px;"><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's <br>header and footerautomatically translated into their language", "egoi-for-wp");?>
+								<span style="display:inline-block; line-height:16px; margin-left:15px;"><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's <br>header and footer automatically translated into their language", "egoi-for-wp");?>
 								</i></span>
 							</span>
 						</div>

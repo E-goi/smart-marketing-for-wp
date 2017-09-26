@@ -1,4 +1,3 @@
-
 <style type="text/css">
 	.nav-tab-wrapper{
 		border-bottom: 1px solid #ccc;
@@ -18,13 +17,13 @@
 			<input type="hidden" name="egoiform" value="egoi_widget">
 			<table class="form-table" style="table-layout: fixed;">
 				<tr valign="top">
-					<th scope="row"><?php _e( 'Enable Widget<span class="e-goi-tooltip">
-							 <span class="dashicons dashicons-editor-help">
-							 </span>
-						  	 <span class="e-goi-tooltiptext">
-						  	 	<?php _e( "Tooltip text", "egoi-for-wp" ); ?>
-						 	</span>
-						</span>', 'egoi-for-wp' ); ?></th>
+				<th><?php echo _e('Enable Widgets 
+ 							<span class="e-goi-tooltip">
+ 								 <span class="dashicons dashicons-editor-help"></span>
+ 							  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom-widget">
+ 							  	 	Need to have the form of this widget disabled? Just tick this option. (don\'t forget that for widget to be visible you must drag him to a sidebar or click it in Appearance > Widgets)
+ 							 	</span>
+ 							</span>', 'egoi-for-wp');?></th>
 					<td class="nowrap">
 						<label>
 							<input type="radio" name="egoi_widget[enabled]" value="1" <?php checked($egoiwidget['enabled'], 1); ?> />
@@ -66,7 +65,7 @@
 					<tr valign="top">
 						<th scope="row"><label for="egoi_form_sync_email_empty"><?php _e( 'Empty email address', 'egoi-for-wp' ); ?></label></th>
 						<td>
-							<input type="text" style="width:450px;" placeholder="<?php _e( '', 'egoi-for-wp' ); ?>" id="egoi_form_sync_email_empty" name="egoi_widget[msg_empty]" value="<?php echo esc_attr($egoiwidget['msg_empty']);?>" />
+							<input type="text" style="width:450px;" placeholder="<?php _e( 'Check, please, if you wrote your e-mail address correctly.', 'egoi-for-wp' ); ?>" id="egoi_form_sync_email_empty" name="egoi_widget[msg_empty]" value="<?php echo esc_attr($egoiwidget['msg_empty']);?>" />
 							<p class="help"><?php _e( 'The text that shows when the email is empty.', 'egoi-for-wp' ); ?></p>
 						</td>
 					</tr>

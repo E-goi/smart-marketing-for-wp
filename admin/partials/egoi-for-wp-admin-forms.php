@@ -284,7 +284,7 @@ defined( 'ABSPATH' ) or exit;
 								<p class="e-goi-form-shortcode--title"><?php _e('Shortcode', 'egoi-for-wp');?></p>
 								<!-- Shortcode print -->
 								<div class="e-goi-form-shortcode">
-									<a class="e-goi-form-shortcode--input e-goi-tooltip" data-title-before="Copy" data-title-after="Copied" id="e-goi_shortcode" data-clipboard-text="<?php echo '[egoi_form_sync_'.$form_id.']';?>"><?php echo '[egoi_form_sync_'.$form_id.']';?></a>
+									<a class="e-goi-form-shortcode--input e-goi-tooltip" data-title-before="<?php _e('Copy', 'egoi-for-wp');?>" data-title-after="Copied" id="e-goi_shortcode" data-clipboard-text="<?php echo '[egoi_form_sync_'.$form_id.']';?>"><?php echo '[egoi_form_sync_'.$form_id.']';?></a>
 									<span class="egoi4wp-form-usage e-goi-help-shortcode-text">
 										<?php _e('Use this shortcode to display this form inside a post or page.', 'egoi-for-wp');?>
 									</span>
@@ -293,7 +293,7 @@ defined( 'ABSPATH' ) or exit;
 
 							<table class="form-table" style="table-layout: fixed;">
 								<tr valign="top">
-									<th scope="row"><?php _e( 'Enable Form', 'egoi-for-wp' ); ?></th>
+									<th scope="row" class="row--custom-active"><?php _e( 'Enable Form', 'egoi-for-wp' ); ?></th>
 									<td class="nowrap nowrap--custom">
 										<label>
 											<input type="radio" name="egoi_form_sync[enabled]" value="1" <?php checked($opt['egoi_form_sync']['enabled'], 1); ?> />
