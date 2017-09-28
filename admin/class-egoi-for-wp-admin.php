@@ -192,7 +192,7 @@ class Egoi_For_Wp_Admin {
 
 		$apikey = get_option('egoi_api_key');
 		$haslists = get_option('egoi_has_list');
-		if($apikey['api_key'] || $haslists){
+		if($apikey['api_key'] && $haslists){
 
 			add_submenu_page($this->plugin_name, __('Captura', 'egoi-for-wp'), __('Captura', 'egoi-for-wp'), $capability, 'egoi-4-wp-form', array($this, 'display_plugin_subscriber_form'));
 
