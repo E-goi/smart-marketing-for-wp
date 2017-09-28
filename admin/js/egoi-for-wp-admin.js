@@ -88,10 +88,16 @@ jQuery(document).ready(function($) {
 		$('.button-primary--custom-add').show();
 	});
 
+
 // POP UP
 
 	//open popup
-	$('.cd-popup-trigger').on('click', function(event){
+	$('.cd-popup-trigger-del').on('click', function(event){
+		event.preventDefault();
+		$('.cd-popup-del-form').addClass('is-visible');
+	});
+
+	$('.cd-popup-trigger-change').on('click', function(event){
 		event.preventDefault();
 		$('.cd-popup').addClass('is-visible');
 	});

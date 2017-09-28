@@ -37,20 +37,25 @@ jQuery(document).ready(function($) {
 		$('#TB_closeWindowButton').trigger("click");
 	});
 
+
+
+// alert change 
+
 	$('#form_choice').change(function() {
 
 		if(session_form.length){
-			var confirm_var = confirm('Se mudar de formulário vai perder todos os dados.');
-
-			if(confirm_var){
-				$('#egoi4wp-form-hide').show();
-				document.getElementById("e-goi-form-options").submit();
-			}
-
+			$('.cd-popup-trigger').trigger('click');
 		}else{
 			document.getElementById("e-goi-form-options").submit();
 		}
 	});
+
+	// alert popup on change form type
+	$('#change_form_req').click(function(){
+		document.getElementById("e-goi-form-options").submit();
+	});
+
+
 
 
 	$('#get_type_form').click(function() {
