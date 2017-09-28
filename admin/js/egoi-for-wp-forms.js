@@ -38,7 +38,6 @@ jQuery(document).ready(function($) {
 	});
 
 
-
 	// alert change 
 	$('#form_choice').change(function() {
 		if(session_form.length){
@@ -62,13 +61,6 @@ jQuery(document).ready(function($) {
 	});
 	
 	//close popup
-	$('.cd-popup').on('click', function(event){
-		if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') ) {
-			event.preventDefault();
-			$(this).removeClass('is-visible');
-		}
-	});
-
 	$('.cd-popup').on('click', function(event){
 		if( $(event.target).is('.cd-popup-close-btn') || $(event.target).is('.cd-popup') ) {
 			event.preventDefault();

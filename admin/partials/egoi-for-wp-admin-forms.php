@@ -126,7 +126,6 @@ defined( 'ABSPATH' ) or exit;
 										<a class="cd-popup-close-btn" href="#0">Cancelar</a>
 									</li>
 								</ul>
-								<a href="#0" class="cd-popup-close img-replace">Close</a>
 							</div> <!-- cd-popup-container -->
 						</div> <!-- PopUp ALERT Change Form -->
 
@@ -242,11 +241,17 @@ defined( 'ABSPATH' ) or exit;
 												 	</span>
 												</div>
 												<span style="margin-left:140px;">
-													<select name="egoi_form_sync[list]" id="egoi4wp-lists"><?php
+													<select name="egoi_form_sync[list]" id="egoi4wp-lists">
+														<option value="" selected disabled>
+															<?php _e( 'Select List', 'egoi-for-wp' ); ?>
+														</option><?php
+
 														$index = 1;
 														foreach($lists as $list) {
-															if($list->title!=''){ ?>
-																<option value="<?php echo esc_attr($list->listnum);?>" <?php selected($list->listnum, $opt['egoi_form_sync']['list']);?>><?php echo esc_html($list->title);?></option><?php
+															if($list->title){ ?>
+																<option value="<?php echo esc_attr($list->listnum);?>" <?php selected($list->listnum, $opt['egoi_form_sync']['list']);?>>
+																	<?php echo esc_html($list->title);?>
+																</option><?php
 															}
 															$index++;
 														} ?>
@@ -281,7 +286,7 @@ defined( 'ABSPATH' ) or exit;
 												</span>
 											</div>
 
-											<div class="e-goi-iframe-select-form" id="empty_forms">
+											<div class="e-goi-iframe-select-form" id="empty_forms" style="display: none;">
 												<?php _e('No forms', 'egoi-for-wp'); ?>
 											</div>
 
@@ -388,7 +393,6 @@ defined( 'ABSPATH' ) or exit;
 											<a class="cd-popup-close-btn" href="#0">Cancelar</a>
 										</li>
 									</ul>
-									<a href="#0" class="cd-popup-close img-replace">Close</a>
 								</div> <!-- cd-popup-container -->
 							</div> <!-- PopUp ALERT Delete Form -->
 
