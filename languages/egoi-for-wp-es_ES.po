@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-28 09:51+0000\n"
-"PO-Revision-Date: 2017-09-28 09:52+0000\n"
+"PO-Revision-Date: 2017-09-28 18:55+0000\n"
 "Last-Translator: Wilson Santos <wsantos@e-goi.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es-ES\n"
@@ -43,6 +43,10 @@ msgid ""
 "the form in your plugin (will be kept in E-goi)."
 msgstr ""
 
+#: admin/partials/custom/egoi-for-wp-form-content.php:41
+msgid "Cole aqui o código HTML Avançado do Formulário E-goi"
+msgstr ""
+
 #: admin/partials/egoi-for-wp-admin-lists.php:13
 msgid ""
 "Active Contacts \n"
@@ -69,18 +73,14 @@ msgstr ""
 " \t\t\t\t\t\t\t \t</span>\n"
 " \t\t\t\t\t\t\t</span>"
 
-#: admin/partials/custom/egoi-for-wp-form-content.php:41
-msgid "Cole aqui o código HTML Avançado do Formulário E-goi"
-msgstr ""
-
 #: admin/class-egoi-for-wp-admin.php:181
 #, php-format
 msgid ""
 "Please rate %sSmart Marketing SMS and Newsletters Forms%s %s on %sWordPress."
 "org%s to help us spread the word. Thank you from the E-goi team!"
 msgstr ""
-"Si deseas dejar de usar el plugin (que por supuesto te va a encantar :) no "
-"te olvides de eliminar tus datos antes de desinstalar."
+"Please rate %sSmart Marketing SMS and Newsletters Forms%s %s on %sWordPress."
+"org%s to help us spread the word. Thank you from the E-goi team!"
 
 #: admin/class-egoi-for-wp-admin.php:191 admin/class-egoi-for-wp-admin.php:191
 #: admin/partials/egoi-for-wp-admin-display.php:78
@@ -501,7 +501,7 @@ msgstr "Confirmar"
 
 #: admin/partials/egoi-for-wp-admin-display.php:288
 msgid "Option saved"
-msgstr "Opción guardada"
+msgstr "Opción guardada!"
 
 #: admin/partials/egoi-for-wp-admin-display.php:291
 msgid ""
@@ -699,9 +699,7 @@ msgstr "Copiar"
 
 #: admin/partials/egoi-for-wp-admin-forms.php:294
 msgid "Use this shortcode to display this form inside a post or page."
-msgstr ""
-"Utilizar este código corto para mostrar esta forma dentro de un post o "
-"página."
+msgstr " Copia este HTML y pégalo en el código HTML de tu web."
 
 #: admin/partials/egoi-for-wp-admin-forms.php:301
 msgid "Enable Form"

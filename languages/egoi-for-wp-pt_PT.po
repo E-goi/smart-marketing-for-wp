@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-28 10:32+0000\n"
-"PO-Revision-Date: 2017-09-28 10:53+0000\n"
+"PO-Revision-Date: 2017-09-28 18:44+0000\n"
 "Last-Translator: Wilson Santos <wsantos@e-goi.com>\n"
 "Language-Team: Portuguese (Portugal)\n"
 "Language: pt-PT\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-forms.php:294
 msgid "Use this shortcode to display this form inside of your site or blog"
-msgstr ""
+msgstr "Copie este HTML e cole-o dentro do código HTML do seu site ou blogue."
 
 #: admin/partials/egoi-for-wp-admin-forms.php:344
 msgid ""
@@ -224,12 +224,12 @@ msgstr "Cor do Texto"
 
 #: admin/partials/egoi-for-wp-admin-bar.php:174
 msgid "Border Size"
-msgstr "Tamanho da Borda"
+msgstr "Tamanho do contorno"
 
 #: admin/partials/egoi-for-wp-admin-bar.php:185
 #: admin/partials/egoi-for-wp-admin-widget.php:137
 msgid "Border Color"
-msgstr "Cor da Borda"
+msgstr "Cor do contorno"
 
 #: admin/partials/egoi-for-wp-admin-bar.php:202
 msgid "Button Color"
@@ -481,7 +481,7 @@ msgstr "Confirmar"
 
 #: admin/partials/egoi-for-wp-admin-display.php:288
 msgid "Option saved"
-msgstr "Guardar opções"
+msgstr "Opção guardada!"
 
 #: admin/partials/egoi-for-wp-admin-display.php:291
 msgid ""
@@ -626,7 +626,7 @@ msgstr "Veja aqui como fazer"
 
 #: admin/partials/egoi-for-wp-admin-forms.php:198
 msgid "Paste here the Advanced HTML code of your E-goi form"
-msgstr "Cole aqui o o código HTML Avançado do formulário E-goi"
+msgstr "Cole aqui o código HTML Avançado do formulário E-goi"
 
 #: admin/partials/egoi-for-wp-admin-forms.php:202
 msgid "Paste here the Pop-Up window code of your E-goi form"
@@ -1178,7 +1178,7 @@ msgstr "Largura do Contorno do Formulário"
 
 #: admin/partials/custom/egoi-for-wp-form-appearance.php:25
 msgid "Box Border Color"
-msgstr "Cor do Contorno do Formulário"
+msgstr "Cor do contorno da área do formulário"
 
 #: admin/partials/custom/egoi-for-wp-form-appearance.php:30
 msgid "The border color outside the form."
