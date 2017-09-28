@@ -1,14 +1,4 @@
 <?php
-
-/**
- *
- * @link       http://www.e-goi.com
- * @since      1.0.0
- *
- * @package    Egoi_For_Wp
- * @subpackage Egoi_For_Wp/includes
- */
-
 /**
  * The core plugin class.
  *
@@ -18,6 +8,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
+ * @link       http://www.e-goi.com
  * @since      1.0.0
  * @package    Egoi_For_Wp
  * @subpackage Egoi_For_Wp/includes
@@ -44,7 +35,6 @@ class Egoi_For_Wp {
 	 */
 	protected $plugin_name;
 
-
 	/**
 	 * The current version of the plugin.
 	 *
@@ -52,7 +42,7 @@ class Egoi_For_Wp {
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
-	protected $version;
+	protected $version = SELF_VERSION;
 	
 	/**
 	 * @var string
@@ -74,17 +64,20 @@ class Egoi_For_Wp {
 	protected $restUrl = 'http://api.e-goi.com/v2/rest.php?type=json&method=';
 
 	/**
-	 * Define the core functionality of the plugin.
+	 * Define the preview in specific area of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since  1.0.0
 	 */
 	const PAGE_SLUG = 'egoi4wp-form-preview';
-	const VERSION = '1.0.16';
 
+	/**
+	 * Constructor
+	 * 
+	 * @since 1.0.0
+	 */
 	public function __construct($debug = false) {
 
 		$this->plugin_name = 'egoi-for-wp';
-		$this->version = self::VERSION;
 		$this->debug = $debug;
 		$this->host = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
 

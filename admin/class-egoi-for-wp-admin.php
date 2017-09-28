@@ -4,19 +4,10 @@ require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://www.e-goi.com
- * @since      1.0.0
- *
- * @package    Egoi_For_Wp
- * @subpackage Egoi_For_Wp/admin
- */
-
-/**
- * The admin-specific functionality of the plugin.
- *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
+ * @link       https://www.e-goi.com
  * @package    Egoi_For_Wp
  * @subpackage Egoi_For_Wp/admin
  * @author     E-goi <info@e-goi.com>

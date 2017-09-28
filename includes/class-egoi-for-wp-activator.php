@@ -1,27 +1,18 @@
 <?php
 /**
- * Fired during plugin activation
- *
- * @link       https://www.e-goi.com
- * @since      1.0.0
- *
- * @package    Egoi_For_Wp
- * @subpackage Egoi_For_Wp/includes
- */
-
-/**
  * Fired during plugin activation.
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
+ * @link       https://www.e-goi.com
  * @package    Egoi_For_Wp
  * @subpackage Egoi_For_Wp/includes
  * @author     E-goi <admin@e-goi.com>
  */
 class Egoi_For_Wp_Activator {
 	
-	public static $version = '1.0.16';
+	public static $version = SELF_VERSION;
 	
 	public static function activate() {
 		
