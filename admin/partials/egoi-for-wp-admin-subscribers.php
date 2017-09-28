@@ -160,17 +160,22 @@ jQuery(document).ready(function($) {
 							
 							}else{ ?>
 
-								<select name="egoi_sync[list]"><?php
+								<select name="egoi_sync[list]">
+									<option value="" selected disabled><?php _e( 'Select list', 'egoi-for-wp' ); ?></option><?php
+									
 									$array_list = '';
-									foreach($lists as $list) { 
-										if($list->title!=''){?>
-											<option value="<?php echo $list->listnum;?>" <?php selected( $this->options_list['list'], $list->listnum ); ?>><?php echo $list->title;?></option><?php
+									foreach($lists as $list) {
+
+										if($list->title){ ?>
+											<option value="<?php echo $list->listnum;?>" <?php selected($this->options_list['list'], $list->listnum); ?>>
+												<?php echo $list->title;?>
+											</option><?php
 											$array_list .= $list->listnum.' - ';
 										}
 									} ?>
 								</select>
 								<p class="help"><?php _e( 'Select the list to synchronize your WordPress user base with.', 'egoi-for-wp' ); ?></p><?php
-							}?>
+							} ?>
 
 						</td>
 					</tr>
@@ -254,9 +259,7 @@ jQuery(document).ready(function($) {
 		<div class="sidebar">
 			<?php include ('egoi-for-wp-admin-sidebar.php'); ?>
 		</div>
-	
 
 	</div>
-
 
 </div>
