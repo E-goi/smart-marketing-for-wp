@@ -1,51 +1,88 @@
-/* ///////////////////// */
+/* /////////////////////////////////////// */
 /* Defaults */
-/* ///////////////////// */
+/* /////////////////////////////////////// */
 
 .e-goi-dnone{
   display:none !important;
 }
 
-
-/* ///////////////////// */
-/* Account */
-/* ///////////////////// */
-
-a{
-  cursor: pointer !important;
+.e-goi-separator{
+  border: 1px solid #ddd;
 }
 
-.postbox{
+.e-goi-mtb20{
+  margin: 20px 0;
+}
+
+.e-goi-fcenter{
+  display: flex !important; 
+  align-items: center !important;
+  align-content:center !important;
+}
+
+/* /////////////////////////////////////// */
+/* Display */
+/* /////////////////////////////////////// */
+
+.wrap-content{
+  margin:10px 20px 0 0px;
+}
+
+.wrap-content--API{
   max-width: 800px;
-}
-
-.postbox--list{
-  max-width: 100%;
-  padding: 10px 30px 10px;
-  background-color: #ffffff;
+  min-width: 255px;
+  border: 1px solid #e5e5e5;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);
+  box-shadow: 0 1px 1px rgba(0,0,0,.04);
+  background: #fff;
 }
 
 .e-goi-account-apikey {
   padding:20px 30px 10px;
+  position: relative;
 }
 
-.e-goi-account-apikey__title,
+.e-goi-account-apikey__connect-failed {
+  display:flex; 
+  align-content: center; 
+  align-items: center;
+}
+
+/* Icon for connection API Failed */
+.dashicons-warning--apikeyinvalid{
+  color: #db4141 !important;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.apikey-error__text{
+    background: #ededed;
+    font-size: 16px;
+    color: #32373c;
+    line-height: 38px;
+    padding: 6px 29px 6px;
+    margin: 13px 0 15px;
+    border-left: #db4141 4px solid;
+}
+
+/* Title API Key */
+.e-goi-account-apikey--title,
 .e-goi-account-list__title {
-    padding: 10px 0 20px !important;  
+    padding: 10px 0 20px !important;
     display: inline-block;
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 400;
 }
 
-.e-goi-account-apikey__actions {
+.e-goi-account-apikey--grp {
   display: flex; 
   align-content: center!important; 
   align-items: baseline; 
   padding:0 0 20px;
 }
 
-.e-goi-account-apikey__actions__form{
-  padding: 9px 12px; 
+.e-goi-account-apikey--grp--form{
+  padding: 8px 12px; 
   background: #efefef; 
   font-size:16px; 
   margin-right:10px; 
@@ -56,33 +93,22 @@ a{
   position: relative;
 }
 
-.e-goi-account-apikey__actions__form:before{
+.e-goi-account-apikey--grp--form:before{
   color: darkseagreen;
   content: "\f147";
   position: absolute;
-  border-radius: 50%;
+  border-radius: 6px;
+  height: 20px;
   right: 6px;
   padding: 0px;
-  top: 4px;
+  top: 7px;
   border: 1px solid #ededed;
   font-size: 24px;
   background-color: #ffffff;
   font-family: dashicons;
 }
 
-.dashicons-warning--apikeyinvalid{
-  color: #db4141 !important;
-  font-size: 24px;
-  margin-right: 10px;
-}
-
-.e-goi-account-apikey__connect-failed {
-  display:flex; 
-  align-content: center; 
-  align-items: center;
-}
-
-.e-goi-account-apikey__actions__form--input{
+.e-goi-account-apikey--grp--form__input{
   padding: 8px 12px; 
   font-size:16px; 
   margin-right:10px;
@@ -90,48 +116,170 @@ a{
   outline: none;
 }
 
-.e-goi-separator{
-  border: 1px solid #efefef;
+/* API Btns Secondary */
+.button-primary--custom,
+.button--custom{
+    font-size: 14px !important;
+    line-height: 34px !important;
+    height: 34px !important;
 }
 
-.e-goi-separator2{
-  border: 1px solid #dddddd;
-  margin-top: 20px;
+/* Link to change the account settings */
+.e-goi-account-apikey--link--account-settings{
+    padding: 20px;
 }
 
-.e-goi-account-apikey__actions__btn-change-account{
-  padding: 20px 30px;
-}
-  .e-goi-account-apikey__actions__btn-change-account a{
+.e-goi-account-apikey--link--account-settings a{
     font-size: 14px;
     padding: 10px 0; 
     display: inline-block;
-  }
+}
+
+/* Icon loading after verify API */
+.e-goi-account-apikey .dashicons-update{
+    padding: 6px;
+    color: #ffffff;
+}
+/* Icon animation update */
+.e-goi-account-apikey .dashicons-update.spin {
+   animation: dashicons-spin 1s infinite;
+   animation-timing-function: linear;
+}
+    @keyframes dashicons-spin {
+       0% {
+          transform: rotate( 0deg );
+       }
+       100% {
+          transform: rotate( 360deg );
+       }
+    }
+
+/* Icon error */
+.e-goi-account-apikey .dashicons-no-alt{
+  color: red;
+}
+
+/* Icon valid */
+.e-goi-account-apikey .dashicons.dashicons-yes{
+    position: absolute;
+    right: 112px;
+    top: 0px;
+    color: darkseagreen;
+    position: relative;
+}
+
+
+/* /////////////////////////////////////// */
+/* Account - Section List */
+/* /////////////////////////////////////// */
+
+.wrap-content--list{
+  max-width: 100%;
+  padding: 20px 30px 10px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 1px rgba(0,0,0,.04);
+  border: 1px solid #e5e5e5;
+}
+
+.postbox--custom{
+  max-width: 740px;
+  padding:30px;
+}
+
+.e-goi-account-lists--create-list{
+  position:relative;
+}
+
+.e-goi-account-lists--create-name,
+.e-goi-account-lists--create-lang{
+  margin-bottom: 15px !important;
+}
+
+.e-goi-account-lists--create-name span:nth-child(2){
+  margin-left: 20px;
+}
+.e-goi-account-lists--create-lang select{
+  margin-left: 17px;
+}
+
+.e-goi-account-lists--create-lang--help-text span{
+  display:inline-block; 
+  line-height:16px; 
+  margin-left:15px;
+}
+
+
+
+
+
+
+
+
+.e-goi-delete-account--actions{
+  display: flex; 
+  align-content: center; 
+  align-items: center; 
+}
+
+.e-goi-delete-account--actions label{
+  margin-right: 20px;
+}
+
+.e-goi-delete-account p{
+  margin-top: 20px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.form-table th{
+  padding: 15px 10px 10px 0 !important;
+}
+
+a{
+  cursor: pointer !important;
+}
+
+
+
+
+
+
+
 
 .e-goi-account-apikey__actions__btn-change-account_2{
   padding: 20px 30px;
   display: inline-block;
 }
-  .e-goi-account-apikey__actions__btn-change-account_2 a{
-    font-size: 14px;
-    padding: 10px 0; 
-    display: inline-block;
-  }
 
-  .e-goi-account-apikey-dont-have-account{
-    padding: 20px 30px;
-    display: inline-block;
-  }
+.e-goi-account-apikey__actions__btn-change-account_2 a{
+  font-size: 14px;
+  padding: 10px 0; 
+  display: inline-block;
+}
 
-  .e-goi-account-apikey-dont-have-account p{
-    margin: 0;
-    padding: 10px 0;
-    font-size: 14px;
-  }
+.e-goi-account-apikey-dont-have-account{
+  padding: 20px 30px;
+  display: inline-block;
+}
 
-  .e-goi-account-apikey-dont-have-account a{
-    font-size: 14px;
-  }
+.e-goi-account-apikey-dont-have-account p{
+  margin: 0;
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.e-goi-account-apikey-dont-have-account a{
+  font-size: 14px;
+}
 
 
 .e-goi-help-text{
@@ -146,62 +294,11 @@ a{
 }
 
 
- .e-goi-account--create-lang{
-   display: flex;
-   align-items: center;
-   align-content:center;
- }
-
-/* API Btns Secondary Override*/
-.e-goi-account-btn{
-    font-size: 14px !important;
-    line-height: 34px !important;
-    height: 34px !important;
-}
-
 .row--custom-active{
   width: 172px !important;
 }
 
 
-/* ///////////////////// */
-/* Alerts */
-/* ///////////////////// */
-
-.apikey-error{
-    background: #ededed;
-    font-size: 16px;
-    color: #32373c;
-    line-height: 38px;
-    padding: 6px 29px 6px;
-    margin: 13px 0 15px;
-    border-left: #db4141 4px solid;
-}
-
-/* Loading */
-.dashicons-update{
-    padding: 6px;
-    color: #ffffff;
-}
-
-.dashicons-update.spin {
-   animation: dashicons-spin 1s infinite;
-   animation-timing-function: linear;
-}
-
-@keyframes dashicons-spin {
-   0% {
-      transform: rotate( 0deg );
-   }
-   100% {
-      transform: rotate( 360deg );
-   }
-}
-
-
-/* ///////////////////// */
-/* Others */
-/* ///////////////////// */
 
 .div-error{
  	color: #900;
@@ -232,17 +329,10 @@ a{
    height: 20px;
 }
 
-#valid, #active .dashicon.dashicon-yes{
-    position: absolute;
-    right: 303px;
-    top: 89px;
-    color: darkseagreen;
-}
-
 #error, #inactive{
     position: absolute;
     right: 303px;
-    top: 89px;
+    top: 78px;
     color: red;
 }
 
@@ -429,31 +519,7 @@ div.dropdown {
   margin-top: .5em;
 }
 
-.e-goi-account--create-name,
-.e-goi-account--create-lang{
-  margin-bottom: 15px;
-}
 
-.e-goi-account--create-name span:nth-child(2){
-  margin-left: 20px;
-}
-.e-goi-account--create-lang select{
-  margin-left: 17px;
-}
-
-.e-goi-delete-account--actions{
-  display: flex; 
-  align-content: center; 
-  align-items: center; 
-}
-
-.e-goi-delete-account--actions label{
-  margin-right: 20px;
-}
-
-.e-goi-delete-account p{
-  margin-top: 20px !important;
-}
 
 
 /* Tooltip e-goi */
@@ -649,7 +715,6 @@ div.dropdown {
 }
 
 
-
 .e-goi-tooltip[data-title-before]:hover:after{
     content: attr(data-title-before);
     padding: 8px 12px;
@@ -675,4 +740,150 @@ div.dropdown {
   border: 2px solid #0085ba !important;
   box-sizing: border-box;
 }
+
+/* /////////////////////////////////////// */
+/* POP UP */
+/* /////////////////////////////////////// */
+.img-replace {
+  /* replace text with an image */
+  display: inline-block;
+  overflow: hidden;
+  text-indent: 100%;
+  color: transparent;
+  white-space: nowrap;
+}
+
+.cd-popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0, 0.8);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+.cd-popup.is-visible {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+  transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.cd-popup-container {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  margin: 4em auto;
+  background: #FFF;
+  border-radius: .25em .25em .4em .4em;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateY(-40px);
+  -moz-transform: translateY(-40px);
+  -ms-transform: translateY(-40px);
+  -o-transform: translateY(-40px);
+  transform: translateY(-40px);
+  /* Force Hardware Acceleration in WebKit */
+  -webkit-backface-visibility: hidden;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.cd-popup-container p {
+  padding: 3em 1em;
+}
+.cd-popup-container .cd-buttons:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.cd-popup-container .cd-buttons li {
+  float: left;
+  width: 50%;
+  margin: 0;
+}
+.cd-popup-container .cd-buttons a {
+  display: block;
+  height: 60px;
+  line-height: 60px;
+  text-transform: uppercase;
+  color: #FFF;
+  -webkit-transition: background-color 0.2s;
+  -moz-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+}
+.cd-popup-container .cd-buttons li:first-child a {
+  background: #0085ba;
+  border-radius: 0 0 0 .25em;
+  text-decoration: none;
+}
+.no-touch .cd-popup-container .cd-buttons li:first-child a:hover {
+  background-color: #008ec2 !important;
+}
+.cd-popup-container .cd-buttons li:last-child a {
+  background: #ccc;
+  border-radius: 0 0 .25em 0;
+  text-decoration: none;
+}
+.no-touch .cd-popup-container .cd-buttons li:last-child a:hover {
+  background-color: #ccc;
+}
+.cd-popup-container .cd-popup-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+}
+.cd-popup-container .cd-popup-close::before, .cd-popup-container .cd-popup-close::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  width: 14px;
+  height: 3px;
+  background-color: #ccc;
+}
+.cd-popup-container .cd-popup-close::before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  left: 8px;
+}
+.cd-popup-container .cd-popup-close::after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  right: 8px;
+}
+.is-visible .cd-popup-container {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
+@media only screen and (min-width: 1170px) {
+  .cd-popup-container {
+    margin: 8em auto;
+  }
+}
+
+.cd-popup-container p{
+  font-size: 16px;
+  margin: 0;
+  padding: 40px 30px 26px;
+}
+
 

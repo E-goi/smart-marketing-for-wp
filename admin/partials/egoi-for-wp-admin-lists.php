@@ -1,10 +1,9 @@
 
-<div class="postbox--list">
-	<div class="wrap"> 
+<div class="wrap-content wrap-content--list"> 
 
-		<h2 class="e-goi-account-list__title">
+		<div class="e-goi-account-list__title">
 			<?php echo __('Information from your E-goi mailing lists', 'egoi-for-wp'); ?>
-		</h2>
+		</div>
 		<table border='0' class="widefat striped">
 			<thead>
 				<tr>
@@ -74,7 +73,7 @@
 				<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI']; ?>'>
 					
 					<div id="e-goi-create-list" style="display: none;">
-						<div class="e-goi-account--create-name">
+						<div class="e-goi-account-lists--create-name e-goi-fcenter">
 							<span>
 								<label for="egoi_wp_title"><?php echo _e('Name', 'egoi-for-wp');?></label>
 							</span>
@@ -82,7 +81,7 @@
 								<input type='text' size='60' name='egoi_wp_title' autofocus required="required" />
 							</span>
 						</div>
-						<div class="e-goi-account--create-lang">
+						<div class="e-goi-account-lists--create-lang e-goi-fcenter">
 							<label for="egoi_wp_lang"><?php echo _e('Language', 'egoi-for-wp');?></label>
 							<select name='egoi_wp_lang'>
 								<option value='en'><?php echo _e('English', 'egoi-for-wp');?></option>
@@ -90,8 +89,8 @@
 								<option value='br'><?php echo _e('Portuguese (Brasil)', 'egoi-for-wp');?></option>
 								<option value='es'><?php echo _e('Spanish', 'egoi-for-wp');?></option>
 							</select>
-							<span class="e-goi-help-text-lang">
-								<span style="display:inline-block; line-height:16px; margin-left:15px;"><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's <br>header and footer automatically translated into their language", "egoi-for-wp");?>
+							<span class="e-goi-account-lists--create-lang--help-text">
+								<span><i><?php echo _e("The emails you send for contacts of this list will then have E-goi's <br>header and footer automatically translated into their language", "egoi-for-wp");?>
 								</i></span>
 							</span>
 						</div>
@@ -103,4 +102,3 @@
 			</div>
 		</div>
 	</div><!-- .wrap -->
-</div> <!-- .postbox -->

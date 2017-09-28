@@ -332,10 +332,27 @@ defined( 'ABSPATH' ) or exit;
 			<a href="#TB_inline?width=0&height=450&inlineId=egoi-for-wp-form-choice&modal=true" id="form_type" class="thickbox button-secondary" style="display:none;"></a>
 			
 			<!-- List -->			
-			<div class="main-content col col-4" style="margin:20px 0;">
+			<div class="main-content col col-4" style="margin:0 0 20px;">
 				<div style="font-size:14px; margin:10px 0;">
 					<?php echo __('Max number of forms:', 'egoi-for-wp');?> <span id="rcv_e-goi_forms"></span>/5
 				</div>
+
+				<!-- PopUp ALERT Delete Form -->
+					<div class="cd-popup" role="alert">
+						<div class="cd-popup-container">
+							<p><b>Are you sure you want to delete this form?</b> This action will remove only the form in your plugin (will be kept in E-goi).</p>
+							<ul class="cd-buttons">
+								<li>
+									<a href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo $j;?>&del=1&del_form=027c8q921">Confirmar</a>
+								</li>
+								<li>
+									<a class="cd-popup-close-btn" href="#0">Cancelar</a>
+								</li>
+							</ul>
+							<a href="#0" class="cd-popup-close img-replace">Close</a>
+						</div> <!-- cd-popup-container -->
+					</div> <!-- PopUp ALERT Delete Form -->
+
 				<table border='0' class="widefat striped">
 				<thead>
 					<tr>
@@ -366,13 +383,14 @@ defined( 'ABSPATH' ) or exit;
 							<?php ($form['egoi_form_sync']['enabled']) ? _e('<span class="e-goi-form-active-label">Ativo</span>', 'egoi-for-wp') : _e('<span class="e-goi-form-inactive-label">Inativo</span>', 'egoi-for-wp');?>
 							</td>
 							<td>
-								<a onclick="return confirm('<?php _e("Do you really want to delete the form", 'egoi-for-wp');?> <?php echo $form_name;?>?');return false;" href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo $j;?>&del=1&del_form=027c8q921"><?php _e('Delete', 'egoi-for-wp');?></a>
+								<a class="cd-popup-trigger" href="#0"><?php _e('Delete', 'egoi-for-wp');?></a>
 							</td>
 							<!-- Option -->
 							<td style="text-align:right;">
 								<a title="<?php _e('Edit', 'egoi-for-wp');?>" href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo $j;?>&type=<?php echo $form['egoi_form_sync']['egoi'];?>"><span class="dashicons dashicons-edit"></span></a> 
 							</td>
-						</tr><?php
+						</tr>
+						<?php
 						$form_exists .= $form['egoi_form_sync']['form_id'].' - ';
 					}
 				}	
@@ -415,4 +433,35 @@ defined( 'ABSPATH' ) or exit;
 	<div class="sidebar">
 		<?php include ('egoi-for-wp-admin-sidebar.php'); ?>
 	</div>
+<script>
+jQuery(document).ready(function($){
+	//open popup
+	$('.cd-popup-trigger').on('click', function(event){
+		event.preventDefault();
+		$('.cd-popup').addClass('is-visible');
+	});
+	
+	//close popup
+	$('.cd-popup').on('click', function(event){
+		if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') ) {
+			event.preventDefault();
+			$(this).removeClass('is-visible');
+		}
+	});
 
+	$('.cd-popup').on('click', function(event){
+		if( $(event.target).is('.cd-popup-close-btn') || $(event.target).is('.cd-popup') ) {
+			event.preventDefault();
+			$(this).removeClass('is-visible');
+		}
+	});
+
+	//close popup when clicking the esc keyboard button
+	$(document).keyup(function(event){
+    	if(event.which=='27'){
+    		$('.cd-popup').removeClass('is-visible');
+	    }
+    });
+});
+
+</script>

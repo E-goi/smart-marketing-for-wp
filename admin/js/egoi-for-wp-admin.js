@@ -77,6 +77,7 @@ jQuery(document).ready(function($) {
 	});
   
 	// Dropdown toggle
+
 	$('.button-primary--custom-add').click(function(){
 	  	$('#e-goi-create-list').show();
 		$(this).hide();
