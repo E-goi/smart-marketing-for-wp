@@ -1,20 +1,10 @@
 <?php
-
-/**
- * Fired during plugin deactivation
- *
- * @link       https://www.e-goi.com
- * @since      1.0.0
- *
- * @package    Egoi_For_Wp
- * @subpackage Egoi_For_Wp/includes
- */
-
 /**
  * Fired during plugin deactivation.
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  *
+ * @link       https://www.e-goi.com
  * @since      1.0.0
  * @package    Egoi_For_Wp
  * @subpackage Egoi_For_Wp/includes
@@ -22,7 +12,7 @@
  */
 class Egoi_For_Wp_Deactivator {
 
-	public static $version = '1.0.16';
+	public static $version = SELF_VERSION;
 	
 	public static function deactivate() {
 		

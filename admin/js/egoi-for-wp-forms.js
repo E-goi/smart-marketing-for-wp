@@ -44,6 +44,7 @@ jQuery(document).ready(function($) {
 		if(session_form.length){
 			$('.cd-popup-trigger-change').trigger('click');
 		}else{
+			$("#load_frm_change").addClass('spin').show();
 			document.getElementById("e-goi-form-options").submit();
 		}
 	});
@@ -96,26 +97,41 @@ jQuery(document).ready(function($) {
 
 	// on change list
     $('#egoi4wp-lists').change(function() {
+       
         var listID = $(this).val();
-        var container = [];
-
         var block = $('#formid_egoi');
-
         var data = {
             action: 'get_form_from_list',
             listID: listID
         };
+
+        $("#load_forms").addClass('spin').show();
+
+        var content = '';
         
         $.post(url_egoi_script.ajaxurl, data, function(response) {
             
-            block.show();
-            $.each(JSON.parse(response), function(key, val) {
-            	if(typeof val.id != 'undefined'){
-                	block.append('<option value="' + val.id + ' - ' + val.url + '">' + val.title + '</option>');
-          		}
-          	});
+            $("#load_forms").removeClass('spin').hide();
 
-          	$('#formid_egoi').trigger('change');
+			content = JSON.parse(response);
+			if(content.ERROR){
+				$('#egoi_form_wp').hide();
+				$('#empty_forms').show();
+				return false;
+
+			}else{
+
+				$('#egoi_form_wp').show();
+				$('#empty_forms').hide();
+
+	            block.show();
+	            $.each(content, function(key, val) {
+	            	if(typeof val.id != 'undefined'){
+	                	block.append('<option value="' + val.id + ' - ' + val.url + '">' + val.title + '</option>');
+	          		}
+	          	});
+	          	$('#formid_egoi').trigger('change');
+	        }
          });
 
     });
@@ -127,8 +143,6 @@ jQuery(document).ready(function($) {
 		var strUser = e.options[e.selectedIndex].value;
 		var res = strUser.split(" - ");
 
-		console.log(window.location.host);
-
 		if(strUser != ''){
 			$.ajax({
 			    url: '//'+window.location.host+'/wp-content/plugins/smart-marketing-for-wp/admin/partials/custom/egoi-for-wp-form_egoi.php',
@@ -138,12 +152,15 @@ jQuery(document).ready(function($) {
 			        url: res[1]
 			    }),
 			    success:function(data, status) {
-			        $('#egoi_form_inter').html(data);
-			        $('#form_egoint').trigger('click');
 
-			        var TBwindow = $('#TB_window');
-					$('#TB_ajaxContent').css('width', '700px');
-			  		TBwindow.css('width', '730px');
+			    	if(data){
+				        $('#egoi_form_inter').html(data);
+				        $('#form_egoint').trigger('click');
+
+				        var TBwindow = $('#TB_window');
+						$('#TB_ajaxContent').css('width', '700px');
+				  		TBwindow.css('width', '730px');
+				  	}
 			    },
 			    error:function(status){
 				    $("#valid").hide();
@@ -151,7 +168,6 @@ jQuery(document).ready(function($) {
 			    }
 			});
 		}
-
 	});
 
 

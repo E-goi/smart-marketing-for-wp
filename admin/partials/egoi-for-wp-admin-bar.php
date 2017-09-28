@@ -15,7 +15,7 @@
 		settings_fields(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 		settings_errors(); ?>
 
-	<!--	<div id="egoi-bar-preview">
+		<?php /*<div id="egoi-bar-preview">
 
 			<div class="e-goi-preview-text"><?php // _e( 'Preview of Subscriber Bar', 'egoi-for-wp' ); ?></div>
 			<div class="egoi-bar" style="border:<?php // echo $this->bar_post['border_px'].' solid '.$this->bar_post['border_color'].';background:'.$this->bar_post['color_bar'].';'?>">
@@ -24,10 +24,10 @@
 				<input type="email" name="email" placeholder="<?php //echo $this->bar_post['text_email_placeholder']; ?>" class="egoi-email"  />
 				<input class="button" class="egoi-button" style="text-align:-webkit-center;padding:10px;height:31px;background:<?php // echo $this->bar_post['color_button']; ?>;color:<?php // echo $this->bar_post['color_button_text']; ?>;" value="<?php // echo $this->bar_post['text_button']; ?>" />
 			</div>
-		</div> -->
+		</div> */ ?>
 
 		<!-- Bar Settings -->
-			<div class="tab" id="tab-settings">
+			<div id="tab-settings">
 
 				<table class="form-table">
 

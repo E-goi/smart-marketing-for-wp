@@ -32,7 +32,7 @@ $contact_forms = $Egoi4WpBuilderObject->getContactFormInfo();
 ?>
 <style type="text/css">
 .form-table th{
-    padding: 20px 10px 20px 10px;
+    padding: 20px 10px 20px 10px !important;
 }
 </style>
 

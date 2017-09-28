@@ -160,17 +160,22 @@ jQuery(document).ready(function($) {
 							
 							}else{ ?>
 
-								<select name="egoi_sync[list]"><?php
+								<select name="egoi_sync[list]" required>
+									<option value="" selected disabled><?php _e( 'Select list', 'egoi-for-wp' ); ?></option><?php
+									
 									$array_list = '';
-									foreach($lists as $list) { 
-										if($list->title!=''){?>
-											<option value="<?php echo $list->listnum;?>" <?php selected( $this->options_list['list'], $list->listnum ); ?>><?php echo $list->title;?></option><?php
+									foreach($lists as $list) {
+
+										if($list->title){ ?>
+											<option value="<?php echo $list->listnum;?>" <?php selected($this->options_list['list'], $list->listnum); ?>>
+												<?php echo $list->title;?>
+											</option><?php
 											$array_list .= $list->listnum.' - ';
 										}
 									} ?>
 								</select>
 								<p class="help"><?php _e( 'Select the list to synchronize your WordPress user base with.', 'egoi-for-wp' ); ?></p><?php
-							}?>
+							} ?>
 
 						</td>
 					</tr>
@@ -188,41 +193,36 @@ jQuery(document).ready(function($) {
 							<p class="help"><?php _e( 'Select the role to synchronize your Subscribers with.', 'egoi-for-wp' ); ?></p>
 
 						</td>
-					</tr><?php
+					</tr>
 
-					if($this->options_list['enabled']) { ?>
-						<?php
-					} ?>
-
-						<tr>
-							<th scope="row"><?php _e( 'Sync existing WP Users', 'egoi-for-wp' ); ?></th>
-							<td class="nowrap"><?php
+					<tr>
+						<th scope="row"><?php _e( 'Sync existing WP Users', 'egoi-for-wp' ); ?></th>
+						<td class="nowrap"><?php
+						
+						if($count_users['total_users'] > '100000'){ ?>
 							
-							if($count_users['total_users'] > '100000'){ ?>
-								
-								<button type="button" class="button" disabled><?php echo _e('Manual Sync', 'egoi-for-wp');?></button>
-								<p class="help"><?php
-									_e('You have too much WP Users to be assigned in bulk!', 'egoi-for-wp');?>
-								</p><?php
+							<button type="button" class="button" disabled><?php echo _e('Manual Sync', 'egoi-for-wp');?></button>
+							<p class="help"><?php
+								_e('You have too much WP Users to be assigned in bulk!', 'egoi-for-wp');?>
+							</p><?php
 
-							}else{ ?>
+						}else{ ?>
 
-								<button type="button" class="button" id="update_users"><?php echo _e('Manual Sync', 'egoi-for-wp');?></button>
-								<div id="load" class="dashicons dashicons-update" style="color:#000;display:none;">
-								</div>
-								
-								<span id="e-goi_import_valid" class="dashicons dashicons-yes" style="display: none;"></span>
+							<button type="button" class="button" id="update_users"><?php echo _e('Manual Sync', 'egoi-for-wp');?></button>
+							<div id="load" class="dashicons dashicons-update" style="color:#000;display:none;">
+							</div>
+							
+							<span id="e-goi_import_valid" class="dashicons dashicons-yes" style="display: none;"></span>
 
-								<div id="e-goi_import_error" style="display:none;">
-									<span class="dashicons dashicons-no-alt"></span>
-								</div>
-								<p class="help"><?php 							
-									_e('When manual sync is loading you should not do anything in this page but you can navigate to other pages in another window/tab', 'egoi-for-wp'); ?>
-								</p><?php
-							} ?>
-							</td>
-						</tr>
-						<?php
+							<div id="e-goi_import_error" style="display:none;">
+								<span class="dashicons dashicons-no-alt"></span>
+							</div>
+							<p class="help"><?php 							
+								_e('When manual sync is loading you should not do anything in this page but you can navigate to other pages in another window/tab', 'egoi-for-wp'); ?>
+							</p><?php
+						} ?>
+						</td>
+					</tr><?php
 
 					if($this->options_list['enabled']) { ?>
 						<tr>
@@ -236,6 +236,7 @@ jQuery(document).ready(function($) {
 
 						<?php
 					} ?>
+					
 				</table>
 
 				<?php submit_button();?>
@@ -254,9 +255,7 @@ jQuery(document).ready(function($) {
 		<div class="sidebar">
 			<?php include ('egoi-for-wp-admin-sidebar.php'); ?>
 		</div>
-	
 
 	</div>
-
 
 </div>

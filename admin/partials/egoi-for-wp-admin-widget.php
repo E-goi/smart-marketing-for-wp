@@ -1,3 +1,19 @@
+<?php
+
+// widgets
+$opt_widget = get_option('egoi_widget');
+$egoiwidget = $opt_widget['egoi_widget'];
+
+$egoiwidget = array_map(
+	function($str){
+		return str_replace("\'", "'", $str);
+	}, $egoiwidget);
+
+if(!$egoiwidget['enabled']){
+	$egoiwidget['enabled'] = 0;
+}
+
+?>
 <style type="text/css">
 	.nav-tab-wrapper{
 		border-bottom: 1px solid #ccc;

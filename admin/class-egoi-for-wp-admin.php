@@ -4,19 +4,10 @@ require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://www.e-goi.com
- * @since      1.0.0
- *
- * @package    Egoi_For_Wp
- * @subpackage Egoi_For_Wp/admin
- */
-
-/**
- * The admin-specific functionality of the plugin.
- *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
+ * @link       https://www.e-goi.com
  * @package    Egoi_For_Wp
  * @subpackage Egoi_For_Wp/admin
  * @author     E-goi <info@e-goi.com>
@@ -131,7 +122,6 @@ class Egoi_For_Wp_Admin {
 		if(isset($rmdata)){
 			$this->saveRMData($rmdata);
 		}
-		
 	}
 
 	/**
@@ -192,7 +182,7 @@ class Egoi_For_Wp_Admin {
 
 		$apikey = get_option('egoi_api_key');
 		$haslists = get_option('egoi_has_list');
-		if($apikey['api_key'] || $haslists){
+		if($apikey['api_key'] && $haslists){
 
 			add_submenu_page($this->plugin_name, __('Captura', 'egoi-for-wp'), __('Captura', 'egoi-for-wp'), $capability, 'egoi-4-wp-form', array($this, 'display_plugin_subscriber_form'));
 
@@ -374,7 +364,7 @@ class Egoi_For_Wp_Admin {
 
 		static $form_defaults = array(
 			'list' => '',
-			'enabled' => '',
+			'enabled' => 1,
 			'show_title' => 0,
 			'egoi' => '',
 			'form_id' => '',
