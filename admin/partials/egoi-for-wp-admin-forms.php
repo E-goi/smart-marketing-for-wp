@@ -64,7 +64,7 @@ defined( 'ABSPATH' ) or exit;
 
 	<h2 class="nav-tab-wrapper" id="egoi-tabs">
 		<a class="nav-tab nav-tab-forms nav-tab-active" id="nav-tab-forms" 
-		onclick="tabs('show_forms');"><?php _e('E-goi Forms', 'egoi-for-wp'); ?></a>
+		onclick="tabs('show_forms');"><?php _e('Advanced Forms', 'egoi-for-wp'); ?></a>
 
 		<a class="nav-tab nav-tab-main-bar" id="nav-tab-main-bar" 
 		onclick="tabs('show_bar');"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a>
@@ -90,7 +90,7 @@ defined( 'ABSPATH' ) or exit;
 					<input type="hidden" name="page" value="egoi-4-wp-form">
 					<input type="hidden" name="form" value="<?php echo $form_id;?>">
 					<p class="label_span"><?php _e('Select the Form Type you want', 'egoi-for-wp');?></p>
-					<select class="e-goi-option-select-admin-forms" name="type" style="width: 250px;" id="form_choice">
+					<select class="e-goi-option-select-admin-forms" name="type" id="form_choice">
 						<option value="" disabled selected>
 							<?php _e('Selected the form', 'egoi-for-wp');?>	
 						</option>
@@ -106,12 +106,11 @@ defined( 'ABSPATH' ) or exit;
 				</form>
 
 				<!-- FORM E-GOI -->
-				<div id="egoi4wp-form-hide" style="margin-top: 20px;">
+				<div id="egoi4wp-form-hide" class="nav-tab-forms-options-mt">
 					<a class="nav-tab-forms-options nav-tab-active" id="nav-tab-forms-options" onclick="tabs('show_options');">
 						<?php _e('Opções | ', 'egoi-for-wp');?>
 					</a>
-
-					<a style="display:inline-block; margin-bottom:15px;" class="nav-tab-forms-appearance" id="nav-tab-forms-appearance" onclick="tabs('show_appearance');">
+					<a class="nav-tab-forms-options--appearance" id="nav-tab-forms-appearance" onclick="tabs('show_appearance');">
 						<?php _e('Customizing the form', 'egoi-for-wp');?>
 					</a>
 
@@ -137,7 +136,9 @@ defined( 'ABSPATH' ) or exit;
 								<div id="titlewrap">
 									<label class="screen-reader-text" for="title"><?php _e('Form Title', 'egoi-for-wp'); ?></label>
 									<input type="hidden" name="egoi_form_sync[form_id]" value="<?php echo $form_id;?>">
-									<input type="text" name="egoi_form_sync[form_name]" size="30" value="<?php echo $opt['egoi_form_sync']['form_name'];?>" id="title" spellcheck="true" autocomplete="off" placeholder="<?php echo __( "Write here the title of your form", 'egoi-for-wp' ); ?>" style="line-height: initial;" required pattern="\S.*\S">
+
+									<input class="e-goi-form-title--input" type="text" name="egoi_form_sync[form_name]" size="30" value="<?php echo $opt['egoi_form_sync']['form_name'];?>" id="title" spellcheck="true" autocomplete="off" placeholder="<?php echo __( "Write here the title of your form", 'egoi-for-wp' ); ?>" required pattern="\S.*\S">
+
 									<input id="shortcode" type="hidden" name="egoiform" value="<?php echo 'egoi_form_sync_'.$form_id;?>">
 								</div>
 							</div>
@@ -156,7 +157,7 @@ defined( 'ABSPATH' ) or exit;
 
 										if ($opt['egoi_form_sync']['egoi'] == $_GET['type']) {?>
 											<!-- Textarea -->
-											<textarea style="width: 100%; height: 300px;" name="egoi_form_sync[form_content]">
+											<textarea class="e-goi-form-title--text-area" name="egoi_form_sync[form_content]">
 												<?php echo $content;?>	
 											</textarea>
 										<?php
@@ -170,11 +171,11 @@ defined( 'ABSPATH' ) or exit;
 												<!-- Titulo -->
 												<?php if($_GET['type'] == 'html'){ ?>
 												
-													<p style="font-size:18px; line-height:16px;"><?php _e('Advanced HTML code', 'egoi-for-wp'); ?></p>
+													<p><?php _e('Advanced HTML code', 'egoi-for-wp'); ?></p>
 												
 												<?php } else{ ?>
 
-													<p style="font-size:18px; line-height:16px;"><?php _e('Código da janela Pop-up', 'egoi-for-wp'); ?></p>
+													<p><?php _e('Código da janela Pop-up', 'egoi-for-wp'); ?></p>
 												
 												<?php } ?>
 
@@ -194,11 +195,11 @@ defined( 'ABSPATH' ) or exit;
 
 											<!-- textarea for Advanced HTML -->
 											<?php if($_GET['type'] == 'html'){ ?>
-												<textarea style="width:100%; height:300px; padding:10px; font-size:14px; font-family: Lucida Console, Monaco, monospace;" placeholder="<?php _e( 'Paste here the Advanced HTML code of your E-goi form', 'egoi-for-wp' ); ?>" name="egoi_form_sync[form_content]"></textarea>
+												<textarea class="e-goi-header-textarea--html-adv" placeholder="<?php _e( 'Paste here the Advanced HTML code of your E-goi form', 'egoi-for-wp' ); ?>" name="egoi_form_sync[form_content]"></textarea>
 											<?php } else{ ?>
 
 											<!-- textarea for Pop-up -->
-												<textarea style="width:100%; height:300px; padding:10px; font-size:14px; font-family: Lucida Console, Monaco, monospace;" placeholder="<?php _e( 'Paste here the Pop-Up window code of your E-goi form', 'egoi-for-wp' ); ?>" name="egoi_form_sync[form_content]"></textarea>
+												<textarea class="e-goi-header-textarea--html-popup" placeholder="<?php _e( 'Paste here the Pop-Up window code of your E-goi form', 'egoi-for-wp' ); ?>" name="egoi_form_sync[form_content]"></textarea>
 											<?php } ?>
 
 											<?php
@@ -208,9 +209,9 @@ defined( 'ABSPATH' ) or exit;
 												
 										<span id="session_form">1</span>
 											
-									<div class="e-goi-iframe-select-list" style="margin-bottom:20px;">
+									<div class="e-goi-iframe-select-list e-goi-fcenter">
 										<!-- AREA Iframe - List to subscribe -->
-										<span style="font-size:16px;"><?php _e( 'List to Subscribe', 'egoi-for-wp' ); ?></span>
+										<span class="e-goi-iframe-select-list--title"><?php _e( 'List to Subscribe', 'egoi-for-wp' ); ?></span>
 											<?php
 												if (empty($lists)) { ?>
 												
@@ -290,7 +291,7 @@ defined( 'ABSPATH' ) or exit;
 								<div class="e-goi-form-shortcode">
 									<a class="e-goi-form-shortcode--input e-goi-tooltip" data-title-before="<?php _e('Copy', 'egoi-for-wp');?>" data-title-after="Copied" id="e-goi_shortcode" data-clipboard-text="<?php echo '[egoi_form_sync_'.$form_id.']';?>"><?php echo '[egoi_form_sync_'.$form_id.']';?></a>
 									<span class="egoi4wp-form-usage e-goi-help-shortcode-text">
-										<?php _e('Use this shortcode to display this form inside a post or page.', 'egoi-for-wp');?>
+										<?php _e('Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp');?>
 									</span>
 								</div>
 							</div>
@@ -340,7 +341,7 @@ defined( 'ABSPATH' ) or exit;
 				<!-- PopUp ALERT Delete Form -->
 					<div class="cd-popup" role="alert">
 						<div class="cd-popup-container">
-							<p><b>Are you sure you want to delete this form?</b> This action will remove only the form in your plugin (will be kept in E-goi).</p>
+							<p><b><?php echo __('Are you sure you want to delete this form?</b> This action will remove only the form in your plugin (will be kept in E-goi).', 'egoi-for-wp');?> </p>
 							<ul class="cd-buttons">
 								<li>
 									<a href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo $j;?>&del=1&del_form=027c8q921">Confirmar</a>
@@ -384,6 +385,9 @@ defined( 'ABSPATH' ) or exit;
 							</td>
 							<td>
 								<a class="cd-popup-trigger" href="#0"><?php _e('Delete', 'egoi-for-wp');?></a>
+
+								<!-- <a class="cd-popup-trigger" onclick="return confirm('<?php // _e("Are you sure you want to delete this form? This action will remove only the form in your plugin (will be kept in E-goi).", 'egoi-for-wp');?> <?php // echo $form_name;?>?');return false;" href="<?php // echo $_SERVER['REQUEST_URI'];?>&form=<?php // echo $j;?>&del=1&del_form=027c8q921"><?php // _e('Delete', 'egoi-for-wp');?></a> -->
+
 							</td>
 							<!-- Option -->
 							<td style="text-align:right;">
@@ -433,35 +437,3 @@ defined( 'ABSPATH' ) or exit;
 	<div class="sidebar">
 		<?php include ('egoi-for-wp-admin-sidebar.php'); ?>
 	</div>
-<script>
-jQuery(document).ready(function($){
-	//open popup
-	$('.cd-popup-trigger').on('click', function(event){
-		event.preventDefault();
-		$('.cd-popup').addClass('is-visible');
-	});
-	
-	//close popup
-	$('.cd-popup').on('click', function(event){
-		if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') ) {
-			event.preventDefault();
-			$(this).removeClass('is-visible');
-		}
-	});
-
-	$('.cd-popup').on('click', function(event){
-		if( $(event.target).is('.cd-popup-close-btn') || $(event.target).is('.cd-popup') ) {
-			event.preventDefault();
-			$(this).removeClass('is-visible');
-		}
-	});
-
-	//close popup when clicking the esc keyboard button
-	$(document).keyup(function(event){
-    	if(event.which=='27'){
-    		$('.cd-popup').removeClass('is-visible');
-	    }
-    });
-});
-
-</script>

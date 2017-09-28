@@ -20,6 +20,108 @@
   align-content:center !important;
 }
 
+.col-4{
+  width: 67%;
+  float: left;
+  max-width: 100%;
+}
+
+/* TOOLTIPS */
+.e-goi-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.e-goi-tooltip .e-goi-tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    padding: 10px;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.e-goi-tooltiptext--custom-widget{
+    width: 220px !important;
+    padding: 15px 10px !important;
+    margin-left: -120px !important;
+}
+
+.e-goi-tooltiptext--subscribe{
+  width: 240px !important;
+  left: -250% !important;
+}
+
+.e-goi-tooltip .e-goi-tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #222 transparent transparent transparent;
+}
+
+.e-goi-tooltip .e-goi-tooltiptext.e-goi-tooltiptext--custom::after{
+    margin-left: -13px !important;
+}
+
+.e-goi-tooltip:hover .e-goi-tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.e-goi-tooltip, .e-goi-tooltip:hover{
+    color: #222;
+}
+
+.e-goi-tooltiptext--active{
+  width: 220px !important;
+  left: -200% !important;
+}
+.e-goi-tooltip[data-title-before]:hover:after{
+    content: attr(data-title-before);
+    padding: 8px 12px;
+    color: #fff;
+    z-index: 20;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 0px 0px 2px #c0c1c2;
+    -webkit-box-shadow: 0px 0px 2px #c0c1c2;
+    box-shadow: 0px 0px 2px #c0c1c2;
+    background-color: #222;
+    position: absolute;
+    bottom: 40px;
+    right: 49px;
+}
+
+.e-goi-tooltip[data-title-after]:active{
+    content: attr(data-title-after);
+}
+
+/* /////////////////////////////////////// */
+/* HEADER */
+/* /////////////////////////////////////// */
+
+.logo{
+  background: url('../img/logo.png') no-repeat;
+  background-position: left center;
+  line-height: 32px;
+  padding-left: 40px;
+}
+
+
 /* /////////////////////////////////////// */
 /* Display */
 /* /////////////////////////////////////// */
@@ -168,9 +270,27 @@
     position: relative;
 }
 
+.e-goi-delete-account--actions{
+  display: flex; 
+  align-content: center; 
+  align-items: center; 
+}
+
+.e-goi-delete-account--actions label{
+  margin-right: 20px;
+}
+
+.e-goi-delete-account p{
+  margin-top: 20px !important;
+}
+
+.postbox--custom{
+  max-width: 740px;
+  padding:30px;
+}
 
 /* /////////////////////////////////////// */
-/* Account - Section List */
+/* DISPLAY -> Section List */
 /* /////////////////////////////////////// */
 
 .wrap-content--list{
@@ -179,11 +299,6 @@
   background-color: #ffffff;
   box-shadow: 0 1px 1px rgba(0,0,0,.04);
   border: 1px solid #e5e5e5;
-}
-
-.postbox--custom{
-  max-width: 740px;
-  padding:30px;
 }
 
 .e-goi-account-lists--create-list{
@@ -210,24 +325,117 @@
 
 
 
+/* /////////////////////////////////////// */
+/* FORMS */
+/* /////////////////////////////////////// */
 
+.label_span {
+  font-size: 14px;
+  font-weight: 600;
+}
 
+.e-goi-option-select-admin-forms{
+  width: 250px;
+  height: 38px !important;
+}
 
+.nav-tab-forms-options-mt{
+  margin-top: 20px;
+}
 
+.nav-tab-forms-options--appearance{
+  display: inline-block; 
+  margin-bottom: 15px;
+}
 
-.e-goi-delete-account--actions{
+/* Title */
+.e-goi-form-title{
   display: flex; 
   align-content: center; 
+  align-items: center;
+}
+
+.e-goi-form-title--left {
+  margin-left: auto;
+}
+
+.e-goi-form-title--left span{
+  margin-right:20px;
+}
+
+.small-margin{
+  margin-bottom: 20px;
+}
+
+.e-goi-form-title--input{
+  line-height: initial;
+}
+
+/* Text Area */
+.e-goi-form-title--text-area{
+  width: 100%; 
+  height: 300px;
+}
+
+.e-goi-header-textarea {
+  display:flex; 
   align-items: center; 
+  justify-content: flex-start;
 }
 
-.e-goi-delete-account--actions label{
-  margin-right: 20px;
+.e-goi-header-textarea div a:first-child{
+  margin-left: 25px;
 }
 
-.e-goi-delete-account p{
-  margin-top: 20px !important;
+.e-goi-header-textarea div a:first-child span{
+  text-decoration: none;
 }
+
+.e-goi-header-textarea > p {
+  font-size:18px; 
+  line-height:16px;
+}
+
+.e-goi-help-link-video {
+  margin-left: auto !important;
+}
+
+.e-goi-help-link-video a {
+  text-decoration: none;
+  border: 1px solid #ccc;
+  padding: 5px;
+  color: #999999;
+}
+
+.e-goi-help-link-video a:hover {
+  background-color: #ffffff;
+  color: #0073aa;
+}
+
+.e-goi-header-textarea--html-adv,
+.e-goi-header-textarea--html-popup{
+  width:100%;
+  height:300px;
+  padding:10px;
+  font-size:14px; 
+  font-family: Lucida Console, Monaco, monospace;
+}
+
+.e-goi-iframe-select-list{
+  margin-bottom: 20px;
+}
+
+.e-goi-iframe-select-list--title{
+  font-size:16px;
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -345,23 +553,12 @@ a{
 	float:right;
 }
 
-.col-4{
-	width: 67%;
-	float: left;
-	max-width: 100%;
-}
-
 .egoi-box{
 	border-left:1px solid #ccc;
 	padding-left: 20px;
 }
 
-.logo{
-	background: url('../img/logo.png') no-repeat;
-	background-position: left center;
-	line-height: 32px;
-	padding-left: 40px;
-}
+
 
 .tab{
 	display: none;
@@ -522,62 +719,6 @@ div.dropdown {
 
 
 
-/* Tooltip e-goi */
-
-.e-goi-tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-.e-goi-tooltip .e-goi-tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    padding: 10px;
-    background-color: #222;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.e-goi-tooltiptext--custom-widget{
-    width: 220px !important;
-    padding: 15px 10px !important;
-    margin-left: -120px !important;
-}
-
-.e-goi-tooltiptext--subscribe{
-  width: 240px !important;
-  left: -250% !important;
-}
-
-.e-goi-tooltip .e-goi-tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #222 transparent transparent transparent;
-}
-
-.e-goi-tooltip .e-goi-tooltiptext.e-goi-tooltiptext--custom::after{
-    margin-left: -13px !important;
-}
-
-.e-goi-tooltip:hover .e-goi-tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
-
 /* forms */
   #TB_ajaxContent{
     overflow: hidden !important;
@@ -585,10 +726,7 @@ div.dropdown {
   .form-table td{
     width: 80%;
   }
-  .label_span {
-    font-size: 14px;
-    font-weight: 600;
-  }
+
   #disabled {
     background: #5B5E5F !important;
       border-color: none !important;
@@ -599,53 +737,6 @@ div.dropdown {
     cursor: default;
   }
 
-.small-margin{
-  margin-bottom: 20px;
-}
-
-.e-goi-form-title{
-  display:flex; 
-  align-content: center; 
-  align-items: center;
-}
-
-.e-goi-form-title--left {
-  margin-left: auto;
-}
-
-.e-goi-form-title--left span{
-  margin-right:20px;
-}
-
-.e-goi-header-textarea {
-  display:flex; 
-  align-items: center; 
-  justify-content: flex-start;
-}
-
-.e-goi-help-link-video {
-  margin-left: auto !important;
-}
-
-.e-goi-help-link-video a {
-  text-decoration: none;
-  border: 1px solid #ccc;
-  padding: 5px;
-  color: #999999;
-}
-
-.e-goi-help-link-video a:hover {
-  background-color: #ffffff;
-  color: #0073aa;
-}
-
-.e-goi-header-textarea div a:first-child{
-  margin-left: 25px;
-}
-
-.e-goi-header-textarea div a:first-child span{
-  text-decoration: none;
-}
 
 .e-goi-iframe-select-list,
 .e-goi-form-shortcode,
@@ -701,40 +792,15 @@ div.dropdown {
   color: darkseagreen;
 }
 
-.e-goi-tooltip, .e-goi-tooltip:hover{
-    color: #222;
-}
 
 .dashicons, .dashicons-before:before{
   color: #666;
 }
 
-.e-goi-tooltiptext--active{
-  width: 220px !important;
-  left: -200% !important;
-}
 
 
-.e-goi-tooltip[data-title-before]:hover:after{
-    content: attr(data-title-before);
-    padding: 8px 12px;
-    color: #fff;
-    z-index: 20;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    -moz-box-shadow: 0px 0px 2px #c0c1c2;
-    -webkit-box-shadow: 0px 0px 2px #c0c1c2;
-    box-shadow: 0px 0px 2px #c0c1c2;
-    background-color: #999;
-    position: absolute;
-    bottom: 40px;
-    right: 49px;
-}
 
-.e-goi-tooltip[data-title-after]:active{
-    content: attr(data-title-after);
-}
+
 
 .e-goi-form-shortcode a:active{
   border: 2px solid #0085ba !important;
