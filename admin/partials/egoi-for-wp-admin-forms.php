@@ -73,23 +73,6 @@ defined( 'ABSPATH' ) or exit;
 		onclick="tabs('show_widget');"><?php _e('Widget Options', 'egoi-for-wp'); ?></a>
 	</h2>
 
-
-				<!-- PopUp ALERT Change Form -->
-				<div class="cd-popup cd-popup-change-form" role="alert">
-					<div class="cd-popup-container">
-						<p><b><?php echo __('Change form', 'egoi-for-wp');?> </p>
-						<ul class="cd-buttons">
-							<li>
-								<a id="change_form_req" href="#">Confirmar</a>
-							</li>
-							<li>
-								<a class="cd-popup-close-btn" href="#0">Cancelar</a>
-							</li>
-						</ul>
-						<a href="#0" class="cd-popup-close img-replace">Close</a>
-					</div> <!-- cd-popup-container -->
-				</div> <!-- PopUp ALERT Delete Form -->
-
 	<!-- wrap Forms -->
 	<div class="wrap egoi4wp-settings" id="tab-forms">
 		<div class="row">
@@ -103,11 +86,11 @@ defined( 'ABSPATH' ) or exit;
 			<!-- Main Content -->
 			<div id="egoi4wp-form" class="main-content col col-4">
 				
-				<span class="cd-popup-trigger-change" style="display: none;"></span>
 				<form id="e-goi-form-options" method="get" action="#">
 					<input type="hidden" name="page" value="egoi-4-wp-form">
 					<input type="hidden" name="form" value="<?php echo $form_id;?>">
 					<p class="label_span"><?php _e('Select the Form Type you want', 'egoi-for-wp');?></p>
+					
 					<select class="e-goi-option-select-admin-forms" name="type" id="form_choice">
 						<option value="" disabled selected>
 							<?php _e('Selected the form', 'egoi-for-wp');?>	
@@ -134,6 +117,24 @@ defined( 'ABSPATH' ) or exit;
 
 					<form method="post" action="#" id="form-egoi">	
 						
+						<span class="cd-popup-trigger-change"></span>
+
+						<!-- PopUp ALERT Change Form -->
+						<div class="cd-popup cd-popup-change-form" role="alert">
+							<div class="cd-popup-container">
+								<p><b><?php echo __('Change form', 'egoi-for-wp');?> </p>
+								<ul class="cd-buttons">
+									<li>
+										<a id="change_form_req" href="#">Confirmar</a>
+									</li>
+									<li>
+										<a class="cd-popup-close-btn" href="#0">Cancelar</a>
+									</li>
+								</ul>
+								<a href="#0" class="cd-popup-close img-replace">Close</a>
+							</div> <!-- cd-popup-container -->
+						</div> <!-- PopUp ALERT Change Form -->
+
 						<div id="tab-forms-options">
 							<?php settings_fields($FORM_OPTION);?>
 
@@ -356,22 +357,6 @@ defined( 'ABSPATH' ) or exit;
 					<?php echo __('Max number of forms:', 'egoi-for-wp');?> <span id="rcv_e-goi_forms"></span>/5
 				</div>
 
-				<!-- PopUp ALERT Delete Form -->
-					<div class="cd-popup cd-popup-del-form" role="alert">
-						<div class="cd-popup-container">
-							<p><b><?php echo __('Are you sure you want to delete this form?</b> This action will remove only the form in your plugin (will be kept in E-goi).', 'egoi-for-wp');?> </p>
-							<ul class="cd-buttons">
-								<li>
-									<a href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo $j;?>&del=1&del_form=027c8q921">Confirmar</a>
-								</li>
-								<li>
-									<a class="cd-popup-close-btn" href="#0">Cancelar</a>
-								</li>
-							</ul>
-							<a href="#0" class="cd-popup-close img-replace">Close</a>
-						</div> <!-- cd-popup-container -->
-					</div> <!-- PopUp ALERT Delete Form -->
-
 				<table border='0' class="widefat striped">
 				<thead>
 					<tr>
@@ -390,6 +375,23 @@ defined( 'ABSPATH' ) or exit;
 					$form = get_option('egoi_form_sync_'.$j);
 					if($form['egoi_form_sync']['form_id']){
 						$form_name = $form['egoi_form_sync']['form_name'];?>
+
+						<!-- PopUp ALERT Delete Form -->
+							<div class="cd-popup cd-popup-del-form" role="alert">
+								<div class="cd-popup-container">
+									<p><b><?php echo __('Are you sure you want to delete this form?</b> This action will remove only the form in your plugin (will be kept in E-goi).', 'egoi-for-wp');?> </p>
+									<ul class="cd-buttons">
+										<li>
+											<a href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo $j;?>&del=1&del_form=027c8q921">Confirmar</a>
+										</li>
+										<li>
+											<a class="cd-popup-close-btn" href="#0">Cancelar</a>
+										</li>
+									</ul>
+									<a href="#0" class="cd-popup-close img-replace">Close</a>
+								</div> <!-- cd-popup-container -->
+							</div> <!-- PopUp ALERT Delete Form -->
+								
 						<tr>
 							<!-- Shortcode -->
 							<td><span style="padding:6px 12px; background-color: #ffffff; border: 1px solid #ccc;"><?php echo "[egoi_form_sync_$j]";?></span></td>
@@ -402,10 +404,7 @@ defined( 'ABSPATH' ) or exit;
 							<?php ($form['egoi_form_sync']['enabled']) ? _e('<span class="e-goi-form-active-label">Ativo</span>', 'egoi-for-wp') : _e('<span class="e-goi-form-inactive-label">Inativo</span>', 'egoi-for-wp');?>
 							</td>
 							<td>
-								<a class="cd-popup-trigger-del" href="#0"><?php _e('Delete', 'egoi-for-wp');?></a>
-
-								<!-- <a class="cd-popup-trigger-del" onclick="return confirm('<?php // _e("Are you sure you want to delete this form? This action will remove only the form in your plugin (will be kept in E-goi).", 'egoi-for-wp');?> <?php // echo $form_name;?>?');return false;" href="<?php // echo $_SERVER['REQUEST_URI'];?>&form=<?php // echo $j;?>&del=1&del_form=027c8q921"><?php // _e('Delete', 'egoi-for-wp');?></a> -->
-
+								<a class="cd-popup-trigger-del" href="#"><?php _e('Delete', 'egoi-for-wp');?></span>
 							</td>
 							<!-- Option -->
 							<td style="text-align:right;">

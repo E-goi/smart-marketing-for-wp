@@ -76,8 +76,7 @@ jQuery(document).ready(function($) {
 		});
 	});
   
-// Dropdown toggle
-
+	// Dropdown toggle
 	$('.button-primary--custom-add').click(function(){
 	  	$('#e-goi-create-list').show();
 		$(this).hide();
@@ -87,42 +86,6 @@ jQuery(document).ready(function($) {
 		$('#e-goi-create-list').hide();
 		$('.button-primary--custom-add').show();
 	});
-
-
-// POP UP
-
-	//open popup
-	$('.cd-popup-trigger-del').on('click', function(event){
-		event.preventDefault();
-		$('.cd-popup-del-form').addClass('is-visible');
-	});
-
-	$('.cd-popup-trigger-change').on('click', function(event){
-		event.preventDefault();
-		$('.cd-popup').addClass('is-visible');
-	});
-	
-	//close popup
-	$('.cd-popup').on('click', function(event){
-		if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') ) {
-			event.preventDefault();
-			$(this).removeClass('is-visible');
-		}
-	});
-
-	$('.cd-popup').on('click', function(event){
-		if( $(event.target).is('.cd-popup-close-btn') || $(event.target).is('.cd-popup') ) {
-			event.preventDefault();
-			$(this).removeClass('is-visible');
-		}
-	});
-
-	//close popup when clicking the esc keyboard button
-	$(document).keyup(function(event){
-    	if(event.which=='27'){
-    		$('.cd-popup').removeClass('is-visible');
-	    }
-    });
 });
 
 

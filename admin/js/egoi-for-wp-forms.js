@@ -39,16 +39,48 @@ jQuery(document).ready(function($) {
 
 
 
-// alert change 
-
+	// alert change 
 	$('#form_choice').change(function() {
-
 		if(session_form.length){
-			$('.cd-popup-trigger').trigger('click');
+			$('.cd-popup-trigger-change').trigger('click');
 		}else{
 			document.getElementById("e-goi-form-options").submit();
 		}
 	});
+
+	// POPUP 
+	//open popup
+	$('.cd-popup-trigger-del').on('click', function(event){
+		event.preventDefault();
+		$('.cd-popup-del-form').addClass('is-visible');
+	});
+
+	$('.cd-popup-trigger-change').on('click', function(event){
+		event.preventDefault();
+		$('.cd-popup-change-form').addClass('is-visible');
+	});
+	
+	//close popup
+	$('.cd-popup').on('click', function(event){
+		if( $(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup') ) {
+			event.preventDefault();
+			$(this).removeClass('is-visible');
+		}
+	});
+
+	$('.cd-popup').on('click', function(event){
+		if( $(event.target).is('.cd-popup-close-btn') || $(event.target).is('.cd-popup') ) {
+			event.preventDefault();
+			$(this).removeClass('is-visible');
+		}
+	});
+
+	//close popup when clicking the esc keyboard button
+	$(document).keyup(function(event){
+    	if(event.which=='27'){
+    		$('.cd-popup').removeClass('is-visible');
+	    }
+    });
 
 	// alert popup on change form type
 	$('#change_form_req').click(function(){
@@ -56,7 +88,7 @@ jQuery(document).ready(function($) {
 	});
 
 
-
+	// OTHER THINGS
 
 	$('#get_type_form').click(function() {
 		$('#form_type').trigger("click");
