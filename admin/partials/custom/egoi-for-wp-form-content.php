@@ -1,17 +1,5 @@
 <?php /*
 
-<div style="margin-bottom: -30px;margin-top: 10px;z-index:5;">
-	<a href="#TB_inline?width=0&height=550&inlineId=egoi-for-wp-form-fields" class="thickbox button-secondary">
-		<span class="dashicons dashicons-plus-alt" style="color:#069;"></span>
-		<?php _e( 'Add More Fields', 'egoi-for-wp' ); ?>
-	</a>
-</div>
-
-
-*/
-
-var_dump($_GET['type']);
-exit;
 
 $listID = $opt['egoi_form_sync']['list'];
 $forms = $Egoi4WpBuilderObject->getForms($listID, 1);
@@ -106,3 +94,4 @@ if(is_null($opt['egoi_form_sync']['show_title'])){
 		} ?>
 
 	</table>
+	*/ ?>

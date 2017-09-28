@@ -4,21 +4,8 @@ defined( 'ABSPATH' ) or exit;
 	$Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
 	$form_id = $_GET['form'];
 
-	// widgets
-	$opt = get_option('egoi_widget');
-	$egoiwidget = $opt['egoi_widget'];
-
-	$egoiwidget = array_map(
-		function($str){
-			return str_replace("\'", "'", $str);
-		}, $egoiwidget);
-
-	if(!$egoiwidget['enabled']){
-		$egoiwidget['enabled'] = 0;
-	}
-
 	// forms
-	if(isset($_POST['action'])){
+	if(isset($_POST['action']) && ($_POST['action'])){
 		
 		$post = $_POST;
 		$post['egoi_form_sync']['form_content'] = htmlentities($_POST['egoi_form_sync']['form_content']);
@@ -46,7 +33,7 @@ defined( 'ABSPATH' ) or exit;
 
 	$lists = $Egoi4WpBuilderObject->getLists();
 
-	add_thickbox();	
+	add_thickbox();
 ?>
 
 	<!-- Header -->
@@ -77,11 +64,17 @@ defined( 'ABSPATH' ) or exit;
 	<div class="wrap egoi4wp-settings" id="tab-forms">
 		<div class="row">
 		<?php
-			if(isset($_GET['form']) && ($_GET['type']) && ($_GET['form'] <= 5)){
-				/* Include shortcodes */
-				include 'egoi-for-wp-admin-shortcodes.php';
-				$FORM_OPTION = get_optionsform($form_id);
-				$opt = get_option($FORM_OPTION); ?>	
+		if(isset($_GET['form']) && ($_GET['type']) && ($_GET['form'] <= 5)){
+				
+			/* Include shortcodes */
+			include 'egoi-for-wp-admin-shortcodes.php';
+			$FORM_OPTION = get_optionsform($form_id);
+			$opt = get_option($FORM_OPTION); ?>	
+
+
+			<div class="sidebar">
+				<?php include ('egoi-for-wp-admin-sidebar.php'); ?>
+			</div>
 			
 			<!-- Main Content -->
 			<div id="egoi4wp-form" class="main-content col col-4 e-goi-forms-fields">
@@ -434,11 +427,11 @@ defined( 'ABSPATH' ) or exit;
 
 				<p><?php
 
-					if($count_op == 5){ ?>
-						<a id="disabled" class='button-primary'><?php _e('Create form +', 'egoi-for-wp');?></a><?php
-					}else{ ?>
-						<a href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo ($count_op+1);?>&type=form" class='button-primary'><?php _e('Create form +', 'egoi-for-wp');?></a><?php
-					} ?>
+				if($count_op >= 5){ ?>
+					<a id="disabled" class='button-primary'><?php _e('Create form +', 'egoi-for-wp');?></a><?php
+				}else{ ?>
+					<a href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo ($count_op+1);?>&type=form" class='button-primary'><?php _e('Create form +', 'egoi-for-wp');?></a><?php
+				} ?>
 				</p>
 			</div>
 
@@ -456,8 +449,4 @@ defined( 'ABSPATH' ) or exit;
 	<!-- wrap Widget Options -->
 	<div class="wrap tab" id="tab-widget">
 		<?php include ('egoi-for-wp-admin-widget.php'); ?>
-	</div>
-		
-	<div class="sidebar">
-		<?php include ('egoi-for-wp-admin-sidebar.php'); ?>
 	</div>

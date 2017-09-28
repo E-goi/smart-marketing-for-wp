@@ -131,7 +131,6 @@ class Egoi_For_Wp_Admin {
 		if(isset($rmdata)){
 			$this->saveRMData($rmdata);
 		}
-		
 	}
 
 	/**
@@ -374,7 +373,7 @@ class Egoi_For_Wp_Admin {
 
 		static $form_defaults = array(
 			'list' => '',
-			'enabled' => '',
+			'enabled' => 1,
 			'show_title' => 0,
 			'egoi' => '',
 			'form_id' => '',
