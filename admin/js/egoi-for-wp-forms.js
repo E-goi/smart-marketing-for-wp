@@ -135,7 +135,7 @@ jQuery(document).ready(function($) {
 	});
 
 	// on change list
-    $('#egoi4wp-lists').change(function() {
+    $('#egoi4wp-lists').on('change', function() {
        
         var listID = $(this).val();
         var block = $('#formid_egoi');
@@ -177,7 +177,7 @@ jQuery(document).ready(function($) {
 
 
 	// ---------FORM E-GOI ---
-	$('#formid_egoi').change(function() {
+	$('#formid_egoi').on('change', function() {
 		var e = document.getElementById('formid_egoi');
 		var strUser = e.options[e.selectedIndex].value;
 		var res = strUser.split(" - ");

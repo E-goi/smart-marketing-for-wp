@@ -17,7 +17,7 @@ if(isset($_POST['action'])){
 }
 
 if(!$options['list']) { ?>
-	<div class="postbox" style="margin-top:20px; max-width:80%; padding: 5px 20px 5px; border-left: 2px solid red;">
+	<div class="postbox" style="margin-top:20px; max-width:80%; padding:5px 20px 5px; border-left:2px solid red;">
 		<div style="padding:10px 0;">
 			<span style="color: orangered; margin-top:5px;" class="dashicons dashicons-warning"></span>
 			<span style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?php _e( 'Select your mailing list in the option "Synchronize users with this list" to activate Track & Engage.<br>You will find this option in "<a href="http://wordpress.dev/wp-admin/admin.php?page=egoi-4-wp-subscribers">Sync contacts</a>" menu.', 'egoi-for-wp' ); ?>
@@ -65,12 +65,6 @@ if(!$options['list']) { ?>
 
 			<button style="margin-top: 20px; margin-bottom: 20px;" class="button-primary"><?php _e( 'Save', 'egoi-for-wp' ); ?></button>
 		</form><?php
-
-	}else{ ?>
-
-		<span style="font-size:18px;">
-			<b><?php _e( '', 'egoi-for-wp' ); ?></b>
-		</span><?php
 
 	} ?>
 	

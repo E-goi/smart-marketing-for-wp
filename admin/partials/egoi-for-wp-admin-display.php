@@ -182,8 +182,7 @@ $api_key = $apikey['api_key'];
 									<span class="dashicons dashicons-no-alt"></span>
 								</div>
 
-
-							<!-- Tooltip - help -->					
+								<!-- Tooltip - help -->					
 								<p class="e-goi-help-text">
 									<span class="e-goi-tooltip">
 										 <span class="dashicons dashicons-editor-help"></span>
