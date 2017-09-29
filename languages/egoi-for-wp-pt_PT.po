@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-28 20:41+0000\n"
-"PO-Revision-Date: 2017-09-28 22:31+0000\n"
+"POT-Creation-Date: 2017-09-29 06:57+0000\n"
+"PO-Revision-Date: 2017-09-29 06:59+0000\n"
 "Last-Translator: Wilson Santos <wsantos@e-goi.com>\n"
 "Language-Team: Portuguese (Portugal)\n"
 "Language: pt-PT\n"
@@ -41,11 +41,19 @@ msgstr ""
 msgid "Ecommerce Option Updated!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:22
-msgid "Error - Track&Engage cannot be activated"
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:23
+msgid ""
+"Select your mailing list in the option \"Synchronize users with this list\" "
+"to activate Track & Engage.<br>You will find this option in \"<a href=\"http:"
+"//wordpress.dev/wp-admin/admin.php?page=egoi-4-wp-subscribers\">Sync "
+"contacts</a>\" menu."
 msgstr ""
+"Seleccione a sua lista de contatos na opção \"Sincronizar utilizadores com "
+"esta lista\" \"para ativar o Track & Engage.<br>Encontrará esta opção no "
+"menu \"<a href=\"http://wordpress.dev/wp-admin/admin.php?page=egoi-4-wp-"
+"subscribers\">Sync Contatos</a>\"."
 
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:36
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:38
 msgid ""
 "Do you want to automatically tracks what your customers do on your site and "
 "engages them where it counts? <p><span style=\"font-size:16px;\">Simply add "
@@ -54,22 +62,13 @@ msgid ""
 "Using-Track--Engage-to-track-subscribers-across-my-site\">do</a>"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:70
-msgid "This integration cant be activated"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-forms.php:285
-msgid "No forms"
+#: admin/partials/egoi-for-wp-admin-forms.php:286
+msgid " Não existem formulários do E-goi"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-subscribers.php:164
 msgid "Select list"
 msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-forms.php:120
-msgid "Attention! If you change your form you will lose the settings."
-msgstr ""
-"Atenção!  Se mudar de formulário vai perder as configurações realizadas. "
 
 #: admin/class-egoi-for-wp-admin.php:171
 #, php-format
@@ -365,7 +364,7 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-display.php:140
 #: admin/partials/egoi-for-wp-admin-display.php:256
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:64
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:66
 #: admin/partials/egoi-for-wp-admin-lists.php:98
 #: admin/partials/egoi-for-wp-admin-widget.php:188
 #: admin/partials/custom/egoi-for-wp-form-map.php:55
@@ -464,9 +463,9 @@ msgid "Remove Data"
 msgstr "Eliminar dados do plugin"
 
 #: admin/partials/egoi-for-wp-admin-display.php:282
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:56
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:58
 #: admin/partials/egoi-for-wp-admin-forms.php:142
-#: admin/partials/egoi-for-wp-admin-forms.php:324
+#: admin/partials/egoi-for-wp-admin-forms.php:326
 #: admin/partials/egoi-for-wp-admin-integrations.php:62
 #: admin/partials/egoi-for-wp-admin-integrations.php:120
 #: admin/partials/egoi-for-wp-admin-integrations.php:150
@@ -479,9 +478,9 @@ msgid "Yes"
 msgstr "Sim"
 
 #: admin/partials/egoi-for-wp-admin-display.php:283
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:59
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:61
 #: admin/partials/egoi-for-wp-admin-forms.php:144
-#: admin/partials/egoi-for-wp-admin-forms.php:328
+#: admin/partials/egoi-for-wp-admin-forms.php:330
 #: admin/partials/egoi-for-wp-admin-integrations.php:66
 #: admin/partials/egoi-for-wp-admin-integrations.php:124
 #: admin/partials/egoi-for-wp-admin-integrations.php:154
@@ -509,15 +508,15 @@ msgstr ""
 "Se deixar de usar o plugin (que você vai adorar :) não se esqueça de "
 "eliminar os seus dados antes de desinstalar."
 
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:31
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:33
 msgid "Track&Engage"
 msgstr "Track&Engage"
 
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:50
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:52
 msgid "Activate Track&Engage"
 msgstr "Ativar Track & Engage"
 
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:62
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:64
 msgid ""
 "If you want the plugin track your WP Users don't forget to have your "
 "WooCommerce activated."
@@ -577,6 +576,11 @@ msgstr "Opções |"
 #: admin/partials/egoi-for-wp-admin-forms.php:110
 msgid "Customizing the form"
 msgstr "Personalização do formulário"
+
+#: admin/partials/egoi-for-wp-admin-forms.php:120
+msgid "Attention! If you change your form you will lose the settings."
+msgstr ""
+"Atenção!  Se mudar de formulário vai perder as configurações realizadas. "
 
 #: admin/partials/egoi-for-wp-admin-forms.php:137
 msgid "Form title"
@@ -667,49 +671,49 @@ msgstr ""
 msgid "Select your form"
 msgstr "Seleccione o formulário"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:308
-#: admin/partials/egoi-for-wp-admin-forms.php:363
+#: admin/partials/egoi-for-wp-admin-forms.php:310
+#: admin/partials/egoi-for-wp-admin-forms.php:365
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:311
+#: admin/partials/egoi-for-wp-admin-forms.php:313
 msgid "Copy"
 msgstr "Copiar"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:313
+#: admin/partials/egoi-for-wp-admin-forms.php:315
 msgid "Use this shortcode to display this form inside of your site or blog"
 msgstr "Copie este HTML e cole-o dentro do código HTML do seu site ou blogue."
 
-#: admin/partials/egoi-for-wp-admin-forms.php:320
+#: admin/partials/egoi-for-wp-admin-forms.php:322
 msgid "Enable Form"
 msgstr "Activar Formulário"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:331
+#: admin/partials/egoi-for-wp-admin-forms.php:333
 msgid "Select \"yes\" to enable this form."
 msgstr "Seleccione \"Sim\" para activar este formulário."
 
-#: admin/partials/egoi-for-wp-admin-forms.php:343
+#: admin/partials/egoi-for-wp-admin-forms.php:345
 #: admin/partials/egoi-for-wp-admin-integrations.php:191
 msgid "Save Changes"
 msgstr "Guardar alterações"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:357
+#: admin/partials/egoi-for-wp-admin-forms.php:359
 msgid "Max number of forms:"
 msgstr "Número máximo de formulários:"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:364
+#: admin/partials/egoi-for-wp-admin-forms.php:366
 msgid "Form ID"
 msgstr "ID de Formulário"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:365
+#: admin/partials/egoi-for-wp-admin-forms.php:367
 msgid "Title"
 msgstr "Título"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:366
+#: admin/partials/egoi-for-wp-admin-forms.php:368
 msgid "State"
 msgstr "Estado"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:382
+#: admin/partials/egoi-for-wp-admin-forms.php:384
 msgid ""
 "Are you sure you want to delete this form?</b> This action will remove only "
 "the form in your plugin (will be kept in E-goi)."
@@ -717,28 +721,28 @@ msgstr ""
 "Tem a certeza que quer eliminar este formulário? </b> Esta ação vai eliminar "
 "o seu formulário apenas no plugin (será mantido no E-goi).\n"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:404
+#: admin/partials/egoi-for-wp-admin-forms.php:406
 msgid "<span class=\"e-goi-form-active-label\">Ativo</span>"
 msgstr "<span class=\"e-goi-form-active-label\">Ativo</span>"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:404
+#: admin/partials/egoi-for-wp-admin-forms.php:406
 msgid "<span class=\"e-goi-form-inactive-label\">Inativo</span>"
 msgstr "<span class=\"e-goi-form-inactive-label\">Inativo</span>"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:407
+#: admin/partials/egoi-for-wp-admin-forms.php:409
 msgid "Delete"
 msgstr "Eliminar"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:411
+#: admin/partials/egoi-for-wp-admin-forms.php:413
 msgid "Edit"
 msgstr "Alterar"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:423
+#: admin/partials/egoi-for-wp-admin-forms.php:425
 msgid "Subscriber Forms are empty"
 msgstr "Não existe formulários"
 
-#: admin/partials/egoi-for-wp-admin-forms.php:431
 #: admin/partials/egoi-for-wp-admin-forms.php:433
+#: admin/partials/egoi-for-wp-admin-forms.php:435
 msgid "Create form +"
 msgstr "Criar formulário +"
 

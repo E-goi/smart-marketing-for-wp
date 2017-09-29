@@ -117,7 +117,7 @@ defined( 'ABSPATH' ) or exit;
 						<!-- PopUp ALERT Change Form -->
 						<div class="cd-popup cd-popup-change-form" role="alert">
 							<div class="cd-popup-container">
-								<p><b><?php echo __('Change form', 'egoi-for-wp');?></b></p>
+								<p><b><?php echo __('Attention! If you change your form you will lose the settings.', 'egoi-for-wp');?></b></p>
 								<ul class="cd-buttons">
 									<li>
 										<a id="change_form_req" href="#">Confirmar</a>
@@ -262,7 +262,7 @@ defined( 'ABSPATH' ) or exit;
 											} ?>
 										</div><!-- .e-goi-iframe-select-list -->
 											
-											<div class="e-goi-iframe-select-form" id="egoi_form_wp" style="margin-bottom:40px;">
+											<div class="e-goi-iframe-select-form" id="egoi_form_wp" style="margin-bottom:15px;">
 												<span style="font-size: 16px;">
 													<?php _e( 'E-goi Form to Subscribe', 'egoi-for-wp' ); ?></span>
 												<div class="e-goi-tooltip">
@@ -286,9 +286,11 @@ defined( 'ABSPATH' ) or exit;
 												</span>
 											</div>
 
-											<div class="e-goi-iframe-select-form" id="empty_forms" style="display: none;">
-												<?php _e('No forms', 'egoi-for-wp'); ?>
-											</div>
+											<span class="e-goi-iframe-select-form" id="empty_forms">
+												<span class="no-forms">
+													<span class="dashicons dashicons-warning"></span><span style="font-size:20px; "><?php _e(' Não existem formulários do E-goi', 'egoi-for-wp'); ?></span>
+												</span>
+											</span>
 
 										<?php
 

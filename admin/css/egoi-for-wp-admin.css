@@ -445,7 +445,14 @@
 }
 
 
-
+#load_frm_change.dashicons-update{
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  background-color: #fff;
+  padding: 7px;
+  margin-top: 3px;
+  color: #0073aa;
+}
 
 
 
@@ -569,8 +576,8 @@ a{
 }
 
 .egoi-box{
-	border-left:1px solid #ccc;
 	padding-left: 20px;
+  background: #fff;
 }
 
 
@@ -759,6 +766,16 @@ div.dropdown {
   display:flex; 
   align-content: center; 
   align-items: center;
+}
+
+.no-forms{
+  padding: 13px 20px;
+  border: 1px solid orangered;
+  background-color: #fff;
+}
+
+.no-forms .dashicons-warning{
+  color: orangered;
 }
 
 .e-goi-form-shortcode--input{

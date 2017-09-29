@@ -8,19 +8,19 @@ if(isset($_GET['type'])){
 	if(($_GET['type'] == 'html') || ($_GET['type'] == 'popup')){ ?>
 
 		<div class="egoi-box" style="position:fixed;">
-			<h4 class="egoi-title"><?php echo __( 'How to integrate the form on the page or article?', 'egoi-for-wp' );?></h4>
-			<p> - <?php echo __( 'Enter the E-goi account and open the forms tab.', 'egoi-for-wp' );?></p>
-			<p> - <?php echo __( 'Choose the desired form.', 'egoi-for-wp' );?></p>
-			<p> - <?php echo __( 'Select the stock button and choose "Publish".', 'egoi-for-wp' );?>
-			<p> - <?php echo __( 'Add another publication.', 'egoi-for-wp' );?>
+			<h4 style="background-color: #fff; padding: 10px 10px;" class="egoi-title"><?php echo __( 'How to integrate the form on the page or article?', 'egoi-for-wp' );?></h4>
+			<p> 1 - <?php echo __( 'Enter the E-goi account and open the forms tab.', 'egoi-for-wp' );?></p>
+			<p> 2 - <?php echo __( 'Choose the desired form.', 'egoi-for-wp' );?></p>
+			<p> 3 - <?php echo __( 'Select the stock button and choose "Publish".', 'egoi-for-wp' );?>
+			<p> 4 - <?php echo __( 'Add another publication.', 'egoi-for-wp' );?>
 			<?php 
 			if($_GET['type'] == 'html'){ ?>
-				<p> - <?php echo __( 'Get the <b>Advanced HTML code</b>', 'egoi-for-wp' );
+				<p> 5 - <?php echo __( 'Get the <b>Advanced HTML code</b>', 'egoi-for-wp' );
 			}else if($_GET['type'] == 'popup'){ ?>
-				<p> - <?php echo __( 'Get the <b>Popup code</b>', 'egoi-for-wp' );
+				<p> 6 - <?php echo __( 'Get the <b>Popup code</b>', 'egoi-for-wp' );
 			} ?>
-			<p> - <?php echo __( 'Transcribe code to the blank text box on the plug-in', 'egoi-for-wp' );?>
-			<p> - <?php echo __( 'Save changes to the plug-in', 'egoi-for-wp' );?></p>
+			<p> 7 - <?php echo __( 'Transcribe code to the blank text box on the plug-in', 'egoi-for-wp' );?>
+			<p> 8 - <?php echo __( 'Save changes to the plug-in', 'egoi-for-wp' );?></p>
 		</div><?php
 	}
 
