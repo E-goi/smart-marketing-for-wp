@@ -61,9 +61,9 @@ if(!$options['list']) { ?>
 				<label for="no"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
 			</span>
 			
-			<div style="font-size:16px; margin-top:30px;line-height:28px;margin-bottom: 30px;"><?php _e( 'If you want the plugin track your WP Users don\'t forget to have your WooCommerce activated.', 'egoi-for-wp' ); ?></div>
+			<div style="font-size:16px; margin-top:10px;line-height:28px; margin-bottom:10px;"><?php _e( 'If you want the plugin track your WP Users don\'t forget to have your WooCommerce activated.', 'egoi-for-wp' ); ?></div>
 
-			<button class="button-primary"><?php _e( 'Save', 'egoi-for-wp' ); ?></button>
+			<button style="margin-top: 20px; margin-bottom: 20px;" class="button-primary"><?php _e( 'Save', 'egoi-for-wp' ); ?></button>
 		</form><?php
 
 	}else{ ?>

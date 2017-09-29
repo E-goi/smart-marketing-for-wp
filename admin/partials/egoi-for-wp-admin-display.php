@@ -171,7 +171,7 @@ $api_key = $apikey['api_key'];
 								<input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi\'s API key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey--grp--form__input" name='egoi_api_key[api_key]' id="egoi_api_key_input" /> 
 							
 								<button type="submit" class='button-primary button-primary--custom' id="egoi_4_wp_login" disabled="disabled"><span id="load" class="dashicons dashicons-update" style="display: none;"></span>
-									<span id="api-save-text"><?php echo __('Save and Connect', 'egoi-for-wp');?>
+									<span id="api-save-text"><?php echo __('Save', 'egoi-for-wp');?>
 									</span>
 								</button>
 
