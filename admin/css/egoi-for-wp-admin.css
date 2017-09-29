@@ -245,19 +245,26 @@
 
 
 /* Icon animation update */
+.dashicons-update.spin {
+  animation: dashicons-spin 1s infinite;
+  animation-timing-function: linear;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  background-color: #fff;
+  padding: 7px;
+  margin-top: 3px;
+  color: #0073aa;
+}
+
 .e-goi-account-apikey .dashicons-update.spin {
-   animation: dashicons-spin 1s infinite;
-   animation-timing-function: linear;
-}
-
-.e-goi-iframe-select-list .dashicons-update.spin {
-   animation: dashicons-spin 1s infinite;
-   animation-timing-function: linear;
-}
-
-.e-goi-forms-fields .dashicons-update.spin {
-   animation: dashicons-spin 1s infinite;
-   animation-timing-function: linear;
+  animation: dashicons-spin 1s infinite;
+  animation-timing-function: linear;
+  border: none !important;
+  border-radius: none !important;
+  background-color: transparent !important;
+  padding: 7px;
+  margin-top: 0px;
+  color: white !important;
 }
 
 
@@ -444,32 +451,6 @@
   font-size:16px;
 }
 
-
-#load_frm_change.dashicons-update{
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  background-color: #fff;
-  padding: 7px;
-  margin-top: 3px;
-  color: #0073aa;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .form-table th{
   padding: 15px 10px 10px 0 !important;
 }
@@ -477,13 +458,6 @@
 a{
   cursor: pointer !important;
 }
-
-
-
-
-
-
-
 
 .e-goi-account-apikey__actions__btn-change-account_2{
   padding: 20px 30px;
@@ -518,7 +492,6 @@ a{
   display: inline-block; 
 }
 
-
 .nowrap--custom{
   padding: 15px 0px !important;
 }
@@ -527,8 +500,6 @@ a{
 .row--custom-active{
   width: 172px !important;
 }
-
-
 
 .div-error{
  	color: #900;

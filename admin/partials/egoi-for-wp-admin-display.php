@@ -190,9 +190,7 @@ $api_key = $apikey['api_key'];
 									  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/858130-O-que-%C3%A9-a-API-do-E-goi-e-onde-est%C3%A1-a-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
 									 	</span>
 									 </span>
-									<span><?php echo __('To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;">
-									<a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span>
-									</a> and copy it.', 'egoi-for-wp');?>
+									<span><?php echo __('To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;"><a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span></a> and copy it.', 'egoi-for-wp');?>
 								</p>
 						</form>
 					</div>
@@ -200,8 +198,7 @@ $api_key = $apikey['api_key'];
 					<div class="e-goi-separator"></div>
 					<div class="e-goi-account-apikey-dont-have-account">
 						<p><?php echo __("Don't have an E-goi account?", "egoi-for-wp");?></p>
-						<a href="http://bo.e-goi.com/?action=registo" target="_blank"><?php echo __("Click here to create your account
-						 </a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
+						<a href="http://bo.e-goi.com/?action=registo" target="_blank"><?php echo __("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
 					</div><?php
 
 				} ?>

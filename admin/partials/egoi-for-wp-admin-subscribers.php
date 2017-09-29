@@ -161,7 +161,7 @@ jQuery(document).ready(function($) {
 							}else{ ?>
 
 								<select name="egoi_sync[list]" required>
-									<option value="" selected disabled><?php _e( 'Select list', 'egoi-for-wp' ); ?></option><?php
+									<option value="" selected disabled><?php _e( 'Select List', 'egoi-for-wp' ); ?></option><?php
 									
 									$array_list = '';
 									foreach($lists as $list) {

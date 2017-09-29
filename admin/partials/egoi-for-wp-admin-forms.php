@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) or exit;
 	$form_id = $_GET['form'];
 
 	// forms
-	if(isset($_POST['action']) && ($_POST['action'])){
+	if(isset($_POST['action']) && ($_POST['action'])) {
 		
 		$post = $_POST;
 		$post['egoi_form_sync']['form_content'] = htmlentities($_POST['egoi_form_sync']['form_content']);
@@ -22,6 +22,8 @@ defined( 'ABSPATH' ) or exit;
 		echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
 			_e($opt_upd . ' Updated!', 'egoi-for-wp');
 		echo '</p></div>';
+
+		$Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
 	}
 
 	if(isset($_GET['del']) && ($_GET['del_form'])){
@@ -30,8 +32,6 @@ defined( 'ABSPATH' ) or exit;
 			_e('Form deleted successfully!', 'egoi-for-wp');
 		echo '</p></div>';
 	}
-
-	$lists = $Egoi4WpBuilderObject->getLists();
 
 	add_thickbox();
 ?>
@@ -70,7 +70,6 @@ defined( 'ABSPATH' ) or exit;
 			include 'egoi-for-wp-admin-shortcodes.php';
 			$FORM_OPTION = get_optionsform($form_id);
 			$opt = get_option($FORM_OPTION); ?>	
-
 
 			<div class="sidebar">
 				<?php include ('egoi-for-wp-admin-sidebar.php'); ?>
@@ -222,75 +221,72 @@ defined( 'ABSPATH' ) or exit;
 												
 										<span id="session_form">1</span>
 											
-									<div class="e-goi-iframe-select-list e-goi-fcenter">
-										<!-- AREA Iframe - List to subscribe -->
-										<span class="e-goi-iframe-select-list--title"><?php _e( 'List to Subscribe', 'egoi-for-wp' ); ?></span>
-										<?php
-											if (empty($lists)) { ?>
-											
-												<?php printf(__('Lists not found, <a href="%s">are you connected to egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-4-wp-account'));?>
-												<?php
+										<div class="e-goi-iframe-select-list e-goi-fcenter">
+											<!-- AREA Iframe - List to subscribe -->
+											<span class="e-goi-iframe-select-list--title"><?php _e( 'List to Subscribe', 'egoi-for-wp' ); ?></span>
+												
+											<span class="e-goi-lists_not_found" style="display: none;">
+												<?php printf(__('Lists not found, <a href="%s">are you connected to egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-4-wp-account')); ?>
+											</span>
 
-											} else{ ?>
+											<!-- Tooltip - help -->
+											<div class="e-goi-tooltip">
+												 <span class="dashicons dashicons-editor-help"></span>
+											  	 <span class="e-goi-tooltiptext">
+											  	 	<span><?php _e( 'The selected mailing list will receive the contacts subscribed into the form.', 'egoi-for-wp' ); ?></span>
+											 	</span>
+											</div>
+											<span style="margin-left:140px;">
+												
+												<span id="e-goi-lists_ct_forms"><?php echo $opt['egoi_form_sync']['list'];?></span>
 
-												<!-- Tooltip - help -->
-												<div class="e-goi-tooltip">
-													 <span class="dashicons dashicons-editor-help"></span>
-												  	 <span class="e-goi-tooltiptext">
-												  	 	<span><?php _e( 'The selected mailing list will receive the contacts subscribed into the form.', 'egoi-for-wp' ); ?></span>
-												 	</span>
-												</div>
-												<span style="margin-left:140px;">
-													<select name="egoi_form_sync[list]" id="egoi4wp-lists">
-														<option value="" selected disabled>
-															<?php _e( 'Select List', 'egoi-for-wp' ); ?>
-														</option><?php
-
-														$index = 1;
-														foreach($lists as $list) {
-															if($list->title){ ?>
-																<option value="<?php echo esc_attr($list->listnum);?>" <?php selected($list->listnum, $opt['egoi_form_sync']['list']);?>>
-																	<?php echo esc_html($list->title);?>
-																</option><?php
-															}
-															$index++;
-														} ?>
-													</select>
-													<span id="load_forms" class="dashicons dashicons-update" style="display: none;"></span>
-												</span>	
-											<?php 
-											} ?>
+												<span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
+												<select name="egoi_form_sync[list]" id="e-goi-list-frm" style="display: none;">
+													<option value="" selected disabled>
+														<?php _e( 'Select List', 'egoi-for-wp' ); ?>
+													</option><?php
+													/*foreach($lists as $list) {
+														if($list->title){ ?>
+															<option value="<?php echo esc_attr($list->listnum);?>" <?php selected($list->listnum, $opt['egoi_form_sync']['list']);?>>
+																<?php echo esc_html($list->title);?>
+															</option><?php
+														}
+													} */ ?>
+												</select>
+												<span id="load_forms" class="dashicons dashicons-update" style="display: none;"></span>
+											</span>
 										</div><!-- .e-goi-iframe-select-list -->
 											
-											<div class="e-goi-iframe-select-form" id="egoi_form_wp" style="margin-bottom:15px;">
-												<span style="font-size: 16px;">
-													<?php _e( 'E-goi Form to Subscribe', 'egoi-for-wp' ); ?></span>
-												<div class="e-goi-tooltip">
-													<span class="dashicons dashicons-editor-help"></span>
-												  	<span class="e-goi-tooltiptext e-goi-tooltiptext--subscribe"><?php _e( 'Need a iframe form? Simply select a form (which already exists in E-goi) and copy the shortcode to display this form on your website or blog', 'egoi-for-wp' ); ?></span>
-												</div>
-												<span style="margin-left:26px;">
-													<select name="egoi_form_sync[form_content]" id="formid_egoi" style="display: none;">
-														<?php
-														if ($listID) { ?>
-															<option value=""><?php _e('Select your form', 'egoi-for-wp');?></option><?php
-															foreach ($forms as $value) {
-																if($value->title){ ?>
-																	<option value="<?php echo $value->id.' - '.$value->url;?>" <?php selected($value->id.' - '.$value->url, $opt['egoi_form_sync']['form_content']);?>>
-																		<?php echo $value->title;?>
-																	</option><?php
-																}
-															}
-														} ?>
-													</select>
-												</span>
+										<div class="e-goi-iframe-select-form" id="egoi_form_wp" style="margin-bottom:15px;">
+											<span style="font-size: 16px;">
+												<?php _e( 'E-goi Form to Subscribe', 'egoi-for-wp' ); ?></span>
+											<div class="e-goi-tooltip">
+												<span class="dashicons dashicons-editor-help"></span>
+											  	<span class="e-goi-tooltiptext e-goi-tooltiptext--subscribe"><?php _e( 'Need a iframe form? Simply select a form (which already exists in E-goi) and copy the shortcode to display this form on your website or blog', 'egoi-for-wp' ); ?></span>
 											</div>
-
-											<span class="e-goi-iframe-select-form" id="empty_forms">
-												<span class="no-forms">
-													<span class="dashicons dashicons-warning"></span><span style="font-size:20px; "><?php _e(' Não existem formulários do E-goi', 'egoi-for-wp'); ?></span>
-												</span>
+											<span style="margin-left:26px;">
+												<select name="egoi_form_sync[form_content]" id="formid_egoi" style="display: none;">
+													<?php
+													if ($listID) { ?>
+														<option value=""><?php _e('Select your form', 'egoi-for-wp');?></option><?php
+														foreach ($forms as $value) {
+															if($value->title){ ?>
+																<option value="<?php echo $value->id.' - '.$value->url;?>" <?php selected($value->id.' - '.$value->url, $opt['egoi_form_sync']['form_content']);?>>
+																	<?php echo $value->title;?>
+																</option><?php
+															}
+														}
+													} ?>
+												</select>
 											</span>
+										</div>
+
+										<span class="e-goi-iframe-select-form" id="empty_forms" style="display: none;">
+											<span class="no-forms">
+												<span class="dashicons dashicons-warning"></span>
+												<span style="font-size:20px; "><?php _e('There are no forms on E-goi. Click here to learn how to create.', 'egoi-for-wp'); ?></span>
+											</span>
+										</span>
 
 										<?php
 
@@ -407,7 +403,7 @@ defined( 'ABSPATH' ) or exit;
 							<td><?php echo $form_name;?></td>
 							<!-- State -->
 							<td>
-							<?php ($form['egoi_form_sync']['enabled']) ? _e('<span class="e-goi-form-active-label">Ativo</span>', 'egoi-for-wp') : _e('<span class="e-goi-form-inactive-label">Inativo</span>', 'egoi-for-wp');?>
+							<?php ($form['egoi_form_sync']['enabled']) ? _e('<span class="e-goi-form-active-label">Active</span>', 'egoi-for-wp') : _e('<span class="e-goi-form-inactive-label">Inactive</span>', 'egoi-for-wp');?>
 							</td>
 							<td>
 								<a class="cd-popup-trigger-del" href="#"><?php _e('Delete', 'egoi-for-wp');?></span>

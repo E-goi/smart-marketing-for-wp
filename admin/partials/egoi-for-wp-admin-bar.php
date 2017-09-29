@@ -25,7 +25,7 @@
 				<input class="button" class="egoi-button" style="text-align:-webkit-center;padding:10px;height:31px;background:<?php // echo $this->bar_post['color_button']; ?>;color:<?php // echo $this->bar_post['color_button_text']; ?>;" value="<?php // echo $this->bar_post['text_button']; ?>" />
 			</div>
 		</div> */ ?>
-
+		
 		<!-- Bar Settings -->
 			<div id="tab-settings">
 
@@ -49,25 +49,42 @@
 					</tr>
 
 					<tr valign="top">
+						<th scope="row">
+							<label>
+								<?php _e( 'Open Bar by default?', 'egoi-for-wp' ); ?>
+							</label>
+						</th>
+						<td>
+							<label>
+								<input type="radio" name="egoi_bar_sync[open]" value="1" <?php checked($this->bar_post['open'], 1); ?> /> <?php _e( 'Yes' ); ?>
+							</label>
+							<label>
+								<input type="radio" name="egoi_bar_sync[open]" value="0" <?php checked($this->bar_post['open'], 0); ?> /> <?php _e( 'No' ); ?>
+							</label>
+							<p class="help"><?php _e( 'Show or Hide by default the bar.', 'egoi-for-wp' ); ?></p>
+						</td>
+					</tr>
+
+					<tr valign="top">
 						<th scope="row"><label><?php _e( 'Egoi List', 'egoi-for-wp' ); ?></label></th>
-						<td><?php
-						if(empty($lists)) {
+						<td>
+							<span class="e-goi-lists_not_found" style="display: none;">
+								<?php printf(__('No lists found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-for-wp'));?>
+							</span>
+							
+							<span id="e-goi-lists_ct_bar" style="display: none;"><?php echo $this->bar_post['list'];?></span>
 
-							printf( __( 'No lists found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp' ), admin_url( 'admin.php?page=egoi-for-wp' ) );
-
-						}else{ ?>
-
-							<select name="egoi_bar_sync[list]" class="egoi4wp-list-input" id="select-egoi-list">
+							<span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
+							<select name="egoi_bar_sync[list]" class="lists" id="e-goi-list-bar" style="display: none;">
 								<option disabled <?php selected($this->bar_post['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option><?php 
-								
+								/*
 								foreach($lists as $list) {
 								 	if($list->title!=''){?>
 										<option value="<?php echo esc_attr( $list->listnum ); ?>" <?php selected($this->bar_post['list'], $list->listnum); ?>><?php echo esc_html( $list->title ); ?></option><?php
 									}
-								} ?>
+								} */ ?>
 							</select>
-							<p class="help"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p><?php
-						}?>
+							<p class="help"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
 						</td>
 					</tr>
 
@@ -254,15 +271,15 @@
 			<table class="form-table">
 				<tr valign="top">
 					<th scope="row"><label><?php _e( 'Success', 'egoi-for-wp' ); ?></label></th>
-					<td><input type="text" class="widefat" name="egoi_bar_sync[text_subscribed]" placeholder="<?php echo esc_attr( $this->bar_post['text_subscribed'] ); ?>"  value="<?php echo esc_attr( $this->bar_post['text_subscribed'] ); ?>" /></td>
+					<td><input type="text" class="widefat" name="egoi_bar_sync[text_subscribed]" value="<?php echo esc_attr($this->bar_post['text_subscribed']) ?: __('Success Subscribed', 'egoi-for-wp'); ?>" /></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row"><label><?php _e( 'Invalid email address', 'egoi-for-wp' ); ?></label></th>
-					<td><input type="text" class="widefat" name="egoi_bar_sync[text_invalid_email]" placeholder="<?php echo esc_attr( $this->bar_post['text_invalid_email'] ); ?>"  value="<?php echo esc_attr( $this->bar_post['text_invalid_email'] ); ?>" /></td>
+					<td><input type="text" class="widefat" name="egoi_bar_sync[text_invalid_email]" value="<?php echo esc_attr($this->bar_post['text_invalid_email']) ?: __('Invalid e-mail', 'egoi-for-wp'); ?>" /></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row"><label><?php _e( 'Already subscribed', 'egoi-for-wp' ); ?></label></th>
-					<td><input type="text" class="widefat" name="egoi_bar_sync[text_already_subscribed]" placeholder="<?php echo esc_attr( $this->bar_post['text_already_subscribed'] ); ?>"  value="<?php echo esc_attr( $this->bar_post['text_already_subscribed'] ); ?>" /></td>
+					<td><input type="text" class="widefat" name="egoi_bar_sync[text_already_subscribed]" value="<?php echo esc_attr($this->bar_post['text_already_subscribed'])  ?: __('Subscriber already exists', 'egoi-for-wp'); ?>" /></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row"><label><?php _e( 'Other errors' ,'egoi-for-wp' ); ?></label></th>

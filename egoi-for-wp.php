@@ -68,6 +68,13 @@ function add_users(){
 	return $admin->users_queue();
 }
 
+// HOOK GET LISTS
+add_action('wp_ajax_egoi_get_lists', 'egoi_get_lists');
+function egoi_get_lists(){
+	$admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    return $admin->get_lists();
+}
+
 // HOOK E-GOI LIST GET FORM
 add_action('wp_ajax_get_form_from_list', 'get_form_from_list');
 function get_form_from_list(){

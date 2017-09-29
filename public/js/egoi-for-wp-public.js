@@ -27,7 +27,10 @@ jQuery(document).ready(function($) {
 		}
 
 		var subs_bar = getCookie("hide_bar");
-		if(subs_bar == '0'){
+		var egoi_session = $('#e-goi-bar-session').text();
+
+		if((subs_bar == '0') || (egoi_session)){
+			
 			$(bar).show();
 
 			$('body').css({'padding-top': '45px'});

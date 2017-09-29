@@ -6,6 +6,54 @@ jQuery(document).ready(function($) {
 
 	var session_form = $('#session_form');
 
+	// Async fetch
+	var data_lists = {
+        action: 'egoi_get_lists'
+    };
+    var select_lists_frm = $('#e-goi-list-frm');
+    var select_lists_bar = $('#e-goi-list-bar');
+    var current_lists = [];
+
+    $(".loading_lists").addClass('spin').show();
+    var lists_count_frm = $('#e-goi-lists_ct_forms');
+    var lists_count_bar = $('#e-goi-lists_ct_bar');
+    
+    $.post(url_egoi_script.ajaxurl, data_lists, function(response) {
+	    
+	    $(".loading_lists").removeClass('spin').hide();
+	    current_lists = JSON.parse(response);
+		
+		if(current_lists.ERROR){
+			$('.e-goi-lists_not_found').show();
+
+			select_lists_frm.hide();
+			select_lists_bar.hide();
+		}else{
+			select_lists_frm.show();
+			select_lists_bar.show();
+			$('.e-goi-lists_not_found').hide();
+
+			$.each(current_lists, function(key, val) {
+	        	
+	        	if(typeof val.listnum != 'undefined') {
+		        	select_lists_frm.append($('<option />').val(val.listnum).text(val.title));
+		        	select_lists_bar.append($('<option />').val(val.listnum).text(val.title));
+		        	
+		        	if(lists_count_frm.text() === val.listnum){
+		        		select_lists_frm.val(val.listnum);
+		        	}
+
+		        	if(lists_count_bar.text() === val.listnum){
+		        		select_lists_bar.val(val.listnum);
+		        	}
+	            }
+	        });	
+		    	
+		}
+	});
+
+    // End of Async fetch
+
 	$('#rcv_e-goi_forms').text($('#ct_e-goi_forms').text());
 
 	$('#egoi4wp-form-hide').hide();
@@ -82,7 +130,6 @@ jQuery(document).ready(function($) {
 
 
 	// OTHER THINGS
-
 	$('#get_type_form').click(function() {
 		$('#form_type').trigger("click");
 	});

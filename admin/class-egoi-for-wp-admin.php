@@ -328,6 +328,7 @@ class Egoi_For_Wp_Admin {
 			'double_optin' => 0,
 			'send_welcome' => 0,
 			'enabled' => 0,
+			'open' => 0,
 			'text_bar' => '',
 			'text_email_placeholder' => '',
 			'text_button' => '',
@@ -1064,6 +1065,14 @@ class Egoi_For_Wp_Admin {
         if(!empty($_POST)){
             $api = new Egoi_For_Wp();
             echo json_encode($api->getForms($_POST['listID']));
+        }
+        wp_die();
+    }
+
+    public function get_lists() {
+        if(!empty($_POST)){
+            $api = new Egoi_For_Wp();
+            echo json_encode($api->getLists($_POST['listID']));
         }
         wp_die();
     }

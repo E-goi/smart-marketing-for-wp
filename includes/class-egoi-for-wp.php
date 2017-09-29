@@ -737,19 +737,18 @@ class Egoi_For_Wp {
 
 	protected function _getContent($url) {
 
-        if(ini_get('allow_url_fopen') == true){
+        if(ini_get('allow_url_fopen')) {
 
-        	$context = stream_context_create(array('http' => array( 'timeout' => 600)));
+        	$context = stream_context_create(array('http' => array('timeout' => 600)));
             $result = file_get_contents($url, false, $context);
 
         } else if(function_exists('curl_init')) {
 
-            $curl = curl_init();
-            curl_setopt($curl,CURLOPT_URL,$url);
-            curl_setopt($curl,CURLOPT_HEADER,0);
-            curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
-            curl_setopt($curl,CURLOPT_CONNECTTIMEOUT,600);
-            curl_setopt($curl,CURLOPT_TIMEOUT,60);
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 600);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 60);
             $result = curl_exec($curl);
 
             curl_close($curl);

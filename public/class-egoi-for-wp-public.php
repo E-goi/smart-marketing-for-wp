@@ -111,9 +111,21 @@ class Egoi_For_Wp_Public {
 			}
 		}
 
-		$hidden = '';
-		if(isset($_COOKIE['hide_bar']) && ($_COOKIE['hide_bar'] == 1)){
-			$hidden = 'display:none;';
+		if($bar_post['open']){
+
+			$enable = '0';
+			$hidden = '';
+			setcookie('hide_bar', $enable, 1);
+			$_COOKIE['hide_bar'] = $enable;
+
+		}else{
+
+			$enable = '';
+			$hidden = '';
+
+			if(isset($_COOKIE['hide_bar']) && ($_COOKIE['hide_bar'] == 1)){
+				$hidden = 'display:none;';
+			}
 		}
 
 		$pos = $bar_post['position'];
@@ -129,10 +141,11 @@ class Egoi_For_Wp_Public {
 		}else{
 			$id_tab = 'tab_egoi_footer';
 		}
-		
-		if($bar_post['position']=='top'){
 
-			$bar_content = '
+		
+		if($bar_post['position'] == 'top'){
+
+			$bar_content = '<span style="display:none;" id="e-goi-bar-session">'.$enable.'</span>
 			<div class="egoi-bar" id="egoi-bar" style="'.$hidden.'">
 				<label class="egoi-label" style="display:inline-block;">'.$bar_post['text_bar'].'</label>
 				<input type="email" name="email" placeholder="'.$bar_post['text_email_placeholder'].'" class="egoi-email" required>
@@ -143,7 +156,7 @@ class Egoi_For_Wp_Public {
 
 		}else{
 
-			$bar_content = '
+			$bar_content = '<span style="display:none;" id="e-goi-bar-session">'.$enable.'</span>
 				<span class="egoi-bottom-action" id="'.$id_tab.'" style="background:'.$bar_post['color_bar'].';"></span>
 				<div class="egoi-bar" id="egoi-bar" style="'.$hidden.'">
 					<label class="egoi-label">'.$bar_post['text_bar'].'</label>
