@@ -135,7 +135,7 @@ jQuery(document).ready(function($) {
 	});
 
 	// on change list
-    $('#egoi4wp-lists').on('change', function() {
+    $('#e-goi-list-frm').on('change', function() {
        
         var listID = $(this).val();
         var block = $('#formid_egoi');
