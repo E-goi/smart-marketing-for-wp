@@ -204,7 +204,6 @@
 							</th>
 							<td>
 								<input type="text" name="egoi_bar_sync[border_color]" value="<?php echo esc_attr( $this->bar_post['border_color'] ); ?>" class="color">
-
 							</td>
 						</tr>
 

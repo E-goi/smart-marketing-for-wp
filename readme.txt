@@ -77,7 +77,11 @@ You can create and update your lists, see how many subscribers you have, but you
 
 = 2.0.0 =
  - Menus updated
- - Layout refactored
+ - Design refactored
+ - Translations updated
+ - New Page Added - Ecommerce
+ - E-goi Forms Refectored
+ - Minor Bug Fixes 
 
 = 1.0.16 =
  - Track&Engage - Improvements

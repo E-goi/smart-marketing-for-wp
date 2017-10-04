@@ -15,7 +15,17 @@ if(isset($_POST['action'])){
 }else{
 	$options = $this->options_list;
 }
+?>
 
+<h1 class="logo">Smart Marketing - <?php _e( 'Ecommerce', 'egoi-for-wp' ); ?></h1>
+	<p class="breadcrumbs">
+		<span class="prefix"><?php echo __( 'You are here: ', 'egoi-for-wp' ); ?></span>
+		<strong>Smart Marketing</a> &rsaquo;
+		<span class="current-crumb"><?php _e( 'Ecommerce', 'egoi-for-wp' ); ?></strong></span>
+	</p>
+<hr/>
+
+<?php
 if(!$options['list']) { ?>
 	<div class="postbox" style="margin-top:20px; max-width:80%; padding:5px 20px 5px; border-left:2px solid red;">
 		<div style="padding:10px 0;">

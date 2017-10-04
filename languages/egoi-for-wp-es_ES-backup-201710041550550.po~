@@ -43,7 +43,6 @@ msgstr "Clave API actualizada!"
 #: admin/partials/egoi-for-wp-admin-display.php:132
 msgid "You really want to change your API Key? You will lose all data!"
 msgstr ""
-"¿Realmente desea cambiar su clave de API? ¡Usted perderá todos los datos!"
 
 #: admin/partials/egoi-for-wp-admin-widget.php:84
 msgid "Your e-mail field is empty!"

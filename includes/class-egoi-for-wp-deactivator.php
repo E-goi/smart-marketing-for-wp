@@ -18,33 +18,7 @@ class Egoi_For_Wp_Deactivator {
 		
 		$opt = get_option('egoi_data');
 		if($opt){
-			
-			$option = array(
-				'Egoi4WpBuilderObject',
-				'egoi_sync',
-				'egoi_bar_sync',
-				'egoi_api_key',
-				'widget_egoi4widget',
-				'egoi_widget',
-				'egoi_form_sync_1',
-				'egoi_form_sync_2',
-				'egoi_form_sync_3',
-				'egoi_form_sync_4',
-				'egoi_form_sync_5',
-				'egoi_int',
-				'egoi_data',
-				'egoi_mapping'
-			);
-			foreach ($option as $opt) {
-				delete_option($opt);
-			}
-			
-			global $wpdb;
-			
-			$table = $wpdb->prefix."egoi_map_fields";
-			$sql = "DROP TABLE $table";
-			$result = $wpdb->query($sql);
-
+			Egoi_For_Wp::removeData();
 		}
 
 		$email = wp_get_current_user();
@@ -65,7 +39,7 @@ class Egoi_For_Wp_Deactivator {
 				'smegoi_e' => get_locale()
 			);
 
-			require('service/post_wsdl.php');
+			require 'service/post_wsdl.php';
 			if(class_exists("SoapClient")){
 				$response = new SoapClient(NULL, $options);
 				$response->call($params);

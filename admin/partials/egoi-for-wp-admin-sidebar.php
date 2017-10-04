@@ -7,7 +7,7 @@ if(isset($_GET['type'])){
 	
 	if(($_GET['type'] == 'html') || ($_GET['type'] == 'popup')){ ?>
 
-		<div class="egoi-box" style="position:fixed;">
+		<div class="egoi-box" style="position:fixed;padding-right: 10px;">
 			<h4 style="background-color: #fff; padding: 10px 10px;" class="egoi-title"><?php echo __( 'How to integrate the form on the page or article?', 'egoi-for-wp' );?></h4>
 			<p> 1 - <?php echo __( 'Enter the E-goi account and open the forms tab.', 'egoi-for-wp' );?></p>
 			<p> 2 - <?php echo __( 'Choose the desired form.', 'egoi-for-wp' );?></p>
@@ -26,12 +26,12 @@ if(isset($_GET['type'])){
 
 }else{?>
 
-	<div class="egoi-box" style="position:fixed;">
+	<div class="egoi-box" style="position:fixed;padding-right: 10px;">
 		<h4 class="egoi-title"><?php echo __( 'Looking for help?', 'egoi-for-wp' ); ?></h4>
 		<p><?php echo __( 'We have some resources available to help you in the right direction.', 'egoi-for-wp' ); ?></p>
 		<ul class="ul-square">
-			<li><a href="<?php echo __( 'https://www.e-goi.com/en/o/smart-marketing-wordpress/', 'egoi-for-wp' ); ?>"><?php echo __( 'General info', 'egoi-for-wp' ); ?></a></li>
-			<li><a href="<?php echo __( 'https://helpdesk.e-goi.com/242267-Integrating-E-goi-with-Wordpress', 'egoi-for-wp' ); ?>">
+			<li><a target="_blank" href="<?php echo __( 'https://www.e-goi.com/en/o/smart-marketing-wordpress/', 'egoi-for-wp' ); ?>"><?php echo __( 'General info', 'egoi-for-wp' ); ?></a></li>
+			<li><a target="_blank" href="<?php echo __( 'https://helpdesk.e-goi.com/242267-Integrating-E-goi-with-Wordpress', 'egoi-for-wp' ); ?>">
 				<?php echo __( 'Knowledge Base', 'egoi-for-wp' ); ?></a></li>
 			</a></li>
 		</ul>

@@ -50,6 +50,28 @@ class Egoi_For_Wp {
 	protected $host;
 
 	/**
+	 * The default options to be created.
+	 * 
+	 * @var array
+	 */
+	protected static $options = array(
+		'Egoi4WpBuilderObject',
+		'egoi_sync',
+		'egoi_bar_sync',
+		'egoi_api_key',
+		'widget_egoi4widget',
+		'egoi_widget',
+		'egoi_form_sync_1',
+		'egoi_form_sync_2',
+		'egoi_form_sync_3',
+		'egoi_form_sync_4',
+		'egoi_form_sync_5',
+		'egoi_int',
+		'egoi_data',
+		'egoi_mapping'
+	);
+
+	/**
 	 * Soap Client
 	 * 
 	 * @var string
@@ -95,6 +117,44 @@ class Egoi_For_Wp {
 		$this->getClientAPI();
 		$this->syncronizeEgoi($_POST);
 
+	}
+
+	/**
+	 * Remove all data from this plugin
+	 *
+	 * @since    2.0.0
+	 * @access   public
+	 */
+	public static function removeData($rmOnlyMappedFields = false, $returnContent = false) {
+
+		try{
+			global $wpdb;
+
+			foreach (self::$options as $opt) {
+				delete_option($opt);
+			}
+			
+			$wpdb->hide_errors();
+			$table = $wpdb->prefix."egoi_map_fields";
+
+			if($rmOnlyMappedFields){
+				$sql = "TRUNCATE TABLE $table";
+				$wpdb->query($sql);
+			}else{
+				$sql = "DROP TABLE $table";
+				$wpdb->query($sql);
+			}
+			
+			if($returnContent){
+				echo json_encode(['result' => 'ok']);
+				exit;
+			}
+
+			return true;
+
+		}catch(Exception $e){
+			return false;
+		}
 	}
 
 	/**

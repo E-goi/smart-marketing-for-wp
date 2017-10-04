@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) or exit;
 		if(isset($post['widget'])){
 			$opt_upd = 'Widgets Settings';
 		}else{
-			$opt_upd = 'Options';
+			$opt_upd = 'Form Settings';
 		}
 
 		echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
@@ -96,6 +96,7 @@ defined( 'ABSPATH' ) or exit;
 						<option value="iframe" <?php selected($_GET['type'], 'iframe');?>><?php _e('E-goi Iframe', 'egoi-for-wp');?>
 						</option>
 					</select>
+					<input type="hidden" id="type_frm_saved" value="<?php echo $_GET['type'];?>">
 
 					<span id="load_frm_change" class="dashicons dashicons-update" style="display: none;"></span>
 				</form>
@@ -122,7 +123,7 @@ defined( 'ABSPATH' ) or exit;
 										<a id="change_form_req" href="#">Confirmar</a>
 									</li>
 									<li>
-										<a class="cd-popup-close-btn" href="#0">Cancelar</a>
+										<a class="cd-popup-close-btn" id="close_frm_change" href="#0">Cancelar</a>
 									</li>
 								</ul>
 							</div> <!-- cd-popup-container -->

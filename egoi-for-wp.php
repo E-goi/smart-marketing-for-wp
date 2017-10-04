@@ -121,6 +121,13 @@ function egoi_widget_init(){
 require plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-widget.php';
 
+// HOOK API KEY CHANGES
+add_action('wp_ajax_apikey_changes', 'apikey_changes');
+function apikey_changes(){
+	return Egoi_For_Wp::removeData(true, true);
+}
+
+// INITIALIZE PLUGIN
 function run_egoi_for_wp() {
 
 	$plugin = new Egoi_For_Wp();

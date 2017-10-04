@@ -81,7 +81,7 @@ if(!$egoiwidget['enabled']){
 					<tr valign="top">
 						<th scope="row"><label for="egoi_form_sync_email_empty"><?php _e( 'Empty email address', 'egoi-for-wp' ); ?></label></th>
 						<td>
-							<input type="text" style="width:450px;" placeholder="<?php _e( 'Check, please, if you wrote your e-mail address correctly.', 'egoi-for-wp' ); ?>" id="egoi_form_sync_email_empty" name="egoi_widget[msg_empty]" value="<?php echo esc_attr($egoiwidget['msg_empty']);?>" />
+							<input type="text" style="width:450px;" placeholder="<?php _e( 'Your e-mail field is empty!', 'egoi-for-wp' ); ?>" id="egoi_form_sync_email_empty" name="egoi_widget[msg_empty]" value="<?php echo esc_attr($egoiwidget['msg_empty']);?>" />
 							<p class="help"><?php _e( 'The text that shows when the email is empty.', 'egoi-for-wp' ); ?></p>
 						</td>
 					</tr>

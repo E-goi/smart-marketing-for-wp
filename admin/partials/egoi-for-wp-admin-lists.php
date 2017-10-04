@@ -8,7 +8,7 @@
 			<thead>
 				<tr>
 					<th><?php echo _e('List ID', 'egoi-for-wp');?></th>
-					<th><?php echo _e('Public Title | Internal Title', 'egoi-for-wp');?></th>
+					<th><?php echo _e('Public Title', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Internal Title', 'egoi-for-wp');?></th>
 					<th><?php echo _e('Active Contacts 
  							<span class="e-goi-tooltip">
@@ -26,39 +26,39 @@
 			foreach($lists as $key_list => $value_list) {
 
 				if($value_list->listnum){ ?>
-						<tr>
-							<td>
-								<?php echo $value_list->listnum; ?>
-							</td>
-							<td>
-								<?php echo $value_list->title; ?>
-							</td>
-							<td>
-								<?php echo $value_list->title_ref; ?>
-							</td>
-							<td>
-								<?php echo $value_list->subs_activos; ?>
-							</td>
-							<td>
-								<?php echo $value_list->subs_total; ?>
-							</td>
-							<td><?php
-								if(strcmp($value_list->idioma,'pt') == 0) { 
-									echo "Português (Portugal)";
-								} else if(strcmp($value_list->idioma,'br') == 0) {
-									echo "Português (Brasil)";
-								} else if(strcmp($value_list->idioma,'es') == 0) {
-									echo "Español";
-								} else {
-									echo "English";
-								} ?>
-							</td>
-							<td>
-								<a href="https://bo.e-goi.com/?from=<?php echo urlencode('/?action=lista_definicoes_principal&list='.$value_list->listnum);?>" class='button' target="_blank" />
-								<?php _e('Change in E-goi', 'egoi-for-wp');?>
-							</a>
-							</td>
-						</tr><?php
+					<tr>
+						<td>
+							<?php echo $value_list->listnum; ?>
+						</td>
+						<td>
+							<?php echo $value_list->title; ?>
+						</td>
+						<td>
+							<?php echo $value_list->title_ref; ?>
+						</td>
+						<td>
+							<?php echo $value_list->subs_activos; ?>
+						</td>
+						<td>
+							<?php echo $value_list->subs_total; ?>
+						</td>
+						<td><?php
+							if(strcmp($value_list->idioma,'pt') == 0) { 
+								echo "Português (Portugal)";
+							} else if(strcmp($value_list->idioma,'br') == 0) {
+								echo "Português (Brasil)";
+							} else if(strcmp($value_list->idioma,'es') == 0) {
+								echo "Español";
+							} else {
+								echo "English";
+							} ?>
+						</td>
+						<td>
+							<a href="https://login.egoiapp.com/#/login/?action=login&menu=sec" class='button' target="_blank" />
+							<?php _e('Change in E-goi', 'egoi-for-wp');?>
+						</a>
+						</td>
+					</tr><?php
 				}
 			} ?>
 		</table>

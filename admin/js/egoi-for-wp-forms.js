@@ -59,7 +59,7 @@ jQuery(document).ready(function($) {
 	$('#egoi4wp-form-hide').hide();
 	$('#wp-form_content-editor-tools').append('<b>Editor</b>');
 
-	var $context = $(document.getElementById('egoi4wp-form'));
+	var $context = $(document.getElementsByClassName('wrap'));
 	$context.find('.color').wpColorPicker();
 
 	var $content = $(document.getElementById('tab-content'));
@@ -68,15 +68,19 @@ jQuery(document).ready(function($) {
 	$appearance.hide();
 
 	$('#nav-tab-content').click(function() {
+
 		$content.show();
 		$appearance.hide();
+
 		$('#nav-tab-content').addClass('nav-tab-active');
 		$('#nav-tab-appearance').removeClass('nav-tab-active');
 	});
 
 	$('#nav-tab-appearance').click(function() {
+
 		$appearance.show();
 		$content.hide();
+
 		$('#nav-tab-appearance').addClass('nav-tab-active');
 		$('#nav-tab-content').removeClass('nav-tab-active');
 	});
@@ -87,13 +91,16 @@ jQuery(document).ready(function($) {
 
 
 	// alert change 
-	$('#form_choice').change(function() {
+	$('#form_choice').on('change', function() {
+		
 		if(session_form.length){
 			$('.cd-popup-trigger-change').trigger('click');
+
 		}else{
 			$("#load_frm_change").addClass('spin').show();
 			document.getElementById("e-goi-form-options").submit();
 		}
+
 	});
 
 	// POPUP 
@@ -116,12 +123,10 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-	//close popup when clicking the esc keyboard button
-	$(document).keyup(function(event){
-    	if(event.which=='27'){
-    		$('.cd-popup').removeClass('is-visible');
-	    }
-    });
+	// cancel btn on change form
+	$('#close_frm_change').on('click', function(){
+		$('#form_choice').val($('#type_frm_saved').val());
+	});
 
 	// alert popup on change form type
 	$('#change_form_req').click(function(){
@@ -171,7 +176,7 @@ jQuery(document).ready(function($) {
 	          	});
 	          	$('#formid_egoi').trigger('change');
 	        }
-         });
+        });
 
     });
 
