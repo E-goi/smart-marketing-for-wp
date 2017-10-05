@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-04 15:49+0000\n"
-"PO-Revision-Date: 2017-10-04 15:50+0000\n"
+"POT-Creation-Date: 2017-10-05 09:26+0000\n"
+"PO-Revision-Date: 2017-10-05 09:28+0000\n"
 "Last-Translator: Teste WP <integrations@e-goi.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es-ES\n"
@@ -21,33 +21,6 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: es_ES\n"
 "X-Generator: Loco - https://localise.biz/"
-
-#: admin/partials/egoi-for-wp-admin-sidebar.php:38
-msgid ""
-"If your answer can not be found in the resources listed above, please use "
-"the <a href=\"https://wordpress.org/support/plugin/smart-marketing-for-wp/\">"
-"support forums on WordPress.org</a>."
-msgstr ""
-"Si su respuesta no se encuentra en los recursos mencionados anteriormente, "
-"utilice los <a href=\"https://wordpress.org/support/plugin/smart-marketing-"
-"for-wp/\"> foros de soporte en WordPress.org </a>."
-
-#: admin/partials/egoi-for-wp-admin-lists.php:11
-msgid "Public Title"
-msgstr "Título Público"
-
-#: admin/partials/egoi-for-wp-admin-display.php:10
-msgid "API Key updated!"
-msgstr "Clave API actualizada!"
-
-#: admin/partials/egoi-for-wp-admin-display.php:132
-msgid "You really want to change your API Key? You will lose all data!"
-msgstr ""
-"¿Realmente desea cambiar su clave de API? ¡Usted perderá todos los datos!"
-
-#: admin/partials/egoi-for-wp-admin-widget.php:84
-msgid "Your e-mail field is empty!"
-msgstr "¡Su campo de correo electrónico está vacío!"
 
 #: includes/class-egoi-for-wp-widget.php:268
 msgid "Widget Title"
@@ -113,8 +86,9 @@ msgid ""
 "Please rate %sSmart Marketing SMS and Newsletters Forms%s %s on %sWordPress."
 "org%s to help us spread the word. Thank you from the E-goi team!"
 msgstr ""
-"Please rate %sSmart Marketing SMS and Newsletters Forms%s %s on %sWordPress."
-"org%s to help us spread the word. Thank you from the E-goi team!"
+"Por favor califique %sSmart Marketing SMS y Newsletters Formularios%s %s en "
+"%sWordPress.org%s para ayudarnos a difundir la palabra. ¡Gracias por el "
+"equipo E-goi!"
 
 #: admin/class-egoi-for-wp-admin.php:181 admin/class-egoi-for-wp-admin.php:181
 #: admin/partials/egoi-for-wp-admin-display.php:79
@@ -212,6 +186,16 @@ msgstr "https://helpdesk.e-goi.com/685499-Integrar-E-goi-con-Wordpress"
 msgid "Knowledge Base"
 msgstr "Base de Conocimiento"
 
+#: admin/partials/egoi-for-wp-admin-sidebar.php:38
+msgid ""
+"If your answer can not be found in the resources listed above, please use "
+"the <a href=\"https://wordpress.org/support/plugin/smart-marketing-for-wp/\">"
+"support forums on WordPress.org</a>."
+msgstr ""
+"Si su respuesta no se encuentra en los recursos mencionados anteriormente, "
+"utilice los <a href=\"https://wordpress.org/support/plugin/smart-marketing-"
+"for-wp/\"> foros de soporte en WordPress.org </a>."
+
 #: admin/partials/egoi-for-wp-admin-lists.php:5
 msgid "Information from your E-goi mailing lists"
 msgstr "Información de tus listas de contactos en E-goi"
@@ -219,6 +203,10 @@ msgstr "Información de tus listas de contactos en E-goi"
 #: admin/partials/egoi-for-wp-admin-lists.php:10
 msgid "List ID"
 msgstr "ID de la lista"
+
+#: admin/partials/egoi-for-wp-admin-lists.php:11
+msgid "Public Title"
+msgstr "Título Público"
 
 #: admin/partials/egoi-for-wp-admin-lists.php:12
 msgid "Internal Title"
@@ -919,6 +907,10 @@ msgstr "Los formularios están vacías"
 msgid "Create form +"
 msgstr "Crear formulario +"
 
+#: admin/partials/egoi-for-wp-admin-display.php:10
+msgid "API Key updated!"
+msgstr "Clave API actualizada!"
+
 #: admin/partials/egoi-for-wp-admin-display.php:25
 msgid "No more lists allowed in your account!"
 msgstr "No se les permite más listas en tu cuenta!"
@@ -942,6 +934,11 @@ msgid ""
 msgstr ""
 "¡API key no válida O vacía! Por favor introducir API key válida <a "
 "href=\"admin.php?page=egoi-4-wp-account\">aquí</a>"
+
+#: admin/partials/egoi-for-wp-admin-display.php:132
+msgid "You really want to change your API Key? You will lose all data!"
+msgstr ""
+"¿Realmente desea cambiar su clave de API? ¡Usted perderá todos los datos!"
 
 #: admin/partials/egoi-for-wp-admin-display.php:150
 msgid "Edit API Key"
@@ -1149,6 +1146,10 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-widget.php:82
 msgid "Empty email address"
 msgstr "Falta la dirección de email"
+
+#: admin/partials/egoi-for-wp-admin-widget.php:84
+msgid "Your e-mail field is empty!"
+msgstr "¡Su campo de correo electrónico está vacío!"
 
 #: admin/partials/egoi-for-wp-admin-widget.php:85
 msgid "The text that shows when the email is empty."
