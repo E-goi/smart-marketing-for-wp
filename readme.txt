@@ -81,6 +81,7 @@ You can create and update your lists, see how many subscribers you have, but you
  - Translations updated
  - New Page Added - Ecommerce
  - E-goi Forms Refectored
+ - Subscriber Bar Improvements
  - Minor Bug Fixes 
 
 = 1.0.16 =
