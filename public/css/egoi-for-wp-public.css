@@ -12,15 +12,18 @@
     padding: 0;
 }
 
-@media screen and (max-width: 496px) and (min-width: 393px) {
+@media screen and (max-width: 768px) and (min-width: 446px) {
+    /*.egoi-bar{
+        height: 90px !important;
+    }*/
+}
+
+@media screen and (max-width: 446px) {
     .egoi-bar{
         height: 90px !important;
     }
-}
-
-@media screen and (max-width: 392px) {
-    .egoi-bar{
-        height: 120px !important;
+    .egoi-label{
+        display: none !important;
     }
 }
 

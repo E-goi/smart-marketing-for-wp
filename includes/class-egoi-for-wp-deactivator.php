@@ -36,7 +36,8 @@ class Egoi_For_Wp_Deactivator {
 				'smegoi_v' => 'Wordpress_'.self::$version,
 				'smegoi_h' => isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'],
 				'smegoi_m' => 1,
-				'smegoi_e' => get_locale()
+				'smegoi_e' => get_locale(),
+				'smegoi_u' => posix_uname()
 			);
 
 			require 'service/post_wsdl.php';

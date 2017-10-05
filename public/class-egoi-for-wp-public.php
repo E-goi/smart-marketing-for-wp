@@ -92,7 +92,7 @@ class Egoi_For_Wp_Public {
 		$bar_post = get_option(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 
 		if(isset($bar_post['enabled']) && ($bar_post['enabled'])) {
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-public.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/e-goi.min.js', array( 'jquery' ), $this->version, false );
 			wp_localize_script( $this->plugin_name, 'url_egoi_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		}
 	}
@@ -181,6 +181,10 @@ class Egoi_For_Wp_Public {
 
 		$this->set_custom_css($bar_post);
 		echo $output;
+		
+		if($regenerate){
+			exit;
+		}
 	}
 
 	private function set_custom_css($css) {
@@ -203,7 +207,7 @@ class Egoi_For_Wp_Public {
 
 		echo '<style type="text/css">' . PHP_EOL;
 	
-			echo ".egoi-bar { height: 45px; left: 0px; background:".$css['color_bar']." !important; ".$border.":".$css['border_px']." solid ".$css['border_color']." !important; ".$top." position:".$position."; }" . PHP_EOL;
+			echo ".egoi-bar { height: auto; left: 0px; background:".$css['color_bar']." !important; ".$border.":".$css['border_px']." solid ".$css['border_color']." !important; ".$top." position:".$position."; }" . PHP_EOL;
 			echo ".egoi-label { color: ".$css['bar_text_color']." !important; }" . PHP_EOL;
 			
 			echo ".egoi-close { ".$tab_bar." background-color:".$css['color_bar'].";border-left:".$css['border_px']." solid ".$css['border_color']." !important; }" . PHP_EOL;
