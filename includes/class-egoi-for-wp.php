@@ -122,7 +122,7 @@ class Egoi_For_Wp {
 	/**
 	 * Remove all data from this plugin
 	 *
-	 * @since    2.0.0
+	 * @since    1.1.0
 	 * @access   public
 	 */
 	public static function removeData($rmOnlyMappedFields = false, $returnContent = false) {

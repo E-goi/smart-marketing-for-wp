@@ -3,7 +3,7 @@
     text-align: -moz-center;
    	box-shadow: 1px 1px 1px #666;
    	width: 100%;
-   	padding: 3px 10px !important;
+   	padding: 10px 10px !important;
     line-height: 25px;
     z-index: 999999;
 }
@@ -19,9 +19,6 @@
 }
 
 @media screen and (max-width: 446px) {
-    .egoi-bar{
-        height: 90px !important;
-    }
     .egoi-label{
         display: none !important;
     }
