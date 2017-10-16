@@ -54,7 +54,7 @@
 							} ?>
 						</td>
 						<td>
-							<a href="https://login.egoiapp.com/#/login/?action=login&menu=sec" class='button' target="_blank" />
+							<a href="https://login.egoiapp.com/#/login/?action=login&menu=sec&from=%2F%3Faction%3Dlista_definicoes_principal%26list%3D<?php echo $value_list->listnum;?>%26menu%3Dsec" class='button' target="_blank" />
 							<?php _e('Change in E-goi', 'egoi-for-wp');?>
 						</a>
 						</td>
