@@ -6,13 +6,13 @@ jQuery(document).ready(function($) {
 
 	var session_form = $('#session_form');
 
-	// Async fetch
-	url = window.location.href;
-
-	var page = url.split('?page=');
-
-	if(typeof page[1] != 'undefined'){
-		if(page[1].substr(0, 14) == 'egoi-4-wp-form'){
+	// initialize class to parse URLs
+	var urlObj = new URL(window.location.href);
+    
+    // Async fetch
+    var page = urlObj.searchParams.get("page");
+	if(typeof page != 'undefined'){
+		if(page == 'egoi-4-wp-form'){
 
 			var data_lists = {
 		        action: 'egoi_get_lists'
@@ -223,9 +223,7 @@ jQuery(document).ready(function($) {
 	});
 
 
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var c = url.searchParams.get("type");
+    var c = urlObj.searchParams.get("type");
     if (c != 'form') {
         $('#egoi4wp-form-hide').show();
     }else{
