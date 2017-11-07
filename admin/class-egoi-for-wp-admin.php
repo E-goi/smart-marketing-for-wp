@@ -1138,7 +1138,7 @@ class Egoi_For_Wp_Admin {
 
     public function get_lists() {
 
-        if(!empty($_POST)){
+        if(!empty($_POST) && ($_POST['listID'])){
             $api = new Egoi_For_Wp();
             echo json_encode($api->getLists($_POST['listID']));
         }
