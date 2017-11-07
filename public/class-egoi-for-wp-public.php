@@ -373,11 +373,5 @@ class Egoi_For_Wp_Public {
 		return $html;
 	}
 
-	public function getTrackEngage($content){
-
-		echo $content;
-		return true;
-	}
-
 
 }

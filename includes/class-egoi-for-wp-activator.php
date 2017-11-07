@@ -44,7 +44,7 @@ class Egoi_For_Wp_Activator {
 				'smegoi_u' => posix_uname()
 			);
 
-			require('service/post_wsdl.php');
+			require 'service/post_wsdl.php';
 			if(class_exists("SoapClient")){
 				$response = new SoapClient(NULL, $options);
 				$response->call($params);
