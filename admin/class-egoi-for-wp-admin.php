@@ -738,7 +738,7 @@ class Egoi_For_Wp_Admin {
 
 					$te = $this->execEc($client_id, $list_id, $user_email, $products, $order_items);
 					$content = stripslashes(htmlspecialchars($te, ENT_QUOTES, 'UTF-8'));
-					add_option('egoi_track_order_'.$order_id, array($content));
+					update_option('egoi_track_order_'.$order_id, array($content));
 					$_SESSION['egoi_order_id'] = $order_id;
 				}
 			}
@@ -757,7 +757,7 @@ class Egoi_For_Wp_Admin {
 	 * @param 	 $data
 	 * @since    1.1.2
 	 */
-	protected function checkForCart(){
+	public function checkForCart(){
 			
 		$cart = $_SESSION['egoi_session_cart'];
 
@@ -770,7 +770,7 @@ class Egoi_For_Wp_Admin {
 			
 			delete_option($option);
 			unset($_SESSION['egoi_session_cart']);
-			return;
+			return false;
 		}
 
 		return true;
@@ -782,20 +782,20 @@ class Egoi_For_Wp_Admin {
 	 * @param 	 $data
 	 * @since    1.1.2
 	 */
-	protected function checkForOrder(){
+	public function checkForOrder(){
 
-		if(isset($_SESSION['egoi_order_id']) && ($_SESSION['egoi_order_id'])){
-			
-			$order_id = $_SESSION['egoi_order_id'];
-			$content = get_option('egoi_track_order_'.$order_id);
-			
-			if($content){
+		if(substr($_GET['key'], 0, 8) != 'wc_order'){
+			if(isset($_SESSION['egoi_order_id']) && ($_SESSION['egoi_order_id'])){
+				
+				$order_id = $_SESSION['egoi_order_id'];
+				$content = get_option('egoi_track_order_'.$order_id);
+				
 				echo html_entity_decode($content[0], ENT_QUOTES);
 				delete_option('egoi_track_order_'.$order_id);
-			}
 
-			unset($_SESSION['egoi_order_id']);
-			return;
+				unset($_SESSION['egoi_order_id']);
+				return false;
+			}
 		}
 
 		return true;
