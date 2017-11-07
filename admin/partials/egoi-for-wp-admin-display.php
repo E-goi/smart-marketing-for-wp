@@ -1,11 +1,15 @@
 <?php
 	
+	$egoi = new Egoi_for_WP;
+	
 	if(!empty($_POST)){
 
 		// on change Apikey
 		if(isset($_POST['apikey_frm']) && ($_POST['apikey_frm'])){
 
 			update_option('egoi_api_key', $_POST['egoi_api_key']);
+
+			update_option('egoi_client', $egoi->getClient());
 			echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
 				_e('API Key updated!', 'egoi-for-wp');
 			echo '</p></div>';
@@ -18,7 +22,7 @@
 			$lang = $_POST['egoi_wp_lang'];
 
 			$egoi = new Egoi_for_WP;
-			$new_list = $egoi->createList($name,$lang);
+			$new_list = $egoi->createList($name, $lang);
 			
 			if(is_string($new_list)){
 				echo '<div class="e-goi-notice error notice is-dismissible"><p>';
@@ -40,7 +44,6 @@
 		}
 	}
 
-	$egoi = new Egoi_for_WP;
 	update_option('Egoi4WpBuilderObject', $egoi);
 	
 	$apikey = get_option('egoi_api_key');
@@ -108,13 +111,13 @@
 			      			<div class="apikey-error__text">
 			      				<?php echo __('API key is invalid OR is empty! Please insert you valid apikey <a href="admin.php?page=egoi-4-wp-account">here</a>', 'egoi-for-wp'); ?>
 			      			</div>
+			      		</div>
 
 		      			<?php update_option('egoi_api_key', '');
-		      			exit();
+		      			wp_die();
 
 		      		}else{ ?>
 						
-						 <!-- API Key do E-goi -->
 						<div>
 							<form name='egoi_apikey_form' method='post'>
 								
@@ -160,44 +163,47 @@
 									</span>
 								</div>
 							</form>	
-						</div> <!-- .API Key -->
-
-					<?php }
+						</div><?php 
+					
+					}
 
 				}else{ ?>
 
-					<!-- if apikey not exists on BD -->
+					<!-- if apikey not exists in DB -->
 					<div class="e-goi-account-apikey">
+						
 						<!-- Title-->
 						<div class="e-goi-account-apikey--title">
 							<?php echo __('Enter the API key of your E-goi account', 'egoi-for-wp');?>
 						</div>
+
+						<!-- Form-->
 						<form name='egoi_apikey_form' method='post' action='<?php echo admin_url('options.php'); ?>' autocomplete="off">
 							<?php settings_fields(Egoi_For_Wp_Admin::API_OPTION); settings_errors(); ?>
 
-								<input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi\'s API key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey--grp--form__input" name='egoi_api_key[api_key]' id="egoi_api_key_input" /> 
-							
-								<button type="submit" class='button-primary button-primary--custom' id="egoi_4_wp_login" disabled="disabled">
-									<span id="load" class="dashicons dashicons-update" style="display: none;"></span>
-									<span id="api-save-text"><?php echo __('Save', 'egoi-for-wp');?></span>
-								</button>
+							<input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi\'s API key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey--grp--form__input" name='egoi_api_key[api_key]' id="egoi_api_key_input" /> 
+						
+							<button type="submit" class='button-primary button-primary--custom' id="egoi_4_wp_login" disabled="disabled">
+								<span id="load" class="dashicons dashicons-update" style="display: none;"></span>
+								<span id="api-save-text"><?php echo __('Save', 'egoi-for-wp');?></span>
+							</button>
 
-								<div id="valid" style="display:none;">
-									<span class="dashicons dashicons-yes"></span>
-								</div>
-								<div id="error" style="display:none;">
-									<span class="dashicons dashicons-no-alt"></span>
-								</div>
+							<div id="valid" style="display:none;">
+								<span class="dashicons dashicons-yes"></span>
+							</div>
+							<div id="error" style="display:none;">
+								<span class="dashicons dashicons-no-alt"></span>
+							</div>
 
-								<!-- Tooltip - help -->					
-								<p class="e-goi-help-text">
-									<span class="e-goi-tooltip">
-										 <span class="dashicons dashicons-editor-help"></span>
-									  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/858130-O-que-%C3%A9-a-API-do-E-goi-e-onde-est%C3%A1-a-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
-									 	</span>
-									</span>
-									<span><?php echo __('To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;"><a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span></a> and copy it.', 'egoi-for-wp');?>
-								</p>
+							<!-- Tooltip - help -->					
+							<p class="e-goi-help-text">
+								<span class="e-goi-tooltip">
+									 <span class="dashicons dashicons-editor-help"></span>
+								  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/858130-O-que-%C3%A9-a-API-do-E-goi-e-onde-est%C3%A1-a-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
+								 	</span>
+								</span>
+								<span><?php echo __('To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;"><a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span></a> and copy it.', 'egoi-for-wp');?>
+							</p>
 						</form>
 					</div>
 					

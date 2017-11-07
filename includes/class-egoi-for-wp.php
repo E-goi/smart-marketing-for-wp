@@ -2,13 +2,13 @@
 /**
  * The core plugin class.
  *
- * This is used to define internationalization, admin-specific hooks, and
+ * This is used to define internationalization, admin-specific hooks, API and
  * public-facing site hooks.
  *
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @link       http://www.e-goi.com
+ * @link       https://www.e-goi.com
  * @since      1.0.0
  * @package    Egoi_For_Wp
  * @subpackage Egoi_For_Wp/includes
@@ -117,6 +117,9 @@ class Egoi_For_Wp {
 		$this->getClientAPI();
 		$this->syncronizeEgoi($_POST);
 
+		if(!get_option('egoi_client')){
+			add_option('egoi_client', $this->getClient());
+		}
 	}
 
 	/**
@@ -231,7 +234,7 @@ class Egoi_For_Wp {
 	public function define_apikey() {
 		
 		$apikey = get_option('egoi_api_key');
-		if($apikey['api_key']!=''){
+		if($apikey['api_key']){
 			$this->_valid['api_key'] = $apikey['api_key'];
 		}
 
@@ -326,6 +329,12 @@ class Egoi_For_Wp {
 		return $this->version;
 	}
 
+	/**
+	 * Initialize E-goi form.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The version number of the plugin.
+	 */
 	private function init_form(){
 
 		$form_id = (int)$_GET['form_id'];
