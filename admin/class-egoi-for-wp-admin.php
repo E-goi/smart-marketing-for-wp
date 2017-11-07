@@ -527,6 +527,11 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function hookEcommerce($cart_id = false){
 
+		// for security reasons
+		if(strpos($this->server_url, 'wp-json') !== false){
+			return;
+		}
+
 		if(!is_admin()){
 
 			if($cart_id){
