@@ -68,7 +68,8 @@ class Egoi_For_Wp {
 		'egoi_form_sync_5',
 		'egoi_int',
 		'egoi_data',
-		'egoi_mapping'
+		'egoi_mapping',
+		'egoi_client'
 	);
 
 	/**
@@ -105,6 +106,7 @@ class Egoi_For_Wp {
 
 		$this->plugin = '908361f0368fd37ffa5cc7c483ffd941';
 
+		$this->setClient();
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -116,6 +118,14 @@ class Egoi_For_Wp {
 
 		$this->getClientAPI();
 		$this->syncronizeEgoi($_POST);
+	}
+
+	/**
+	 * Set E-goi Client ID
+	 * 
+	 * @since    1.1.2
+	 */
+	protected function setClient() {
 
 		if(!get_option('egoi_client')){
 			add_option('egoi_client', $this->getClient());
@@ -185,6 +195,9 @@ class Egoi_For_Wp {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-egoi-for-wp-admin.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-egoi-for-wp-listener.php';
 
+		/**
+		 * Public funcionality
+		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-egoi-for-wp-public.php';
 
 		$this->loader = new Egoi_For_Wp_Loader();
@@ -217,20 +230,25 @@ class Egoi_For_Wp {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin =  new Egoi_For_Wp_Admin( $this->get_plugin_name(), $this->get_version(), $this->debug );
+		$plugin_admin = new Egoi_For_Wp_Admin($this->get_plugin_name(), $this->get_version(), $this->debug);
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+		$this->loader->add_action('admin_menu', $plugin_admin, 'add_plugin_admin_menu');
 		$this->define_apikey();
 
-		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
-		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
-		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'del_action_link' );
+		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php');
+		$this->loader->add_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links');
+		$this->loader->add_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'del_action_link');
 
 	}
 
+	/**
+	 * Register API Key on runtime
+	 * 
+	 * @since 1.0.13
+	 */
 	public function define_apikey() {
 		
 		$apikey = get_option('egoi_api_key');
@@ -280,6 +298,11 @@ class Egoi_For_Wp {
 		
 	}
 
+	/**
+	 * Register Profile Hooks
+	 * 
+	 * @since   1.0.5
+	 */
 	public function define_listen_hooks() {
 
 		$this->loader->add_action('user_register', $this, 'get_listener', 999);
