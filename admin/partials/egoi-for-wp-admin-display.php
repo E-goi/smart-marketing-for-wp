@@ -117,7 +117,11 @@
 		      			<?php update_option('egoi_api_key', '');
 		      			wp_die();
 
-		      		}else{ ?>
+		      		}else{
+
+		      			if(!get_option('egoi_client')){
+		      				add_option('egoi_client', $api_client);
+		      			} ?>
 						
 						<div>
 							<form name='egoi_apikey_form' method='post'>
