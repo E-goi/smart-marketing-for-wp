@@ -87,6 +87,13 @@ class Egoi_For_Wp {
 	protected $restUrl = 'http://api.e-goi.com/v2/rest.php?type=json&method=';
 
 	/**
+	 * Plugin Key
+	 * 
+	 * @var string
+	 */
+	protected $plugin = '908361f0368fd37ffa5cc7c483ffd941';
+
+	/**
 	 * Define the preview in specific area of the plugin.
 	 *
 	 * @since  1.0.0
@@ -103,8 +110,6 @@ class Egoi_For_Wp {
 		$this->plugin_name = 'egoi-for-wp';
 		$this->debug = $debug;
 		$this->host = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
-
-		$this->plugin = '908361f0368fd37ffa5cc7c483ffd941';
 
 		$this->setClient();
 		$this->load_dependencies();
