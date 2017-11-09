@@ -111,7 +111,6 @@ class Egoi_For_Wp {
 		$this->debug = $debug;
 		$this->host = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
 
-		$this->setClient();
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -123,6 +122,8 @@ class Egoi_For_Wp {
 
 		$this->getClientAPI();
 		$this->syncronizeEgoi($_POST);
+
+		$this->setClient();
 	}
 
 	/**
@@ -132,8 +133,10 @@ class Egoi_For_Wp {
 	 */
 	protected function setClient() {
 
-		if(!get_option('egoi_client')){
-			add_option('egoi_client', $this->getClient());
+		if(!is_admin()){
+			if(!get_option('egoi_client')){
+				add_option('egoi_client', $this->getClient());
+			}
 		}
 	}
 
