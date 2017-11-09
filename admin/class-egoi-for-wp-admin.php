@@ -540,29 +540,32 @@ class Egoi_For_Wp_Admin {
 
 				if(!$_GET['wc-ajax']){
 
-					$list_id = $this->options_list['list'];
-					$track = $this->options_list['track'];
+					if(!$_GET['remove_item']){
 
-					if($track && $list_id){
+						$list_id = $this->options_list['list'];
+						$track = $this->options_list['track'];
 
-						// check for saved addtocart event
-						$validated_cart = $this->checkForCart();
-						
-						// check for saved Order event
-						$validated_order = $this->checkForOrder();
+						if($track && $list_id){
 
-						if($validated_cart && $validated_order){
+							// check for saved addtocart event
+							$validated_cart = $this->checkForCart();
+							
+							// check for saved Order event
+							$validated_order = $this->checkForOrder();
 
-							// check && execute now for page view
-							$client_info = get_option('egoi_client');
-							if($client_info){
+							if($validated_cart && $validated_order){
 
-								$client_id = $client_info->CLIENTE_ID;
+								// check && execute now for page view
+								$client_info = get_option('egoi_client');
+								if($client_info){
 
-								$user = wp_get_current_user();
-								$user_email = $user->data->user_email;
+									$client_id = $client_info->CLIENTE_ID;
 
-								echo $this->execEc($client_id, $list_id, $user_email);
+									$user = wp_get_current_user();
+									$user_email = $user->data->user_email;
+
+									echo $this->execEc($client_id, $list_id, $user_email);
+								}
 							}
 						}
 					}
