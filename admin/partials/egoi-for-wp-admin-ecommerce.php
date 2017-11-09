@@ -26,11 +26,17 @@ if(isset($_POST['action'])){
 <hr/>
 
 <?php
+
 if(!$options['list']) { ?>
 	<div class="postbox" style="margin-top:20px; max-width:80%; padding:5px 20px 5px; border-left:2px solid red;">
 		<div style="padding:10px 0;">
 			<span style="color: orangered; margin-top:5px;" class="dashicons dashicons-warning"></span>
-			<span style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?php _e( 'Select your mailing list in the option "Synchronize users with this list" to activate Track & Engage.<br>You will find this option in "<a href="http://wordpress.dev/wp-admin/admin.php?page=egoi-4-wp-subscribers">Sync contacts</a>" menu.', 'egoi-for-wp' ); ?>
+			<span style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;">
+			<?php 
+			_e('Select your mailing list in the option "Synchronize users with this list" to activate Track & Engage.<br>You will find this option in ', 'egoi-for-wp'); 
+			?>
+			<a href="<?php echo $this->protocol . $_SERVER['SERVER_NAME'] . $this->port;?>/wp-admin/admin.php?page=egoi-4-wp-subscribers">
+				<?php _e('Sync Contacts', 'egoi-for-wp'); ?></a>
 			</span>
 		</div>
 	</div><?php

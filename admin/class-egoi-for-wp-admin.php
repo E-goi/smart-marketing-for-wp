@@ -54,6 +54,20 @@ class Egoi_For_Wp_Admin {
 	private $version;
 
 	/**
+	 * Server Protocol
+	 * 
+	 * @var string
+	 */
+	protected $protocol;
+
+	/**
+	 * Server Port if is in use
+	 * 
+	 * @var string
+	 */
+	protected $port;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -65,6 +79,8 @@ class Egoi_For_Wp_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->server_url = $_SERVER['REQUEST_URI'];
+		$this->protocol = $_SERVER['HTTPS'] ?: 'http://';
+		$this->port = ':'.$_SERVER['SERVER_PORT'];
 
 		if (!session_id()){
     		session_start();
