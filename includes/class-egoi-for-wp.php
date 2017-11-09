@@ -374,11 +374,11 @@ class Egoi_For_Wp {
 		$instance = new self($form_id, $is_preview);
 	}
 
-	public function getClient() {
+	public function getClient($apikey = false) {
 		
 		$url = $this->restUrl.'getClientData&'.http_build_query(array(
 				'functionOptions' => array(
-					'apikey' => $this->_valid['api_key'],
+					'apikey' => $apikey ?: $this->_valid['api_key'],
 					'plugin_key' => $this->plugin
 					)
 				),'','&');

@@ -9,7 +9,8 @@
 
 			update_option('egoi_api_key', $_POST['egoi_api_key']);
 
-			update_option('egoi_client', $egoi->getClient());
+			update_option('egoi_client', $egoi->getClient($_POST['egoi_api_key']['api_key']));
+
 			echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
 				_e('API Key updated!', 'egoi-for-wp');
 			echo '</p></div>';
