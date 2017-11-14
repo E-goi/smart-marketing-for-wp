@@ -41,7 +41,7 @@ class Egoi_For_Wp_Activator {
 				'smegoi_v' => 'Wordpress_'.self::$version,
 				'smegoi_h' => isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'],
 				'smegoi_e' => get_locale(),
-				//'smegoi_u' => posix_uname()
+				'smegoi_u' => (function_exists('posix_uname') && (is_array(posix_uname()))) ? posix_uname() : ''
 			);
 
 			require 'service/post_wsdl.php';
@@ -56,7 +56,7 @@ class Egoi_For_Wp_Activator {
 			//continue
 		}
 
-		return '';
+		return true;
 	}
 
 	private static function _postContent($url, $rows) {

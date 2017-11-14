@@ -162,7 +162,7 @@
 								</div>
 								<hr>
 								<div class="e-goi-account-apikey--link--account-settings">
-									<a href="https://login.egoiapp.com/#/login/?action=login&menu=sec" target="_blank" id="egoi_edit_info">
+									<a href="https://login.egoiapp.com/#/login/?action=login&from=%2F%3Faction%3Ddados_cliente&menu=sec" target="_blank" id="egoi_edit_info">
 										<?php echo __('Click here if you want to change your E-goi account info', 'egoi-for-wp');?>
 									</a>
 									</span>
