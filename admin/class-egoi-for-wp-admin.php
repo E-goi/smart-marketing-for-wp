@@ -953,7 +953,16 @@ class Egoi_For_Wp_Admin {
 									$get_tg = $api->getTag($cf7[0]->post_title);
 				                	$cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
 
-									$api->editSubscriber($egoi_int['list_cf'], $email, array($cf7tag, $tag ? $tag : 0), $name, $lname, $extra_fields, $option, $ref_fields);
+									$api->editSubscriber(
+										$egoi_int['list_cf'], 
+										$email, 
+										array($cf7tag, $tag ? $tag : 0), 
+										$name, 
+										$lname, 
+										$extra_fields, 
+										$option, 
+										$ref_fields
+									);
 								}
 
 							}else{
@@ -967,7 +976,18 @@ class Egoi_For_Wp_Admin {
 								$get_tg = $api->getTag($cf7[0]->post_title);
 				                $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
 
-								$api->addSubscriberTags($egoi_int['list_cf'], $email, array($cf7tag, $tag ? $tag : 0), $name, $lname, 1, $extra_fields, $option, $ref_fields, $status);
+								$api->addSubscriberTags(
+									$egoi_int['list_cf'], 
+									$email, 
+									array($cf7tag, $tag ? $tag : 0), 
+									$name, 
+									$lname, 
+									1, 
+									$extra_fields, 
+									$option, 
+									$ref_fields, 
+									$status
+								);
 							}
 						}else{
 							echo $error_sent;

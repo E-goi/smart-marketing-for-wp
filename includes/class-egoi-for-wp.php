@@ -501,17 +501,7 @@ class Egoi_For_Wp {
        	return $result;
 	}
 
-	public function addSubscriberTags(
-		$listID, 
-		$email, 
-		$tags = array(),
-		$name = '', 
-		$lname = '', 
-		$role = false, 
-		$rows = array(), 
-		$option = false, 
-		$ref_fields = array(), 
-		$status = 1
+	public function addSubscriberTags($listID, $email, $tags = array(), $name = '', $lname = '', $role = 0, $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 1
 	) {
 
 		$full_name = explode(' ', $name);
@@ -556,8 +546,15 @@ class Egoi_For_Wp {
 		}
 
 		if($option){
-			foreach ($rows as $key => $value) {
-				$params[str_replace('key_', 'extra_', $key)] = $value;	
+			$all_extra_fields = get_object_vars($this->getExtraFields($listID));
+			if($all_extra_fields){
+
+				foreach ($extra_fields as $key => $value) {
+					$filtered_key = str_replace(array('key_', 'extra_'), '', $key);
+					if(array_key_exists('key_'.$filtered_key, $all_extra_fields)){
+						$params['extra_'.$filtered_key] = $value;
+					}
+				}
 			}
 		}
 
@@ -567,7 +564,7 @@ class Egoi_For_Wp {
 		return $result_client->Egoi_Api->addSubscriber;
 	}
 
-	public function editSubscriber($listID, $subscriber, $role = '', $fname = '', $lname = '', $fields = array(), $option = false, $ref_fields = array()) {
+	public function editSubscriber($listID, $subscriber, $role = 0, $fname = '', $lname = '', $fields = array(), $option = 0, $ref_fields = array()) {
 		
 		$apikey = $this->_valid['api_key'];
 		$plugin_key = $this->plugin;
