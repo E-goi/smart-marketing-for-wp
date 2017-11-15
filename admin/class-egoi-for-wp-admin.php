@@ -788,7 +788,7 @@ class Egoi_For_Wp_Admin {
 			
 		$cart = $_SESSION['egoi_session_cart'];
 
-		if(isset($cart) && ($cart == 1)){
+		if(isset($cart) && ($cart)){
 
 			$option = 'egoi_track_addtocart_'.$cart;
 			
