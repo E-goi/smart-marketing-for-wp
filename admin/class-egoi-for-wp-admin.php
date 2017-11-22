@@ -691,9 +691,6 @@ class Egoi_For_Wp_Admin {
 			foreach($woocommerce->cart->get_cart() as $k => $product){
 
 				$product_info = wc_get_product($product['data']->get_id());
-				echo 'PRODUCT: ';
-				var_dump($product_info);
-				exit;
 				$price = get_post_meta($product['product_id'], '_sale_price', true) ?: get_post_meta($product['product_id'], '_regular_price', true);
 
 				
