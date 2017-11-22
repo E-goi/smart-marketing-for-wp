@@ -117,6 +117,8 @@ class Egoi_For_Wp_Admin {
 
 		// hooks Woocommerce
 		add_action('woocommerce_add_to_cart', array($this, 'hookEcommerce'), 10, 3);
+		add_action('woocommerce_after_cart_item_quantity_update', array($this, 'hookCartQuantityUpdate'), 10, 3);
+		add_action('woocommerce_before_cart_item_quantity_zero', array($this, 'hookCartQuantityUpdate'), 10, 3);
 		add_action('woocommerce_cart_updated', array($this, 'hookRemoveItem'), 10, 3);
 		add_action('woocommerce_checkout_order_processed', array($this, 'hookProcessOrder'), 10, 1);
 
@@ -431,7 +433,7 @@ class Egoi_For_Wp_Admin {
 		}
 	}
 
-	public function execEc($client_id, $list_id, $user_email, $products = array(), $order_items = array(), $sum_price = false){
+	public function execEc($client_id, $list_id, $user_email, $products = array(), $order_items = array(), $sum_price = false, $cart_zero = 0){
 
 		return include dirname( __DIR__ ) . '/includes/ecommerce/t&e.php';
 	}
@@ -556,7 +558,7 @@ class Egoi_For_Wp_Admin {
 
 				if(!$_GET['wc-ajax']){
 
-					if(!$_GET['remove_item']){
+					if(!$_GET['remove_item'] && !strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
 
 						$list_id = $this->options_list['list'];
 						$track = $this->options_list['track'];
@@ -571,23 +573,34 @@ class Egoi_For_Wp_Admin {
 
 							if($validated_cart && $validated_order){
 
-								if(substr($_GET['key'], 0, 8) != 'wc_order'){
+								if(substr($_GET['key'], 0, 8) != 'wc_order' || $_SESSION[$_GET['key']] == 1 ) {
 
-									// check && execute now for page view
-									$client_info = get_option('egoi_client');
-									if($client_info){
+									if ($_SESSION[$_GET['key']] == 1) {
+										//echo 'TESTE';
+										$test = get_option('egoi_track_order_'.$_SESSION['egoi_order_id']);
+										echo html_entity_decode($test[0], ENT_QUOTES);
 
-										$client_id = $client_info->CLIENTE_ID;
+									}else{
 
-										$user = wp_get_current_user();
-										$user_email = $user->data->user_email;
+										// check && execute now for page view
+										$client_info = get_option('egoi_client');
+										if($client_info){
 
-										echo $this->execEc($client_id, $list_id, $user_email);
+											$client_id = $client_info->CLIENTE_ID;
+
+											$user = wp_get_current_user();
+											$user_email = $user->data->user_email;
+
+											echo $this->execEc($client_id, $list_id, $user_email);
+										}
 									}
+								} else {
+									$_SESSION[$_GET['key']] = 1;
+									
 								}
 							}
 						}
-					}
+					} 
 				}
 			}
 		}
@@ -600,10 +613,13 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.1.0
 	 */
 	public function hookRemoveItem(){
-
 		if(isset($_GET['removed_item']) && ($_GET['removed_item'])){
 			$this->hookCartUpdate();
-		}
+		} 
+	}
+
+	public function hookCartQuantityUpdate(){
+		$this->hookCartUpdate();
 	}
 
 	/**
@@ -643,6 +659,7 @@ class Egoi_For_Wp_Admin {
 			 		'post_type' => 'product'
 			 	);
 			 	$products = get_posts($args);
+
 				$this->hookProcessCart($data, $products);
 			}
 		}
@@ -657,6 +674,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function hookProcessCart($data, $products = array()) {
 
+
 		if(!empty($products) && ($data)){
 
 			global $woocommerce;
@@ -668,25 +686,44 @@ class Egoi_For_Wp_Admin {
 
 			$sum_price = 0;
 			$products = array();
+
+
 			foreach($woocommerce->cart->get_cart() as $k => $product){
-				
+
 				$product_info = wc_get_product($product['data']->get_id());
+				echo 'PRODUCT: ';
+				var_dump($product_info);
+				exit;
 				$price = get_post_meta($product['product_id'], '_sale_price', true) ?: get_post_meta($product['product_id'], '_regular_price', true);
+
 				
 				$products[$k]['id'] = $product['product_id'];
 				$products[$k]['name'] = $product_info->get_title();
 				$products[$k]['cat'] = ' - ';
 				$products[$k]['price'] = $price;
 				$products[$k]['quantity'] = $product['quantity'];
-				$sum_price += number_format(($price * $product['quantity']), 2);
+				$sum_price += floatval(round($price * $product['quantity'],2));
 			}
 
-			$te = $this->execEc($client_id, $list_id, $user_email, $products, array(), $sum_price);
-			$content = stripslashes(htmlspecialchars($te, ENT_QUOTES, 'UTF-8'));
+			$cart_zero = empty($products) ? 1 : 0;
 
+			$te = $this->execEc($client_id, $list_id, $user_email, $products, array(), $sum_price, $cart_zero);
+			$content = stripslashes(htmlspecialchars($te, ENT_QUOTES, 'UTF-8'));
 			update_option('egoi_track_addtocart_'.$hash_cart, array($content));
+
+			
+			/*
+			if(empty($products)){
+				echo 'teste';
+				echo html_entity_decode($content[0], ENT_QUOTES);
+				//$_SESSION['reloadCartPage'] = 1;
+			}
+			*/
+			//update_option('egoi_track_addtocart_'.$hash_cart, array($content));
 		}
 	}
+
+	
 
 	/**
 	 * Process E-commerce event Order for Paypal.
@@ -767,6 +804,7 @@ class Egoi_For_Wp_Admin {
 					$content = stripslashes(htmlspecialchars($te, ENT_QUOTES, 'UTF-8'));
 					update_option('egoi_track_order_'.$order_id, array($content));
 					$_SESSION['egoi_order_id'] = $order_id;
+
 				}
 			}
 			
@@ -793,6 +831,7 @@ class Egoi_For_Wp_Admin {
 			$option = 'egoi_track_addtocart_'.$cart;
 			
 			$content = get_option($option);
+			//var_dump($content);
 			echo html_entity_decode($content[0], ENT_QUOTES);
 			
 			delete_option($option);
