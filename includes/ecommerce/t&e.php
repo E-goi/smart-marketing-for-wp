@@ -26,6 +26,24 @@ $te = "
 				    	$price,
 				    	$qty]);\n";
 				}
+			} else if ($cart_zero == 1) {
+				$id = 0;
+				$name = '';
+				$cat = '';
+				$price = 0;
+				$qty = 0;
+				$sum_price = 0;
+
+				$te .= "_egoiaq.push(['addEcommerceItem',
+			    	\"$id\",
+			    	\"$name\",
+			    	\"$cat\",
+			    	$price,
+			    	$qty]);\n";
+
+			    $te .= "_egoiaq.push(['trackEcommerceCartUpdate',
+				    	$sum_price\n
+				    ]);\n";
 			}
 			
 
