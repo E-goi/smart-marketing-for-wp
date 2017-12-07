@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
+?>
 <div class="wrap egoi4wp-settings" id="tab-forms">
 <div class="row">
 
