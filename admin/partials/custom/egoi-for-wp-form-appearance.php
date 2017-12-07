@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 
 $width = $opt['egoi_form_sync']['width'];
 $height = $opt['egoi_form_sync']['height'];

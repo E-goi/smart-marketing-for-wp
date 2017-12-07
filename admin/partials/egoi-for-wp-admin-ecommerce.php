@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 
 if(isset($_POST['action'])){
 		

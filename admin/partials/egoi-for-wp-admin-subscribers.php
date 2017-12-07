@@ -1,5 +1,7 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 
 add_thickbox();
 
