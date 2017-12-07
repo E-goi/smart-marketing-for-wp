@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) or exit;
 		$Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
 	}
 
-	if(isset($_GET['del']) && ($_GET['del_form'])){
+	if( (isset($_GET['del']) && ($_GET['del_form'])) || (isset($_GET['del_simple_form']) && ($_GET['del_simple_form']) ) ){
 		delete_option('egoi_form_sync_'.$form_id);
 		echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
 			_e('Form deleted successfully!', 'egoi-for-wp');
@@ -53,12 +53,16 @@ defined( 'ABSPATH' ) or exit;
 		<a class="nav-tab nav-tab-forms nav-tab-active" id="nav-tab-forms" 
 		onclick="tabs('show_forms');"><?php _e('Advanced Forms', 'egoi-for-wp'); ?></a>
 
+		<a class="nav-tab nav-tab-simple-forms" id="nav-tab-simple-forms" 
+		onclick="tabs('show_simple_forms');"><?php _e('Simple Forms', 'egoi-for-wp'); ?></a>
+
 		<a class="nav-tab nav-tab-main-bar" id="nav-tab-main-bar" 
 		onclick="tabs('show_bar');"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a>
 
 		<a class="nav-tab nav-tab-widget" id="nav-tab-widget" 
 		onclick="tabs('show_widget');"><?php _e('Widget Options', 'egoi-for-wp'); ?></a>
 	</h2>
+	
 
 	<!-- wrap Forms -->
 	<div class="wrap egoi4wp-settings" id="tab-forms">
@@ -343,7 +347,7 @@ defined( 'ABSPATH' ) or exit;
 							<?php include ('custom/egoi-for-wp-form-appearance.php'); ?>
 						</div>
 
-						<div style="display: -webkit-inline-box;">
+						<div style="display: -webkit-inline-box; margin-bottom: 30px;">
 							<button style="margin-top: 12px;" type="submit" class="button button-primary"><?php _e('Save Changes', 'egoi-for-wp');?></button>
 						</div>
 					</form>
@@ -381,7 +385,7 @@ defined( 'ABSPATH' ) or exit;
 						$form_name = $form['egoi_form_sync']['form_name'];?>
 
 						<!-- PopUp ALERT Delete Form -->
-							<div class="cd-popup cd-popup-del-form" role="alert">
+							<div class="cd-popup cd-popup-del-form" data-id-form="<?=$j?>" data-type-form="form" role="alert">
 								<div class="cd-popup-container">
 									<p><b><?php echo __('Are you sure you want to delete this form?</b> This action will remove only the form in your plugin (will be kept in E-goi).', 'egoi-for-wp');?> </p>
 									<ul class="cd-buttons">
@@ -407,7 +411,7 @@ defined( 'ABSPATH' ) or exit;
 							<?php ($form['egoi_form_sync']['enabled']) ? _e('<span class="e-goi-form-active-label">Active</span>', 'egoi-for-wp') : _e('<span class="e-goi-form-inactive-label">Inactive</span>', 'egoi-for-wp');?>
 							</td>
 							<td>
-								<a class="cd-popup-trigger-del" href="#"><?php _e('Delete', 'egoi-for-wp');?></span>
+								<a class="cd-popup-trigger-del" data-id-form="<?=$j?>" data-type-form="form" href="#"><?php _e('Delete', 'egoi-for-wp');?></span>
 							</td>
 							<!-- Option -->
 							<td style="text-align:right;">
@@ -444,6 +448,11 @@ defined( 'ABSPATH' ) or exit;
 		</div>
 	</div>
 
+	<!-- wrap Simple Forms -->
+	<div class="wrap tab" id="tab-simple-forms">
+		<?php include ('egoi-for-wp-admin-simple-forms.php'); ?>
+	</div>
+
 	<!-- wrap Subscriber Bar -->
 	<div class="wrap tab" id="tab-main-bar">
 		<?php include ('egoi-for-wp-admin-bar.php'); ?>
@@ -453,3 +462,24 @@ defined( 'ABSPATH' ) or exit;
 	<div class="wrap tab" id="tab-widget">
 		<?php include ('egoi-for-wp-admin-widget.php'); ?>
 	</div>
+	
+	<?php 
+		if ( (isset($_GET['type']) && $_GET['type'] == 'simple_form') ||
+		(isset($_GET['simple_form'])) ) { 
+		?>
+		<script type="text/javascript">
+		
+			jQuery('#tab-simple-forms').show();
+			jQuery('#tab-forms').hide();
+			jQuery('#tab-main-bar').hide();
+			jQuery('#tab-widget').hide();
+
+			var option = "nav-tab ";
+
+			jQuery('#nav-tab-forms').attr('class', option + 'nav-tab-forms');
+			jQuery('#nav-tab-main-bar').attr('class', option + 'nav-tab-main-bar');
+			jQuery('#nav-tab-widget').attr('class', option + 'nav-tab-widget');
+			jQuery('#nav-tab-simple-forms').addClass('nav-tab-active');
+
+		</script>
+	<?php } ?>

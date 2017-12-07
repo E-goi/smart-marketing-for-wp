@@ -185,7 +185,7 @@ if(!$egoiwidget['enabled']){
 				</table>
 			</div>
 
-			<button style="margin-top: 12px;" type="submit" class="button button-primary"><?php _e('Save', 'egoi-for-wp');?></button>
+			<button style="margin-top: 12px; margin-bottom: 30px;" type="submit" class="button button-primary"><?php _e('Save', 'egoi-for-wp');?></button>
 
 			</form>
 

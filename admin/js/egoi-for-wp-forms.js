@@ -113,11 +113,21 @@ jQuery(document).ready(function($) {
 
 	// POPUP 
 	//open popup
-	$('.cd-popup-trigger-del').on('click', function(event){
-		event.preventDefault();
-		$('.cd-popup-del-form').addClass('is-visible');
-	});
+	$( ".cd-popup-trigger-del" ).click(function() {
+		var id = $(this).data('id-form');
+        var type = $(this).data('type-form');
 
+		event.preventDefault();
+        $('.cd-popup-del-form').filter(function(){
+            var popup = false;
+            if ($(this).data('id-form') === id && $(this).data('type-form') === type) {
+                popup = true;
+            }
+            return popup;
+        }).addClass('is-visible');
+        
+    });
+    
 	$('.cd-popup-trigger-change').on('click', function(event){
 		event.preventDefault();
 		$('.cd-popup-change-form').addClass('is-visible');
