@@ -1,5 +1,8 @@
 <?php 
-defined( 'ABSPATH' ) or exit;
+
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 
 	$Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
 	$form_id = $_GET['form'];

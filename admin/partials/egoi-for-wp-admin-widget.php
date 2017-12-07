@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 
 // widgets
 $opt_widget = get_option('egoi_widget');

@@ -1,6 +1,5 @@
 <?php
 error_reporting(0);
-
 /**
  *
  * @link              https://www.e-goi.com

@@ -1,6 +1,7 @@
 <?php 
-defined( 'ABSPATH' ) or exit;
-
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 ?>
 
 <table class="form-table egoi4wp-form-messages">

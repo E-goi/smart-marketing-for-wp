@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 
 $key = $_POST["key"];
 if(isset($key)){

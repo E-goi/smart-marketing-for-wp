@@ -1,4 +1,8 @@
-
+<?php
+	if ( ! defined( 'ABSPATH' ) ) {
+	    die();
+	}
+?>
 <div class="wrap-content wrap-content--list"> 
 
 		<div class="e-goi-account-list__title">

@@ -1,4 +1,9 @@
 <?php
+
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 	
 	$egoi = new Egoi_for_WP;
 	
