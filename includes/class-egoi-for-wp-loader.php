@@ -1,5 +1,8 @@
 <?php
-
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 /**
  * Register all actions and filters for the plugin
  *

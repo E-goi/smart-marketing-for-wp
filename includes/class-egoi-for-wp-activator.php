@@ -1,4 +1,8 @@
 <?php
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 /**
  * Fired during plugin activation.
  *

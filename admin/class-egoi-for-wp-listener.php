@@ -1,4 +1,8 @@
 <?php
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 /**
 *  E-goi Listener 4 Syncronize Users with WP
 */

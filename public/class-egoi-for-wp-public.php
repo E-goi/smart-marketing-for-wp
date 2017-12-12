@@ -1,5 +1,8 @@
 <?php
-
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 /**
  * Class responsible to handle public interactions with plugin
  */

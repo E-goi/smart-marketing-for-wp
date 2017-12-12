@@ -162,6 +162,8 @@ function egoi_simple_form( $atts ){
 	
 	$post .= '
 		<script type="text/javascript" >
+			
+
 			jQuery("#egoi_simple_form").submit(function(event) {
 				
 				event.preventDefault(); // Stop form from submitting normally
@@ -225,9 +227,9 @@ function simple_form_add_subscriber() {
 	$params = array( 
 		'apikey'    => $apikey['api_key'],
 		'listID' => $haslists,
-		'email' => $_POST['egoi_email'],
-		'cellphone' => $_POST['egoi_mobile'],
-		'first_name' => $_POST['egoi_name'],
+		'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
+		'cellphone' => filter_var($_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
+		'first_name' => filter_var($_POST['egoi_name'], FILTER_SANITIZE_STRING),
 		'status' => 1
 	);
 

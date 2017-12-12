@@ -1,4 +1,9 @@
-
+<?php
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
+?>
 <div class="medium-margin"></div>
 
 	<table class="form-table" style="table-layout: fixed;">

@@ -1,4 +1,8 @@
 <?php
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 function get_optionsform($form_id){
 	switch($form_id){
 		case 1:

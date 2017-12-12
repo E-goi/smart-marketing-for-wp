@@ -1,4 +1,9 @@
-
+<?php
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
+?>
 <div class="row" style="background: #0085ba;padding: 10px;">
 	<div class="egoi-map-title"><?php _e('Map Custom Fields', 'egoi-for-wp');?></div>
 	<div id="error_map" class="updated error notice" style="display:none;"><?php _e('The selected fields are already mapped!', 'egoi-for-wp');?></div><div id="error_map" class="updated error notice" style="display:none;"><?php _e('The selected fields are already mapped!', 'egoi-for-wp');?></div>

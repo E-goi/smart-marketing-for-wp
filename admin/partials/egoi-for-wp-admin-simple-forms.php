@@ -68,12 +68,13 @@ if ( ! defined( 'ABSPATH' ) ) {
             $id_simple_form = $shortcode['id_simple_form'];
 
             echo "<div id='shortcode_div' style='width:100%;background:#00aeda;text-align:center;color:#fff'  onclick='select_all(this)'>".$shortcode['shortcode']."</div>";
-       
+            
         } else if (isset($_GET['edit_simple_form'])) {
 
             function selectSimpleForm($id) {
                 global $wpdb;
                 $table = $wpdb->prefix."posts";
+                $shortcode['shortcode'] = '[egoi-simple-form id="'.$id.'"]';
                 $shortcode['title_simple_form'] = $wpdb->get_var( "SELECT post_title FROM ".$table." WHERE ID = '".$id."' " ); 
                 $shortcode['html_code_simple_form'] = $wpdb->get_var( "SELECT post_content FROM ".$table." WHERE ID = '".$id."' " ); 
                 return $shortcode;
@@ -81,6 +82,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             $shortcode = selectSimpleForm($_GET['simple_form']);
             $id_simple_form = $_GET['simple_form'];
 
+            echo "<div id='shortcode_div' style='width:100%;background:#00aeda;text-align:center;color:#fff'  onclick='select_all(this)'>".$shortcode['shortcode']."</div>";
+            
         } else {
             $id_simple_form = 0;
         }
@@ -161,7 +164,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         html_code = toggleLabel(html_code, label, 'Email');
                         break;
                     case 'egoi_mobile_button':
-                        var label = '[Egoi-Mobile]\n<p>\n   <label for="egoi_mobile"><?php _e('Mobile', 'egoi-for-wp');?>: </label>\n  <input type="text" name="egoi_mobile" id="egoi_mobile">\n</p>\n[/Egoi-Mobile]\n';
+                        var label = '[Egoi-Mobile]\n<p>\n   <label for="egoi_mobile"><?php _e('Mobile', 'egoi-for-wp');?>: </label>\n  <input type="text" name="egoi_mobile" id="egoi_mobile" placeholder="<?php _e('(Country Code)-Phone Number', 'egoi-for-wp');?>">\n</p>\n[/Egoi-Mobile]\n';
                         html_code = toggleLabel(html_code, label, 'Mobile');
                         break;
                     case 'egoi_submit_button':

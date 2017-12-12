@@ -1,5 +1,8 @@
 <?php
-
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+    die();
+}
 $te = "
 		<script type='text/javascript'>
 			var _egoiaq = _egoiaq || [];
