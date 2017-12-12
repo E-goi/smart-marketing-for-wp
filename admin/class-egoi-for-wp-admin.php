@@ -1224,4 +1224,54 @@ class Egoi_For_Wp_Admin {
     }
 
 
+	public function subscribe_egoi_simple_form_add() {
+		
+		$apikey = get_option('egoi_api_key');	
+		$list_id = $this->options_list['list'];
+
+		$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
+		
+		$params = array( 
+			'apikey'    => $apikey['api_key'],
+			'name' => 'addSubscriber'
+		);
+		
+		$tag = $client->addTag($params);
+
+		$params = array( 
+			'apikey'    => $apikey['api_key'],
+			'listID' => $list_id,
+			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
+			'cellphone' => filter_var($_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
+			'first_name' => filter_var($_POST['egoi_name'], FILTER_SANITIZE_STRING),
+			'status' => 1
+		);
+
+		$result = $client->addSubscriber($params);
+
+		if (!isset($result['ERROR']) && !isset($result['MODIFICATION_DATE']) ) {
+			$error = 'Subscriber '.$this->check_subscriber($result).' is now registered on E-goi!';
+		} else if (isset($result['MODIFICATION_DATE'])) {
+			$error = 'Subscriber data from '.$this->check_subscriber($result).' has been updated on E-goi!';
+		} else if (isset($result['ERROR'])) {
+			$error = 'ERROR: '.strtolower(str_replace('_',' ',$result['ERROR']));
+		}
+		
+		_e($error, 'egoi-for-wp');
+		
+		wp_die(); // this is required to terminate immediately and return a proper response
+		
+	}
+
+	public function check_subscriber($subscriber_data) {
+		$data = array('FIRST_NAME','EMAIL','CELLPHONE');
+		foreach ($data as $value) {
+			if ($subscriber_data[$value]) {
+				$subscriber = $subscriber_data[$value];
+				break;
+			}
+		}
+		return $subscriber;
+	}
+
 }

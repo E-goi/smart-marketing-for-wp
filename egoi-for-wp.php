@@ -110,6 +110,21 @@ function process_egoi_form(){
 	return $public_area->subscribe_egoi_form();
 }
 
+// HOOK E-GOI SIMPLE FORM SHORTCODE
+function process_egoi_simple_form($atts){
+	$public_area = new Egoi_For_Wp_Public();
+	return $public_area->subscribe_egoi_simple_form($atts);
+}
+add_shortcode( 'egoi-simple-form', 'process_egoi_simple_form' );
+
+// HOOK E-GOI SIMPLE FORM ADD SUBSCRIBER
+add_action( 'wp_ajax_my_action', 'process_simple_form_add' );
+add_action( 'wp_ajax_nopriv_my_action', 'process_simple_form_add' );
+function process_simple_form_add(){
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+	return $admin->subscribe_egoi_simple_form_add();
+}
+
 
 add_action('widgets_init', 'egoi_widget_init');
 function egoi_widget_init(){
@@ -139,122 +154,3 @@ function run_egoi_for_wp() {
 
 }
 run_egoi_for_wp();
-
-
-function egoi_simple_form( $atts ){
-	global $wpdb;
-
-	$id = $atts['id'];
-
-	$post = '<form id="egoi_simple_form" method="post" action="/">';
-	$table = $wpdb->prefix.'posts';
-
-	$html_code = $wpdb->get_var(" SELECT post_content FROM $table WHERE ID = '$id' ");
-	$tags = array('Name','Email','Mobile','Submit');
-	foreach ($tags as $tag) {
-		$html_code = str_replace('[Egoi-'.$tag.']','',$html_code);
-		$html_code = str_replace('[/Egoi-'.$tag.']','',$html_code);
-	}
-
-	$post .= str_replace('\"', '"', $html_code);
-	$post .= '<div id="simple_form_result" style="margin:10px 0px; padding:12px; display:none;"></div>';
-	$post .= '</form>';
-	
-	$post .= '
-		<script type="text/javascript" >
-			
-
-			jQuery("#egoi_simple_form").submit(function(event) {
-				
-				event.preventDefault(); // Stop form from submitting normally
-
-				jQuery( "#simple_form_result" ).hide();
-
-				var ajaxurl = "'.admin_url('admin-ajax.php').'";
-				var egoi_name = jQuery("#egoi_name").val();
-				var egoi_email = jQuery("#egoi_email").val();
-				var egoi_mobile	= jQuery("#egoi_mobile").val();
-
-				var data = {
-					"action": "my_action",
-					"egoi_name": egoi_name,
-					"egoi_email": egoi_email,
-					"egoi_mobile": egoi_mobile
-				};
-		
-				var posting = jQuery.post(ajaxurl, data);
-
-				posting.done(function( data ) {
-					if (data.substring(0, 5) != "ERROR") {
-						jQuery( "#simple_form_result" ).css({
-							"color": "#4F8A10",
-							"background-color": "#DFF2BF"
-						});
-					} else {
-						jQuery( "#simple_form_result" ).css({
-							"color": "#9F6000",
-							"background-color": "#FFD2D2"
-						});
-					}
-
-					jQuery( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
-				});
-			});
-		</script>
-	';
-
-	return $post;
-}
-add_shortcode( 'egoi-simple-form', 'egoi_simple_form' );
-
-add_action( 'wp_ajax_my_action', 'simple_form_add_subscriber' );
-add_action( 'wp_ajax_nopriv_my_action', 'simple_form_add_subscriber' );
-
-function simple_form_add_subscriber() {
-	
-	$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
-	
-	$params = array( 
-		'apikey'    => '0a472eba225447a04f417b9c8a00826973f8923b',
-		'name' => 'addSubscriber'
-	);
-	
-	$tag = $client->addTag($params);
-
-	$apikey = get_option('egoi_api_key');
-	$haslists = get_option('egoi_has_list');
-	
-	$params = array( 
-		'apikey'    => $apikey['api_key'],
-		'listID' => $haslists,
-		'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
-		'cellphone' => filter_var($_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
-		'first_name' => filter_var($_POST['egoi_name'], FILTER_SANITIZE_STRING),
-		'status' => 1
-	);
-
-	$result = $client->addSubscriber($params);
-	
-	if (!isset($result['ERROR']) && !isset($result['MODIFICATION_DATE']) ) {
-		$error = 'Subscriber '.check_subscriber($result).' is now registered on E-goi!';
-	} else if (isset($result['MODIFICATION_DATE'])) {
-		$error = 'Subscriber data from '.check_subscriber($result).' has been updated on E-goi!';
-	} else if (isset($result['ERROR'])) {
-		$error = 'ERROR: '.strtolower(str_replace('_',' ',$result['ERROR']));
-	}
-	_e($error, 'egoi-for-wp');
-
-	wp_die(); // this is required to terminate immediately and return a proper response
-	
-}
-
-function check_subscriber($subscriber_data) {
-	$data = array('FIRST_NAME','EMAIL','CELLPHONE');
-	foreach ($data as $value) {
-		if ($subscriber_data[$value]) {
-			$subscriber = $subscriber_data[$value];
-			break;
-		}
-	}
-	return $subscriber;
-}

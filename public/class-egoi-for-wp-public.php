@@ -377,4 +377,68 @@ class Egoi_For_Wp_Public {
 	}
 
 
+	public function subscribe_egoi_simple_form( $atts ){
+		global $wpdb;
+
+		$id = $atts['id'];
+
+		$post = '<form id="egoi_simple_form" method="post" action="/">';
+		$table = $wpdb->prefix.'posts';
+
+		$html_code = $wpdb->get_var(" SELECT post_content FROM $table WHERE ID = '$id' ");
+		$tags = array('Name','Email','Mobile','Submit');
+		foreach ($tags as $tag) {
+			$html_code = str_replace('[Egoi-'.$tag.']','',$html_code);
+			$html_code = str_replace('[/Egoi-'.$tag.']','',$html_code);
+		}
+
+		$post .= str_replace('\"', '"', $html_code);
+		$post .= '<div id="simple_form_result" style="margin:10px 0px; padding:12px; display:none;"></div>';
+		$post .= '</form>';
+		
+		$post .= '
+			<script type="text/javascript" >
+
+				jQuery("#egoi_simple_form").submit(function(event) {
+					
+					event.preventDefault(); // Stop form from submitting normally
+
+					jQuery( "#simple_form_result" ).hide();
+
+					var ajaxurl = "'.admin_url('admin-ajax.php').'";
+					var egoi_name = jQuery("#egoi_name").val();
+					var egoi_email = jQuery("#egoi_email").val();
+					var egoi_mobile	= jQuery("#egoi_mobile").val();
+
+					var data = {
+						"action": "my_action",
+						"egoi_name": egoi_name,
+						"egoi_email": egoi_email,
+						"egoi_mobile": egoi_mobile
+					};
+			
+					var posting = jQuery.post(ajaxurl, data);
+
+					posting.done(function( data ) {
+						if (data.substring(0, 5) != "ERROR") {
+							jQuery( "#simple_form_result" ).css({
+								"color": "#4F8A10",
+								"background-color": "#DFF2BF"
+							});
+						} else {
+							jQuery( "#simple_form_result" ).css({
+								"color": "#9F6000",
+								"background-color": "#FFD2D2"
+							});
+						}
+
+						jQuery( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
+					});
+				});
+			</script>
+		';
+
+		return $post;
+	}
+
 }
