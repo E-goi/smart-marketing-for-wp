@@ -135,6 +135,9 @@ class Egoi_For_Wp_Admin {
 		add_action('comment_post', array($this, 'insertCommentHook'), 10, 3);
 		add_action('comment_form_after_fields', array($this, 'checkNewsletterPostComment'), 10, 1);
 
+		//Sets up a JSON endpoint at /wp-json/egoi/v1/products_data/
+		add_action( 'rest_api_init', array($this, 'egoi_products_data_api_init'), 10, 3) ;
+
 		// hook map fields to E-goi
 		$this->mapFieldsEgoi();
 
@@ -1273,5 +1276,96 @@ class Egoi_For_Wp_Admin {
 		}
 		return $subscriber;
 	}
+
+	//Sets up a JSON endpoint at /wp-json/egoi/v1/products_data/
+	public function egoi_products_data_api_init() {
+		$namespace = 'egoi/v1';
+		register_rest_route( $namespace, '/products_data/', array(
+			'methods' => 'GET',
+			'callback' => array( $this, 'egoi_products_data_return' ),
+			'args' => array(
+				'ids' => array(
+					'sanitize_callback'  => 'sanitize_text_field'
+				),
+			),
+		) );
+	}
+
+	//Outputs Easy Post data on the JSON endpoint
+	public function egoi_products_data_return( WP_REST_Request $request ) {
+		
+		// Get query strings params from request
+		$params = $request->get_query_params('ids');
+		
+		$params["ids"] = filter_var($params["ids"], FILTER_SANITIZE_STRING);
+		$ids = str_replace(" ","",$params["ids"]);
+		$ids = explode(",",$ids); 
+		foreach ($ids as $value) {
+			if (!is_numeric($value)) 
+				die();
+		}
+		$args = array( 'post_type' => array('product', 'product_variation') ,'posts_per_page' => -1);
+		$products = get_posts( $args );
+	
+		$products_data = array();
+		foreach ($products as $product) {
+			if ( in_array($product->ID, $ids) ) {
+	
+				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product->ID ), 'single-post-thumbnail' );
+				$sku = get_post_meta( $product->ID, '_sku', true);
+				$price = get_post_meta( $product->ID, '_regular_price', true);
+				$sale = get_post_meta( $product->ID, '_sale_price', true);
+				$sale_dates_from = get_post_meta( $product->ID, '_sale_price_dates_from', true);
+				$sale_dates_to = get_post_meta( $product->ID, '_sale_price_dates_to', true);
+				$image_gallery = $image[0];
+				$upsell_ids = get_post_meta( $product->ID, '_upsell_ids', true);
+				$crosssell_ids = get_post_meta( $product->ID, '_crosssell_ids', true);
+				$manage_stock = get_post_meta( $product->ID, '_manage_stock', true);
+				$stock_quantity = get_post_meta( $product->ID, '_stock', true);
+				$stock_status = get_post_meta( $product->ID, '_stock_status', true);
+				$weight = get_post_meta( $product->ID, '_weight', true);
+				$length = get_post_meta( $product->ID, '_length', true);
+				$width = get_post_meta( $product->ID, '_width', true);
+				$height = get_post_meta( $product->ID, '_height', true);
+				$shipping_class = get_the_terms($product->ID, 'product_shipping_class');
+				$categories = get_the_terms( $product->ID, 'product_cat' );
+				$tags = get_the_terms( $product->ID, 'product_tag' );
+				$virtual = get_post_meta( $product->ID, '_virtual', true);
+				$downloadable = get_post_meta( $product->ID, '_downloadable', true);
+				$download_limit = get_post_meta( $product->ID, '_download_limit', true);
+				$download_expiry = get_post_meta( $product->ID, '_download_expiry', true);
+				
+				$products_data['items']['item'][] = array(
+					'id' => $product->ID,
+					'name' => $product->post_title,
+					'sku' => $sku,
+					'regular_price' => $price,
+					'sale_price' => $sale,
+					'sale_dates_from' => $sale_dates_from,
+					'sale_dates_to' => $sale_dates_to,
+					'image_gallery' => $image_gallery,
+					'upsell_ids' => $upsell_ids,
+					'crosssell_ids' => $crosssell_ids,
+					'manage_stock' => $manage_stock,
+					'stock_quantity' => $stock_quantity,
+					'stock_status' => $stock_status,
+					'weight' => $weight,
+					'length' => $length,
+					'width' => $width,
+					'height' => $height,
+					'shipping_class' => $shipping_class[0],
+					'excerpt' => $product->post_excerpt,
+					'categories' => $categories,
+					'tags' => $tags,
+					'virtual' => $virtual,
+					'downloadable' => $downloadable,
+					'download_limit' => $download_limit,
+					'download_expiry' => $download_expiry
+				);
+			}
+		}
+		return $products_data; 
+	}
+	
 
 }
