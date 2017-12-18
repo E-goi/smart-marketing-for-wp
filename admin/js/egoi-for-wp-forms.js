@@ -152,6 +152,24 @@ jQuery(document).ready(function($) {
 	});
 
 
+	$(document).on('keyup',function(evt) {
+	    if (evt.keyCode == 27) {
+	       	if($('.cd-popup').hasClass('is-visible')){
+	       		$('.cd-popup').removeClass('is-visible');
+	       		$('#form_choice').val($('#type_frm_saved').val());
+	       	}
+	    }
+	});
+
+	$(document).on('click', function(e) {
+		var element = e.target;
+
+		if(element.id && element.id == 'change-form'){
+			$('#form_choice').val($('#type_frm_saved').val());
+		}
+  	});
+
+
 	// OTHER THINGS
 	$('#get_type_form').click(function() {
 		$('#form_type').trigger("click");

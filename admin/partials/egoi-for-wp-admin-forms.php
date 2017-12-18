@@ -122,7 +122,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<span class="cd-popup-trigger-change"></span>
 
 						<!-- PopUp ALERT Change Form -->
-						<div class="cd-popup cd-popup-change-form" role="alert">
+						<div class="cd-popup cd-popup-change-form" id="change-form" role="alert">
 							<div class="cd-popup-container">
 								<p><b><?php echo __('Attention! If you change your form you will lose the settings.', 'egoi-for-wp');?></b></p>
 								<ul class="cd-buttons">
