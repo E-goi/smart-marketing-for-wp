@@ -138,6 +138,12 @@ class Egoi_For_Wp_Admin {
 		//Sets up a JSON endpoint at /wp-json/egoi/v1/products_data/
 		add_action( 'rest_api_init', array($this, 'egoi_products_data_api_init'), 10, 3) ;
 
+
+		// Map shortcode to Visual Composer
+		if ( function_exists( 'vc_lean_map' ) ) {
+			vc_lean_map( 'egoi_vc_shortcode', array( $this, 'egoi_vc_shortcode_map' ) );
+		}
+
 		// hook map fields to E-goi
 		$this->mapFieldsEgoi();
 
@@ -1226,7 +1232,7 @@ class Egoi_For_Wp_Admin {
         wp_die();
     }
 
-
+    // ADD A SIMPLE FORM SUBSCRIBER
 	public function subscribe_egoi_simple_form_add() {
 		
 		$apikey = get_option('egoi_api_key');	
@@ -1245,7 +1251,7 @@ class Egoi_For_Wp_Admin {
 			'apikey'    => $apikey['api_key'],
 			'listID' => $list_id,
 			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
-			'cellphone' => filter_var($_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
+			'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
 			'first_name' => filter_var($_POST['egoi_name'], FILTER_SANITIZE_STRING),
 			'status' => 1
 		);
@@ -1365,6 +1371,35 @@ class Egoi_For_Wp_Admin {
 			}
 		}
 		return $products_data; 
+	}
+
+
+	//Map shortcode to Visual Composer
+	public function egoi_vc_shortcode_map() {
+
+        global $wpdb;
+
+        $rows = $wpdb->get_results( " SELECT ID, post_title FROM ".$wpdb->prefix."posts WHERE post_type = 'egoi-simple-form'" );
+        $shortcode_ids = array();
+        foreach ($rows as $row) {
+        	$shortcode_ids[$row->ID." - ".$row->post_title] = $row->ID;
+        }
+		return array(
+			'name'        => 'E-goi',
+      		'icon' 		  => plugin_dir_url( __FILE__ ) . "img/logo.png", 
+			'description' => 'Shortcode E-goi.',
+			'base'        => 'egoi_vc_shortcode',
+			'params'      => array(
+				array(
+					
+					'type'       => 'dropdown',
+					'heading'    => 'Shortcode ID',
+					'param_name' => 'shortcode_id',
+					'value'      => $shortcode_ids,
+				),
+			)
+		);
+
 	}
 	
 

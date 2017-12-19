@@ -386,18 +386,29 @@ class Egoi_For_Wp_Public {
 		$table = $wpdb->prefix.'posts';
 
 		$html_code = $wpdb->get_var(" SELECT post_content FROM $table WHERE ID = '$id' ");
-		$tags = array('Name','Email','Mobile','Submit');
+		$tags = array('name','email','mobile','submit');
 		foreach ($tags as $tag) {
-			$html_code = str_replace('[Egoi-'.$tag.']','',$html_code);
-			$html_code = str_replace('[/Egoi-'.$tag.']','',$html_code);
+			$html_code = str_replace('[e_'.$tag.']','',$html_code);
+			$html_code = str_replace('[/e_'.$tag.']','',$html_code);
 		}
 
 		$post .= str_replace('\"', '"', $html_code);
 		$post .= '<div id="simple_form_result" style="margin:10px 0px; padding:12px; display:none;"></div>';
 		$post .= '</form>';
 		
+		
+
 		$post .= '
 			<script type="text/javascript" >
+				jQuery(document).ready(function() {
+					jQuery("#egoi_country_code").empty();
+				';
+		foreach (COUNTRY_CODES as $key => $value) {
+		 	$string = ucwords(strtolower($value['name']))." (+".$value['code'].")";
+		 	$post .= 'jQuery("#egoi_country_code").append("<option value='.$value['code'].'>'.$string.'</option>");';
+		}
+		$post .= '
+				});
 
 				jQuery("#egoi_simple_form").submit(function(event) {
 					
@@ -408,12 +419,14 @@ class Egoi_For_Wp_Public {
 					var ajaxurl = "'.admin_url('admin-ajax.php').'";
 					var egoi_name = jQuery("#egoi_name").val();
 					var egoi_email = jQuery("#egoi_email").val();
+					var egoi_country_code	= jQuery("#egoi_country_code").val();
 					var egoi_mobile	= jQuery("#egoi_mobile").val();
 
 					var data = {
 						"action": "my_action",
 						"egoi_name": egoi_name,
 						"egoi_email": egoi_email,
+						"egoi_country_code": egoi_country_code,
 						"egoi_mobile": egoi_mobile
 					};
 			
@@ -439,6 +452,22 @@ class Egoi_For_Wp_Public {
 		';
 
 		return $post;
+	}
+
+	/**
+	 * Visual Composer Shortcode output
+	 */
+	public function egoi_vc_shortcode_output( $atts, $content = null ) {
+
+		if (function_exists('vc_map_get_attributes')) {
+			// Extract shortcode attributes (based on the vc_lean_map function - see next function)
+			extract( vc_map_get_attributes( 'egoi_vc_shortcode', $atts ) );
+			
+			return $this->subscribe_egoi_simple_form( array('id'=>$shortcode_id) );
+		} else {
+			return false;
+		}
+
 	}
 
 }

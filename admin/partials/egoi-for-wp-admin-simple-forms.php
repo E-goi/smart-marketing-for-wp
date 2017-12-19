@@ -136,13 +136,13 @@ if ( ! defined( 'ABSPATH' ) ) {
         <script type="text/javascript">
 
             function toggleLabel(html_code, label, tag) {
-                var begin_tag = "[Egoi-" + tag + "]";
+                var begin_tag = "[e_" + tag + "]";
                 var first_char = html_code.indexOf(begin_tag);
 
                 if (first_char < 0 ) {
                     html_code += label;
                 } else {
-                    var end_tag = "[/Egoi-" + tag + "]";
+                    var end_tag = "[/e_" + tag + "]";
                     var last_char = html_code.indexOf(end_tag) + end_tag.length +1;
 
                     html_code = html_code.replace(html_code.substring(first_char, last_char), '');
@@ -156,20 +156,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 switch (this.id) {
                     case 'egoi_name_button':
-                        var label = '[Egoi-Name]\n<p>\n  <label for="egoi_name"><?php _e('Name', 'egoi-for-wp');?>: </label>\n  <input type="text" name="egoi_name" id="egoi_name">\n</p>\n[/Egoi-Name]\n';
-                        html_code = toggleLabel(html_code, label, 'Name');
+                        var label = '[e_name]\n<p>\n  <label for="egoi_name"><?php _e('Name', 'egoi-for-wp');?>: </label>\n  <input type="text" name="egoi_name" id="egoi_name">\n</p>\n[/e_name]\n';
+                        html_code = toggleLabel(html_code, label, 'name');
                         break;
                     case 'egoi_email_button':
-                        var label = '[Egoi-Email]\n<p>\n   <label for="egoi_email"><?php _e('Email', 'egoi-for-wp');?>: </label>\n  <input type="email" name="egoi_email" id="egoi_email">\n</p>\n[/Egoi-Email]\n';
-                        html_code = toggleLabel(html_code, label, 'Email');
+                        var label = '[e_email]\n<p>\n  <label for="egoi_email"><?php _e('Email', 'egoi-for-wp');?>: </label>\n  <input type="email" name="egoi_email" id="egoi_email">\n</p>\n[/e_email]\n';
+                        html_code = toggleLabel(html_code, label, 'email');
                         break;
                     case 'egoi_mobile_button':
-                        var label = '[Egoi-Mobile]\n<p>\n   <label for="egoi_mobile"><?php _e('Mobile', 'egoi-for-wp');?>: </label>\n  <input type="text" name="egoi_mobile" id="egoi_mobile" placeholder="<?php _e('(Country Code)-Phone Number', 'egoi-for-wp');?>">\n</p>\n[/Egoi-Mobile]\n';
-                        html_code = toggleLabel(html_code, label, 'Mobile');
+                        var label = '[e_mobile]\n<p>\n  <label for="egoi_mobile"><?php _e('Mobile', 'egoi-for-wp');?>: </label>\n  <select name="egoi_country_code" id="egoi_country_code"></select><input type="text" name="egoi_mobile" id="egoi_mobile">\n</p>\n[/e_mobile]\n';
+                        html_code = toggleLabel(html_code, label, 'mobile');
                         break;
                     case 'egoi_submit_button':
-                        var label = '[Egoi-Submit]\n<p>\n   <button type="submit"><?php _e('Submit Button', 'egoi-for-wp');?></button>\n</p>\n[/Egoi-Submit]\n';
-                        html_code = toggleLabel(html_code, label, 'Submit');
+                        var label = '[e_submit]\n<p>\n  <button type="submit"><?php _e('Submit Button', 'egoi-for-wp');?></button>\n</p>\n[/e_submit]\n';
+                        html_code = toggleLabel(html_code, label, 'submit');
                 }
 
                 jQuery("#html_code").val(html_code);
@@ -178,11 +178,11 @@ if ( ! defined( 'ABSPATH' ) ) {
             jQuery("#egoi_simple_form").on("submit", function () {
                 var html_code = jQuery("#html_code").val();
                 var simple_form_error = false;
-                if ( html_code.indexOf('[Egoi-Submit]') < 0 || html_code.indexOf('[/Egoi-Submit]') < 0 ) {
+                if ( html_code.indexOf('[e_submit]') < 0 || html_code.indexOf('[/e_submit]') < 0 ) {
                     simple_form_error = 'Submit button is required';       
-                } else if ( (html_code.indexOf('[Egoi-Name]') < 0 || html_code.indexOf('[/Egoi-Name]') < 0) 
-                        && (html_code.indexOf('[Egoi-Email]') < 0 || html_code.indexOf('[/Egoi-Email]') < 0)
-                        && (html_code.indexOf('[Egoi-Mobile]') < 0 || html_code.indexOf('[/Egoi-Mobile]') < 0) ) {
+                } else if ( (html_code.indexOf('[e_name]') < 0 || html_code.indexOf('[/e_name]') < 0) 
+                        && (html_code.indexOf('[e_email]') < 0 || html_code.indexOf('[/e_email]') < 0)
+                        && (html_code.indexOf('[e_mobile]') < 0 || html_code.indexOf('[/e_mobile]') < 0) ) {
                     simple_form_error = 'At least one input is required';
                 } 
 
