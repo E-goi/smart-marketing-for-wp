@@ -108,7 +108,12 @@ class Egoi_For_Wp_Admin {
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_5, Egoi_For_Wp_Admin::FORM_OPTION_5);
 		
 		// hooks Core
-		add_action('wp_loaded', array($this, 'hookEcommerce'), 10, 1);
+
+		if(!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order') {
+			add_action('wp_footer', array($this, 'hookEcommerce'), 10, 1);
+		} else {
+			add_action('wp_loaded', array($this, 'hookEcommerce'), 10, 1);
+		}
 
 		if(strpos($this->server_url, 'egoi') !== false){
 			// HOOK TO CHANGE DEFAULT FOOTER TEXT
@@ -116,6 +121,7 @@ class Egoi_For_Wp_Admin {
 		}
 
 		// hooks Woocommerce
+		//add_action('woocommerce_order_details_after_order_table', array($this, 'hookEcommerce'), 10, 3);
 		add_action('woocommerce_add_to_cart', array($this, 'hookEcommerce'), 10, 3);
 		add_action('woocommerce_after_cart_item_quantity_update', array($this, 'hookCartQuantityUpdate'), 10, 3);
 		add_action('woocommerce_before_cart_item_quantity_zero', array($this, 'hookCartQuantityUpdate'), 10, 3);
