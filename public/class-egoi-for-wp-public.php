@@ -376,7 +376,8 @@ class Egoi_For_Wp_Public {
 		return $html;
 	}
 
-
+	
+	// Simple form shortcode output
 	public function subscribe_egoi_simple_form( $atts ){
 		global $wpdb;
 

@@ -161,8 +161,8 @@ function apikey_changes(){
 }
 
 // COUNTRY MOBILE CODES
-define('COUNTRY_CODES', array(
-	'AFG'=>array('name'=>'Afeganistão','code'=>'93'),
+const COUNTRY_CODES = array(
+    'AFG'=>array('name'=>'Afeganistão','code'=>'93'),
     'ZAF'=>array('name'=>'África do Sul','code'=>'27'),
     'ALB'=>array('name'=>'Albânia','code'=>'355'),
     'DEU'=>array('name'=>'Alemanha','code'=>'49'),
@@ -393,7 +393,7 @@ define('COUNTRY_CODES', array(
     'WLF'=>array('name'=>'Wallis and Futuna','code'=>'681'),
     'ZMB'=>array('name'=>'Zâmbia','code'=>'260'),
     'ZWE'=>array('name'=>'Zimbabwe','code'=>'263')
-));
+);
 
 
 // INITIALIZE PLUGIN
