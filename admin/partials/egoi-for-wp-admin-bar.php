@@ -2,7 +2,7 @@
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
     die();
-}
+} 
 ?>
 <div class="wrap" id="egoi4wp-admin" style="width:65%;">
 

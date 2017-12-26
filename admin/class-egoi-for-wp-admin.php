@@ -559,14 +559,13 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.1.2
 	 */
 	public function hookEcommerce($cart_id = false){
-
 		// for security reasons
+			
 		if(strpos($this->server_url, 'wp-json') !== false){
 			return;
 		}
 
 		if(!is_admin()){
-
 			if($cart_id){
 				$this->hookCartUpdate();
 			}else{
@@ -575,6 +574,7 @@ class Egoi_For_Wp_Admin {
 
 					if(!$_GET['remove_item'] && !strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
 
+					
 						$list_id = $this->options_list['list'];
 						$track = $this->options_list['track'];
 
@@ -588,15 +588,17 @@ class Egoi_For_Wp_Admin {
 
 							if($validated_cart && $validated_order){
 
+
 								if(substr($_GET['key'], 0, 8) != 'wc_order' || $_SESSION[$_GET['key']] == 1 ) {
 
 									if ($_SESSION[$_GET['key']] == 1) {
 										//echo 'TESTE';
+
 										$test = get_option('egoi_track_order_'.$_SESSION['egoi_order_id']);
 										echo html_entity_decode($test[0], ENT_QUOTES);
 
 									}else{
-
+				
 										// check && execute now for page view
 										$client_info = get_option('egoi_client');
 										if($client_info){

@@ -17,8 +17,8 @@ $te = "
 				foreach($products as $product){
 
 					$id = $product['id'];
-					$name = $product['name'];
-					$cat = $product['cat'];
+					$name = htmlentities($product['name']);
+					$cat = htmlentities($product['cat']);
 					$price = $product['price'];
 					$qty = $product['quantity'];
 
