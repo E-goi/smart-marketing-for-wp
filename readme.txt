@@ -2,8 +2,8 @@
 Contributors: E-goi
 Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
-Requires at least: 4.4
-Tested up to: 4.9
+Requires at least: 4.7
+Tested up to: 4.9.1
 Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,19 +21,22 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * E-goi list management 
 * Integrates with Contact Form 7 
 * Integrates with WooCommerce 
+* Integrates with Page Builder By SiteOrigin
+* Integrates with Visual Composer
+* Multiple types of Custom Forms 
 * Easy E-goi/WP field mapping; send anything over to E-goi!
 
 = User Guide =
 
-[Download User Guide](http://www.e-goi.com/files/9814/7024/4971/SmartMarketingWordpress-UserGuide.pdf "Download User Guide") 
+[Download User Guide](https://www.e-goi.com/wp-content/uploads/plugins/wordpress/SmartMarketingWordpress-UserGuide.pdf "Download User Guide") 
 
 = Manual de Instruções =
 
-[Download Manual de Instruções](http://www.e-goi.com/files/5914/7024/4971/Smart_Marketing_Wordpress_-_Manual_de_Instrucoes.pdf "Download Manual de Instruções") 
+[Download Manual de Instruções](https://www.e-goi.com/wp-content/uploads/plugins/wordpress/Smart_Marketing_Wordpress_-_Manual_de_Instrucoes.pdf "Download Manual de Instruções") 
 
 = Manual de Instrucciones =
 
-[Download Manual de Instrucciones](http://www.e-goi.pt/files/8214/7091/3962/Smart_Marketing_Wordpress-Manual_de_Instrucciones.pdf "Download Manual de Instrucciones")
+[Download Manual de Instrucciones](https://www.e-goi.com/wp-content/uploads/plugins/wordpress/Smart_Marketing_Wordpress-Manual_de_Instrucciones.pdf "Download Manual de Instrucciones")
 
 
 == Installation ==
@@ -50,7 +53,7 @@ Now the plugin is ready to be configured and waiting for your users newsletter s
 This plugin is compatible with PHP Version 5.3.0 and above.
 
 = This plugin integrates with WooCommerce, but which version this plugin is compatible? =
-This plugin is compatible with WooCommerce Version 2.5 and above.
+This plugin is compatible with WooCommerce Version 2.6 and above.
 
 = This plugin integrates with ContactForm7, but which version this plugin is compatible? =
 This plugin is compatible with ContactForm7 Version 4.5 and above.
@@ -75,8 +78,16 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
-= 1.1.2 =
+= 1.2.0 =
  - Track&Engage - Improvements and corrections
+ - Fix security failure (XSS)
+ - Fix error in RSS pages
+ - Fix the error when changing the form type in the advanced form
+ - Simple Forms - creating a simple form that generates a shortcode
+ - JSON Endpoint - This endpoint returns the produts info in a JSON
+ - Integration with Visual Composer
+ - Integration with Page Builder By SiteOrigin  
+
 
 = 1.1.1 =
  - Minify Admin/Public JS files

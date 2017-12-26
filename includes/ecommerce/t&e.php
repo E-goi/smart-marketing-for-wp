@@ -3,6 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
+
 $te = "
 		<script type='text/javascript'>
 			var _egoiaq = _egoiaq || [];
@@ -15,11 +16,10 @@ $te = "
 
 			if(!empty($products)){
 				foreach($products as $product){
-
 					$id = $product['id'];
 					$name = htmlentities($product['name']);
 					$cat = htmlentities($product['cat']);
-					$price = $product['price'];
+					$price = floatval($product['price']);
 					$qty = $product['quantity'];
 
 					$te .= "_egoiaq.push(['addEcommerceItem',
