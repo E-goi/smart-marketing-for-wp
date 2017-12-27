@@ -298,7 +298,8 @@ class Egoi_For_Wp_Public {
 		$server_output = curl_exec($ch);
 		curl_close($ch);
 
-		$content = strip_tags(explode('</style>', $server_output)[1], '<div></div><p></p><br>');
+		$outputs = explode('</style>', $server_output);
+		$content = strip_tags($outputs[1], '<div></div><p></p><br>');
 		echo $content;
 		exit;
 	}
@@ -404,7 +405,7 @@ class Egoi_For_Wp_Public {
 				jQuery(document).ready(function() {
 					jQuery("#egoi_country_code").empty();
 				';
-		foreach (COUNTRY_CODES as $key => $value) {
+		foreach (unserialize(COUNTRY_CODES) as $key => $value) {
 		 	$string = ucwords(strtolower($value['name']))." (+".$value['code'].")";
 		 	$post .= 'jQuery("#egoi_country_code").append("<option value='.$value['code'].'>'.$string.'</option>");';
 		}

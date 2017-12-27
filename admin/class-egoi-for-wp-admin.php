@@ -82,10 +82,6 @@ class Egoi_For_Wp_Admin {
 		$this->protocol = $_SERVER['HTTPS'] ?: 'http://';
 		$this->port = ':'.$_SERVER['SERVER_PORT'];
 
-		if (!session_id()){
-    		session_start();
-		}
-
 		//settings pages
 		$this->load_api = $this->load_api();
 		$this->options_list = $this->load_options();

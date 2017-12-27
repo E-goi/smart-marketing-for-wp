@@ -171,7 +171,7 @@ class Egoi_For_Wp {
 			}
 			
 			if($returnContent){
-				echo json_encode(['result' => 'ok']);
+				echo json_encode(array('result' => 'ok'));
 				exit;
 			}
 
