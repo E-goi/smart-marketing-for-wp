@@ -76,7 +76,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			/* Include shortcodes */
 			include 'egoi-for-wp-admin-shortcodes.php';
 			$FORM_OPTION = get_optionsform($form_id);
-			$opt = get_option($FORM_OPTION); ?>	
+
+			$opt = get_option($FORM_OPTION); 
+			?>	
 
 			<div class="sidebar">
 				<?php include ('egoi-for-wp-admin-sidebar.php'); ?>
@@ -246,20 +248,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 											</div>
 											<span style="margin-left:140px;">
 												
-												<span id="e-goi-lists_ct_forms"><?php echo $opt['egoi_form_sync']['list'];?></span>
+												<span id="e-goi-lists_ct_forms" hidden><?php echo $opt['egoi_form_sync']['list'];?></span> 
 
 												<span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
 												<select name="egoi_form_sync[list]" id="e-goi-list-frm" style="display: none;">
 													<option value="" selected disabled>
 														<?php _e( 'Select List', 'egoi-for-wp' ); ?>
-													</option><?php
-													/*foreach($lists as $list) {
-														if($list->title){ ?>
-															<option value="<?php echo esc_attr($list->listnum);?>" <?php selected($list->listnum, $opt['egoi_form_sync']['list']);?>>
-																<?php echo esc_html($list->title);?>
-															</option><?php
-														}
-													} */ ?>
+													</option>
 												</select>
 												<span id="load_forms" class="dashicons dashicons-update" style="display: none;"></span>
 											</span>
@@ -273,6 +268,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											  	<span class="e-goi-tooltiptext e-goi-tooltiptext--subscribe"><?php _e( 'Need a iframe form? Simply select a form (which already exists in E-goi) and copy the shortcode to display this form on your website or blog', 'egoi-for-wp' ); ?></span>
 											</div>
 											<span style="margin-left:26px;">
+												<span id="e-goi-forms" hidden><?php echo $opt['egoi_form_sync']['form_content'];?></span> 
 												<select name="egoi_form_sync[form_content]" id="formid_egoi" style="display: none;">
 													<?php
 													if ($listID) { ?>
