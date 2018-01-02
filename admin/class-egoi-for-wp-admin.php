@@ -1314,7 +1314,7 @@ class Egoi_For_Wp_Admin {
 			if (!is_numeric($value)) 
 				die();
 		}
-		$args = array( 'post_type' => array('product', 'product_variation') ,'posts_per_page' => -1);
+		$args = array( 'post_type' => array('product', 'product_variation') , 'post__in' => $ids, 'numberposts' => -1);
 		$products = get_posts( $args );
 	
 		$products_data = array();
