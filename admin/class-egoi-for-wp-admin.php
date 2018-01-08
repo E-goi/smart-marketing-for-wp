@@ -1243,13 +1243,6 @@ class Egoi_For_Wp_Admin {
 		$list_id = $this->options_list['list'];
 
 		$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
-		
-		$params = array( 
-			'apikey'    => $apikey['api_key'],
-			'name' => 'addSubscriber'
-		);
-		
-		$tag = $client->addTag($params);
 
 		$params = array( 
 			'apikey'    => $apikey['api_key'],
@@ -1304,6 +1297,7 @@ class Egoi_For_Wp_Admin {
 	//Outputs Easy Post data on the JSON endpoint
 	public function egoi_products_data_return( WP_REST_Request $request ) {
 		
+		global $_wp_additional_image_sizes;
 		// Get query strings params from request
 		$params = $request->get_query_params('ids');
 		
@@ -1320,8 +1314,14 @@ class Egoi_For_Wp_Admin {
 		$products_data = array();
 		foreach ($products as $product) {
 			if ( in_array($product->ID, $ids) ) {
-	
-				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product->ID ), 'single-post-thumbnail' );
+				
+				$sizes = array('thumbnail', 'medium', 'medium_large', 'large');
+				foreach ($_wp_additional_image_sizes as $key => $value) {
+					$sizes[] = $key;
+				}
+				foreach ($sizes as $size) {
+					$image_sizes[$size] = get_the_post_thumbnail_url($product->ID, $size);
+				}
 				$sku = get_post_meta( $product->ID, '_sku', true);
 				$price = get_post_meta( $product->ID, '_regular_price', true);
 				$sale = get_post_meta( $product->ID, '_sale_price', true);
@@ -1344,6 +1344,7 @@ class Egoi_For_Wp_Admin {
 				$downloadable = get_post_meta( $product->ID, '_downloadable', true);
 				$download_limit = get_post_meta( $product->ID, '_download_limit', true);
 				$download_expiry = get_post_meta( $product->ID, '_download_expiry', true);
+				$url = get_permalink($product->ID);
 				
 				$products_data['items']['item'][] = array(
 					'id' => $product->ID,
@@ -1353,7 +1354,16 @@ class Egoi_For_Wp_Admin {
 					'sale_price' => $sale,
 					'sale_dates_from' => $sale_dates_from,
 					'sale_dates_to' => $sale_dates_to,
-					'image_gallery' => $image_gallery,
+					'image_thumbnail' => $image_sizes['thumbnail'],
+					'image_medium' => $image_sizes['medium'],
+					'image_medium_large' => $image_sizes['medium_large'],
+					'image_large' => $image_sizes['large'],
+					'image_home-blog-post' => $image_sizes['home-blog-post'],
+					'image_home-event-post' => $image_sizes['home-event-post'],
+					'image_event-detail-post' => $image_sizes['event-detail-post'],
+					'image_shop_thumbnail' => $image_sizes['shop_thumbnail'],
+					'image_shop_catalog' => $image_sizes['shop_catalog'],
+					'image_shop_thumbnail' => $image_sizes['shop_single'],
 					'upsell_ids' => $upsell_ids,
 					'crosssell_ids' => $crosssell_ids,
 					'manage_stock' => $manage_stock,
@@ -1370,7 +1380,8 @@ class Egoi_For_Wp_Admin {
 					'virtual' => $virtual,
 					'downloadable' => $downloadable,
 					'download_limit' => $download_limit,
-					'download_expiry' => $download_expiry
+					'download_expiry' => $download_expiry,
+					'url' => $url
 				);
 			}
 		}
