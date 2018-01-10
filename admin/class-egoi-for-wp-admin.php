@@ -1290,6 +1290,12 @@ class Egoi_For_Wp_Admin {
 				'ids' => array(
 					'sanitize_callback'  => 'sanitize_text_field'
 				),
+				'decimal_sep' => array(
+					'sanitize_callback'  => 'sanitize_text_field'
+				),
+				'decimal_space' => array(
+					'sanitize_callback'  => 'sanitize_text_field'
+				),
 			),
 		) );
 	}
@@ -1298,9 +1304,11 @@ class Egoi_For_Wp_Admin {
 	public function egoi_products_data_return( WP_REST_Request $request ) {
 		
 		global $_wp_additional_image_sizes;
+
 		// Get query strings params from request
 		$params = $request->get_query_params('ids');
-		
+
+
 		$params["ids"] = filter_var($params["ids"], FILTER_SANITIZE_STRING);
 		$ids = str_replace(" ","",$params["ids"]);
 		$ids = explode(",",$ids); 
@@ -1308,6 +1316,7 @@ class Egoi_For_Wp_Admin {
 			if (!is_numeric($value)) 
 				die();
 		}
+
 		$args = array( 'post_type' => array('product', 'product_variation') , 'post__in' => $ids, 'numberposts' => -1);
 		$products = get_posts( $args );
 	
@@ -1320,7 +1329,7 @@ class Egoi_For_Wp_Admin {
 					$sizes[] = $key;
 				}
 				foreach ($sizes as $size) {
-					$image_sizes[$size] = get_the_post_thumbnail_url($product->ID, $size);
+					$image_sizes[$size] = "<img src='".get_the_post_thumbnail_url($product->ID, $size)."' />";
 				}
 				$sku = get_post_meta( $product->ID, '_sku', true);
 				$price = get_post_meta( $product->ID, '_regular_price', true);
@@ -1345,7 +1354,17 @@ class Egoi_For_Wp_Admin {
 				$download_limit = get_post_meta( $product->ID, '_download_limit', true);
 				$download_expiry = get_post_meta( $product->ID, '_download_expiry', true);
 				$url = get_permalink($product->ID);
-				
+
+				if (isset($params['decimal_space']) && is_numeric($params['decimal_space'])) {
+					$price = number_format($price, $params['decimal_space']);
+					$sale = number_format($sale, $params['decimal_space']);
+				} 
+
+				if (isset($params['decimal_sep'])) {
+					$price = str_replace('.', str_replace('"', '', $params['decimal_sep']), $price);
+					$sale = str_replace('.', str_replace('"', '', $params['decimal_sep']), $sale);
+				}
+							
 				$products_data['items']['item'][] = array(
 					'id' => $product->ID,
 					'name' => $product->post_title,
@@ -1383,8 +1402,10 @@ class Egoi_For_Wp_Admin {
 					'download_expiry' => $download_expiry,
 					'url' => $url
 				);
+
 			}
 		}
+
 		return $products_data; 
 	}
 
