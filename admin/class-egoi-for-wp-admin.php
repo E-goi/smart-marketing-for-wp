@@ -1245,25 +1245,49 @@ class Egoi_For_Wp_Admin {
 		$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
 
 		$params = array( 
+		    'apikey'    => $apikey['api_key'],
+			'name' 		=> filter_var(stripslashes($_POST['egoi_tag']), FILTER_SANITIZE_STRING)
+		);
+
+		$tags = $client->getTags($params);
+		foreach ($tags['TAG_LIST'] as $tag_data) {
+			if (filter_var(stripslashes($_POST['egoi_tag']), FILTER_SANITIZE_STRING) == $tag_data['NAME']) {
+				$tag = $tag_data;
+			}
+		}
+		if (!$tag) {
+			$tag = $client->addTag($params);
+		}
+
+		$params = array( 
 			'apikey'    => $apikey['api_key'],
 			'listID' => $list_id,
 			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
 			'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
-			'first_name' => filter_var($_POST['egoi_name'], FILTER_SANITIZE_STRING),
+			'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
+			'tags' => $tag,
 			'status' => 1
 		);
 
 		$result = $client->addSubscriber($params);
 
 		if (!isset($result['ERROR']) && !isset($result['MODIFICATION_DATE']) ) {
-			$error = 'Subscriber '.$this->check_subscriber($result).' is now registered on E-goi!';
+			echo $this->check_subscriber($result).' ';
+			_e('was successfully registered!', 'egoi-for-wp');
 		} else if (isset($result['MODIFICATION_DATE'])) {
-			$error = 'Subscriber data from '.$this->check_subscriber($result).' has been updated on E-goi!';
+			_e('Subscriber data from', 'egoi-for-wp');
+			echo ' '.$this->check_subscriber($result).' ';
+			_e('has been updated!', 'egoi-for-wp');
 		} else if (isset($result['ERROR'])) {
-			$error = 'ERROR: '.strtolower(str_replace('_',' ',$result['ERROR']));
+			if ($result['ERROR'] == 'NO_DATA_TO_INSERT') {
+				_e('ERROR: no data to insert', 'egoi-for-wp');
+			} else if ($result['ERROR'] == 'EMAIL_ADDRESS_INVALID_MX_ERROR') {
+				_e('ERROR: e-mail address is invalid', 'egoi-for-wp');
+			} else {
+				_e('ERROR: invalid data submitted', 'egoi-for-wp');
+			}
+			
 		}
-		
-		_e($error, 'egoi-for-wp');
 		
 		wp_die(); // this is required to terminate immediately and return a proper response
 		

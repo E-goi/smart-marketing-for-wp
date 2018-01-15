@@ -91,8 +91,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     
         <div class="nav-tab-forms-options-mt">
             <form id="egoi_simple_form" method="post" action="#">
-                <input name="id_simple_form" type="hidden" value="<?=$id_simple_form?>">
-                <input name="action" type="hidden" value="1">
+                <input name="id_simple_form" type="hidden" value="<?=$id_simple_form?>" />
+                <input name="action" type="hidden" value="1" />
                 <div id="simple-form-submit-error"></div>
                 <div class="e-goi-form-title">
                     <p style="font-size:18px; line-height:16px;"><?php _e('Form title', 'egoi-for-wp'); ?></p>
@@ -104,7 +104,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                         <input class="e-goi-form-title--input" type="text" name="title" size="30" id="title" spellcheck="true" autocomplete="off" 
                         placeholder="<?php echo __( "Write here the title of your form", 'egoi-for-wp' ); ?>" required pattern="\S.*\S" 
-                        value="<?=$shortcode['title_simple_form']?>">
+                        value="<?= htmlentities(stripslashes($shortcode['title_simple_form'])) ?>" />
                     </div>
                 </div>
 
@@ -125,7 +125,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
 
                 <!-- textarea for Advanced HTML -->
-                <textarea id="html_code" class="e-goi-header-textarea--html-adv" placeholder="<?php _e( 'HTML code of your form', 'egoi-for-wp' ); ?>" name="html_code"><?php echo str_replace('\"', '"', $shortcode['html_code_simple_form']); ?></textarea>
+                <textarea id="html_code" class="e-goi-header-textarea--html-adv" placeholder="<?php _e( 'HTML code of your form', 'egoi-for-wp' ); ?>" name="html_code"><?= stripslashes($shortcode['html_code_simple_form']); ?></textarea>
 
                 <div style="display: -webkit-inline-box; margin-bottom: 30px;">
                     <button style="margin-top: 12px;" type="submit" class="button button-primary"><?php _e('Save Changes', 'egoi-for-wp');?></button>
@@ -135,9 +135,29 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         <script type="text/javascript">
 
+            jQuery(document).ready(function() {
+
+                var html_code = jQuery("#html_code").val();
+
+                if (html_code.length > 0) {
+
+                    var tags = ["name", "email", "mobile", "submit"];
+                    for (var i = 0; i < tags.length; i++) {
+                        if (html_code.indexOf('[e_' + tags[i] + ']') >= 0 && html_code.indexOf('[/e_' + tags[i] + ']') >= 0) {
+                            jQuery('#egoi_' + tags[i] + '_button').addClass("active");
+                        }
+                    }
+                }
+
+            });
+
             function toggleLabel(html_code, label, tag) {
+
+                var button = jQuery('#egoi_' + tag + '_button');
                 var begin_tag = "[e_" + tag + "]";
                 var first_char = html_code.indexOf(begin_tag);
+
+                button.toggleClass("active");
 
                 if (first_char < 0 ) {
                     html_code += label;
@@ -156,19 +176,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 switch (this.id) {
                     case 'egoi_name_button':
-                        var label = '[e_name]\n<p>\n  <label for="egoi_name"><?php _e('Name', 'egoi-for-wp');?>: </label>\n  <input type="text" name="egoi_name" id="egoi_name">\n</p>\n[/e_name]\n';
+                        var label = '[e_name]\n<p>\n  <label for="egoi_name"><?php _e('Name', 'egoi-for-wp');?>: </label>\n  <input type="text" name="egoi_name" id="egoi_name" />\n</p>\n[/e_name]\n';
                         html_code = toggleLabel(html_code, label, 'name');
                         break;
                     case 'egoi_email_button':
-                        var label = '[e_email]\n<p>\n  <label for="egoi_email"><?php _e('Email', 'egoi-for-wp');?>: </label>\n  <input type="email" name="egoi_email" id="egoi_email">\n</p>\n[/e_email]\n';
+                        var label = '[e_email]\n<p>\n  <label for="egoi_email"><?php _e('Email', 'egoi-for-wp');?>: </label>\n  <input type="email" name="egoi_email" id="egoi_email" />\n</p>\n[/e_email]\n';
                         html_code = toggleLabel(html_code, label, 'email');
                         break;
                     case 'egoi_mobile_button':
-                        var label = '[e_mobile]\n<p>\n  <label for="egoi_mobile"><?php _e('Mobile', 'egoi-for-wp');?>: </label>\n  <select name="egoi_country_code" id="egoi_country_code"></select><input type="text" name="egoi_mobile" id="egoi_mobile">\n</p>\n[/e_mobile]\n';
+                        var label = '[e_mobile]\n<p>\n  <label for="egoi_mobile"><?php _e('Mobile', 'egoi-for-wp');?>: </label>\n  <select name="egoi_country_code" id="egoi_country_code"></select><input type="text" name="egoi_mobile" id="egoi_mobile" />\n</p>\n[/e_mobile]\n';
                         html_code = toggleLabel(html_code, label, 'mobile');
                         break;
                     case 'egoi_submit_button':
-                        var label = '[e_submit]\n<p>\n  <button type="submit"><?php _e('Submit Button', 'egoi-for-wp');?></button>\n</p>\n[/e_submit]\n';
+                        var label = '[e_submit]\n<p>\n  <button type="submit" id="egoi_submit_button"><?php _e('Submit Button', 'egoi-for-wp');?></button>\n</p>\n[/e_submit]\n';
                         html_code = toggleLabel(html_code, label, 'submit');
                 }
 

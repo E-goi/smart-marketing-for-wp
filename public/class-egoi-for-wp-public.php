@@ -385,16 +385,17 @@ class Egoi_For_Wp_Public {
 		$id = $atts['id'];
 
 		$post = '<form id="egoi_simple_form" method="post" action="/">';
-		$table = $wpdb->prefix.'posts';
 
-		$html_code = $wpdb->get_var(" SELECT post_content FROM $table WHERE ID = '$id' ");
+		$table = $wpdb->prefix.'posts';
+		$html_code = $wpdb->get_row(" SELECT post_content, post_title FROM $table WHERE ID = '$id' ");
+		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.htmlentities(stripcslashes($html_code->post_title)).' - '.$id.'" />';
 		$tags = array('name','email','mobile','submit');
 		foreach ($tags as $tag) {
-			$html_code = str_replace('[e_'.$tag.']','',$html_code);
-			$html_code = str_replace('[/e_'.$tag.']','',$html_code);
+			$html_code->post_content = str_replace('[e_'.$tag.']','',$html_code->post_content);
+			$html_code->post_content = str_replace('[/e_'.$tag.']','',$html_code->post_content);
 		}
 
-		$post .= str_replace('\"', '"', $html_code);
+		$post .= stripslashes($html_code->post_content);
 		$post .= '<div id="simple_form_result" style="margin:10px 0px; padding:12px; display:none;"></div>';
 		$post .= '</form>';
 		
@@ -416,6 +417,12 @@ class Egoi_For_Wp_Public {
 					
 					event.preventDefault(); // Stop form from submitting normally
 
+					var button_obj = jQuery("#egoi_submit_button");
+					var button_style = button_obj.css(["width", "height"]);
+					var button_text = button_obj.text();
+
+					button_obj.html("...").prop("disabled",true).css(button_style);
+
 					jQuery( "#simple_form_result" ).hide();
 
 					var ajaxurl = "'.admin_url('admin-ajax.php').'";
@@ -423,23 +430,29 @@ class Egoi_For_Wp_Public {
 					var egoi_email = jQuery("#egoi_email").val();
 					var egoi_country_code	= jQuery("#egoi_country_code").val();
 					var egoi_mobile	= jQuery("#egoi_mobile").val();
+					var egoi_tag	= jQuery("#egoi_tag").val();
 
 					var data = {
 						"action": "my_action",
 						"egoi_name": egoi_name,
 						"egoi_email": egoi_email,
 						"egoi_country_code": egoi_country_code,
-						"egoi_mobile": egoi_mobile
+						"egoi_mobile": egoi_mobile,
+						"egoi_tag": egoi_tag
 					};
 			
 					var posting = jQuery.post(ajaxurl, data);
 
 					posting.done(function( data ) {
-						if (data.substring(0, 5) != "ERROR") {
+						if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
+
 							jQuery( "#simple_form_result" ).css({
 								"color": "#4F8A10",
 								"background-color": "#DFF2BF"
 							});
+
+							jQuery( "#egoi_simple_form" )[0].reset();
+
 						} else {
 							jQuery( "#simple_form_result" ).css({
 								"color": "#9F6000",
@@ -448,7 +461,9 @@ class Egoi_For_Wp_Public {
 						}
 
 						jQuery( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
+						button_obj.prop("disabled",false).removeAttr( "style" ).html(button_text);
 					});
+
 				});
 			</script>
 		';
