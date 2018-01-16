@@ -121,7 +121,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <button type="button" class="simple-form-button button button-default" id="egoi_mobile_button"><?php _e('Mobile', 'egoi-for-wp');?></button>
                         <button type="button" class="simple-form-button button button-default" id="egoi_submit_button"><?php _e('Submit Button', 'egoi-for-wp');?></button>
                     </p>
-                    <p style="color:#d8b14e;"><?php _e('You cant change the inputs IDs', 'egoi-for-wp'); ?></p>
+                    <p style="color:#d8b14e;"><?php _e('You can\'t change the IDs of inputs and buttons', 'egoi-for-wp'); ?></p>
                 </div>
 
                 <!-- textarea for Advanced HTML -->

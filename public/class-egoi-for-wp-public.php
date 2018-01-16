@@ -417,7 +417,7 @@ class Egoi_For_Wp_Public {
 					
 					event.preventDefault(); // Stop form from submitting normally
 
-					var button_obj = jQuery("#egoi_submit_button");
+					var button_obj = jQuery("button[type=submit]");
 					var button_style = button_obj.css(["width", "height"]);
 					var button_text = button_obj.text();
 
