@@ -54,7 +54,7 @@ if(!$options['list']) { ?>
 
 	<div>
 		<span style="padding:15px 0; font-size:16px;display: inline-block;">
-			<span style="display: inline-block; max-witdh:100px;"><?php _e('Do you want to automatically tracks what your customers do on your site and engages them where it counts? <p><span style="font-size:16px;">Simply add our HTML code snippet to your site, select "Yes" and you\'re all set. Here\'s how to <a target="_blank" href="https://helpdesk.e-goi.com/416945-Using-Track--Engage-to-track-subscribers-across-my-site">do</a>', 'egoi-for-wp'); ?>
+			<span style="display: inline-block; max-witdh:100px;"><?php _e('Track & Engage is an E-goi analytics feature, connected to your Wordpress Website or WooCommerce Store, perfect for remarketing actions like returning users or abandoned cart.<p><span style="font-size:16px;">Activate this option here, and confirm if Track & Engage is also active in E-goi Platform (Web -> Track & Engage).</span></p><p><span style="font-size:16px;">To know more about the feature Track & Engage, check <a target="_blank" href="https://helpdesk.e-goi.com/416945-Using-Track--Engage-to-track-subscribers-across-my-site">here</a>.</span></p>', 'egoi-for-wp'); ?>
 			</span>
 		</span>
 	</div>
@@ -80,7 +80,7 @@ if(!$options['list']) { ?>
 				<label for="no"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
 			</span>
 			
-			<div style="font-size:16px; margin-top:10px;line-height:28px; margin-bottom:10px;"><?php _e( 'If you want the plugin track your WP Users don\'t forget to have your WooCommerce activated.', 'egoi-for-wp' ); ?></div>
+			<div style="font-size:16px; margin-top:10px;line-height:28px; margin-bottom:10px;"></div>
 
 			<button style="margin-top: 20px; margin-bottom: 20px;" class="button-primary"><?php _e( 'Save', 'egoi-for-wp' ); ?></button>
 		</form><?php
