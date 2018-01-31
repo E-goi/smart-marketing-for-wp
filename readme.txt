@@ -78,6 +78,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 2.0.6 =
+- Minor Translations changes
+
 = 2.0.5 =
 - Minor Bug Fixes
 
