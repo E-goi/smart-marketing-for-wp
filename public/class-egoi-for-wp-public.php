@@ -417,11 +417,22 @@ class Egoi_For_Wp_Public {
 					
 					event.preventDefault(); // Stop form from submitting normally
 
-					var button_obj = jQuery("button[type=submit]");
+					var button_obj = jQuery("button[type=submit]", "#egoi_simple_form");
 					var button_style = button_obj.css(["width", "height"]);
 					var button_text = button_obj.text();
 
-					button_obj.html("...").prop("disabled",true).css(button_style);
+					var max = 3;
+					var i = 2;
+					button_obj.text(".").prop("disabled",true).css(button_style);
+					var button_effect = setInterval(function () {
+						if (i <= max) {
+							button_obj.text(".".repeat(i)).prop("disabled",true).css(button_style);
+							i++;
+						} else {
+							button_obj.text(".").prop("disabled",true).css(button_style);
+							i=2;
+						}
+					}, 400);
 
 					jQuery( "#simple_form_result" ).hide();
 
@@ -461,6 +472,7 @@ class Egoi_For_Wp_Public {
 						}
 
 						jQuery( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
+						clearInterval(button_effect);
 						button_obj.prop("disabled",false).removeAttr( "style" ).html(button_text);
 					});
 
