@@ -1354,6 +1354,7 @@ class Egoi_For_Wp_Admin {
 				}
 				foreach ($sizes as $size) {
 					$image_sizes[$size] = "<img src='".get_the_post_thumbnail_url($product->ID, $size)."' />";
+					$image_url[$size] = get_the_post_thumbnail_url($product->ID, $size);
 				}
 				$sku = get_post_meta( $product->ID, '_sku', true);
 				$price = get_post_meta( $product->ID, '_regular_price', true);
@@ -1398,15 +1399,25 @@ class Egoi_For_Wp_Admin {
 					'sale_dates_from' => $sale_dates_from,
 					'sale_dates_to' => $sale_dates_to,
 					'image_thumbnail' => $image_sizes['thumbnail'],
+					'image_thumbnail_URL' => $image_url['thumbnail'],
 					'image_medium' => $image_sizes['medium'],
+					'image_medium_URL' => $image_url['medium'],
 					'image_medium_large' => $image_sizes['medium_large'],
+					'image_medium_large_URL' => $image_url['medium_large'],
 					'image_large' => $image_sizes['large'],
+					'image_large_URL' => $image_url['large'],
 					'image_home-blog-post' => $image_sizes['home-blog-post'],
+					'image_home-blog-post_URL' => $image_url['home-blog-post'],
 					'image_home-event-post' => $image_sizes['home-event-post'],
+					'image_home-event-post_URL' => $image_url['home-event-post'],
 					'image_event-detail-post' => $image_sizes['event-detail-post'],
+					'image_event-detail-post_URL' => $image_url['event-detail-post'],
 					'image_shop_thumbnail' => $image_sizes['shop_thumbnail'],
+					'image_shop_thumbnail_URL' => $image_url['shop_thumbnail'],
 					'image_shop_catalog' => $image_sizes['shop_catalog'],
+					'image_shop_catalog_URL' => $image_url['shop_catalog'],
 					'image_shop_thumbnail' => $image_sizes['shop_single'],
+					'image_shop_thumbnail_URL' => $image_url['shop_single'],
 					'upsell_ids' => $upsell_ids,
 					'crosssell_ids' => $crosssell_ids,
 					'manage_stock' => $manage_stock,
