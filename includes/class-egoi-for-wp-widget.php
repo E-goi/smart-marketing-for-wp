@@ -21,6 +21,8 @@ class Egoi4Widget extends WP_Widget {
 		$this->input_width = $opt['egoi_widget']['input_width'] ? 'width:'.$opt['egoi_widget']['input_width'] : '100%';
 		$this->btn_width = $opt['egoi_widget']['btn_width'] ? 'width:'.$opt['egoi_widget']['btn_width'] : '';
 		$this->bcolor = $opt['egoi_widget']['bcolor'] ? 'border: 1px solid '.$opt['egoi_widget']['bcolor'] : '';
+		$this->listID = $opt['egoi_widget']['list'];
+		$this->lang = $opt['egoi_widget']['lang'];
 
 		$widget_ops = array(
 			'classname' => 'Egoi4Widget',
@@ -41,7 +43,8 @@ class Egoi4Widget extends WP_Widget {
 			$this->egoi_id = $widgetid;
 			
 			$title = apply_filters('widget_title', $instance['title']);
-			$list = $instance['list'];
+			//$list = $instance['list'];
+			$list = $this->listID;
 			$fname = $instance['fname'];
 			$fname_label = $instance['fname_label'];
 			$fname_placeholder = $instance['fname_placeholder'];
@@ -115,7 +118,10 @@ class Egoi4Widget extends WP_Widget {
 				echo $before_title . $title . $after_title;
 			}
 			echo '
-			<form name="egoi_contact" id="egoi-widget-form-'.$this->egoi_id.'" action="" method="post">';
+			<form name="egoi_contact" id="egoi-widget-form-'.$this->egoi_id.'" action="" method="post">
+				<input type="hidden" name="egoi-list" value="'.$this->listID.'">
+				<input type="hidden" name="egoi-lang" value="'.$this->lang.'">
+			';
 
 			if ($fname){
 				echo "<label>".$fname_label."</label>";
@@ -149,7 +155,9 @@ class Egoi4Widget extends WP_Widget {
 		
 		$instance = $old_instance;
 		$instance['widgetid'] = strip_tags($new_instance['widgetid']);
-		$instance['list'] = strip_tags($new_instance['list']);
+		//$instance['list'] = strip_tags($new_instance['list']);
+		$instance['list'] = $this->listID;
+		$instance['lang'] = $this->lang;
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['fname'] = strip_tags($new_instance['fname']);
 		$instance['fname_label'] = strip_tags($new_instance['fname_label']);
@@ -209,7 +217,8 @@ class Egoi4Widget extends WP_Widget {
 			); 
 
 			$widgetid = esc_attr($instance['widgetid']);
-			$list_id = esc_attr($instance['list']);
+			//$list_id = esc_attr($instance['list']);
+			$list_id = $this->listID;
 			$title = esc_attr($instance['title']);
 			$fname = esc_attr($instance['fname']);
 			$fname_label = esc_attr($instance['fname_label']);
@@ -272,20 +281,7 @@ class Egoi4Widget extends WP_Widget {
 				<label for="'.$this->get_field_id('title').'">'.__('Widget Title', 'egoi-for-wp').'</label>
 				<input class="widefat" id="'.$this->get_field_id('title').'" name="'.$this->get_field_name('title').'" type="text" value="'.$title.'" />
 			</p>
-			<p>
-				<label for="'.$this->get_field_id('list').'">'.__('List', 'egoi-for-wp').'</label>
-				<select class="widefat" name="'.$this->get_field_name('list').'" id="'.$this->get_field_id('list').'">';
-					foreach($lists as $list) {
-						if($list->title!=''){
-							if ($list_id == $list->listnum){
-								echo '<option value="'.$list->listnum.'" selected>'.$list->title.'</option>';
-							}else{
-								echo '<option value="'.$list->listnum.'">'.$list->title.'</option>';
-							}
-						}
-					}
-
-				echo '</select>
+			
 			<p>';
 				$checked_fname = '';
 				$style_fname = 'display:none;';
@@ -386,13 +382,17 @@ function egoi_widget_request() {
 	if(isset($_POST['egoi_subscribe']) && ($_POST['egoi_subscribe'] == "submited")) {
 	
 		$id = $_POST['widget_id'];
-		$list = $_POST['widget_list'];
+		
 		$fname = $_POST['widget_fname'];
 		$lname = $_POST['widget_lname'];
 		$tag = $_POST['widget_tag'];
 
 		$opt = get_option('egoi_widget');
 		$Egoi4WP = $opt['egoi_widget'];
+
+		$lang = $Egoi4WP['lang'];
+
+		$list = $Egoi4WP['list'];
 
 		// new options
 		$bcolor_success = 'background: '.$Egoi4WP['bcolor_success'].'!important';
@@ -437,7 +437,7 @@ function egoi_widget_request() {
 
 		}else{
 
-			$result = $api->addSubscriber($list, $name, $email, 1, $mobile, $tag);
+			$result = $api->addSubscriber($list, $name, $email, $lang, 1, $mobile, $tag);
 			if($result){
 
 				$redirect = $Egoi4WP['redirect'];
