@@ -17,7 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                 $user = wp_get_current_user();
                 $date = date('Y-m-d H:i:s');
                 $post_name =  preg_replace('~[^0-9a-z]+~i', '-', preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities(str_replace(" ", "-", strtolower($_POST['title'])), ENT_QUOTES, 'UTF-8'))) ;
-                
+
+
+                //to save simple form options: listId and language
+                $table2 = $wpdb->prefix.'options';
+
+                $data->list = $_POST['list'];
+                $data->lang = $_POST['lang'];
+
+                $info = json_encode($data);
 
                 if ($_POST['id_simple_form'] == 0) {
                     $post = array (
@@ -37,7 +45,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                     $query =  $wpdb->insert($table, $post);
                     $id_simple_form = $wpdb->insert_id;
-                } else {
+
+                    //insert simple form options
+                    $options = array(
+                        'option_name' => 'egoi_simple_form_'.$id_simple_form,
+                        'option_value' => $info,
+                        'autoload' => 'yes'
+                    );
+
+                    $query2 =  $wpdb->insert($table2, $options);
+
+                } 
+                else {
+                    
                     $post = array (
                         'post_author' => $user->ID,
                         'post_content' => $_POST['html_code'],
@@ -51,6 +71,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                     $where = array('ID' => $_POST['id_simple_form']);
                     $query = $wpdb->update($table, $post, $where);
                     $id_simple_form = $_POST['id_simple_form'];
+
+                    //update simple form options
+                    $options = array(
+                        'option_value' => $info
+                    );
+
+                    $where2 = array('option_name' => 'egoi_simple_form_'.$id_simple_form);
+
+                    $query2 = $wpdb->update($table2, $options, $where2);
                 }
 
                 $shortcode = '[egoi-simple-form id="'.$id_simple_form.'"]';
@@ -59,7 +88,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 'shortcode' => $shortcode, 
                                 'id_simple_form' => $id_simple_form, 
                                 'title_simple_form' => $_POST['title'], 
-                                'html_code_simple_form' => $_POST['html_code']
+                                'html_code_simple_form' => $_POST['html_code'],
+                                'list' => $_POST['list'],
+                                'lang' => $_POST['lang']
                             ) ;
 
             }
@@ -77,8 +108,19 @@ if ( ! defined( 'ABSPATH' ) ) {
                 $shortcode['shortcode'] = '[egoi-simple-form id="'.$id.'"]';
                 $shortcode['title_simple_form'] = $wpdb->get_var( "SELECT post_title FROM ".$table." WHERE ID = '".$id."' " ); 
                 $shortcode['html_code_simple_form'] = $wpdb->get_var( "SELECT post_content FROM ".$table." WHERE ID = '".$id."' " ); 
+
+
+                //get simple form options
+                $data = get_option('egoi_simple_form_'.$id);
+
+                $info = json_decode($data);
+
+                $shortcode['list'] = $info->list;
+                $shortcode['lang'] = $info->lang;
+
                 return $shortcode;
             }
+
             $shortcode = selectSimpleForm($_GET['simple_form']);
             $id_simple_form = $_GET['simple_form'];
 
@@ -94,6 +136,43 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <input name="id_simple_form" type="hidden" value="<?=$id_simple_form?>">
                 <input name="action" type="hidden" value="1">
                 <div id="simple-form-submit-error"></div>
+
+               <div>
+                <table class="form-table" style="table-layout: fixed;">
+
+                    <tr valign="top">
+                        <th scope="row"><label><?php _e( 'Egoi List', 'egoi-for-wp' ); ?></label></th>
+                        <td>
+                            <span class="e-goi-lists_not_found" style="display: none;">
+                                <?php printf(__('No lists found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-for-wp'));?>
+                            </span>
+                            
+                            <span id="e-goi-lists_ct_simple_form" style="display: none;"><?php echo $shortcode['list'];?></span>
+
+                            <span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
+                            <select name="list" class="lists" id="e-goi-list-simple-form" style="display: none;">
+                                <option disabled <?php selected($shortcode['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
+                            </select>
+                            <p class="help"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
+                        </td>
+                    </tr>
+
+                    <!-- Languages -->
+                    <tr valign="top">
+                        <th scope="row"><label id="egoi-lang-sf" style="display: none;"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label></th>
+                        <td>
+                            <span id="lang_simple_form" style="display: none;"><?php echo $shortcode['lang'];?></span>
+
+                            <span class="loading_lang dashicons dashicons-update" style="display: none;"></span>
+                            <select name="lang" id="e-goi-lang-simple-form" style="display: none;">
+                            </select>
+                        </td>
+                    </tr>
+                    <!-- END config list and language -->
+
+                </table>
+            </div>
+
                 <div class="e-goi-form-title">
                     <p style="font-size:18px; line-height:16px;"><?php _e('Form title', 'egoi-for-wp'); ?></p>
                 </div> <!-- .e-goi-form-title -->
@@ -135,7 +214,142 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         <script type="text/javascript">
 
+            jQuery(document).ready(function() {
+
+                var html_code = jQuery("#html_code").val();
+
+                if (html_code.length > 0) {
+
+                    var tags = ["name", "email", "mobile", "submit"];
+                    for (var i = 0; i < tags.length; i++) {
+                        if (html_code.indexOf('[e_' + tags[i] + ']') >= 0 && html_code.indexOf('[/e_' + tags[i] + ']') >= 0) {
+                            jQuery('#egoi_' + tags[i] + '_button').addClass("active");
+                        }
+                    }
+                }
+
+                if(jQuery("#e-goi-lists_ct_simple_form").text() != ""){
+                    jQuery('#egoi-lang-sf').show();
+                    getListLangSF(jQuery("#e-goi-lists_ct_simple_form").text());
+                }
+
+                'use strict';
+
+                new Clipboard('#e-goi_shortcode');
+
+                var session_form = jQuery('#session_form');
+
+                // initialize class to parse URLs
+                var urlObj = new URL(window.location.href);
+                
+                // Async fetch
+                var page = urlObj.searchParams.get("page");
+                if(typeof page != 'undefined'){
+                    if(page == 'egoi-4-wp-form'){
+
+                        var data_lists = {
+                            action: 'egoi_get_lists'
+                        };
+
+                        var select_lists_simple_form = jQuery('#e-goi-list-simple-form');
+                        var current_lists = [];
+
+                        jQuery(".loading_lists").addClass('spin').show();
+                        
+                        var lists_count_simple_form = jQuery('#e-goi-lists_ct_simple_form');
+                        
+                        jQuery.post(url_egoi_script.ajaxurl, data_lists, function(response) {
+                            jQuery(".loading_lists").removeClass('spin').hide();
+                            current_lists = JSON.parse(response);
+
+
+                            
+                            if(current_lists.ERROR){
+                                jQuery('.e-goi-lists_not_found').show();
+
+                                select_lists_simple_form.hide();
+
+                            }else{
+                                select_lists_simple_form.show();
+                                
+                                jQuery('.e-goi-lists_not_found').hide();
+
+                                jQuery.each(current_lists, function(key, val) {
+                                    
+                                    if(typeof val.listnum != 'undefined') {
+                                        select_lists_simple_form.append(jQuery('<option />').val(val.listnum).text(val.title));
+
+                                        if(lists_count_simple_form.text() === val.listnum){
+                                            select_lists_simple_form.val(val.listnum);
+                                        }
+                                    }
+                                }); 
+                                    
+                            }
+                        });
+                    }
+                }
+
+            });
+
+            jQuery("#e-goi-list-simple-form").change(function(){
+                jQuery('#e-goi-lang-simple-form').hide();
+                jQuery('#e-goi-lang-simple-form').empty();
+                jQuery('#egoi-lang-sf').show();
+                jQuery(".loading_lang").addClass('spin').show();
+
+                var listID = jQuery("#e-goi-list-simple-form").val();
+
+                getListLangSF(listID);
+            });
+
+            function getListLangSF(listID){
+
+                var data_lists = {
+                    action: 'egoi_get_lists'
+                };
+
+                jQuery.post(url_egoi_script.ajaxurl, data_lists, function(response) {
+                    
+                    content = JSON.parse(response);
+                    
+                    jQuery('#e-goi-lang-simple-form').show();
+
+                    var idiomas = [];
+                    jQuery.each(content, function(key, val) {
+
+                        if(val.listnum == listID){
+                            var idioma = val.idioma;
+                            var idiomas_extra = val.idiomas_extra;
+
+                            var idiomas = [];
+
+                            idiomas.push(idioma);
+                            jQuery.each(idiomas_extra, function(key, val){
+                                idiomas.push(val);
+                            });
+                            
+                            jQuery.each(idiomas, function(key, val){
+                                if(jQuery('#lang_simple_form').text() != "" && jQuery('#lang_simple_form').text() == val){
+                                    jQuery("#e-goi-lang-simple-form").append('<option selected value="' + val + '">' + val + '</option>');
+                                }
+                                else{
+                                    jQuery("#e-goi-lang-simple-form").append('<option value="' + val + '">' + val + '</option>');
+                                }
+                            });
+
+                            jQuery(".loading_lang").removeClass('spin').hide();
+                        }
+                        
+                    });
+
+                });
+            }
+
             function toggleLabel(html_code, label, tag) {
+                var button = jQuery('#egoi_' + tag + '_button');
+                button.toggleClass("active");
+
                 var begin_tag = "[e_" + tag + "]";
                 var first_char = html_code.indexOf(begin_tag);
 
@@ -178,9 +392,15 @@ if ( ! defined( 'ABSPATH' ) ) {
             jQuery("#egoi_simple_form").on("submit", function () {
                 var html_code = jQuery("#html_code").val();
                 var simple_form_error = false;
+
+                var listID = jQuery("#egoi_lists").val();
+                var lang = jQuery("#egoi_languages").val();
+
+            
                 if ( html_code.indexOf('[e_submit]') < 0 || html_code.indexOf('[/e_submit]') < 0 ) {
                     simple_form_error = 'Submit button is required';       
-                } else if ( (html_code.indexOf('[e_name]') < 0 || html_code.indexOf('[/e_name]') < 0) 
+                } 
+                else if ( (html_code.indexOf('[e_name]') < 0 || html_code.indexOf('[/e_name]') < 0) 
                         && (html_code.indexOf('[e_email]') < 0 || html_code.indexOf('[/e_email]') < 0)
                         && (html_code.indexOf('[e_mobile]') < 0 || html_code.indexOf('[/e_mobile]') < 0) ) {
                     simple_form_error = 'At least one input is required';
@@ -216,13 +436,19 @@ if ( ! defined( 'ABSPATH' ) ) {
                 global $wpdb;
                 $table = $wpdb->prefix."posts";
                 $where = array('ID' => $id);
+
+                //delete simple form options
+                $table2 = $wpdb->prefix."options";
+                $where2 = array('option_name' => 'egoi_simple_form_'.$id);
+                $test = $wpdb->delete($table2, $where2);
+
                 return $wpdb->delete($table, $where);
             } 
             deleteSimpleForm($_GET['simple_form']);
         }
     ?>
     
-    <!-- List -->			
+    <!-- List -->           
     <div class="main-content col col-4" style="margin:0 0 20px;">
         <div style="font-size:14px; margin:10px 0;">
             <?php _e('Simple Forms', 'egoi-for-wp');?>

@@ -21,7 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		settings_fields(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 		settings_errors(); ?>
 
-		<?php /*<div id="egoi-bar-preview">
+		<?php 
+		/*<div id="egoi-bar-preview">
 
 			<div class="e-goi-preview-text"><?php // _e( 'Preview of Subscriber Bar', 'egoi-for-wp' ); ?></div>
 			<div class="egoi-bar" style="border:<?php // echo $this->bar_post['border_px'].' solid '.$this->bar_post['border_color'].';background:'.$this->bar_post['color_bar'].';'?>">
@@ -82,15 +83,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							<span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
 							<select name="egoi_bar_sync[list]" class="lists" id="e-goi-list-bar" style="display: none;">
-								<option disabled <?php selected($this->bar_post['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option><?php 
-								/*
-								foreach($lists as $list) {
-								 	if($list->title!=''){?>
-										<option value="<?php echo esc_attr( $list->listnum ); ?>" <?php selected($this->bar_post['list'], $list->listnum); ?>><?php echo esc_html( $list->title ); ?></option><?php
-									}
-								} */ ?>
+								<option disabled <?php selected($this->bar_post['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
 							</select>
 							<p class="help"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
+						</td>
+					</tr>
+
+					<!-- Languages -->
+					<tr valign="top">
+						<th scope="row"><label id="egoi-lang" style="display: none;"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label></th>
+						<td>
+							<span id="lang_bar" style="display: none;"><?php echo $this->bar_post['lang'];?></span>
+
+							<span class="loading_lang dashicons dashicons-update" style="display: none;"></span>
+							<select name="egoi_bar_sync[lang]"  id="e-goi-lang-bar" style="display: none;">
+								<option disabled <?php selected($this->bar_post['lang'], ''); ?>><?php _e( 'Select a lang..', 'egoi-for-wp' ); ?></option>
+							</select>
 						</td>
 					</tr>
 
@@ -310,3 +318,69 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</form>
 
 </div>
+
+<script type="text/javascript">
+
+	jQuery(document).ready(function($) {
+
+		if(jQuery("#e-goi-lists_ct_bar").text() != ""){
+			jQuery('#egoi-lang').show();
+			getListLang(jQuery("#e-goi-lists_ct_bar").text());
+		}
+	});
+
+	jQuery("#e-goi-list-bar").change(function(){
+        jQuery('#e-goi-lang-bar').hide();
+        jQuery('#egoi-lang').show();
+        jQuery('#e-goi-lang-bar').empty();
+        jQuery(".loading_lang").addClass('spin').show();
+
+        var listID = jQuery("#e-goi-list-bar").val();
+
+        getListLang(listID);
+    });
+
+
+    function getListLang(listID){
+
+        var data_lists = {
+            action: 'egoi_get_lists'
+        };
+
+        jQuery.post(url_egoi_script.ajaxurl, data_lists, function(response) {
+
+            content = JSON.parse(response);
+
+            jQuery('#e-goi-lang-bar').show();
+
+            var idiomas = [];
+            jQuery.each(content, function(key, val) {
+
+                if(val.listnum == listID){
+                    var idioma = val.idioma;
+                    var idiomas_extra = val.idiomas_extra;
+
+                    var idiomas = [];
+
+                    idiomas.push(idioma);
+                    jQuery.each(idiomas_extra, function(key, val){
+                        idiomas.push(val);
+                    });
+
+                    jQuery.each(idiomas, function(key, val){
+                        if(jQuery('#lang_bar').text() != "" && jQuery('#lang_bar').text() == val){
+                    		jQuery("#e-goi-lang-bar").append('<option selected value="' + val + '">' + val + '</option>');
+                    	}
+                    	else{
+                    		jQuery("#e-goi-lang-bar").append('<option value="' + val + '">' + val + '</option>');
+                    	}
+                    });
+
+                    jQuery(".loading_lang").removeClass('spin').hide();
+                }
+                
+            });
+
+        });
+    }
+</script>

@@ -67,6 +67,47 @@ if(!$egoiwidget['enabled']){
 
 			<div id="tab-widget-settings">
 				<table class="form-table" style="table-layout: fixed;">
+
+					<!-- Config list and lang -->
+					<tr valign="top">
+						<th scope="row"><label><?php _e( 'Egoi List', 'egoi-for-wp' ); ?></label></th>
+						<td>
+							<span class="e-goi-lists_not_found" style="display: none;">
+								<?php printf(__('No lists found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-for-wp'));?>
+							</span>
+							
+							<span id="e-goi-lists_ct_widget" style="display: none;"><?php echo $egoiwidget['list'];?></span>
+
+							<span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
+							<select name="egoi_widget[list]" class="lists" id="e-goi-list-widget" style="display: none;">
+								<option disabled <?php selected($egoiwidget['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
+							</select>
+							<p class="help"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
+						</td>
+					</tr>
+
+					<tr valign="top">
+						<th scope="row"><label for="egoi-lang-w"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label></th>
+						<td>
+							<span id="lang_widget" style="display: none;"><?php echo $egoiwidget['lang'];?></span>
+
+							<span class="loading_lang dashicons dashicons-update" style="display: none;"></span>
+							<select name="egoi_widget[lang]"  id="e-goi-lang-widget" style="display: none;">
+
+							</select>
+						</td>
+					</tr>
+
+					<!-- END config list and language -->
+
+
+					<tr valign="top">
+						<th scope="row"><label for="egoi_form_sync_subscribed"><?php _e( 'Successfully subscribed', 'egoi-for-wp' ); ?></label></th>
+						<td>
+							<input type="text" style="width:450px;" id="egoi_form_sync_subscribed" placeholder="<?php _e( 'Your request has been successfully submitted. Thank you.', 'egoi-for-wp' ); ?>" name="egoi_widget[msg_subscribed]" value="<?php echo esc_attr($egoiwidget['msg_subscribed']);?>" />
+							<p class="help"><?php _e( 'The text that shows when an email address is successfully subscribed to the selected list.', 'egoi-for-wp' ); ?></p>
+						</td>
+					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="egoi_form_sync_subscribed"><?php _e( 'Successfully subscribed', 'egoi-for-wp' ); ?></label></th>
 						<td>
@@ -194,3 +235,69 @@ if(!$egoiwidget['enabled']){
 
 		</div>
 	</div>
+
+
+<script type="text/javascript">
+
+	jQuery(document).ready(function($) {
+		if(jQuery("#e-goi-lists_ct_widget").text() != ""){
+			jQuery('#egoi-lang-w').show();
+			getListWidget(jQuery("#e-goi-lists_ct_widget").text());
+		}
+	});
+
+	jQuery("#e-goi-list-widget").change(function(){
+        jQuery('#e-goi-lang-widget').hide();
+        jQuery('#egoi-lang-w').show();
+        jQuery('#e-goi-lang-widget').empty();
+        jQuery(".loading_lang").addClass('spin').show();
+
+        var listID = jQuery("#e-goi-list-widget").val();
+
+        getListWidget(listID);
+    });
+
+
+    function getListWidget(listID){
+        var data_lists = {
+            action: 'egoi_get_lists'
+        };
+
+        jQuery.post(url_egoi_script.ajaxurl, data_lists, function(response) {
+            
+            content = JSON.parse(response);
+
+            jQuery('#e-goi-lang-widget').show();
+
+            var idiomas = [];
+            jQuery.each(content, function(key, val) {
+
+                if(val.listnum == listID){
+                    var idioma = val.idioma;
+                    var idiomas_extra = val.idiomas_extra;
+
+                    var idiomas = [];
+
+                    idiomas.push(idioma);
+                    jQuery.each(idiomas_extra, function(key, val){
+                        idiomas.push(val);
+                    });
+
+                    jQuery.each(idiomas, function(key, val){
+                    	if(jQuery('#lang_widget').text() != "" && jQuery('#lang_widget').text() == val){
+                    		jQuery("#e-goi-lang-widget").append('<option selected value="' + val + '">' + val + '</option>');
+                    	}
+                    	else{
+                    		jQuery("#e-goi-lang-widget").append('<option value="' + val + '">' + val + '</option>');
+                    	}
+                        
+                    });
+
+                    jQuery(".loading_lang").removeClass('spin').hide();
+                }
+                
+            });
+
+        });
+    }
+</script>
