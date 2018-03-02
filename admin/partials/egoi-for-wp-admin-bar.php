@@ -2,7 +2,18 @@
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
     die();
+} 
+
+//check if have a new tag in BD
+if($this->bar_post['tag'] != ""){
+	$data = new Egoi_For_Wp();
+	$info = $data->getTag($this->bar_post['tag']);
+    $tag = $info['ID'];
 }
+else{
+	$tag = $this->bar_post['tag-egoi'];
+}
+
 ?>
 <div class="wrap" id="egoi4wp-admin" style="width:65%;">
 
@@ -17,22 +28,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<form method="post" name="bar_options" action="<?php echo admin_url('options.php'); ?>"><?php 
-
 		settings_fields(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
-		settings_errors(); ?>
+		settings_errors(); 
+		?>
 
-		<?php 
-		/*<div id="egoi-bar-preview">
-
-			<div class="e-goi-preview-text"><?php // _e( 'Preview of Subscriber Bar', 'egoi-for-wp' ); ?></div>
-			<div class="egoi-bar" style="border:<?php // echo $this->bar_post['border_px'].' solid '.$this->bar_post['border_color'].';background:'.$this->bar_post['color_bar'].';'?>">
-			
-				<label class="egoi-label" style="color:<?php // echo $this->bar_post['bar_text_color']; ?>;"><?php // echo $this->bar_post['text_bar']; ?></label>
-				<input type="email" name="email" placeholder="<?php //echo $this->bar_post['text_email_placeholder']; ?>" class="egoi-email"  />
-				<input class="button" class="egoi-button" style="text-align:-webkit-center;padding:10px;height:31px;background:<?php // echo $this->bar_post['color_button']; ?>;color:<?php // echo $this->bar_post['color_button_text']; ?>;" value="<?php // echo $this->bar_post['text_button']; ?>" />
+		<div id="bar-submit-error" style="display: none;">
+			<div class="error notice">
+				<p><?php _e('Please, choose the list.', 'egoi-for-wp'); ?></p>
 			</div>
-		</div> */ ?>
-		
+		</div>
+
 		<!-- Bar Settings -->
 			<div id="tab-settings">
 
@@ -82,7 +87,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<span id="e-goi-lists_ct_bar" style="display: none;"><?php echo $this->bar_post['list'];?></span>
 
 							<span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
-							<select name="egoi_bar_sync[list]" class="lists" id="e-goi-list-bar" style="display: none;">
+							<select name="egoi_bar_sync[list]" class="lists" id="e-goi-list-bar" style="display: none;" required>
 								<option disabled <?php selected($this->bar_post['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
 							</select>
 							<p class="help"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
@@ -95,10 +100,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td>
 							<span id="lang_bar" style="display: none;"><?php echo $this->bar_post['lang'];?></span>
 
-							<span class="loading_lang dashicons dashicons-update" style="display: none;"></span>
+							<span class="loading_lang dashicons dashicons-update" style="display: none;" required></span>
 							<select name="egoi_bar_sync[lang]"  id="e-goi-lang-bar" style="display: none;">
 								<option disabled <?php selected($this->bar_post['lang'], ''); ?>><?php _e( 'Select a lang..', 'egoi-for-wp' ); ?></option>
 							</select>
+						</td>
+					</tr>
+
+
+					<!-- TAGS -->
+					<tr valign="top">
+						<th scope="row"><label for="egoi_tag_bar"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label></th>
+						<td>
+                         	<div class="nav-tab-wrapper-tags" id="egoi-tabs-bar-tags">
+								<a class="nav-tab-bar-egoi-tags nav-tab-active" id="nav-tab-bar-egoi-tags" style="cursor: pointer;"><?php _e( 'Select E-goi tags', 'egoi-for-wp' ); ?></a>
+								<span> | </span>
+								<a class="nav-tab-bar-new-tags" id="nav-tab-bar-new-tags" style="cursor: pointer;"><?php _e( 'Add new tag', 'egoi-for-wp' ); ?></a>
+							</div>
+							<br>
+
+							<!-- TABS -->
+							<div id="tab-bar-egoi-tags">
+								<span class="egoi-tags_not_found" style="display: none;">
+									<?php printf(__('No tags found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-for-wp'));?>
+								</span>
+
+								<span id="e-goi-tags_ct_bar" style="display: none;"><?php echo $tag;?></span>
+
+								<span class="loading_tags dashicons dashicons-update" style="display: none;"></span>
+								<select name="egoi_bar_sync[tag-egoi]" class="tags" id="e-goi-tags-bar" style="display: none;">
+									<option disabled <?php selected($tag, ''); ?>><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
+								</select>
+
+								<p class="help"><?php _e( 'Select the tag to which visitors should be associated', 'egoi-for-wp' ); ?></p>
+							</div>
+
+							<div id="tab-bar-new-tags" style="display: none;">
+								<input type="text" style="width:450px;" id="egoi_tag" name="egoi_bar_sync[tag]" placeholder="<?php _e( 'Choose a name for your new tag', 'egoi-for-wp' ); ?>" value=""/>
+								<p class="help"><?php _e( 'Create a new tag to which visitors should be associated', 'egoi-for-wp' ); ?></p>
+							</div>
+                                
 						</td>
 					</tr>
 
@@ -312,9 +353,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			</table>
 		</div>
+			<button style="margin-top: 12px; margin-bottom: 30px;" id="egoi-bar-btn" type="submit" class="button button-primary"><?php _e('Save', 'egoi-for-wp');?></button>
 
-
-		<?php submit_button(); ?>
+		<?php //submit_button(); ?>
 	</form>
 
 </div>
@@ -323,10 +364,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	jQuery(document).ready(function($) {
 
+		$('#nav-tab-bar-egoi-tags').click(function() {
+			$('#tab-bar-new-tags').hide();
+			$('#tab-bar-egoi-tags').show();
+			$('#egoi_tag').val('');
+			$(this).addClass('nav-tab-active');
+			$('#nav-tab-bar-new-tags').removeClass('nav-tab-active');
+		});
+
+		$('#nav-tab-bar-new-tags').click(function() {
+			$('#tab-bar-new-tags').show();
+			$('#tab-bar-egoi-tags').hide();
+			$('#e-goi-tags-bar').val('');
+			$(this).addClass('nav-tab-active');
+			$('#nav-tab-bar-egoi-tags').removeClass('nav-tab-active');
+		});
+
 		if(jQuery("#e-goi-lists_ct_bar").text() != ""){
 			jQuery('#egoi-lang').show();
 			getListLang(jQuery("#e-goi-lists_ct_bar").text());
 		}
+
+		getTagsBar();
 	});
 
 	jQuery("#e-goi-list-bar").change(function(){
@@ -363,9 +422,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                     var idiomas = [];
 
                     idiomas.push(idioma);
-                    jQuery.each(idiomas_extra, function(key, val){
-                        idiomas.push(val);
-                    });
+                    if (idiomas_extra != "") {
+	                    jQuery.each(idiomas_extra, function(key, val){
+	                        idiomas.push(val);
+	                    });
+	                }
 
                     jQuery.each(idiomas, function(key, val){
                         if(jQuery('#lang_bar').text() != "" && jQuery('#lang_bar').text() == val){
@@ -383,4 +444,68 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         });
     }
+
+    function getTagsBar(){
+		var data = {
+			action: 'egoi_get_tags'
+		}
+
+		var select_tags = jQuery('#e-goi-tags-bar');
+
+	    var tags = [];
+
+	    jQuery(".loading_tags").addClass('spin').show();
+	    var lists_count_tags_bar = jQuery('#e-goi-tags_ct_bar');
+
+		jQuery.post(url_egoi_script.ajaxurl, data, function(response) {
+		    tags = JSON.parse(response);
+		    jQuery(".loading_tags").removeClass('spin').hide();
+
+			
+			if(tags.ERROR){
+				jQuery('.egoi-tags_not_found').show();
+				select_tags.hide();
+
+			}else{
+
+				select_tags.show();
+				
+				jQuery('.e-goi-tags_not_found').hide();
+
+				jQuery.each(tags['TAG_LIST'], function(key, val) {
+		        	
+		        	if(typeof val.ID != 'undefined') {
+			        	select_tags.append(jQuery('<option />').val(val.ID).text(val.NAME));
+			        	
+			        	if(lists_count_tags_bar.text() === val.ID){
+			        		select_tags.val(val.ID);
+			        	}
+		            }
+		        });	 	
+			}
+		});
+	}
+
+	jQuery("#egoi-bar-btn").on("click", function () {
+		jQuery('#bar-submit-error').hide();
+
+		if(jQuery("#e-goi-list-bar").val() == null && jQuery("#e-goi-lang-bar").val() == null){
+
+			jQuery('#bar-submit-error').show();
+			return false;
+		}
+
+		var new_tag = jQuery("#egoi_tag").val();
+
+		if(new_tag != ''){
+			var data = {
+				action: 'egoi_add_tag',
+				name: new_tag
+			};
+
+			jQuery.post(url_egoi_script.ajaxurl, data, function(response){
+				tag = JSON.parse(response);
+			});
+		}
+	});
 </script>

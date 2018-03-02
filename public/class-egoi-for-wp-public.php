@@ -106,7 +106,17 @@ class Egoi_For_Wp_Public {
 	public function generate_bar($regenerate = null) {
 		
 		$bar_post = get_option(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
-		
+
+		//add new tag to E-goi
+		if($bar_post['tag'] != ""){
+			$data = new Egoi_For_Wp();
+			$info = $data->getTag($bar_post['tag']);
+		    $tag = $info['ID'];
+		}
+		else{
+			$tag = $bar_post['tag-egoi'];
+		}
+
 		// if defined some redirection
 		if($bar_post['redirect']){
 			if($_POST['egoi_action_sub']){
@@ -152,6 +162,10 @@ class Egoi_For_Wp_Public {
 			<div class="egoi-bar" id="egoi-bar" style="'.$hidden.'">
 				<input type="hidden" name="list" value="'.$bar_post['list'].'">
 				<input type="hidden" name="lang" value="'.$bar_post['lang'].'">
+<<<<<<< Updated upstream
+=======
+				<input type="hidden" name="tag" value="'. $tag .'">
+>>>>>>> Stashed changes
 				<label class="egoi-label" style="display:inline-block;">'.$bar_post['text_bar'].'</label>
 				<input type="email" name="email" placeholder="'.$bar_post['text_email_placeholder'].'" class="egoi-email" required>
 				<input type="button" class="egoi_sub_btn" value="'.$bar_post['text_button'].'" />
@@ -166,6 +180,10 @@ class Egoi_For_Wp_Public {
 				<div class="egoi-bar" id="egoi-bar" style="'.$hidden.'">
 					<input type="hidden" name="list" value="'.$bar_post['list'].'">
 					<input type="hidden" name="lang" value="'.$bar_post['lang'].'">
+<<<<<<< Updated upstream
+=======
+					<input type="hidden" name="tag" value="'. $tag .'">
+>>>>>>> Stashed changes
 					<label class="egoi-label">'.$bar_post['text_bar'].'</label>
 					<input type="email" name="email" placeholder="'.$bar_post['text_email_placeholder'].'" class="egoi-email" required style="display:inline-block;width:20%;">
 					<input type="button" class="egoi_sub_btn" value="'.$bar_post['text_button'].'" />
@@ -244,6 +262,15 @@ class Egoi_For_Wp_Public {
 
 		$lang = $bar['lang'];
 
+		if(isset($bar['tag-egoi']) && $bar['tag-egoi'] != ''){
+		    $tag = $bar['tag-egoi'];
+        }
+        else{
+	    	$data = new Egoi_For_Wp();
+	    	$new = $data->getTag($bar['tag']);
+	    	$tag = $new['ID'];
+        }
+
 		if($action){
 
 			$error = '';
@@ -266,7 +293,9 @@ class Egoi_For_Wp_Public {
 				$error = $bar['text_already_subscribed'];
 			}
 
-			$add = $client->addSubscriber($bar['list'], $name, $email, $lang);
+
+			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, 1, '', $tag);
+
 			$success = $bar['text_subscribed'];
 
 			if($error){
@@ -383,49 +412,66 @@ class Egoi_For_Wp_Public {
 	}
 
 
-	public function subscribe_egoi_simple_form( $atts ){
-		global $wpdb;
+    public function subscribe_egoi_simple_form( $atts ){
+        global $wpdb;
 
-		$id = $atts['id'];
+        $id = $atts['id'];
 
-		$post = '<form id="egoi_simple_form" method="post" action="/">';
+        $post = '<form id="egoi_simple_form" method="post" action="/">';
 
-		$options = get_option('egoi_simple_form_'.$id);
-		$data = json_decode($options);
+        $options = get_option('egoi_simple_form_'.$id);
+        $data = json_decode($options);
 
-		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="'.$data->list.'">';
-		$post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="'.$data->lang.'">';
+        $post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="'.$data->list.'">';
+        $post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="'.$data->lang.'">';
+        $post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.$data->tag.'">';
 
-		$table = $wpdb->prefix.'posts';
+        $table = $wpdb->prefix.'posts';
+        $html_code = $wpdb->get_row(" SELECT post_content, post_title FROM $table WHERE ID = '$id' ");
+        $tags = array('name','email','mobile','submit');
+        foreach ($tags as $tag) {
+            $html_code->post_content = str_replace('[e_'.$tag.']','',$html_code->post_content);
+            $html_code->post_content = str_replace('[/e_'.$tag.']','',$html_code->post_content);
+        }
 
-		$html_code = $wpdb->get_var(" SELECT post_content FROM $table WHERE ID = '$id' ");
-		$tags = array('name','email','mobile','submit');
-		foreach ($tags as $tag) {
-			$html_code = str_replace('[e_'.$tag.']','',$html_code);
-			$html_code = str_replace('[/e_'.$tag.']','',$html_code);
-		}
+        $post .= stripslashes($html_code->post_content);
+        $post .= '<div id="simple_form_result" style="margin:10px 0px; padding:12px; display:none;"></div>';
+        $post .= '</form>';
 
-		$post .= str_replace('\"', '"', $html_code);
-		$post .= '<div id="simple_form_result" style="margin:10px 0px; padding:12px; display:none;"></div>';
-		$post .= '</form>';
-		
-		
 
-		$post .= '
+
+        $post .= '
 			<script type="text/javascript" >
 				jQuery(document).ready(function() {
 					jQuery("#egoi_country_code").empty();
 				';
-		foreach (COUNTRY_CODES as $key => $value) {
-		 	$string = ucwords(strtolower($value['name']))." (+".$value['code'].")";
-		 	$post .= 'jQuery("#egoi_country_code").append("<option value='.$value['code'].'>'.$string.'</option>");';
-		}
-		$post .= '
+        foreach (unserialize(COUNTRY_CODES) as $key => $value) {
+            $string = ucwords(strtolower($value['name']))." (+".$value['code'].")";
+            $post .= 'jQuery("#egoi_country_code").append("<option value='.$value['code'].'>'.$string.'</option>");';
+        }
+        $post .= '
 				});
 
 				jQuery("#egoi_simple_form").submit(function(event) {
 					
 					event.preventDefault(); // Stop form from submitting normally
+
+					var button_obj = jQuery("button[type=submit]", "#egoi_simple_form");
+					var button_style = button_obj.css(["width", "height"]);
+					var button_text = button_obj.text();
+
+					var max = 3;
+					var i = 2;
+					button_obj.text(".").prop("disabled",true).css(button_style);
+					var button_effect = setInterval(function () {
+						if (i <= max) {
+							button_obj.text(".".repeat(i)).prop("disabled",true).css(button_style);
+							i++;
+						} else {
+							button_obj.text(".").prop("disabled",true).css(button_style);
+							i=2;
+						}
+					}, 400);
 
 					jQuery( "#simple_form_result" ).hide();
 
@@ -434,9 +480,9 @@ class Egoi_For_Wp_Public {
 					var egoi_email = jQuery("#egoi_email").val();
 					var egoi_country_code	= jQuery("#egoi_country_code").val();
 					var egoi_mobile	= jQuery("#egoi_mobile").val();
-					var egoi_tag	= jQuery("#egoi_tag").val();
 					var egoi_list = jQuery("#egoi_list").val();
 					var egoi_lang = jQuery("#egoi_lang").val();
+					var egoi_tag = jQuery("#egoi_tag").val();
 
 					var data = {
 						"action": "my_action",
@@ -444,19 +490,23 @@ class Egoi_For_Wp_Public {
 						"egoi_email": egoi_email,
 						"egoi_country_code": egoi_country_code,
 						"egoi_mobile": egoi_mobile,
-						"egoi_tag": egoi_tag,
 						"egoi_list": egoi_list,
-						"egoi_lang": egoi_lang
+						"egoi_lang": egoi_lang,
+						"egoi_tag": egoi_tag
 					};
 			
 					var posting = jQuery.post(ajaxurl, data);
 
 					posting.done(function( data ) {
-						if (data.substring(0, 5) != "ERROR") {
+						if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
+
 							jQuery( "#simple_form_result" ).css({
 								"color": "#4F8A10",
 								"background-color": "#DFF2BF"
 							});
+
+							jQuery( "#egoi_simple_form" )[0].reset();
+
 						} else {
 							jQuery( "#simple_form_result" ).css({
 								"color": "#9F6000",
@@ -465,13 +515,16 @@ class Egoi_For_Wp_Public {
 						}
 
 						jQuery( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
+						clearInterval(button_effect);
+						button_obj.prop("disabled",false).removeAttr( "style" ).html(button_text);
 					});
+
 				});
 			</script>
 		';
 
-		return $post;
-	}
+        return $post;
+    }
 
 	/**
 	 * Visual Composer Shortcode output

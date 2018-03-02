@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php 
     if (isset($_GET['type']) && $_GET['type'] == 'simple_form' ) { 
+
         if (isset($_POST['id_simple_form'])) {
 
             function saveSimpleForm() {
@@ -24,6 +25,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 $data->list = $_POST['list'];
                 $data->lang = $_POST['lang'];
+
+                //to add tag if not exist
+                if(isset($_POST['tag-egoi']) && $_POST['tag-egoi']!=''){
+                    $data->tag = $_POST['tag-egoi'];
+                }
+                else{
+                    $tag = new Egoi_For_Wp();
+                    $new = $tag->addTag($_POST['tag']);
+                    $data->tag = $new->ID;
+                }
 
                 $info = json_encode($data);
 
@@ -90,7 +101,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 'title_simple_form' => $_POST['title'], 
                                 'html_code_simple_form' => $_POST['html_code'],
                                 'list' => $_POST['list'],
-                                'lang' => $_POST['lang']
+                                'lang' => $_POST['lang'],
+                                'tag' => isset($_POST['tag-egoi']) ? $_POST['tag-egoi'] : $new->ID
+
                             ) ;
 
             }
@@ -118,10 +131,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                 $shortcode['list'] = $info->list;
                 $shortcode['lang'] = $info->lang;
 
+                $shortcode['tag'] = $info->tag;
+
                 return $shortcode;
             }
 
             $shortcode = selectSimpleForm($_GET['simple_form']);
+
             $id_simple_form = $_GET['simple_form'];
 
             echo "<div id='shortcode_div' style='width:100%;background:#00aeda;text-align:center;color:#fff'  onclick='select_all(this)'>".$shortcode['shortcode']."</div>";
@@ -172,6 +188,86 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 </table>
             </div>
+                <div id="sf-submit-error" style="display: none;">
+                    <div class="error notice">
+                        <p><?php _e('Please, choose the list.', 'egoi-for-wp'); ?></p>
+                    </div>
+                </div>
+
+                <div>
+                    <table class="form-table" style="table-layout: fixed;">
+
+                        <tr valign="top">
+                            <th scope="row"><label><?php _e( 'Egoi List', 'egoi-for-wp' ); ?></label></th>
+                            <td>
+                                <span class="e-goi-lists_not_found" style="display: none;">
+                                    <?php printf(__('No lists found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-for-wp'));?>
+                                </span>
+                                
+                                <span id="e-goi-lists_ct_simple_form" style="display: none;"><?php echo $shortcode['list'];?></span>
+
+                                <span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
+                                <select name="list" class="lists" id="e-goi-list-simple-form" style="display: none;">
+                                    <option disabled <?php selected($shortcode['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
+                                </select>
+                                <p class="help"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
+                            </td>
+                        </tr>
+
+                        <!-- Languages -->
+                        <tr valign="top">
+                            <th scope="row"><label id="egoi-lang-sf" style="display: none;"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label></th>
+                            <td>
+                                <span id="lang_simple_form" style="display: none;"><?php echo $shortcode['lang'];?></span>
+
+                                <span class="loading_lang dashicons dashicons-update" style="display: none;"></span>
+                                <select name="lang" id="e-goi-lang-simple-form" style="display: none;">
+                                </select>
+                            </td>
+                        </tr>
+                        <!-- END config list and language -->
+
+
+                        <tr valign="top">
+                            <th scope="row"><label for="egoi_tag_simple-form"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label></th>
+                            <td>
+                                <div class="nav-tab-wrapper-tags" id="egoi-tabs-simple-form-tags">
+                                    <a class="nav-tab-simple-form-egoi-tags nav-tab-active" id="nav-tab-simple-form-egoi-tags" style="cursor: pointer;"><?php _e( 'Select E-goi tags', 'egoi-for-wp' ); ?></a>
+                                    <span> | </span>
+                                    <a class="nav-tab-simple-form-new-tags" id="nav-tab-simple-form-new-tags" style="cursor: pointer;"><?php _e( 'Add new tag', 'egoi-for-wp' ); ?></a>
+                                </div>
+                                <br>
+
+                                <!-- TABS -->
+                                <div id="tab-simple-form-egoi-tags">
+                                    <span class="egoi-tags_not_found" style="display: none;">
+                                        <?php printf(__('No tags found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-for-wp'));?>
+                                    </span>
+
+                                    <span id="e-goi-tags_ct_simple-form" style="display: none;"><?php echo $shortcode['tag'];?></span>
+
+                                    <span class="loading_tags dashicons dashicons-update" style="display: none;"></span>
+                                    <select name="tag-egoi" class="tags" id="e-goi-tags-simple-form" style="display: none;">
+                                        <option disabled <?php selected($shortcode['tag'], ''); ?>><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
+                                    </select>
+
+                                    <p class="help"><?php _e( 'Select the tag to which visitors should be associated', 'egoi-for-wp' ); ?></p>
+                                </div>
+
+                                <div id="tab-simple-form-new-tags" style="display: none;">
+                                    <input type="text" style="width:450px;" id="egoi_tag" name="tag" placeholder="<?php _e( 'Choose a name for your new tag', 'egoi-for-wp' ); ?>" value="" />
+                                    <p class="help"><?php _e( 'Create a new tag to which visitors should be associated', 'egoi-for-wp' ); ?></p>
+                                </div>
+                                    
+                            </td>
+                    </tr>
+
+                    </table>
+                </div>
+
+                <!-- TAGS -->
+                <div>
+                </div>
 
                 <div class="e-goi-form-title">
                     <p style="font-size:18px; line-height:16px;"><?php _e('Form title', 'egoi-for-wp'); ?></p>
@@ -233,6 +329,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     getListLangSF(jQuery("#e-goi-lists_ct_simple_form").text());
                 }
 
+<<<<<<< Updated upstream
+=======
+                if(jQuery("#e-goi-tags_ct_simple_form").text() != ""){
+                    getTagsSF();
+                }
+
+>>>>>>> Stashed changes
                 'use strict';
 
                 new Clipboard('#e-goi_shortcode');
@@ -290,6 +393,28 @@ if ( ! defined( 'ABSPATH' ) ) {
                     }
                 }
 
+<<<<<<< Updated upstream
+=======
+
+                jQuery('#nav-tab-simple-form-egoi-tags').click(function() {
+                   jQuery('#tab-simple-form-new-tags').hide();
+                    jQuery('#tab-simple-form-egoi-tags').show();
+                    jQuery('#egoi_tag').val('');
+                    jQuery(this).addClass('nav-tab-active');
+                    jQuery('#nav-tab-simple-form-new-tags').removeClass('nav-tab-active');
+                });
+
+                jQuery('#nav-tab-simple-form-new-tags').click(function() {
+                    jQuery('#tab-simple-form-new-tags').show();
+                    jQuery('#tab-simple-form-egoi-tags').hide();
+                    jQuery('#e-goi-tags-simple-form').val('');
+                    jQuery(this).addClass('nav-tab-active');
+                    jQuery('#nav-tab-simple-form-egoi-tags').removeClass('nav-tab-active');
+                });
+
+                getTagsSF();
+
+>>>>>>> Stashed changes
             });
 
             jQuery("#e-goi-list-simple-form").change(function(){
@@ -308,6 +433,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 var data_lists = {
                     action: 'egoi_get_lists'
                 };
+<<<<<<< Updated upstream
 
                 jQuery.post(url_egoi_script.ajaxurl, data_lists, function(response) {
                     
@@ -346,6 +472,48 @@ if ( ! defined( 'ABSPATH' ) ) {
                 });
             }
 
+=======
+
+                jQuery.post(url_egoi_script.ajaxurl, data_lists, function(response) {
+                    
+                    content = JSON.parse(response);
+                    
+                    jQuery('#e-goi-lang-simple-form').show();
+
+                    var idiomas = [];
+                    jQuery.each(content, function(key, val) {
+
+                        if(val.listnum == listID){
+                            var idioma = val.idioma;
+                            var idiomas_extra = val.idiomas_extra;
+
+                            var idiomas = [];
+
+                            idiomas.push(idioma);
+                            if (idiomas_extra != "") {
+                                jQuery.each(idiomas_extra, function(key, val){
+                                    idiomas.push(val);
+                                });
+                            }
+                            
+                            jQuery.each(idiomas, function(key, val){
+                                if(jQuery('#lang_simple_form').text() != "" && jQuery('#lang_simple_form').text() == val){
+                                    jQuery("#e-goi-lang-simple-form").append('<option selected value="' + val + '">' + val + '</option>');
+                                }
+                                else{
+                                    jQuery("#e-goi-lang-simple-form").append('<option value="' + val + '">' + val + '</option>');
+                                }
+                            });
+
+                            jQuery(".loading_lang").removeClass('spin').hide();
+                        }
+                        
+                    });
+
+                });
+            }
+
+>>>>>>> Stashed changes
             function toggleLabel(html_code, label, tag) {
                 var button = jQuery('#egoi_' + tag + '_button');
                 button.toggleClass("active");
@@ -392,10 +560,20 @@ if ( ! defined( 'ABSPATH' ) ) {
             jQuery("#egoi_simple_form").on("submit", function () {
                 var html_code = jQuery("#html_code").val();
                 var simple_form_error = false;
+<<<<<<< Updated upstream
 
                 var listID = jQuery("#egoi_lists").val();
                 var lang = jQuery("#egoi_languages").val();
 
+=======
+                jQuery('#sf-submit-error').hide();
+
+                if(jQuery("#e-goi-list-simple-form").val() == null && jQuery("#e-goi-lang-simple-form").val() == null){
+                    console.log('aqui');
+                    jQuery('#sf-submit-error').show();
+                    return false;
+                }
+>>>>>>> Stashed changes
             
                 if ( html_code.indexOf('[e_submit]') < 0 || html_code.indexOf('[/e_submit]') < 0 ) {
                     simple_form_error = 'Submit button is required';       
@@ -410,6 +588,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                     jQuery('#simple-form-submit-error').empty().append('<div class="error notice"><p>' + simple_form_error + '</p></div>');
                     return false;
                 }
+
+                
             });
 
             function select_all(el) {
@@ -424,6 +604,51 @@ if ( ! defined( 'ABSPATH' ) ) {
                     textRange.moveToElementText(el);
                     textRange.select();
                 }
+            }
+
+
+            function getTagsSF(){
+                var data = {
+                    action: 'egoi_get_tags'
+                }
+
+                var select_tags = jQuery('#e-goi-tags-simple-form');
+
+                var tags = [];
+
+                jQuery(".loading_tags").addClass('spin').show();
+                var lists_count_tags = jQuery('#e-goi-tags_ct_simple-form');
+
+
+                jQuery.post(url_egoi_script.ajaxurl, data, function(response) {
+                    tags = JSON.parse(response);
+                    jQuery(".loading_tags").removeClass('spin').hide();
+
+                    
+                    if(tags.ERROR){
+                        jQuery('.egoi-tags_not_found').show();
+                        select_tags.hide();
+
+                    }else{
+
+                        select_tags.show();
+                        
+                        jQuery('.e-goi-tags_not_found').hide();
+
+                        jQuery.each(tags['TAG_LIST'], function(key, val) {
+                            
+                            if(typeof val.ID != 'undefined') {
+
+                                select_tags.append(jQuery('<option />').val(val.ID).text(val.NAME));
+                                
+                                if(lists_count_tags.text() === val.ID){
+                                    select_tags.val(val.ID);
+
+                                }
+                            }
+                        });     
+                    }
+                });
             }
 
         </script>

@@ -1238,6 +1238,24 @@ class Egoi_For_Wp_Admin {
         wp_die();
     }
 
+    public function get_tags() {
+
+        if(!empty($_POST)){
+            $api = new Egoi_For_Wp();
+            echo json_encode($api->getTags());
+        }
+        wp_die();
+    }
+
+    public function add_tag($name) {
+
+        if(!empty($_POST)){
+            $api = new Egoi_For_Wp();
+            echo json_encode($api->addTag($name));
+        }
+        wp_die();
+    }
+
     // ADD A SIMPLE FORM SUBSCRIBER
 	public function subscribe_egoi_simple_form_add() {
 		

@@ -23,6 +23,7 @@ class Egoi4Widget extends WP_Widget {
 		$this->bcolor = $opt['egoi_widget']['bcolor'] ? 'border: 1px solid '.$opt['egoi_widget']['bcolor'] : '';
 		$this->listID = $opt['egoi_widget']['list'];
 		$this->lang = $opt['egoi_widget']['lang'];
+		$this->tag = $opt['egoi_widget']['tag']!='' ? $opt['egoi_widget']['tag'] : $opt['egoi_widget']['tag-egoi'];
 
 		$widget_ops = array(
 			'classname' => 'Egoi4Widget',
@@ -43,7 +44,6 @@ class Egoi4Widget extends WP_Widget {
 			$this->egoi_id = $widgetid;
 			
 			$title = apply_filters('widget_title', $instance['title']);
-			//$list = $instance['list'];
 			$list = $this->listID;
 			$fname = $instance['fname'];
 			$fname_label = $instance['fname_label'];
@@ -58,7 +58,7 @@ class Egoi4Widget extends WP_Widget {
 			$mobile_label = $instance['mobile_label'];
 			$mobile_placeholder = $instance['mobile_placeholder'];
 			$button = $instance['button'];
-			$tag = $instance['tag'];
+			$tag = $this->tag;
 			
 			echo '
 			<style>
@@ -121,6 +121,7 @@ class Egoi4Widget extends WP_Widget {
 			<form name="egoi_contact" id="egoi-widget-form-'.$this->egoi_id.'" action="" method="post">
 				<input type="hidden" name="egoi-list" value="'.$this->listID.'">
 				<input type="hidden" name="egoi-lang" value="'.$this->lang.'">
+				<input type="hidden" name="egoi-tag" value="'. $this->tag .'">
 			';
 
 			if ($fname){
@@ -152,12 +153,10 @@ class Egoi4Widget extends WP_Widget {
 	}
 	
 	public function update($new_instance, $old_instance) {
-		
 		$instance = $old_instance;
 		$instance['widgetid'] = strip_tags($new_instance['widgetid']);
-		//$instance['list'] = strip_tags($new_instance['list']);
-		$instance['list'] = $this->listID;
-		$instance['lang'] = $this->lang;
+		$instance['list'] = strip_tags($new_instance['list']);
+		$instance['lang'] = strip_tags($new_instance['lang']);
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['fname'] = strip_tags($new_instance['fname']);
 		$instance['fname_label'] = strip_tags($new_instance['fname_label']);
@@ -172,19 +171,14 @@ class Egoi4Widget extends WP_Widget {
 		$instance['mobile_label'] = strip_tags($new_instance['mobile_label']);
 		$instance['mobile_placeholder'] = strip_tags($new_instance['mobile_placeholder']);
 		$instance['button'] = strip_tags($new_instance['button']);
-		$instance['tag'] = strip_tags($new_instance['tag']);
 
-		if($new_instance['tag']){
+		if($new_instance['tag']!=''){
 			$api = new Egoi_For_Wp();
-			$tags = $api->getTag($instance['tag']);
-
-			if($tags['NEW_ID']){
-				$instance['tag'] = $tags['NEW_ID'];
-				$instance['tag_name'] = $tags['NEW_NAME'];
-			}else{
-				$instance['tag'] = $tags['ID'];
-				$instance['tag_name'] = $tags['NAME'];
-			}
+			$tag = $api->getTag($instance['tag']);
+			$instance['tag'] = $tag['ID'];
+		}
+		else{
+			$instance['tag-egoi'] = $tag['ID'];
 		}
 
 		return $instance;
@@ -237,7 +231,6 @@ class Egoi4Widget extends WP_Widget {
 			$mobile_placeholder = esc_attr($instance['mobile_placeholder']);
 			$button = esc_attr($instance['button']);
 			
-			$tag = esc_attr($instance['tag_name']);
 
 			$Egoi4WP = get_option('Egoi4WpBuilderObject');
 			$lists = $Egoi4WP->getLists();
@@ -356,12 +349,7 @@ class Egoi4Widget extends WP_Widget {
 
 				echo '
 			</p>
-			<p>
-				<label>'.__('Tag', 'egoi-for-wp').'</label>';
-				echo '<input type="text" name="'.$this->get_field_name('tag').'" id="'.$this->get_field_id('tag').'" placeholder="'.__('Tag Name', 'egoi-for-wp').'" value="'.$tag.'" style="width:100%;">';
-				
-				echo '
-			</p>
+			
 			<p>
 				<label for="'.$this->get_field_id('button').'">'.__('Subscribe Button', 'egoi-for-wp').'</label>';
 				echo '<input type="text" name="'.$this->get_field_name('button').'" id="'.$this->get_field_id('button').'" placeholder="'.__('Subscribe', 'egoi-for-wp').'" value="'.$button.'" style="width:100%;">';
@@ -385,7 +373,6 @@ function egoi_widget_request() {
 		
 		$fname = $_POST['widget_fname'];
 		$lname = $_POST['widget_lname'];
-		$tag = $_POST['widget_tag'];
 
 		$opt = get_option('egoi_widget');
 		$Egoi4WP = $opt['egoi_widget'];
@@ -393,6 +380,14 @@ function egoi_widget_request() {
 		$lang = $Egoi4WP['lang'];
 
 		$list = $Egoi4WP['list'];
+
+		if($Egoi4WP['tag']!=''){
+			$data = new Egoi_For_Wp();
+			$info = $data->getTag($Egoi4WP['tag']);
+		    $tag = $info['ID'];
+		}else{
+			$tag = $Egoi4WP['tag-egoi'];
+		}
 
 		// new options
 		$bcolor_success = 'background: '.$Egoi4WP['bcolor_success'].'!important';

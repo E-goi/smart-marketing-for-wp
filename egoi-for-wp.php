@@ -160,6 +160,20 @@ function apikey_changes(){
 	return Egoi_For_Wp::removeData(true, true);
 }
 
+// HOOK GET TAGS
+add_action('wp_ajax_egoi_get_tags', 'egoi_get_tags');
+function egoi_get_tags(){
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    return $admin->get_tags();
+}
+
+// HOOK ADD TAG
+add_action('wp_ajax_egoi_add_tag', 'egoi_add_tag');
+function egoi_add_tag(){
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    return $admin->add_tag($_POST['name']);
+}
+
 // COUNTRY MOBILE CODES
 define('COUNTRY_CODES', array(
 	'AFG'=>array('name'=>'Afeganistão','code'=>'93'),
