@@ -429,6 +429,7 @@ else{
 	                }
 
                     jQuery.each(idiomas, function(key, val){
+                    	var field_text = jQuery('<option />').html(val.title).text();
                         if(jQuery('#lang_bar').text() != "" && jQuery('#lang_bar').text() == val){
                     		jQuery("#e-goi-lang-bar").append('<option selected value="' + val + '">' + val + '</option>');
                     	}
@@ -475,7 +476,8 @@ else{
 				jQuery.each(tags['TAG_LIST'], function(key, val) {
 		        	
 		        	if(typeof val.ID != 'undefined') {
-			        	select_tags.append(jQuery('<option />').val(val.ID).text(val.NAME));
+		        		var field_text = jQuery('<option />').html(val.NAME).text();
+			        	select_tags.append(jQuery('<option />').val(val.ID).text(field_text));
 			        	
 			        	if(lists_count_tags_bar.text() === val.ID){
 			        		select_tags.val(val.ID);

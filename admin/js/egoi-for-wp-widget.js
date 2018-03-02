@@ -73,7 +73,9 @@ jQuery(document).ready(function($) {
 					$.each(current_lists, function(key, val) {
 			        	
 			        	if(typeof val.listnum != 'undefined') {
-				        	select_lists_widget.append($('<option />').val(val.listnum).text(val.title));
+			        		var field_text = jQuery('<option />').html(val.title).text();
+
+				        	select_lists_widget.append($('<option />').val(val.listnum).text(field_text));
 				        	
 				        	if(lists_count_widget.text() === val.listnum){
 				        		select_lists_widget.val(val.listnum);
@@ -85,7 +87,6 @@ jQuery(document).ready(function($) {
 				    	
 				}
 			});
-
 
 		    //get E-goi tags
 			getTags();
@@ -125,7 +126,9 @@ function getTags(){
 			jQuery.each(tags['TAG_LIST'], function(key, val) {
 	        	
 	        	if(typeof val.ID != 'undefined') {
-		        	select_tags.append(jQuery('<option />').val(val.ID).text(val.NAME));
+	        		var field_text = jQuery('<option />').html(val.NAME).text();
+
+		        	select_tags.append(jQuery('<option />').val(val.ID).text(field_text));
 		        	
 		        	if(lists_count_tags.text() === val.ID){
 		        		select_tags.val(val.ID);

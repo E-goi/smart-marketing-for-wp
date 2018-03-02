@@ -546,8 +546,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                         jQuery.each(tags['TAG_LIST'], function(key, val) {
                             
                             if(typeof val.ID != 'undefined') {
-
-                                select_tags.append(jQuery('<option />').val(val.ID).text(val.NAME));
+                                var field_text = jQuery('<option />').html(val.NAME).text();
+                                select_tags.append(jQuery('<option />').val(val.ID).text(field_text));
                                 
                                 if(lists_count_tags.text() === val.ID){
                                     select_tags.val(val.ID);
