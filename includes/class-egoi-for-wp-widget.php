@@ -130,7 +130,7 @@ class Egoi4Widget extends WP_Widget {
 			}
 			
 			if ($lname){
-				echo "<label>".$fname_label."</label>";
+				echo "<label>".$lname_label."</label>";
 				echo "<div class='widget-text'><input type='text' placeholder='".$lname_placeholder."' name='egoi-lname-sub".$this->egoi_id."' id='egoi-lname-sub".$this->egoi_id."' style='".$this->input_width.";' /></div>";
 			}
 			
