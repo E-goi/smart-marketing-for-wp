@@ -1236,6 +1236,24 @@ class Egoi_For_Wp_Admin {
         wp_die();
     }
 
+    public function get_tags() {
+
+        if(!empty($_POST)){
+            $api = new Egoi_For_Wp();
+            echo json_encode($api->getTags());
+        }
+        wp_die();
+    }
+
+    public function add_tag($name) {
+
+        if(!empty($_POST)){
+            $api = new Egoi_For_Wp();
+            echo json_encode($api->addTag($name));
+        }
+        wp_die();
+    }
+
     // ADD A SIMPLE FORM SUBSCRIBER
 	public function subscribe_egoi_simple_form_add() {
 		
@@ -1261,10 +1279,11 @@ class Egoi_For_Wp_Admin {
 
 		$params = array( 
 			'apikey'    => $apikey['api_key'],
-			'listID' => $list_id,
+			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_EMAIL),
 			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
 			'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
 			'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
+			'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
 			'tags' => $tag,
 			'status' => 1
 		);
@@ -1472,6 +1491,17 @@ class Egoi_For_Wp_Admin {
 		);
 
 	}
+
+
+	//get all languages of a specific list
+	public function get_languages() {
+		//exit;
+        if(!empty($_GET)){
+            $api = new Egoi_For_Wp();
+            echo json_encode($api->getLists($_['listID']));
+        }
+        wp_die();
+    }
 	
 
 }

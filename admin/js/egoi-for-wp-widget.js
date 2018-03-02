@@ -14,6 +14,22 @@ jQuery(document).ready(function($) {
 		$('#nav-tab-widget-settings').removeClass('nav-tab-active');
 	});
 
+	$('#nav-tab-widget-egoi-tags').click(function() {
+		$('#tab-widget-new-tags').hide();
+		$('#tab-widget-egoi-tags').show();
+		$('#egoi_tag').val('');
+		$(this).addClass('nav-tab-active');
+		$('#nav-tab-widget-new-tags').removeClass('nav-tab-active');
+	});
+
+	$('#nav-tab-widget-new-tags').click(function() {
+		$('#tab-widget-new-tags').show();
+		$('#tab-widget-egoi-tags').hide();
+		$('#e-goi-tags-widget').val('');
+		$(this).addClass('nav-tab-active');
+		$('#nav-tab-widget-egoi-tags').removeClass('nav-tab-active');
+	});
+
 	'use strict';
 
 	new Clipboard('#e-goi_shortcode');
@@ -28,6 +44,7 @@ jQuery(document).ready(function($) {
 	if(typeof page != 'undefined'){
 		if(page == 'egoi-4-wp-form'){
 
+			//get E-goi lists
 			var data_lists = {
 		        action: 'egoi_get_lists'
 		    };
@@ -68,7 +85,55 @@ jQuery(document).ready(function($) {
 				    	
 				}
 			});
+
+
+		    //get E-goi tags
+			getTags();
 		}
 	}
 
 });
+
+function getTags(){
+	var data = {
+		action: 'egoi_get_tags'
+	}
+
+	var select_tags = jQuery('#e-goi-tags-widget');
+
+    var tags = [];
+
+    jQuery(".loading_tags").addClass('spin').show();
+    var lists_count_tags = jQuery('#e-goi-tags_ct_widget');
+
+
+	jQuery.post(url_egoi_script.ajaxurl, data, function(response) {
+	    tags = JSON.parse(response);
+	    jQuery(".loading_tags").removeClass('spin').hide();
+
+		
+		if(tags.ERROR){
+			jQuery('.egoi-tags_not_found').show();
+			select_tags.hide();
+
+		}else{
+
+			select_tags.show();
+			
+			jQuery('.e-goi-tags_not_found').hide();
+
+			jQuery.each(tags['TAG_LIST'], function(key, val) {
+	        	
+	        	if(typeof val.ID != 'undefined') {
+		        	select_tags.append(jQuery('<option />').val(val.ID).text(val.NAME));
+		        	
+		        	if(lists_count_tags.text() === val.ID){
+		        		select_tags.val(val.ID);
+
+		        	}
+	            }
+	        });	 	
+		}
+	});
+}
+

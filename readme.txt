@@ -78,6 +78,11 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 2.1.0 =
+- Simple Forms - option to choose a list, a language and a tag that the subscribers will be associated
+- Subscriber Bar - option to choose a list, a language and a tag that the subscribers will be associated
+- Widget - option to choose a list, a language and a tag that the subscribers will be associated
+
 = 2.0.7 =
 - Products endpoint improvements
 - Minor Bug Fixes

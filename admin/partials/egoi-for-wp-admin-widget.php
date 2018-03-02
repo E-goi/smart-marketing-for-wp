@@ -7,6 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 $opt_widget = get_option('egoi_widget');
 $egoiwidget = $opt_widget['egoi_widget'];
 
+if($egoiwidget['tag']!=''){
+	$data = new Egoi_For_Wp();
+	$info = $data->getTag($egoiwidget['tag']);
+    $tag = $info['ID'];
+}else{
+	$tag = $egoiwidget['tag-egoi'];
+}
+
+
 $egoiwidget = array_map(
 	function($str){
 		return str_replace("\'", "'", $str);
@@ -16,9 +25,15 @@ if(!$egoiwidget['enabled']){
 	$egoiwidget['enabled'] = 0;
 }
 
+
 ?>
 <style type="text/css">
 	.nav-tab-wrapper{
+		border-bottom: 1px solid #ccc;
+		padding-top: 9px;
+	}
+
+	.nav-tab-wrapper-tags{
 		border-bottom: 1px solid #ccc;
 		padding-top: 9px;
 	}
@@ -31,6 +46,12 @@ if(!$egoiwidget['enabled']){
 
 			<form method="post" action="">
 			<?php settings_fields($FORM_OPTION);?>
+
+			<div id="widget-submit-error" style="display: none;">
+				<div class="error notice">
+					<p><?php _e('Please, choose the list.', 'egoi-for-wp'); ?></p>
+				</div>
+			</div>
 			
 			<input type="hidden" name="widget" value="1">
 			<input type="hidden" name="egoiform" value="egoi_widget">
@@ -79,7 +100,7 @@ if(!$egoiwidget['enabled']){
 							<span id="e-goi-lists_ct_widget" style="display: none;"><?php echo $egoiwidget['list'];?></span>
 
 							<span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
-							<select name="egoi_widget[list]" class="lists" id="e-goi-list-widget" style="display: none;">
+							<select name="egoi_widget[list]" class="lists" id="e-goi-list-widget" style="display: none;" required>
 								<option disabled <?php selected($egoiwidget['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
 							</select>
 							<p class="help"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
@@ -99,6 +120,42 @@ if(!$egoiwidget['enabled']){
 					</tr>
 
 					<!-- END config list and language -->
+
+
+					<!-- TAGS -->
+	               <tr valign="top">
+						<th scope="row"><label for="egoi_tag_widget"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label></th>
+						<td>
+                         	<div class="nav-tab-wrapper-tags" id="egoi-tabs-widget-tags">
+								<a class="nav-tab-widget-egoi-tags nav-tab-active" id="nav-tab-widget-egoi-tags" style="cursor: pointer;"><?php _e( 'Select E-goi tags', 'egoi-for-wp' ); ?></a>
+								<span> | </span>
+								<a class="nav-tab-widget-new-tags" id="nav-tab-widget-new-tags" style="cursor: pointer;"><?php _e( 'Add new tag', 'egoi-for-wp' ); ?></a>
+							</div>
+							<br>
+
+							<!-- TABS -->
+							<div id="tab-widget-egoi-tags">
+								<span class="egoi-tags_not_found" style="display: none;">
+									<?php printf(__('No tags found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-for-wp'));?>
+								</span>
+
+								<span id="e-goi-tags_ct_widget" style="display: none;"><?php echo $tag;?></span>
+
+								<span class="loading_tags dashicons dashicons-update" style="display: none;"></span>
+								<select name="egoi_widget[tag-egoi]" class="tags" id="e-goi-tags-widget" style="display: none;">
+									<option disabled <?php selected($tag, ''); ?>><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
+								</select>
+
+								<p class="help"><?php _e( 'Select the tag to which visitors should be associated', 'egoi-for-wp' ); ?></p>
+							</div>
+
+							<div id="tab-widget-new-tags" style="display: none;">
+								<input type="text" style="width:450px;" id="egoi_tag_widget" name="egoi_widget[tag]" placeholder="<?php _e( 'Choose a name for your new tag', 'egoi-for-wp' ); ?>" value="" />
+								<p class="help"><?php _e( 'Create a new tag to which visitors should be associated', 'egoi-for-wp' ); ?></p>
+							</div>
+                                
+						</td>
+					</tr>
 
 
 					<tr valign="top">
@@ -229,7 +286,7 @@ if(!$egoiwidget['enabled']){
 				</table>
 			</div>
 
-			<button style="margin-top: 12px; margin-bottom: 30px;" type="submit" class="button button-primary"><?php _e('Save', 'egoi-for-wp');?></button>
+			<button style="margin-top: 12px; margin-bottom: 30px;" id="egoi-widget-btn" type="submit" class="button button-primary"><?php _e('Save', 'egoi-for-wp');?></button>
 
 			</form>
 
@@ -257,7 +314,6 @@ if(!$egoiwidget['enabled']){
         getListWidget(listID);
     });
 
-
     function getListWidget(listID){
         var data_lists = {
             action: 'egoi_get_lists'
@@ -279,9 +335,12 @@ if(!$egoiwidget['enabled']){
                     var idiomas = [];
 
                     idiomas.push(idioma);
-                    jQuery.each(idiomas_extra, function(key, val){
-                        idiomas.push(val);
-                    });
+
+                    if (idiomas_extra != "") {
+	                    jQuery.each(idiomas_extra, function(key, val){
+	                        idiomas.push(val);
+	                    });
+	                }
 
                     jQuery.each(idiomas, function(key, val){
                     	if(jQuery('#lang_widget').text() != "" && jQuery('#lang_widget').text() == val){
@@ -300,4 +359,30 @@ if(!$egoiwidget['enabled']){
 
         });
     }
+
+    jQuery("#egoi-widget-btn").on("click", function () {
+
+    	jQuery('#widget-submit-error').hide();
+
+		if(jQuery("#e-goi-list-widget").val() == null && jQuery("#e-goi-lang-widget").val() == null){
+			jQuery('#widget-submit-error').show();
+			return false;
+		}
+
+		var new_tag = jQuery("#egoi_tag_widget").val();
+
+		if(new_tag != ''){
+			var data = {
+				action: 'egoi_add_tag',
+				name: new_tag
+			};
+
+			jQuery.post(url_egoi_script.ajaxurl, data, function(response){
+				tag = JSON.parse(response);
+			});
+
+			return false;
+		}
+	});
+
 </script>

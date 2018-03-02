@@ -26,6 +26,7 @@ jQuery(document).ready(function($) {
 		    var lists_count_frm = $('#e-goi-lists_ct_forms');
 		    var lists_count_bar = $('#e-goi-lists_ct_bar');
 		    var form_to_subscriber = $("#e-goi-forms");
+		    var lang = $("#lang_bar");
 		    
 		    $.post(url_egoi_script.ajaxurl, data_lists, function(response) {
 			    $(".loading_lists").removeClass('spin').hide();
@@ -40,7 +41,6 @@ jQuery(document).ready(function($) {
 					select_form.hide();
 				}else{
 					select_lists_frm.show();
-					select_lists_bar.show();
 					if(form_to_subscriber.text() != ''){
 						select_form.show();
 					}

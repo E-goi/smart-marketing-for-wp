@@ -106,7 +106,17 @@ class Egoi_For_Wp_Public {
 	public function generate_bar($regenerate = null) {
 		
 		$bar_post = get_option(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
-		
+
+		//add new tag to E-goi
+		if($bar_post['tag'] != ""){
+			$data = new Egoi_For_Wp();
+			$info = $data->getTag($bar_post['tag']);
+		    $tag = $info['ID'];
+		}
+		else{
+			$tag = $bar_post['tag-egoi'];
+		}
+
 		// if defined some redirection
 		if($bar_post['redirect']){
 			if($_POST['egoi_action_sub']){
@@ -150,6 +160,9 @@ class Egoi_For_Wp_Public {
 
 			$bar_content = '<span style="display:none;" id="e-goi-bar-session">'.$enable.'</span>
 			<div class="egoi-bar" id="egoi-bar" style="'.$hidden.'">
+				<input type="hidden" name="list" value="'.$bar_post['list'].'">
+				<input type="hidden" name="lang" value="'.$bar_post['lang'].'">
+				<input type="hidden" name="tag" value="'. $tag .'">
 				<label class="egoi-label" style="display:inline-block;">'.$bar_post['text_bar'].'</label>
 				<input type="email" name="email" placeholder="'.$bar_post['text_email_placeholder'].'" class="egoi-email" required>
 				<input type="button" class="egoi_sub_btn" value="'.$bar_post['text_button'].'" />
@@ -162,6 +175,9 @@ class Egoi_For_Wp_Public {
 			$bar_content = '<span style="display:none;" id="e-goi-bar-session">'.$enable.'</span>
 				<span class="egoi-bottom-action" id="'.$id_tab.'" style="background:'.$bar_post['color_bar'].';"></span>
 				<div class="egoi-bar" id="egoi-bar" style="'.$hidden.'">
+					<input type="hidden" name="list" value="'.$bar_post['list'].'">
+					<input type="hidden" name="lang" value="'.$bar_post['lang'].'">
+					<input type="hidden" name="tag" value="'. $tag .'">
 					<label class="egoi-label">'.$bar_post['text_bar'].'</label>
 					<input type="email" name="email" placeholder="'.$bar_post['text_email_placeholder'].'" class="egoi-email" required style="display:inline-block;width:20%;">
 					<input type="button" class="egoi_sub_btn" value="'.$bar_post['text_button'].'" />
@@ -238,6 +254,17 @@ class Egoi_For_Wp_Public {
 		$fname = explode('@', $email);
 		$name = $fname[0];
 
+		$lang = $bar['lang'];
+
+		if(isset($bar['tag-egoi']) && $bar['tag-egoi'] != ''){
+		    $tag = $bar['tag-egoi'];
+        }
+        else{
+	    	$data = new Egoi_For_Wp();
+	    	$new = $data->getTag($bar['tag']);
+	    	$tag = $new['ID'];
+        }
+
 		if($action){
 
 			$error = '';
@@ -260,7 +287,8 @@ class Egoi_For_Wp_Public {
 				$error = $bar['text_already_subscribed'];
 			}
 
-			$add = $client->addSubscriber($bar['list'], $name, $email);
+			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, 1, '', $tag);
+
 			$success = $bar['text_subscribed'];
 
 			if($error){
@@ -386,9 +414,15 @@ class Egoi_For_Wp_Public {
 
 		$post = '<form id="egoi_simple_form" method="post" action="/">';
 
+		$options = get_option('egoi_simple_form_'.$id);
+		$data = json_decode($options);
+
+		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="'.$data->list.'">';
+		$post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="'.$data->lang.'">';
+		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.$data->tag.'">';
+
 		$table = $wpdb->prefix.'posts';
 		$html_code = $wpdb->get_row(" SELECT post_content, post_title FROM $table WHERE ID = '$id' ");
-		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.htmlentities(stripcslashes($html_code->post_title)).' - '.$id.'" />';
 		$tags = array('name','email','mobile','submit');
 		foreach ($tags as $tag) {
 			$html_code->post_content = str_replace('[e_'.$tag.']','',$html_code->post_content);
@@ -441,7 +475,9 @@ class Egoi_For_Wp_Public {
 					var egoi_email = jQuery("#egoi_email").val();
 					var egoi_country_code	= jQuery("#egoi_country_code").val();
 					var egoi_mobile	= jQuery("#egoi_mobile").val();
-					var egoi_tag	= jQuery("#egoi_tag").val();
+					var egoi_list = jQuery("#egoi_list").val();
+					var egoi_lang = jQuery("#egoi_lang").val();
+					var egoi_tag = jQuery("#egoi_tag").val();
 
 					var data = {
 						"action": "my_action",
@@ -449,6 +485,8 @@ class Egoi_For_Wp_Public {
 						"egoi_email": egoi_email,
 						"egoi_country_code": egoi_country_code,
 						"egoi_mobile": egoi_mobile,
+						"egoi_list": egoi_list,
+						"egoi_lang": egoi_lang,
 						"egoi_tag": egoi_tag
 					};
 			
