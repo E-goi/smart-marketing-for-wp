@@ -1,4 +1,5 @@
 <?php
+error_reporting(~E_NOTICE);
 
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -51,9 +52,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	update_option('Egoi4WpBuilderObject', $egoi);
-	
-	$apikey = get_option('egoi_api_key');
-	$api_key = $apikey['api_key'];
 
 	$opt = get_option('egoi_data');
 
@@ -99,8 +97,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div id="icon-wp-info" class="icon32"></div>
 			<div class="wrap-content--API">
 	      		<?php 
-		      	// If exists in BD
-		      	if($api_key){
+		      	// If API Key exists in BD
+		      	$apikey = get_option('egoi_api_key');
+		      	if(isset($apikey['api_key']) && ($apikey['api_key'])) {
+
+		      		$api_key = $apikey['api_key'];
 
 		      		$api_client = $egoi->getClient();
 		      		if($api_client->response == 'INVALID'){ ?>
@@ -124,15 +125,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		      		}else{
 
-		      			if(!get_option('egoi_client')){
-		      				add_option('egoi_client', $api_client);
-		      			} ?>
+		      			update_option('egoi_client', $api_client); ?>
 						
 						<div>
 							<form name='egoi_apikey_form' method='post'>
 								
 								<?php
-								settings_fields( Egoi_For_Wp_Admin::API_OPTION );
+								settings_fields(Egoi_For_Wp_Admin::API_OPTION);
 								settings_errors(); ?>
 
 								<input type="hidden" name="apikey_frm" value="1">
@@ -209,7 +208,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<p class="e-goi-help-text">
 								<span class="e-goi-tooltip">
 									 <span class="dashicons dashicons-editor-help"></span>
-								  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/858130-O-que-%C3%A9-a-API-do-E-goi-e-onde-est%C3%A1-a-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
+								  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/511369-Whats-E-gois-API-and-where-do-I-find-my-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
 								 	</span>
 								</span>
 								<span><?php echo __('To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;"><a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span></a> and copy it.', 'egoi-for-wp');?>
@@ -220,7 +219,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="e-goi-separator"></div>
 					<div class="e-goi-account-apikey-dont-have-account">
 						<p><?php echo __("Don't have an E-goi account?", "egoi-for-wp");?></p>
-						<a href="http://bo.e-goi.com/?action=registo" target="_blank"><?php echo __("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
+						<a href="https://login.egoiapp.com/#/signup" target="_blank"><?php echo __("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
 					</div><?php
 
 				} ?>
@@ -231,7 +230,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php 
 				
 				// Display lists ERROR
-				if ($lists->ERROR){
+				if (isset($lists->ERROR) && ($lists->ERROR)) {
 
 					update_option('egoi_has_list', 0); ?>
 

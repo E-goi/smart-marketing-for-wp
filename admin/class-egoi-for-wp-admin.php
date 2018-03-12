@@ -221,7 +221,7 @@ class Egoi_For_Wp_Admin {
 
 		$apikey = get_option('egoi_api_key');
 		$haslists = get_option('egoi_has_list');
-		if($apikey['api_key'] && $haslists){
+		if(isset($apikey['api_key']) && ($apikey['api_key']) && ($haslists)) {
 
 			add_submenu_page($this->plugin_name, __('Capture Contacts', 'egoi-for-wp'), __('Capture Contacts', 'egoi-for-wp'), $capability, 'egoi-4-wp-form', array($this, 'display_plugin_subscriber_form'));
 
@@ -569,7 +569,6 @@ class Egoi_For_Wp_Admin {
 				if(!$_GET['wc-ajax']){
 
 					if(!$_GET['remove_item'] && !strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-
 					
 						$list_id = $this->options_list['list'];
 						$track = $this->options_list['track'];
@@ -584,7 +583,6 @@ class Egoi_For_Wp_Admin {
 
 							if($validated_cart && $validated_order){
 
-
 								if(substr($_GET['key'], 0, 8) != 'wc_order' || $_SESSION[$_GET['key']] == 1 ) {
 
 									if ($_SESSION[$_GET['key']] == 1) {
@@ -597,7 +595,7 @@ class Egoi_For_Wp_Admin {
 				
 										// check && execute now for page view
 										$client_info = get_option('egoi_client');
-										if($client_info){
+										if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
 
 											$client_id = $client_info->CLIENTE_ID;
 
@@ -607,9 +605,9 @@ class Egoi_For_Wp_Admin {
 											echo $this->execEc($client_id, $list_id, $user_email);
 										}
 									}
+
 								} else {
 									$_SESSION[$_GET['key']] = 1;
-									
 								}
 							}
 						}
@@ -648,7 +646,7 @@ class Egoi_For_Wp_Admin {
 		if($track && $list_id){
 
 			$client_info = get_option('egoi_client');
-			if($client_info){
+			if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
 
 				// if it is a guest
 				$session = base64_encode('guest_'.time());
@@ -687,7 +685,6 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function hookProcessCart($data, $products = array()) {
 
-
 		if(!empty($products) && ($data)){
 
 			global $woocommerce;
@@ -700,13 +697,11 @@ class Egoi_For_Wp_Admin {
 			$sum_price = 0;
 			$products = array();
 
-
 			foreach($woocommerce->cart->get_cart() as $k => $product){
 
 				$product_info = wc_get_product($product['data']->get_id());
 				$price = get_post_meta($product['product_id'], '_sale_price', true) ?: get_post_meta($product['product_id'], '_regular_price', true);
 
-				
 				$products[$k]['id'] = $product['product_id'];
 				$products[$k]['name'] = $product_info->get_title();
 				$products[$k]['cat'] = ' - ';
@@ -720,16 +715,6 @@ class Egoi_For_Wp_Admin {
 			$te = $this->execEc($client_id, $list_id, $user_email, $products, array(), $sum_price, $cart_zero);
 			$content = stripslashes(htmlspecialchars($te, ENT_QUOTES, 'UTF-8'));
 			update_option('egoi_track_addtocart_'.$hash_cart, array($content));
-
-			
-			/*
-			if(empty($products)){
-				echo 'teste';
-				echo html_entity_decode($content[0], ENT_QUOTES);
-				//$_SESSION['reloadCartPage'] = 1;
-			}
-			*/
-			//update_option('egoi_track_addtocart_'.$hash_cart, array($content));
 		}
 	}
 
@@ -779,7 +764,7 @@ class Egoi_For_Wp_Admin {
 			if($track && $list_id){
 
 			 	$client_info = get_option('egoi_client');
-				if($client_info){
+				if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
 				
 					$user = wp_get_current_user();
 					$user_email = $user->data->user_email;
@@ -834,14 +819,11 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function checkForCart(){
 			
-		$cart = $_SESSION['egoi_session_cart'];
+		if(isset($_SESSION['egoi_session_cart']) && ($_SESSION['egoi_session_cart'])){
 
-		if(isset($cart) && ($cart)){
-
-			$option = 'egoi_track_addtocart_'.$cart;
+			$option = 'egoi_track_addtocart_'.$_SESSION['egoi_session_cart'];
 			
 			$content = get_option($option);
-			//var_dump($content);
 			echo html_entity_decode($content[0], ENT_QUOTES);
 			
 			delete_option($option);

@@ -3,8 +3,8 @@ Contributors: E-goi
 Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
-Tested up to: 4.9.1
-Stable tag: 2.0.7
+Tested up to: 4.9.4
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,33 +78,36 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 2.1.1 =
+ - Minor Translations changes
+ - Minor Bug Fixes
+
 = 2.1.0 =
-- Simple Forms - option to choose a list, a language and a tag that the subscribers will be associated
-- Subscriber Bar - option to choose a list, a language and a tag that the subscribers will be associated
-- Widget - option to choose a list, a language and a tag that the subscribers will be associated
+ - Simple Forms - option to choose a list, a language and a tag that the subscribers will be associated
+ - Subscriber Bar - option to choose a list, a language and a tag that the subscribers will be associated
+ - Widget - option to choose a list, a language and a tag that the subscribers will be associated
 
 = 2.0.7 =
-- Products endpoint improvements
-- Minor Bug Fixes
+ - Products endpoint improvements
+ - Minor Bug Fixes
 
 = 2.0.6 =
-- Minor Translations changes
+ - Minor Translations changes
 
 = 2.0.5 =
-- Minor Bug Fixes
+ - Minor Bug Fixes
 
 = 2.0.4 =
-- Simple Form improvements
+ - Simple Form improvements
 
 = 2.0.3 =
-- Products endpoint improvements
+ - Products endpoint improvements
 
 = 2.0.2 =
-- Products endpoint improvements
+ - Products endpoint improvements
 
 = 2.0.1 =
  - Minor Bug Fixes
-
 
 = 2.0.0 =
  - Track&Engage - Improvements and corrections
@@ -115,7 +118,6 @@ You can create and update your lists, see how many subscribers you have, but you
  - JSON Endpoint - This endpoint returns the produts info in a JSON
  - Integration with Visual Composer
  - Integration with Page Builder By SiteOrigin  
-
 
 = 1.1.1 =
  - Minify Admin/Public JS files

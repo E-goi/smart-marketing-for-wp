@@ -264,7 +264,7 @@ class Egoi_For_Wp {
 	public function define_apikey() {
 		
 		$apikey = get_option('egoi_api_key');
-		if($apikey['api_key']){
+		if(isset($apikey['api_key']) && ($apikey['api_key'])) {
 			$this->_valid['api_key'] = $apikey['api_key'];
 		}
 
