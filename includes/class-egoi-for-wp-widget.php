@@ -360,7 +360,9 @@ class Egoi4Widget extends WP_Widget {
 		}else{
 			echo '<p>';
 			echo __('Form disabled! Please enable it in', 'egoi-for-wp');
-			echo ' <b>Smart Marketing -> Widgets</b></p>';
+			echo ' <b>';
+			echo __('Smart Marketing -> Capture Contacts -> Widget Options', 'egoi-for-wp');
+			echo '</b></p>';
 		}
 	}
 }
