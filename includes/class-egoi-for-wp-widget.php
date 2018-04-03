@@ -413,7 +413,7 @@ class Egoi4Widget extends WP_Widget {
                 echo '<label>'.__('Tag', 'egoi-for-wp').'<span class="e-goi-tooltip">
 						 <span class="dashicons dashicons-info"></span>
 					  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-					  	 	Tag set by default: '.$default_tag['NAME'].'
+					  	 	'.__('Tag set by default', 'egoi-for-wp').":\n".$default_tag['NAME'].'
 					 	</span>
 					</span>
 				</label>';
@@ -432,14 +432,14 @@ class Egoi4Widget extends WP_Widget {
                 echo '<label>'.__('Languages', 'egoi-for-wp').'</label><span class="e-goi-tooltip">
 						 <span class="dashicons dashicons-info"></span>
 					  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-					  	 	List: '."\n".$this->listID.'<br>
-					  	 	Language set by default: '.$this->lang.'
+					  	 	'.__('List', 'egoi-for-wp').":\n".$this->listID.'<br>
+					  	 	'.__('Language set by default', 'egoi-for-wp').":\n".$this->lang.'
 					 	</span>
 					</span>
 				</label><br>';
             }
             else{
-                echo '<label>'.__('Languages for list:', 'egoi-for-wp')."\n".$this->listID.'</label><br>';
+                echo '<label>'.__('Languages for list', 'egoi-for-wp').":\n".$this->listID.'</label><br>';
             }
 
             echo '<select id="'.$this->get_field_name('widget_lang').'" name="'.$this->get_field_name('widget_lang').'" type="text" >';
