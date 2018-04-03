@@ -1047,5 +1047,28 @@ class Egoi_For_Wp {
 	        }
 		}
 	}
+
+	/* Get E-goi Tag by ID*/
+    public function getTagByID($id) {
+
+        $url = $this->restUrl.'getTags&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'plugin_key' => $this->plugin
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        $result = $result_client->Egoi_Api->getTags->TAG_LIST;
+
+        foreach ($result as $key => $value) {
+            if($value->ID == $id){
+                $data['NAME'] = $value->NAME;
+                $data['ID'] = $value->ID;
+            }
+        }
+
+        return $data;
+    }
 	
 }
