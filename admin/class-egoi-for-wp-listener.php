@@ -55,6 +55,7 @@ class Egoi_For_Wp_Listener {
 	private function Listen($user_id){
 
 		$user = get_userdata($user_id);
+
 		$list = $this->options_listen['list'];
 
 		$admin = new Egoi_For_Wp($this->plugin_name, $this->version);
@@ -81,21 +82,24 @@ class Egoi_For_Wp_Listener {
 		$email = $user->user_email;
 
 		if($role == $user->roles[0]){
+			
 			$addtags = $admin->addTag($user->roles[0]);
-			if($addtags->ERROR == ''){
-				$tag = $addtags->ID;
-				$add = $admin->addSubscriberTags($list, $email, array($tag), $name, '', $role, $fields, $op);
+			if(!$addtags->ERROR){
+				$tag_id = $addtags->ID;
+				$admin->addSubscriberTags($list, $email, array($tag_id), $name, '', $role, $fields, $op);
 
 			}else{
-				$get_tags = $admin->getTags();
-				foreach($get_tags['TAG_LIST'] as $key => $tag){
-					if(in_array(strtolower($user->roles[0]), $tag)){
-						$add = $admin->addSubscriberTags($list, $email, array($tag['ID']), $name, '', $role, $fields, $op);
+				$get_tags = $admin->getTags(1);
+				if (!empty($get_tags)) {
+					foreach($get_tags->TAG_LIST as $key => $tag){
+						if(in_array(strtolower($user->roles[0]), (array)$tag)){
+							$admin->addSubscriberTags($list, $email, array($tag->ID), $name, '', $role, $fields, $op);
+						}
 					}
 				}
 			}
 		}else{
-			$add = $admin->addSubscriberTags($list, $email, array(''), $name, '', false, $fields, $op);
+			$admin->addSubscriberTags($list, $email, array(''), $name, '', false, $fields, $op);
 		}
 			
 	}
