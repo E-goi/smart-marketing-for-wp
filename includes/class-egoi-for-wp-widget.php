@@ -38,12 +38,11 @@ class Egoi4Widget extends WP_Widget {
     /* Widget Layout for customers (frontend) */
     public function widget($args, $instance) {
 
-
         if($this->widget_enabled){
             wp_enqueue_style('egoi-style', plugin_dir_url( __FILE__ ).'../public/css/egoi-for-wp-public.css');
 
             extract($args);
-            $widgetid = $args['widget_id'];
+            $widgetid = $args['widget_id']!='' ? $args['widget_id'] : $instance['widget_id'];
             $this->egoi_id = $widgetid;
 
             $title = apply_filters('widget_title', $instance['title']);
