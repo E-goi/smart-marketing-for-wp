@@ -1031,7 +1031,7 @@ class Egoi_For_Wp {
 
 	public function getClientAPI(){
 
-		$key = $_POST["key"];
+		$key = $_POST["egoi_key"];
 		if(isset($key)){
 
 			$url = $this->restUrl.'getClientData&'.http_build_query(array('functionOptions' => array('apikey' => $key)),'','&');
