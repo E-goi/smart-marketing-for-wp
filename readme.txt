@@ -4,7 +4,7 @@ Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
 Tested up to: 4.9.4
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,11 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 2.1.2 =
+ - Fixed the removal of simple forms in the deactivation of the plugin
+ - Widgets improvements
+ - Fixed compatibility with Yith Woocommerce Composite Products
 
 = 2.1.1 =
  - Minor Translations changes
