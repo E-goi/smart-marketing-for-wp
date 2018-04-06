@@ -73,7 +73,8 @@ class Egoi_For_Wp {
 		'egoi_int',
 		'egoi_data',
 		'egoi_mapping',
-		'egoi_client'
+		'egoi_client',
+        'egoi_has_list'
 	);
 
 	/**
@@ -155,9 +156,24 @@ class Egoi_For_Wp {
 		try{
 			global $wpdb;
 
-			foreach (self::$options as $opt) {
-				delete_option($opt);
-			}
+            $egoi_options = self::$options;
+
+            $all_options = wp_load_alloptions();
+
+            //to get all options that are egoi simple forms
+            foreach ($all_options as $key => $value) {
+                if(strpos($key, 'egoi_simple_') !== false ){
+                    $egoi_options[] = $key; //add to egoi options
+
+                    //to delete simple form on posts table in BD
+                    $post_id = str_replace('egoi_simple_form_', "", $key);
+                    wp_delete_post($post_id);
+                }
+            }
+
+            foreach ($egoi_options as $opt) {
+                delete_option($opt);
+            }
 			
 			$wpdb->hide_errors();
 			$table = $wpdb->prefix."egoi_map_fields";
