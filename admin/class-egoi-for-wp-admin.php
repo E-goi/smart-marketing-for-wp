@@ -767,7 +767,14 @@ class Egoi_For_Wp_Admin {
 				if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
 				
 					$user = wp_get_current_user();
-					$user_email = $user->data->user_email;
+
+                    if($user->data->user_email){
+                        $user_email = $user->data->user_email;
+                    }
+                    else{
+                        $user_email = $_POST['billing_email']; //if user is guest
+                    }
+
 					$client_id = $client_info->CLIENTE_ID;
 
 					$order = new WC_Order($order_id);
