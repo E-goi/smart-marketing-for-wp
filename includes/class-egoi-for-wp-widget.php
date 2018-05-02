@@ -64,6 +64,9 @@ class Egoi4Widget extends WP_Widget {
             $default_tag = $instance['tag-egoi'];
             $language = $instance['lang'];
 
+            $the_widget_list = $instance['list'];
+            $list_id = $the_widget_list ?: $list;
+
             $tag = '';
 
             //set tag defined on widget
@@ -136,7 +139,7 @@ class Egoi4Widget extends WP_Widget {
             }
             echo '
 			<form name="egoi_contact" id="egoi-widget-form-'.$this->egoi_id.'" action="" method="post">
-				<input type="hidden" id="egoi-list" name="egoi-list" value="'.$list.'">
+				<input type="hidden" id="egoi-list" name="egoi-list" value="'. $list_id .'">
 				<input type="hidden" id="egoi-lang" name="egoi-lang" value="'.$language.'">
 				<input type="hidden" id="egoi-tag" name="egoi-tag" value="'. $tag .'">
 			';
