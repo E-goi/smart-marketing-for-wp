@@ -46,8 +46,7 @@ class Egoi4Widget extends WP_Widget {
             $this->egoi_id = $widgetid;
 
             $title = apply_filters('widget_title', $instance['title']);
-            //$list = $instance['list'];
-            $list = $this->listID;
+            $list = $this->listID ? $this->listID : $instance['list'];
             $fname = $instance['fname'];
             $fname_label = $instance['fname_label'];
             $fname_placeholder = $instance['fname_placeholder'];
@@ -137,7 +136,7 @@ class Egoi4Widget extends WP_Widget {
             }
             echo '
 			<form name="egoi_contact" id="egoi-widget-form-'.$this->egoi_id.'" action="" method="post">
-				<input type="hidden" id="egoi-list" name="egoi-list" value="'.$this->listID.'">
+				<input type="hidden" id="egoi-list" name="egoi-list" value="'.$list.'">
 				<input type="hidden" id="egoi-lang" name="egoi-lang" value="'.$language.'">
 				<input type="hidden" id="egoi-tag" name="egoi-tag" value="'. $tag .'">
 			';
