@@ -268,7 +268,7 @@ class Egoi4Widget extends WP_Widget {
             $button = esc_attr($instance['button']);
 
             $tag = esc_attr($instance['tag_name']);
-            $lang = esc_attr($instance['lang']);
+            $lang_widget = esc_attr($instance['lang']);
 
             $default_tag = '';
             if($instance['tag-egoi']!=''){
@@ -445,7 +445,12 @@ class Egoi4Widget extends WP_Widget {
             echo '<option value="" selected disabled>'.__('Select a language', 'egoi-for-wp').'</option>';
 
             foreach ($languages as $value) {
-                echo '<option value="'.$value.'">'.$value.'</option>';
+                if($value == $lang_widget){
+                    echo '<option selected value="'.$value.'">'.$value.'</option>';
+                }
+                else {
+                    echo '<option value="' . $value . '">' . $value . '</option>';
+                }
             }
             echo '</select>				
 			</p>
