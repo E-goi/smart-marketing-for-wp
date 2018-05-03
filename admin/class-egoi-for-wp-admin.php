@@ -230,6 +230,9 @@ class Egoi_For_Wp_Admin {
 			add_submenu_page($this->plugin_name, __('Ecommerce', 'egoi-for-wp'), __('Ecommerce', 'egoi-for-wp'), $capability, 'egoi-4-wp-ecommerce', array($this, 'display_plugin_subscriber_ecommerce'));
 
 			add_submenu_page($this->plugin_name, __('Integrations', 'egoi-for-wp'), __('Integrations', 'egoi-for-wp'), $capability, 'egoi-4-wp-integrations', array($this, 'display_plugin_integrations'));
+
+            add_submenu_page($this->plugin_name, __('Web Push', 'egoi-for-wp'), __('Web Push', 'egoi-for-wp'), $capability, 'egoi-4-wp-webpush', array($this, 'display_plugin_webpush'));
+
 		}
 	}
 
@@ -324,6 +327,16 @@ class Egoi_For_Wp_Admin {
 		}
 
 	}
+
+    public function display_plugin_webpush() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-webpush.php' );
+        }
+
+    }
 
 	private function load_api() {
 
