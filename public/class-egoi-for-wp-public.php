@@ -537,4 +537,32 @@ class Egoi_For_Wp_Public {
 
 	}
 
+
+    /**
+     * Web Push Output
+     */
+    public function add_webpush() {
+        $options = get_option('egoi_webpush');
+        if ($options['track'] == 1) {
+            $cod = trim($options['cod']);
+            $js = "
+                <script type=\"text/javascript\">
+                    var _egoiwp = _egoiwp || {};
+                    (function(){
+                    var u=\"https://cdn-static.egoiapp2.com/\";
+                    _egoiwp.code = \"$cod\";
+                    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                    g.type='text/javascript';
+                    g.defer=true;
+                    g.async=true;
+                    g.src=u+'webpush.js';
+                    s.parentNode.insertBefore(g,s);
+                    })(); 
+                </script>";
+            return $js;
+        } else {
+            return false;
+        }
+    }
+
 }

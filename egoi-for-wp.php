@@ -179,6 +179,16 @@ function egoi_add_tag(){
     return $admin->add_tag($_POST['name']);
 }
 
+// HOOK WEB PUSH
+function egoi_add_webpush() {
+    $public_area = new Egoi_For_Wp_Public();
+    $webpush = $public_area->add_webpush();
+    if ($webpush) {
+        echo $webpush;
+    }
+}
+add_action('wp_footer', 'egoi_add_webpush');
+
 // COUNTRY MOBILE CODES
 define( 'COUNTRY_CODES' , serialize(array(
     'AFG'=>array('name'=>'Afeganistão','code'=>'93'),
