@@ -64,7 +64,7 @@ $options = get_option('egoi_webpush');
     <p>
         <a href="<?php echo $link_tutorial; ?>" target="_blank"><?php _e('Here', 'egoi-for-wp'); ?></a>
         <?php _e('show how to get a Web Push code.', 'egoi-for-wp'); ?>
-        <?php _e('You only need to copy the code marked in black as in the example below.', 'egoi-for-wp'); ?>
+        <?php _e('You only need the code marked in black as in the example below.', 'egoi-for-wp'); ?>
     </p>
     <?php
         $wpcode = plugin_dir_url() . 'smart-marketing-for-wp/admin/img/webpushcode.png';

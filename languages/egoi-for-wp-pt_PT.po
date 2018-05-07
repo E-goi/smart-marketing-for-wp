@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-07 13:58+0000\n"
-"PO-Revision-Date: 2018-05-07 13:59+0000\n"
+"POT-Creation-Date: 2018-05-07 15:06+0000\n"
+"PO-Revision-Date: 2018-05-07 15:46+0000\n"
 "Last-Translator: procha@e-goi.com <procha@e-goi.com>\n"
-"Language-Team: Portuguese (Portugal)\n"
+"Language-Team: Português\n"
 "Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -491,11 +491,11 @@ msgstr "Está aqui:"
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:55
 msgid "To use E-goi Web Push you need to join a paid plan."
-msgstr "Para usares o Web Push do E-goi precisas de aderir a um plano pago."
+msgstr "Para usar o Web Push do E-goi precisa de aderir a um plano pago."
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:57
 msgid "If you not joined to a E-goi paid plan, click"
-msgstr "Se não aderiste a uma plano pago do E-goi, clica"
+msgstr "Se não aderiu a um plano pago do E-goi, clique"
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:58
 msgid "here"
@@ -503,7 +503,7 @@ msgstr "aqui"
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:63
 msgid "To configure E-goi Web Push, you need a web push code."
-msgstr "Para configurares o Web Push do E-goi, precisas do código Web Push."
+msgstr "Para configurar o Web Push do E-goi, precisa do código Web Push."
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:65
 msgid "Here"
@@ -511,13 +511,11 @@ msgstr "Aqui"
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:66
 msgid "show how to get a Web Push code."
-msgstr "mostra como podes obter o teu código Web Push."
+msgstr "mostra como pode obter o seu código Web Push."
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:67
-msgid "You only need to copy the code marked in black as in the example below."
-msgstr ""
-"Só precisas de selecionar o código marcado a preto tal como mostra a imagem "
-"em baixo."
+msgid "You only need the code marked in black as in the example below."
+msgstr "Só precisa do código marcado a preto tal como o exemplo em baixo."
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:85
 msgid "Activate Web Push"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-07 14:01+0000\n"
-"PO-Revision-Date: 2018-05-07 14:08+0000\n"
+"POT-Creation-Date: 2018-05-07 15:08+0000\n"
+"PO-Revision-Date: 2018-05-07 15:09+0000\n"
 "Last-Translator: procha@e-goi.com <procha@e-goi.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -516,9 +516,8 @@ msgid "show how to get a Web Push code."
 msgstr "muestra cómo obtener un código Web Push"
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:67
-msgid "You only need to copy the code marked in black as in the example below."
-msgstr ""
-"Sólo necesita copiar el código marcado en negro como el siguiente ejemplo."
+msgid "You only need the code marked in black as in the example below."
+msgstr "Sólo necesitas el código marcado en negro como el siguiente ejemplo."
 
 #: admin/partials/egoi-for-wp-admin-webpush.php:85
 msgid "Activate Web Push"
