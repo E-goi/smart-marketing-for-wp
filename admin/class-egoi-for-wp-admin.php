@@ -1279,6 +1279,13 @@ class Egoi_For_Wp_Admin {
 			$tag = $client->addTag($params);
 		}
 
+		// double opt-in
+        if (filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1') {
+		    $status = 0;
+        } else {
+		    $status = 1;
+        }
+
 		$params = array( 
 			'apikey'    => $apikey['api_key'],
 			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_EMAIL),
@@ -1287,7 +1294,7 @@ class Egoi_For_Wp_Admin {
 			'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
 			'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
 			'tags' => $tag,
-			'status' => 1
+			'status' => $status,
 		);
 
 		$result = $client->addSubscriber($params);

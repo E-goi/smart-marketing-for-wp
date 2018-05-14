@@ -67,7 +67,7 @@ $options = get_option('egoi_webpush');
         <?php _e('You only need the code marked in black as in the example below.', 'egoi-for-wp'); ?>
     </p>
     <?php
-        $wpcode = plugin_dir_url() . 'smart-marketing-for-wp/admin/img/webpushcode.png';
+        $wpcode = plugins_url() . '/smart-marketing-for-wp/admin/img/webpushcode.png';
     ?>
     <img src="<?=$wpcode?>" style="margin-bottom: 5px;">
 </div>

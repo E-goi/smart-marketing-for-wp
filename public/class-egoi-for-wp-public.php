@@ -163,6 +163,7 @@ class Egoi_For_Wp_Public {
 				<input type="hidden" name="list" value="'.$bar_post['list'].'">
 				<input type="hidden" name="lang" value="'.$bar_post['lang'].'">
 				<input type="hidden" name="tag" value="'. $tag .'">
+				<input type="hidden" name="double_optin" value="'. $bar_post['double_optin'] .'">
 				<label class="egoi-label" style="display:inline-block;">'.$bar_post['text_bar'].'</label>
 				<input type="email" name="email" placeholder="'.$bar_post['text_email_placeholder'].'" class="egoi-email" required>
 				<input type="button" class="egoi_sub_btn" value="'.$bar_post['text_button'].'" />
@@ -178,6 +179,7 @@ class Egoi_For_Wp_Public {
 					<input type="hidden" name="list" value="'.$bar_post['list'].'">
 					<input type="hidden" name="lang" value="'.$bar_post['lang'].'">
 					<input type="hidden" name="tag" value="'. $tag .'">
+				    <input type="hidden" name="double_optin" value="'. $bar_post['double_optin'] .'">
 					<label class="egoi-label">'.$bar_post['text_bar'].'</label>
 					<input type="email" name="email" placeholder="'.$bar_post['text_email_placeholder'].'" class="egoi-email" required style="display:inline-block;width:20%;">
 					<input type="button" class="egoi_sub_btn" value="'.$bar_post['text_button'].'" />
@@ -287,7 +289,13 @@ class Egoi_For_Wp_Public {
 				$error = $bar['text_already_subscribed'];
 			}
 
-			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, 1, '', $tag);
+            if (!isset($bar['double_optin']) || $bar['double_optin'] == 0) {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+
+			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, $status, '', $tag);
 
 			$success = $bar['text_subscribed'];
 
@@ -420,6 +428,7 @@ class Egoi_For_Wp_Public {
 		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="'.$data->list.'">';
 		$post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="'.$data->lang.'">';
 		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.$data->tag.'">';
+        $post .= '<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="'.$data->double_optin.'">';
 
 		$table = $wpdb->prefix.'posts';
 		$html_code = $wpdb->get_row(" SELECT post_content, post_title FROM $table WHERE ID = '$id' ");
@@ -478,6 +487,7 @@ class Egoi_For_Wp_Public {
 					var egoi_list = jQuery("#egoi_list").val();
 					var egoi_lang = jQuery("#egoi_lang").val();
 					var egoi_tag = jQuery("#egoi_tag").val();
+					var egoi_double_optin = jQuery("#egoi_double_optin").val();
 
 					var data = {
 						"action": "my_action",
@@ -487,7 +497,8 @@ class Egoi_For_Wp_Public {
 						"egoi_mobile": egoi_mobile,
 						"egoi_list": egoi_list,
 						"egoi_lang": egoi_lang,
-						"egoi_tag": egoi_tag
+						"egoi_tag": egoi_tag,
+						"egoi_double_optin" : egoi_double_optin
 					};
 			
 					var posting = jQuery.post(ajaxurl, data);

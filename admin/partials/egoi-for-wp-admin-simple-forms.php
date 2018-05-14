@@ -25,6 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                     $data->list = $_POST['list'];
                     $data->lang = $_POST['lang'];
+                    $data->double_optin = $_POST['double_optin'];
 
                     //to add tag if not exist
                     if(isset($_POST['tag-egoi']) && $_POST['tag-egoi']!=''){
@@ -102,7 +103,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                         'html_code_simple_form' => $_POST['html_code'],
                         'list' => $_POST['list'],
                         'lang' => $_POST['lang'],
-                        'tag' => isset($_POST['tag-egoi']) ? $_POST['tag-egoi'] : $new->ID
+                        'tag' => isset($_POST['tag-egoi']) ? $_POST['tag-egoi'] : $new->ID,
+                        'double_optin' => $_POST['double_optin']
                     ) ;
 
                 }
@@ -130,6 +132,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     $shortcode['list'] = $info->list;
                     $shortcode['lang'] = $info->lang;
                     $shortcode['tag'] = $info->tag;
+                    $shortcode['double_optin'] = $info->double_optin;
 
                     return $shortcode;
                 }
@@ -159,6 +162,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                     <div>
                         <table class="form-table" style="table-layout: fixed;">
+
+
+                            <tr valign="top">
+                                <th scope="row">
+                                    <label>
+                                        <?php _e( 'Enable Double Opt-In?', 'egoi-for-wp' ); ?>
+                                    </label>
+                                </th>
+                                <td>
+                                    <label>
+                                        <input type="radio" name="double_optin" value="1" <?php echo !isset($shortcode['double_optin']) || $shortcode['double_optin'] == 1 ? 'checked' : null; ?> /> <?php _e( 'Yes' ); ?>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="double_optin" value="0" <?php checked($shortcode['double_optin'], 0); ?> /> <?php _e( 'No' ); ?>
+                                    </label>
+                                    <p class="help"><?php _e( 'If you activate the double opt-in, a confirmation e-mail will be send to the subscribers.', 'egoi-for-wp' ); ?></p>
+                                </td>
+                            </tr>
+
 
                             <tr valign="top">
                                 <th scope="row"><label><?php _e( 'Egoi List', 'egoi-for-wp' ); ?></label></th>

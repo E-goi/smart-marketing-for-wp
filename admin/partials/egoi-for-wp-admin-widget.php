@@ -25,7 +25,6 @@ if(!$egoiwidget['enabled']){
     $egoiwidget['enabled'] = 0;
 }
 
-
 ?>
 <style type="text/css">
     .nav-tab-wrapper{
@@ -56,6 +55,7 @@ if(!$egoiwidget['enabled']){
                 <input type="hidden" name="widget" value="1">
                 <input type="hidden" name="egoiform" value="egoi_widget">
                 <table class="form-table" style="table-layout: fixed;">
+
                     <tr valign="top">
                         <th><?php echo _e('Enable Widgets 
  							<span class="e-goi-tooltip">
@@ -76,6 +76,23 @@ if(!$egoiwidget['enabled']){
                             <!-- <p class="help">
 							<?php // _e( 'Select "yes" to enable forms widget.', 'egoi-for-wp' ); ?>
 						</p> -->
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row">
+                            <label>
+                                <?php _e( 'Enable Double Opt-In?', 'egoi-for-wp' ); ?>
+                            </label>
+                        </th>
+                        <td>
+                            <label>
+                                <input type="radio" name="egoi_widget[double_optin]" value="1" <?php echo $egoiwidget['double_optin'] == 1 || $egoiwidget['list'] == 0 ? 'checked' : null ?> /> <?php _e( 'Yes' ); ?>
+                            </label>
+                            <label>
+                                <input type="radio" name="egoi_widget[double_optin]" value="0" <?php echo $egoiwidget['double_optin'] == 0 && $egoiwidget['list'] != 0 ? 'checked' : null ?> /> <?php _e( 'No' ); ?>
+                            </label>
+                            <p class="help"><?php _e( 'If you activate the double opt-in, a confirmation e-mail will be send to the subscribers.', 'egoi-for-wp' ); ?></p>
                         </td>
                     </tr>
                 </table>

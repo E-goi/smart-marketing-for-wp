@@ -13,7 +13,6 @@ if($this->bar_post['tag'] != ""){
 else{
     $tag = $this->bar_post['tag-egoi'];
 }
-
 ?>
 <div class="wrap" id="egoi4wp-admin" style="width:65%;">
 
@@ -57,6 +56,23 @@ else{
                             <input type="radio" name="egoi_bar_sync[enabled]" value="0" <?php checked($this->bar_post['enabled'], 0); ?> /> <?php _e( 'No' ); ?>
                         </label>
                         <p class="help"><?php _e( 'A valid way to completely disable the bar.', 'egoi-for-wp' ); ?></p>
+                    </td>
+                </tr>
+
+                <tr valign="top">
+                    <th scope="row">
+                        <label>
+                            <?php _e( 'Enable Double Opt-In?', 'egoi-for-wp' ); ?>
+                        </label>
+                    </th>
+                    <td>
+                        <label>
+                            <input type="radio" name="egoi_bar_sync[double_optin]" value="1" <?php echo $this->bar_post['double_optin'] == 1 || $this->bar_post['list'] == 0 ? 'checked' : null ?> /> <?php _e( 'Yes' ); ?>
+                        </label>
+                        <label>
+                            <input type="radio" name="egoi_bar_sync[double_optin]" value="0" <?php echo $this->bar_post['double_optin'] == 0 && $this->bar_post['list'] != 0 ? 'checked' : null ?> /> <?php _e( 'No' ); ?>
+                        </label>
+                        <p class="help"><?php _e( 'If you activate the double opt-in, a confirmation e-mail will be send to the subscribers.', 'egoi-for-wp' ); ?></p>
                     </td>
                 </tr>
 

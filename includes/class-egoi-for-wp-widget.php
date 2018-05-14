@@ -25,6 +25,7 @@ class Egoi4Widget extends WP_Widget {
         $this->listID = $opt['egoi_widget']['list'];
         $this->lang = $opt['egoi_widget']['lang'];
         $this->tag_egoi = $opt['egoi_widget']['tag-egoi'];
+        $this->double_optin = $opt['egoi_widget']['double_optin'];
 
         $widget_ops = array(
             'classname' => 'Egoi4Widget',
@@ -112,6 +113,7 @@ class Egoi4Widget extends WP_Widget {
 									widget_id: $("input#egoi-id-sub'.$this->egoi_id.'").val(),
 									widget_tag: $("input#egoi-tag").val(),
 									widget_lang: $("input#egoi-lang").val(),
+									widget_double_optin: $("input#egoi-double-optin").val(),
 								},
 								success: function(response) {
 									$("#Loading_'.$this->egoi_id.'").hide();
@@ -137,12 +139,14 @@ class Egoi4Widget extends WP_Widget {
             if ($title){
                 echo $before_title . $title . $after_title;
             }
+
             echo '
 			<form name="egoi_contact" id="egoi-widget-form-'.$this->egoi_id.'" action="" method="post">
 				<input type="hidden" id="egoi-list" name="egoi-list" value="'. $list_id .'">
 				<input type="hidden" id="egoi-lang" name="egoi-lang" value="'.$language.'">
 				<input type="hidden" id="egoi-tag" name="egoi-tag" value="'. $tag .'">
-			';
+				<input type="hidden" id="egoi-double-optin" name="egoi-double-optin" value="'.$this->double_optin.'">
+ 			';
 
             if ($fname){
                 echo "<label>".$fname_label."</label>";
@@ -532,7 +536,12 @@ function egoi_widget_request() {
 
         }else{
 
-            $result = $api->addSubscriber($list, $name, $email, $lang, 1, $mobile, $tag);
+            if (!isset($_POST['widget_double_optin']) || $_POST['widget_double_optin'] == 0) {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+            $result = $api->addSubscriber($list, $name, $email, $lang, $status, $mobile, $tag);
             if($result){
 
                 $redirect = $Egoi4WP['redirect'];

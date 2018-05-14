@@ -472,6 +472,9 @@ class Egoi_For_Wp {
 		$fname = $full_name[0];
 		$lname = $full_name[1];
 
+		if ($status === false) {
+		    $status = 1;
+        }
 		if($tag){
 			$url = $this->restUrl.'addSubscriber&'.http_build_query(array(
 					'functionOptions' => array(
@@ -480,9 +483,9 @@ class Egoi_For_Wp {
 						'listID' => $listID, 
 						'lang' => $lang,
 						'first_name' => $fname, 
-						'last_name' => $lname, 
+						'last_name' => $lname,
 						'email' => $email, 
-						'status' => $status ? $status : 1,
+						'status' => $status,
 						'tags' => array($tag)
 						)
 					),'','&');
@@ -494,9 +497,9 @@ class Egoi_For_Wp {
 						'listID' => $listID,
 						'lang' => $lang,
 						'first_name' => $fname, 
-						'last_name' => $lname, 
+						'last_name' => $lname,
 						'email' => $email, 
-						'status' => $status ? $status : 1
+						'status' => $status
 						)
 					),'','&');
 		}
