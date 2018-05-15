@@ -554,7 +554,7 @@ class Egoi_For_Wp_Public {
      */
     public function add_webpush() {
         $options = get_option('egoi_webpush');
-        if ($options['track'] == 1) {
+        if (isset($options['track']) && $options['track'] == 1) {
             $cod = trim($options['cod']);
             $js = "
                 <script type=\"text/javascript\">

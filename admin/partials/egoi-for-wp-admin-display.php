@@ -138,7 +138,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<div class="e-goi-account-apikey">
 									<!-- Title -->
 									<div class="e-goi-account-apikey--title" for="egoi_wp_apikey">
-										<?php echo __('API Key do E-goi');?>
+										<?php echo __('E-goi API Key');?>
 									</div>
 
 									<span id="confirm_text" style="display: none;"><?php _e('You really want to change your API Key? You will lose all data!', 'egoi-for-wp');?>

@@ -189,6 +189,13 @@ function egoi_add_webpush() {
 }
 add_action('wp_footer', 'egoi_add_webpush');
 
+function hook_font_awesome() {
+    ?>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <?php
+}
+add_action('admin_head', 'hook_font_awesome');
+
 // COUNTRY MOBILE CODES
 define( 'COUNTRY_CODES' , serialize(array(
     'AFG'=>array('name'=>'Afeganistão','code'=>'93'),
