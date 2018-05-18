@@ -1264,20 +1264,26 @@ class Egoi_For_Wp_Admin {
 
 		$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
 
-		$params = array( 
-		    'apikey'    => $apikey['api_key'],
-			'name' 		=> filter_var(stripslashes($_POST['egoi_tag']), FILTER_SANITIZE_STRING)
-		);
 
-		$tags = $client->getTags($params);
-		foreach ($tags['TAG_LIST'] as $tag_data) {
-			if (filter_var(stripslashes($_POST['egoi_tag']), FILTER_SANITIZE_STRING) == $tag_data['NAME']) {
-				$tag = $tag_data;
-			}
-		}
-		if (!$tag) {
-			$tag = $client->addTag($params);
-		}
+		// TODO: ver com a Ana para que serve isto
+        $params = array(
+            'apikey'    => $apikey['api_key']
+        );
+        $tags = $client->getTags($params);
+        foreach ($tags['TAG_LIST'] as $tag_data) {
+            if (filter_var(stripslashes($_POST['egoi_tag']), FILTER_SANITIZE_NUMBER_INT) == $tag_data['ID']) {
+                $tag = $tag_data;
+            }
+        }
+        if (!$tag) {
+            $params = array(
+                'apikey'    => $apikey['api_key'],
+                'name' 		=> filter_var(stripslashes($_POST['egoi_tag']), FILTER_SANITIZE_NUMBER_INT)
+            );
+            $tag = $client->addTag($params);
+        }
+        // -----------
+
 
 		// double opt-in
         if (filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1') {
@@ -1288,7 +1294,7 @@ class Egoi_For_Wp_Admin {
 
 		$params = array( 
 			'apikey'    => $apikey['api_key'],
-			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_EMAIL),
+			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
 			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
 			'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
 			'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
