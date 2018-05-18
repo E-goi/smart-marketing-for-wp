@@ -967,19 +967,21 @@ div.dropdown {
 
 .help-list-style ol{
     list-style: none;
+    margin-left: 0px;
 }
 .help-list-style li{
     counter-increment: item;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .help-list-style li:before{
     margin-right: 10px;
     content: counter(item);
-    background: lightblue;
+    background: white;
+    border: 1px solid #04afdb;
     border-radius: 100%;
-    color: white;
-    width: 1.2em;
+    color: #04afdb;
+    width: 1.4em;
     text-align: center;
     display: inline-block;
 }
