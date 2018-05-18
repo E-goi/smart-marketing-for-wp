@@ -459,8 +459,9 @@ class Egoi_For_Wp_Public {
 				jQuery("#egoi_simple_form").submit(function(event) {
 					
 					event.preventDefault(); // Stop form from submitting normally
-
+                    
 					var button_obj = jQuery("button[type=submit]", "#egoi_simple_form");
+					var button_original_style = button_obj.attr("style");
 					var button_style = button_obj.css(["width", "height"]);
 					var button_text = button_obj.text();
 
@@ -522,7 +523,11 @@ class Egoi_For_Wp_Public {
 
 						jQuery( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
 						clearInterval(button_effect);
-						button_obj.prop("disabled",false).removeAttr( "style" ).html(button_text);
+						if (button_original_style) {
+						    button_obj.prop("disabled",false).attr("style", button_original_style).html(button_text);
+						} else {
+						    button_obj.prop("disabled",false).removeAttr("style").html(button_text);
+						}
 					});
 
 				});
