@@ -553,9 +553,9 @@ class Egoi_For_Wp_Public {
      * Web Push Output
      */
     public function add_webpush() {
-        $options = get_option('egoi_webpush');
+        $options = get_option('egoi_webpush_code');
         if (isset($options['track']) && $options['track'] == 1) {
-            $cod = trim($options['cod']);
+            $cod = trim($options['code']);
             $js = "
                 <script type=\"text/javascript\">
                     var _egoiwp = _egoiwp || {};
@@ -568,8 +568,9 @@ class Egoi_For_Wp_Public {
                     g.async=true;
                     g.src=u+'webpush.js';
                     s.parentNode.insertBefore(g,s);
-                    })(); 
-                </script>";
+                    })();
+                </script>
+                ";
             return $js;
         } else {
             return false;

@@ -5,7 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function webpushValidator($cod) {
-
     $ch = curl_init('https://egoiapp2.com/wp/files/'.$cod);
     curl_setopt($ch,  CURLOPT_RETURNTRANSFER, TRUE);
 
@@ -20,36 +19,34 @@ function webpushValidator($cod) {
     return true;
 }
 
+$error = $ok = 0;
 if(isset($_POST['action'])){
-    if (
-        ($_POST['egoi_webpush']['track'] == 1 || $_POST['egoi_webpush']['track'] == 0) &&
-        (trim($_POST['egoi_webpush']['cod']) != '')
-    ) {
-        if (webpushValidator($_POST['egoi_webpush']['cod'])) {
-            if (!get_option('egoi_webpush')) {
-                add_option('egoi_webpush', $_POST['egoi_webpush']);
+    if (isset($_POST['egoi_webpush']['code'])) {  // Save web push code
+        if (webpushValidator($_POST['egoi_webpush']['code'])) { // valid web push
+            if (!$options = get_option('egoi_webpush_code')) {
+                $_POST['egoi_webpush']['track'] = 1;
+                add_option('egoi_webpush_code', $_POST['egoi_webpush']);
             } else {
-                update_option('egoi_webpush', $_POST['egoi_webpush']);
+                $_POST['egoi_webpush']['track'] = $options['track'];
+                update_option('egoi_webpush_code', $_POST['egoi_webpush']);
             }
-
-            echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
-            _e('Web Push Updated!', 'egoi-for-wp');
-            echo '</p></div>';
-        } else {
-            echo '<div class="error notice is-dismissible"><p>';
-            _e('Invalid Web Push Code!', 'egoi-for-wp');
-            echo '</p></div>';
+            $ok = 1;
+        } else { // invalid web push
+            $error = 1;
         }
 
-    } else {
-        echo '<div class="error notice is-dismissible"><p>';
-        _e('ERROR!', 'egoi-for-wp');
-        echo '</p></div>';
+    } else if (isset($_POST['egoi_webpush']['track'])) {  // switch on/off web push
+
+        $options = get_option('egoi_webpush_code');
+        $options['track'] = $_POST['egoi_webpush']['track'];
+        update_option('egoi_webpush_code', $options);
+
     }
 }
-$options = get_option('egoi_webpush');
+$options = get_option('egoi_webpush_code');
 ?>
 
+<!-- head -->
 <h1 class="logo">Smart Marketing - <?php _e( 'Web Push', 'egoi-for-wp' ); ?></h1>
 <p class="breadcrumbs">
     <span class="prefix"><?php echo __( 'You are here: ', 'egoi-for-wp' ); ?></span>
@@ -58,79 +55,176 @@ $options = get_option('egoi_webpush');
 </p>
 <hr/>
 
-<?php
-    $locale = get_locale();
+<table width="100%">
+    <tr>
+        <td valign="top">
+            <!-- Web push code form AND tutorial how to get web push code -->
+            <div class='wrap-content' id="wrap--acoount">
+                <div class="main-content">
+                    <div class="wrap-content--webpush">
+                        <div>
+                            <form id='form_webpush_code' method='post' action="">
+                                <?php
+                                settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
+                                settings_errors();
+                                ?>
 
-    if (strpos($locale, 'pt') !== false) {
-        $link_money = 'https://www.e-goi.pt/precos/';
-        $link_tutorial = 'https://helpdesk.e-goi.com/765004-Criar-web-push';
-    } else if (strpos($locale, 'es') !== false) {
-        $link_money = 'https://www.e-goi.pt/precos/';
-        $link_tutorial = 'https://helpdesk.e-goi.com/092775-Crear-mensaje-web-push';
-    } else {
-        $link_money = 'https://www.e-goi.pt/precos/';
-        $link_tutorial = 'https://helpdesk.e-goi.com/135733-Creating-a-web-push-message';
-    }
-?>
+                                <div class="e-goi-account-apikey">
+                                    <!-- Title -->
+                                    <div class="e-goi-account-apikey--title" for="egoi_wp_apikey">
+                                        <?php echo _e('Insert here the Web Push code', 'egoi-for-wp');?>
+                                    </div>
 
-<form method="post" action="#">
+                                    <!-- API key and btn -->
+                                    <div class="e-goi-account-apikey--grp" style="padding-bottom: 4px;">
 
-    <div class='wrap-content' id="wrap--acoount">
-        <div class="main-content">
-            <div class="wrap-content--API">
-                <div>
-                    <?php
-                    settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
-                    settings_errors();
-                    ?>
+                                        <?php if (!isset($options['code']) || (isset($_POST['egoi_webpush']['code']) && $error == 1) ) { // if not have a valid web push ?>
 
-                    <div class="e-goi-account-apikey">
-                        <!-- Title -->
-                        <div class="e-goi-account-apikey--title" for="egoi_wp_apikey">
-                            <?php echo _e('Web Push Code', 'egoi-for-wp');?>
+                                            <input type="text" class="e-goi-account-apikey--grp--form__input" name="egoi_webpush[code]" size="55"
+                                               autocomplete="off" placeholder="<?php echo __( "Paste here the Web Push code", 'egoi-for-wp' ); ?>"
+                                               required pattern="[a-zA-Z0-9]+" value="<?php echo $_POST['egoi_webpush']['code'];?>" spellcheck="false" autofocus
+                                                <?php echo $error ? 'style="border-color: #ed000e;"' : null; ?>
+                                            />
+
+                                            <span id="save_webpush" class="button-primary button-primary--custom" >
+                                                <?php echo __('Save', 'egoi-for-wp');?>
+                                            </span>
+
+                                        <?php } else { ?>
+
+                                            <span class="e-goi-account-apikey--grp--form" size="55" id="webpush_span" <?php echo $ok ? 'style="border-color: green;"' : null; ?>>
+                                                <?php echo $options['code']; ?>
+                                            </span>
+
+                                            <a type="button" id="edit_webpush" class="button button--custom">
+                                                <?php echo __('Edit', 'egoi-for-wp');?>
+                                            </a>
+
+                                            <input type="text" class="e-goi-account-apikey--grp--form__input" name="egoi_webpush[code]" size="55" id="egoi_webpush_cod"
+                                                   autocomplete="off" placeholder="<?php echo __( "Paste here the Web Push code", 'egoi-for-wp' ); ?>"
+                                                   required pattern="[a-zA-Z0-9]+" value="<?php echo $options['code'];?>" spellcheck="false" autofocus
+                                                 style="display: none;"
+                                            />
+                                            <span id="save_webpush" class="button-primary button-primary--custom" style="display: none;">
+                                                <?php echo __('Save', 'egoi-for-wp');?>
+                                            </span>
+
+                                        <?php } ?>
+
+                                    </div>
+
+                                    <?php if($ok) { ?>
+                                        <div>
+                                            <span style="color: green;"><?php echo __('Code is valid', 'egoi-for-wp');?></span>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php if($error) { ?>
+                                        <div>
+                                            <span style="color: #ed000e;"><?php echo __('Code is invalid', 'egoi-for-wp');?></span>
+                                        </div>
+                                    <?php } ?>
+
+                                </div>
+                            </form>
                         </div>
-
-                        <div class="e-goi-account-apikey--grp">
-                            <input type="text" class="e-goi-account-apikey--grp--form__input" autofocus name="egoi_webpush[cod]" size="40" id="egoi_webpush_cod"
-                                   autocomplete="off" placeholder="<?php echo __( "Write here the code of your Web Push", 'egoi-for-wp' ); ?>"
-                                   required pattern="[a-zA-Z0-9\s]+" value="<?php echo $options['cod'];?> "/>
-                        </div>
-
-                        <div style="color: #a6a4a2;">
-                            <i class="fas fa-question-circle"></i>
-                            <?php _e('To get your web push code, just click on the menu "Push Apps > Web Push > Create/Edit > Code" of your account' ,'egoi-for-wp'); ?>
-                            <a href="https://login.egoiapp.com/#/login" target="_blank">E-goi</a>
-                            <?php _e('and copy what is in:', 'egoi-for-wp'); ?>
-                            _egoiwp.code= "XxXxXxXxXxXxXxXxXxXxXxXxXx"
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="e-goi-account-apikey--link--account-settings" style="margin-left: 10px;">
-                        <?php _e('In order to use E-goi web push you will need to join a paid plan.','egoi-for-wp'); ?>
-                        <a href="<?=$link_money?>" target="_blank">
-                            <?php echo __(' Learn more here!', 'egoi-for-wp');?>
-                        </a>
-                        </span>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <!-- How to get web push code -->
+            <div class='wrap-content' id="wrap--acoount" style="margin-top: 0px;">
+                <div class="main-content">
+                    <div class="wrap-content--webpush" style="background-color: #f9f9f9;">
+                        <div class="e-goi-account-apikey--link--account-settings help-list-style" style="margin-left: 10px;">
+                            <p style="font-size: 17px;"><?php _e('How to get the Web Push Code?', 'egoi-for-wp');?></p>
+                            <ol style="font-size: 14px;">
+                                <li>
+                                    <?php _e('Do', 'egoi-for-wp');?>
+                                    <b><?php _e('LOGIN', 'egoi-for-wp');?></b>
+                                    <?php _e('in to your account and click on the top menu item', 'egoi-for-wp');?>
+                                    <b><?php _e('APPS > PUSH APPS', 'egoi-for-wp');?></b>
+                                </li>
+                                <li>
+                                    <?php _e('Click', 'egoi-for-wp');?>
+                                    <b><?php _e('ADD APP > WEB PUSH', 'egoi-for-wp');?></b>
+                                    <?php _e('button and fill in the initial settings', 'egoi-for-wp');?>
+                                </li>
+                                <li>
+                                    <?php _e('At the bottom of the page click the tab labeled "Code" and', 'egoi-for-wp');?>
+                                    <b><?php _e('COPY', 'egoi-for-wp');?></b>
+                                    <?php _e('the code that is in the variable:', 'egoi-for-wp');?>
+                                    <b>_egoiwp.code</b>
+                                </li>
+                            </ol>
 
-    <div style="max-width:80%; padding: 5px 5px 5px;">
+                            <?php _e('Example image:', 'egoi-for-wp'); ?>
+                            <?php $img = plugins_url().'/smart-marketing-for-wp/admin/img/webpushcode.png'; ?>
+                            <img src="<?=$img?>" style="max-width: 480px; display: inline-block; padding: 10px; background-color: white; margin-top: 4px;">
 
-            <table class="form-table">
-                <tr>
-                    <th scope="row"><?php _e( 'Activate Web Push', 'egoi-for-wp' ); ?></th>
-                    <td class="nowrap">
-                        <label><input id="yes" type="radio" name="egoi_webpush[track]" <?php checked( $options['track'], 1 ); ?> value="1" required><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
-                        <label><input id="no" type="radio" name="egoi_webpush[track]" <?php checked( $options['track'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
-                    </td>
-                </tr>
-            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Web push switch -->
+            <?php if (isset($options['code'])) { ?>
+                <div style="padding: 5px 5px 5px;">
+                    <form id='form_webpush_switch' method='post' action="">
+                        <?php
+                        settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
+                        settings_errors();
+                        ?>
+                        <table class="form-table">
+                            <tr>
+                                <th scope="row"><?php _e( 'Activate Web Push', 'egoi-for-wp' ); ?></th>
+                                <td class="nowrap">
+                                    <label><input id="yes" type="radio" name="egoi_webpush[track]" <?php checked( $options['track'], 1 ); ?> value="1" required><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+                                    <label><input id="no" type="radio" name="egoi_webpush[track]" <?php checked( $options['track'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+                                </td>
+                            </tr>
+                        </table>
 
-            <?php submit_button(); ?>
+                        <?php submit_button(); ?>
+                    </form>
+                </div>
+            <?php } ?>
+        </td>
+        <td valign="top">
+            <!-- How to activate web push code in E-goi -->
+            <div class='wrap-content' id="wrap--acoount">
+                <div class="main-content">
+                    <div class="wrap-content--webpush" style="padding: 5px 15px;">
+                        <div>
+                            <div style="background-color: #04afdb; color: white; padding: 5px;">
+                                <p><?php _e('Want to use E-goi\'s Web Push without limits?', 'egoi-for-wp'); ?>
+                                <br><?php _e('Join an Unlimited Shipping Cloth.', 'egoi-for-wp'); ?>
+                                    <button style="float: right">Join Plane</button></p>
+                            </div>
+                            <div style="margin-left: 10px;">
+                                <p>
+                                    <?php _e('Integrate', 'egoi-for-wp'); ?>
+                                    <b><?php _e('Web Push Notification with your site', 'egoi-for-wp'); ?></b>
+                                    <?php _e('to alert your Customers or Followers, with Instant Messaging, directly to your Browser, even if they are browsing another site.', 'egoi-for-wp'); ?>
+                                    <a href="" target="_blank"><?php _e('Learn more', 'egoi-for-wp'); ?></a>
+                                </p>
 
-    </div>
+                                <?php $img = plugins_url().'/smart-marketing-for-wp/admin/img/webpushpage.jpg'; ?>
+                                <img src="<?=$img?>" style="width: 100%; height: auto;">
+                            </div>
 
-</form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span>
+            <?php _e('Do not know how to create a Web Push in E-goi? Learn how to do it', 'egoi-for-wp'); ?>
+                <a href="" target="_blank"><?php _e('here', 'egoi-for-wp'); ?></a>
+            </span>
+        </td>
+    </tr>
+</table>
+
+
+
+
+<?php $js_dir = plugins_url().'/smart-marketing-for-wp/admin/js/egoi-for-wp-webpush.js'; ?>
+<script src="<?=$js_dir?>"></script>
