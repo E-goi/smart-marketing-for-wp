@@ -81,6 +81,7 @@ You can create and update your lists, see how many subscribers you have, but you
 = 2.2.0 =
  - Integration with E-goi Web Push
  - Enable Double Opt-In option on subscriber forms
+ - Simple form minor bug fixes
 
 = 2.1.4 =
  - Show the language when is selected on widget
