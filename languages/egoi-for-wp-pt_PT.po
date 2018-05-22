@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 14:26+0000\n"
-"PO-Revision-Date: 2018-05-18 14:26+0000\n"
+"POT-Creation-Date: 2018-05-22 15:16+0000\n"
+"PO-Revision-Date: 2018-05-22 15:16+0000\n"
 "Last-Translator: procha@e-goi.com <procha@e-goi.com>\n"
 "Language-Team: Português\n"
 "Language: pt_PT\n"
@@ -142,10 +142,10 @@ msgid "Integrations"
 msgstr "Integrações"
 
 #: admin/class-egoi-for-wp-admin.php:234
-#: admin/partials/egoi-for-wp-admin-webpush.php:66
-#: admin/partials/egoi-for-wp-admin-webpush.php:70
+#: admin/partials/egoi-for-wp-admin-webpush.php:71
+#: admin/partials/egoi-for-wp-admin-webpush.php:75
 msgid "Web Push"
-msgstr ""
+msgstr "Web Push"
 
 #: admin/class-egoi-for-wp-admin.php:555
 msgid "Subscribe Newsletter"
@@ -282,8 +282,8 @@ msgstr ""
 "rodapé do E-goi traduzido automaticamente no idioma deles."
 
 #: admin/partials/egoi-for-wp-admin-lists.php:102
-#: admin/partials/egoi-for-wp-admin-webpush.php:106
-#: admin/partials/egoi-for-wp-admin-webpush.php:125
+#: admin/partials/egoi-for-wp-admin-webpush.php:118
+#: admin/partials/egoi-for-wp-admin-webpush.php:138
 #: admin/partials/egoi-for-wp-admin-ecommerce.php:85
 #: admin/partials/egoi-for-wp-admin-display.php:158
 #: admin/partials/egoi-for-wp-admin-display.php:197
@@ -480,7 +480,7 @@ msgid "Delete"
 msgstr "Eliminar"
 
 #: admin/partials/egoi-for-wp-admin-simple-forms.php:670
-#: admin/partials/egoi-for-wp-admin-webpush.php:116
+#: admin/partials/egoi-for-wp-admin-webpush.php:129
 #: admin/partials/egoi-for-wp-admin-forms.php:417
 msgid "Edit"
 msgstr "Alterar"
@@ -491,7 +491,7 @@ msgstr "Alterar"
 msgid "Create form +"
 msgstr "Criar formulário +"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:68
+#: admin/partials/egoi-for-wp-admin-webpush.php:73
 #: admin/partials/egoi-for-wp-admin-forms.php:45
 #: admin/partials/egoi-for-wp-admin-ecommerce.php:25
 #: admin/partials/egoi-for-wp-admin-display.php:88
@@ -500,76 +500,87 @@ msgstr "Criar formulário +"
 msgid "You are here: "
 msgstr "Está aqui:"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:91
-msgid "Insert here the Web Push code"
+#: admin/partials/egoi-for-wp-admin-webpush.php:96
+msgid "Insert the Web Push code here"
 msgstr "Insira aqui o código Web Push"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:100
-#: admin/partials/egoi-for-wp-admin-webpush.php:120
+#: admin/partials/egoi-for-wp-admin-webpush.php:102
+msgid "Enter only highlighted code with black color"
+msgstr "Insira apena o código destacado a preto"
+
+#: admin/partials/egoi-for-wp-admin-webpush.php:112
+msgid "Paste the Web Push code here"
+msgstr "Cole aqui o código Web Push"
+
+#: admin/partials/egoi-for-wp-admin-webpush.php:133
 msgid "Paste here the Web Push code"
 msgstr "Cole aqui o código Web Push"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:134
+#: admin/partials/egoi-for-wp-admin-webpush.php:149
 msgid "Code is valid"
 msgstr "Código Válido"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:138
+#: admin/partials/egoi-for-wp-admin-webpush.php:153
 msgid "Code is invalid"
 msgstr "Código Inválido"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:157
+#: admin/partials/egoi-for-wp-admin-webpush.php:172
 msgid "How to get the Web Push Code?"
 msgstr "Como capturar o código Web Push?"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:160
-msgid "Do"
+#: admin/partials/egoi-for-wp-admin-webpush.php:175
+msgid " "
 msgstr "Efetue o"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:161
+#: admin/partials/egoi-for-wp-admin-webpush.php:176
 msgid "LOGIN"
 msgstr "LOGIN"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:162
-msgid "in to your account and click on the top menu item"
-msgstr "na sua conta E-goi e clique no item do menu superior"
+#: admin/partials/egoi-for-wp-admin-webpush.php:177
+msgid "to your account and click on the top menu item"
+msgstr "na sua conta e clique no item do menu superior"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:163
+#: admin/partials/egoi-for-wp-admin-webpush.php:178
 msgid "APPS > PUSH APPS"
 msgstr "APPS > APPS PUSH"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:166
+#: admin/partials/egoi-for-wp-admin-webpush.php:181
 msgid "Click"
 msgstr "Clique no botão"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:167
+#: admin/partials/egoi-for-wp-admin-webpush.php:182
 msgid "ADD APP > WEB PUSH"
 msgstr "ADICIONAR APP > WEB PUSH"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:168
-msgid "button and fill in the initial settings"
+#: admin/partials/egoi-for-wp-admin-webpush.php:183
+msgid "button and fill in the require settings"
 msgstr "e preencha as configurações iniciais"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:171
+#: admin/partials/egoi-for-wp-admin-webpush.php:186
 msgid "At the bottom of the page click the tab labeled \"Code\" and"
 msgstr "No fundo da página clique na tab com o nome \"Código\" e "
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:172
+#: admin/partials/egoi-for-wp-admin-webpush.php:187
 msgid "COPY"
 msgstr "COPIE"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:173
-msgid "the code that is in the variable:"
-msgstr "o código que está na variável:"
+#: admin/partials/egoi-for-wp-admin-webpush.php:188
+msgid "the code that is between double quotes, after"
+msgstr "o código que está entre aspas, depois da variável"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:178
+#: admin/partials/egoi-for-wp-admin-webpush.php:189
+msgid "variable"
+msgstr " "
+
+#: admin/partials/egoi-for-wp-admin-webpush.php:193
 msgid "Example image"
 msgstr "Imagem de Exemplo"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:196
+#: admin/partials/egoi-for-wp-admin-webpush.php:211
 msgid "Activate Web Push"
 msgstr "Ativar o Web Push"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:198
+#: admin/partials/egoi-for-wp-admin-webpush.php:213
 #: admin/partials/egoi-for-wp-admin-forms.php:150
 #: admin/partials/egoi-for-wp-admin-forms.php:331
 #: admin/partials/egoi-for-wp-admin-ecommerce.php:77
@@ -585,7 +596,7 @@ msgstr "Ativar o Web Push"
 msgid "Yes"
 msgstr "Sim"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:199
+#: admin/partials/egoi-for-wp-admin-webpush.php:214
 #: admin/partials/egoi-for-wp-admin-forms.php:152
 #: admin/partials/egoi-for-wp-admin-forms.php:335
 #: admin/partials/egoi-for-wp-admin-ecommerce.php:80
@@ -601,43 +612,44 @@ msgstr "Sim"
 msgid "No"
 msgstr "Não"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:215
+#: admin/partials/egoi-for-wp-admin-webpush.php:233
 msgid "Want to use E-goi's Web Push without limits?"
 msgstr "Quer usar o Web Push do E-goi sem limites?"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:216
-msgid "Join an Unlimited Shipping Cloth."
+#: admin/partials/egoi-for-wp-admin-webpush.php:234
+msgid "Join an Unlimited Sending plan."
 msgstr "Adira a um plano de envio Ilimitados."
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:217
-msgid "Join Plane"
+#: admin/partials/egoi-for-wp-admin-webpush.php:238
+msgid "Join Now"
 msgstr "Aderir Plano"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:221
+#: admin/partials/egoi-for-wp-admin-webpush.php:245
 msgid "Integrate"
 msgstr "Integre o"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:222
-msgid "Web Push Notification with your site"
-msgstr "Web Push Notification com o seu site"
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:223
-msgid ""
-"to alert your Customers or Followers, with Instant Messaging, directly to "
-"your Browser, even if they are browsing another site."
+#: admin/partials/egoi-for-wp-admin-webpush.php:246
+msgid "Web Push Notification"
 msgstr ""
-"para alertar os seus Clientes ou Seguidores, com Mensagens Instantâneas, "
-"diretamente para o seu Browser, mesmo que estejam a navegar noutro site."
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:224
+#: admin/partials/egoi-for-wp-admin-webpush.php:247
+msgid ""
+"with your site to alert your customers or followers, with Instant Messaging, "
+"directly to your browser, even if they are browsing another site."
+msgstr ""
+"com o seu site para alertar os seus clientes ou seguidores, com Mensagens "
+"Instantâneas, diretamente para o seu browser, mesmo que estejam a navegar "
+"noutro site."
+
+#: admin/partials/egoi-for-wp-admin-webpush.php:248
 msgid "Learn more"
 msgstr "Saiba mais"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:238
-msgid "Do not know how to create a Web Push in E-goi? Learn how to do it"
+#: admin/partials/egoi-for-wp-admin-webpush.php:262
+msgid "Don't know how to create a Web Push in E-goi? Learn how to do it"
 msgstr "Não sabe como criar um Web Push no E-goi? Saiba como faze-lo"
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:239
+#: admin/partials/egoi-for-wp-admin-webpush.php:263
 msgid "here"
 msgstr "aqui"
 
