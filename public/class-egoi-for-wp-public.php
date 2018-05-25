@@ -419,10 +419,11 @@ class Egoi_For_Wp_Public {
 		global $wpdb;
 
 		$id = $atts['id'];
+        $simple_form = 'egoi_simple_form_'.$id;
 
-		$post = '<form id="egoi_simple_form" method="post" action="/">';
+		$post = '<form id="'.$simple_form.'" method="post" action="/">';
 
-		$options = get_option('egoi_simple_form_'.$id);
+		$options = get_option($simple_form);
 		$data = json_decode($options);
 
 		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="'.$data->list.'">';
@@ -456,11 +457,12 @@ class Egoi_For_Wp_Public {
 		$post .= '
 				});
 
-				jQuery("#egoi_simple_form").submit(function(event) {
+				jQuery("#'.$simple_form.'").submit(function(event) {
 					
+					var simple_form = jQuery(this);
 					event.preventDefault(); // Stop form from submitting normally
                     
-					var button_obj = jQuery("button[type=submit]", "#egoi_simple_form");
+					var button_obj = jQuery("button[type=submit]", "#'.$simple_form.'");
 					var button_original_style = button_obj.attr("style");
 					var button_style = button_obj.css(["width", "height"]);
 					var button_text = button_obj.text();
@@ -478,17 +480,17 @@ class Egoi_For_Wp_Public {
 						}
 					}, 400);
 
-					jQuery( "#simple_form_result" ).hide();
+					simple_form.find( "#simple_form_result" ).hide();
 
 					var ajaxurl = "'.admin_url('admin-ajax.php').'";
-					var egoi_name = jQuery("#egoi_name").val();
-					var egoi_email = jQuery("#egoi_email").val();
-					var egoi_country_code	= jQuery("#egoi_country_code").val();
-					var egoi_mobile	= jQuery("#egoi_mobile").val();
-					var egoi_list = jQuery("#egoi_list").val();
-					var egoi_lang = jQuery("#egoi_lang").val();
-					var egoi_tag = jQuery("#egoi_tag").val();
-					var egoi_double_optin = jQuery("#egoi_double_optin").val();
+					var egoi_name = simple_form.find("#egoi_name").val();
+					var egoi_email = simple_form.find("#egoi_email").val();
+					var egoi_country_code	= simple_form.find("#egoi_country_code").val();
+					var egoi_mobile	= simple_form.find("#egoi_mobile").val();
+					var egoi_list = simple_form.find("#egoi_list").val();
+					var egoi_lang = simple_form.find("#egoi_lang").val();
+					var egoi_tag = simple_form.find("#egoi_tag").val();
+					var egoi_double_optin = simple_form.find("#egoi_double_optin").val();
 
 					var data = {
 						"action": "my_action",
@@ -507,21 +509,21 @@ class Egoi_For_Wp_Public {
 					posting.done(function( data ) {
 						if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
 
-							jQuery( "#simple_form_result" ).css({
+							simple_form.find( "#simple_form_result" ).css({
 								"color": "#4F8A10",
 								"background-color": "#DFF2BF"
 							});
 
-							jQuery( "#egoi_simple_form" )[0].reset();
+							jQuery( "#'.$simple_form.'" )[0].reset();
 
 						} else {
-							jQuery( "#simple_form_result" ).css({
+							simple_form.find( "#simple_form_result" ).css({
 								"color": "#9F6000",
 								"background-color": "#FFD2D2"
 							});
 						}
 
-						jQuery( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
+						simple_form.find( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
 						clearInterval(button_effect);
 						if (button_original_style) {
 						    button_obj.prop("disabled",false).attr("style", button_original_style).html(button_text);
