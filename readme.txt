@@ -3,8 +3,8 @@ Contributors: E-goi
 Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
-Tested up to: 4.9.5
-Stable tag: 2.2.2
+Tested up to: 4.9.6
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,18 +14,19 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 **What you get**
 
-* WP/E-goi contact sync-up 
-* Quick sign-up bar 
-* Full sign-up bar customisation 
-* Comments sign-up option 
-* E-goi list management 
-* Integrates with Contact Form 7 
-* Integrates with WooCommerce 
+* WP/E-goi contact sync-up
+* Quick sign-up bar
+* Full sign-up bar customisation
+* Comments sign-up option
+* E-goi list management
+* Integrates with Contact Form 7
+* Integrates with WooCommerce
 * Integrates with Page Builder By SiteOrigin
 * Integrates with Visual Composer
-* Multiple types of Custom Forms 
+* Multiple types of Custom Forms
 * Easy E-goi/WP field mapping; send anything over to E-goi!
 * Web Push Notifications
+* RSS Feed
 
 = User Guide WordPress and WooCommerce =
 
@@ -81,6 +82,12 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 2.3.0 =
+ - RSS Feed - Create RSS feeds with your WordPress Posts or Products
+
+= 2.2.3 =
+ - Minor bug fixes in Simple Forms
 
 = 2.2.2 =
  - Minor bug fixes

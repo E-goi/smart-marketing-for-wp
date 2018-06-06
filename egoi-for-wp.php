@@ -11,7 +11,7 @@ error_reporting(0);
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           2.2.2
+ * Version:           2.3.0
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
  * License:           GPL-2.0+
@@ -25,14 +25,14 @@ if (!defined( 'WPINC' )) {
     exit;
 }
 
-define('SELF_VERSION', '2.2.2');
+define('SELF_VERSION', '2.3.0');
 
 if (!session_id()){
     session_start();
 }
 
 function activate_egoi_for_wp() {
-    
+
     if (!version_compare(PHP_VERSION, '5.3.0', '>=')) {
         echo 'This PHP Version - '.PHP_VERSION.' is obsolete, please update your PHP version to run this plugin';
         exit;
@@ -66,9 +66,9 @@ function fatalErrorShutdownHandler(){
 }
 
 // HOOK TO REMOVE UNNECESSARY AJAX
-add_action('wp_enqueue_scripts', 'dequeue_woocommerce_cart_fragments', 11); 
+add_action('wp_enqueue_scripts', 'dequeue_woocommerce_cart_fragments', 11);
 function dequeue_woocommerce_cart_fragments() {
-    wp_dequeue_script('wc-cart-fragments'); 
+    wp_dequeue_script('wc-cart-fragments');
 }
 
 // HOOK SYNC USERS
@@ -149,7 +149,7 @@ add_action('widgets_init', 'egoi_widget_init');
 function egoi_widget_init(){
     wp_enqueue_script('canvas-loader', plugin_dir_url(__FILE__) . 'admin/js/egoi-for-wp-canvas.js');
     register_widget('Egoi4Widget');
-    add_action('init', 'egoi_widget_request'); 
+    add_action('init', 'egoi_widget_request');
 }
 
 /**
