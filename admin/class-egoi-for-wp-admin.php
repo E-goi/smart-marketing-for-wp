@@ -233,6 +233,8 @@ class Egoi_For_Wp_Admin {
 
             add_submenu_page($this->plugin_name, __('Web Push', 'egoi-for-wp'), __('Web Push', 'egoi-for-wp'), $capability, 'egoi-4-wp-webpush', array($this, 'display_plugin_webpush'));
 
+            add_submenu_page($this->plugin_name, __('RSS Feed', 'egoi-for-wp'), __('RSS Feed', 'egoi-for-wp'), $capability, 'egoi-4-wp-rssfeed', array($this, 'display_plugin_rssfeed'));
+
 		}
 	}
 
@@ -334,6 +336,16 @@ class Egoi_For_Wp_Admin {
             wp_die('You do not have sufficient permissions to access this page.');
         } else {
             include_once( 'partials/egoi-for-wp-admin-webpush.php' );
+        }
+
+    }
+
+    public function display_plugin_rssfeed() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-rssfeed.php' );
         }
 
     }
