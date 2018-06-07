@@ -646,10 +646,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <p><b><?php echo __('Are you sure you want to delete this form?</b> This action will remove only the form in your plugin (will be kept in E-goi).', 'egoi-for-wp');?> </p>
                                 <ul class="cd-buttons">
                                     <li>
-                                        <a href="<?php echo $_SERVER['REQUEST_URI'];?>&simple_form=<?php echo $id_simple_form;?>&del_simple_form=1">Confirmar</a>
+                                        <a href="<?php echo $_SERVER['REQUEST_URI'];?>&simple_form=<?php echo $id_simple_form;?>&del_simple_form=1"><?php _e('Confirm', 'egoi-for-wp'); ?></a>
                                     </li>
                                     <li>
-                                        <a class="cd-popup-close-btn" href="#0">Cancelar</a>
+                                        <a class="cd-popup-close-btn" href="#0"><?php _e('Cancel', 'egoi-for-wp'); ?></a>
                                     </li>
                                 </ul>
                             </div> <!-- cd-popup-container -->
@@ -663,7 +663,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <!-- Title -->
                             <td><?php echo $title_simple_form;?></td>
                             <td>
-                                <a class="cd-popup-trigger-del" data-id-form="<?=$id_simple_form?>" data-type-form="simple-form" href="#"><?php _e('Delete', 'egoi-for-wp');?></span>
+                                <a class="cd-popup-trigger-del" data-id-form="<?=$id_simple_form?>" data-type-form="simple-form" href="#"><?php _e('Delete', 'egoi-for-wp');?></a>
                             </td>
                             <!-- Option -->
                             <td style="text-align:right;">

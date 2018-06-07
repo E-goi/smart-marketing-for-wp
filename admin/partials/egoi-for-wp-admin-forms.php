@@ -410,7 +410,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php ($form['egoi_form_sync']['enabled']) ? _e('<span class="e-goi-form-active-label">Active</span>', 'egoi-for-wp') : _e('<span class="e-goi-form-inactive-label">Inactive</span>', 'egoi-for-wp');?>
 							</td>
 							<td>
-								<a class="cd-popup-trigger-del" data-id-form="<?=$j?>" data-type-form="form" href="#"><?php _e('Delete', 'egoi-for-wp');?></span>
+								<a class="cd-popup-trigger-del" data-id-form="<?=$j?>" data-type-form="form" href="#"><?php _e('Delete', 'egoi-for-wp');?></a>
 							</td>
 							<!-- Option -->
 							<td style="text-align:right;">
