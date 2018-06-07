@@ -1507,6 +1507,47 @@ class Egoi_For_Wp_Admin {
         }
         wp_die();
     }
-	
+
+
+    /*
+     * RSS Feed - handler for links
+     */
+    public function prepareUrl($complement = '') {
+        if (strpos($_SERVER['REQUEST_URI'], '&del=')) {
+            $url = substr($_SERVER['REQUEST_URI'], 0, -34);
+        } else if (strpos($_SERVER['REQUEST_URI'], '&add=')) {
+            $url = substr($_SERVER['REQUEST_URI'], 0, -6);
+        } else {
+            $url = $_SERVER['REQUEST_URI'];
+        }
+        return $url.$complement;
+    }
+
+    /*
+     * RSS Feed - Create new feed
+     */
+    public function createFeed($post) {
+        $code = wp_generate_password(16, false);
+
+        $type = filter_var($post['type'], FILTER_SANITIZE_STRING);
+        $categories = $post[substr($type,0,-1)."_categories_include"];
+        $categories_exclude = $post[substr($type,0,-1)."_categories_exclude"];
+        $tags = $post[substr($type,0,-1)."_tags_include"];
+        $tags_exclude = $post[substr($type,0,-1)."_tags_exclude"];
+
+        $rssfeed = array(
+            'code' => $code,
+            'name' => filter_var($post['name'], FILTER_SANITIZE_STRING),
+            'max_characters' => filter_var($post['max_characters'], FILTER_SANITIZE_NUMBER_INT),
+            'type' => filter_var($post['type'], FILTER_SANITIZE_STRING),
+            'categories' => $categories,
+            'categories_exclude' => $categories_exclude,
+            'tags' => $tags,
+            'tags_exclude' => $tags_exclude
+        );
+        add_option('egoi_rssfeed_'.$code, $rssfeed);
+
+        return true;
+    }
 
 }

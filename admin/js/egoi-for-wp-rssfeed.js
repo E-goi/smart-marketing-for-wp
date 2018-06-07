@@ -12,3 +12,20 @@ jQuery(document).ready(function() {
         }
     });
 });
+
+jQuery(".term").change(function() {
+    var term_name = this.name;
+    var term_id = this.value;
+
+    if (term_name.indexOf('include') >= 0) {
+        var term_change = term_name.replace('include', 'exclude');
+    } else {
+        var term_change = term_name.replace('exclude', 'include');
+    }
+
+    if(jQuery(this).is(":checked")) {
+        jQuery("input[name='"+term_change+"'][value='"+term_id+"']").attr("disabled", true);
+    } else {
+        jQuery("input[name='"+term_change+"'][value='"+term_id+"']").removeAttr("disabled");
+    }
+});
