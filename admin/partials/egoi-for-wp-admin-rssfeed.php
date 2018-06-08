@@ -30,7 +30,7 @@ if (isset($_GET['del'])) {
 </p>
 <hr/>
 
-<?php if (!isset($_GET['add'])) { ?>
+<?php if (!isset($_GET['add']) && !isset($_GET['edit'])) { ?>
 
     <div class="wrap-content wrap-content--list">
 
@@ -73,11 +73,12 @@ if (isset($_GET['del'])) {
                 <tr>
                     <td><?=$feed['name']?></td>
                     <td><?php echo ucfirst($feed['type']); ?></td>
-                    <td><?=$feed['url']?></td>
+                    <td><?php echo get_site_url().'/?feed='.$option->option_name; ?></td>
                     <td>
                         <a class="cd-popup-trigger-del" data-id-form="<?=$option->option_name?>" data-type-form="rss-feed" href="#"><?php _e('Delete', 'egoi-for-wp');?></a>
                     </td>
                     <td align="right">
+                        <a title="<?php _e('Edit', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&edit='.$option->option_name);?>"><i class="far fa-edit"></i></a>
                         <a title="<?php _e('Preview', 'egoi-for-wp'); ?>" href=""><i class="fas fa-eye"></i></a>
                     </td>
                 </tr>
@@ -89,7 +90,7 @@ if (isset($_GET['del'])) {
         </p>
     </div>
 
-<?php } else if (isset($_GET['add'])) { ?>
+<?php } else if (isset($_GET['add']) || isset($_GET['edit'])) { ?>
 
     <?php
         $args['hide_empty'] = false;
@@ -105,16 +106,27 @@ if (isset($_GET['del'])) {
 
         $args['taxonomy'] = 'product_tag';
         $product_tags = get_terms($args);
+
+        if (isset($_GET['edit'])) {
+            $feed = get_option($_GET['edit']);
+        }
+
+        if (!isset($_GET['edit'])) {
+            $code = wp_generate_password(16, false);
+        } else {
+            $code = substr($_GET['edit'], -16);
+        }
     ?>
 
     <div class="wrap egoi4wp-settings" id="tab-forms">
         <div class="row">
             <div class="nav-tab-forms-options-mt">
-                <form id="egoi_simple_form" method="post" action="#">
+                <form id="egoi_simple_form" method="post" action="<?php echo $this->prepareUrl('&edit=egoi_rssfeed_'.$code); ?>">
                     <?php
                     settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
                     settings_errors();
                     ?>
+                    <input name="code" type="hidden" value="<?=$code?>">
                     <div>
                         <p>
                             <a href="<?php echo $this->prepareUrl();?>" class='button button--custom'>
@@ -129,7 +141,9 @@ if (isset($_GET['del'])) {
                                     <label><?php _e( 'Name', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td>
-                                    <input type="text" style="width:450px;" id="name" name="name" placeholder="<?php _e( 'Choose a name for your new RSS Feed', 'egoi-for-wp' ); ?>" value="" required />
+                                    <input type="text" style="width:450px;" id="name" name="name"
+                                           placeholder="<?php _e( 'Choose a name for your new RSS Feed', 'egoi-for-wp' ); ?>"
+                                           value="<?php echo isset($feed) ? $feed['name'] : null; ?>" required />
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -137,7 +151,9 @@ if (isset($_GET['del'])) {
                                     <label><?php _e( 'Maximum of characters', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td>
-                                    <input type="text" style="width:450px;" id="max_characters" name="max_characters" pattern="[0-9]*" placeholder="<?php _e( 'Define a maximum of characters for your RSS Feed', 'egoi-for-wp' ); ?>" value="" required />
+                                    <input type="text" style="width:450px;" id="max_characters" name="max_characters" pattern="[0-9]*"
+                                           placeholder="<?php _e( 'Define a maximum of characters for your RSS Feed', 'egoi-for-wp' ); ?>"
+                                           value="<?php echo isset($feed) ? $feed['max_characters'] : null; ?>" required />
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -146,10 +162,10 @@ if (isset($_GET['del'])) {
                                 </th>
                                 <td>
                                     <label>
-                                        <input type="radio" name="type" value="posts" required /> <?php _e( 'Posts' ); ?>
+                                        <input type="radio" name="type" value="posts" <?php checked( $feed['type'], 'posts' ); ?> /> <?php _e( 'Posts' ); ?>
                                     </label>
                                     <label>
-                                        <input type="radio" name="type" value="products" /> <?php _e( 'Products' ); ?>
+                                        <input type="radio" name="type" value="products" <?php checked( $feed['type'], 'products' ); ?> /> <?php _e( 'Products' ); ?>
                                     </label>
                                     <p class="help"><?php _e( 'You can chose between Posts and Products to fill your RSS Feed', 'egoi-for-wp' ); ?></p>
                                 </td>

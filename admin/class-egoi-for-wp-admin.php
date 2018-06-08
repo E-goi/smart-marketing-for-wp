@@ -1320,11 +1320,11 @@ class Egoi_For_Wp_Admin {
 	public function check_subscriber($subscriber_data) {
 		$data = array('FIRST_NAME','EMAIL','CELLPHONE');
 		foreach ($data as $value) {
-			if ($subscriber_data[$value]) {
-				$subscriber = $subscriber_data[$value];
-				break;
-			}
-		}
+            if ($subscriber_data[$value]) {
+                $subscriber = $subscriber_data[$value];
+                break;
+            }
+        }
 		return $subscriber;
 	}
 
@@ -1517,6 +1517,8 @@ class Egoi_For_Wp_Admin {
             $url = substr($_SERVER['REQUEST_URI'], 0, -34);
         } else if (strpos($_SERVER['REQUEST_URI'], '&add=')) {
             $url = substr($_SERVER['REQUEST_URI'], 0, -6);
+        } else if (strpos($_SERVER['REQUEST_URI'], '&edit=')) {
+            $url = substr($_SERVER['REQUEST_URI'], 0, -35);
         } else {
             $url = $_SERVER['REQUEST_URI'];
         }
@@ -1527,8 +1529,7 @@ class Egoi_For_Wp_Admin {
      * RSS Feed - Create new feed
      */
     public function createFeed($post) {
-        $code = wp_generate_password(16, false);
-
+        $code = filter_var($post['code'], FILTER_SANITIZE_STRING);
         $type = filter_var($post['type'], FILTER_SANITIZE_STRING);
         $categories = $post[substr($type,0,-1)."_categories_include"];
         $categories_exclude = $post[substr($type,0,-1)."_categories_exclude"];
