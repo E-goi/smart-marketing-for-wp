@@ -5,7 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if(isset($_POST['action'])){
-    $result = $this->createFeed($_POST);
+    $edit = isset($_GET['edit']) ? true : false;
+    $result = $this->createFeed($_POST, $edit);
 
     if ($result) {
         ?>
@@ -177,12 +178,18 @@ if (isset($_GET['del'])) {
                                 </th>
                                 <td class="post_cats_tags">
                                     <?php foreach ($post_categories as $category) { ?>
-                                        <input class="term" type="checkbox" name="post_categories_include[]" value="<?=$category->term_id?>" /><?=$category->name?>
+                                        <input class="term" type="checkbox" name="post_categories_include[]" value="<?=$category->term_id?>"
+                                        <?php if (in_array($category->term_id, $feed['categories'])) echo 'checked';
+                                        else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> />
+                                        <?=$category->name?>
                                     <?php } ?>
                                 </td>
                                 <td class="product_cats_tags">
                                     <?php foreach ($product_categories as $category) { ?>
-                                        <input class="term" type="checkbox" name="product_categories_include[]" value="<?=$category->term_id?>" /><?=$category->name?>
+                                        <input class="term" type="checkbox" name="product_categories_include[]" value="<?=$category->term_id?>"
+                                        <?php if (in_array($category->term_id, $feed['categories'])) echo 'checked';
+                                        else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> />
+                                        <?=$category->name?>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -192,12 +199,18 @@ if (isset($_GET['del'])) {
                                 </th>
                                 <td class="post_cats_tags">
                                     <?php foreach ($post_categories as $category) { ?>
-                                        <input class="term" type="checkbox" name="post_categories_exclude[]" value="<?=$category->term_id?>" /><?=$category->name?>
+                                        <input class="term" type="checkbox" name="post_categories_exclude[]" value="<?=$category->term_id?>"
+                                        <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'checked';
+                                        else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> />
+                                        <?=$category->name?>
                                     <?php } ?>
                                 </td>
                                 <td class="product_cats_tags">
                                     <?php foreach ($product_categories as $category) { ?>
-                                        <input class="term" type="checkbox" name="product_categories_exclude[]" value="<?=$category->term_id?>" /><?=$category->name?>
+                                        <input class="term" type="checkbox" name="product_categories_exclude[]" value="<?=$category->term_id?>"
+                                        <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'checked';
+                                        else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> />
+                                        <?=$category->name?>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -207,12 +220,18 @@ if (isset($_GET['del'])) {
                                 </th>
                                 <td class="post_cats_tags">
                                     <?php foreach ($post_tags as $tag) { ?>
-                                        <input class="term" type="checkbox" name="post_tags_include[]" value="<?=$tag->term_id?>" /><?=$tag->name?>
+                                        <input class="term" type="checkbox" name="post_tags_include[]" value="<?=$tag->term_id?>"
+                                        <?php if (in_array($tag->term_id, $feed['tags'])) echo 'checked';
+                                        else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> />
+                                        <?=$tag->name?>
                                     <?php } ?>
                                 </td>
                                 <td class="product_cats_tags">
                                     <?php foreach ($product_tags as $tag) { ?>
-                                        <input class="term" type="checkbox" name="product_tags_include[]" value="<?=$tag->term_id?>" /><?=$tag->name?>
+                                        <input class="term" type="checkbox" name="product_tags_include[]" value="<?=$tag->term_id?>"
+                                            <?php if (in_array($tag->term_id, $feed['tags'])) echo 'checked';
+                                            else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> />
+                                            <?=$tag->name?>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -222,17 +241,21 @@ if (isset($_GET['del'])) {
                                 </th>
                                 <td class="post_cats_tags">
                                     <?php foreach ($post_tags as $tag) { ?>
-                                        <input class="term" type="checkbox" name="post_tags_exclude[]" value="<?=$tag->term_id?>" /><?=$tag->name?>
+                                        <input class="term" type="checkbox" name="post_tags_exclude[]" value="<?=$tag->term_id?>"
+                                            <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'checked';
+                                            else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> />
+                                            <?=$tag->name?>
                                     <?php } ?>
                                 </td>
                                 <td class="product_cats_tags">
                                     <?php foreach ($product_tags as $tag) { ?>
-                                        <input class="term" type="checkbox" name="product_tags_exclude[]" value="<?=$tag->term_id?>" /><?=$tag->name?>
+                                        <input class="term" type="checkbox" name="product_tags_exclude[]" value="<?=$tag->term_id?>"
+                                            <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'checked';
+                                            else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> />
+                                            <?=$tag->name?>
                                     <?php } ?>
                                 </td>
                             </tr>
-
-
                         </table>
                     </div>
                     <?php submit_button(); ?>

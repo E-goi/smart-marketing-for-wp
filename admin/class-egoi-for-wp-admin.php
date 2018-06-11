@@ -39,7 +39,7 @@ class Egoi_For_Wp_Admin {
 
 	/**
 	 * Limit Subscribers
-	 * 
+	 *
 	 * @var integer
 	 */
 	private $limit_subs = 10000;
@@ -55,14 +55,14 @@ class Egoi_For_Wp_Admin {
 
 	/**
 	 * Server Protocol
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $protocol;
 
 	/**
 	 * Server Port if is in use
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $port;
@@ -95,14 +95,14 @@ class Egoi_For_Wp_Admin {
 		register_setting( Egoi_For_Wp_Admin::API_OPTION, Egoi_For_Wp_Admin::API_OPTION);
 		register_setting( Egoi_For_Wp_Admin::OPTION_NAME, Egoi_For_Wp_Admin::OPTION_NAME);
 		register_setting( Egoi_For_Wp_Admin::BAR_OPTION_NAME, Egoi_For_Wp_Admin::BAR_OPTION_NAME);
-		
+
 		// register forms
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_1, Egoi_For_Wp_Admin::FORM_OPTION_1);
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_2, Egoi_For_Wp_Admin::FORM_OPTION_2);
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_3, Egoi_For_Wp_Admin::FORM_OPTION_3);
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_4, Egoi_For_Wp_Admin::FORM_OPTION_4);
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_5, Egoi_For_Wp_Admin::FORM_OPTION_5);
-		
+
 		// hooks Core
 
 		if(!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order') {
@@ -129,10 +129,10 @@ class Egoi_For_Wp_Admin {
 
 		// after billing form
 		add_action('woocommerce_after_checkout_billing_form', array($this, 'hookWoocommercePostBilling'), 10);
-		
+
 		// hook contact form 7
 		add_action('wpcf7_submit', array($this, 'getContactForm'), 10, 1);
-		
+
 		// hook comment form
 		add_action('comment_post', array($this, 'insertCommentHook'), 10, 3);
 		add_action('comment_form_after_fields', array($this, 'checkNewsletterPostComment'), 10, 1);
@@ -161,8 +161,8 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );	
+
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style('wp-color-picker');
 	}
 
@@ -174,10 +174,10 @@ class Egoi_For_Wp_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
-		
+
 		wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'));
 		wp_enqueue_script('custom-script1');
-		
+
 		wp_register_script('custom-script2', plugin_dir_url(__FILE__) . 'js/forms.min.js', array('jquery'));
 		wp_enqueue_script('custom-script2');
 
@@ -189,7 +189,7 @@ class Egoi_For_Wp_Admin {
 
 		wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
 		wp_enqueue_script('custom-script5');
-		
+
 		wp_enqueue_script('wp-color-picker');
 
 		wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
@@ -213,7 +213,7 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
-		
+
 		add_menu_page( 'Smart Marketing - Main Page', 'Smart Marketing', 'Egoi_Plugin', $this->plugin_name, array($this, 'display_plugin_setup_page'), plugin_dir_url( __FILE__ ).'img/logo_small.png');
 
 		$capability = 'manage_options';
@@ -239,15 +239,15 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function add_action_links($links) {
-		
+
 		$link_account = 'egoi-4-wp-account';
 	   	$settings_link = array(
 	    '<a href="'.admin_url('admin.php?page='.$link_account).'">'.__('Settings', $this->plugin_name).'</a>');
 	   	return array_merge(  $settings_link, $links );
 	}
-	
+
 	public function del_action_link($actions) {
-			
+
 		if (array_key_exists('edit', $actions )){
 			unset($actions ['edit']);
 		}
@@ -277,7 +277,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-subscribers.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_subscriber_bar_page() {
@@ -287,7 +287,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-bar.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_subscriber_form() {
@@ -297,7 +297,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-forms.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_subscriber_widget() {
@@ -307,7 +307,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-widget.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_subscriber_ecommerce() {
@@ -317,7 +317,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-ecommerce.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_integrations() {
@@ -412,7 +412,7 @@ class Egoi_For_Wp_Admin {
 			'text_invalid_email' => '',
 			'text_already_subscribed' => '',
 			'text_error' => '',
-			'redirect' => ''	
+			'redirect' => ''
 		);
 
     	if(!get_option( self::BAR_OPTION_NAME, array() )) {
@@ -440,7 +440,7 @@ class Egoi_For_Wp_Admin {
 			'border_color' => '',
 			'border' => ''
 		);
-			
+
 		switch($id) {
 			case '1':
 				$foption = self::FORM_OPTION_1;
@@ -474,16 +474,16 @@ class Egoi_For_Wp_Admin {
 		return include dirname( __DIR__ ) . '/includes/ecommerce/t&e.php';
 	}
 
-	/* 
+	/*
 	* -- HOOKS ---
 	*/
 	public function users_queue(){
 
 		if(isset($_POST['submit']) && ($_POST['submit'])){
-		    
+
 		    try {
 
-			    $api = new Egoi_For_Wp(); 
+			    $api = new Egoi_For_Wp();
 			    $listID = $_POST['listID'];
 			    $count_users = count_users();
 
@@ -494,7 +494,7 @@ class Egoi_For_Wp_Admin {
 			    }else{
 					$users = get_users($args);
 			    }
-			    
+
 			    $current_user = wp_get_current_user();
 			    $current_email = $current_user->data->user_email;
 
@@ -512,7 +512,7 @@ class Egoi_For_Wp_Admin {
 
 		    	foreach ($users as $user) {
 			        if($current_email != $user->user_email){
-			            
+
 			            $name = $user->display_name ? $user->display_name : $user->user_login;
 			            $email = $user->user_email;
 			            $url = $user->user_url;
@@ -538,7 +538,7 @@ class Egoi_For_Wp_Admin {
 	                	$subs[] = $subscribers;
 			        }
 			    }
-			    
+
 			    if($count_users['total_users'] >= $this->limit_subs){
 				    $subs = array_chunk($subs, $this->limit_subs, true);
 				    for($x=0; $x<=9; $x++){
@@ -581,7 +581,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function hookEcommerce($cart_id = false){
 		// for security reasons
-			
+
 		if(strpos($this->server_url, 'wp-json') !== false){
 			return;
 		}
@@ -591,10 +591,13 @@ class Egoi_For_Wp_Admin {
 				$this->hookCartUpdate();
 			}else{
 
-				if(!$_GET['wc-ajax']){
+				if(!isset($_GET['wc-ajax']) || !$_GET['wc-ajax']){
 
-					if(!$_GET['remove_item'] && !strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-					
+					if(
+					    (!isset($_GET['remove_item']) || !$_GET['remove_item'])
+                        && ( !isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (!strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && empty($_SERVER['HTTP_X_REQUESTED_WITH'])))
+                    ) {
+
 						$list_id = $this->options_list['list'];
 						$track = $this->options_list['track'];
 
@@ -602,41 +605,35 @@ class Egoi_For_Wp_Admin {
 
 							// check for saved addtocart event
 							$validated_cart = $this->checkForCart();
-							
+
 							// check for saved Order event
 							$validated_order = $this->checkForOrder();
 
 							if($validated_cart && $validated_order){
 
-								if(substr($_GET['key'], 0, 8) != 'wc_order' || $_SESSION[$_GET['key']] == 1 ) {
+                                if (isset($_GET['key'])) {
 
-									if ($_SESSION[$_GET['key']] == 1) {
-										//echo 'TESTE';
+                                    $test = get_option('egoi_track_order_'.$_SESSION['egoi_order_id']);
+                                    echo html_entity_decode($test[0], ENT_QUOTES);
 
-										$test = get_option('egoi_track_order_'.$_SESSION['egoi_order_id']);
-										echo html_entity_decode($test[0], ENT_QUOTES);
+                                }else{
 
-									}else{
-				
-										// check && execute now for page view
-										$client_info = get_option('egoi_client');
-										if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
+                                    // check && execute now for page view
+                                    $client_info = get_option('egoi_client');
+                                    if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
 
-											$client_id = $client_info->CLIENTE_ID;
+                                        $client_id = $client_info->CLIENTE_ID;
 
-											$user = wp_get_current_user();
-											$user_email = $user->data->user_email;
+                                        $user = wp_get_current_user();
+                                        $user_email = $user->data->user_email;
 
-											echo $this->execEc($client_id, $list_id, $user_email);
-										}
-									}
+                                        echo $this->execEc($client_id, $list_id, $user_email);
+                                    }
+                                }
 
-								} else {
-									$_SESSION[$_GET['key']] = 1;
-								}
 							}
 						}
-					} 
+					}
 				}
 			}
 		}
@@ -651,7 +648,7 @@ class Egoi_For_Wp_Admin {
 	public function hookRemoveItem(){
 		if(isset($_GET['removed_item']) && ($_GET['removed_item'])){
 			$this->hookCartUpdate();
-		} 
+		}
 	}
 
 	public function hookCartQuantityUpdate(){
@@ -667,7 +664,7 @@ class Egoi_For_Wp_Admin {
 
 		$list_id = $this->options_list['list'];
 		$track = $this->options_list['track'];
-		
+
 		if($track && $list_id){
 
 			$client_info = get_option('egoi_client');
@@ -743,7 +740,7 @@ class Egoi_For_Wp_Admin {
 		}
 	}
 
-	
+
 
 	/**
 	 * Process E-commerce event Order for Paypal.
@@ -778,7 +775,7 @@ class Egoi_For_Wp_Admin {
 						$last_name = $_POST['billing_last_name'];
 						$guest_email = $_POST['billing_email'];
 						$name = $first_name.' '.$last_name;
-						
+
 						$api->addSubscriber($this->options_list['list'], $name, $guest_email, 1, '', 'Guest');
 					}
 				}
@@ -790,7 +787,7 @@ class Egoi_For_Wp_Admin {
 
 			 	$client_info = get_option('egoi_client');
 				if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
-				
+
 					$user = wp_get_current_user();
 
                     if($user->data->user_email){
@@ -807,7 +804,7 @@ class Egoi_For_Wp_Admin {
 
 					$products = array();
 					foreach($items as $k => $item){
-						
+
 						$sale_price = get_post_meta($item['product_id'] , '_sale_price', true);
 						$regular_price = get_post_meta($item['product_id'] , '_regular_price', true);
 
@@ -834,13 +831,13 @@ class Egoi_For_Wp_Admin {
 
 				}
 			}
-			
+
 			return false;
 
 		} catch(Exception $e) {
 	    	$this->sendError('WooCommerce - Order ERROR', $e->getMessage());
 	    }
-		
+
 	}
 
 	/**
@@ -850,14 +847,14 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.1.2
 	 */
 	public function checkForCart(){
-			
+
 		if(isset($_SESSION['egoi_session_cart']) && ($_SESSION['egoi_session_cart'])){
 
 			$option = 'egoi_track_addtocart_'.$_SESSION['egoi_session_cart'];
-			
+
 			$content = get_option($option);
 			echo html_entity_decode($content[0], ENT_QUOTES);
-			
+
 			delete_option($option);
 			unset($_SESSION['egoi_session_cart']);
 			return false;
@@ -874,12 +871,12 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function checkForOrder(){
 
-		if(substr($_GET['key'], 0, 8) != 'wc_order'){
+		if (!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order'){
 			if(isset($_SESSION['egoi_order_id']) && ($_SESSION['egoi_order_id'])){
-				
+
 				$order_id = $_SESSION['egoi_order_id'];
 				$content = get_option('egoi_track_order_'.$order_id);
-				
+
 				echo html_entity_decode($content[0], ENT_QUOTES);
 				delete_option('egoi_track_order_'.$order_id);
 
@@ -907,12 +904,12 @@ class Egoi_For_Wp_Admin {
 				$egoi_int = $opt['egoi_int'];
 
 				if($egoi_int['enable_cf']) {
-					
+
 					$api = new Egoi_For_Wp();
 
 					$form_id = $_POST['_wpcf7'];
 					if(in_array($form_id, $opt['contact_form'])) {
-						
+
 						$key_name = 'your-name';
 						$key_email = 'your-email';
 						if(strpos($result->form, $key_name) !== false){
@@ -931,9 +928,9 @@ class Egoi_For_Wp_Admin {
 							$email = $_POST[$key_email];
 						}else{
 							$match = array_filter(
-								$_POST, 
+								$_POST,
 									function($value) {
-										return preg_match("/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i", $value); 
+										return preg_match("/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i", $value);
 									}
 								);
 
@@ -990,7 +987,7 @@ class Egoi_For_Wp_Admin {
 						}
 
 						$ref_fields = array('tel' => $tel, 'cell' => $cell, 'bd' => $bd, 'fax' => $fax, 'lang' => $lang);
-						
+
 						$subject = $_POST['your-subject'];
 						$status = $_POST['status-egoi'];
 						$error_msg = $result->prop('messages');
@@ -1017,19 +1014,19 @@ class Egoi_For_Wp_Admin {
 				                	$cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
 
 									$api->editSubscriber(
-										$egoi_int['list_cf'], 
-										$email, 
-										array($cf7tag, $tag ? $tag : 0), 
-										$name, 
-										$lname, 
-										$extra_fields, 
-										$option, 
+										$egoi_int['list_cf'],
+										$email,
+										array($cf7tag, $tag ? $tag : 0),
+										$name,
+										$lname,
+										$extra_fields,
+										$option,
 										$ref_fields
 									);
 								}
 
 							}else{
-								
+
 								if($subject){ // check if tag exists in E-goi
 									$get_tags = $api->getTag($subject);
 					                $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
@@ -1040,15 +1037,15 @@ class Egoi_For_Wp_Admin {
 				                $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
 
 								$api->addSubscriberTags(
-									$egoi_int['list_cf'], 
-									$email, 
-									array($cf7tag, $tag ? $tag : 0), 
-									$name, 
-									$lname, 
-									1, 
-									$extra_fields, 
-									$option, 
-									$ref_fields, 
+									$egoi_int['list_cf'],
+									$email,
+									array($cf7tag, $tag ? $tag : 0),
+									$name,
+									$lname,
+									1,
+									$extra_fields,
+									$option,
+									$ref_fields,
 									$status
 								);
 							}
@@ -1073,7 +1070,7 @@ class Egoi_For_Wp_Admin {
 	 * @param 	 $approved
 	 * @param 	 $data
 	 * @since    1.0.0
-	 */	
+	 */
 	public function insertCommentHook($id, $approved = false, $data) {
 
 		$opt = get_option('egoi_int');
@@ -1087,9 +1084,9 @@ class Egoi_For_Wp_Admin {
 
 		 	if($check == 'on') {
 
-				$api = new Egoi_For_Wp();	
+				$api = new Egoi_For_Wp();
 				$add = $api->addSubscriberTags($egoi_int['list_cp'], $email, array($tag), $name, 1);
-						
+
 				if($add->UID){
 					if($egoi_int['redirect']){
 						wp_redirect($egoi_int['redirect']);
@@ -1108,7 +1105,7 @@ class Egoi_For_Wp_Admin {
 	 * Check if form is available for newsletter.
 	 *
 	 * @since    1.0.0
-	 */	
+	 */
 	public function checkNewsletterPostComment() {
 
 		$opt = get_option('egoi_int');
@@ -1121,12 +1118,12 @@ class Egoi_For_Wp_Admin {
 			return '';
 		}
 	}
-	
+
 	/**
 	 * Map custom fields with Core / Woocommerce to E-goi.
 	 *
 	 * @since    1.0.6
-	 */	
+	 */
 	public function mapFieldsEgoi() {
 
 		$id = (int)$_POST["id_egoi"];
@@ -1187,7 +1184,7 @@ class Egoi_For_Wp_Admin {
 			}
 			exit;
 			//return '';
-			
+
 		}else if(isset($id) && ($id != '')){
 
 			global $wpdb;
@@ -1210,7 +1207,7 @@ class Egoi_For_Wp_Admin {
 	}
 
 	private function saveRMData($post = false) {
-		
+
 		if(!get_option('egoi_data'))
 			add_option('egoi_data', $post);
 
@@ -1233,7 +1230,7 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function get_form_processed() {
-        
+
         if(!empty($_POST)){
             $api = new Egoi_For_Wp();
             echo json_encode($api->getForms($_POST['listID']));
@@ -1270,7 +1267,7 @@ class Egoi_For_Wp_Admin {
 
     // ADD A SIMPLE FORM SUBSCRIBER
 	public function subscribe_egoi_simple_form_add() {
-		
+
 		$apikey = get_option('egoi_api_key');
 
 		$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
@@ -1282,7 +1279,7 @@ class Egoi_For_Wp_Admin {
 		    $status = 1;
         }
 
-		$params = array( 
+		$params = array(
 			'apikey'    => $apikey['api_key'],
 			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
 			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
@@ -1310,11 +1307,11 @@ class Egoi_For_Wp_Admin {
 			} else {
 				_e('ERROR: invalid data submitted', 'egoi-for-wp');
 			}
-			
+
 		}
-		
+
 		wp_die(); // this is required to terminate immediately and return a proper response
-		
+
 	}
 
 	public function check_subscriber($subscriber_data) {
@@ -1350,7 +1347,7 @@ class Egoi_For_Wp_Admin {
 
 	//Outputs Easy Post data on the JSON endpoint
 	public function egoi_products_data_return( WP_REST_Request $request ) {
-		
+
 		global $_wp_additional_image_sizes;
 
 		// Get query strings params from request
@@ -1359,19 +1356,19 @@ class Egoi_For_Wp_Admin {
 
 		$params["ids"] = filter_var($params["ids"], FILTER_SANITIZE_STRING);
 		$ids = str_replace(" ","",$params["ids"]);
-		$ids = explode(",",$ids); 
+		$ids = explode(",",$ids);
 		foreach ($ids as $value) {
-			if (!is_numeric($value)) 
+			if (!is_numeric($value))
 				die();
 		}
 
 		$args = array( 'post_type' => array('product', 'product_variation') , 'post__in' => $ids, 'numberposts' => -1);
 		$products = get_posts( $args );
-	
+
 		$products_data = array();
 		foreach ($products as $product) {
 			if ( in_array($product->ID, $ids) ) {
-				
+
 				$sizes = array('thumbnail', 'medium', 'medium_large', 'large');
 				foreach ($_wp_additional_image_sizes as $key => $value) {
 					$sizes[] = $key;
@@ -1407,13 +1404,13 @@ class Egoi_For_Wp_Admin {
 				if (isset($params['decimal_space']) && is_numeric($params['decimal_space'])) {
 					$price = number_format($price, $params['decimal_space']);
 					$sale = number_format($sale, $params['decimal_space']);
-				} 
+				}
 
 				if (isset($params['decimal_sep'])) {
 					$price = str_replace('.', str_replace('"', '', $params['decimal_sep']), $price);
 					$sale = str_replace('.', str_replace('"', '', $params['decimal_sep']), $sale);
 				}
-							
+
 				$products_data['items']['item'][] = array(
 					'id' => $product->ID,
 					'name' => $product->post_title,
@@ -1465,7 +1462,7 @@ class Egoi_For_Wp_Admin {
 			}
 		}
 
-		return $products_data; 
+		return $products_data;
 	}
 
 
@@ -1481,12 +1478,12 @@ class Egoi_For_Wp_Admin {
         }
 		return array(
 			'name'        => 'E-goi',
-      		'icon' 		  => plugin_dir_url( __FILE__ ) . "img/logo.png", 
+      		'icon' 		  => plugin_dir_url( __FILE__ ) . "img/logo.png",
 			'description' => 'Shortcode E-goi.',
 			'base'        => 'egoi_vc_shortcode',
 			'params'      => array(
 				array(
-					
+
 					'type'       => 'dropdown',
 					'heading'    => 'Shortcode ID',
 					'param_name' => 'shortcode_id',
@@ -1528,7 +1525,7 @@ class Egoi_For_Wp_Admin {
     /*
      * RSS Feed - Create new feed
      */
-    public function createFeed($post) {
+    public function createFeed($post, $edit) {
         $code = filter_var($post['code'], FILTER_SANITIZE_STRING);
         $type = filter_var($post['type'], FILTER_SANITIZE_STRING);
         $categories = $post[substr($type,0,-1)."_categories_include"];
@@ -1546,7 +1543,11 @@ class Egoi_For_Wp_Admin {
             'tags' => $tags,
             'tags_exclude' => $tags_exclude
         );
-        add_option('egoi_rssfeed_'.$code, $rssfeed);
+        if ($edit) {
+            update_option('egoi_rssfeed_' . $code, $rssfeed);
+        } else {
+            add_option('egoi_rssfeed_' . $code, $rssfeed);
+        }
 
         return true;
     }
