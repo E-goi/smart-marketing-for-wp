@@ -1,4 +1,5 @@
 jQuery(document).ready(function() {
+    jQuery('.js-example-basic-multiple').select2();
     jQuery(".post_cats_tags").hide();
     jQuery(".product_cats_tags").hide();
 
@@ -20,19 +21,32 @@ jQuery(document).ready(function() {
     });
 });
 
-jQuery(".term").change(function() {
-    var term_name = this.name;
-    var term_id = this.value;
+jQuery('.js-example-basic-multiple').on('select2:select', function (e) {
+    var option = e.params.data.element.id;
 
-    if (term_name.indexOf('include') >= 0) {
-        var term_change = term_name.replace('include', 'exclude');
+    if (option.indexOf('include') >= 0) {
+        var option_change = option.replace('include', 'exclude');
     } else {
-        var term_change = term_name.replace('exclude', 'include');
+        var option_change = option.replace('exclude', 'include');
     }
+    jQuery('#'+option_change).prop('disabled', true);
 
-    if(jQuery(this).is(":checked")) {
-        jQuery("input[name='"+term_change+"'][value='"+term_id+"']").attr("disabled", true);
+    jQuery(".js-example-basic-multiple").select2("destroy");
+    jQuery(".js-example-basic-multiple").select2();
+
+});
+
+jQuery('.js-example-basic-multiple').on('select2:unselect', function (e) {
+    var option = e.params.data.element.id;
+
+    if (option.indexOf('include') >= 0) {
+        var option_change = option.replace('include', 'exclude');
     } else {
-        jQuery("input[name='"+term_change+"'][value='"+term_id+"']").removeAttr("disabled");
+        var option_change = option.replace('exclude', 'include');
     }
+    jQuery('#'+option_change).prop('disabled', false);
+
+    jQuery(".js-example-basic-multiple").select2("destroy");
+    jQuery(".js-example-basic-multiple").select2();
+
 });

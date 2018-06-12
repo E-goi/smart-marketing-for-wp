@@ -31,7 +31,7 @@ if (isset($_GET['del'])) {
 </p>
 <hr/>
 
-<?php if (!isset($_GET['add']) && !isset($_GET['edit'])) { ?>
+<?php if (!isset($_GET['add']) && !isset($_GET['edit']) && !isset($_GET['view'])) { ?>
 
     <div class="wrap-content wrap-content--list">
 
@@ -80,7 +80,7 @@ if (isset($_GET['del'])) {
                     </td>
                     <td align="right">
                         <a title="<?php _e('Edit', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&edit='.$option->option_name);?>"><i class="far fa-edit"></i></a>
-                        <a title="<?php _e('Preview', 'egoi-for-wp'); ?>" href=""><i class="fas fa-eye"></i></a>
+                        <a title="<?php _e('Preview', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&view='.$option->option_name);?>"><i class="fas fa-eye"></i></a>
                     </td>
                 </tr>
             <?php } ?>
@@ -118,7 +118,6 @@ if (isset($_GET['del'])) {
             $code = substr($_GET['edit'], -16);
         }
     ?>
-
     <div class="wrap egoi4wp-settings" id="tab-forms">
         <div class="row">
             <div class="nav-tab-forms-options-mt">
@@ -177,20 +176,26 @@ if (isset($_GET['del'])) {
                                     <label><?php _e( 'Categories', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td class="post_cats_tags">
+                                    <select class="js-example-basic-multiple" name="post_categories_include[]" multiple="multiple" style="width:450px;">
                                     <?php foreach ($post_categories as $category) { ?>
-                                        <input class="term" type="checkbox" name="post_categories_include[]" value="<?=$category->term_id?>"
-                                        <?php if (in_array($category->term_id, $feed['categories'])) echo 'checked';
-                                        else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> />
-                                        <?=$category->name?>
+                                        <option id="posts_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>">
+                                            <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
+                                            else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?>
+                                            <?=$category->name?>
+                                        </option>
                                     <?php } ?>
+                                    </select>
                                 </td>
                                 <td class="product_cats_tags">
-                                    <?php foreach ($product_categories as $category) { ?>
-                                        <input class="term" type="checkbox" name="product_categories_include[]" value="<?=$category->term_id?>"
-                                        <?php if (in_array($category->term_id, $feed['categories'])) echo 'checked';
-                                        else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> />
-                                        <?=$category->name?>
-                                    <?php } ?>
+                                    <select class="js-example-basic-multiple" name="product_categories_include[]" multiple="multiple" style="width:450px;">
+                                        <?php foreach ($product_categories as $category) { ?>
+                                            <option id="products_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>">
+                                                <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
+                                                else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?>
+                                                <?=$category->name?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </td>
                             </tr>
                             <tr valign="top" >
@@ -198,20 +203,26 @@ if (isset($_GET['del'])) {
                                     <label><?php _e( 'Categories to exclude', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td class="post_cats_tags">
-                                    <?php foreach ($post_categories as $category) { ?>
-                                        <input class="term" type="checkbox" name="post_categories_exclude[]" value="<?=$category->term_id?>"
-                                        <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'checked';
-                                        else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> />
-                                        <?=$category->name?>
-                                    <?php } ?>
+                                    <select class="js-example-basic-multiple" name="post_categories_exclude[]" multiple="multiple" style="width:450px;">
+                                        <?php foreach ($post_categories as $category) { ?>
+                                            <option id="posts_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>">
+                                                <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
+                                                else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?>
+                                                <?=$category->name?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </td>
                                 <td class="product_cats_tags">
-                                    <?php foreach ($product_categories as $category) { ?>
-                                        <input class="term" type="checkbox" name="product_categories_exclude[]" value="<?=$category->term_id?>"
-                                        <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'checked';
-                                        else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> />
-                                        <?=$category->name?>
-                                    <?php } ?>
+                                    <select class="js-example-basic-multiple" name="product_categories_exclude[]" multiple="multiple" style="width:450px;">
+                                        <?php foreach ($product_categories as $category) { ?>
+                                            <option id="products_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>">
+                                                <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
+                                                else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?>
+                                                <?=$category->name?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </td>
                             </tr>
                             <tr valign="top" >
@@ -219,20 +230,26 @@ if (isset($_GET['del'])) {
                                     <label><?php _e( 'Tags', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td class="post_cats_tags">
-                                    <?php foreach ($post_tags as $tag) { ?>
-                                        <input class="term" type="checkbox" name="post_tags_include[]" value="<?=$tag->term_id?>"
-                                        <?php if (in_array($tag->term_id, $feed['tags'])) echo 'checked';
-                                        else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> />
-                                        <?=$tag->name?>
-                                    <?php } ?>
+                                    <select class="js-example-basic-multiple" name="post_tags_include[]" multiple="multiple" style="width:450px;">
+                                        <?php foreach ($post_tags as $tag) { ?>
+                                            <option id="posts_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>">
+                                                <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
+                                                else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?>
+                                                <?=$tag->name?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </td>
                                 <td class="product_cats_tags">
-                                    <?php foreach ($product_tags as $tag) { ?>
-                                        <input class="term" type="checkbox" name="product_tags_include[]" value="<?=$tag->term_id?>"
-                                            <?php if (in_array($tag->term_id, $feed['tags'])) echo 'checked';
-                                            else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> />
-                                            <?=$tag->name?>
-                                    <?php } ?>
+                                    <select class="js-example-basic-multiple" name="product_tags_include[]" multiple="multiple" style="width:450px;">
+                                        <?php foreach ($product_tags as $tag) { ?>
+                                            <option id="products_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>">
+                                                <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
+                                                else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?>
+                                                <?=$tag->name?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </td>
                             </tr>
                             <tr valign="top" >
@@ -240,20 +257,26 @@ if (isset($_GET['del'])) {
                                     <label><?php _e( 'Tags to exclude', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td class="post_cats_tags">
-                                    <?php foreach ($post_tags as $tag) { ?>
-                                        <input class="term" type="checkbox" name="post_tags_exclude[]" value="<?=$tag->term_id?>"
-                                            <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'checked';
-                                            else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> />
-                                            <?=$tag->name?>
-                                    <?php } ?>
+                                    <select class="js-example-basic-multiple" name="post_tags_exclude[]" multiple="multiple" style="width:450px;">
+                                        <?php foreach ($post_tags as $tag) { ?>
+                                            <option id="posts_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>">
+                                                <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
+                                                else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?>
+                                                <?=$tag->name?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </td>
                                 <td class="product_cats_tags">
-                                    <?php foreach ($product_tags as $tag) { ?>
-                                        <input class="term" type="checkbox" name="product_tags_exclude[]" value="<?=$tag->term_id?>"
-                                            <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'checked';
-                                            else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> />
-                                            <?=$tag->name?>
-                                    <?php } ?>
+                                    <select class="js-example-basic-multiple" name="product_tags_exclude[]" multiple="multiple" style="width:450px;">
+                                        <?php foreach ($product_tags as $tag) { ?>
+                                            <option id="products_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>">
+                                                <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
+                                                else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?>
+                                                <?=$tag->name?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
                                 </td>
                             </tr>
                         </table>
@@ -264,36 +287,39 @@ if (isset($_GET['del'])) {
         </div>
     </div>
 
+<?php } else if ($_GET['view']) { ?>
+    <a href="<?php echo $this->prepareUrl();?>" class='button button--custom'>
+        <i class="fas fa-arrow-left"></i>
+        <?php _e('Back', 'egoi-for-wp');?>
+    </a>
     <?php
-    // Get a SimplePie feed object from the specified feed source.
-    $rss = fetch_feed( 'http://localhost:8888/wordpress/?feed='.$_GET['feed'] );
+        $feed = get_option($_GET['view']);
+        $args = $this->get_egoi_rss_feed_args($feed);
 
-    if ( ! is_wp_error( $rss ) ) : // Checks that the object is created correctly
-
-    // Figure out how many total items there are, but limit it to 5.
-    $maxitems = $rss->get_item_quantity( 0 );
-
-    // Build an array of all the items, starting with element 0 (first element).
-    $rss_items = $rss->get_items( 0, $maxitems );
-
-    endif;
+        $query = new WP_Query( $args );
     ?>
 
-    <ul>
-        <?php if ( $maxitems == 0 ) : ?>
-            <li><?php _e( 'No items', 'my-text-domain' ); ?></li>
-        <?php else : ?>
-            <?php // Loop through each feed item and display each item as a hyperlink. ?>
-            <?php foreach ( $rss_items as $item ) : ?>
-                <li>
-                    <a href="<?php echo esc_url( $item->get_permalink() ); ?>"
-                       title="<?php printf( __( 'Posted %s', 'my-text-domain' ), $item->get_date('j F Y | g:i a') ); ?>">
-                        <?php echo esc_html( $item->get_title() ); ?>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </ul>
+    <div class="wrap-content wrap-content--list">
+        <div style="width: 600px; margin: auto;">
+            <h3><?php echo $feed['name']; ?></h3>
+            <?php if (!$query->have_posts()) { ?> <p> <?php _e('No Posts', 'egoi-for-wp'); ?> </p>
+            <?php } else {
+                    while ( $query->have_posts() ) {
+                        $query->the_post();
+                        $words_num = $this->egoi_rss_feed_words_num(get_the_content_feed('rss2'), $feed['max_characters']);
+                        ?>
+                        <p>
+                            <a href="<?php the_permalink_rss() ?>" target="_blank">
+                                <?php the_title_rss() ?>
+                            </a><br>
+                            <?php echo mysql2date('j M Y H:i', get_post_time('Y-m-d H:i:s', true), false); ?>
+                        </p>
+                        <p><?php if ( has_post_thumbnail() ) { echo get_the_post_thumbnail(null, array(600)); } ?></p>
+                        <p><?php the_content_rss('', TRUE, '', $words_num); ?> </p>
+                <?php }
+            }?>
+        </div>
+    </div>
 
 <?php } ?>
 
