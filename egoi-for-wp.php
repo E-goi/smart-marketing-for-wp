@@ -189,6 +189,22 @@ function egoi_add_webpush() {
 }
 add_action('wp_footer', 'egoi_add_webpush');
 
+
+/**
+ * Hooks for RSS Feeds
+ * Registers our custom feed
+ */
+function register_egoi_rss_feeds() {
+    $public_area = new Egoi_For_Wp_Public();
+    $public_area->add_egoi_rss_feeds();
+}
+add_action( 'init', 'register_egoi_rss_feeds' );
+
+function egoi_rss_feeds(){
+    $public_area = new Egoi_For_Wp_Public();
+    $public_area->egoi_rss_feeds_content();
+}
+
 function hook_font_awesome() {
     ?>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
