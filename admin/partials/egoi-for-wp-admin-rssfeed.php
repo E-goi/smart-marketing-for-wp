@@ -178,9 +178,9 @@ if (isset($_GET['del'])) {
                                 <td class="post_cats_tags">
                                     <select class="js-example-basic-multiple" name="post_categories_include[]" multiple="multiple" style="width:450px;">
                                     <?php foreach ($post_categories as $category) { ?>
-                                        <option id="posts_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>">
+                                        <option id="posts_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>"
                                             <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
-                                            else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?>
+                                            else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> >
                                             <?=$category->name?>
                                         </option>
                                     <?php } ?>
@@ -189,9 +189,9 @@ if (isset($_GET['del'])) {
                                 <td class="product_cats_tags">
                                     <select class="js-example-basic-multiple" name="product_categories_include[]" multiple="multiple" style="width:450px;">
                                         <?php foreach ($product_categories as $category) { ?>
-                                            <option id="products_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>">
+                                            <option id="products_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>"
                                                 <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
-                                                else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?>
+                                                else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> >
                                                 <?=$category->name?>
                                             </option>
                                         <?php } ?>
@@ -205,9 +205,9 @@ if (isset($_GET['del'])) {
                                 <td class="post_cats_tags">
                                     <select class="js-example-basic-multiple" name="post_categories_exclude[]" multiple="multiple" style="width:450px;">
                                         <?php foreach ($post_categories as $category) { ?>
-                                            <option id="posts_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>">
+                                            <option id="posts_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>"
                                                 <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
-                                                else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?>
+                                                else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> >
                                                 <?=$category->name?>
                                             </option>
                                         <?php } ?>
@@ -216,9 +216,9 @@ if (isset($_GET['del'])) {
                                 <td class="product_cats_tags">
                                     <select class="js-example-basic-multiple" name="product_categories_exclude[]" multiple="multiple" style="width:450px;">
                                         <?php foreach ($product_categories as $category) { ?>
-                                            <option id="products_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>">
+                                            <option id="products_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>"
                                                 <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
-                                                else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?>
+                                                else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> >
                                                 <?=$category->name?>
                                             </option>
                                         <?php } ?>
@@ -232,9 +232,9 @@ if (isset($_GET['del'])) {
                                 <td class="post_cats_tags">
                                     <select class="js-example-basic-multiple" name="post_tags_include[]" multiple="multiple" style="width:450px;">
                                         <?php foreach ($post_tags as $tag) { ?>
-                                            <option id="posts_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>">
+                                            <option id="posts_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
                                                 <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
-                                                else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?>
+                                                else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> >
                                                 <?=$tag->name?>
                                             </option>
                                         <?php } ?>
@@ -243,9 +243,9 @@ if (isset($_GET['del'])) {
                                 <td class="product_cats_tags">
                                     <select class="js-example-basic-multiple" name="product_tags_include[]" multiple="multiple" style="width:450px;">
                                         <?php foreach ($product_tags as $tag) { ?>
-                                            <option id="products_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>">
+                                            <option id="products_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
                                                 <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
-                                                else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?>
+                                                else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> >
                                                 <?=$tag->name?>
                                             </option>
                                         <?php } ?>
@@ -259,9 +259,9 @@ if (isset($_GET['del'])) {
                                 <td class="post_cats_tags">
                                     <select class="js-example-basic-multiple" name="post_tags_exclude[]" multiple="multiple" style="width:450px;">
                                         <?php foreach ($post_tags as $tag) { ?>
-                                            <option id="posts_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>">
+                                            <option id="posts_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
                                                 <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
-                                                else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?>
+                                                else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> >
                                                 <?=$tag->name?>
                                             </option>
                                         <?php } ?>
@@ -270,9 +270,9 @@ if (isset($_GET['del'])) {
                                 <td class="product_cats_tags">
                                     <select class="js-example-basic-multiple" name="product_tags_exclude[]" multiple="multiple" style="width:450px;">
                                         <?php foreach ($product_tags as $tag) { ?>
-                                            <option id="products_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>">
+                                            <option id="products_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
                                                 <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
-                                                else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?>
+                                                else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> >
                                                 <?=$tag->name?>
                                             </option>
                                         <?php } ?>
