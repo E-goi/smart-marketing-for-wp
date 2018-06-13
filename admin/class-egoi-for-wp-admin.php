@@ -1557,6 +1557,8 @@ class Egoi_For_Wp_Admin {
         $feed = filter_var($_GET['feed'], FILTER_SANITIZE_STRING);
         $feed_configs = get_option($feed);
 
+        //add_filter( 'rss2_ns', array($this, 'flipboard_namespace') );
+
         // RSS Feed Head
         $this->egoi_rss_feed_head();
 
@@ -1567,8 +1569,20 @@ class Egoi_For_Wp_Admin {
 
         $query = new WP_Query( $args );
 
+        global $woocommerce;
+
         while ( $query->have_posts() ) : $query->the_post();
             $words_num = $this->egoi_rss_feed_words_num(get_the_content_feed('rss2'), $feed_configs['max_characters']);
+
+            if ($feed_configs['type'] == 'products') {
+                $currency = get_woocommerce_currency_symbol();
+                $price = get_post_meta(get_the_ID(), '_regular_price', true);
+                $sale = get_post_meta(get_the_ID(), '_sale_price', true);
+                $product_cats = get_the_terms( get_the_ID(), 'product_cat' );
+            } else {
+                $price = false;
+            }
+
             ?>
             <item>
                 <title><?php the_title_rss() ?></title>
@@ -1578,25 +1592,27 @@ class Egoi_For_Wp_Admin {
                 <?php endif; ?>
                 <pubDate><?php echo mysql2date('j M Y H:i', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
                 <dc:creator><![CDATA[<?php the_author() ?>]]></dc:creator>
-                <?php the_category_rss('rss2') ?>
-
+                <?php
+                    if ($feed_configs['type'] == 'posts') {
+                        the_category_rss('rss2');
+                    } else {
+                        foreach ( $product_cats as $cat ) {
+                            echo "<category>".$cat->name."</category>";
+                        }
+                    }
+                ?>
                 <guid isPermaLink="false"><?php the_guid(); ?></guid>
+                <?php if ( has_post_thumbnail() ) { ?>
+                    <imagecomplet><img src="<?php echo get_the_post_thumbnail_url(); ?>" /></imagecomplet>
+                    <image><?php echo get_the_post_thumbnail_url(); ?></image>
+                <?php } ?>
+                <?php if ($price) { ?>
+                    <price><![CDATA[<?php echo $price; ?>]]></price>
+                <?php } ?>
                 <?php if (get_option('rss_use_excerpt')) : ?>
-                    <description><![CDATA[<?php if ( has_post_thumbnail() ) {
-                            $thumbnail_html = sprintf("<image>%s</image>\n",
-                                get_the_post_thumbnail()
-                            );
-                            echo $thumbnail_html;
-                        }
-                        the_content_rss('', TRUE, '', $words_num); ?>]]></description>
+                    <description><![CDATA[<?php the_content_rss('', TRUE, '', $words_num); ?>]]></description>
                 <?php else : ?>
-                    <description><![CDATA[<?php if ( has_post_thumbnail() ) {
-                            $thumbnail_html = sprintf("<image>%s</image>\n",
-                                get_the_post_thumbnail()
-                            );
-                        }
-                        echo $thumbnail_html;
-                        the_content_rss('', TRUE, '', $words_num); ?>]]></description>
+                    <description><![CDATA[<?php the_content_rss('', TRUE, '', $words_num); ?>]]></description>
                     <?php if ( strlen( $content ) > 0 ) : ?>
                         <content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
                     <?php else : ?>
@@ -1621,6 +1637,13 @@ class Egoi_For_Wp_Admin {
         </channel>
         </rss>
         <?php
+
+        //remove_filter( 'rss2_ns', array($this, 'flipboard_namespace') );
+    }
+
+    public function flipboard_namespace() {
+        echo 'xmlns:media="http://search.yahoo.com/mrss/"
+            xmlns:georss="http://www.georss.org/georss"';
     }
 
     public function egoi_rss_feed_head() {

@@ -4,6 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
 
+//$feed = fetch_feed( 'http://plugins.mktrip.com/wordpress/?feed=egoi_rssfeed_aj3rtFcIzyLWmXcV' );
+//var_dump($feed);
+
 if(isset($_POST['action'])){
     $edit = isset($_GET['edit']) ? true : false;
     $result = $this->createFeed($_POST, $edit);
@@ -51,7 +54,7 @@ if (isset($_GET['del'])) {
             <?php
                 global $wpdb;
                 $table = $wpdb->prefix."options";
-                $options = $wpdb->get_results( " SELECT * FROM ".$table." WHERE option_name LIKE 'egoi_rssfeed_%' ");
+                $options = $wpdb->get_results( " SELECT * FROM ".$table." WHERE option_name LIKE 'egoi_rssfeed_%' ORDER BY option_id DESC ");
                 foreach ($options as $option) {
                     $feed = get_option($option->option_name);
             ?>
@@ -72,14 +75,16 @@ if (isset($_GET['del'])) {
                 </div> <!-- PopUp ALERT Delete Form -->
 
                 <tr>
-                    <td><?=$feed['name']?></td>
-                    <td><?php echo ucfirst($feed['type']); ?></td>
-                    <td><?php echo get_site_url().'/?feed='.$option->option_name; ?></td>
-                    <td>
-                        <a class="cd-popup-trigger-del" data-id-form="<?=$option->option_name?>" data-type-form="rss-feed" href="#"><?php _e('Delete', 'egoi-for-wp');?></a>
+                    <td style="vertical-align: middle;"><?=$feed['name']?></td>
+                    <td style="vertical-align: middle;"><?php echo ucfirst($feed['type']); ?></td>
+                    <td style="vertical-align: middle;"><input type="text" id="url_<?=$option->option_name?>" class="copy-input" value="<?php echo get_site_url().'/?feed='.$option->option_name; ?>" readonly
+                        style="width: 100%;border: none;background-image:none;background-color:transparent;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></td>
+                    <td style="vertical-align: middle;" width="100">
+                        <button class="copy_url button button--custom" style="width: 90px;" data-rss-feed="url_<?=$option->option_name?>"><?php _e('Copy URL', 'egoi-for-wp');?></button>
                     </td>
-                    <td align="right">
-                        <a title="<?php _e('Edit', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&edit='.$option->option_name);?>"><i class="far fa-edit"></i></a>
+                    <td style="vertical-align: middle;" align="right" width="70" nowrap>
+                        <a class="cd-popup-trigger-del" data-id-form="<?=$option->option_name?>" data-type-form="rss-feed" href="" title="<?php _e('Delete', 'egoi-for-wp'); ?>"><i style="padding-right: 3px;" class="far fa-trash-alt"></i></a>
+                        <a title="<?php _e('Edit', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&edit='.$option->option_name);?>"><i style="padding-right: 2px;" class="far fa-edit"></i></a>
                         <a title="<?php _e('Preview', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&view='.$option->option_name);?>"><i class="fas fa-eye"></i></a>
                     </td>
                 </tr>
@@ -136,6 +141,18 @@ if (isset($_GET['del'])) {
                         </p>
 
                         <table class="form-table" style="table-layout: fixed;">
+                            <?php if (isset($_GET['edit'])) { ?>
+                                 <tr valign="top">
+                                    <th scope="row">
+                                        <label><?php _e( 'URL', 'egoi-for-wp' ); ?></label>
+                                    </th>
+                                    <td>
+                                        <input type="text" style="width:420px; background: white; color: #32373c;" id="input_<?=$code?>" name="input_url"
+                                               value="<?php echo get_site_url().'/?feed=egoi_rssfeed_'.$code; ?>" readonly />
+                                        <button type="button" class="copy_url button button--custom" style="padding: 0 5px; height: 25px !important; line-height: 0 !important;" data-rss-feed="input_<?=$code?>"><i class="far fa-copy"></i></button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                             <tr valign="top">
                                 <th scope="row">
                                     <label><?php _e( 'Name', 'egoi-for-wp' ); ?></label>

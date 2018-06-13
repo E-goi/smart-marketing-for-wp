@@ -1,4 +1,5 @@
 jQuery(document).ready(function() {
+
     jQuery('.js-example-basic-multiple').select2();
     jQuery(".post_cats_tags").hide();
     jQuery(".product_cats_tags").hide();
@@ -49,4 +50,20 @@ jQuery('.js-example-basic-multiple').on('select2:unselect', function (e) {
     jQuery(".js-example-basic-multiple").select2("destroy");
     jQuery(".js-example-basic-multiple").select2();
 
+});
+
+jQuery(".copy_url").click(function () {
+    var feed = jQuery(this).attr('data-rss-feed');
+    var url = document.getElementById(feed);
+    url.select();
+    document.execCommand("copy");
+
+    if (feed.indexOf("url") >= 0) {
+        jQuery(".copy_url").each(function () {
+            jQuery(this).html("Copy URL").attr('style', 'width: 90px;');
+        });
+        jQuery(this).html("Copied!").css('color', '#1BDB49');
+    } else if (feed.indexOf("input") >= 0) {
+        jQuery(this).html("<i class=\"fas fa-check\"></i>").css('color', '#1BDB49');
+    }
 });

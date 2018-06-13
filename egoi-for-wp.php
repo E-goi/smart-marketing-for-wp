@@ -200,14 +200,17 @@ function register_egoi_rss_feeds() {
 }
 add_action( 'init', 'register_egoi_rss_feeds' );
 
+
 function egoi_rss_feeds(){
-    $public_area = new Egoi_For_Wp_Public();
-    $public_area->egoi_rss_feeds_content();
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    $admin->egoi_rss_feeds_content();
 }
 
 function hook_font_awesome() {
     ?>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <?php
 }
 add_action('admin_head', 'hook_font_awesome');
