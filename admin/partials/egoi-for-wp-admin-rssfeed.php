@@ -4,9 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
 
-//$feed = fetch_feed( 'http://plugins.mktrip.com/wordpress/?feed=egoi_rssfeed_aj3rtFcIzyLWmXcV' );
-//var_dump($feed);
-
 if(isset($_POST['action'])){
     $edit = isset($_GET['edit']) ? true : false;
     $result = $this->createFeed($_POST, $edit);
@@ -324,14 +321,28 @@ if (isset($_GET['del'])) {
                     while ( $query->have_posts() ) {
                         $query->the_post();
                         $words_num = $this->egoi_rss_feed_words_num(get_the_content_feed('rss2'), $feed['max_characters']);
+                        $content = get_the_content_feed('rss2');
                         ?>
                         <p>
                             <a href="<?php the_permalink_rss() ?>" target="_blank">
                                 <?php the_title_rss() ?>
                             </a><br>
-                            <?php echo mysql2date('j M Y H:i', get_post_time('Y-m-d H:i:s', true), false); ?>
+                            <?php echo mysql2date('j M Y H:i', get_post_time('Y-m-d H:i:s', true), false); ?><br>
+                            <?php the_author() ?>
                         </p>
-                        <p><?php if ( has_post_thumbnail() ) { echo get_the_post_thumbnail(null, array(600)); } ?></p>
+                        <?php if ( has_post_thumbnail() ) {
+                                echo get_the_post_thumbnail(null, array(600));
+                            } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
+                            foreach( $gallery as $image_url ) {
+                                ?><p><img width="600" src="<?php echo $image_url; ?>" /></p><?php
+                                break;
+                            }
+                        } else  {
+                            preg_match('~<img.*?src=["\']+(.*?)["\']+~', $content, $img);
+                            if ($img) {
+                                ?><p><img width="600" src="<?php echo $img[1]; ?>"/></p><?php
+                            }
+                        }?>
                         <p><?php the_content_rss('', TRUE, '', $words_num); ?> </p>
                 <?php }
             }?>

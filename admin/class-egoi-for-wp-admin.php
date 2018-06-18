@@ -1557,8 +1557,6 @@ class Egoi_For_Wp_Admin {
         $feed = filter_var($_GET['feed'], FILTER_SANITIZE_STRING);
         $feed_configs = get_option($feed);
 
-        //add_filter( 'rss2_ns', array($this, 'flipboard_namespace') );
-
         // RSS Feed Head
         $this->egoi_rss_feed_head();
 
@@ -1569,10 +1567,10 @@ class Egoi_For_Wp_Admin {
 
         $query = new WP_Query( $args );
 
-        global $woocommerce;
-
         while ( $query->have_posts() ) : $query->the_post();
             $words_num = $this->egoi_rss_feed_words_num(get_the_content_feed('rss2'), $feed_configs['max_characters']);
+
+            $content = get_the_content_feed('rss2');
 
             if ($feed_configs['type'] == 'products') {
                 $currency = get_woocommerce_currency_symbol();
@@ -1603,9 +1601,23 @@ class Egoi_For_Wp_Admin {
                 ?>
                 <guid isPermaLink="false"><?php the_guid(); ?></guid>
                 <?php if ( has_post_thumbnail() ) { ?>
-                    <imagecomplet><img src="<?php echo get_the_post_thumbnail_url(); ?>" /></imagecomplet>
+                    <imagecomplete><img src="<?php echo get_the_post_thumbnail_url(); ?>" /></imagecomplete>
                     <image><?php echo get_the_post_thumbnail_url(); ?></image>
-                <?php } ?>
+                <?php } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
+                    foreach( $gallery as $image_url ) {
+                        ?>
+                        <image><?=$image_url?></image>
+                        <imagecomplete><img src="<?=$image_url?>" /></imagecomplete>
+                        <?php
+                        break;
+                    }
+                } else  {
+                    preg_match('~<img.*?src=["\']+(.*?)["\']+~', $content, $img);
+                    ?>
+                    <image><?=$img[1]?></image>
+                    <imagecomplete><img src="<?=$img[1]?>" /></imagecomplete>
+                    <?php
+                }?>
                 <?php if ($price) { ?>
                     <price><![CDATA[<?php echo $price; ?>]]></price>
                 <?php } ?>
@@ -1637,13 +1649,6 @@ class Egoi_For_Wp_Admin {
         </channel>
         </rss>
         <?php
-
-        //remove_filter( 'rss2_ns', array($this, 'flipboard_namespace') );
-    }
-
-    public function flipboard_namespace() {
-        echo 'xmlns:media="http://search.yahoo.com/mrss/"
-            xmlns:georss="http://www.georss.org/georss"';
     }
 
     public function egoi_rss_feed_head() {
