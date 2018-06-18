@@ -59,10 +59,12 @@ jQuery(".copy_url").click(function () {
     document.execCommand("copy");
 
     if (feed.indexOf("url") >= 0) {
+        var copy_text = jQuery("#copy_text").text();
+        var copied_text = jQuery("#copied_text").text();
         jQuery(".copy_url").each(function () {
-            jQuery(this).html("Copy URL").attr('style', 'width: 90px;');
+            jQuery(this).html(copy_text).attr('style', 'width: 90px;');
         });
-        jQuery(this).html("Copied!").css('color', '#1BDB49');
+        jQuery(this).html(copied_text).css('color', '#1BDB49');
     } else if (feed.indexOf("input") >= 0) {
         jQuery(this).html("<i class=\"fas fa-check\"></i>").css('color', '#1BDB49');
     }

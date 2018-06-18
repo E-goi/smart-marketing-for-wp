@@ -1537,6 +1537,7 @@ class Egoi_For_Wp_Admin {
             'code' => $code,
             'name' => filter_var($post['name'], FILTER_SANITIZE_STRING),
             'max_characters' => filter_var($post['max_characters'], FILTER_SANITIZE_NUMBER_INT),
+            'image_size' => filter_var($post['image_size'], FILTER_SANITIZE_STRING),
             'type' => filter_var($post['type'], FILTER_SANITIZE_STRING),
             'categories' => $categories,
             'categories_exclude' => $categories_exclude,
@@ -1580,7 +1581,6 @@ class Egoi_For_Wp_Admin {
             } else {
                 $price = false;
             }
-
             ?>
             <item>
                 <title><?php the_title_rss() ?></title>
@@ -1601,8 +1601,8 @@ class Egoi_For_Wp_Admin {
                 ?>
                 <guid isPermaLink="false"><?php the_guid(); ?></guid>
                 <?php if ( has_post_thumbnail() ) { ?>
-                    <imagecomplete><img src="<?php echo get_the_post_thumbnail_url(); ?>" /></imagecomplete>
-                    <image><?php echo get_the_post_thumbnail_url(); ?></image>
+                    <imagecomplete><img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']); ?>" /></imagecomplete>
+                    <image><?php echo get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']); ?></image>
                 <?php } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
                     foreach( $gallery as $image_url ) {
                         ?>

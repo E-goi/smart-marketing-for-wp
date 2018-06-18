@@ -48,6 +48,8 @@ if (isset($_GET['del'])) {
                 </tr>
             </thead>
             <tbody>
+            <spam id="copy_text" style="display: none;"><?php _e('Copy URL', 'egoi-for-wp'); ?></spam>
+            <spam id="copied_text" style="display: none;"><?php _e('Copied!', 'egoi-for-wp'); ?></spam>
             <?php
                 global $wpdb;
                 $table = $wpdb->prefix."options";
@@ -73,7 +75,7 @@ if (isset($_GET['del'])) {
 
                 <tr>
                     <td style="vertical-align: middle;"><?=$feed['name']?></td>
-                    <td style="vertical-align: middle;"><?php echo ucfirst($feed['type']); ?></td>
+                    <td style="vertical-align: middle;"><?php _e(ucfirst($feed['type']), 'egoi-for-wp'); ?></td>
                     <td style="vertical-align: middle;"><input type="text" id="url_<?=$option->option_name?>" class="copy-input" value="<?php echo get_site_url().'/?feed='.$option->option_name; ?>" readonly
                         style="width: 100%;border: none;background-image:none;background-color:transparent;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></td>
                     <td style="vertical-align: middle;" width="100">
@@ -171,15 +173,29 @@ if (isset($_GET['del'])) {
                                 </td>
                             </tr>
                             <tr valign="top">
+                                <th scope="row"><label><?php _e( 'Image size', 'egoi-for-wp' ); ?></label></th>
+                                <td>
+                                    <select name="image_size" id="image_size" style="width: 450px;">
+                                        <option disabled <?php selected($feed['image_size'], null); ?> ><?php _e( 'Select size..', 'egoi-for-wp' ); ?></option>
+                                        <option value="full" <?php selected($feed['image_size'], 'full'); ?> ><?php _e('Full', 'egoi-for-wp'); ?></option>
+                                        <option value="large" <?php selected($feed['image_size'], 'large'); ?> ><?php _e('Large', 'egoi-for-wp'); ?></option>
+                                        <option value="medium" <?php selected($feed['image_size'], 'medium'); ?> ><?php _e('Medium', 'egoi-for-wp'); ?></option>
+                                        <option value="medium_large" <?php selected($feed['image_size'], 'medium_large'); ?> ><?php _e('Medium Large', 'egoi-for-wp'); ?></option>
+                                        <option value="thumbnail" <?php selected($feed['image_size'], 'thumbnail'); ?> ><?php _e('Thumbnail', 'egoi-for-wp'); ?></option>
+                                    </select>
+                                    <p class="help"><?php _e( 'Select the default size for feed images.' ,'egoi-for-wp' ); ?></p>
+                                </td>
+                            </tr>
+                            <tr valign="top">
                                 <th scope="row">
                                     <label><?php _e( 'Type', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td>
                                     <label>
-                                        <input type="radio" name="type" value="posts" <?php checked( $feed['type'], 'posts' ); ?> /> <?php _e( 'Posts' ); ?>
+                                        <input type="radio" name="type" value="posts" <?php checked( $feed['type'], 'posts' ); ?> /> <?php _e( 'Posts', 'egoi-for-wp' ); ?>
                                     </label>
                                     <label>
-                                        <input type="radio" name="type" value="products" <?php checked( $feed['type'], 'products' ); ?> /> <?php _e( 'Products' ); ?>
+                                        <input type="radio" name="type" value="products" <?php checked( $feed['type'], 'products' ); ?> /> <?php _e( 'Products', 'egoi-for-wp' ); ?>
                                     </label>
                                     <p class="help"><?php _e( 'You can chose between Posts and Products to fill your RSS Feed', 'egoi-for-wp' ); ?></p>
                                 </td>
@@ -331,16 +347,16 @@ if (isset($_GET['del'])) {
                             <?php the_author() ?>
                         </p>
                         <?php if ( has_post_thumbnail() ) {
-                                echo get_the_post_thumbnail(null, array(600));
+                                echo '<p  align="center">'.get_the_post_thumbnail(get_the_ID(), $feed['image_size']).'</p>';
                             } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
                             foreach( $gallery as $image_url ) {
-                                ?><p><img width="600" src="<?php echo $image_url; ?>" /></p><?php
+                                ?><p  align="center"><img width="600" src="<?php echo $image_url; ?>" /></p><?php
                                 break;
                             }
                         } else  {
                             preg_match('~<img.*?src=["\']+(.*?)["\']+~', $content, $img);
                             if ($img) {
-                                ?><p><img width="600" src="<?php echo $img[1]; ?>"/></p><?php
+                                ?><p  align="center"><img width="600" src="<?php echo $img[1]; ?>"/></p><?php
                             }
                         }?>
                         <p><?php the_content_rss('', TRUE, '', $words_num); ?> </p>
