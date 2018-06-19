@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-18 16:39+0000\n"
-"PO-Revision-Date: 2018-06-18 16:40+0000\n"
+"PO-Revision-Date: 2018-06-18 17:18+0000\n"
 "Last-Translator: dafdfv sdfsdfsdf <procha@e-goi.com>\n"
 "Language-Team: Português\n"
 "Language: pt_PT\n"
@@ -905,7 +905,7 @@ msgstr "Escolha um nome para o seu RSS Feed"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:167
 msgid "Maximum of characters"
-msgstr "Maximo de caracteres"
+msgstr "Máximo de caracteres"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:171
 msgid "Define a maximum of characters for your RSS Feed"
@@ -913,7 +913,7 @@ msgstr "Defina um número máximo de caracteres para o seu RSS Feed"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:176
 msgid "Image size"
-msgstr "Tamanho da Imagem"
+msgstr "Tamanho da imagem"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:179
 msgid "Select size.."
@@ -970,7 +970,7 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:287
 msgid "Tags to exclude"
-msgstr "Excluir Tags"
+msgstr "Excluir tags"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:335
 msgid "No Posts"

@@ -1569,9 +1569,12 @@ class Egoi_For_Wp_Admin {
         $query = new WP_Query( $args );
 
         while ( $query->have_posts() ) : $query->the_post();
-            $words_num = $this->egoi_rss_feed_words_num(get_the_content_feed('rss2'), $feed_configs['max_characters']);
 
             $content = get_the_content_feed('rss2');
+
+            $description = $this->egoi_rss_feed_description(get_the_excerpt(), $feed_configs['max_characters']);
+
+            $all_content = implode(' ', get_extended(  get_post_field( 'post_content', get_the_ID() ) )) ;
 
             if ($feed_configs['type'] == 'products') {
                 $currency = get_woocommerce_currency_symbol();
@@ -1612,7 +1615,7 @@ class Egoi_For_Wp_Admin {
                         break;
                     }
                 } else  {
-                    preg_match('~<img.*?src=["\']+(.*?)["\']+~', $content, $img);
+                    preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
                     ?>
                     <image><?=$img[1]?></image>
                     <imagecomplete><img src="<?=$img[1]?>" /></imagecomplete>
@@ -1622,13 +1625,11 @@ class Egoi_For_Wp_Admin {
                     <price><![CDATA[<?php echo $price; ?>]]></price>
                 <?php } ?>
                 <?php if (get_option('rss_use_excerpt')) : ?>
-                    <description><![CDATA[<?php the_content_rss('', TRUE, '', $words_num); ?>]]></description>
+                    <description><![CDATA[<?php echo $description; ?>]]></description>
                 <?php else : ?>
-                    <description><![CDATA[<?php the_content_rss('', TRUE, '', $words_num); ?>]]></description>
+                    <description><![CDATA[<?php echo $description; ?>]]></description>
                     <?php if ( strlen( $content ) > 0 ) : ?>
                         <content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
-                    <?php else : ?>
-                        <content:encoded><![CDATA[<?php the_content_rss('', TRUE, '', $words_num); ?>]]></content:encoded>
                     <?php endif; ?>
                 <?php endif; ?>
                 <?php if ( get_comments_number() || comments_open() ) : ?>
@@ -1778,8 +1779,8 @@ class Egoi_For_Wp_Admin {
         return $args;
     }
 
-    public function egoi_rss_feed_words_num($text, $num_max_chars) {
-        $words = explode(' ', $text);
+    public function egoi_rss_feed_description($text, $num_max_chars) {
+        $words = explode(' ', strip_tags($text));
         $words_num = $char_num = 0;
         foreach ($words as $word) {
             $char_num += strlen($word);
@@ -1788,7 +1789,16 @@ class Egoi_For_Wp_Admin {
                 break;
             }
         }
-        return $words_num;
+        $excerpt = explode(' ', $text, $words_num);
+
+        if (count($words)>$words_num) {
+            array_pop($excerpt);
+            $excerpt = implode(" ",$excerpt).' [...]';
+        } else {
+            $excerpt = implode(" ",$excerpt);
+        }
+        $description = preg_replace('`[[^]]*]`','',$excerpt);
+        return $description;
     }
 
 

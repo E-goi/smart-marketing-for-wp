@@ -336,8 +336,12 @@ if (isset($_GET['del'])) {
             <?php } else {
                     while ( $query->have_posts() ) {
                         $query->the_post();
-                        $words_num = $this->egoi_rss_feed_words_num(get_the_content_feed('rss2'), $feed['max_characters']);
+
                         $content = get_the_content_feed('rss2');
+
+                        $all_content = implode(' ', get_extended(  get_post_field( 'post_content', get_the_ID() ) )) ;
+
+                        $description = $this->egoi_rss_feed_description(get_the_excerpt(), $feed['max_characters']);
                         ?>
                         <p>
                             <a href="<?php the_permalink_rss() ?>" target="_blank">
@@ -354,12 +358,12 @@ if (isset($_GET['del'])) {
                                 break;
                             }
                         } else  {
-                            preg_match('~<img.*?src=["\']+(.*?)["\']+~', $content, $img);
+                            preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
                             if ($img) {
                                 ?><p  align="center"><img width="600" src="<?php echo $img[1]; ?>"/></p><?php
                             }
                         }?>
-                        <p><?php the_content_rss('', TRUE, '', $words_num); ?> </p>
+                        <p><?php echo $description; ?> </p>
                 <?php }
             }?>
         </div>
