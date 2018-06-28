@@ -194,6 +194,11 @@ add_action('wp_footer', 'egoi_add_webpush');
  * Hooks for RSS Feeds
  * Registers our custom feed
  */
+add_action('wp_feed_options', 'force_feed', 10, 1);
+function force_feed($feed) {
+    $feed->force_feed(true);
+}
+
 function register_egoi_rss_feeds() {
     $public_area = new Egoi_For_Wp_Public();
     $public_area->add_egoi_rss_feeds();

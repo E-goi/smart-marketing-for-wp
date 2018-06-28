@@ -122,9 +122,12 @@ if (isset($_GET['del'])) {
             $code = substr($_GET['edit'], -16);
         }
     ?>
-    <div class="wrap egoi4wp-settings" id="tab-forms">
-        <div class="row">
-            <div class="nav-tab-forms-options-mt">
+    <div class="wrap">
+
+        <div class="main-content">
+
+            <!-- Main Content -->
+            <div class="col-4" style="max-width: 900px;">
                 <form id="egoi_simple_form" method="post" action="<?php echo $this->prepareUrl('&edit=egoi_rssfeed_'.$code); ?>">
                     <?php
                     settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
@@ -146,7 +149,7 @@ if (isset($_GET['del'])) {
                                         <label><?php _e( 'URL', 'egoi-for-wp' ); ?></label>
                                     </th>
                                     <td>
-                                        <input type="text" style="width:420px; background: white; color: #32373c;" id="input_<?=$code?>" name="input_url"
+                                        <input type="text" style="width:90%; background: white; color: #32373c;" id="input_<?=$code?>" name="input_url"
                                                value="<?php echo get_site_url().'/?feed=egoi_rssfeed_'.$code; ?>" readonly />
                                         <button type="button" class="copy_url button button--custom" style="padding: 0 5px; height: 25px !important; line-height: 0 !important;" data-rss-feed="input_<?=$code?>"><i class="far fa-copy"></i></button>
                                     </td>
@@ -157,7 +160,7 @@ if (isset($_GET['del'])) {
                                     <label><?php _e( 'Name', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td>
-                                    <input type="text" style="width:450px;" id="name" name="name"
+                                    <input type="text" style="width:90%;" id="name" name="name"
                                            placeholder="<?php _e( 'Choose a name for your new RSS Feed', 'egoi-for-wp' ); ?>"
                                            value="<?php echo isset($feed) ? $feed['name'] : null; ?>" required />
                                 </td>
@@ -167,23 +170,23 @@ if (isset($_GET['del'])) {
                                     <label><?php _e( 'Maximum of characters', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td>
-                                    <input type="text" style="width:450px;" id="max_characters" name="max_characters" pattern="[0-9]*"
-                                           placeholder="<?php _e( 'Define a maximum of characters for your RSS Feed', 'egoi-for-wp' ); ?>"
+                                    <input type="text" style="width:90%;" id="max_characters" name="max_characters" pattern="[0-9]*"
+                                           placeholder="<?php _e( 'Set the maximum characters for RSS Feed text', 'egoi-for-wp' ); ?>"
                                            value="<?php echo isset($feed) ? $feed['max_characters'] : null; ?>" required />
                                 </td>
                             </tr>
                             <tr valign="top">
                                 <th scope="row"><label><?php _e( 'Image size', 'egoi-for-wp' ); ?></label></th>
                                 <td>
-                                    <select name="image_size" id="image_size" style="width: 450px;">
-                                        <option disabled <?php selected($feed['image_size'], null); ?> ><?php _e( 'Select size..', 'egoi-for-wp' ); ?></option>
+                                    <select name="image_size" id="image_size" style="width:90%;" required>
+                                        <option value="" <?php selected($feed['image_size'], null); ?> ><?php _e( 'Select size..', 'egoi-for-wp' ); ?></option>
                                         <option value="full" <?php selected($feed['image_size'], 'full'); ?> ><?php _e('Full', 'egoi-for-wp'); ?></option>
                                         <option value="large" <?php selected($feed['image_size'], 'large'); ?> ><?php _e('Large', 'egoi-for-wp'); ?></option>
                                         <option value="medium" <?php selected($feed['image_size'], 'medium'); ?> ><?php _e('Medium', 'egoi-for-wp'); ?></option>
                                         <option value="medium_large" <?php selected($feed['image_size'], 'medium_large'); ?> ><?php _e('Medium Large', 'egoi-for-wp'); ?></option>
                                         <option value="thumbnail" <?php selected($feed['image_size'], 'thumbnail'); ?> ><?php _e('Thumbnail', 'egoi-for-wp'); ?></option>
                                     </select>
-                                    <p class="help"><?php _e( 'Select the default size for feed images.' ,'egoi-for-wp' ); ?></p>
+                                    <p class="help"><?php _e( 'Select a default size for RSS feed images.' ,'egoi-for-wp' ); ?></p>
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -192,21 +195,21 @@ if (isset($_GET['del'])) {
                                 </th>
                                 <td>
                                     <label>
-                                        <input type="radio" name="type" value="posts" <?php checked( $feed['type'], 'posts' ); ?> /> <?php _e( 'Posts', 'egoi-for-wp' ); ?>
+                                        <input type="radio" name="type" value="posts" <?php checked( $feed['type'], 'posts' ); ?> required /> <?php _e( 'Posts', 'egoi-for-wp' ); ?>
                                     </label>
                                     <label>
                                         <input type="radio" name="type" value="products" <?php checked( $feed['type'], 'products' ); ?> /> <?php _e( 'Products', 'egoi-for-wp' ); ?>
                                     </label>
-                                    <p class="help"><?php _e( 'You can chose between Posts and Products to fill your RSS Feed', 'egoi-for-wp' ); ?></p>
+                                    <p class="help"><?php _e( 'Choose between Posts or Products to fill out the RSS Feed', 'egoi-for-wp' ); ?>.</p>
                                 </td>
                             </tr>
 
                             <tr valign="top" >
-                                <th scope="row">
+                                <th scope="row" class="cats_tags_titles">
                                     <label><?php _e( 'Categories', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td class="post_cats_tags">
-                                    <select class="js-example-basic-multiple" name="post_categories_include[]" multiple="multiple" style="width:450px;">
+                                    <select class="js-example-basic-multiple" name="post_categories_include[]" multiple="multiple" style="width:90%;">
                                     <?php foreach ($post_categories as $category) { ?>
                                         <option id="posts_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>"
                                             <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
@@ -215,9 +218,10 @@ if (isset($_GET['del'])) {
                                         </option>
                                     <?php } ?>
                                     </select>
+                                    <p class="help"><?php _e( 'Please select at least one Category or All will be displayed', 'egoi-for-wp' ); ?>.</p>
                                 </td>
                                 <td class="product_cats_tags">
-                                    <select class="js-example-basic-multiple" name="product_categories_include[]" multiple="multiple" style="width:450px;">
+                                    <select class="js-example-basic-multiple" name="product_categories_include[]" multiple="multiple" style="width:90%;">
                                         <?php foreach ($product_categories as $category) { ?>
                                             <option id="products_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>"
                                                 <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
@@ -226,14 +230,15 @@ if (isset($_GET['del'])) {
                                             </option>
                                         <?php } ?>
                                     </select>
+                                    <p class="help"><?php _e( 'Please select at least one Category or All will be displayed', 'egoi-for-wp' ); ?>.</p>
                                 </td>
                             </tr>
                             <tr valign="top" >
-                                <th scope="row">
+                                <th scope="row" class="cats_tags_titles">
                                     <label><?php _e( 'Categories to exclude', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td class="post_cats_tags">
-                                    <select class="js-example-basic-multiple" name="post_categories_exclude[]" multiple="multiple" style="width:450px;">
+                                    <select class="js-example-basic-multiple" name="post_categories_exclude[]" multiple="multiple" style="width:90%;">
                                         <?php foreach ($post_categories as $category) { ?>
                                             <option id="posts_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>"
                                                 <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
@@ -242,9 +247,10 @@ if (isset($_GET['del'])) {
                                             </option>
                                         <?php } ?>
                                     </select>
+                                    <p><br></p>
                                 </td>
                                 <td class="product_cats_tags">
-                                    <select class="js-example-basic-multiple" name="product_categories_exclude[]" multiple="multiple" style="width:450px;">
+                                    <select class="js-example-basic-multiple" name="product_categories_exclude[]" multiple="multiple" style="width:90%;">
                                         <?php foreach ($product_categories as $category) { ?>
                                             <option id="products_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>"
                                                 <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
@@ -253,14 +259,15 @@ if (isset($_GET['del'])) {
                                             </option>
                                         <?php } ?>
                                     </select>
+                                    <p><br></p>
                                 </td>
                             </tr>
                             <tr valign="top" >
-                                <th scope="row">
+                                <th scope="row" class="cats_tags_titles">
                                     <label><?php _e( 'Tags', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td class="post_cats_tags">
-                                    <select class="js-example-basic-multiple" name="post_tags_include[]" multiple="multiple" style="width:450px;">
+                                    <select class="js-example-basic-multiple" name="post_tags_include[]" multiple="multiple" style="width:90%;">
                                         <?php foreach ($post_tags as $tag) { ?>
                                             <option id="posts_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
                                                 <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
@@ -269,9 +276,10 @@ if (isset($_GET['del'])) {
                                             </option>
                                         <?php } ?>
                                     </select>
+                                    <p class="help"><?php _e( 'Please select at least one Tag or All will be displayed', 'egoi-for-wp' ); ?>.</p>
                                 </td>
                                 <td class="product_cats_tags">
-                                    <select class="js-example-basic-multiple" name="product_tags_include[]" multiple="multiple" style="width:450px;">
+                                    <select class="js-example-basic-multiple" name="product_tags_include[]" multiple="multiple" style="width:90%;">
                                         <?php foreach ($product_tags as $tag) { ?>
                                             <option id="products_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
                                                 <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
@@ -280,14 +288,15 @@ if (isset($_GET['del'])) {
                                             </option>
                                         <?php } ?>
                                     </select>
+                                    <p class="help"><?php _e( 'Please select at least one Tag or All will be displayed', 'egoi-for-wp' ); ?>.</p>
                                 </td>
                             </tr>
                             <tr valign="top" >
-                                <th scope="row">
+                                <th scope="row" class="cats_tags_titles">
                                     <label><?php _e( 'Tags to exclude', 'egoi-for-wp' ); ?></label>
                                 </th>
                                 <td class="post_cats_tags">
-                                    <select class="js-example-basic-multiple" name="post_tags_exclude[]" multiple="multiple" style="width:450px;">
+                                    <select class="js-example-basic-multiple" name="post_tags_exclude[]" multiple="multiple" style="width:90%;">
                                         <?php foreach ($post_tags as $tag) { ?>
                                             <option id="posts_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
                                                 <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
@@ -298,7 +307,7 @@ if (isset($_GET['del'])) {
                                     </select>
                                 </td>
                                 <td class="product_cats_tags">
-                                    <select class="js-example-basic-multiple" name="product_tags_exclude[]" multiple="multiple" style="width:450px;">
+                                    <select class="js-example-basic-multiple" name="product_tags_exclude[]" multiple="multiple" style="width:90%;" >
                                         <?php foreach ($product_tags as $tag) { ?>
                                             <option id="products_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
                                                 <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
@@ -314,6 +323,13 @@ if (isset($_GET['del'])) {
                     <?php submit_button(); ?>
                 </form>
             </div>
+
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <?php include ('egoi-for-wp-admin-sidebar.php'); ?>
+            </div>
+
         </div>
     </div>
 
@@ -359,7 +375,7 @@ if (isset($_GET['del'])) {
                             }
                         } else  {
                             preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
-                            if ($img) {
+                            if (isset($img[1])) {
                                 ?><p  align="center"><img width="600" src="<?php echo $img[1]; ?>"/></p><?php
                             }
                         }?>

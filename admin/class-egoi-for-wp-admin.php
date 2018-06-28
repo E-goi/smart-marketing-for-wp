@@ -1577,9 +1577,6 @@ class Egoi_For_Wp_Admin {
             $all_content = implode(' ', get_extended(  get_post_field( 'post_content', get_the_ID() ) )) ;
 
             if ($feed_configs['type'] == 'products') {
-                $currency = get_woocommerce_currency_symbol();
-                $price = get_post_meta(get_the_ID(), '_regular_price', true);
-                $sale = get_post_meta(get_the_ID(), '_sale_price', true);
                 $product_cats = get_the_terms( get_the_ID(), 'product_cat' );
             } else {
                 $price = false;
@@ -1591,38 +1588,39 @@ class Egoi_For_Wp_Admin {
                 <?php if ( get_comments_number() || comments_open() ) : ?>
                     <comments><?php comments_link_feed(); ?></comments>
                 <?php endif; ?>
-                <pubDate><?php echo mysql2date('j M Y H:i', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
+                <pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
                 <dc:creator><![CDATA[<?php the_author() ?>]]></dc:creator>
                 <?php
                     if ($feed_configs['type'] == 'posts') {
                         the_category_rss('rss2');
                     } else {
                         foreach ( $product_cats as $cat ) {
-                            echo "<category>".$cat->name."</category>";
+                            ?>
+                            <category><![CDATA[<?=$cat->name?>]]></category>
+                            <?php
                         }
                     }
                 ?>
                 <guid isPermaLink="false"><?php the_guid(); ?></guid>
                 <?php if ( has_post_thumbnail() ) { ?>
-                    <imagecomplete><img src="<?php echo get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']); ?>" /></imagecomplete>
                     <image><?php echo get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']); ?></image>
                 <?php } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
                     foreach( $gallery as $image_url ) {
                         ?>
                         <image><?=$image_url?></image>
-                        <imagecomplete><img src="<?=$image_url?>" /></imagecomplete>
                         <?php
                         break;
                     }
                 } else  {
                     preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
-                    ?>
-                    <image><?=$img[1]?></image>
-                    <imagecomplete><img src="<?=$img[1]?>" /></imagecomplete>
-                    <?php
+                    if (isset($img[1])) {
+                        ?>
+                        <image><?= $img[1] ?></image>
+                        <?php
+                    }
                 }?>
                 <?php if ($price) { ?>
-                    <price><![CDATA[<?php echo $price; ?>]]></price>
+
                 <?php } ?>
                 <?php if (get_option('rss_use_excerpt')) : ?>
                     <description><![CDATA[<?php echo $description; ?>]]></description>

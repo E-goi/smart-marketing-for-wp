@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-18 16:39+0000\n"
-"PO-Revision-Date: 2018-06-18 17:18+0000\n"
+"POT-Creation-Date: 2018-06-28 10:28+0000\n"
+"PO-Revision-Date: 2018-06-28 10:37+0000\n"
 "Last-Translator: dafdfv sdfsdfsdf <procha@e-goi.com>\n"
-"Language-Team: Português\n"
+"Language-Team: Portuguese (Portugal)\n"
 "Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -257,7 +257,7 @@ msgstr "Criar Lista +"
 #: admin/partials/egoi-for-wp-admin-simple-forms.php:279
 #: admin/partials/egoi-for-wp-admin-simple-forms.php:479
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:44
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:157
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:160
 #: admin/partials/egoi-for-wp-admin-display.php:253
 msgid "Name"
 msgstr "Nome"
@@ -864,12 +864,12 @@ msgid "RSS Feed saved!"
 msgstr "RSS Feed gravado!"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:45
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:191
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:194
 msgid "Type"
 msgstr "Tipo"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:46
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:146
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:149
 msgid "URL"
 msgstr ""
 
@@ -894,85 +894,95 @@ msgstr "Visualizar"
 msgid "Create RSS Feed +"
 msgstr "Criar RSS Feed +"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:138
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:323
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:141
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:339
 msgid "Back"
 msgstr "Voltar"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:161
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:164
 msgid "Choose a name for your new RSS Feed"
 msgstr "Escolha um nome para o seu RSS Feed"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:167
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:170
 msgid "Maximum of characters"
 msgstr "Máximo de caracteres"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:171
-msgid "Define a maximum of characters for your RSS Feed"
-msgstr "Defina um número máximo de caracteres para o seu RSS Feed"
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:174
+msgid "Set the maximum characters for RSS Feed text"
+msgstr "Defina um número máximo de caracteres para o texto do seu RSS Feed"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:176
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:179
 msgid "Image size"
 msgstr "Tamanho da imagem"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:179
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:182
 msgid "Select size.."
 msgstr "Selecione o tamanho"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:180
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:183
 msgid "Full"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:181
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:184
 msgid "Large"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:182
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:185
 msgid "Medium"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:183
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:186
 msgid "Medium Large"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:184
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:187
 msgid "Thumbnail"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:186
-msgid "Select the default size for feed images."
-msgstr "Selecione o tamanho pré definido das imagens do seu feed"
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:189
+msgid "Select a default size for RSS feed images."
+msgstr "Selecione o tamanho pré definido das imagens do seu RSS feed"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:195
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:198
 msgid "Posts"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:198
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:201
 msgid "Products"
 msgstr "Produtos"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:200
-msgid "You can chose between Posts and Products to fill your RSS Feed"
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:203
+msgid "Choose between Posts or Products to fill out the RSS Feed"
 msgstr ""
 "Você pode escolher entre Posts e Produtos para preencher o seu RSS Feed"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:206
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:209
 msgid "Categories"
 msgstr "Categorias"
 
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:221
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:233
+msgid "Please select at least one Category or All will be displayed"
+msgstr "Selecione pelo menos uma categoria ou serão exibidas TODAS."
+
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:238
 msgid "Categories to exclude"
 msgstr "Excluir categorias"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:260
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:267
 msgid "Tags"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:287
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:279
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:291
+msgid "Please select at least one Tag or All will be displayed"
+msgstr "Selecione pelo menos uma Tag ou serão exibidas TODAS."
+
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:296
 msgid "Tags to exclude"
 msgstr "Excluir tags"
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:335
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:351
 msgid "No Posts"
 msgstr "Não tem Posts"
 
@@ -1632,31 +1642,71 @@ msgid "Save changes to the plug-in"
 msgstr "Guarde alterações no Plugin"
 
 #: admin/partials/egoi-for-wp-admin-sidebar.php:32
-msgid "Looking for help?"
+msgid "Need help?"
 msgstr "Precisa de ajuda?"
 
 #: admin/partials/egoi-for-wp-admin-sidebar.php:33
+msgid "We have several resources available to help you:"
+msgstr "Nós temos vários recursos disponíveis para o ajudar:"
+
+#: admin/partials/egoi-for-wp-admin-sidebar.php:35
+msgid "https://helpdesk.e-goi.com/337098-Adding-an-RSS-feed-to-my-email"
+msgstr ""
+"https://helpdesk.e-goi.com/585285-Inserir-automaticamente-conte%C3%BAdo-RSS-"
+"em-emails-RSS-to-email"
+
+#: admin/partials/egoi-for-wp-admin-sidebar.php:36
+msgid "How to insert RSS content into your emails?"
+msgstr "Como inserir conteúdo RSS nos seus emails?"
+
+#: admin/partials/egoi-for-wp-admin-sidebar.php:38
+msgid ""
+"https://www.e-goi.com/features/integrations-and-plugins/plugin-wordpress-"
+"smart-marketing-e-goi/"
+msgstr ""
+"https://www.e-goi.pt/funcionalidades/integracoes-e-plugins/plugin-wordpress-"
+"smart-marketing"
+
+#: admin/partials/egoi-for-wp-admin-sidebar.php:39
+msgid "General information"
+msgstr "Informação geral"
+
+#: admin/partials/egoi-for-wp-admin-sidebar.php:42
+msgid ""
+"Did not find the answer to your question? you can use the <a href=\"https:"
+"//wordpress.org/support/plugin/smart-marketing-for-wp\">support forum at "
+"WordPress.org </a> to post your question."
+msgstr ""
+"Não encontrou a resposta para a sua dúvida? pode usar o <a href=\"https:"
+"//wordpress.org/support/plugin/smart-marketing-for-wp\">fórum de suporte no "
+"WordPress.org</a> para colocar a sua questão."
+
+#: admin/partials/egoi-for-wp-admin-sidebar.php:48
+msgid "Looking for help?"
+msgstr "Precisa de ajuda?"
+
+#: admin/partials/egoi-for-wp-admin-sidebar.php:49
 msgid "We have some resources available to help you in the right direction."
 msgstr ""
 "Nós temos vários recursos disponíveis para lhe ajudar na direcção certa."
 
-#: admin/partials/egoi-for-wp-admin-sidebar.php:35
+#: admin/partials/egoi-for-wp-admin-sidebar.php:51
 msgid "https://www.e-goi.com/en/o/smart-marketing-wordpress/"
 msgstr "https://www.e-goi.pt/pt/o/smart-marketing-para-wordpress/"
 
-#: admin/partials/egoi-for-wp-admin-sidebar.php:35
+#: admin/partials/egoi-for-wp-admin-sidebar.php:51
 msgid "General info"
 msgstr "Informação Geral"
 
-#: admin/partials/egoi-for-wp-admin-sidebar.php:36
+#: admin/partials/egoi-for-wp-admin-sidebar.php:52
 msgid "https://helpdesk.e-goi.com/242267-Integrating-E-goi-with-Wordpress"
 msgstr "https://helpdesk.e-goi.com/835325-Integrar-o-E-goi-com-o-Wordpress"
 
-#: admin/partials/egoi-for-wp-admin-sidebar.php:37
+#: admin/partials/egoi-for-wp-admin-sidebar.php:53
 msgid "Knowledge Base"
 msgstr "Base de Conhecimentos"
 
-#: admin/partials/egoi-for-wp-admin-sidebar.php:40
+#: admin/partials/egoi-for-wp-admin-sidebar.php:56
 msgid ""
 "If your answer can not be found in the resources listed above, please use "
 "the <a href=\"https://wordpress.org/support/plugin/smart-marketing-for-wp/\">"

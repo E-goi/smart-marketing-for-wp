@@ -1,17 +1,22 @@
 jQuery(document).ready(function() {
 
     jQuery('.js-example-basic-multiple').select2();
+
+    jQuery(".cats_tags_titles").hide();
     jQuery(".post_cats_tags").hide();
     jQuery(".product_cats_tags").hide();
 
     var type = jQuery('input[type=radio][name=type]:checked').val();
     if (type == 'posts') {
         jQuery(".post_cats_tags").show();
+        jQuery(".cats_tags_titles").show();
     } else if (type == 'products') {
         jQuery(".product_cats_tags").show();
+        jQuery(".cats_tags_titles").show();
     }
 
     jQuery('input[type=radio][name=type]').change(function() {
+        jQuery(".cats_tags_titles").show();
         if (this.value == 'posts') {
             jQuery(".post_cats_tags").show();
             jQuery(".product_cats_tags").hide();
