@@ -52,8 +52,12 @@ jQuery('.js-example-basic-multiple').on('select2:unselect', function (e) {
     }
     jQuery('#'+option_change).prop('disabled', false);
 
-    jQuery(".js-example-basic-multiple").select2("destroy");
-    jQuery(".js-example-basic-multiple").select2();
+
+    setTimeout(function () {
+        jQuery(".js-example-basic-multiple").select2("destroy");
+        jQuery(".js-example-basic-multiple").select2();
+    });
+
 
 });
 

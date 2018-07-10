@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-28 10:28+0000\n"
-"PO-Revision-Date: 2018-06-28 10:37+0000\n"
+"PO-Revision-Date: 2018-06-28 14:44+0000\n"
 "Last-Translator: dafdfv sdfsdfsdf <procha@e-goi.com>\n"
-"Language-Team: Portuguese (Portugal)\n"
+"Language-Team: Português\n"
 "Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -963,7 +963,7 @@ msgstr "Categorias"
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:221
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:233
 msgid "Please select at least one Category or All will be displayed"
-msgstr "Selecione pelo menos uma categoria ou serão exibidas TODAS."
+msgstr "Selecione pelo menos uma categoria ou serão exibidas TODAS"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:238
 msgid "Categories to exclude"
@@ -976,7 +976,7 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:279
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:291
 msgid "Please select at least one Tag or All will be displayed"
-msgstr "Selecione pelo menos uma Tag ou serão exibidas TODAS."
+msgstr "Selecione pelo menos uma Tag ou serão exibidas TODAS"
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:296
 msgid "Tags to exclude"

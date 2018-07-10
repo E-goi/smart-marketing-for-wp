@@ -1603,11 +1603,11 @@ class Egoi_For_Wp_Admin {
                 ?>
                 <guid isPermaLink="false"><?php the_guid(); ?></guid>
                 <?php if ( has_post_thumbnail() ) { ?>
-                    <image><?php echo get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']); ?></image>
+                    <image><?php echo htmlentities('<img src="'.get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']).'" />'); ?></image>
                 <?php } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
                     foreach( $gallery as $image_url ) {
                         ?>
-                        <image><?=$image_url?></image>
+                        <image><?php echo htmlentities('<img src="'.$image_url.'" />'); ?></image>
                         <?php
                         break;
                     }
@@ -1615,7 +1615,7 @@ class Egoi_For_Wp_Admin {
                     preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
                     if (isset($img[1])) {
                         ?>
-                        <image><?= $img[1] ?></image>
+                        <image><?php echo htmlentities('<img src="'.$img[1].'" />'); ?></image>
                         <?php
                     }
                 }?>
