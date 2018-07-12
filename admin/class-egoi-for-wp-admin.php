@@ -1602,26 +1602,21 @@ class Egoi_For_Wp_Admin {
                     }
                 ?>
                 <guid isPermaLink="false"><?php the_guid(); ?></guid>
+
                 <?php if ( has_post_thumbnail() ) { ?>
-                    <image><?php echo htmlentities('<img src="'.get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']).'" />'); ?></image>
+                    <enclosure url="<?php echo get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']); ?>" type="image/jpg" />
                 <?php } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
                     foreach( $gallery as $image_url ) {
-                        ?>
-                        <image><?php echo htmlentities('<img src="'.$image_url.'" />'); ?></image>
-                        <?php
+                        ?><enclosure url="<?php echo $image_url; ?>" type="image/jpg" /><?php
                         break;
                     }
                 } else  {
                     preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
                     if (isset($img[1])) {
-                        ?>
-                        <image><?php echo htmlentities('<img src="'.$img[1].'" />'); ?></image>
-                        <?php
+                        ?><enclosure url="<?php echo $img[1]; ?>" type="image/jpg" /><?php
                     }
                 }?>
-                <?php if ($price) { ?>
 
-                <?php } ?>
                 <?php if (get_option('rss_use_excerpt')) : ?>
                     <description><![CDATA[<?php echo $description; ?>]]></description>
                 <?php else : ?>
@@ -1658,7 +1653,6 @@ class Egoi_For_Wp_Admin {
          */
 
         header('Content-Type: ' . feed_content_type('rss2') . '; charset=' . get_option('blog_charset'), true);
-        $more = 1;
 
         echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
 
