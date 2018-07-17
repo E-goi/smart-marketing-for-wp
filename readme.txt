@@ -83,6 +83,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 2.3.1 =
+ - RSS Feed - Improvements
+
 = 2.3.0 =
  - RSS Feed - Create RSS feeds with your WordPress Posts or Products
 
