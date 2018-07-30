@@ -181,10 +181,14 @@ function egoi_add_tag(){
 
 // HOOK WEB PUSH
 function egoi_add_webpush() {
-    $public_area = new Egoi_For_Wp_Public();
-    $webpush = $public_area->add_webpush();
-    if ($webpush) {
-        echo $webpush;
+    
+    if(!strpos($_SERVER['HTTP_REFERER'], 'wp-admin')){ //don't show web push on admin pages
+        $public_area = new Egoi_For_Wp_Public();
+        $webpush = $public_area->add_webpush();
+
+        if ($webpush) {
+            echo $webpush;
+        }
     }
 }
 add_action('wp_footer', 'egoi_add_webpush');
