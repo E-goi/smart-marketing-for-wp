@@ -1570,8 +1570,6 @@ class Egoi_For_Wp_Admin {
 
         while ( $query->have_posts() ) : $query->the_post();
 
-            $content = get_the_content_feed('rss2');
-
             $description = $this->egoi_rss_feed_description(get_the_excerpt(), $feed_configs['max_characters']);
 
             $all_content = implode(' ', get_extended(  get_post_field( 'post_content', get_the_ID() ) )) ;
@@ -1621,9 +1619,7 @@ class Egoi_For_Wp_Admin {
                     <description><![CDATA[<?php echo $description; ?>]]></description>
                 <?php else : ?>
                     <description><![CDATA[<?php echo $description; ?>]]></description>
-                    <?php if ( strlen( $content ) > 0 ) : ?>
-                        <content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
-                    <?php endif; ?>
+                    <content:encoded><![CDATA[<?php echo the_content(); ?>]]></content:encoded>
                 <?php endif; ?>
                 <?php if ( get_comments_number() || comments_open() ) : ?>
                     <wfw:commentRss><?php echo esc_url( get_post_comments_feed_link(null, 'rss2') ); ?></wfw:commentRss>
@@ -1636,6 +1632,7 @@ class Egoi_For_Wp_Admin {
                  *
                  * @since 2.0.0
                  */
+
                 do_action( 'rss2_item' );
                 ?>
             </item>
@@ -1646,6 +1643,9 @@ class Egoi_For_Wp_Admin {
     }
 
     public function egoi_rss_feed_head() {
+
+        $this->feed_cleaner();
+
         /**
          * RSS2 Feed Template for displaying RSS2 Posts feed.
          *
@@ -1791,6 +1791,39 @@ class Egoi_For_Wp_Admin {
         }
         $description = preg_replace('`[[^]]*]`','',$excerpt);
         return $description;
+    }
+
+    public function feed_cleaner()
+    {
+        remove_all_filters('the_content_feed');
+        remove_all_filters('the_excerpt_rss');
+        remove_all_filters('the_content_rss');
+        remove_all_filters('the_title_rss');
+        remove_all_filters('comment_text_rss');
+        remove_all_filters('post_comments_feed_link');
+        remove_all_filters('author_feed_link');
+        remove_all_filters('the_content_feed');
+        remove_all_filters('comment_author_rss');
+        remove_all_filters('pre_link_rss');
+        remove_all_filters('bloginfo_rss');
+        remove_all_filters('category_feed_link');
+        remove_all_filters('the_category_rss');
+        remove_all_filters('feed_link');
+
+        remove_all_actions('commentrss2_item');
+        remove_all_actions('do_feed_rss');
+        remove_all_actions('do_feed_rss2');
+        remove_all_actions('rss_head');
+        remove_all_actions('rss_item');
+        remove_all_actions('rss2_head');
+        remove_all_actions('rss2_item');
+        remove_all_actions('rss2_ns');
+        remove_all_actions('atom_entry');
+        remove_all_actions('atom_head');
+        remove_all_actions('atom_ns');
+        remove_all_actions('rdf_header');
+        remove_all_actions('rdf_item');
+        remove_all_actions('rdf_ns');
     }
 
 
