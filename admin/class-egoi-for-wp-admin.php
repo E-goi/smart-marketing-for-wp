@@ -1601,17 +1601,32 @@ class Egoi_For_Wp_Admin {
                 ?>
                 <guid isPermaLink="false"><?php the_guid(); ?></guid>
 
-                <?php if ( has_post_thumbnail() ) { ?>
-                    <enclosure url="<?php echo get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']); ?>" type="image/jpg" />
+                <?php if ( has_post_thumbnail() ) {
+                    $img_url = get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']);
+                    $pos = strpos($img_url, "?");
+                    if ($pos !== false) {
+                        $img_url = substr($img_url, 0, $pos);
+                    }
+
+                    ?>
+                    <enclosure url="<?php echo $img_url; ?>" type="image/jpg" />
                 <?php } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
-                    foreach( $gallery as $image_url ) {
-                        ?><enclosure url="<?php echo $image_url; ?>" type="image/jpg" /><?php
+                    foreach( $gallery as $img_url ) {
+                        $pos = strpos($img_url, "?");
+                        if ($pos !== false) {
+                            $img_url = substr($img_url, 0, $pos);
+                        }
+                        ?><enclosure url="<?php echo $img_url; ?>" type="image/jpg" /><?php
                         break;
                     }
                 } else  {
                     preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
                     if (isset($img[1])) {
-                        ?><enclosure url="<?php echo $img[1]; ?>" type="image/jpg" /><?php
+                        $pos = strpos($img[1], "?");
+                        if ($pos !== false) {
+                            $img_url = substr($img[1], 0, $pos);
+                        }
+                        ?><enclosure url="<?php echo $img_url; ?>" type="image/jpg" /><?php
                     }
                 }?>
 
