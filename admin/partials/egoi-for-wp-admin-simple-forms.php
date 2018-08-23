@@ -685,3 +685,9 @@ if ( ! defined( 'ABSPATH' ) ) {
         } ?>
     </div>
 </div>
+
+
+<!-- Banner -->
+<div class="sidebar" style="width: 220px;">
+    <?php include ('egoi-for-wp-admin-banner.php'); ?>
+</div>

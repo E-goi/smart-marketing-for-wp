@@ -76,6 +76,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 			edit.style.display = 'block';
 		}
 	}
+
+    jQuery( document ).ready(function() {
+
+        var iframe_src = 'http://guiamais.mktrip.com/wp-iframe/wp-iframe.php?';
+        var width = jQuery(".iframe-container").width();
+
+        if (width < 550) {
+            if (jQuery("#iframe").attr('src') != iframe_src+'type=v') {
+                jQuery("#iframe").attr('src',iframe_src+'type=v');
+                jQuery(".iframe-container").css( 'padding-top', 530 );
+            }
+        }
+
+    });
+
+
+
+    jQuery( window ).resize( function () {
+        var width = jQuery(".iframe-container").width();
+        var iframe_src = 'http://guiamais.mktrip.com/wp-iframe/wp-iframe.php?';
+        if (width < 450) {
+            if (jQuery("#iframe").attr('src') != iframe_src+'type=v') {
+                jQuery("#iframe").attr('src',iframe_src+'type=v');
+                jQuery(".iframe-container").css( 'padding-top', 530 );
+            }
+        } else {
+            if (jQuery("#iframe").attr('src') != iframe_src+'type=h') {
+                jQuery("#iframe").attr('src',iframe_src+'type=h');
+                jQuery(".iframe-container").css( 'padding-top', 270 );
+            }
+        }
+
+    });
 </script>
 
 <!-- STYLE on this page - Position the text footer fixed to the bottom --> 
@@ -92,6 +125,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 <hr/>
 
 <!-- CONTENT -->
+<style type="text/css">
+    .iframe-container {
+        overflow: hidden;
+        padding-top: 270px;
+        position: relative;
+    }
+
+    .iframe-container iframe {
+        border: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+</style>
+<body>
+<div class="iframe-container">
+    <iframe id="iframe" src="http://guiamais.mktrip.com/wp-iframe/wp-iframe.php?type=h&lang=<?php echo get_locale(); ?>" ></iframe>
+</div>
 <div class='wrap-content' id="wrap--acoount">
 	<div class="main-content">
 		<div id="icon-wp-info" class="icon32"></div>

@@ -14,7 +14,8 @@ else{
     $tag = $this->bar_post['tag-egoi'];
 }
 ?>
-<div class="wrap" id="egoi4wp-admin" style="width:65%;">
+<div class="main-content col col-4">
+<div class="wrap" id="egoi4wp-admin" style="width:100%;">
 
     <div id="egoi-tabs-bar">
         <!--	<a class="nav-tab-preview nav-tab-active" id="nav-tab-preview" onclick="tabs('preview_bar');"><?php // _e( 'Preview bar', 'egoi-for-wp' ); ?></a>
@@ -197,6 +198,7 @@ else{
             </table>
         </div>
 
+
         <!-- Appearance Tab -->
         <div class="tab" id="tab-appearance">
 
@@ -374,7 +376,17 @@ else{
         <?php //submit_button(); ?>
     </form>
 
+
+
 </div>
+</div>
+
+    <!-- Banner -->
+    <div class="sidebar" style="width: 220px;">
+        <?php include ('egoi-for-wp-admin-banner.php'); ?>
+    </div>
+
+
 
 <script type="text/javascript">
 

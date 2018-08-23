@@ -441,6 +441,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</p>
 			</div>
 
+            <!-- Banner -->
+            <div class="sidebar" style="width: 220px;">
+                <?php include ('egoi-for-wp-admin-banner.php'); ?>
+            </div>
+
 			<?php
 				
 		} ?>
@@ -461,7 +466,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="wrap tab" id="tab-widget">
 		<?php include ('egoi-for-wp-admin-widget.php'); ?>
 	</div>
-	
+
 	<?php 
 		if ( (isset($_GET['type']) && $_GET['type'] == 'simple_form') ||
 		(isset($_GET['simple_form'])) ) { 

@@ -403,3 +403,10 @@ if(!$egoiwidget['enabled']){
         });
 
     </script>
+
+
+
+<!-- Banner -->
+<div class="sidebar" style="width: 200px;">
+    <?php include ('egoi-for-wp-admin-banner.php'); ?>
+</div>
