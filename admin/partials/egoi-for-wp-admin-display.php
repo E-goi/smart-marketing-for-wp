@@ -79,31 +79,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     jQuery( document ).ready(function() {
 
-        var iframe_src = 'http://guiamais.mktrip.com/wp-iframe/wp-iframe.php?';
+        var iframe_src = jQuery("#iframe").attr('src');
         var width = jQuery(".iframe-container").width();
 
-        if (width < 550) {
-            if (jQuery("#iframe").attr('src') != iframe_src+'type=v') {
-                jQuery("#iframe").attr('src',iframe_src+'type=v');
+        if (width < 450) {
+            if (iframe_src.indexOf("type=h") >= 0) {
+                var pos = iframe_src.indexOf("type=h");
+                var new_iframe_src = iframe_src.substring(0, pos) + 'type=v' + iframe_src.substring(pos+6);
+
+                jQuery("#iframe").attr('src',new_iframe_src);
                 jQuery(".iframe-container").css( 'padding-top', 530 );
             }
         }
 
     });
 
-
-
     jQuery( window ).resize( function () {
         var width = jQuery(".iframe-container").width();
-        var iframe_src = 'http://guiamais.mktrip.com/wp-iframe/wp-iframe.php?';
+
+        var iframe_src = jQuery("#iframe").attr('src');
         if (width < 450) {
-            if (jQuery("#iframe").attr('src') != iframe_src+'type=v') {
-                jQuery("#iframe").attr('src',iframe_src+'type=v');
+            if (iframe_src.indexOf("type=h") >= 0) {
+                var pos = iframe_src.indexOf("type=h");
+                var new_iframe_src = iframe_src.substring(0, pos) + 'type=v' + iframe_src.substring(pos+6);
+
+                jQuery("#iframe").attr('src',new_iframe_src);
                 jQuery(".iframe-container").css( 'padding-top', 530 );
             }
         } else {
-            if (jQuery("#iframe").attr('src') != iframe_src+'type=h') {
-                jQuery("#iframe").attr('src',iframe_src+'type=h');
+            if (iframe_src.indexOf("type=v") >= 0) {
+                var pos = iframe_src.indexOf("type=v");
+                var new_iframe_src = iframe_src.substring(0, pos) + 'type=h' + iframe_src.substring(pos+6);
+
+                jQuery("#iframe").attr('src',new_iframe_src);
                 jQuery(".iframe-container").css( 'padding-top', 270 );
             }
         }
