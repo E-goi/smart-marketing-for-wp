@@ -152,7 +152,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </style>
 <body>
 <div class="iframe-container">
-    <iframe id="iframe" src="http://guiamais.mktrip.com/wp-iframe/wp-iframe.php?type=h&lang=<?php echo get_locale(); ?>" ></iframe>
+    <iframe id="iframe" src="https://eg.e-goi.com/pluginbanners/wp-iframe.php?type=h&lang=<?php echo get_locale(); ?>" ></iframe>
 </div>
 <div class='wrap-content' id="wrap--acoount">
 	<div class="main-content">
