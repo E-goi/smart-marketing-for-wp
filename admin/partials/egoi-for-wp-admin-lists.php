@@ -3,8 +3,17 @@
 	    die();
 	}
 ?>
-<div class="wrap-content wrap-content--list"> 
+<div class="wrap-content wrap-content--list">
 
+        <?php if (is_plugin_active( 'smart-marketing-addon-sms-order/smart-marketing-addon-sms-order.php' )) {?>
+            <div class="e-goi-account-list__title">
+                <?php _e('Account Information', 'egoi-for-wp'); ?>
+            </div>
+
+            <p>
+                <?php echo __('Balance', 'egoi-for-wp').': '.$api_client->CREDITS;?>
+            </p>
+        <?php } ?>
 		<div class="e-goi-account-list__title">
 			<?php echo __('Information from your E-goi mailing lists', 'egoi-for-wp'); ?>
 		</div>
