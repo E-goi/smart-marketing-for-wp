@@ -14,6 +14,7 @@
                 <?php echo __('Balance', 'egoi-for-wp').': '.$api_client->CREDITS;?>
             </p>
         <?php } ?>
+
 		<div class="e-goi-account-list__title">
 			<?php echo __('Information from your E-goi mailing lists', 'egoi-for-wp'); ?>
 		</div>

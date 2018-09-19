@@ -1842,4 +1842,33 @@ class Egoi_For_Wp_Admin {
     }
 
 
+    public function create_egoi_account($account) {
+        require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-create-account.php';
+
+        $email = filter_var($account['new_account_email'], FILTER_SANITIZE_EMAIL);
+        $company = filter_var($account['new_account_company'], FILTER_SANITIZE_STRING);
+        $prefix = filter_var($account['new_account_prefix'], FILTER_SANITIZE_NUMBER_INT);
+        $phone = filter_var($account['new_account_phone'], FILTER_SANITIZE_NUMBER_INT);
+        $password = filter_var($account['new_account_password'], FILTER_SANITIZE_STRING);
+
+        $create_account = new EgoiCreateAccount(array(
+            'utilizador' => $email,
+            'email' => $email,
+            'empresa' => $company,
+            'ipAddress' => $_SERVER['REMOTE_ADDR'],
+            'phone' => $phone,
+            'password' => $password,
+            'indicative' => $prefix
+        ));
+
+        $result = $create_account->createAccount();
+
+        if ($result) {
+            return $create_account->checkLogin(['username' => $email, 'password' => $password]);
+        }
+
+        return false;
+    }
+
+
 }

@@ -5,7 +5,7 @@ error_reporting(~E_NOTICE);
 if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
-	
+
 	$egoi = new Egoi_for_WP;
 	
 	if(!empty($_POST)){
@@ -41,14 +41,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 				echo '</p></div>';
 			}
 
-		}else{
+		}else if (isset($_POST['egoi_wp_createlist']) && (empty($_POST['egoi_wp_title']))){
 
-			if(isset($_POST['egoi_wp_createlist']) && (empty($_POST['egoi_wp_title']))) {
-				echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
-					_e('Empty data!', 'egoi-for-wp');
-				echo '</p></div>';
-			}
+            echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
+                _e('Empty data!', 'egoi-for-wp');
+            echo '</p></div>';
 		}
+
+		if (isset($_POST['egoi_create_account'])) {
+            $account = $this->create_egoi_account($_POST);
+            if (isset($account->Egoi_Api->checklogin->apikey)) {
+                update_option('egoi_api_key', array("api_key" => $account->Egoi_Api->checklogin->apikey));
+                update_option('egoi_client', $egoi->getClient($account->Egoi_Api->checklogin->apikey));
+            }
+
+            echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
+                _e('Welcome to E-goi!', 'egoi-for-wp');
+            echo '</p></div>';
+        }
 	}
 
 	update_option('Egoi4WpBuilderObject', $egoi);
@@ -91,6 +101,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                 jQuery(".iframe-container").css( 'padding-top', 530 );
             }
         }
+
+        jQuery("#create_new_account").on("click", function() {
+            jQuery("#new_account_form").toggle();
+        });
 
     });
 
@@ -281,8 +295,71 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="e-goi-separator"></div>
 					<div class="e-goi-account-apikey-dont-have-account">
 						<p><?php echo __("Don't have an E-goi account?", "egoi-for-wp");?></p>
-						<a href="https://login.egoiapp.com/#/signup" target="_blank"><?php echo __("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
-					</div><?php
+						<a id="create_new_account"><?php echo __("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
+
+                        <div id="new_account_form" style="display: none;">
+                            <form name="egoi_new_accout_form" method="post">
+                                <input name="egoi_create_account" type="hidden" value="1" />
+                                <table class="form-table" style="table-layout: fixed;">
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label>
+                                                <?php _e( 'Email', 'egoi-for-wp' ); ?>
+                                            </label>
+                                        </th>
+                                        <td>
+                                            <input type="email" style="width:450px;" id="new_account_email" name="new_account_email" placeholder="<?php _e( 'Email', 'egoi-for-wp' ); ?>" required />
+                                        </td>
+                                    </tr>
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label>
+                                                <?php _e( 'Phone', 'egoi-for-wp' ); ?>
+                                            </label>
+                                        </th>
+                                        <td>
+                                            <select name="new_account_prefix" style="width:150px; float: left;" required >
+                                                <?php
+                                                foreach (unserialize(COUNTRY_CODES) as $key => $value) {
+                                                    $string = ucwords(strtolower($value['name']))." (+".$value['code'].")";
+                                                    ?>
+                                                    <option value="<?=$value['code']?>"><?=$string?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                            <input type="text" style="width:300px;" id="new_account_phone" name="new_account_phone" placeholder="<?php _e( 'Phone', 'egoi-for-wp' ); ?>" required />
+                                        </td>
+                                    </tr>
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label>
+                                                <?php _e( 'Company', 'egoi-for-wp' ); ?>
+                                            </label>
+                                        </th>
+                                        <td>
+                                            <input type="text" style="width:450px;" id="new_account_company" name="new_account_company" placeholder="<?php _e( 'Company', 'egoi-for-wp' ); ?>" required />
+                                        </td>
+                                    </tr>
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label>
+                                                <?php _e( 'Password', 'egoi-for-wp' ); ?>
+                                            </label>
+                                        </th>
+                                        <td>
+                                            <input type="password" style="width:450px;" id="new_account_password" name="new_account_password" placeholder="<?php _e( 'Password', 'egoi-for-wp' ); ?>" required />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <?php submit_button(__('Create Account', 'egoi-for-wp')); ?>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                    <?php
 
 				} ?>
 				</div><!-- .wrap-content-API -->
@@ -308,7 +385,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						
 						<div class="e-goi-account-lists--create-list">
 							<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI'];?>'>
-								
+
 								<div id="e-goi-create-list" style="display: none;">
 									<div class="e-goi-account-lists--create-name e-goi-fcenter">
 										<span>
