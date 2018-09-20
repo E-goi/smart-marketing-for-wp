@@ -451,8 +451,8 @@ class Egoi_For_Wp_Public {
 					jQuery("#egoi_country_code").empty();
 				';
 		foreach (unserialize(COUNTRY_CODES) as $key => $value) {
-		 	$string = ucwords(strtolower($value['name']))." (+".$value['code'].")";
-		 	$post .= 'jQuery("#egoi_country_code").append("<option value='.$value['code'].'>'.$string.'</option>");';
+		 	$string = ucwords(strtolower($value['country_pt']))." (+".$value['prefix'].")";
+		 	$post .= 'jQuery("#egoi_country_code").append("<option value='.$value['prefix'].'>'.$string.'</option>");';
 		}
 		$post .= '
 				});

@@ -321,9 +321,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                                             <select name="new_account_prefix" style="width:150px; float: left;" required >
                                                 <?php
                                                 foreach (unserialize(COUNTRY_CODES) as $key => $value) {
-                                                    $string = ucwords(strtolower($value['name']))." (+".$value['code'].")";
+                                                    $string = ucwords(strtolower($value['country_pt']))." (+".$value['prefix'].")";
                                                     ?>
-                                                    <option value="<?=$value['code']?>"><?=$string?></option>
+                                                    <option value="<?=$value['prefix']?>"><?=$string?></option>
                                                     <?php
                                                 }
                                                 ?>
