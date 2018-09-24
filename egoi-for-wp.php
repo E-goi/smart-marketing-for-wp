@@ -68,7 +68,7 @@ function fatalErrorShutdownHandler(){
 // HOOK TO REMOVE UNNECESSARY AJAX
 add_action('wp_enqueue_scripts', 'dequeue_woocommerce_cart_fragments', 11);
 function dequeue_woocommerce_cart_fragments() {
-    wp_dequeue_script('wc-cart-fragments');
+    //wp_dequeue_script('wc-cart-fragments');
 }
 
 // HOOK SYNC USERS

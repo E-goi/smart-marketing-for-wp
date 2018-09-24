@@ -123,6 +123,7 @@ class Egoi_For_Wp_Admin {
 		add_action('woocommerce_before_cart_item_quantity_zero', array($this, 'hookCartQuantityUpdate'), 10, 3);
 		add_action('woocommerce_cart_updated', array($this, 'hookRemoveItem'), 10, 3);
 		add_action('woocommerce_checkout_order_processed', array($this, 'hookProcessOrder'), 10, 1);
+        add_action('woocommerce_widget_shopping_cart_buttons', array($this, 'hookRemoveItem'), 11);
 
 		// paypal
 		add_action('valid-paypal-standard-ipn-request', array($this, 'hookIpnResponse'), 10, 1);
@@ -513,7 +514,7 @@ class Egoi_For_Wp_Admin {
 		    	foreach ($users as $user) {
 			        if($current_email != $user->user_email){
 
-                        if (isset($user->first_name) && isset($user->last_name)) {
+                        if (isset($user->first_name) && $user->first_name != "" && isset($user->last_name) && $user->last_name != "") {
                             $fname = $user->first_name;
                             $lname = $user->last_name;
                         } else {
@@ -651,7 +652,9 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.1.0
 	 */
 	public function hookRemoveItem(){
-		if(isset($_GET['removed_item']) && ($_GET['removed_item'])){
+		if ( ( isset($_GET['removed_item']) && ($_GET['removed_item']) ) ||
+            ( isset($_GET['wc-ajax']) && $_GET['wc-ajax'] == 'remove_from_cart' )
+        ) {
 			$this->hookCartUpdate();
 		}
 	}
