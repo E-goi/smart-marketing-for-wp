@@ -528,7 +528,6 @@ class Egoi_For_Wp {
 
 	public function addSubscriberTags($listID, $email, $tags = array(), $name = '', $lname = '', $role = 0, $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 1
 	) {
-
 		$full_name = explode(' ', $name);
 		$fname = $full_name[0];
 		if(!$lname){

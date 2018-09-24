@@ -489,7 +489,7 @@ class Egoi_For_Wp_Admin {
 
 			    if($count_users['total_users'] > $this->limit_subs){
 			    	global $wpdb;
-					$sql = "SELECT user_login, user_email, user_url, display_name FROM ".$wpdb->prefix."users LIMIT 100000";
+					$sql = "SELECT * FROM ".$wpdb->prefix."users LIMIT 100000";
 					$users = $wpdb->get_results($sql);
 			    }else{
 					$users = get_users($args);
@@ -513,13 +513,18 @@ class Egoi_For_Wp_Admin {
 		    	foreach ($users as $user) {
 			        if($current_email != $user->user_email){
 
-			            $name = $user->display_name ? $user->display_name : $user->user_login;
+                        if (isset($user->first_name) && isset($user->last_name)) {
+                            $fname = $user->first_name;
+                            $lname = $user->last_name;
+                        } else {
+                            $name = $user->display_name ? $user->display_name : $user->user_login;
+                            $full_name = explode(' ', $name);
+                            $fname = $full_name[0];
+                            $lname = $full_name[1];
+                        }
+
 			            $email = $user->user_email;
 			            $url = $user->user_url;
-
-			            $full_name = explode(' ', $name);
-						$fname = $full_name[0];
-						$lname = $full_name[1];
 
 			            $subscribers['status'] = 1;
 		                $subscribers['email'] = $email;
