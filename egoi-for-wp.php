@@ -956,14 +956,6 @@ define( 'COUNTRY_CODES' , serialize(array (
             'prefix' => '852',
             'language' => 'zh-HK',
         ),
-    'HM' =>
-        array (
-            'iso3' => 'HMD',
-            'country' => 'Heard Island and McDonald Islands',
-            'country_pt' => 'Heard Island and McDonald Islands',
-            'prefix' => '',
-            'language' => '',
-        ),
     'HN' =>
         array (
             'iso3' => 'HND',

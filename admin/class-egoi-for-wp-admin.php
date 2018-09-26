@@ -1849,9 +1849,13 @@ class Egoi_For_Wp_Admin {
         remove_all_actions('rdf_ns');
     }
 
-
+    /**
+     * @param $account
+     * @return mixed
+     */
     public function create_egoi_account($account) {
-        require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-create-account.php';
+
+        $url = 'http://dev-web-agency.e-team.biz/smaddonsms/account/create';
 
         $email = filter_var($account['new_account_email'], FILTER_SANITIZE_EMAIL);
         $company = filter_var($account['new_account_company'], FILTER_SANITIZE_STRING);
@@ -1859,23 +1863,28 @@ class Egoi_For_Wp_Admin {
         $phone = filter_var($account['new_account_phone'], FILTER_SANITIZE_NUMBER_INT);
         $password = filter_var($account['new_account_password'], FILTER_SANITIZE_STRING);
 
-        $create_account = new EgoiCreateAccount(array(
-            'utilizador' => $email,
+        $account_params = array (
             'email' => $email,
-            'empresa' => $company,
-            'ipAddress' => $_SERVER['REMOTE_ADDR'],
+            'company' => $company,
+            'remote_addr' => $_SERVER['REMOTE_ADDR'],
             'phone' => $phone,
             'password' => $password,
-            'indicative' => $prefix
-        ));
+            'prefix' => $prefix
+        );
 
-        $result = $create_account->createAccount();
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $account_params);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
-        if ($result) {
-            return $create_account->checkLogin(['username' => $email, 'password' => $password]);
-        }
+        $response = curl_exec($ch);
 
-        return false;
+        curl_close($ch);
+
+        return $response;
+
     }
 
 

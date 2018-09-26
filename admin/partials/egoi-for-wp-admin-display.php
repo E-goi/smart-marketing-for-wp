@@ -49,7 +49,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		if (isset($_POST['egoi_create_account'])) {
-            $account = $this->create_egoi_account($_POST);
+            $account = json_decode($this->create_egoi_account($_POST));
+
             if (isset($account->Egoi_Api->checklogin->apikey)) {
                 update_option('egoi_api_key', array("api_key" => $account->Egoi_Api->checklogin->apikey));
                 update_option('egoi_client', $egoi->getClient($account->Egoi_Api->checklogin->apikey));
