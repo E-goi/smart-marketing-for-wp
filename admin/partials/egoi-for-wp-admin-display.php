@@ -296,8 +296,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="e-goi-separator"></div>
 					<div class="e-goi-account-apikey-dont-have-account">
 						<p><?php echo __("Don't have an E-goi account?", "egoi-for-wp");?></p>
-						<?php //echo "<a id='create_new_account'>".__("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
-                        <?php echo "<a href='https://login.egoiapp.com/#/signup' target='_blank'>".__("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
+						<?php echo "<a id='create_new_account'>".__("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
+                        <?php //echo "<a href='https://login.egoiapp.com/#/signup' target='_blank'>".__("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
 
                         <div id="new_account_form" style="display: none;">
                             <form name="egoi_new_accout_form" method="post">
