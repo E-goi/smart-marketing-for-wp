@@ -1,10 +1,11 @@
 <?php
+error_reporting(~E_NOTICE);
 
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
-	
+
 	$egoi = new Egoi_for_WP;
 	
 	if(!empty($_POST)){
@@ -40,20 +41,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 				echo '</p></div>';
 			}
 
-		}else{
+		}else if (isset($_POST['egoi_wp_createlist']) && (empty($_POST['egoi_wp_title']))){
 
-			if(isset($_POST['egoi_wp_createlist']) && (empty($_POST['egoi_wp_title']))) {
-				echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
-					_e('Empty data!', 'egoi-for-wp');
-				echo '</p></div>';
-			}
+            echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
+                _e('Empty data!', 'egoi-for-wp');
+            echo '</p></div>';
 		}
+
+		if (isset($_POST['egoi_create_account'])) {
+            $account = json_decode($this->create_egoi_account($_POST));
+
+            if (isset($account->Egoi_Api->checklogin->apikey)) {
+                update_option('egoi_api_key', array("api_key" => $account->Egoi_Api->checklogin->apikey));
+                update_option('egoi_client', $egoi->getClient($account->Egoi_Api->checklogin->apikey));
+            }
+
+            echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
+                _e('Welcome to E-goi!', 'egoi-for-wp');
+            echo '</p></div>';
+        }
 	}
 
 	update_option('Egoi4WpBuilderObject', $egoi);
-	
-	$apikey = get_option('egoi_api_key');
-	$api_key = $apikey['api_key'];
 
 	$opt = get_option('egoi_data');
 
@@ -78,6 +87,51 @@ if ( ! defined( 'ABSPATH' ) ) {
 			edit.style.display = 'block';
 		}
 	}
+
+    jQuery( document ).ready(function() {
+
+        var iframe_src = jQuery("#iframe").attr('src');
+        var width = jQuery(".iframe-container").width();
+
+        if (width < 450) {
+            if (iframe_src.indexOf("type=h") >= 0) {
+                var pos = iframe_src.indexOf("type=h");
+                var new_iframe_src = iframe_src.substring(0, pos) + 'type=v' + iframe_src.substring(pos+6);
+
+                jQuery("#iframe").attr('src',new_iframe_src);
+                jQuery(".iframe-container").css( 'padding-top', 530 );
+            }
+        }
+
+        jQuery("#create_new_account").on("click", function() {
+            jQuery("#new_account_form").toggle();
+        });
+
+    });
+
+    jQuery( window ).resize( function () {
+        var width = jQuery(".iframe-container").width();
+
+        var iframe_src = jQuery("#iframe").attr('src');
+        if (width < 450) {
+            if (iframe_src.indexOf("type=h") >= 0) {
+                var pos = iframe_src.indexOf("type=h");
+                var new_iframe_src = iframe_src.substring(0, pos) + 'type=v' + iframe_src.substring(pos+6);
+
+                jQuery("#iframe").attr('src',new_iframe_src);
+                jQuery(".iframe-container").css( 'padding-top', 530 );
+            }
+        } else {
+            if (iframe_src.indexOf("type=v") >= 0) {
+                var pos = iframe_src.indexOf("type=v");
+                var new_iframe_src = iframe_src.substring(0, pos) + 'type=h' + iframe_src.substring(pos+6);
+
+                jQuery("#iframe").attr('src',new_iframe_src);
+                jQuery(".iframe-container").css( 'padding-top', 270 );
+            }
+        }
+
+    });
 </script>
 
 <!-- STYLE on this page - Position the text footer fixed to the bottom --> 
@@ -94,13 +148,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 <hr/>
 
 <!-- CONTENT -->
+<style type="text/css">
+    .iframe-container {
+        overflow: hidden;
+        padding-top: 270px;
+        position: relative;
+    }
+
+    .iframe-container iframe {
+        border: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+</style>
+<body>
+<div class="iframe-container">
+    <iframe id="iframe" src="https://eg.e-goi.com/pluginbanners/wp-iframe.php?type=h&lang=<?php echo get_locale(); ?>" ></iframe>
+</div>
 <div class='wrap-content' id="wrap--acoount">
 	<div class="main-content">
 		<div id="icon-wp-info" class="icon32"></div>
 			<div class="wrap-content--API">
 	      		<?php 
-		      	// If exists in BD
-		      	if($api_key){
+		      	// If API Key exists in BD
+		      	$apikey = get_option('egoi_api_key');
+		      	if(isset($apikey['api_key']) && ($apikey['api_key'])) {
+
+		      		$api_key = $apikey['api_key'];
 
 		      		$api_client = $egoi->getClient();
 		      		if($api_client->response == 'INVALID'){ ?>
@@ -124,22 +202,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		      		}else{
 
-		      			if(!get_option('egoi_client')){
-		      				add_option('egoi_client', $api_client);
-		      			} ?>
+		      			update_option('egoi_client', $api_client); ?>
 						
 						<div>
 							<form name='egoi_apikey_form' method='post'>
 								
 								<?php
-								settings_fields( Egoi_For_Wp_Admin::API_OPTION );
+								settings_fields(Egoi_For_Wp_Admin::API_OPTION);
 								settings_errors(); ?>
 
 								<input type="hidden" name="apikey_frm" value="1">
 								<div class="e-goi-account-apikey">
 									<!-- Title -->
 									<div class="e-goi-account-apikey--title" for="egoi_wp_apikey">
-										<?php echo __('API Key do E-goi');?>
+										<?php echo __('E-goi API Key');?>
 									</div>
 
 									<span id="confirm_text" style="display: none;"><?php _e('You really want to change your API Key? You will lose all data!', 'egoi-for-wp');?>
@@ -209,7 +285,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<p class="e-goi-help-text">
 								<span class="e-goi-tooltip">
 									 <span class="dashicons dashicons-editor-help"></span>
-								  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/858130-O-que-%C3%A9-a-API-do-E-goi-e-onde-est%C3%A1-a-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
+								  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/511369-Whats-E-gois-API-and-where-do-I-find-my-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
 								 	</span>
 								</span>
 								<span><?php echo __('To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;"><a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span></a> and copy it.', 'egoi-for-wp');?>
@@ -220,8 +296,72 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="e-goi-separator"></div>
 					<div class="e-goi-account-apikey-dont-have-account">
 						<p><?php echo __("Don't have an E-goi account?", "egoi-for-wp");?></p>
-						<a href="http://bo.e-goi.com/?action=registo" target="_blank"><?php echo __("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
-					</div><?php
+						<?php echo "<a id='create_new_account'>".__("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
+                        <?php //echo "<a href='https://login.egoiapp.com/#/signup' target='_blank'>".__("Click here to create your account</a> (It's free and takes less than 1 minute)</p>", "egoi-for-wp"); ?>
+
+                        <div id="new_account_form" style="display: none;">
+                            <form name="egoi_new_accout_form" method="post">
+                                <input name="egoi_create_account" type="hidden" value="1" />
+                                <table class="form-table" style="table-layout: fixed;">
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label>
+                                                <?php _e( 'Email', 'egoi-for-wp' ); ?>
+                                            </label>
+                                        </th>
+                                        <td>
+                                            <input type="email" style="width:450px;" id="new_account_email" name="new_account_email" placeholder="<?php _e( 'Email', 'egoi-for-wp' ); ?>" required />
+                                        </td>
+                                    </tr>
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label>
+                                                <?php _e( 'Phone', 'egoi-for-wp' ); ?>
+                                            </label>
+                                        </th>
+                                        <td>
+                                            <select name="new_account_prefix" style="width:150px; float: left;" required >
+                                                <?php
+                                                foreach (unserialize(COUNTRY_CODES) as $key => $value) {
+                                                    $string = ucwords(strtolower($value['country_pt']))." (+".$value['prefix'].")";
+                                                    ?>
+                                                    <option value="<?=$value['prefix']?>"><?=$string?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                            <input type="text" style="width:300px;" id="new_account_phone" name="new_account_phone" placeholder="<?php _e( 'Phone', 'egoi-for-wp' ); ?>" required />
+                                        </td>
+                                    </tr>
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label>
+                                                <?php _e( 'Company', 'egoi-for-wp' ); ?>
+                                            </label>
+                                        </th>
+                                        <td>
+                                            <input type="text" style="width:450px;" id="new_account_company" name="new_account_company" placeholder="<?php _e( 'Company', 'egoi-for-wp' ); ?>" required />
+                                        </td>
+                                    </tr>
+                                    <tr valign="top">
+                                        <th scope="row">
+                                            <label>
+                                                <?php _e( 'Password', 'egoi-for-wp' ); ?>
+                                            </label>
+                                        </th>
+                                        <td>
+                                            <input type="password" style="width:450px;" id="new_account_password" name="new_account_password" placeholder="<?php _e( 'Password', 'egoi-for-wp' ); ?>" required />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <?php submit_button(__('Create Account', 'egoi-for-wp')); ?>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                    <?php
 
 				} ?>
 				</div><!-- .wrap-content-API -->
@@ -231,7 +371,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php 
 				
 				// Display lists ERROR
-				if ($lists->ERROR){
+				if (isset($lists->ERROR) && ($lists->ERROR)) {
 
 					update_option('egoi_has_list', 0); ?>
 
@@ -247,7 +387,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						
 						<div class="e-goi-account-lists--create-list">
 							<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI'];?>'>
-								
+
 								<div id="e-goi-create-list" style="display: none;">
 									<div class="e-goi-account-lists--create-name e-goi-fcenter">
 										<span>

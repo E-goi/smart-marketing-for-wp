@@ -3,7 +3,7 @@
 	    die();
 	}
 ?>
-<div class="wrap-content wrap-content--list"> 
+<div class="wrap-content wrap-content--list">
 
 		<div class="e-goi-account-list__title">
 			<?php echo __('Information from your E-goi mailing lists', 'egoi-for-wp'); ?>

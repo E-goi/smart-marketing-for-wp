@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
 
+
 $data = $_POST;
 
 $url_str = $data['url'];

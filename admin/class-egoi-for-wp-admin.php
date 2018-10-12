@@ -39,7 +39,7 @@ class Egoi_For_Wp_Admin {
 
 	/**
 	 * Limit Subscribers
-	 * 
+	 *
 	 * @var integer
 	 */
 	private $limit_subs = 10000;
@@ -55,14 +55,14 @@ class Egoi_For_Wp_Admin {
 
 	/**
 	 * Server Protocol
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $protocol;
 
 	/**
 	 * Server Port if is in use
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $port;
@@ -82,10 +82,6 @@ class Egoi_For_Wp_Admin {
 		$this->protocol = $_SERVER['HTTPS'] ?: 'http://';
 		$this->port = ':'.$_SERVER['SERVER_PORT'];
 
-		if (!session_id()){
-    		session_start();
-		}
-
 		//settings pages
 		$this->load_api = $this->load_api();
 		$this->options_list = $this->load_options();
@@ -99,14 +95,14 @@ class Egoi_For_Wp_Admin {
 		register_setting( Egoi_For_Wp_Admin::API_OPTION, Egoi_For_Wp_Admin::API_OPTION);
 		register_setting( Egoi_For_Wp_Admin::OPTION_NAME, Egoi_For_Wp_Admin::OPTION_NAME);
 		register_setting( Egoi_For_Wp_Admin::BAR_OPTION_NAME, Egoi_For_Wp_Admin::BAR_OPTION_NAME);
-		
+
 		// register forms
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_1, Egoi_For_Wp_Admin::FORM_OPTION_1);
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_2, Egoi_For_Wp_Admin::FORM_OPTION_2);
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_3, Egoi_For_Wp_Admin::FORM_OPTION_3);
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_4, Egoi_For_Wp_Admin::FORM_OPTION_4);
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_5, Egoi_For_Wp_Admin::FORM_OPTION_5);
-		
+
 		// hooks Core
 
 		if(!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order') {
@@ -127,16 +123,17 @@ class Egoi_For_Wp_Admin {
 		add_action('woocommerce_before_cart_item_quantity_zero', array($this, 'hookCartQuantityUpdate'), 10, 3);
 		add_action('woocommerce_cart_updated', array($this, 'hookRemoveItem'), 10, 3);
 		add_action('woocommerce_checkout_order_processed', array($this, 'hookProcessOrder'), 10, 1);
+        add_action('woocommerce_widget_shopping_cart_buttons', array($this, 'hookRemoveItem'), 11);
 
 		// paypal
 		add_action('valid-paypal-standard-ipn-request', array($this, 'hookIpnResponse'), 10, 1);
 
 		// after billing form
 		add_action('woocommerce_after_checkout_billing_form', array($this, 'hookWoocommercePostBilling'), 10);
-		
+
 		// hook contact form 7
 		add_action('wpcf7_submit', array($this, 'getContactForm'), 10, 1);
-		
+
 		// hook comment form
 		add_action('comment_post', array($this, 'insertCommentHook'), 10, 3);
 		add_action('comment_form_after_fields', array($this, 'checkNewsletterPostComment'), 10, 1);
@@ -165,8 +162,8 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );	
+
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_style('wp-color-picker');
 	}
 
@@ -178,10 +175,10 @@ class Egoi_For_Wp_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
-		
+
 		wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'));
 		wp_enqueue_script('custom-script1');
-		
+
 		wp_register_script('custom-script2', plugin_dir_url(__FILE__) . 'js/forms.min.js', array('jquery'));
 		wp_enqueue_script('custom-script2');
 
@@ -193,7 +190,7 @@ class Egoi_For_Wp_Admin {
 
 		wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
 		wp_enqueue_script('custom-script5');
-		
+
 		wp_enqueue_script('wp-color-picker');
 
 		wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
@@ -217,7 +214,7 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
-		
+
 		add_menu_page( 'Smart Marketing - Main Page', 'Smart Marketing', 'Egoi_Plugin', $this->plugin_name, array($this, 'display_plugin_setup_page'), plugin_dir_url( __FILE__ ).'img/logo_small.png');
 
 		$capability = 'manage_options';
@@ -225,7 +222,7 @@ class Egoi_For_Wp_Admin {
 
 		$apikey = get_option('egoi_api_key');
 		$haslists = get_option('egoi_has_list');
-		if($apikey['api_key'] && $haslists){
+		if(isset($apikey['api_key']) && ($apikey['api_key']) && ($haslists)) {
 
 			add_submenu_page($this->plugin_name, __('Capture Contacts', 'egoi-for-wp'), __('Capture Contacts', 'egoi-for-wp'), $capability, 'egoi-4-wp-form', array($this, 'display_plugin_subscriber_form'));
 
@@ -234,19 +231,24 @@ class Egoi_For_Wp_Admin {
 			add_submenu_page($this->plugin_name, __('Ecommerce', 'egoi-for-wp'), __('Ecommerce', 'egoi-for-wp'), $capability, 'egoi-4-wp-ecommerce', array($this, 'display_plugin_subscriber_ecommerce'));
 
 			add_submenu_page($this->plugin_name, __('Integrations', 'egoi-for-wp'), __('Integrations', 'egoi-for-wp'), $capability, 'egoi-4-wp-integrations', array($this, 'display_plugin_integrations'));
+
+            add_submenu_page($this->plugin_name, __('Web Push', 'egoi-for-wp'), __('Web Push', 'egoi-for-wp'), $capability, 'egoi-4-wp-webpush', array($this, 'display_plugin_webpush'));
+
+            add_submenu_page($this->plugin_name, __('RSS Feed', 'egoi-for-wp'), __('RSS Feed', 'egoi-for-wp'), $capability, 'egoi-4-wp-rssfeed', array($this, 'display_plugin_rssfeed'));
+
 		}
 	}
 
 	public function add_action_links($links) {
-		
+
 		$link_account = 'egoi-4-wp-account';
 	   	$settings_link = array(
 	    '<a href="'.admin_url('admin.php?page='.$link_account).'">'.__('Settings', $this->plugin_name).'</a>');
 	   	return array_merge(  $settings_link, $links );
 	}
-	
+
 	public function del_action_link($actions) {
-			
+
 		if (array_key_exists('edit', $actions )){
 			unset($actions ['edit']);
 		}
@@ -276,7 +278,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-subscribers.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_subscriber_bar_page() {
@@ -286,7 +288,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-bar.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_subscriber_form() {
@@ -296,7 +298,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-forms.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_subscriber_widget() {
@@ -306,7 +308,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-widget.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_subscriber_ecommerce() {
@@ -316,7 +318,7 @@ class Egoi_For_Wp_Admin {
 	    } else {
 			include_once( 'partials/egoi-for-wp-admin-ecommerce.php' );
 		}
-	    
+
 	}
 
 	public function display_plugin_integrations() {
@@ -328,6 +330,26 @@ class Egoi_For_Wp_Admin {
 		}
 
 	}
+
+    public function display_plugin_webpush() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-webpush.php' );
+        }
+
+    }
+
+    public function display_plugin_rssfeed() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-rssfeed.php' );
+        }
+
+    }
 
 	private function load_api() {
 
@@ -391,7 +413,7 @@ class Egoi_For_Wp_Admin {
 			'text_invalid_email' => '',
 			'text_already_subscribed' => '',
 			'text_error' => '',
-			'redirect' => ''	
+			'redirect' => ''
 		);
 
     	if(!get_option( self::BAR_OPTION_NAME, array() )) {
@@ -419,7 +441,7 @@ class Egoi_For_Wp_Admin {
 			'border_color' => '',
 			'border' => ''
 		);
-			
+
 		switch($id) {
 			case '1':
 				$foption = self::FORM_OPTION_1;
@@ -453,27 +475,27 @@ class Egoi_For_Wp_Admin {
 		return include dirname( __DIR__ ) . '/includes/ecommerce/t&e.php';
 	}
 
-	/* 
+	/*
 	* -- HOOKS ---
 	*/
 	public function users_queue(){
 
 		if(isset($_POST['submit']) && ($_POST['submit'])){
-		    
+
 		    try {
 
-			    $api = new Egoi_For_Wp(); 
+			    $api = new Egoi_For_Wp();
 			    $listID = $_POST['listID'];
 			    $count_users = count_users();
 
 			    if($count_users['total_users'] > $this->limit_subs){
 			    	global $wpdb;
-					$sql = "SELECT user_login, user_email, user_url, display_name FROM ".$wpdb->prefix."users LIMIT 100000";
+					$sql = "SELECT * FROM ".$wpdb->prefix."users LIMIT 100000";
 					$users = $wpdb->get_results($sql);
 			    }else{
 					$users = get_users($args);
 			    }
-			    
+
 			    $current_user = wp_get_current_user();
 			    $current_email = $current_user->data->user_email;
 
@@ -491,14 +513,19 @@ class Egoi_For_Wp_Admin {
 
 		    	foreach ($users as $user) {
 			        if($current_email != $user->user_email){
-			            
-			            $name = $user->display_name ? $user->display_name : $user->user_login;
+
+                        if (isset($user->first_name) && $user->first_name != "" && isset($user->last_name) && $user->last_name != "") {
+                            $fname = $user->first_name;
+                            $lname = $user->last_name;
+                        } else {
+                            $name = $user->display_name ? $user->display_name : $user->user_login;
+                            $full_name = explode(' ', $name);
+                            $fname = $full_name[0];
+                            $lname = $full_name[1];
+                        }
+
 			            $email = $user->user_email;
 			            $url = $user->user_url;
-
-			            $full_name = explode(' ', $name);
-						$fname = $full_name[0];
-						$lname = $full_name[1];
 
 			            $subscribers['status'] = 1;
 		                $subscribers['email'] = $email;
@@ -517,7 +544,7 @@ class Egoi_For_Wp_Admin {
 	                	$subs[] = $subscribers;
 			        }
 			    }
-			    
+
 			    if($count_users['total_users'] >= $this->limit_subs){
 				    $subs = array_chunk($subs, $this->limit_subs, true);
 				    for($x=0; $x<=9; $x++){
@@ -559,21 +586,23 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.1.2
 	 */
 	public function hookEcommerce($cart_id = false){
-
 		// for security reasons
+
 		if(strpos($this->server_url, 'wp-json') !== false){
 			return;
 		}
 
 		if(!is_admin()){
-
 			if($cart_id){
 				$this->hookCartUpdate();
 			}else{
 
-				if(!$_GET['wc-ajax']){
+				if(!isset($_GET['wc-ajax']) || !$_GET['wc-ajax']){
 
-					if(!$_GET['remove_item'] && !strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+					if(
+					    (!isset($_GET['remove_item']) || !$_GET['remove_item'])
+                        && ( !isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (!strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && empty($_SERVER['HTTP_X_REQUESTED_WITH'])))
+                    ) {
 
 						$list_id = $this->options_list['list'];
 						$track = $this->options_list['track'];
@@ -582,40 +611,35 @@ class Egoi_For_Wp_Admin {
 
 							// check for saved addtocart event
 							$validated_cart = $this->checkForCart();
-							
+
 							// check for saved Order event
 							$validated_order = $this->checkForOrder();
 
 							if($validated_cart && $validated_order){
 
-								if(substr($_GET['key'], 0, 8) != 'wc_order' || $_SESSION[$_GET['key']] == 1 ) {
+                                if (isset($_GET['key'])) {
 
-									if ($_SESSION[$_GET['key']] == 1) {
-										//echo 'TESTE';
-										$test = get_option('egoi_track_order_'.$_SESSION['egoi_order_id']);
-										echo html_entity_decode($test[0], ENT_QUOTES);
+                                    $test = get_option('egoi_track_order_'.$_SESSION['egoi_order_id']);
+                                    echo html_entity_decode($test[0], ENT_QUOTES);
 
-									}else{
+                                }else{
 
-										// check && execute now for page view
-										$client_info = get_option('egoi_client');
-										if($client_info){
+                                    // check && execute now for page view
+                                    $client_info = get_option('egoi_client');
+                                    if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
 
-											$client_id = $client_info->CLIENTE_ID;
+                                        $client_id = $client_info->CLIENTE_ID;
 
-											$user = wp_get_current_user();
-											$user_email = $user->data->user_email;
+                                        $user = wp_get_current_user();
+                                        $user_email = $user->data->user_email;
 
-											echo $this->execEc($client_id, $list_id, $user_email);
-										}
-									}
-								} else {
-									$_SESSION[$_GET['key']] = 1;
-									
-								}
+                                        echo $this->execEc($client_id, $list_id, $user_email);
+                                    }
+                                }
+
 							}
 						}
-					} 
+					}
 				}
 			}
 		}
@@ -628,9 +652,11 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.1.0
 	 */
 	public function hookRemoveItem(){
-		if(isset($_GET['removed_item']) && ($_GET['removed_item'])){
+		if ( ( isset($_GET['removed_item']) && ($_GET['removed_item']) ) ||
+            ( isset($_GET['wc-ajax']) && $_GET['wc-ajax'] == 'remove_from_cart' )
+        ) {
 			$this->hookCartUpdate();
-		} 
+		}
 	}
 
 	public function hookCartQuantityUpdate(){
@@ -646,11 +672,11 @@ class Egoi_For_Wp_Admin {
 
 		$list_id = $this->options_list['list'];
 		$track = $this->options_list['track'];
-		
+
 		if($track && $list_id){
 
 			$client_info = get_option('egoi_client');
-			if($client_info){
+			if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
 
 				// if it is a guest
 				$session = base64_encode('guest_'.time());
@@ -689,7 +715,6 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function hookProcessCart($data, $products = array()) {
 
-
 		if(!empty($products) && ($data)){
 
 			global $woocommerce;
@@ -702,13 +727,11 @@ class Egoi_For_Wp_Admin {
 			$sum_price = 0;
 			$products = array();
 
-
 			foreach($woocommerce->cart->get_cart() as $k => $product){
 
 				$product_info = wc_get_product($product['data']->get_id());
 				$price = get_post_meta($product['product_id'], '_sale_price', true) ?: get_post_meta($product['product_id'], '_regular_price', true);
 
-				
 				$products[$k]['id'] = $product['product_id'];
 				$products[$k]['name'] = $product_info->get_title();
 				$products[$k]['cat'] = ' - ';
@@ -722,20 +745,10 @@ class Egoi_For_Wp_Admin {
 			$te = $this->execEc($client_id, $list_id, $user_email, $products, array(), $sum_price, $cart_zero);
 			$content = stripslashes(htmlspecialchars($te, ENT_QUOTES, 'UTF-8'));
 			update_option('egoi_track_addtocart_'.$hash_cart, array($content));
-
-			
-			/*
-			if(empty($products)){
-				echo 'teste';
-				echo html_entity_decode($content[0], ENT_QUOTES);
-				//$_SESSION['reloadCartPage'] = 1;
-			}
-			*/
-			//update_option('egoi_track_addtocart_'.$hash_cart, array($content));
 		}
 	}
 
-	
+
 
 	/**
 	 * Process E-commerce event Order for Paypal.
@@ -770,7 +783,7 @@ class Egoi_For_Wp_Admin {
 						$last_name = $_POST['billing_last_name'];
 						$guest_email = $_POST['billing_email'];
 						$name = $first_name.' '.$last_name;
-						
+
 						$api->addSubscriber($this->options_list['list'], $name, $guest_email, 1, '', 'Guest');
 					}
 				}
@@ -781,10 +794,17 @@ class Egoi_For_Wp_Admin {
 			if($track && $list_id){
 
 			 	$client_info = get_option('egoi_client');
-				if($client_info){
-				
+				if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
+
 					$user = wp_get_current_user();
-					$user_email = $user->data->user_email;
+
+                    if($user->data->user_email){
+                        $user_email = $user->data->user_email;
+                    }
+                    else{
+                        $user_email = $_POST['billing_email']; //if user is guest
+                    }
+
 					$client_id = $client_info->CLIENTE_ID;
 
 					$order = new WC_Order($order_id);
@@ -792,7 +812,7 @@ class Egoi_For_Wp_Admin {
 
 					$products = array();
 					foreach($items as $k => $item){
-						
+
 						$sale_price = get_post_meta($item['product_id'] , '_sale_price', true);
 						$regular_price = get_post_meta($item['product_id'] , '_regular_price', true);
 
@@ -819,13 +839,13 @@ class Egoi_For_Wp_Admin {
 
 				}
 			}
-			
+
 			return false;
 
 		} catch(Exception $e) {
 	    	$this->sendError('WooCommerce - Order ERROR', $e->getMessage());
 	    }
-		
+
 	}
 
 	/**
@@ -835,17 +855,14 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.1.2
 	 */
 	public function checkForCart(){
-			
-		$cart = $_SESSION['egoi_session_cart'];
 
-		if(isset($cart) && ($cart)){
+		if(isset($_SESSION['egoi_session_cart']) && ($_SESSION['egoi_session_cart'])){
 
-			$option = 'egoi_track_addtocart_'.$cart;
-			
+			$option = 'egoi_track_addtocart_'.$_SESSION['egoi_session_cart'];
+
 			$content = get_option($option);
-			//var_dump($content);
 			echo html_entity_decode($content[0], ENT_QUOTES);
-			
+
 			delete_option($option);
 			unset($_SESSION['egoi_session_cart']);
 			return false;
@@ -862,12 +879,12 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function checkForOrder(){
 
-		if(substr($_GET['key'], 0, 8) != 'wc_order'){
+		if (!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order'){
 			if(isset($_SESSION['egoi_order_id']) && ($_SESSION['egoi_order_id'])){
-				
+
 				$order_id = $_SESSION['egoi_order_id'];
 				$content = get_option('egoi_track_order_'.$order_id);
-				
+
 				echo html_entity_decode($content[0], ENT_QUOTES);
 				delete_option('egoi_track_order_'.$order_id);
 
@@ -895,12 +912,12 @@ class Egoi_For_Wp_Admin {
 				$egoi_int = $opt['egoi_int'];
 
 				if($egoi_int['enable_cf']) {
-					
+
 					$api = new Egoi_For_Wp();
 
 					$form_id = $_POST['_wpcf7'];
 					if(in_array($form_id, $opt['contact_form'])) {
-						
+
 						$key_name = 'your-name';
 						$key_email = 'your-email';
 						if(strpos($result->form, $key_name) !== false){
@@ -919,9 +936,9 @@ class Egoi_For_Wp_Admin {
 							$email = $_POST[$key_email];
 						}else{
 							$match = array_filter(
-								$_POST, 
+								$_POST,
 									function($value) {
-										return preg_match("/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i", $value); 
+										return preg_match("/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i", $value);
 									}
 								);
 
@@ -978,7 +995,7 @@ class Egoi_For_Wp_Admin {
 						}
 
 						$ref_fields = array('tel' => $tel, 'cell' => $cell, 'bd' => $bd, 'fax' => $fax, 'lang' => $lang);
-						
+
 						$subject = $_POST['your-subject'];
 						$status = $_POST['status-egoi'];
 						$error_msg = $result->prop('messages');
@@ -1005,19 +1022,19 @@ class Egoi_For_Wp_Admin {
 				                	$cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
 
 									$api->editSubscriber(
-										$egoi_int['list_cf'], 
-										$email, 
-										array($cf7tag, $tag ? $tag : 0), 
-										$name, 
-										$lname, 
-										$extra_fields, 
-										$option, 
+										$egoi_int['list_cf'],
+										$email,
+										array($cf7tag, $tag ? $tag : 0),
+										$name,
+										$lname,
+										$extra_fields,
+										$option,
 										$ref_fields
 									);
 								}
 
 							}else{
-								
+
 								if($subject){ // check if tag exists in E-goi
 									$get_tags = $api->getTag($subject);
 					                $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
@@ -1028,15 +1045,15 @@ class Egoi_For_Wp_Admin {
 				                $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
 
 								$api->addSubscriberTags(
-									$egoi_int['list_cf'], 
-									$email, 
-									array($cf7tag, $tag ? $tag : 0), 
-									$name, 
-									$lname, 
-									1, 
-									$extra_fields, 
-									$option, 
-									$ref_fields, 
+									$egoi_int['list_cf'],
+									$email,
+									array($cf7tag, $tag ? $tag : 0),
+									$name,
+									$lname,
+									1,
+									$extra_fields,
+									$option,
+									$ref_fields,
 									$status
 								);
 							}
@@ -1061,7 +1078,7 @@ class Egoi_For_Wp_Admin {
 	 * @param 	 $approved
 	 * @param 	 $data
 	 * @since    1.0.0
-	 */	
+	 */
 	public function insertCommentHook($id, $approved = false, $data) {
 
 		$opt = get_option('egoi_int');
@@ -1075,9 +1092,9 @@ class Egoi_For_Wp_Admin {
 
 		 	if($check == 'on') {
 
-				$api = new Egoi_For_Wp();	
+				$api = new Egoi_For_Wp();
 				$add = $api->addSubscriberTags($egoi_int['list_cp'], $email, array($tag), $name, 1);
-						
+
 				if($add->UID){
 					if($egoi_int['redirect']){
 						wp_redirect($egoi_int['redirect']);
@@ -1096,7 +1113,7 @@ class Egoi_For_Wp_Admin {
 	 * Check if form is available for newsletter.
 	 *
 	 * @since    1.0.0
-	 */	
+	 */
 	public function checkNewsletterPostComment() {
 
 		$opt = get_option('egoi_int');
@@ -1109,12 +1126,12 @@ class Egoi_For_Wp_Admin {
 			return '';
 		}
 	}
-	
+
 	/**
 	 * Map custom fields with Core / Woocommerce to E-goi.
 	 *
 	 * @since    1.0.6
-	 */	
+	 */
 	public function mapFieldsEgoi() {
 
 		$id = (int)$_POST["id_egoi"];
@@ -1175,7 +1192,7 @@ class Egoi_For_Wp_Admin {
 			}
 			exit;
 			//return '';
-			
+
 		}else if(isset($id) && ($id != '')){
 
 			global $wpdb;
@@ -1198,7 +1215,7 @@ class Egoi_For_Wp_Admin {
 	}
 
 	private function saveRMData($post = false) {
-		
+
 		if(!get_option('egoi_data'))
 			add_option('egoi_data', $post);
 
@@ -1221,7 +1238,7 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function get_form_processed() {
-        
+
         if(!empty($_POST)){
             $api = new Egoi_For_Wp();
             echo json_encode($api->getForms($_POST['listID']));
@@ -1258,54 +1275,61 @@ class Egoi_For_Wp_Admin {
 
     // ADD A SIMPLE FORM SUBSCRIBER
 	public function subscribe_egoi_simple_form_add() {
-		
-		$apikey = get_option('egoi_api_key');	
-		$list_id = $this->options_list['list'];
+
+		$apikey = get_option('egoi_api_key');
 
 		$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
-		
-		$params = array( 
-			'apikey'    => $apikey['api_key'],
-			'name' => 'addSubscriber'
-		);
-		
-		$tag = $client->addTag($params);
 
-		$params = array( 
+		// double opt-in
+        if (filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1') {
+		    $status = 0;
+        } else {
+		    $status = 1;
+        }
+
+		$params = array(
 			'apikey'    => $apikey['api_key'],
-			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_EMAIL),
+			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
 			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
 			'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
 			'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
 			'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
-			'tags' => $tag,
-			'status' => 1
+			'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
+			'status' => $status,
 		);
 
 		$result = $client->addSubscriber($params);
 
 		if (!isset($result['ERROR']) && !isset($result['MODIFICATION_DATE']) ) {
-			$error = 'Subscriber '.$this->check_subscriber($result).' is now registered on E-goi!';
+			echo $this->check_subscriber($result).' ';
+			_e('was successfully registered!', 'egoi-for-wp');
 		} else if (isset($result['MODIFICATION_DATE'])) {
-			$error = 'Subscriber data from '.$this->check_subscriber($result).' has been updated on E-goi!';
+			_e('Subscriber data from', 'egoi-for-wp');
+			echo ' '.$this->check_subscriber($result).' ';
+			_e('has been updated!', 'egoi-for-wp');
 		} else if (isset($result['ERROR'])) {
-			$error = 'ERROR: '.strtolower(str_replace('_',' ',$result['ERROR']));
+			if ($result['ERROR'] == 'NO_DATA_TO_INSERT') {
+				_e('ERROR: no data to insert', 'egoi-for-wp');
+			} else if ($result['ERROR'] == 'EMAIL_ADDRESS_INVALID_MX_ERROR') {
+				_e('ERROR: e-mail address is invalid', 'egoi-for-wp');
+			} else {
+				_e('ERROR: invalid data submitted', 'egoi-for-wp');
+			}
+
 		}
-		
-		_e($error, 'egoi-for-wp');
-		
+
 		wp_die(); // this is required to terminate immediately and return a proper response
-		
+
 	}
 
 	public function check_subscriber($subscriber_data) {
 		$data = array('FIRST_NAME','EMAIL','CELLPHONE');
 		foreach ($data as $value) {
-			if ($subscriber_data[$value]) {
-				$subscriber = $subscriber_data[$value];
-				break;
-			}
-		}
+            if ($subscriber_data[$value]) {
+                $subscriber = $subscriber_data[$value];
+                break;
+            }
+        }
 		return $subscriber;
 	}
 
@@ -1319,31 +1343,48 @@ class Egoi_For_Wp_Admin {
 				'ids' => array(
 					'sanitize_callback'  => 'sanitize_text_field'
 				),
+				'decimal_sep' => array(
+					'sanitize_callback'  => 'sanitize_text_field'
+				),
+				'decimal_space' => array(
+					'sanitize_callback'  => 'sanitize_text_field'
+				),
 			),
 		) );
 	}
 
 	//Outputs Easy Post data on the JSON endpoint
 	public function egoi_products_data_return( WP_REST_Request $request ) {
-		
+
+		global $_wp_additional_image_sizes;
+
 		// Get query strings params from request
 		$params = $request->get_query_params('ids');
-		
+
+
 		$params["ids"] = filter_var($params["ids"], FILTER_SANITIZE_STRING);
 		$ids = str_replace(" ","",$params["ids"]);
-		$ids = explode(",",$ids); 
+		$ids = explode(",",$ids);
 		foreach ($ids as $value) {
-			if (!is_numeric($value)) 
+			if (!is_numeric($value))
 				die();
 		}
-		$args = array( 'post_type' => array('product', 'product_variation') ,'posts_per_page' => -1);
+
+		$args = array( 'post_type' => array('product', 'product_variation') , 'post__in' => $ids, 'numberposts' => -1);
 		$products = get_posts( $args );
-	
+
 		$products_data = array();
 		foreach ($products as $product) {
 			if ( in_array($product->ID, $ids) ) {
-	
-				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $product->ID ), 'single-post-thumbnail' );
+
+				$sizes = array('thumbnail', 'medium', 'medium_large', 'large');
+				foreach ($_wp_additional_image_sizes as $key => $value) {
+					$sizes[] = $key;
+				}
+				foreach ($sizes as $size) {
+					$image_sizes[$size] = "<img src='".get_the_post_thumbnail_url($product->ID, $size)."' />";
+					$image_url[$size] = get_the_post_thumbnail_url($product->ID, $size);
+				}
 				$sku = get_post_meta( $product->ID, '_sku', true);
 				$price = get_post_meta( $product->ID, '_regular_price', true);
 				$sale = get_post_meta( $product->ID, '_sale_price', true);
@@ -1366,7 +1407,18 @@ class Egoi_For_Wp_Admin {
 				$downloadable = get_post_meta( $product->ID, '_downloadable', true);
 				$download_limit = get_post_meta( $product->ID, '_download_limit', true);
 				$download_expiry = get_post_meta( $product->ID, '_download_expiry', true);
-				
+				$url = get_permalink($product->ID);
+
+				if (isset($params['decimal_space']) && is_numeric($params['decimal_space'])) {
+					$price = number_format($price, $params['decimal_space']);
+					$sale = number_format($sale, $params['decimal_space']);
+				}
+
+				if (isset($params['decimal_sep'])) {
+					$price = str_replace('.', str_replace('"', '', $params['decimal_sep']), $price);
+					$sale = str_replace('.', str_replace('"', '', $params['decimal_sep']), $sale);
+				}
+
 				$products_data['items']['item'][] = array(
 					'id' => $product->ID,
 					'name' => $product->post_title,
@@ -1375,7 +1427,26 @@ class Egoi_For_Wp_Admin {
 					'sale_price' => $sale,
 					'sale_dates_from' => $sale_dates_from,
 					'sale_dates_to' => $sale_dates_to,
-					'image_gallery' => $image_gallery,
+					'image_thumbnail' => $image_sizes['thumbnail'],
+					'image_thumbnail_URL' => $image_url['thumbnail'],
+					'image_medium' => $image_sizes['medium'],
+					'image_medium_URL' => $image_url['medium'],
+					'image_medium_large' => $image_sizes['medium_large'],
+					'image_medium_large_URL' => $image_url['medium_large'],
+					'image_large' => $image_sizes['large'],
+					'image_large_URL' => $image_url['large'],
+					'image_home-blog-post' => $image_sizes['home-blog-post'],
+					'image_home-blog-post_URL' => $image_url['home-blog-post'],
+					'image_home-event-post' => $image_sizes['home-event-post'],
+					'image_home-event-post_URL' => $image_url['home-event-post'],
+					'image_event-detail-post' => $image_sizes['event-detail-post'],
+					'image_event-detail-post_URL' => $image_url['event-detail-post'],
+					'image_shop_thumbnail' => $image_sizes['shop_thumbnail'],
+					'image_shop_thumbnail_URL' => $image_url['shop_thumbnail'],
+					'image_shop_catalog' => $image_sizes['shop_catalog'],
+					'image_shop_catalog_URL' => $image_url['shop_catalog'],
+					'image_shop_thumbnail' => $image_sizes['shop_single'],
+					'image_shop_thumbnail_URL' => $image_url['shop_single'],
 					'upsell_ids' => $upsell_ids,
 					'crosssell_ids' => $crosssell_ids,
 					'manage_stock' => $manage_stock,
@@ -1392,11 +1463,14 @@ class Egoi_For_Wp_Admin {
 					'virtual' => $virtual,
 					'downloadable' => $downloadable,
 					'download_limit' => $download_limit,
-					'download_expiry' => $download_expiry
+					'download_expiry' => $download_expiry,
+					'url' => $url
 				);
+
 			}
 		}
-		return $products_data; 
+
+		return $products_data;
 	}
 
 
@@ -1412,12 +1486,12 @@ class Egoi_For_Wp_Admin {
         }
 		return array(
 			'name'        => 'E-goi',
-      		'icon' 		  => plugin_dir_url( __FILE__ ) . "img/logo.png", 
+      		'icon' 		  => plugin_dir_url( __FILE__ ) . "img/logo.png",
 			'description' => 'Shortcode E-goi.',
 			'base'        => 'egoi_vc_shortcode',
 			'params'      => array(
 				array(
-					
+
 					'type'       => 'dropdown',
 					'heading'    => 'Shortcode ID',
 					'param_name' => 'shortcode_id',
@@ -1438,6 +1512,380 @@ class Egoi_For_Wp_Admin {
         }
         wp_die();
     }
-	
+
+
+    /*
+     * RSS Feed - handler for links
+     */
+    public function prepareUrl($complement = '') {
+        if (strpos($_SERVER['REQUEST_URI'], '&del=')) {
+            $url = substr($_SERVER['REQUEST_URI'], 0, -34);
+        } else if (strpos($_SERVER['REQUEST_URI'], '&add=')) {
+            $url = substr($_SERVER['REQUEST_URI'], 0, -6);
+        } else if (strpos($_SERVER['REQUEST_URI'], '&edit=') || strpos($_SERVER['REQUEST_URI'], '&view=')) {
+            $url = substr($_SERVER['REQUEST_URI'], 0, -35);
+        } else {
+            $url = $_SERVER['REQUEST_URI'];
+        }
+        return $url.$complement;
+    }
+
+    /*
+     * RSS Feed - Create new feed
+     */
+    public function createFeed($post, $edit) {
+        $code = filter_var($post['code'], FILTER_SANITIZE_STRING);
+        $type = filter_var($post['type'], FILTER_SANITIZE_STRING);
+        $categories = $post[substr($type,0,-1)."_categories_include"];
+        $categories_exclude = $post[substr($type,0,-1)."_categories_exclude"];
+        $tags = $post[substr($type,0,-1)."_tags_include"];
+        $tags_exclude = $post[substr($type,0,-1)."_tags_exclude"];
+
+        $rssfeed = array(
+            'code' => $code,
+            'name' => filter_var($post['name'], FILTER_SANITIZE_STRING),
+            'max_characters' => filter_var($post['max_characters'], FILTER_SANITIZE_NUMBER_INT),
+            'image_size' => filter_var($post['image_size'], FILTER_SANITIZE_STRING),
+            'type' => filter_var($post['type'], FILTER_SANITIZE_STRING),
+            'categories' => $categories,
+            'categories_exclude' => $categories_exclude,
+            'tags' => $tags,
+            'tags_exclude' => $tags_exclude
+        );
+        if ($edit) {
+            update_option('egoi_rssfeed_' . $code, $rssfeed);
+        } else {
+            add_option('egoi_rssfeed_' . $code, $rssfeed);
+        }
+
+        return true;
+    }
+
+    public function egoi_rss_feeds_content() {
+
+        $feed = filter_var($_GET['feed'], FILTER_SANITIZE_STRING);
+        $feed_configs = get_option($feed);
+
+        // RSS Feed Head
+        $this->egoi_rss_feed_head();
+
+        /*
+         * RSS Feed Content
+         */
+        $args = $this->get_egoi_rss_feed_args($feed_configs);
+
+        $query = new WP_Query( $args );
+
+        while ( $query->have_posts() ) : $query->the_post();
+
+            $description = $this->egoi_rss_feed_description(get_the_excerpt(), $feed_configs['max_characters']);
+
+            $all_content = implode(' ', get_extended(  get_post_field( 'post_content', get_the_ID() ) )) ;
+
+            if ($feed_configs['type'] == 'products') {
+                $product_cats = get_the_terms( get_the_ID(), 'product_cat' );
+            } else {
+                $price = false;
+            }
+            ?>
+            <item>
+                <title><?php the_title_rss() ?></title>
+                <link><?php the_permalink_rss() ?></link>
+                <?php if ( get_comments_number() || comments_open() ) : ?>
+                    <comments><?php comments_link_feed(); ?></comments>
+                <?php endif; ?>
+                <pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
+                <dc:creator><![CDATA[<?php the_author() ?>]]></dc:creator>
+                <?php
+                    if ($feed_configs['type'] == 'posts') {
+                        the_category_rss('rss2');
+                    } else {
+                        foreach ( $product_cats as $cat ) {
+                            ?>
+                            <category><![CDATA[<?=$cat->name?>]]></category>
+                            <?php
+                        }
+                    }
+                ?>
+                <guid isPermaLink="false"><?php the_guid(); ?></guid>
+
+                <?php if ( has_post_thumbnail() ) {
+                    $img_url = get_the_post_thumbnail_url(get_the_ID(), $feed_configs['image_size']);
+                    $pos = strpos($img_url, "?");
+                    if ($pos !== false) {
+                        $img_url = substr($img_url, 0, $pos);
+                    }
+
+                    ?>
+                    <enclosure url="<?php echo $img_url; ?>" type="image/jpg" />
+                <?php } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
+                    foreach( $gallery as $img_url ) {
+                        $pos = strpos($img_url, "?");
+                        if ($pos !== false) {
+                            $img_url = substr($img_url, 0, $pos);
+                        }
+                        ?><enclosure url="<?php echo $img_url; ?>" type="image/jpg" /><?php
+                        break;
+                    }
+                } else  {
+                    preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
+                    if (isset($img[1])) {
+                        $pos = strpos($img[1], "?");
+                        if ($pos !== false) {
+                            $img_url = substr($img[1], 0, $pos);
+                        }
+                        ?><enclosure url="<?php echo $img_url; ?>" type="image/jpg" /><?php
+                    }
+                }?>
+
+                <?php if (get_option('rss_use_excerpt')) : ?>
+                    <description><![CDATA[<?php echo $description; ?>]]></description>
+                <?php else : ?>
+                    <description><![CDATA[<?php echo $description; ?>]]></description>
+                    <content:encoded><![CDATA[<?php echo the_content(); ?>]]></content:encoded>
+                <?php endif; ?>
+                <?php if ( get_comments_number() || comments_open() ) : ?>
+                    <wfw:commentRss><?php echo esc_url( get_post_comments_feed_link(null, 'rss2') ); ?></wfw:commentRss>
+                    <slash:comments><?php echo get_comments_number(); ?></slash:comments>
+                <?php endif; ?>
+                <?php rss_enclosure(); ?>
+                <?php
+                /**
+                 * Fires at the end of each RSS2 feed item.
+                 *
+                 * @since 2.0.0
+                 */
+
+                do_action( 'rss2_item' );
+                ?>
+            </item>
+        <?php endwhile; ?>
+        </channel>
+        </rss>
+        <?php
+    }
+
+    public function egoi_rss_feed_head() {
+
+        $this->feed_cleaner();
+
+        /**
+         * RSS2 Feed Template for displaying RSS2 Posts feed.
+         *
+         * @package WordPress
+         */
+
+        header('Content-Type: ' . feed_content_type('rss2') . '; charset=' . get_option('blog_charset'), true);
+
+        echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
+
+        /**
+         * Fires between the xml and rss tags in a feed.
+         *
+         * @since 4.0.0
+         *
+         * @param string $context Type of feed. Possible values include 'rss2', 'rss2-comments',
+         *                        'rdf', 'atom', and 'atom-comments'.
+         */
+        do_action( 'rss_tag_pre', 'rss2' );
+        ?>
+    <rss version="2.0"
+         xmlns:content="http://purl.org/rss/1.0/modules/content/"
+         xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:atom="http://www.w3.org/2005/Atom"
+         xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+         xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+        <?php
+        /**
+         * Fires at the end of the RSS root to add namespaces.
+         *
+         * @since 2.0.0
+         */
+        do_action( 'rss2_ns' );
+        ?>
+    >
+
+        <channel>
+        <title><?php wp_title_rss(); ?></title>
+        <atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml" />
+        <link><?php bloginfo_rss('url') ?></link>
+        <description><?php bloginfo_rss("description") ?></description>
+        <lastBuildDate><?php
+            $date = get_lastpostmodified( 'GMT' );
+            echo $date ? mysql2date( 'r', $date, false ) : date( 'r' );
+            ?></lastBuildDate>
+        <language><?php bloginfo_rss( 'language' ); ?></language>
+        <sy:updatePeriod><?php
+            $duration = 'hourly';
+
+            /**
+             * Filters how often to update the RSS feed.
+             *
+             * @since 2.1.0
+             *
+             * @param string $duration The update period. Accepts 'hourly', 'daily', 'weekly', 'monthly',
+             *                         'yearly'. Default 'hourly'.
+             */
+            echo apply_filters( 'rss_update_period', $duration );
+            ?></sy:updatePeriod>
+        <sy:updateFrequency><?php
+            $frequency = '1';
+
+            /**
+             * Filters the RSS update frequency.
+             *
+             * @since 2.1.0
+             *
+             * @param string $frequency An integer passed as a string representing the frequency
+             *                          of RSS updates within the update period. Default '1'.
+             */
+            echo apply_filters( 'rss_update_frequency', $frequency );
+            ?></sy:updateFrequency>
+        <?php
+        /**
+         * Fires at the end of the RSS2 Feed Header.
+         *
+         * @since 2.0.0
+         */
+        do_action( 'rss2_head');
+    }
+
+    public function get_egoi_rss_feed_args($feed_configs) {
+
+        if ($feed_configs['type'] == 'posts') {
+            $cat_taxonomy = 'category';
+            $tag_taxonomy = 'post_tag';
+        } else if ($feed_configs['type'] == 'products') {
+            $cat_taxonomy = 'product_cat';
+            $tag_taxonomy = 'product_tag';
+        }
+
+        $args = array(
+            'post_type' => substr($feed_configs['type'], 0, -1),
+            'posts_per_page' => -1
+        );
+        if (isset($feed_configs['categories'])) {
+            $args['tax_query'][] = array(
+                'taxonomy' => $cat_taxonomy,
+                'terms' =>  $feed_configs['categories']
+            );
+        }
+        if (isset($feed_configs['categories_exclude'])) {
+            $args['tax_query'][] = array(
+                'taxonomy' => $cat_taxonomy,
+                'terms' =>  $feed_configs['categories_exclude'],
+                'operator' => 'NOT IN'
+            );
+        }
+        if (isset($feed_configs['tags'])) {
+            $args['tax_query'][] = array(
+                'taxonomy' => $tag_taxonomy,
+                'terms' =>  $feed_configs['tags']
+            );
+        }
+        if (isset($feed_configs['tags_exclude'])) {
+            $args['tax_query'][] = array(
+                'taxonomy' => $tag_taxonomy,
+                'terms' =>  $feed_configs['tags_exclude'],
+                'operator' => 'NOT IN'
+            );
+        }
+        return $args;
+    }
+
+    public function egoi_rss_feed_description($text, $num_max_chars) {
+        $words = explode(' ', strip_tags($text));
+        $words_num = $char_num = 0;
+        foreach ($words as $word) {
+            $char_num += strlen($word);
+            $words_num++;
+            if ($char_num >= $num_max_chars) {
+                break;
+            }
+        }
+        $excerpt = explode(' ', $text, $words_num);
+
+        if (count($words)>$words_num) {
+            array_pop($excerpt);
+            $excerpt = implode(" ",$excerpt).' [...]';
+        } else {
+            $excerpt = implode(" ",$excerpt);
+        }
+        $description = preg_replace('`[[^]]*]`','',$excerpt);
+        return $description;
+    }
+
+    public function feed_cleaner()
+    {
+        remove_all_filters('the_content_feed');
+        remove_all_filters('the_excerpt_rss');
+        remove_all_filters('the_content_rss');
+        remove_all_filters('the_title_rss');
+        remove_all_filters('comment_text_rss');
+        remove_all_filters('post_comments_feed_link');
+        remove_all_filters('author_feed_link');
+        remove_all_filters('the_content_feed');
+        remove_all_filters('comment_author_rss');
+        remove_all_filters('pre_link_rss');
+        remove_all_filters('bloginfo_rss');
+        remove_all_filters('category_feed_link');
+        remove_all_filters('the_category_rss');
+        remove_all_filters('feed_link');
+
+        remove_all_actions('commentrss2_item');
+        remove_all_actions('do_feed_rss');
+        remove_all_actions('do_feed_rss2');
+        remove_all_actions('rss_head');
+        remove_all_actions('rss_item');
+        remove_all_actions('rss2_head');
+        remove_all_actions('rss2_item');
+        remove_all_actions('rss2_ns');
+        remove_all_actions('atom_entry');
+        remove_all_actions('atom_head');
+        remove_all_actions('atom_ns');
+        remove_all_actions('rdf_header');
+        remove_all_actions('rdf_item');
+        remove_all_actions('rdf_ns');
+    }
+
+    /**
+     * @param $account
+     * @return mixed
+     */
+    public function create_egoi_account($account) {
+
+        $url = 'http://dev-web-agency.e-team.biz/smaddonsms/account/create';
+
+        $email = filter_var($account['new_account_email'], FILTER_SANITIZE_EMAIL);
+        $company = filter_var($account['new_account_company'], FILTER_SANITIZE_STRING);
+        $prefix = filter_var($account['new_account_prefix'], FILTER_SANITIZE_NUMBER_INT);
+        $phone = filter_var($account['new_account_phone'], FILTER_SANITIZE_NUMBER_INT);
+        $password = filter_var($account['new_account_password'], FILTER_SANITIZE_STRING);
+
+        $account_params = array (
+            'email' => $email,
+            'company' => $company,
+            'remote_addr' => $_SERVER['REMOTE_ADDR'],
+            'phone' => $phone,
+            'password' => $password,
+            'prefix' => $prefix
+        );
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $account_params);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+
+    }
+
 
 }

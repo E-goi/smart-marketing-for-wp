@@ -55,6 +55,7 @@ class Egoi_For_Wp_Listener {
 	private function Listen($user_id){
 
 		$user = get_userdata($user_id);
+
 		$list = $this->options_listen['list'];
 
 		$admin = new Egoi_For_Wp($this->plugin_name, $this->version);
@@ -63,6 +64,7 @@ class Egoi_For_Wp_Listener {
 		if(get_option('egoi_mapping')){
 			
 			$op = 1;
+			$ref_fields = array();
 			$all_fields = get_user_meta($user_id);
 			$all_fields['user_email'][0] = $user->user_email;
 			$all_fields['user_url'][0] = $user->user_url;
@@ -77,25 +79,40 @@ class Egoi_For_Wp_Listener {
 		}
 
 		$role = $this->options_listen['role'];
-		$name = $user->display_name;
+		if (isset($_POST['billing_first_name']) && isset($_POST['billing_last_name'])) {
+            $name = $_POST['billing_first_name'].' '.$_POST['billing_last_name'];
+        } else {
+            $name = $user->display_name;
+        }
 		$email = $user->user_email;
 
+		if (isset($_POST['billing_phone']) && !isset($ref_fields['tel'])) {
+            $ref_fields['tel'] = $_POST['billing_phone'];
+        }
+
+        if (isset($_POST['billing_cellphone']) && !isset($ref_fields['cell'])) {
+            $ref_fields['cell'] = $_POST['billing_cellphone'];
+        }
+
 		if($role == $user->roles[0]){
+			
 			$addtags = $admin->addTag($user->roles[0]);
-			if($addtags->ERROR == ''){
-				$tag = $addtags->ID;
-				$add = $admin->addSubscriberTags($list, $email, array($tag), $name, '', $role, $fields, $op);
+			if(!$addtags->ERROR){
+				$tag_id = $addtags->ID;
+				$admin->addSubscriberTags($list, $email, array($tag_id), $name, '', $role, $fields, $op, $ref_fields);
 
 			}else{
-				$get_tags = $admin->getTags();
-				foreach($get_tags['TAG_LIST'] as $key => $tag){
-					if(in_array(strtolower($user->roles[0]), $tag)){
-						$add = $admin->addSubscriberTags($list, $email, array($tag['ID']), $name, '', $role, $fields, $op);
+				$get_tags = $admin->getTags(1);
+				if (!empty($get_tags)) {
+					foreach($get_tags->TAG_LIST as $key => $tag){
+						if(in_array(strtolower($user->roles[0]), (array)$tag)){
+							$admin->addSubscriberTags($list, $email, array($tag->ID), $name, '', $role, $fields, $op, $ref_fields);
+						}
 					}
 				}
 			}
 		}else{
-			$add = $admin->addSubscriberTags($list, $email, array(''), $name, '', false, $fields, $op);
+			$admin->addSubscriberTags($list, $email, array(''), $name, '', false, $fields, $op, $ref_fields);
 		}
 			
 	}

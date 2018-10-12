@@ -73,7 +73,8 @@ class Egoi_For_Wp {
 		'egoi_int',
 		'egoi_data',
 		'egoi_mapping',
-		'egoi_client'
+		'egoi_client',
+        'egoi_has_list'
 	);
 
 	/**
@@ -155,9 +156,24 @@ class Egoi_For_Wp {
 		try{
 			global $wpdb;
 
-			foreach (self::$options as $opt) {
-				delete_option($opt);
-			}
+            $egoi_options = self::$options;
+
+            $all_options = wp_load_alloptions();
+
+            //to get all options that are egoi simple forms
+            foreach ($all_options as $key => $value) {
+                if(strpos($key, 'egoi_simple_') !== false ){
+                    $egoi_options[] = $key; //add to egoi options
+
+                    //to delete simple form on posts table in BD
+                    $post_id = str_replace('egoi_simple_form_', "", $key);
+                    wp_delete_post($post_id);
+                }
+            }
+
+            foreach ($egoi_options as $opt) {
+                delete_option($opt);
+            }
 			
 			$wpdb->hide_errors();
 			$table = $wpdb->prefix."egoi_map_fields";
@@ -171,7 +187,7 @@ class Egoi_For_Wp {
 			}
 			
 			if($returnContent){
-				echo json_encode(['result' => 'ok']);
+				echo json_encode(array('result' => 'ok'));
 				exit;
 			}
 
@@ -264,7 +280,7 @@ class Egoi_For_Wp {
 	public function define_apikey() {
 		
 		$apikey = get_option('egoi_api_key');
-		if($apikey['api_key']){
+		if(isset($apikey['api_key']) && ($apikey['api_key'])) {
 			$this->_valid['api_key'] = $apikey['api_key'];
 		}
 
@@ -456,6 +472,9 @@ class Egoi_For_Wp {
 		$fname = $full_name[0];
 		$lname = $full_name[1];
 
+		if ($status === false) {
+		    $status = 1;
+        }
 		if($tag){
 			$url = $this->restUrl.'addSubscriber&'.http_build_query(array(
 					'functionOptions' => array(
@@ -464,9 +483,9 @@ class Egoi_For_Wp {
 						'listID' => $listID, 
 						'lang' => $lang,
 						'first_name' => $fname, 
-						'last_name' => $lname, 
+						'last_name' => $lname,
 						'email' => $email, 
-						'status' => $status ? $status : 1,
+						'status' => $status,
 						'tags' => array($tag)
 						)
 					),'','&');
@@ -478,9 +497,9 @@ class Egoi_For_Wp {
 						'listID' => $listID,
 						'lang' => $lang,
 						'first_name' => $fname, 
-						'last_name' => $lname, 
+						'last_name' => $lname,
 						'email' => $email, 
-						'status' => $status ? $status : 1
+						'status' => $status
 						)
 					),'','&');
 		}
@@ -509,7 +528,6 @@ class Egoi_For_Wp {
 
 	public function addSubscriberTags($listID, $email, $tags = array(), $name = '', $lname = '', $role = 0, $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 1
 	) {
-
 		$full_name = explode(' ', $name);
 		$fname = $full_name[0];
 		if(!$lname){
@@ -1031,7 +1049,7 @@ class Egoi_For_Wp {
 
 	public function getClientAPI(){
 
-		$key = $_POST["key"];
+		$key = $_POST["egoi_key"];
 		if(isset($key)){
 
 			$url = $this->restUrl.'getClientData&'.http_build_query(array('functionOptions' => array('apikey' => $key)),'','&');
@@ -1047,5 +1065,28 @@ class Egoi_For_Wp {
 	        }
 		}
 	}
+
+	/* Get E-goi Tag by ID*/
+    public function getTagByID($id) {
+
+        $url = $this->restUrl.'getTags&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'plugin_key' => $this->plugin
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        $result = $result_client->Egoi_Api->getTags->TAG_LIST;
+
+        foreach ($result as $key => $value) {
+            if($value->ID == $id){
+                $data['NAME'] = $value->NAME;
+                $data['ID'] = $value->ID;
+            }
+        }
+
+        return $data;
+    }
 	
 }

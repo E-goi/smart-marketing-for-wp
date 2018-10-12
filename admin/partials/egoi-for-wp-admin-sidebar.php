@@ -26,18 +26,35 @@ if(isset($_GET['type'])){
 		</div><?php
 	}
 
-}else{?>
+}else if (isset($_GET['page']) && $_GET['page'] == 'egoi-4-wp-rssfeed') {?>
 
 	<div class="egoi-box" style="position:fixed;padding-right: 10px;">
-		<h4 class="egoi-title"><?php echo __( 'Looking for help?', 'egoi-for-wp' ); ?></h4>
-		<p><?php echo __( 'We have some resources available to help you in the right direction.', 'egoi-for-wp' ); ?></p>
+		<h4 class="egoi-title"><?php echo _e( 'Need help?', 'egoi-for-wp' ); ?></h4>
+		<p><?php echo _e( 'We have several resources available to help you:', 'egoi-for-wp' ); ?></p>
 		<ul class="ul-square">
-			<li><a target="_blank" href="<?php echo __( 'https://www.e-goi.com/en/o/smart-marketing-wordpress/', 'egoi-for-wp' ); ?>"><?php echo __( 'General info', 'egoi-for-wp' ); ?></a></li>
-			<li><a target="_blank" href="<?php echo __( 'https://helpdesk.e-goi.com/242267-Integrating-E-goi-with-Wordpress', 'egoi-for-wp' ); ?>">
-				<?php echo __( 'Knowledge Base', 'egoi-for-wp' ); ?></a></li>
+			<li><a target="_blank" href="<?php echo _e( 'https://helpdesk.e-goi.com/337098-Adding-an-RSS-feed-to-my-email', 'egoi-for-wp' ); ?>">
+                    <?php echo _e( 'How to insert RSS content into your emails?', 'egoi-for-wp' ); ?>
+                </a></li>
+			<li><a target="_blank" href="<?php echo _e( 'https://www.e-goi.com/features/integrations-and-plugins/plugin-wordpress-smart-marketing-e-goi/', 'egoi-for-wp' ); ?>">
+				<?php echo __( 'General information', 'egoi-for-wp' ); ?></a></li>
 			</a></li>
 		</ul>
-		<p><?php echo __( 'If your answer can not be found in the resources listed above, please use the <a href="https://wordpress.org/support/plugin/smart-marketing-for-wp/">support forums on WordPress.org</a>.', 'egoi-for-wp' ); ?></p>
+		<p><?php echo _e( 'Did not find the answer to your question? you can use the <a href="https://wordpress.org/support/plugin/smart-marketing-for-wp">support forum at WordPress.org </a> to post your question.', 'egoi-for-wp' ); ?></p>
 	</div><?php
 
-}
+} else { ?>
+
+    <div class="egoi-box" style="position:fixed;padding-right: 10px;">
+    <h4 class="egoi-title"><?php echo __( 'Looking for help?', 'egoi-for-wp' ); ?></h4>
+    <p><?php echo __( 'We have some resources available to help you in the right direction.', 'egoi-for-wp' ); ?></p>
+    <ul class="ul-square">
+        <li><a target="_blank" href="<?php echo __( 'https://www.e-goi.com/en/o/smart-marketing-wordpress/', 'egoi-for-wp' ); ?>"><?php echo __( 'General info', 'egoi-for-wp' ); ?></a></li>
+        <li><a target="_blank" href="<?php echo __( 'https://helpdesk.e-goi.com/242267-Integrating-E-goi-with-Wordpress', 'egoi-for-wp' ); ?>">
+                <?php echo __( 'Knowledge Base', 'egoi-for-wp' ); ?></a></li>
+        </a></li>
+    </ul>
+    <p><?php echo __( 'If your answer can not be found in the resources listed above, please use the <a href="https://wordpress.org/support/plugin/smart-marketing-for-wp/">support forums on WordPress.org</a>.', 'egoi-for-wp' ); ?></p>
+    </div><?php
+
+    ?>
+<?php } ?>

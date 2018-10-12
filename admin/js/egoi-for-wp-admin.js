@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 			$.ajax({
 			    type: 'POST',
 			    data:({
-			        key: key
+			        egoi_key: key
 			    }),
 			    success:function(data, status) {
 			        

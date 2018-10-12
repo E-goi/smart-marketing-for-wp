@@ -18,18 +18,17 @@ jQuery(document).ready(function($) {
 		        action: 'egoi_get_lists'
 		    };
 		    var select_lists_frm = $('#e-goi-list-frm');
+		    var select_form = $('#formid_egoi');
 		    var select_lists_bar = $('#e-goi-list-bar');
 		    var current_lists = [];
 
 		    $(".loading_lists").addClass('spin').show();
 		    var lists_count_frm = $('#e-goi-lists_ct_forms');
 		    var lists_count_bar = $('#e-goi-lists_ct_bar');
-
 		    var form_to_subscriber = $("#e-goi-forms");
 		    var lang = $("#lang_bar");
 		    
 		    $.post(url_egoi_script.ajaxurl, data_lists, function(response) {
-			    
 			    $(".loading_lists").removeClass('spin').hide();
 			    current_lists = JSON.parse(response);
 				
@@ -41,10 +40,7 @@ jQuery(document).ready(function($) {
 
 					select_form.hide();
 				}else{
-
 					select_lists_frm.show();
-					select_lists_bar.show();
-
 					if(form_to_subscriber.text() != ''){
 						select_form.show();
 					}
@@ -59,6 +55,9 @@ jQuery(document).ready(function($) {
 				        	
 				        	if(lists_count_frm.text() === val.listnum){
 				        		select_lists_frm.val(val.listnum);
+				        		if(form_to_subscriber.text() != ''){
+					        		select_form.append($('<option />').val(form_to_subscriber.text()).text(form_to_subscriber.text()));
+					        	}
 				        	}
 
 				        	if(lists_count_bar.text() === val.listnum){
@@ -205,9 +204,12 @@ jQuery(document).ready(function($) {
             $("#load_forms").removeClass('spin').hide();
 
 			content = JSON.parse(response);
+			
 			if(content.ERROR){
 				$('#egoi_form_wp').hide();
 				$('#empty_forms').show();
+				block.empty();
+
 				return false;
 
 			}else{
@@ -215,10 +217,11 @@ jQuery(document).ready(function($) {
 				$('#egoi_form_wp').show();
 				$('#empty_forms').hide();
 
+				block.empty();
 	            block.show();
 	            $.each(content, function(key, val) {
 	            	if(typeof val.id != 'undefined'){
-	                	block.append('<option value="' + val.id + ' - ' + val.url + '">' + val.title + '</option>');
+	                	block.append('<option value="' + val.title + '">' + val.title + '</option>');
 	          		}
 	          	});
 	          	$('#formid_egoi').trigger('change');
@@ -234,9 +237,12 @@ jQuery(document).ready(function($) {
 		var strUser = e.options[e.selectedIndex].value;
 		var res = strUser.split(" - ");
 
+		var url = url_egoi_script.ajaxurl.split('wp-admin/admin-ajax.php');
+
 		if(strUser != ''){
+
 			$.ajax({
-			    url: '//'+window.location.host+'/wp-content/plugins/smart-marketing-for-wp/admin/partials/custom/egoi-for-wp-form_egoi.php',
+			    url: url[0]+'/wp-content/plugins/smart-marketing-for-wp/admin/partials/custom/egoi-for-wp-form_egoi.php',
 			    type: 'POST',
 			    data:({
 			        id: res[0],

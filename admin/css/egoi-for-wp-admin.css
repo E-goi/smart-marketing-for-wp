@@ -139,6 +139,15 @@
   background: #fff;
 }
 
+.wrap-content--webpush{
+    max-width: 800px;
+    min-width: 255px;
+    border: 1px solid #e5e5e5;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    background: #fff;
+}
+
 .e-goi-account-apikey {
   padding:20px 30px 10px;
   position: relative;
@@ -955,5 +964,27 @@ div.dropdown {
   margin: 0;
   padding: 40px 30px 26px;
 }
+
+.help-list-style ol{
+    list-style: none;
+    margin-left: 0px;
+}
+.help-list-style li{
+    counter-increment: item;
+    margin-bottom: 10px;
+}
+
+.help-list-style li:before{
+    margin-right: 10px;
+    content: counter(item);
+    background: white;
+    border: 1px solid #04afdb;
+    border-radius: 100%;
+    color: #04afdb;
+    width: 1.4em;
+    text-align: center;
+    display: inline-block;
+}
+
 
 
