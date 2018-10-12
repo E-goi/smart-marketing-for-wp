@@ -24,13 +24,13 @@
     "url": "https://github.com/picturepan2/spectre/issues"
   },
   "devDependencies": {
-    "gulp": "latest",
+    "gulp": "^3.9.1",
     "gulp-autoprefixer": "latest",
     "gulp-clean-css": "latest",
     "gulp-csscomb": "latest",
+    "gulp-pug": "latest",
     "gulp-rename": "latest",
     "gulp-sass": "latest",
-    "gulp-pug": "latest",
     "jstransformer-highlight": "latest",
     "jstransformer-markdown-it": "latest"
   },

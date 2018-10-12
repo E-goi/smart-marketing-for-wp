@@ -46,3 +46,24 @@
 // Utility classes
 @import "animations";
 @import "utilities";
+
+/*! Spectre.css Experimentals v#{$version} | MIT License | github.com/picturepan2/spectre */
+// Experimentals
+@import "autocomplete";
+@import "calendars";
+@import "carousels";
+@import "comparison-sliders";
+@import "filters";
+@import "meters";
+@import "off-canvas";
+@import "parallax";
+@import "progress";
+@import "sliders";
+@import "timelines";
+
+/*! Spectre.css Icons v#{$version} | MIT License | github.com/picturepan2/spectre */
+// Icons
+@import "icons/icons-core";
+@import "icons/icons-navigation";
+@import "icons/icons-action";
+@import "icons/icons-object";
