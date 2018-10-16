@@ -605,7 +605,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             ?>
 
             <!-- List -->
-            <div class="main-content col col-4" style="margin:0 0 20px;">
+            <div class="main-content col eg-col-4" style="margin:0 0 20px;">
                 <div style="font-size:14px; margin:10px 0;">
                     <?php _e('Simple Forms', 'egoi-for-wp');?>
                 </div>

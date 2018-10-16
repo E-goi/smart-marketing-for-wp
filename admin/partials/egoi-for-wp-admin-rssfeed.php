@@ -127,7 +127,7 @@ if (isset($_GET['del'])) {
         <div class="main-content">
 
             <!-- Main Content -->
-            <div class="col-4" style="max-width: 900px;">
+            <div class="eg-col-4" style="max-width: 900px;">
                 <form id="egoi_simple_form" method="post" action="<?php echo $this->prepareUrl('&edit=egoi_rssfeed_'.$code); ?>">
                     <?php
                     settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );

@@ -85,7 +85,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 			
 			<!-- Main Content -->
-			<div id="egoi4wp-form" class="main-content col col-4 e-goi-forms-fields">
+			<div id="egoi4wp-form" class="main-content col eg-col-4 e-goi-forms-fields">
 				
 				<form id="e-goi-form-options" method="get" action="#">
 					<input type="hidden" name="page" value="egoi-4-wp-form">
@@ -359,7 +359,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<a href="#TB_inline?width=0&height=450&inlineId=egoi-for-wp-form-choice&modal=true" id="form_type" class="thickbox button-secondary" style="display:none;"></a>
 			
 			<!-- List -->			
-			<div class="main-content col col-4" style="margin:0 0 20px;">
+			<div class="main-content col eg-col-4" style="margin:0 0 20px;">
 				<div style="font-size:14px; margin:10px 0;">
 					<?php echo __('Max number of forms:', 'egoi-for-wp');?> <span id="rcv_e-goi_forms"></span>/5
 				</div>

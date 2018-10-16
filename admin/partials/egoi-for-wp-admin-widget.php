@@ -41,7 +41,7 @@ if(!$egoiwidget['enabled']){
 <div class="wrap egoi4wp-settings">
 
     <div class="row">
-        <div id="egoi4wp-admin" class="main-content col col-4">
+        <div id="egoi4wp-admin" class="main-content col eg-col-4">
 
             <form method="post" action="">
                 <?php settings_fields($FORM_OPTION);?>

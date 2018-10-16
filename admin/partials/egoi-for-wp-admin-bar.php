@@ -14,7 +14,7 @@ else{
     $tag = $this->bar_post['tag-egoi'];
 }
 ?>
-<div class="main-content col col-4">
+<div class="main-content col eg-col-4">
 <div class="wrap" id="egoi4wp-admin" style="width:100%;">
 
     <div id="egoi-tabs-bar">
