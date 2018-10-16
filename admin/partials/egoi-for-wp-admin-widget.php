@@ -238,7 +238,7 @@ if(!$egoiwidget['enabled']){
                     </table>
                 </div>
 
-                <div class="tab" id="tab-widget-appearance">
+                <div class="eg-tab" id="tab-widget-appearance">
                     <table class="form-table">
 
                         <tr valign="top">

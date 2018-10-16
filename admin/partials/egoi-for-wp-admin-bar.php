@@ -200,7 +200,7 @@ else{
 
 
         <!-- Appearance Tab -->
-        <div class="tab" id="tab-appearance">
+        <div class="eg-tab" id="tab-appearance">
 
             <div class="row">
                 <div class="col col-2">
@@ -338,7 +338,7 @@ else{
         </div>
 
         <!-- Form Messages -->
-        <div class="tab" id="tab-messages">
+        <div class="eg-tab" id="tab-messages">
 
             <table class="form-table">
                 <tr valign="top">

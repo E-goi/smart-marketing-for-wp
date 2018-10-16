@@ -562,7 +562,7 @@ a{
 
 
 
-.tab{
+.eg-tab{
 	display: none;
 }
 .tab-active{
@@ -607,7 +607,7 @@ a{
     padding: 20px;
 }
 
-.btn{
+.eg-btn{
 	  display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -629,7 +629,7 @@ a{
     border-radius: 4px;
     outline: 0;
 }
-.form-input{
+.eg-form-input{
 	  display: block;
     width: 100%;
     height: 34px;
@@ -708,10 +708,10 @@ a{
   margin: 20px 0;
 }
 
-.dropdown-toggle {
+.eg-dropdown-toggle {
 }
 
-div.dropdown {
+div.eg-dropdown {
   display:none;
   position: absolute;
   top: 100%;

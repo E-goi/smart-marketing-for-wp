@@ -381,7 +381,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 
 					<div class="postbox postbox--custom e-goi-fcenter">
-						<a type="button" class="button-primary button-primary--custom-add dropdown-toggle"> 
+						<a type="button" class="button-primary button-primary--custom-add eg-dropdown-toggle">
 							<?php echo _e('Create List +', 'egoi-for-wp');?>
 						</a>
 						

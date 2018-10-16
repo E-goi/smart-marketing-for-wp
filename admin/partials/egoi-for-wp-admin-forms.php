@@ -342,7 +342,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</table>
 						</div>
 
-						<div class="tab" id="tab-forms-appearance">
+						<div class="eg-tab" id="tab-forms-appearance">
 							<?php include ('custom/egoi-for-wp-form-appearance.php'); ?>
 						</div>
 
@@ -453,17 +453,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<!-- wrap Simple Forms -->
-	<div class="wrap tab" id="tab-simple-forms">
+	<div class="wrap eg-tab" id="tab-simple-forms">
 		<?php include ('egoi-for-wp-admin-simple-forms.php'); ?>
 	</div>
 
 	<!-- wrap Subscriber Bar -->
-	<div class="wrap tab" id="tab-main-bar">
+	<div class="wrap eg-tab" id="tab-main-bar">
 		<?php include ('egoi-for-wp-admin-bar.php'); ?>
 	</div>
 
 	<!-- wrap Widget Options -->
-	<div class="wrap tab" id="tab-widget">
+	<div class="wrap eg-tab" id="tab-widget">
 		<?php include ('egoi-for-wp-admin-widget.php'); ?>
 	</div>
 
