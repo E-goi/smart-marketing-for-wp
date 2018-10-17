@@ -1863,27 +1863,19 @@ class Egoi_For_Wp_Admin {
         $phone = filter_var($account['new_account_phone'], FILTER_SANITIZE_NUMBER_INT);
         $password = filter_var($account['new_account_password'], FILTER_SANITIZE_STRING);
 
-        $account_params = array (
-            'email' => $email,
-            'company' => $company,
-            'remote_addr' => $_SERVER['REMOTE_ADDR'],
-            'phone' => $phone,
-            'password' => $password,
-            'prefix' => $prefix
-        );
+        $response = wp_remote_post($url, array(
+            'timeout' => 60,
+            'body' => array (
+                'email' => $email,
+                'company' => $company,
+                'remote_addr' => $_SERVER['REMOTE_ADDR'],
+                'phone' => $phone,
+                'password' => $password,
+                'prefix' => $prefix
+            )
+        ));
 
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $account_params);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-
-        $response = curl_exec($ch);
-
-        curl_close($ch);
-
-        return $response;
+        return $response['body'];
 
     }
 
