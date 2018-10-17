@@ -163,7 +163,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style('wp-color-picker');
 	}
 
@@ -223,6 +223,8 @@ class Egoi_For_Wp_Admin {
 		$apikey = get_option('egoi_api_key');
 		$haslists = get_option('egoi_has_list');
 		if(isset($apikey['api_key']) && ($apikey['api_key']) && ($haslists)) {
+
+            add_submenu_page($this->plugin_name, __('Dashboard', 'egoi-for-wp'), __('Dashboard', 'egoi-for-wp'), $capability, 'egoi-4-wp-dashboard', array($this, 'display_plugin_dashboard'));
 
 			add_submenu_page($this->plugin_name, __('Capture Contacts', 'egoi-for-wp'), __('Capture Contacts', 'egoi-for-wp'), $capability, 'egoi-4-wp-form', array($this, 'display_plugin_subscriber_form'));
 
@@ -347,6 +349,16 @@ class Egoi_For_Wp_Admin {
             wp_die('You do not have sufficient permissions to access this page.');
         } else {
             include_once( 'partials/egoi-for-wp-admin-rssfeed.php' );
+        }
+
+    }
+
+    public function display_plugin_dashboard() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-dashboard.php' );
         }
 
     }
