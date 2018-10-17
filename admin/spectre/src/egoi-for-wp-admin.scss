@@ -4,8 +4,8 @@
 
 /*! Spectre.css v#{$version} | MIT License | github.com/picturepan2/spectre */
 // Reset and dependencies
-//@import "normalize";
-//@import "base";
+@import "normalize";
+@import "base";
 
 // Elements
 /*
@@ -19,7 +19,7 @@
 @import "media";
 */
 
-// Layout
+// Layout 
 @import "layout";
 @import "navbar";
 
