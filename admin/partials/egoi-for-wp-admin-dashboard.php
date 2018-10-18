@@ -93,9 +93,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 <!-- /Subscriber Statistics -->
 
+
 <div class="container">
     <div class="columns subscriber-form mt-3">
-        <div class="column col-8">
+        <div class="column col-8 col-md-12 col-xs-12">
+            <!-- Last 5 subscribers -->
             <div class="subscriber-form__element">
                 <div class="subscriber-form__element__title">
                     Últimos 5 subscritores
@@ -144,10 +146,54 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </table>
             </div>
         </div>
-        <div class="column col-4">
+        <!-- /Last 5 subscribers --> 
+
+        <!-- Subscribers by Form -->
+        <div class="column col-4 col-md-12 col-xs-12">
             <div class="subscriber-form__element">
-                <div class="">Subscritores por Formulário</div>
+                <div class="subscriber-form__element__title">Subscritores por Formulário</div>
             </div>
+            <table class="table">
+                    <tbody>
+                        <tr class="active">
+                            <td>Formulário ABC</td>
+                            <td align="right">56756743</td>
+                        </tr>
+                        <tr>
+                            <td>Formulário SDFA</td>
+                            <td align="right">1231231</td>
+                        </tr>
+                        <tr class="active">
+                            <td>Formulário TRY</td>
+                            <td align="right">345345</td>
+                        </tr>
+                        <tr>
+                            <td>Formulário WERW</td>
+                            <td align="right">123123</td>
+                        </tr>
+                        <tr class="active">
+                            <td>Formulário WERW</td>
+                            <td align="right">12321</td>
+                        </tr>
+                        <tr>
+                            <td>Formulário WERW</td>
+                            <td align="right">123123</td>
+                        </tr>
+                        <tr class="active">
+                            <td>Formulário WERW</td>
+                            <td align="right">12321</td>
+                        </tr>
+                        <tr>
+                            <td>Formulário WERW</td>
+                            <td align="right">123123</td>
+                        </tr>
+                        <tr class="active">
+                            <td>Formulário WERW</td>
+                            <td align="right">12321</td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
+        <!-- /Subscribers by Form -->
     </div>
 </div>
