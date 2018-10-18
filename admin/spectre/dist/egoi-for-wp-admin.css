@@ -6107,10 +6107,15 @@ div.eg-dropdown {
   padding-right: 20px;
 }
 
+.eg-dash-notifications.notice {
+  border-left: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .toast {
   background: #fff;
   border: 0;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
 }
 
 .dash-notifications {
@@ -6161,10 +6166,9 @@ div.eg-dropdown {
   position: relative;
 }
 
-.subscriber-statistics__element,
-.subscriber-statistics__bestday {
+.subscriber-statistics__element {
   background-color: #fff;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
   padding-left: 25px; 
   padding-top: 25px;
 }
@@ -6204,4 +6208,43 @@ div.eg-dropdown {
 
 .subscriber-statistics .e-goi-tooltiptext {
   font-size: 14px;
+}
+
+.subscriber-form__element {
+  background-color: #fff;
+  border: 1px solid #f3f3f3; 
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+}
+
+.subscriber-form__element__title {
+  background-color: #dfdfdf;
+  color: #333; 
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 12px;
+}
+
+.dash-notifications--titles {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.subscriber-form .table {
+  background: #fff;
+  border-collapse: unset;
+  padding: 12px 12px;
+}
+
+.subscriber-form .table th {
+  font-size: 14px; 
+  font-weight: normal;
+}
+
+.subscriber-form .table tbody tr.active,
+.table.table-striped tbody tr.active {
+  background: #fff;
+}
+
+.mt-3 {
+  margin-top: 2em;
 }
