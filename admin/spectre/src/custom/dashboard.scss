@@ -1,3 +1,6 @@
+//
+// Notifications
+//
 .toast {
     background: $light-color;
     border: 0;
@@ -11,6 +14,7 @@
 .dash-notifications__icon-upgrade {
     background: url("../img/64x64.png") no-repeat;
     background-position: center center;
+    background-repeat: no-repeat;
 }
 .dash-notifications__img{
     padding: 10px;
@@ -36,3 +40,67 @@
     margin-right: 8px;
 }
 
+//
+// Subscriber Statistics
+//
+.subscriber-statistics{
+}
+
+.subscriber-statistics .column{
+    position: relative;
+}
+
+.subscriber-statistics__element,
+.subscriber-statistics__bestday{
+    background-color: $light-color;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    padding-top: 25px;
+    padding-left: 25px;
+}
+
+.subscriber-statistics__element__today{
+    background: url("https://via.placeholder.com/80x80") no-repeat;
+    background-position: 0;
+    width: 80px;
+    height: 80px;
+}
+
+.subscriber-statistics__element__regists{
+    position: absolute;
+    top: 15px;
+    left: 130px;
+}
+.subscriber-statistics__element__regists__title{
+    font-size: 18px;
+    margin: 0;
+}
+.subscriber-statistics__element__regists__result{
+    font-size: 24px;
+    margin: 0;
+}
+.subscriber-statistics__element__regists__subscribers{
+    font-size: 11px;
+    margin: 0;
+    color: #999;
+}
+.subscriber-statistics .dashicons{
+    vertical-align: text-bottom;
+}
+.subscriber-statistics .e-goi-tooltiptext {
+    font-size: 14px;
+}
+
+
+
+
+
+
+
+
+.subscriber-statistics__total{
+
+}
+
+.subscriber-statistics__bestday{
+
+}

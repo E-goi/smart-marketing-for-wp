@@ -6124,6 +6124,7 @@ div.eg-dropdown {
 .dash-notifications__icon-upgrade {
   background: url("../img/64x64.png") no-repeat;
   background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .dash-notifications__img {
@@ -6154,4 +6155,53 @@ div.eg-dropdown {
   color: #acb3c2;
   margin: 0;
   margin-right: 8px;
+}
+
+.subscriber-statistics .column {
+  position: relative;
+}
+
+.subscriber-statistics__element,
+.subscriber-statistics__bestday {
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  padding-left: 25px; 
+  padding-top: 25px;
+}
+
+.subscriber-statistics__element__today {
+  background: url("https://via.placeholder.com/80x80") no-repeat;
+  background-position: 0;
+  height: 80px; 
+  width: 80px;
+}
+
+.subscriber-statistics__element__regists {
+  left: 130px; 
+  position: absolute;
+  top: 15px;
+}
+
+.subscriber-statistics__element__regists__title {
+  font-size: 18px;
+  margin: 0;
+}
+
+.subscriber-statistics__element__regists__result {
+  font-size: 24px;
+  margin: 0;
+}
+
+.subscriber-statistics__element__regists__subscribers {
+  color: #999; 
+  font-size: 11px;
+  margin: 0;
+}
+
+.subscriber-statistics .dashicons {
+  vertical-align: text-bottom;
+}
+
+.subscriber-statistics .e-goi-tooltiptext {
+  font-size: 14px;
 }
