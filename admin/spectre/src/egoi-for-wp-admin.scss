@@ -8,8 +8,8 @@
 @import "base";
 
 // Elements
-/*
-@import "typography";
+
+// @import "typography";
 @import "asian";
 @import "tables";
 @import "buttons";
@@ -17,7 +17,7 @@
 @import "labels";
 @import "codes";
 @import "media";
-*/
+
 
 // Layout 
 @import "layout";
@@ -72,3 +72,4 @@
 
 // Custom class
 @import "custom/egoi-for-wp-admin";
+@import "custom/dashboard";
