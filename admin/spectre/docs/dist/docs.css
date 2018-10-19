@@ -82,7 +82,7 @@
 }
 
 .docs-content .anchor {
-  color: #6362dc;
+  color: #00bae9;
   display: none;
   margin-left: .2rem;
   padding: 0 .2rem;
@@ -196,7 +196,7 @@
 .docs-content .code .hljs-title,
 .docs-content .code .hljs-class,
 .docs-content .code .hljs-string {
-  color: #5755d9;
+  color: #00aeda;
 }
 
 .docs-content .code .hljs-name,
@@ -231,7 +231,7 @@
 .docs-content .example-tile-icon {
   align-content: space-around;
   align-items: center;
-  background: #5755d9;
+  background: #00aeda;
   border-radius: .1rem;
   color: #fff;
   display: flex;
@@ -268,7 +268,7 @@
 }
 
 .docs-brand {
-  color: #5755d9;
+  color: #00aeda;
   left: 1.5rem;
   position: fixed;
   top: .85rem;
@@ -355,7 +355,7 @@
 }
 
 .section-hero .docs-brand h2 {
-  color: #5755d9;
+  color: #00aeda;
 }
 
 .section-hero .column {
@@ -428,7 +428,7 @@
 }
 
 .grid-hero .card .card-title {
-  color: #5755d9;
+  color: #00aeda;
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0;
