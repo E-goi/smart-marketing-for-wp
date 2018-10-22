@@ -1892,4 +1892,38 @@ class Egoi_For_Wp_Admin {
     }
 
 
+    /**
+     *
+     * Dashboard
+     *
+     */
+
+    public function smsnf_save_form_subscriber($subscriber) {
+        global $wpdb;
+
+        $table = $wpdb->prefix.'egoi_form_subscribers';
+
+        $subscriber['created_at'] = current_time('mysql');
+
+        return $wpdb->insert($table, $subscriber, array('%d', '%s', '%s', '%d', '%s'));
+    }
+
+    public function smsnf_get_form_susbcribers_total($period = 'ever') {
+        global $wpdb;
+
+        $table = $wpdb->prefix.'egoi_form_subscribers';
+
+        $today = date('Y-m-d');
+
+        $sql = "SELECT COUNT(*) as total FROM $table ";
+
+        if ($period == 'today') {
+            return $wpdb->get_row($sql." WHERE created_at BETWEEN '$today' AND '".date('Y-m-d', strtotime($today. ' +1 day'))."' ");
+        } else if ($period == 'ever') {
+            return $wpdb->get_row($sql);
+        }
+        return false;
+    }
+
+    //public function smsnf_get_
 }
