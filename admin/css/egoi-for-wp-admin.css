@@ -6118,10 +6118,11 @@ div.eg-dropdown {
 
 .smsnf-dashboard-notifications {
   align-items: center;
-  border-left: 3px solid #00aeda !important; 
+  border-left: 3px solid #00aeda !important;
   display: flex;
   display: -ms-flexbox;
   -ms-flex-align: center;
+  padding: 16px 38px 16px 16px;
 }
 
 .smsnf-dashboard-notifications__img--upgrade {
@@ -6149,6 +6150,26 @@ div.eg-dropdown {
   margin: 0;
 }
 
+.smsnf-dashboard-notifications__btn {
+  align-items: center;
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-align: center;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.smsnf-dashboard-notifications__btn a:first-child {
+  -webkit-appearance: initial; 
+  display: inline-block;
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+.smsnf-dashboard-notifications__btn a:first-child:hover {
+  text-decoration: underline;
+}
+
 .smsnf-dashboard-maintitle {
   font-size: 24px;
   font-weight: 500;
@@ -6156,8 +6177,9 @@ div.eg-dropdown {
 
 .smsnf-dashboard-subs-stats {
   background-color: #fff;
+  border-radius: 3px; 
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-  padding-left: 25px; 
+  padding-left: 25px;
   padding-top: 25px;
   position: relative;
 }
@@ -6189,18 +6211,21 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subs-stats__content h3 {
-  font-size: 18px;
+  color: gray;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased; 
   font-weight: normal;
 }
 
 .smsnf-dashboard-subs-stats__content p {
   color: #999; 
   font-size: 11px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .smsnf-dashboard-subs-stats__content .smsnf-dashboard-subs-stats__content--result {
-  display: inline-block;
+  color: #00aeda; 
+  display: block;
   font-size: 28px;
   margin-top: -7px;
 }
@@ -6213,15 +6238,26 @@ div.eg-dropdown {
   font-size: 14px;
 }
 
-.smsnf-dashboard-last-subscribers {
+.smsnf-dashboard-subs-stats .dashicons,
+.dashicons-before:before {
+  color: lightgray;
+}
+
+.smsnf-dashboard-last-subscribers,
+.smsnf-dashboard-subscribers-by-lists,
+.smsnf-dashboard-last-email-campaign,
+.smsnf-dashboard-last-sms-campaign,
+.smsnf-dashboard-blog-last-post {
   background-color: #fff;
-  border: 1px solid #f3f3f3; 
+  border: 1px solid #f3f3f3;
+  border-radius: 3px; 
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 }
 
 .smsnf-dashboard-last-subscribers-by-form {
   background-color: #fff;
-  border: 1px solid #f3f3f3; 
+  border: 1px solid #f3f3f3;
+  border-radius: 3px; 
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 }
 
@@ -6231,22 +6267,13 @@ div.eg-dropdown {
   padding: 12px 12px;
 }
 
-.smsnf-dashboard-last-subscribers-by-form__table .table tr td:nth-child(2) {
-  text-align: right;
+.smsnf-dashboard-last-subscribers-by-form__table .table tr td:first-child {
+  font-size: .9rem;
 }
 
-.smsnf-dashboard-last-subscribers__title,
-.smsnf-dashboard-subscribers-by-lists__title,
-.smsnf-dashboard-last-subscribers-by-form__title,
-.smsnf-dashboard-blog-last-post__title,
-.smsnf-dashboard-last-email-campaign__title,
-.smsnf-dashboard-last-sms-campaign__title {
-  background-color: #fefefe;
-  border-bottom: 1px solid #eee;
-  color: #333;
-  font-size: 1rem;
-  font-weight: 500; 
-  padding: 12px;
+.smsnf-dashboard-last-subscribers-by-form__table .table tr td:nth-child(2) {
+  font-size: 1rem; 
+  text-align: right;
 }
 
 .smsnf-dashboard-last-subscribers .table,
@@ -6265,6 +6292,28 @@ div.eg-dropdown {
 .smsnf-dashboard-last-subscribers .table tbody tr.active,
 .table.table-striped tbody tr.active {
   background: #fff;
+}
+
+.smsnf-dashboard-last-subscribers-by-form__table table tr td:first-child {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.smsnf-dashboard-last-subscribers__title,
+.smsnf-dashboard-subscribers-by-lists__title,
+.smsnf-dashboard-last-subscribers-by-form__title,
+.smsnf-dashboard-blog-last-post__title,
+.smsnf-dashboard-last-email-campaign__title,
+.smsnf-dashboard-last-sms-campaign__title {
+  background-color: #fefefe;
+  border-bottom: 1px solid #dedede;
+  color: #333;
+  font-size: 18px; 
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  padding: 18px 12px;
 }
 
 .smsnf-dashboard-last-email-campaign__chart,
@@ -6295,21 +6344,29 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subscribers-by-lists__content p span {
+  background-color: rgba(0, 174, 218, .1);
+  border: 1px solid rgba(0, 174, 218, .3);
+  border-radius: 2px;
+  color: #00aeda;
+  font-weight: 700;
   font-weight: bold;
+  margin-left: 5px; 
+  padding: 4px 5px;
 }
 
 .smsnf-dashboard-subscribers-by-lists__content select {
-  border: 1px solid #ddd;
+  border: 1px solid #00aeda;
   box-shadow: 0 2px 4px 0 rgba(181, 181, 181, .3);
-  color: #888; 
+  color: rgba(0, 174, 218, .9); 
   font-size: 14px;
   height: 35px;
   width: 158px;
 }
 
 .smsnf-dashboard-subscribers-by-lists__content select:hover {
-  background-color: #eee;
+  border: 1px solid rgba(0, 174, 218, .8); 
   box-shadow: 0 2px 4px 0 rgba(181, 181, 181, .3);
+  color: #00aeda;
 }
 
 .smsnf-dashboard-blog-last-post {
@@ -6330,11 +6387,11 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-blog-last-post__content small {
-  background-color: #eee;
-  border: 1px solid #dedede;
-  border-radius: 40px; 
-  color: #333;
-  padding: 2px 15px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 174, 218, .5);
+  border-radius: 3px;
+  color: #00aeda;
+  padding: 5px 10px; 
   -webkit-text-decoration: uppercase;
   text-decoration: uppercase;
 }
@@ -6350,48 +6407,52 @@ div.eg-dropdown {
   margin: 10px 0 0 0;
 }
 
+.smsnf-dashboard-blog-last-post__content__title:hover {
+  color: #00aeda;
+  text-decoration: underline;
+}
+
 .smsnf-dashboard-blog-last-post__content__description {
+  color: #666; 
   font-size: .9rem;
 }
 
-.order {
-  display: flex;
-  display: -ms-flexbox;
-  -ms-flex-direction: column;
-  flex-direction: column;
+@media screen and (min-width: 841px) and (max-width: 1054px) {
+  .smsnf-dashboard-subs-stats__content--result {
+    font-size: 24px !important;
+  }
 }
 
-.order .column .smsnf-dashboard-subs-stats {
-  -ms-flex-order: 7;
-  order: 7;
+@media screen and (min-width: 400px) and (max-width: 840px) {
+  .smsnf-dashboard-subs-stats {
+    display: flex;
+    display: -ms-flexbox;
+    margin: 6px 0;
+  }
 }
 
-.order .column .smsnf-dashboard-last-subscribers {
-  -ms-flex-order: 2;
-  order: 2;
+@media screen and (min-width: 400px) and (max-width: 650px) {
+  .smsnf-dashboard-notifications {
+    -ms-flex-direction: column;
+    flex-direction: column;
+    text-align: center;
+  }
+  .smsnf-dashboard-notifications__btn {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .smsnf-dashboard-notifications__btn p {
+    margin: 0 auto; 
+    max-width: 90%;
+  }
 }
 
-.order .column .smsnf-dashboard-last-subscribers-by-form {
-  -ms-flex-order: 3;
-  order: 3;
+.smsnf-dashboard .table td,
+.table th {
+  border-bottom: .05rem solid #efefef;
+  padding: .5rem .1rem;
 }
 
-.order .column .smsnf-dashboard-subscribers-by-lists {
-  -ms-flex-order: 4;
-  order: 4;
-}
-
-.order .column .smsnf-dashboard-last-email-campaign {
-  -ms-flex-order: 5;
-  order: 5;
-}
-
-.order .column .smsnf-dashboard-last-sms-campaign {
-  -ms-flex-order: 6;
-  order: 6;
-}
-
-.order .column .smsnf-dashboard-blog-last-post {
-  -ms-flex-order: 1;
-  order: 1;
+.smsnf-dashboard .table tbody tr:last-child td {
+  border-bottom: 0;
 }

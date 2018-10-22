@@ -9,7 +9,8 @@
 .smsnf-dashboard-notifications{
 	display: flex;
 	align-items: center;
-	border-left: 3px solid rgb(0,174,218) !important;
+  border-left: 3px solid rgb(0,174,218) !important;
+  padding: 16px 38px 16px 16px;
 }
 .smsnf-dashboard-notifications__img--upgrade {
 	background: url("../img/64x64.png") no-repeat;
@@ -31,7 +32,21 @@
 		line-height: 20px;
 	}
 }
-
+.smsnf-dashboard-notifications__btn{
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  a:first-child{
+    display: inline-block;
+    margin-right: 20px;
+    text-decoration: none;
+    -webkit-appearance: initial;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
 
 //////////////////////////////
 // Main Title Page
@@ -52,7 +67,8 @@
 	background-color: $light-color;
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 	padding-top: 25px;
-	padding-left: 25px;
+  padding-left: 25px;
+  border-radius: 3px;
 }
 .smsnf-dashboard-subs-stats__icon--today,
 .smsnf-dashboard-subs-stats__icon--total,
@@ -75,18 +91,21 @@
 	top: 4px;
 	left: 126px;
 	h3 {
-		font-size: 18px;
-		font-weight: normal;
+		font-size: 16px;
+    font-weight: normal;
+    color: gray;
+    -webkit-font-smoothing: antialiased;
 	}
 	p {
 		font-size: 11px;
-		margin-top: 5px;
-		color: #999;
+		margin-top: 10px;
+    color: #999;
 	}
 	.smsnf-dashboard-subs-stats__content--result{
 		font-size: 28px;
-		display: inline-block;
-		margin-top: -7px;
+		display: block;
+    margin-top: -7px;
+    color: rgb(0, 174, 218);
 	}
 }
 
@@ -96,43 +115,45 @@
 .smsnf-dashboard-subs-stats__content .e-goi-tooltiptext {
 	font-size: 14px;
 }
+.smsnf-dashboard-subs-stats .dashicons, 
+.dashicons-before:before{
+  color: lightgray;
+}
 
 
 //////////////////////////////
 // Last Subscribers table
 //////////////////////////////
 
-.smsnf-dashboard-last-subscribers{
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-    background-color: $light-color;
-    border: 1px solid #f3f3f3;
+.smsnf-dashboard-last-subscribers,
+.smsnf-dashboard-subscribers-by-lists,
+.smsnf-dashboard-last-email-campaign,
+.smsnf-dashboard-last-sms-campaign,
+.smsnf-dashboard-blog-last-post {
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+  background-color: $light-color;
+  border: 1px solid #f3f3f3;
+  border-radius: 3px;
 }
 .smsnf-dashboard-last-subscribers-by-form{
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 	background-color: $light-color;
-	border: 1px solid #f3f3f3;
+  border: 1px solid #f3f3f3;
+  border-radius: 3px;
 }
 .smsnf-dashboard-last-subscribers-by-form__table .table{
 	background-color: #fff;
 	border-collapse: unset;
-	padding: 12px 12px;
+  padding: 12px 12px;
+  tr td:first-child{
+    font-size: 0.9rem;
+  }
 	tr td:nth-child(2){
-		text-align: right;
+    text-align: right;
+    font-size: 1rem;
 	}
 }
-.smsnf-dashboard-last-subscribers__title,
-.smsnf-dashboard-subscribers-by-lists__title,
-.smsnf-dashboard-last-subscribers-by-form__title,
-.smsnf-dashboard-blog-last-post__title,
-.smsnf-dashboard-last-email-campaign__title,
-.smsnf-dashboard-last-sms-campaign__title{
-    font-size: 1rem;
-    padding: 12px;
-    color:#333;
-    background-color: #fefefe;
-    border-bottom: 1px solid #eeeeee;
-    font-weight: 500;
-}
+
 .smsnf-dashboard-last-subscribers .table,
 .smsnf-dashboard-last-email-campaign .table,
 .smsnf-dashboard-last-sms-campaign .table {
@@ -149,6 +170,28 @@
     background: #ffffff
 }
 
+.smsnf-dashboard-last-subscribers-by-form__table 
+table tr td:first-child{
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.smsnf-dashboard-last-subscribers__title,
+.smsnf-dashboard-subscribers-by-lists__title,
+.smsnf-dashboard-last-subscribers-by-form__title,
+.smsnf-dashboard-blog-last-post__title,
+.smsnf-dashboard-last-email-campaign__title,
+.smsnf-dashboard-last-sms-campaign__title{
+    color:#333;
+    background-color: #fefefe;
+    border-bottom: 1px solid #dedede;
+    padding: 18px 12px;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    font-size: 18px;
+}
 
 //////////////////////////////
 // Subscribers by List
@@ -175,19 +218,27 @@
 	p{
 		font-size: 16px;
 		span{
-				font-weight: bold;
+        font-weight: bold;
+        color: #00aeda;
+        border: 1px solid rgba(0, 174, 218, 0.3);
+        font-weight: 700;
+        padding: 4px 5px;
+        border-radius: 2px;
+        background-color: rgba(0, 174, 218, 0.1);
+        margin-left: 5px;
 		}
 	}
 	select{
-		border: 1px solid #ddd;
+		border: 1px solid rgba(0, 174, 218, 1);
 		font-size: 14px;
 		height: 35px;
 		width: 158px;
 		box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
-		color: #888;
+    color: rgba(0, 174, 218, .9);
 		&:hover{
-			background-color: #eee;
-			box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
+      box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
+      color: rgb(0, 174, 218);
+      border: 1px solid rgba(0, 174, 218, 0.8);
 		}
 	}
 }
@@ -209,12 +260,12 @@
 }
 .smsnf-dashboard-blog-last-post__content small{
     text-decoration: uppercase;
-    background-color: #eee;
-    border: 1px solid #dedede;
-    color: #333;
-    padding: 2px 15px;
-    border-radius: 40px;
-}
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid rgba(0,174,218,.5);
+    color: rgb(0,174,218);
+    padding: 5px 10px;
+  }
 .smsnf-dashboard-blog-last-post__content a{
     text-decoration: none;
     color: #333;
@@ -223,7 +274,60 @@
     font-size: 20px;
     line-height: 26px;
     margin: 10px 0 0 0;
+    &:hover{
+      color: rgb(0,174,218);
+      text-decoration: underline;
+    }
 }
 .smsnf-dashboard-blog-last-post__content__description{
-	font-size: 0.9rem;
+  font-size: 0.9rem;
+  color: #666;
 }
+
+
+//////////////////////////////
+// Media Queries
+//////////////////////////////
+
+@media screen and (min-width: 841px) and (max-width: 1054px) {
+  .smsnf-dashboard-subs-stats__content--result{
+    font-size: 24px !important;
+   }
+}
+
+@media screen and (min-width: 400px) and (max-width: 840px) {
+  .smsnf-dashboard-subs-stats {
+    display: flex;
+    margin: 6px 0px;
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: 650px) {
+  .smsnf-dashboard-notifications{
+    flex-direction: column;
+    text-align: center;
+  }
+  .smsnf-dashboard-notifications__btn{
+    margin-left: 0;
+    margin-right: 0;
+    p{
+      max-width: 90%;
+      margin: 0 auto;
+    }
+  }
+}
+
+
+//////////////////////////////
+// Reset Styles
+//////////////////////////////
+
+// Style table
+.smsnf-dashboard .table td, .table th{
+  border-bottom: .05rem solid #efefef;
+  padding: .5rem 0.1rem;
+}
+.smsnf-dashboard .table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
