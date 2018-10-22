@@ -19,22 +19,43 @@ class Egoi_For_Wp_Activator {
 	public static $version = SELF_VERSION;
 	
 	public static function activate() {
-		
-		global $wpdb;
-		
-		$charset_collate = $wpdb->get_charset_collate();
-		$table = $wpdb->prefix."egoi_map_fields";
-		
-		$sql="CREATE TABLE IF NOT EXISTS $table (id INT(11) NOT NULL AUTO_INCREMENT, wp VARCHAR(255) NOT NULL, wp_name VARCHAR(255) NOT NULL, egoi VARCHAR(255) NOT NULL, egoi_name VARCHAR(255) NOT NULL, status INT(1) NOT NULL, PRIMARY KEY (id)) $charset_collate;";
-        
-		require_once(ABSPATH.'wp-admin/includes/upgrade.php');
-		$result = dbDelta($sql);
+
+	    self::smsnf_create_table('egoi_map_fields', "
+	        id INT(11) NOT NULL AUTO_INCREMENT, 
+            wp VARCHAR(255) NOT NULL, 
+            wp_name VARCHAR(255) NOT NULL, 
+            egoi VARCHAR(255) NOT NULL, 
+            egoi_name VARCHAR(255) NOT NULL, 
+            status INT(1) NOT NULL, 
+            PRIMARY KEY (id)"
+        );
+
+        self::smsnf_create_table('egoi_forms_subscribers', "
+            id INT(11) NOT NULL AUTO_INCREMENT, 
+            form_id INT(11) NOT NULL, 
+            form_type VARCHAR(255) NOT NULL, 
+            subscriber_id INT(11) NOT NULL, 
+            list_id INT(11) NOT NULL, 
+            created_at DATETIME NOT NULL,
+            PRIMARY KEY (id)"
+        );
 
 		$email = wp_get_current_user();
 		$email = $email->data->user_email;
 
 		self::serviceActivate(array('email' => $email));
 	}
+
+	public static function smsnf_create_table($table, $fields) {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix.$table." (".$fields.") ".$charset_collate."; ";
+
+        require_once(ABSPATH.'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+
+    }
 
 	public static function serviceActivate($data = array()) {
 
