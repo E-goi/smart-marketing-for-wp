@@ -30,7 +30,7 @@ class Egoi_For_Wp_Activator {
             PRIMARY KEY (id)"
         );
 
-        self::smsnf_create_table('egoi_forms_subscribers', "
+        self::smsnf_create_table('egoi_form_subscribers', "
             id INT(11) NOT NULL AUTO_INCREMENT, 
             form_id INT(11) NOT NULL, 
             form_type VARCHAR(255) NOT NULL, 
