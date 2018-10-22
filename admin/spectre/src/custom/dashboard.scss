@@ -54,7 +54,6 @@
 	padding-top: 25px;
 	padding-left: 25px;
 }
-
 .smsnf-dashboard-subs-stats__icon--today,
 .smsnf-dashboard-subs-stats__icon--total,
 .smsnf-dashboard-subs-stats__icon--bestday{
@@ -62,7 +61,6 @@
 	width: 80px;
 	height: 80px;
 }
-
 .smsnf-dashboard-subs-stats__icon--today{
   background: url("https://via.placeholder.com/80x80") no-repeat;
 }
@@ -72,7 +70,6 @@
 .smsnf-dashboard-subs-stats__icon--bestday{
 	background: url("https://via.placeholder.com/80x80") no-repeat;
 }
-
 .smsnf-dashboard-subs-stats__content{
 	position: absolute;
 	top: 4px;
@@ -110,13 +107,11 @@
     background-color: $light-color;
     border: 1px solid #f3f3f3;
 }
-
 .smsnf-dashboard-last-subscribers-by-form{
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 	background-color: $light-color;
 	border: 1px solid #f3f3f3;
 }
-
 .smsnf-dashboard-last-subscribers-by-form__table .table{
 	background-color: #fff;
 	border-collapse: unset;
@@ -125,12 +120,12 @@
 		text-align: right;
 	}
 }
-
-
 .smsnf-dashboard-last-subscribers__title,
 .smsnf-dashboard-subscribers-by-lists__title,
 .smsnf-dashboard-last-subscribers-by-form__title,
-.smsnf-dashboard-blog-last-post__title {
+.smsnf-dashboard-blog-last-post__title,
+.smsnf-dashboard-last-email-campaign__title,
+.smsnf-dashboard-last-sms-campaign__title{
     font-size: 1rem;
     padding: 12px;
     color:#333;
@@ -138,8 +133,9 @@
     border-bottom: 1px solid #eeeeee;
     font-weight: 500;
 }
-
-.smsnf-dashboard-last-subscribers .table {
+.smsnf-dashboard-last-subscribers .table,
+.smsnf-dashboard-last-email-campaign .table,
+.smsnf-dashboard-last-sms-campaign .table {
     background: #ffffff;
     border-collapse: unset;
     padding: 12px 12px;
@@ -148,7 +144,6 @@
    font-weight: normal;
    font-size: 14px;
 }
-
 .smsnf-dashboard-last-subscribers .table tbody tr.active, 
 .table.table-striped tbody tr.active{
     background: #ffffff
@@ -159,7 +154,10 @@
 // Subscribers by List
 //////////////////////////////
 
-.canvas-container{
+// Chart JS  
+.smsnf-dashboard-last-email-campaign__chart,
+.smsnf-dashboard-subscribers-by-lists__chart,
+.smsnf-dashboard-last-sms-campaign__chart{
 	background-clip: border-box;
 	background-color: #fff;
 	min-width: 0;
@@ -167,6 +165,7 @@
 	position: relative;
 	word-wrap: break-word;
 }
+
 .smsnf-dashboard-subscribers-by-lists__content{
 	display: flex;
 	flex-direction: row;
@@ -187,16 +186,15 @@
 		box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
 		color: #888;
 		&:hover{
-				background-color: #eee;
-				box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
+			background-color: #eee;
+			box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
 		}
 	}
 }
 
-
-//
+//////////////////////////////
 // Blog Post's
-//
+//////////////////////////////
 
 .smsnf-dashboard-blog-last-post{
     background-color: #ffffff;
@@ -217,12 +215,10 @@
     padding: 2px 15px;
     border-radius: 40px;
 }
-
 .smsnf-dashboard-blog-last-post__content a{
     text-decoration: none;
     color: #333;
 }
-
 .smsnf-dashboard-blog-last-post__content__title{
     font-size: 20px;
     line-height: 26px;

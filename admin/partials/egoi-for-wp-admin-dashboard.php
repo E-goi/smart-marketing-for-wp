@@ -79,10 +79,10 @@
                 </div>
             </div>
 
-            <!-- Last Subscribers table and Subscribers by List-->
+            <!-- Last Subscribers table / Subscribers by List / Last Email Campaign -->
             <div class="column col-8 col-md-12 col-xs-12">
                 <!-- Last Subscribers table -->
-                <div class="smsnf-dashboard-last-subscribers">
+                <div class="smsnf-dashboard-last-subscribers mt-3">
                     <div class="smsnf-dashboard-last-subscribers__title">
                         Últimos 5 subscritores
                     </div>
@@ -130,11 +130,11 @@
                     </table>
                 </div>
                 <!-- Subscribers by List -->
-                <div class="smsnf-dashboard-subscribers-by-lists">
+                <div class="smsnf-dashboard-subscribers-by-lists mt-3">
                     <div class="smsnf-dashboard-subscribers-by-lists__title">
                         Subscritores por Listas
                     </div>
-                    <div class="canvas-container">
+                    <div class="smsnf-dashboard-subscribers-by-lists__chart">
                         <div class="smsnf-dashboard-subscribers-by-lists__content">
                             <p>Total de Subscritores: <span>1223</span></p>
                             <div>
@@ -146,7 +146,62 @@
                                 </select>
                             </div>
                         </div>
-                        <canvas id="lineChart" height="120"></canvas>
+                        <canvas id="smsnf-dsbl__lineChart" height="120"></canvas>
+                    </div>
+                </div>
+                
+                <div class="columns">
+                    <div class="column col-6 col-ml-auto col-xs-12 col-md-12">
+                        <!-- Last Email Campaign --> 
+                        <div class="smsnf-dashboard-last-email-campaign mt-3">
+                            <div class="smsnf-dashboard-last-email-campaign__title">
+                                Última campanha de Email Enviada
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>Curso de HTML Avançado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>20192</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total de Envios</td>
+                                        <td>2312</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="smsnf-dashboard-last-email-campaign__chart">
+                                <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
+                            </div>
+                        </div>
+                        <!-- Last SMS Campaign --> 
+                        <div class="smsnf-dashboard-last-sms-campaign mt-3">
+                            <div class="smsnf-dashboard-last-sms-campaign__title">
+                                Última campanha de SMS Enviada
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>Curso de HTML Avançado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>1231</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total de Envios</td>
+                                        <td>321</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="smsnf-dashboard-last-sms-campaign__chart">
+                                <canvas id="smsnf-dlsc__doughnutChart" height="120"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,7 +209,7 @@
             <!-- Subscribers by Form and Blog Post's -->
             <div class="column col-4 col-md-12 col-xs-12">
                 <!-- Subscribers by Form -->
-                <div class="smsnf-dashboard-last-subscribers-by-form">
+                <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
                     <div class="smsnf-dashboard-last-subscribers-by-form__title">
                         Subscritores por Formulário
                     </div>
@@ -202,7 +257,7 @@
                     </div>
                 </div>
                 <!-- Blog Post's -->
-                <div class="smsnf-dashboard-blog-last-post">
+                <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
                     <div class="smsnf-dashboard-blog-last-post__content">
                         <div>
@@ -235,15 +290,16 @@
                     </div>
                 </div>
             </div>
-
             
         </div><!-- / Columns -->
     </div><!-- / Container -->
 </div><!-- / Wrap -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<!-- Total of subscribers Chart JS -->
 <script>
-    const CHART = document.getElementById("lineChart");
+    const CHART = document.getElementById("smsnf-dsbl__lineChart");
     console.log(CHART);
 
     let lineChart = new Chart(CHART, {
@@ -300,3 +356,100 @@
         }
     });
 </script>
+
+<!-- Last Campaign Email Chart JS -->
+<script>
+    Chart.defaults.global.legend.labels.usePointStyle = true;
+    var ctx = document.getElementById("smsnf-dlec__doughnutChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Abertura", "Cliques", "Bounces", "Remoções", "Queixas"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: '#333',
+                }
+            },
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+        }
+    });
+</script>
+
+<!-- Last Campaign SMS Chart JS -->
+<script>
+    Chart.defaults.global.legend.labels.usePointStyle = true;
+    var ctx = document.getElementById("smsnf-dlsc__doughnutChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Entregues", "Não Entregues"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: '#333',
+                }
+            },
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
+

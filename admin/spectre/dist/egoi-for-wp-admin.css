@@ -6238,7 +6238,9 @@ div.eg-dropdown {
 .smsnf-dashboard-last-subscribers__title,
 .smsnf-dashboard-subscribers-by-lists__title,
 .smsnf-dashboard-last-subscribers-by-form__title,
-.smsnf-dashboard-blog-last-post__title {
+.smsnf-dashboard-blog-last-post__title,
+.smsnf-dashboard-last-email-campaign__title,
+.smsnf-dashboard-last-sms-campaign__title {
   background-color: #fefefe;
   border-bottom: 1px solid #eee;
   color: #333;
@@ -6247,7 +6249,9 @@ div.eg-dropdown {
   padding: 12px;
 }
 
-.smsnf-dashboard-last-subscribers .table {
+.smsnf-dashboard-last-subscribers .table,
+.smsnf-dashboard-last-email-campaign .table,
+.smsnf-dashboard-last-sms-campaign .table {
   background: #fff;
   border-collapse: unset;
   padding: 12px 12px;
@@ -6263,7 +6267,9 @@ div.eg-dropdown {
   background: #fff;
 }
 
-.canvas-container {
+.smsnf-dashboard-last-email-campaign__chart,
+.smsnf-dashboard-subscribers-by-lists__chart,
+.smsnf-dashboard-last-sms-campaign__chart {
   background-clip: border-box;
   background-color: #fff;
   min-width: 0;
@@ -6346,4 +6352,46 @@ div.eg-dropdown {
 
 .smsnf-dashboard-blog-last-post__content__description {
   font-size: .9rem;
+}
+
+.order {
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.order .column .smsnf-dashboard-subs-stats {
+  -ms-flex-order: 7;
+  order: 7;
+}
+
+.order .column .smsnf-dashboard-last-subscribers {
+  -ms-flex-order: 2;
+  order: 2;
+}
+
+.order .column .smsnf-dashboard-last-subscribers-by-form {
+  -ms-flex-order: 3;
+  order: 3;
+}
+
+.order .column .smsnf-dashboard-subscribers-by-lists {
+  -ms-flex-order: 4;
+  order: 4;
+}
+
+.order .column .smsnf-dashboard-last-email-campaign {
+  -ms-flex-order: 5;
+  order: 5;
+}
+
+.order .column .smsnf-dashboard-last-sms-campaign {
+  -ms-flex-order: 6;
+  order: 6;
+}
+
+.order .column .smsnf-dashboard-blog-last-post {
+  -ms-flex-order: 1;
+  order: 1;
 }
