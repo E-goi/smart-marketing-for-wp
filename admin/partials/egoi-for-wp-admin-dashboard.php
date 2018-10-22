@@ -1,9 +1,4 @@
-<?php
-if ( ! defined( 'ABSPATH' ) ) {
-    die();
-}
-?>
-
+<?php if ( ! defined( 'ABSPATH' ) ) { die();} ?>
 <!-- Header -->
 <div class="container">
   <div class="columns">
@@ -22,117 +17,73 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div><!-- /header -->
 
 <!-- Wrap -->
-<div class="sm-dashboard">
-    <!-- Notifications -->
+<div class="smsnf-dashboard">
     <div class="container">
         <div class="columns">
-            <div class="column">
-                <div class="sm-dashboard-notifications notice is-dismissible">
-                    <div class="sm-dashboard-notifications__img">
-                        <figure class="avatar avatar-xl sm-dashboard-notifications__img--upgrade"></figure>
+
+            <!-- Notifications -->
+            <div class="column col-12">
+                <div class="smsnf-dashboard-notifications notice is-dismissible">
+                    <div class="smsnf-dashboard-notifications__img">
+                        <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--upgrade"></figure>
                     </div>
-                    <div class="sm-dashboard-notifications__copy">
-                        <h3 class="text-dark">Upgrade da Conta</h3>
-                        <p class="text-dark">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
+                    <div class="smsnf-dashboard-notifications__copy">
+                        <h3>Upgrade da Conta</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- /Notifications -->
 
-    <!-- Global title -->
-    <div class="container">
-        <div class="columns">
-            <div class="column">
-                <h1 class="sm-dashboard-maintitle">Estatísticas dos subscritores</h1>
-            </div>
-        </div>
-    </div>
-
-    <!-- Registrations made today -->
-    <div class="container">
-        <div class="columns sm-dashboard-subs-stats">
-
-
-            <div class="column col-4 col-md-12 col-xs-12 mt-2">
-
-                <div class="sm-dashboard-subs-stats--today">
-                    <div class="sm-dashboard-subs-stats__element">
-                        <div class="sm-dashboard-subs-stats__element__today"></div>
-                    </div>
-                    <div class="sm-dashboard-subs-stats__element__regists">
-                        <p class="sm-dashboard-subs-stats__element__regists__title">Registos efetuados hoje</p>
-                        <p class="sm-dashboard-subs-stats__element__regists__result">123</p>
-                    </div>
-                </div>
-
+            <!-- Global title -->
+            <div class="column col-12">
+                <h2 class="smsnf-dashboard-maintitle">Estatísticas dos subscritores</h2>
             </div>
 
-
-            <!-- <div class="column col-4 col-md-12 col-xs-12 mt-2">
-
-                <div class="sm-dashboard-subs-stats--total">
-                    <div class="sm-dashboard-subs-stats__element">
-                        <div class="sm-dashboard-subs-stats__element__today">
-                    </div>
-                    <div class="sm-dashboard-subs-stats__element__regists">
-                        <p class="sm-dashboard-subs-stats__element__regists__title">Total de Subscritores</p>
-                        <p class="sm-dashboard-subs-stats__element__regists__result">123</p>
+            <!-- Registrations made today -->
+            <div class="column col-4 col-md-12 col-xs-12">
+                <div class="smsnf-dashboard-subs-stats">
+                    <div class="smsnf-dashboard-subs-stats__icon--today"><!-- Icon --></div>
+                    <div class="smsnf-dashboard-subs-stats__content">
+                        <h3>Registos efetuados hoje</h3>
+                        <span class="smsnf-dashboard-subs-stats__content--result">123</span>
                     </div>
                 </div>
+            </div>
 
-            </div> -->
-
-            <!-- <div class="column col-4 col-md-12 col-xs-12 mt-2">
-
-                <div class="sm-dashboard-subs-stats--total">
-                    <div class="sm-dashboard-subs-stats__element">
-                        <div class="sm-dashboard-subs-stats__element__today">
-                    </div>
-                    <div class="sm-dashboard-subs-stats__element__regists">
-                        <p class="sm-dashboard-subs-stats__element__regists__title">Total de Subscritores</p>
-                        <p class="sm-dashboard-subs-stats__element__regists__result">123</p>
+            <!-- Total Subscribers -->
+            <div class="column col-4 col-md-12 col-xs-12">
+                <div class="smsnf-dashboard-subs-stats">
+                    <div class="smsnf-dashboard-subs-stats__icon--total"><!-- Icon --></div>
+                    <div class="smsnf-dashboard-subs-stats__content">
+                        <h3>Registos efetuados hoje</h3>
+                        <span class="smsnf-dashboard-subs-stats__content--result">123</span>
                     </div>
                 </div>
+            </div>
 
-            </div> -->
-
-
-            <!-- <div class="column col-4 col-md-12 col-xs-12 mt-2">
-
-                <div class="sm-dashboard-subs-stats--bestday">
-
-                    <div class="sm-dashboard-subs-stats__element">
-                        <div class="sm-dashboard-subs-stats__element__today">
-                    </div>
-                    <div class="sm-dashboard-subs-stats__element__regists">
-                        <p class="sm-dashboard-subs-stats__element__regists__title">Melhor dia 
+            <!-- Best day -->
+            <div class="column col-4 col-md-12 col-xs-12">
+                <div class="smsnf-dashboard-subs-stats">
+                    <div class="smsnf-dashboard-subs-stats__icon--bestday"><!-- Icon --></div>
+                    <div class="smsnf-dashboard-subs-stats__content">
+                        <h3 class="d-inline-block">Melhor dia</h3>
                             <span class="e-goi-tooltip">
                                 <span class="dashicons dashicons-editor-help"></span>
                                 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                                 </span>
                             </span>
-                        </p>
-                        <p class="sm-dashboard-subs-stats__element__regists__result">123</p>
-                        <p class="sm-dashboard-subs-stats__element__regists__subscribers">Total de 23 Subscrições</p>
+                         <span class="smsnf-dashboard-subs-stats__content--result">8 de Agosto de 2018</span>
+                         <p>Total de 23 Subscrições</p> 
                     </div>
                 </div>
+            </div>
 
-            </div> -->
-
-
-        </div>
-    </div>
-    <!-- /Registrations Made Today -->
-
-    <div class="container">
-        <div class="columns subscriber-form mt-3">
+            <!-- Last Subscribers table / Subscribers by List / Last Email Campaign -->
             <div class="column col-8 col-md-12 col-xs-12">
-                <!-- Last 5 subscribers -->
-                <div class="subscriber-form__element">
-                    <div class="subscriber-form__element__title">
+                <!-- Last Subscribers table -->
+                <div class="smsnf-dashboard-last-subscribers mt-3">
+                    <div class="smsnf-dashboard-last-subscribers__title">
                         Últimos 5 subscritores
                     </div>
                     <table class="table">
@@ -178,18 +129,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                         </tbody>
                     </table>
                 </div>
-                <!-- /Last 5 subscribers --> 
-                
                 <!-- Subscribers by List -->
-                <div class="mt-3">
-                    <div class="subscriber-form__element__title">
+                <div class="smsnf-dashboard-subscribers-by-lists mt-3">
+                    <div class="smsnf-dashboard-subscribers-by-lists__title">
                         Subscritores por Listas
                     </div>
-                    <!-- Start Chart JS -->
-                    <div class="canvas-container">
-                        <div class="subscribers-by-list">
+                    <div class="smsnf-dashboard-subscribers-by-lists__chart">
+                        <div class="smsnf-dashboard-subscribers-by-lists__content">
                             <p>Total de Subscritores: <span>1223</span></p>
-                            <div class="flex-item">
+                            <div>
                                 <select>
                                     <option value="-- Select the list --">-- Select the list --</option>
                                     <option value="Lista A">Lista A</option>
@@ -198,103 +146,160 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </select>
                             </div>
                         </div>
-                        <canvas id="lineChart" height="120"></canvas>
+                        <canvas id="smsnf-dsbl__lineChart" height="120"></canvas>
                     </div>
                 </div>
-                <!-- End Char JS -->
+                
+                <div class="columns">
+                    <div class="column col-6 col-ml-auto col-xs-12 col-md-12">
+                        <!-- Last Email Campaign --> 
+                        <div class="smsnf-dashboard-last-email-campaign mt-3">
+                            <div class="smsnf-dashboard-last-email-campaign__title">
+                                Última campanha de Email Enviada
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>Curso de HTML Avançado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>20192</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total de Envios</td>
+                                        <td>2312</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="smsnf-dashboard-last-email-campaign__chart">
+                                <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
+                            </div>
+                        </div>
+                        <!-- Last SMS Campaign --> 
+                        <div class="smsnf-dashboard-last-sms-campaign mt-3">
+                            <div class="smsnf-dashboard-last-sms-campaign__title">
+                                Última campanha de SMS Enviada
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>Curso de HTML Avançado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>1231</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total de Envios</td>
+                                        <td>321</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="smsnf-dashboard-last-sms-campaign__chart">
+                                <canvas id="smsnf-dlsc__doughnutChart" height="120"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
+            <!-- Subscribers by Form and Blog Post's -->
             <div class="column col-4 col-md-12 col-xs-12">
                 <!-- Subscribers by Form -->
-                <div class="subscriber-form__element">
-                    <div class="subscriber-form__element__title">Subscritores por Formulário</div>
-                </div>
-                <table class="table subscriber-form-table">
-                    <tbody>
-                        <tr class="active">
-                            <td>Formulário ABC</td>
-                            <td>56756743</td>
-                        </tr>
-                        <tr>
-                            <td>Formulário SDFA</td>
-                            <td>1231231</td>
-                        </tr>
-                        <tr class="active">
-                            <td>Formulário TRY</td>
-                            <td>345345</td>
-                        </tr>
-                        <tr>
-                            <td>Formulário WERW</td>
-                            <td>123123</td>
-                        </tr>
-                        <tr class="active">
-                            <td>Formulário WERW</td>
-                            <td>12321</td>
-                        </tr>
-                        <tr>
-                            <td>Formulário WERW</td>
-                            <td>123123</td>
-                        </tr>
-                        <tr class="active">
-                            <td>Formulário WERW</td>
-                            <td>12321</td>
-                        </tr>
-                        <tr>
-                            <td>Formulário WERW</td>
-                            <td>123123</td>
-                        </tr>
-                        <tr class="active">
-                            <td>Formulário WERW</td>
-                            <td>12321</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- /Subscribers by Form -->
-                
-                <!-- Blog Post's -->
-                <div class="blog-last-post mt-3">
-                    <div class="blog-last-post__element">
-                        <div class="blog-last-post__element__title">Últimos Post's do Blog</div>
+                <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
+                    <div class="smsnf-dashboard-last-subscribers-by-form__title">
+                        Subscritores por Formulário
                     </div>
-                    <div class="blog-last-post__content">
+                    <div class="smsnf-dashboard-last-subscribers-by-form__table">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Formulário ABC</td>
+                                    <td>56756743</td>
+                                </tr>
+                                <tr>
+                                    <td>Formulário SDFA</td>
+                                    <td>1231231</td>
+                                </tr>
+                                <tr>
+                                    <td>Formulário TRY</td>
+                                    <td>345345</td>
+                                </tr>
+                                <tr>
+                                    <td>Formulário WERW</td>
+                                    <td>123123</td>
+                                </tr>
+                                <tr>
+                                    <td>Formulário WERW</td>
+                                    <td>12321</td>
+                                </tr>
+                                <tr>
+                                    <td>Formulário WERW</td>
+                                    <td>123123</td>
+                                </tr>
+                                <tr>
+                                    <td>Formulário WERW</td>
+                                    <td>12321</td>
+                                </tr>
+                                <tr>
+                                    <td>Formulário WERW</td>
+                                    <td>123123</td>
+                                </tr>
+                                <tr>
+                                    <td>Formulário WERW</td>
+                                    <td>12321</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Blog Post's -->
+                <div class="smsnf-dashboard-blog-last-post mt-3">
+                    <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
+                    <div class="smsnf-dashboard-blog-last-post__content">
                         <div>
                             <div>21-12-2018</div>
                             <a href=""><small>CAPTAR</small></a>
                         </div>
                         <a href="">
-                            <h4 class="blog-last-post__content__title">
+                            <h4 class="smsnf-dashboard-blog-last-post__content__title">
                             Conheça as 4 principais tendências de marketing digital para 2019
                             </h4>
                         </a>
-                        <p class="blog-last-post__content__description">
+                        <p class="smsnf-dashboard-blog-last-post__content__description">
                             Será que o seu negócio está atento às tendências do marketing digital para inovar e sair na frente da concorrência? Com o início do ano que se aproxima...
                         </p>
                         <hr>
                     </div>
-                    <div class="blog-last-post__content">
+                    <div class="smsnf-dashboard-blog-last-post__content">
                         <div>
                             <div>21-12-2018</div>
                             <a href=""><small>CAPTAR</small></a>
                         </div>
                         <a href="">
-                            <h4 class="blog-last-post__content__title">
+                            <h4 class="smsnf-dashboard-blog-last-post__content__title">
                             Conheça as 4 principais tendências de marketing digital para 2019
                             </h4>
                         </a>
-                        <p class="blog-last-post__content__description">
+                        <p class="smsnf-dashboard-blog-last-post__content__description">
                             Será que o seu negócio está atento às tendências do marketing digital para inovar e sair na frente da concorrência? Com o início do ano que se aproxima...
                         </p>
                     </div>
                 </div>
-                <!-- Blog Post's -->
             </div>
-        </div>
-    </div>
+            
+        </div><!-- / Columns -->
+    </div><!-- / Container -->
 </div><!-- / Wrap -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<!-- Total of subscribers Chart JS -->
 <script>
-    const CHART = document.getElementById("lineChart");
+    const CHART = document.getElementById("smsnf-dsbl__lineChart");
     console.log(CHART);
 
     let lineChart = new Chart(CHART, {
@@ -351,3 +356,100 @@ if ( ! defined( 'ABSPATH' ) ) {
         }
     });
 </script>
+
+<!-- Last Campaign Email Chart JS -->
+<script>
+    Chart.defaults.global.legend.labels.usePointStyle = true;
+    var ctx = document.getElementById("smsnf-dlec__doughnutChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Abertura", "Cliques", "Bounces", "Remoções", "Queixas"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: '#333',
+                }
+            },
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+        }
+    });
+</script>
+
+<!-- Last Campaign SMS Chart JS -->
+<script>
+    Chart.defaults.global.legend.labels.usePointStyle = true;
+    var ctx = document.getElementById("smsnf-dlsc__doughnutChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Entregues", "Não Entregues"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: true,
+                position: 'right',
+                labels: {
+                    fontColor: '#333',
+                }
+            },
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
+

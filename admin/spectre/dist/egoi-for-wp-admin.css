@@ -6111,12 +6111,12 @@ div.eg-dropdown {
   padding-right: 20px;
 }
 
-.sm-dashboard-notifications.notice {
+.smsnf-dashboard-notifications.notice {
   border-left: 0;
   margin: 0;
 }
 
-.sm-dashboard-notifications {
+.smsnf-dashboard-notifications {
   align-items: center;
   border-left: 3px solid #00aeda !important; 
   display: flex;
@@ -6124,94 +6124,123 @@ div.eg-dropdown {
   -ms-flex-align: center;
 }
 
-.sm-dashboard-notifications__img--upgrade {
+.smsnf-dashboard-notifications__img--upgrade {
   background: url("../img/64x64.png") no-repeat;
   background-position: center center;
   background-repeat: no-repeat;
 }
 
-.sm-dashboard-notifications__img {
+.smsnf-dashboard-notifications__img {
   padding: 10px;
 }
 
-.sm-dashboard-notifications__copy {
+.smsnf-dashboard-notifications__copy {
+  color: #333; 
   padding: 0 4px;
 }
 
-.sm-dashboard-notifications__copy h3 {
+.smsnf-dashboard-notifications__copy h3 {
   line-height: 20px;
   margin: 0;
 }
 
-.sm-dashboard-notifications__copy p {
+.smsnf-dashboard-notifications__copy p {
   line-height: 20px; 
   margin: 0;
 }
 
-.sm-dashboard-maintitle {
+.smsnf-dashboard-maintitle {
   font-size: 24px;
   font-weight: 500;
 }
 
-.sm-dashboard-subs-stats .column {
-  position: relative;
-}
-
-.sm-dashboard-subs-stats--today,
-.sm-dashboard-subs-stats--total,
-.sm-dashboard-subs-stats--bestday {
+.smsnf-dashboard-subs-stats {
   background-color: #fff;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
   padding-left: 25px; 
   padding-top: 25px;
+  position: relative;
 }
 
-.sm-dashboard-subs-stats__element__today {
-  background: url("https://via.placeholder.com/80x80") no-repeat;
+.smsnf-dashboard-subs-stats__icon--today,
+.smsnf-dashboard-subs-stats__icon--total,
+.smsnf-dashboard-subs-stats__icon--bestday {
   background-position: 0;
   height: 80px; 
   width: 80px;
 }
 
-.sm-dashboard-subs-stats__element__regists {
-  left: 130px; 
+.smsnf-dashboard-subs-stats__icon--today {
+  background: url("https://via.placeholder.com/80x80") no-repeat;
+}
+
+.smsnf-dashboard-subs-stats__icon--total {
+  background: url("https://via.placeholder.com/80x80") no-repeat;
+}
+
+.smsnf-dashboard-subs-stats__icon--bestday {
+  background: url("https://via.placeholder.com/80x80") no-repeat;
+}
+
+.smsnf-dashboard-subs-stats__content {
+  left: 126px; 
   position: absolute;
-  top: 15px;
+  top: 4px;
 }
 
-.sm-dashboard-subs-stats__element__regists__title {
+.smsnf-dashboard-subs-stats__content h3 {
   font-size: 18px;
-  margin: 0;
+  font-weight: normal;
 }
 
-.sm-dashboard-subs-stats__element__regists__result {
+.smsnf-dashboard-subs-stats__content p {
+  color: #999; 
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.smsnf-dashboard-subs-stats__content .smsnf-dashboard-subs-stats__content--result {
+  display: inline-block;
   font-size: 28px;
-  margin: 0;
   margin-top: -7px;
 }
 
-.sm-dashboard-subs-stats__element__regists__subscribers {
-  color: #999; 
-  font-size: 11px;
-  margin: 0;
-}
-
-.sm-dashboard-subs-stats .dashicons {
+.smsnf-dashboard-subs-stats__content .dashicons {
   vertical-align: text-bottom;
 }
 
-.sm-dashboard-subs-stats .e-goi-tooltiptext {
+.smsnf-dashboard-subs-stats__content .e-goi-tooltiptext {
   font-size: 14px;
 }
 
-.subscriber-form__element {
+.smsnf-dashboard-last-subscribers {
   background-color: #fff;
   border: 1px solid #f3f3f3; 
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 }
 
-.subscriber-form__element__title,
-.blog-last-post__element__title {
+.smsnf-dashboard-last-subscribers-by-form {
+  background-color: #fff;
+  border: 1px solid #f3f3f3; 
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+}
+
+.smsnf-dashboard-last-subscribers-by-form__table .table {
+  background-color: #fff;
+  border-collapse: unset;
+  padding: 12px 12px;
+}
+
+.smsnf-dashboard-last-subscribers-by-form__table .table tr td:nth-child(2) {
+  text-align: right;
+}
+
+.smsnf-dashboard-last-subscribers__title,
+.smsnf-dashboard-subscribers-by-lists__title,
+.smsnf-dashboard-last-subscribers-by-form__title,
+.smsnf-dashboard-blog-last-post__title,
+.smsnf-dashboard-last-email-campaign__title,
+.smsnf-dashboard-last-sms-campaign__title {
   background-color: #fefefe;
   border-bottom: 1px solid #eee;
   color: #333;
@@ -6220,65 +6249,27 @@ div.eg-dropdown {
   padding: 12px;
 }
 
-.subscriber-form .table {
+.smsnf-dashboard-last-subscribers .table,
+.smsnf-dashboard-last-email-campaign .table,
+.smsnf-dashboard-last-sms-campaign .table {
   background: #fff;
   border-collapse: unset;
   padding: 12px 12px;
 }
 
-.subscriber-form .table th {
+.smsnf-dashboard-last-subscribers .table th {
   font-size: 14px; 
   font-weight: normal;
 }
 
-.subscriber-form .table tbody tr.active,
+.smsnf-dashboard-last-subscribers .table tbody tr.active,
 .table.table-striped tbody tr.active {
   background: #fff;
 }
 
-.subscriber-form-table td:nth-child(2) {
-  text-align: right;
-}
-
-.blog-last-post {
-  background-color: #fff;
-}
-
-.blog-last-post__content {
-  padding: 10px 20px;
-}
-
-.blog-last-post__content div:first-child {
-  align-items: center; 
-  display: flex;
-  display: -ms-flexbox;
-  -ms-flex-align: center;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.blog-last-post__content small {
-  background-color: #eee;
-  border: 1px solid #dedede;
-  border-radius: 40px; 
-  color: #333;
-  padding: 2px 15px;
-  -webkit-text-decoration: uppercase;
-  text-decoration: uppercase;
-}
-
-.blog-last-post__content a {
-  color: #333; 
-  text-decoration: none;
-}
-
-.blog-last-post__content__title {
-  font-size: 20px;
-  line-height: 26px;
-  margin: 10px 0 0 0;
-}
-
-.canvas-container {
+.smsnf-dashboard-last-email-campaign__chart,
+.smsnf-dashboard-subscribers-by-lists__chart,
+.smsnf-dashboard-last-sms-campaign__chart {
   background-clip: border-box;
   background-color: #fff;
   min-width: 0;
@@ -6287,7 +6278,7 @@ div.eg-dropdown {
   word-wrap: break-word;
 }
 
-.subscribers-by-list {
+.smsnf-dashboard-subscribers-by-lists__content {
   align-items: baseline;
   display: flex;
   display: -ms-flexbox;
@@ -6299,15 +6290,15 @@ div.eg-dropdown {
   padding: 10px;
 }
 
-.subscribers-by-list p {
+.smsnf-dashboard-subscribers-by-lists__content p {
   font-size: 16px;
 }
 
-.subscribers-by-list p span {
+.smsnf-dashboard-subscribers-by-lists__content p span {
   font-weight: bold;
 }
 
-.subscribers-by-list select {
+.smsnf-dashboard-subscribers-by-lists__content select {
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px 0 rgba(181, 181, 181, .3);
   color: #888; 
@@ -6316,7 +6307,91 @@ div.eg-dropdown {
   width: 158px;
 }
 
-.subscribers-by-list select:hover {
+.smsnf-dashboard-subscribers-by-lists__content select:hover {
   background-color: #eee;
   box-shadow: 0 2px 4px 0 rgba(181, 181, 181, .3);
+}
+
+.smsnf-dashboard-blog-last-post {
+  background-color: #fff;
+}
+
+.smsnf-dashboard-blog-last-post__content {
+  padding: 10px 20px;
+}
+
+.smsnf-dashboard-blog-last-post__content div:first-child {
+  align-items: center; 
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-align: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.smsnf-dashboard-blog-last-post__content small {
+  background-color: #eee;
+  border: 1px solid #dedede;
+  border-radius: 40px; 
+  color: #333;
+  padding: 2px 15px;
+  -webkit-text-decoration: uppercase;
+  text-decoration: uppercase;
+}
+
+.smsnf-dashboard-blog-last-post__content a {
+  color: #333; 
+  text-decoration: none;
+}
+
+.smsnf-dashboard-blog-last-post__content__title {
+  font-size: 20px;
+  line-height: 26px;
+  margin: 10px 0 0 0;
+}
+
+.smsnf-dashboard-blog-last-post__content__description {
+  font-size: .9rem;
+}
+
+.order {
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.order .column .smsnf-dashboard-subs-stats {
+  -ms-flex-order: 7;
+  order: 7;
+}
+
+.order .column .smsnf-dashboard-last-subscribers {
+  -ms-flex-order: 2;
+  order: 2;
+}
+
+.order .column .smsnf-dashboard-last-subscribers-by-form {
+  -ms-flex-order: 3;
+  order: 3;
+}
+
+.order .column .smsnf-dashboard-subscribers-by-lists {
+  -ms-flex-order: 4;
+  order: 4;
+}
+
+.order .column .smsnf-dashboard-last-email-campaign {
+  -ms-flex-order: 5;
+  order: 5;
+}
+
+.order .column .smsnf-dashboard-last-sms-campaign {
+  -ms-flex-order: 6;
+  order: 6;
+}
+
+.order .column .smsnf-dashboard-blog-last-post {
+  -ms-flex-order: 1;
+  order: 1;
 }

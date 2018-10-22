@@ -1,116 +1,131 @@
-//
+//////////////////////////////
 // Notifications
-//
-.sm-dashboard-notifications.notice{
-    border-left: 0;
-    margin: 0;
+//////////////////////////////
+
+.smsnf-dashboard-notifications.notice{
+	border-left: 0;
+	margin: 0;
 }
-.sm-dashboard-notifications{
-    display: flex;
-    align-items: center;
-    border-left: 3px solid rgb(0,174,218) !important;
+.smsnf-dashboard-notifications{
+	display: flex;
+	align-items: center;
+	border-left: 3px solid rgb(0,174,218) !important;
 }
-.sm-dashboard-notifications__img--upgrade {
-    background: url("../img/64x64.png") no-repeat;
-    background-position: center center;
-    background-repeat: no-repeat;
+.smsnf-dashboard-notifications__img--upgrade {
+	background: url("../img/64x64.png") no-repeat;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
-.sm-dashboard-notifications__img{
-    padding: 10px;
+.smsnf-dashboard-notifications__img{
+	padding: 10px;
 }
-.sm-dashboard-notifications__copy{
-    padding: 0 4px;
-}
-.sm-dashboard-notifications__copy h3{
-    line-height: 20px;
-    margin: 0;
-}
-.sm-dashboard-notifications__copy p{
-    margin: 0;
-    line-height: 20px;
+.smsnf-dashboard-notifications__copy{
+	padding: 0 4px;
+	color:#333;
+	h3{
+		line-height: 20px;
+		margin: 0;
+	}
+	p{
+		margin: 0;
+		line-height: 20px;
+	}
 }
 
 
-//
+//////////////////////////////
 // Main Title Page
-//
+//////////////////////////////
 
-.sm-dashboard-maintitle{
-    font-size: 24px;
-    font-weight: 500;
+.smsnf-dashboard-maintitle{
+	font-size: 24px;
+	font-weight: 500;
 }
 
 
-//
+//////////////////////////////
 // Subscriber Statistics
-//
+//////////////////////////////
 
-.sm-dashboard-subs-stats .column{
-    position: relative;
+.smsnf-dashboard-subs-stats{
+	position: relative;
+	background-color: $light-color;
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	padding-top: 25px;
+	padding-left: 25px;
+}
+.smsnf-dashboard-subs-stats__icon--today,
+.smsnf-dashboard-subs-stats__icon--total,
+.smsnf-dashboard-subs-stats__icon--bestday{
+	background-position: 0;
+	width: 80px;
+	height: 80px;
+}
+.smsnf-dashboard-subs-stats__icon--today{
+  background: url("https://via.placeholder.com/80x80") no-repeat;
+}
+.smsnf-dashboard-subs-stats__icon--total{
+	background: url("https://via.placeholder.com/80x80") no-repeat;
+}
+.smsnf-dashboard-subs-stats__icon--bestday{
+	background: url("https://via.placeholder.com/80x80") no-repeat;
+}
+.smsnf-dashboard-subs-stats__content{
+	position: absolute;
+	top: 4px;
+	left: 126px;
+	h3 {
+		font-size: 18px;
+		font-weight: normal;
+	}
+	p {
+		font-size: 11px;
+		margin-top: 5px;
+		color: #999;
+	}
+	.smsnf-dashboard-subs-stats__content--result{
+		font-size: 28px;
+		display: inline-block;
+		margin-top: -7px;
+	}
 }
 
-.sm-dashboard-subs-stats--today,
-.sm-dashboard-subs-stats--total,
-.sm-dashboard-subs-stats--bestday{
-    background-color: $light-color;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-    padding-top: 25px;
-    padding-left: 25px;
+.smsnf-dashboard-subs-stats__content .dashicons{
+	vertical-align: text-bottom;
 }
-
-// .sm-dashboard-subs-stats__element{
-//     background-color: $light-color;
-//     box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-//     padding-top: 25px;
-//     padding-left: 25px;
-// }
-
-.sm-dashboard-subs-stats__element__today{
-    background: url("https://via.placeholder.com/80x80") no-repeat;
-    background-position: 0;
-    width: 80px;
-    height: 80px;
-}
-
-.sm-dashboard-subs-stats__element__regists{
-    position: absolute;
-    top: 15px;
-    left: 130px;
-}
-.sm-dashboard-subs-stats__element__regists__title{
-    font-size: 18px;
-    margin: 0;
-}
-.sm-dashboard-subs-stats__element__regists__result{
-    font-size: 28px;
-    margin: 0;
-    margin-top: -7px;
-}
-.sm-dashboard-subs-stats__element__regists__subscribers{
-    font-size: 11px;
-    margin: 0;
-    color: #999;
-}
-.sm-dashboard-subs-stats .dashicons{
-    vertical-align: text-bottom;
-}
-.sm-dashboard-subs-stats .e-goi-tooltiptext {
-    font-size: 14px;
+.smsnf-dashboard-subs-stats__content .e-goi-tooltiptext {
+	font-size: 14px;
 }
 
 
-//
-// Last 5 Subscribers
-//
+//////////////////////////////
+// Last Subscribers table
+//////////////////////////////
 
-.subscriber-form__element{
+.smsnf-dashboard-last-subscribers{
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
     background-color: $light-color;
     border: 1px solid #f3f3f3;
 }
-
-.subscriber-form__element__title,
-.blog-last-post__element__title {
+.smsnf-dashboard-last-subscribers-by-form{
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	background-color: $light-color;
+	border: 1px solid #f3f3f3;
+}
+.smsnf-dashboard-last-subscribers-by-form__table .table{
+	background-color: #fff;
+	border-collapse: unset;
+	padding: 12px 12px;
+	tr td:nth-child(2){
+		text-align: right;
+	}
+}
+.smsnf-dashboard-last-subscribers__title,
+.smsnf-dashboard-subscribers-by-lists__title,
+.smsnf-dashboard-last-subscribers-by-form__title,
+.smsnf-dashboard-blog-last-post__title,
+.smsnf-dashboard-last-email-campaign__title,
+.smsnf-dashboard-last-sms-campaign__title{
     font-size: 1rem;
     padding: 12px;
     color:#333;
@@ -118,42 +133,81 @@
     border-bottom: 1px solid #eeeeee;
     font-weight: 500;
 }
-
-.subscriber-form .table {
+.smsnf-dashboard-last-subscribers .table,
+.smsnf-dashboard-last-email-campaign .table,
+.smsnf-dashboard-last-sms-campaign .table {
     background: #ffffff;
     border-collapse: unset;
     padding: 12px 12px;
 }
-.subscriber-form .table th{
+.smsnf-dashboard-last-subscribers .table th{
    font-weight: normal;
    font-size: 14px;
 }
-
-.subscriber-form .table tbody tr.active, 
+.smsnf-dashboard-last-subscribers .table tbody tr.active, 
 .table.table-striped tbody tr.active{
     background: #ffffff
 }
-.subscriber-form-table td:nth-child(2){
-    text-align: right;
+
+
+//////////////////////////////
+// Subscribers by List
+//////////////////////////////
+
+// Chart JS  
+.smsnf-dashboard-last-email-campaign__chart,
+.smsnf-dashboard-subscribers-by-lists__chart,
+.smsnf-dashboard-last-sms-campaign__chart{
+	background-clip: border-box;
+	background-color: #fff;
+	min-width: 0;
+	padding: 0 10px 10px 10px;
+	position: relative;
+	word-wrap: break-word;
 }
 
+.smsnf-dashboard-subscribers-by-lists__content{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: baseline;
+	padding:10px;
+	p{
+		font-size: 16px;
+		span{
+				font-weight: bold;
+		}
+	}
+	select{
+		border: 1px solid #ddd;
+		font-size: 14px;
+		height: 35px;
+		width: 158px;
+		box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
+		color: #888;
+		&:hover{
+			background-color: #eee;
+			box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
+		}
+	}
+}
 
-//
+//////////////////////////////
 // Blog Post's
-//
+//////////////////////////////
 
-.blog-last-post{
+.smsnf-dashboard-blog-last-post{
     background-color: #ffffff;
 }
-.blog-last-post__content{
+.smsnf-dashboard-blog-last-post__content{
     padding: 10px 20px;
 }
-.blog-last-post__content div:first-child{
+.smsnf-dashboard-blog-last-post__content div:first-child{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.blog-last-post__content small{
+.smsnf-dashboard-blog-last-post__content small{
     text-decoration: uppercase;
     background-color: #eee;
     border: 1px solid #dedede;
@@ -161,55 +215,15 @@
     padding: 2px 15px;
     border-radius: 40px;
 }
-
-.blog-last-post__content a{
+.smsnf-dashboard-blog-last-post__content a{
     text-decoration: none;
     color: #333;
 }
-
-.blog-last-post__content__title{
+.smsnf-dashboard-blog-last-post__content__title{
     font-size: 20px;
     line-height: 26px;
     margin: 10px 0 0 0;
 }
-
-//
-// Subscribers-by-list
-//
-
-.canvas-container{
-    background-clip: border-box;
-    background-color: #fff;
-    min-width: 0;
-    padding: 0 10px 10px 10px;
-    position: relative;
-    word-wrap: break-word;
+.smsnf-dashboard-blog-last-post__content__description{
+	font-size: 0.9rem;
 }
-.subscribers-by-list{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
-    padding:10px;
-}
-.subscribers-by-list p{
-    font-size: 16px;
-    span{
-        font-weight: bold;
-    }
-}
-
-.subscribers-by-list select{ 
-    border: 1px solid #ddd;
-    font-size: 14px;
-    height: 35px;
-    width: 158px;
-    box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
-    color: #888;
-    &:hover{
-        background-color: #eee;
-        box-shadow: 0 2px 4px 0 rgba(181,181,181,.3);
-    }
-}
-
-
