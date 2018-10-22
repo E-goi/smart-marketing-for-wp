@@ -31,6 +31,14 @@
                         <h3>Upgrade da Conta</h3>
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
                     </div>
+                    <div class="smsnf-dashboard-notifications__btn">
+                        <a type="button" id=""> 
+						    <?php echo __('Hide notification', 'egoi-for-wp');?>
+						</a>
+                        <a type="button" id="" class="button button-primary"> 
+						    <?php echo __('Upgrade', 'egoi-for-wp');?>
+						</a>
+                    </div>
                 </div>
             </div>
 
@@ -55,8 +63,8 @@
                 <div class="smsnf-dashboard-subs-stats">
                     <div class="smsnf-dashboard-subs-stats__icon--total"><!-- Icon --></div>
                     <div class="smsnf-dashboard-subs-stats__content">
-                        <h3>Registos efetuados hoje</h3>
-                        <span class="smsnf-dashboard-subs-stats__content--result">123</span>
+                        <h3>Total de Subscritores</h3>
+                        <span class="smsnf-dashboard-subs-stats__content--result">12312</span>
                     </div>
                 </div>
             </div>
@@ -73,7 +81,7 @@
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                                 </span>
                             </span>
-                         <span class="smsnf-dashboard-subs-stats__content--result">8 de Agosto de 2018</span>
+                         <span class="smsnf-dashboard-subs-stats__content--result">8 Ago 2018</span>
                          <p>Total de 23 Subscrições</p> 
                     </div>
                 </div>
@@ -139,7 +147,6 @@
                             <p>Total de Subscritores: <span>1223</span></p>
                             <div>
                                 <select>
-                                    <option value="-- Select the list --">-- Select the list --</option>
                                     <option value="Lista A">Lista A</option>
                                     <option value="Lista B">Lista B</option>
                                     <option value="Lista C">Lista C</option>
@@ -217,7 +224,7 @@
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <td>Formulário ABC</td>
+                                    <td>Formulário ABC asdasd asd asd asd as dasd asdasdasasdasd</td>
                                     <td>56756743</td>
                                 </tr>
                                 <tr>
@@ -269,9 +276,11 @@
                             Conheça as 4 principais tendências de marketing digital para 2019
                             </h4>
                         </a>
-                        <p class="smsnf-dashboard-blog-last-post__content__description">
-                            Será que o seu negócio está atento às tendências do marketing digital para inovar e sair na frente da concorrência? Com o início do ano que se aproxima...
-                        </p>
+                        <a href="">
+                            <p class="smsnf-dashboard-blog-last-post__content__description">
+                                Será que o seu negócio está atento às tendências do marketing digital para inovar e sair na frente da concorrência? Com o início do ano que se aproxima...
+                            </p>
+                        </a>
                         <hr>
                     </div>
                     <div class="smsnf-dashboard-blog-last-post__content">
@@ -284,9 +293,11 @@
                             Conheça as 4 principais tendências de marketing digital para 2019
                             </h4>
                         </a>
-                        <p class="smsnf-dashboard-blog-last-post__content__description">
-                            Será que o seu negócio está atento às tendências do marketing digital para inovar e sair na frente da concorrência? Com o início do ano que se aproxima...
-                        </p>
+                        <a href="">
+                            <p class="smsnf-dashboard-blog-last-post__content__description">
+                                Será que o seu negócio está atento às tendências do marketing digital para inovar e sair na frente da concorrência? Com o início do ano que se aproxima...
+                            </p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -309,10 +320,24 @@
             datasets: [
                 {
                 label: "Nº de Subscritores",
-                backgroundColor: ["#00aeea", "#19b6ec","#32beee","#4cc6f0","#66cef2", "#7fd6f4"],
-                hoverBackgroundColor: ["#009cd2", "#009cd2","#009cd2","#009cd2","#009cd2","#009cd2"],
+                backgroundColor: [
+                    "rgba(0, 174, 218, 0.4)", 
+                    "rgba(0, 174, 218, 0.4)",
+                    "rgba(0, 174, 218, 0.4)",
+                    "rgba(0, 174, 218, 0.4)",
+                    "rgba(0, 174, 218, 0.4)",
+                    "rgba(0, 174, 218, 0.4)"
+                ],
+                hoverBackgroundColor: [
+                    "rgba(0, 174, 218, 0.5)", 
+                    "rgba(0, 174, 218, 0.5)",
+                    "rgba(0, 174, 218, 0.5)",
+                    "rgba(0, 174, 218, 0.5)",
+                    "rgba(0, 174, 218, 0.5)",
+                    "rgba(0, 174, 218, 0.5)"
+                ],
                 data: [300,800,600,200,120,150],
-                borderWidth: 2,
+                borderWidth: 0,
                 hoverBorderWidth: 0
                 }
             ]
@@ -367,22 +392,20 @@
             labels: ["Abertura", "Cliques", "Bounces", "Remoções", "Queixas"],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [12, 19, 3, 5, 2],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(0, 174, 218, 0.4)',
+                    'rgba(147, 189, 77, 0.3)',
+                    'rgba(246, 116, 73, 0.3)',
+                    'rgba(250, 70, 19, 0.4)',
+                    'rgba(237, 60, 47, 0.6)'
                 ],
                 borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgba(0, 174, 218, 0.5)',
+                    'rgba(147, 189, 77, 0.4)',
+                    'rgba(246, 116, 73, 0.4)',
+                    'rgba(242, 91, 41, 0.5)',
+                    'rgba(237, 60, 47, 0.7)'
                 ],
                 borderWidth: 1
             }]
@@ -417,14 +440,14 @@
             labels: ["Entregues", "Não Entregues"],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19],
+                data: [1020, 100],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgba(147, 189, 77, 0.3)',
+                    'rgba(250, 70, 19, 0.4)'
                 ],
                 borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
+                    'rgba(147, 189, 77, 0.4)',
+                    'rgba(250, 70, 19, 0.5)'
                 ],
                 borderWidth: 1
             }]
