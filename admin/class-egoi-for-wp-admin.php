@@ -1911,11 +1911,9 @@ class Egoi_For_Wp_Admin {
     public function smsnf_get_form_susbcribers_total($period = 'ever') {
         global $wpdb;
 
-        $table = $wpdb->prefix.'egoi_form_subscribers';
-
         $today = date('Y-m-d');
 
-        $sql = "SELECT COUNT(*) as total FROM $table ";
+        $sql = "SELECT COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers ";
 
         if ($period == 'today') {
             return $wpdb->get_row($sql." WHERE created_at BETWEEN '$today' AND '".date('Y-m-d', strtotime($today. ' +1 day'))."' ");
@@ -1925,5 +1923,52 @@ class Egoi_For_Wp_Admin {
         return false;
     }
 
-    //public function smsnf_get_
+    public function smsnf_get_form_subscribers_best_day() {
+        global $wpdb;
+
+        $sql = "SELECT DATE(created_at) date, COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers GROUP BY date ORDER BY total DESC ";
+
+        return $wpdb->get_row($sql);
+    }
+
+    public function smsnf_get_form_subscribers_last($num = 5) {
+        global $wpdb;
+
+        $sql = " SELECT * FROM {$wpdb->prefix}egoi_form_subscribers ORDER BY created_at DESC LIMIT $num";
+
+        return $wpdb->get_results($sql);
+    }
+
+    public function smsnf_get_form_subscriber_total_by($type) {
+        global $wpdb;
+
+        $sql = " SELECT {$type}_id $type, COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers GROUP BY {$type}_id ";
+
+        return $wpdb->get_results($sql);
+    }
+
+    public function smsnf_get_form_subscribers_list($list, $period = 6) {
+        global $wpdb;
+
+        $period--;
+        $start_day = date('Y-m', strtotime(date(). ' -'.$period.' month')).'-01';
+
+        $sql = " SELECT list_id list, MONTH(created_at) month, YEAR(created_at) year, COUNT(*) total 
+            FROM {$wpdb->prefix}egoi_form_subscribers 
+            WHERE  created_at >= '$start_day' 
+            GROUP BY list_id, month, year ORDER BY list, year, month";
+
+        $total_subscribers = array();
+        $query = $wpdb->get_results($sql);
+
+        for ($i=0; $i<=$period; $i++) {
+            $month = date('n', strtotime($start_day.' +'.$i.' month'));
+            var_dump($month);
+        }
+        foreach ($wpdb->get_results($sql) as $row) {
+            $total_subscribers[$row->list][$row->month] = $row->total;
+        }
+        return $total_subscribers;
+    }
+
 }
