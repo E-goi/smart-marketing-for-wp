@@ -10,10 +10,10 @@
 	display: flex;
 	align-items: center;
   border-left: 3px solid rgb(0,174,218) !important;
-  padding: 16px 38px 16px 16px;
+  padding: 12px 38px 9px 12px;
 }
 .smsnf-dashboard-notifications__img--upgrade {
-	background: url("../img/64x64.png") no-repeat;
+	background: url("../img/upgrade-icon.png") no-repeat;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -24,12 +24,16 @@
 	padding: 0 4px;
 	color:#333;
 	h3{
-		line-height: 20px;
-		margin: 0;
+		line-height: 26px;
+    margin: 0;
+    font-size: 20px;
+    font-family:'Montserrat', sans-serif;
 	}
 	p{
-		margin: 0;
-		line-height: 20px;
+		margin-top: 0;
+    line-height: 20px;
+    color: #666666;
+    font-size: 16px;
 	}
 }
 .smsnf-dashboard-notifications__btn{
@@ -37,6 +41,8 @@
   display: flex;
   align-items: center;
   margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   a:first-child{
     display: inline-block;
     margin-right: 20px;
@@ -147,6 +153,7 @@
   padding: 12px 12px;
   tr td:first-child{
     font-size: 0.9rem;
+    line-height: 20px;
   }
 	tr td:nth-child(2){
     text-align: right;
@@ -168,14 +175,6 @@
 .smsnf-dashboard-last-subscribers .table tbody tr.active, 
 .table.table-striped tbody tr.active{
     background: #ffffff
-}
-
-.smsnf-dashboard-last-subscribers-by-form__table 
-table tr td:first-child{
-  max-width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .smsnf-dashboard-last-subscribers__title,
@@ -284,6 +283,10 @@ table tr td:first-child{
   color: #666;
 }
 
+.smsnf-dashboard-last-email-campaign__totalsend,
+.smsnf-dashboard-last-sms-campaign__totalsend{
+  font-weight: bold;
+}
 
 //////////////////////////////
 // Media Queries
@@ -291,7 +294,7 @@ table tr td:first-child{
 
 @media screen and (min-width: 841px) and (max-width: 1054px) {
   .smsnf-dashboard-subs-stats__content--result{
-    font-size: 24px !important;
+    font-size: 20px !important;
    }
 }
 
@@ -302,7 +305,7 @@ table tr td:first-child{
   }
 }
 
-@media screen and (min-width: 400px) and (max-width: 650px) {
+@media screen and (min-width: 300px) and (max-width: 650px) {
   .smsnf-dashboard-notifications{
     flex-direction: column;
     text-align: center;
@@ -315,7 +318,13 @@ table tr td:first-child{
       margin: 0 auto;
     }
   }
-}
+  .smsnf-dashboard-notifications.notice.is-dismissible{
+    padding-right: 12px !important;
+    }
+  }
+
+
+
 
 
 //////////////////////////////
@@ -330,4 +339,23 @@ table tr td:first-child{
 .smsnf-dashboard .table tbody tr:last-child td {
   border-bottom: 0;
 }
-
+.button-smsnf-primary{
+  font-size: 16px !important;
+  background-color: #00aeda !important;
+  border-radius: 5px !important; 
+  color: #fff !important;
+  padding: 10px 18px !important;
+  text-decoration: none !important;
+  text-transform: uppercase !important;
+  -webkit-appearance: inherit !important;
+  -moz-appearance: inherit !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  &:hover{
+    background-color:#00718e !important;
+  }
+}
+.smsnf-dashboard-notifications__img .avatar.avatar-xl{
+  height: 4.2rem;
+  width: 4.2rem;
+}

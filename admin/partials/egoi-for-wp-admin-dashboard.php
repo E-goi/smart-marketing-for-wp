@@ -32,10 +32,10 @@
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
-                        <a type="button" id=""> 
+                        <a class="hide-sm hide-xs" type="button" id=""> 
 						    <?php echo __('Hide notification', 'egoi-for-wp');?>
 						</a>
-                        <a type="button" id="" class="button button-primary"> 
+                        <a type="button" id="" class="button-smsnf-primary"> 
 						    <?php echo __('Upgrade', 'egoi-for-wp');?>
 						</a>
                     </div>
@@ -100,38 +100,44 @@
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Formulário</th>
+                                <th class="hide-xs">Data</th>
                                 <th>Lista</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="active">
+                            <tr>
                                 <td>Maria Almeida</td>
                                 <td>mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                             <tr>
                                 <td>Maria Almeida</td>
                                 <td>mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
-                                <td>Marketing</td>
-                            </tr>
-                            <tr class="active">
-                                <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
-                                <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                             <tr>
                                 <td>Maria Almeida</td>
                                 <td>mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
-                            <tr class="active">
+                            <tr>
                                 <td>Maria Almeida</td>
                                 <td>mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
+                                <td>Marketing</td>
+                            </tr>
+                            <tr>
+                                <td>Maria Almeida</td>
+                                <td>mariaalmeida@e-goi.com</td>
+                                <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                         </tbody>
@@ -176,7 +182,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
-                                        <td>2312</td>
+                                        <td class="smsnf-dashboard-last-email-campaign__totalsend">2312</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -201,7 +207,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
-                                        <td>321</td>
+                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend">321</td>
                                     </tr>
                                 </tbody>
                             </table>
