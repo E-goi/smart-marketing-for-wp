@@ -6142,7 +6142,7 @@ div.eg-dropdown {
 
 .smsnf-dashboard-notifications__copy h3 {
   font-family: "Montserrat", sans-serif; 
-  font-size: 20px;
+  font-size: 23px;
   line-height: 26px;
   margin: 0;
 }
@@ -6183,37 +6183,37 @@ div.eg-dropdown {
 
 .smsnf-dashboard-subs-stats {
   background-color: #fff;
-  border-radius: 3px; 
+  border-radius: 3px;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-  padding-left: 25px;
-  padding-top: 25px;
+  padding: 10px 25px; 
+  position: relative;
   position: relative;
 }
 
 .smsnf-dashboard-subs-stats__icon--today,
 .smsnf-dashboard-subs-stats__icon--total,
 .smsnf-dashboard-subs-stats__icon--bestday {
-  background-position: 0;
-  height: 80px; 
-  width: 80px;
+  background-position: center center;
+  height: 100px; 
+  width: 100px;
 }
 
 .smsnf-dashboard-subs-stats__icon--today {
-  background: url("https://via.placeholder.com/80x80") no-repeat;
+  background: url("../img/subscribers-today.png") no-repeat;
 }
 
 .smsnf-dashboard-subs-stats__icon--total {
-  background: url("https://via.placeholder.com/80x80") no-repeat;
+  background: url("../img/total-subscribers.png") no-repeat;
 }
 
 .smsnf-dashboard-subs-stats__icon--bestday {
-  background: url("https://via.placeholder.com/80x80") no-repeat;
+  background: url("../img/bestday.png") no-repeat;
 }
 
 .smsnf-dashboard-subs-stats__content {
-  left: 126px; 
+  left: 156px;
   position: absolute;
-  top: 4px;
+  top: 8px;
 }
 
 .smsnf-dashboard-subs-stats__content h3 {

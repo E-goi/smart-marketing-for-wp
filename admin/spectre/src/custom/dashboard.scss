@@ -26,7 +26,7 @@
 	h3{
 		line-height: 26px;
     margin: 0;
-    font-size: 20px;
+    font-size: 23px;
     font-family:'Montserrat', sans-serif;
 	}
 	p{
@@ -71,31 +71,32 @@
 .smsnf-dashboard-subs-stats{
 	position: relative;
 	background-color: $light-color;
-	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-	padding-top: 25px;
-  padding-left: 25px;
   border-radius: 3px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+  position: relative;
+  padding: 10px 25px;
 }
+
 .smsnf-dashboard-subs-stats__icon--today,
 .smsnf-dashboard-subs-stats__icon--total,
 .smsnf-dashboard-subs-stats__icon--bestday{
-	background-position: 0;
-	width: 80px;
-	height: 80px;
+  background-position: center center;
+  width: 100px;
+	height: 100px;
 }
 .smsnf-dashboard-subs-stats__icon--today{
-  background: url("https://via.placeholder.com/80x80") no-repeat;
+  background: url("../img/subscribers-today.png") no-repeat;
 }
 .smsnf-dashboard-subs-stats__icon--total{
-	background: url("https://via.placeholder.com/80x80") no-repeat;
+	background: url("../img/total-subscribers.png") no-repeat;
 }
 .smsnf-dashboard-subs-stats__icon--bestday{
-	background: url("https://via.placeholder.com/80x80") no-repeat;
+	background: url("../img/bestday.png") no-repeat;
 }
 .smsnf-dashboard-subs-stats__content{
-	position: absolute;
-	top: 4px;
-	left: 126px;
+  left: 156px;
+  position: absolute;
+  top: 8px;
 	h3 {
 		font-size: 16px;
     font-weight: normal;
