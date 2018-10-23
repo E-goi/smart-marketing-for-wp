@@ -3,12 +3,21 @@
 <div class="container">
   <div class="columns">
     <div class="column">
-        <h1 class="logo">Smart Marketing - <?php _e( 'Dashboard', 'egoi-for-wp' ); ?></h1>
+        <div class="smsnf-header">
+            <span class="smsnf-header__logo"></span>
+            <h1><?php _e( 'Dashboard', 'egoi-for-wp' ); ?></h1>
+        </div>
             <div class="breadcrumbs">
-                <span class="prefix"><?php echo __( 'You are here: ', 'egoi-for-wp' ); ?></span>
-                    <strong>Smart Marketing</a> &rsaquo;
-                        <span class="current-crumb"><?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
-                    </strong>
+                <span class="prefix">
+                    <?php echo __( 'You are here: ', 'egoi-for-wp' ); ?>
+                </span>    
+                    <a href="#">
+                        <strong>Smart Marketing</a> &rsaquo;
+                            <a href="#">
+                                <span class="current-crumb">
+                                <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
+                            </a>
+                        </strong>
                 </span>
             </div>
         <hr/>
@@ -21,7 +30,7 @@
     <div class="container">
         <div class="columns">
 
-            <!-- Notifications -->
+            <!-- Notifications | Upgrade Account -->
             <div class="column col-12">
                 <div class="smsnf-dashboard-notifications notice is-dismissible">
                     <div class="smsnf-dashboard-notifications__img">
@@ -32,10 +41,31 @@
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
-                        <a type="button" id=""> 
+                        <a class="hide-sm hide-xs" type="button" id=""> 
 						    <?php echo __('Hide notification', 'egoi-for-wp');?>
 						</a>
-                        <a type="button" id="" class="button button-primary"> 
+                        <a type="button" id="" class="button-smsnf-primary"> 
+						    <?php echo __('Upgrade', 'egoi-for-wp');?>
+						</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notifications | Account -->
+            <div class="column col-12">
+                <div class="smsnf-dashboard-notifications notice is-dismissible">
+                    <div class="smsnf-dashboard-notifications__img">
+                        <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--limit"></figure>
+                    </div>
+                    <div class="smsnf-dashboard-notifications__copy">
+                        <h3>Já atingiu 80% do seu saldo disponível</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
+                    </div>
+                    <div class="smsnf-dashboard-notifications__btn">
+                        <a class="hide-sm hide-xs" type="button" id=""> 
+						    <?php echo __('Hide notification', 'egoi-for-wp');?>
+						</a>
+                        <a type="button" id="" class="button-smsnf-primary"> 
 						    <?php echo __('Upgrade', 'egoi-for-wp');?>
 						</a>
                     </div>
@@ -74,20 +104,20 @@
                 <div class="smsnf-dashboard-subs-stats">
                     <div class="smsnf-dashboard-subs-stats__icon--bestday"><!-- Icon --></div>
                     <div class="smsnf-dashboard-subs-stats__content">
-                        <h3 class="d-inline-block">Melhor dia</h3>
-                            <span class="e-goi-tooltip">
+                        <h3 class="d-inline-block">Melhor dia <span class="e-goi-tooltip">
                                 <span class="dashicons dashicons-editor-help"></span>
                                 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                                 </span>
                             </span>
+                        </h3>
                          <span class="smsnf-dashboard-subs-stats__content--result">8 Ago 2018</span>
                          <p>Total de 23 Subscrições</p> 
                     </div>
                 </div>
             </div>
 
-            <!-- Last Subscribers table / Subscribers by List / Last Email Campaign -->
+            <!-- Last Subscribers table / Subscribers by List / Account / Last Email Campaign -->
             <div class="column col-8 col-md-12 col-xs-12">
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">
@@ -97,41 +127,47 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Username</th>
-                                <th>Email</th>
+                                <th>Name</th>
+                                <th class="hide-xs">Email</th>
                                 <th>Formulário</th>
+                                <th class="hide-xs">Data</th>
                                 <th>Lista</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="active">
+                            <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                             <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
-                                <td>Marketing</td>
-                            </tr>
-                            <tr class="active">
-                                <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
-                                <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                             <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
-                            <tr class="active">
+                            <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
+                                <td>Marketing</td>
+                            </tr>
+                            <tr>
+                                <td>Maria Almeida</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
+                                <td>Captação de Leads</td>
+                                <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                         </tbody>
@@ -144,7 +180,10 @@
                     </div>
                     <div class="smsnf-dashboard-subscribers-by-lists__chart">
                         <div class="smsnf-dashboard-subscribers-by-lists__content">
-                            <p>Total de Subscritores: <span>1223</span></p>
+                            <p>Total 
+                                <span class="hide-xs">de Subscritores:</span>
+                                <span>1223</span>
+                            </p>
                             <div>
                                 <select>
                                     <option value="Lista A">Lista A</option>
@@ -158,7 +197,24 @@
                 </div>
                 
                 <div class="columns">
-                    <div class="column col-6 col-ml-auto col-xs-12 col-md-12">
+                    <div class="column col-6 col-xs-12 col-md-12">
+                        <!-- Account -->
+                        <div class="smsnf-dashboard-account mt-3">
+                            <div class="smsnf-dashboard-account__title">
+                                A sua conta
+                            </div>
+                            <div class="smsnf-dashboard-account__content">
+                                <div class="smsnf-dashboard-account__install-addon"></div>
+                                <p>Envie notificações SMS aos seus clientes e 
+                                administradores por cada alteração ao estado da encomenda no
+                                seu wooCommerce</p>
+                                <a type="button" id="" class="button-smsnf-primary"> 
+						            <?php echo __('Upgrade', 'egoi-for-wp');?>
+						        </a>
+                            </div>
+                        </div>
+                     </div>            
+                    <div class="column col-6 col-xs-12 col-md-12">
                         <!-- Last Email Campaign --> 
                         <div class="smsnf-dashboard-last-email-campaign mt-3">
                             <div class="smsnf-dashboard-last-email-campaign__title">
@@ -176,7 +232,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
-                                        <td>2312</td>
+                                        <td class="smsnf-dashboard-last-email-campaign__totalsend">2312</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -201,7 +257,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
-                                        <td>321</td>
+                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend">321</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -246,18 +302,6 @@
                                 <tr>
                                     <td>Formulário WERW</td>
                                     <td>123123</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>12321</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>123123</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>12321</td>
                                 </tr>
                             </tbody>
                         </table>
