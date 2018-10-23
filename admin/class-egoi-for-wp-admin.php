@@ -1981,4 +1981,14 @@ class Egoi_For_Wp_Admin {
         return $total_subscribers;
     }
 
+    public function smsnf_get_blog_posts($num_items = 2) {
+        $feed = fetch_feed('https://blog.e-goi.pt/feed/');
+
+        if (!is_wp_error($feed)) {
+            $num_items = $feed->get_item_quantity( $num_items );
+            return $feed->get_items(0, $num_items);
+        }
+        return false;
+    }
+
 }
