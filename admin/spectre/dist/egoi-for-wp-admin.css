@@ -6146,7 +6146,7 @@ div.eg-dropdown {
 
 .smsnf-dashboard-notifications__copy h3 {
   font-family: "Montserrat", sans-serif; 
-  font-size: 23px;
+  font-size: 18px;
   line-height: 26px;
   margin: 0;
 }
@@ -6181,8 +6181,11 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-maintitle {
-  font-size: 24px;
-  font-weight: 500;
+  color: #333;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+  padding: 0;
 }
 
 .smsnf-dashboard-subs-stats {
@@ -6291,7 +6294,8 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-last-subscribers-by-form__table .table tr td:nth-child(2) {
-  font-size: 1rem; 
+  color: #00aeda; 
+  font-size: 1rem;
   text-align: right;
 }
 
@@ -6554,14 +6558,31 @@ div.eg-dropdown {
   padding: 20px;
 }
 
-@media screen and (min-width: 400px) and (max-width: 450px) {
+@media screen and (min-width: 350px) and (max-width: 450px) {
   .smsnf-header h1 {
-    font-size: 24px !important;
+    font-size: 21px !important;
   }
 }
 
 @media (min-width: 960px) {
-  .breadcrumbs {
+  .smsnf-header__breadcrumbs {
     display: none;
   }
+}
+
+.flexteste {
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.grp-1 {
+  -ms-flex-order: 10;
+  order: 10;
+}
+
+.grp-2 {
+  -ms-flex-order: 20;
+  order: 20;
 }

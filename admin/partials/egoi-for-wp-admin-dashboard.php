@@ -5,21 +5,20 @@
     <div class="column">
         <div class="smsnf-header">
             <span class="smsnf-header__logo"></span>
-            <h1><?php _e( 'Dashboard', 'egoi-for-wp' ); ?></h1>
+            <h1>Smart Marketing - <?php _e( 'Dashboard', 'egoi-for-wp' ); ?></h1>
         </div>
-            <div class="breadcrumbs">
-                <span class="prefix">
-                    <?php echo __( 'You are here: ', 'egoi-for-wp' ); ?>
-                </span>    
-                    <a href="#">
-                        <strong>Smart Marketing</a> &rsaquo;
-                            <a href="#">
-                                <span class="current-crumb">
-                                <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
-                            </a>
-                        </strong>
-                </span>
-            </div>
+        <div class="smsnf-header__breadcrumbs">
+            <span class="prefix">
+                <?php echo __( 'You are here: ', 'egoi-for-wp' ); ?>
+            </span>    
+                    <strong>Smart Marketing</a> &rsaquo;
+                        <a href="#">
+                            <span class="current-crumb">
+                            <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
+                        </a>
+                    </strong>
+            </span>
+        </div>
         <hr/>
     </div>
   </div>
@@ -117,7 +116,8 @@
                 </div>
             </div>
 
-            <!-- Last Subscribers table / Subscribers by List / Account / Last Email Campaign -->
+            <!-- Column Left Start -->
+            <!-- Last Subscribers table / Subscribers by List / Account / Subscribers by Form / Last Email Campaign -->
             <div class="column col-8 col-md-12 col-xs-12">
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">
@@ -173,31 +173,30 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- Subscribers by List -->
-                <div class="smsnf-dashboard-subscribers-by-lists mt-3">
-                    <div class="smsnf-dashboard-subscribers-by-lists__title">
-                        Subscritores por Listas
-                    </div>
-                    <div class="smsnf-dashboard-subscribers-by-lists__chart">
-                        <div class="smsnf-dashboard-subscribers-by-lists__content">
-                            <p>Total 
-                                <span class="hide-xs">de Subscritores:</span>
-                                <span>1223</span>
-                            </p>
-                            <div>
-                                <select>
-                                    <option value="Lista A">Lista A</option>
-                                    <option value="Lista B">Lista B</option>
-                                    <option value="Lista C">Lista C</option>
-                                </select>
+                <div class="columns">
+                    <div class="column col-6 col-md-12 col-xs-12">
+                        <!-- Subscribers by List -->
+                        <div class="smsnf-dashboard-subscribers-by-lists mt-3">
+                            <div class="smsnf-dashboard-subscribers-by-lists__title">
+                                Subscritores por Listas
+                            </div>
+                            <div class="smsnf-dashboard-subscribers-by-lists__chart">
+                                <div class="smsnf-dashboard-subscribers-by-lists__content">
+                                    <p>Total 
+                                        <span class="hide-xs">de Subscritores:</span>
+                                        <span>1223</span>
+                                    </p>
+                                    <div>
+                                        <select>
+                                            <option value="Lista A">Lista A</option>
+                                            <option value="Lista B">Lista B</option>
+                                            <option value="Lista C">Lista C</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <canvas id="smsnf-dsbl__lineChart" height="120"></canvas>
                             </div>
                         </div>
-                        <canvas id="smsnf-dsbl__lineChart" height="120"></canvas>
-                    </div>
-                </div>
-                
-                <div class="columns">
-                    <div class="column col-6 col-xs-12 col-md-12">
                         <!-- Account -->
                         <div class="smsnf-dashboard-account mt-3">
                             <div class="smsnf-dashboard-account__title">
@@ -209,35 +208,46 @@
                                 administradores por cada alteração ao estado da encomenda no
                                 seu wooCommerce</p>
                                 <a type="button" id="" class="button-smsnf-primary"> 
-						            <?php echo __('Upgrade', 'egoi-for-wp');?>
-						        </a>
+                                    <?php echo __('Upgrade', 'egoi-for-wp');?>
+                                </a>
                             </div>
                         </div>
-                     </div>            
-                    <div class="column col-6 col-xs-12 col-md-12">
-                        <!-- Last Email Campaign --> 
-                        <div class="smsnf-dashboard-last-email-campaign mt-3">
-                            <div class="smsnf-dashboard-last-email-campaign__title">
-                                Última campanha de Email Enviada
+                    </div>
+                    <div class="column col-6 col-md-12 col-xs-12">
+                        <!-- Subscribers by Form -->
+                        <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
+                            <div class="smsnf-dashboard-last-subscribers-by-form__title">
+                                Subscritores por Formulário
                             </div>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>Nome</td>
-                                        <td>Curso de HTML Avançado</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ID</td>
-                                        <td>20192</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total de Envios</td>
-                                        <td class="smsnf-dashboard-last-email-campaign__totalsend">2312</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="smsnf-dashboard-last-email-campaign__chart">
-                                <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
+                            <div class="smsnf-dashboard-last-subscribers-by-form__table">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Formulário ABCFGHHGJ</td>
+                                            <td>56756743</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Formulário SDFA</td>
+                                            <td>1231231</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Formulário TRY</td>
+                                            <td>345345</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Formulário WERW</td>
+                                            <td>123123</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Formulário WERW</td>
+                                            <td>12321</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Formulário WERW</td>
+                                            <td>123123</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <!-- Last SMS Campaign --> 
@@ -265,48 +275,37 @@
                                 <canvas id="smsnf-dlsc__doughnutChart" height="120"></canvas>
                             </div>
                         </div>
+                        <!-- Last Email Campaign --> 
+                        <div class="smsnf-dashboard-last-email-campaign mt-3">
+                            <div class="smsnf-dashboard-last-email-campaign__title">
+                                Última campanha de Email Enviada
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>Curso de HTML Avançado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>20192</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total de Envios</td>
+                                        <td class="smsnf-dashboard-last-email-campaign__totalsend">2312</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="smsnf-dashboard-last-email-campaign__chart">
+                                <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Subscribers by Form and Blog Post's -->
+                </div><!-- /columns -->
+            </div> <!-- /col-8 -->
+
+            <!-- Column Right Start -->
             <div class="column col-4 col-md-12 col-xs-12">
-                <!-- Subscribers by Form -->
-                <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
-                    <div class="smsnf-dashboard-last-subscribers-by-form__title">
-                        Subscritores por Formulário
-                    </div>
-                    <div class="smsnf-dashboard-last-subscribers-by-form__table">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td>Formulário ABC asdasd asd asd asd as dasd asdasdasasdasd</td>
-                                    <td>56756743</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário SDFA</td>
-                                    <td>1231231</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário TRY</td>
-                                    <td>345345</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>123123</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>12321</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>123123</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
@@ -345,10 +344,12 @@
                     </div>
                 </div>
             </div>
-            
+
         </div><!-- / Columns -->
     </div><!-- / Container -->
 </div><!-- / Wrap -->
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 

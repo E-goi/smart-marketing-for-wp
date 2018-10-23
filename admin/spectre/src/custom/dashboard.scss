@@ -30,7 +30,7 @@
 	h3{
 		line-height: 26px;
     margin: 0;
-    font-size: 23px;
+    font-size: 18px;
     font-family:'Montserrat', sans-serif;
 	}
 	p{
@@ -63,8 +63,11 @@
 //////////////////////////////
 
 .smsnf-dashboard-maintitle{
-	font-size: 24px;
-	font-weight: 500;
+  color: #333;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+  padding: 0px;
 }
 
 
@@ -167,6 +170,7 @@
 	tr td:nth-child(2){
     text-align: right;
     font-size: 1rem;
+    color:rgb(0, 174, 218);
 	}
 }
 
@@ -238,7 +242,7 @@
 		}
 	}
 	select{
-		border: 1px solid rgba(0, 174, 218, 1);
+		border: 1px solid rgb(0, 174, 218);
 		font-size: 14px;
 		height: 35px;
 		width: 158px;
@@ -421,14 +425,24 @@
 }
 
 
-@media screen and (min-width: 400px) and (max-width: 450px) {
+@media screen and (min-width: 350px) and (max-width: 450px) {
   .smsnf-header h1{
-    font-size: 24px !important;
+    font-size: 21px !important;
    }
 }
 
 @media (min-width:960px){
-  .breadcrumbs{
+  .smsnf-header__breadcrumbs{
     display: none;
   }
+}
+
+.flexteste{
+  display: flex; flex-direction: column;
+}
+.grp-1{
+  order: 10;
+}
+.grp-2{
+  order: 20;
 }
