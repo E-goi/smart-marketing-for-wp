@@ -30,7 +30,7 @@
     <div class="container">
         <div class="columns">
 
-            <!-- Notifications -->
+            <!-- Notifications | Upgrade Account -->
             <div class="column col-12">
                 <div class="smsnf-dashboard-notifications notice is-dismissible">
                     <div class="smsnf-dashboard-notifications__img">
@@ -38,6 +38,27 @@
                     </div>
                     <div class="smsnf-dashboard-notifications__copy">
                         <h3>Upgrade da Conta</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
+                    </div>
+                    <div class="smsnf-dashboard-notifications__btn">
+                        <a class="hide-sm hide-xs" type="button" id=""> 
+						    <?php echo __('Hide notification', 'egoi-for-wp');?>
+						</a>
+                        <a type="button" id="" class="button-smsnf-primary"> 
+						    <?php echo __('Upgrade', 'egoi-for-wp');?>
+						</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notifications | Account -->
+            <div class="column col-12">
+                <div class="smsnf-dashboard-notifications notice is-dismissible">
+                    <div class="smsnf-dashboard-notifications__img">
+                        <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--limit"></figure>
+                    </div>
+                    <div class="smsnf-dashboard-notifications__copy">
+                        <h3>Já atingiu 80% do seu saldo disponível</h3>
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
@@ -90,14 +111,13 @@
                                 </span>
                             </span>
                         </h3>
-                            
                          <span class="smsnf-dashboard-subs-stats__content--result">8 Ago 2018</span>
                          <p>Total de 23 Subscrições</p> 
                     </div>
                 </div>
             </div>
 
-            <!-- Last Subscribers table / Subscribers by List / Last Email Campaign -->
+            <!-- Last Subscribers table / Subscribers by List / Account / Last Email Campaign -->
             <div class="column col-8 col-md-12 col-xs-12">
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">
@@ -177,7 +197,24 @@
                 </div>
                 
                 <div class="columns">
-                    <div class="column col-6 col-ml-auto col-xs-12 col-md-12">
+                    <div class="column col-6 col-xs-12 col-md-12">
+                        <!-- Account -->
+                        <div class="smsnf-dashboard-account mt-3">
+                            <div class="smsnf-dashboard-account__title">
+                                A sua conta
+                            </div>
+                            <div class="smsnf-dashboard-account__content">
+                                <div class="smsnf-dashboard-account__install-addon"></div>
+                                <p>Envie notificações SMS aos seus clientes e 
+                                administradores por cada alteração ao estado da encomenda no
+                                seu wooCommerce</p>
+                                <a type="button" id="" class="button-smsnf-primary"> 
+						            <?php echo __('Upgrade', 'egoi-for-wp');?>
+						        </a>
+                            </div>
+                        </div>
+                     </div>            
+                    <div class="column col-6 col-xs-12 col-md-12">
                         <!-- Last Email Campaign --> 
                         <div class="smsnf-dashboard-last-email-campaign mt-3">
                             <div class="smsnf-dashboard-last-email-campaign__title">
