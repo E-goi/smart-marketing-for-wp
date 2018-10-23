@@ -1947,27 +1947,37 @@ class Egoi_For_Wp_Admin {
         return $wpdb->get_results($sql);
     }
 
-    public function smsnf_get_form_subscribers_list($list, $period = 6) {
+    public function smsnf_get_form_subscribers_list($list = null, $period = 6) {
         global $wpdb;
 
         $period--;
         $start_day = date('Y-m', strtotime(date(). ' -'.$period.' month')).'-01';
 
-        $sql = " SELECT list_id list, MONTH(created_at) month, YEAR(created_at) year, COUNT(*) total 
-            FROM {$wpdb->prefix}egoi_form_subscribers 
-            WHERE  created_at >= '$start_day' 
-            GROUP BY list_id, month, year ORDER BY list, year, month";
+        $sql = " SELECT list_id list, MONTH(created_at) month, YEAR(created_at) year, COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers WHERE  created_at >= '$start_day' ";
+        $sql .= $list ? " AND list_id = '$list' " : null;
+        $sql .= " GROUP BY list_id, month, year ORDER BY list, year, month";
 
-        $total_subscribers = array();
-        $query = $wpdb->get_results($sql);
+        $total_subscribers_flag = $total_subscribers = $lists = array();
+
+        foreach ($wpdb->get_results($sql) as $row) {
+            $total_subscribers_flag[$row->list][$row->month] = $row->total;
+            if (!in_array($row->list, $lists)) {
+                $lists[] = $row->list;
+            }
+        }
 
         for ($i=0; $i<=$period; $i++) {
             $month = date('n', strtotime($start_day.' +'.$i.' month'));
-            var_dump($month);
+
+            foreach ($lists as $list) {
+                if (isset($total_subscribers_flag[$list][$month])) {
+                    $total_subscribers[$list][$month] = $total_subscribers_flag[$list][$month];
+                } else {
+                    $total_subscribers[$list][$month] = 0;
+                }
+            }
         }
-        foreach ($wpdb->get_results($sql) as $row) {
-            $total_subscribers[$row->list][$row->month] = $row->total;
-        }
+
         return $total_subscribers;
     }
 
