@@ -6185,8 +6185,9 @@ div.eg-dropdown {
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-  padding: 10px 25px; 
-  position: relative;
+  display: flex; 
+  display: -ms-flexbox;
+  padding: 10px 25px;
   position: relative;
 }
 
@@ -6211,9 +6212,11 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subs-stats__content {
-  left: 156px;
-  position: absolute;
-  top: 8px;
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-left: 20px;
 }
 
 .smsnf-dashboard-subs-stats__content h3 {
@@ -6247,6 +6250,10 @@ div.eg-dropdown {
 .smsnf-dashboard-subs-stats .dashicons,
 .dashicons-before:before {
   color: lightgray;
+}
+
+.smsnf-dashboard-subs-stats .dashicons:hover {
+  color: #00aeda;
 }
 
 .smsnf-dashboard-last-subscribers,
@@ -6343,7 +6350,7 @@ div.eg-dropdown {
   font-size: 16px;
 }
 
-.smsnf-dashboard-subscribers-by-lists__content p span {
+.smsnf-dashboard-subscribers-by-lists__content p span:nth-child(2) {
   background-color: rgba(0, 174, 218, .1);
   border: 1px solid rgba(0, 174, 218, .3);
   border-radius: 2px;
@@ -6422,9 +6429,15 @@ div.eg-dropdown {
   font-weight: bold;
 }
 
-@media screen and (min-width: 841px) and (max-width: 1054px) {
+@media screen and (min-width: 841px) and (max-width: 1200px) {
   .smsnf-dashboard-subs-stats__content--result {
     font-size: 20px !important;
+  }
+  .smsnf-dashboard-subs-stats__icon--today,
+  .smsnf-dashboard-subs-stats__icon--total,
+  .smsnf-dashboard-subs-stats__icon--bestday {
+    background-position: center center; 
+    background-size: 90%;
   }
 }
 
@@ -6486,4 +6499,39 @@ div.eg-dropdown {
 .smsnf-dashboard-notifications__img .avatar.avatar-xl {
   height: 4.2rem;
   width: 4.2rem;
+}
+
+.smsnf-header {
+  align-items: center;
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-align: center;
+  height: 74px; 
+  width: 100%;
+}
+
+.smsnf-header h1 {
+  color: #333;
+  font-weight: 600;
+  margin-left: 12px;
+  word-spacing: 1px;
+}
+
+.smsnf-header__logo {
+  background: url("../img/logo-2.png") no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 20px;
+}
+
+@media screen and (min-width: 400px) and (max-width: 450px) {
+  .smsnf-header h1 {
+    font-size: 24px !important;
+  }
+}
+
+@media (min-width: 960px) {
+  .breadcrumbs {
+    display: none;
+  }
 }

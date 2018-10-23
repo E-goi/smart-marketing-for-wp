@@ -3,12 +3,21 @@
 <div class="container">
   <div class="columns">
     <div class="column">
-        <h1 class="logo">Smart Marketing - <?php _e( 'Dashboard', 'egoi-for-wp' ); ?></h1>
+        <div class="smsnf-header">
+            <span class="smsnf-header__logo"></span>
+            <h1><?php _e( 'Dashboard', 'egoi-for-wp' ); ?></h1>
+        </div>
             <div class="breadcrumbs">
-                <span class="prefix"><?php echo __( 'You are here: ', 'egoi-for-wp' ); ?></span>
-                    <strong>Smart Marketing</a> &rsaquo;
-                        <span class="current-crumb"><?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
-                    </strong>
+                <span class="prefix">
+                    <?php echo __( 'You are here: ', 'egoi-for-wp' ); ?>
+                </span>    
+                    <a href="#">
+                        <strong>Smart Marketing</a> &rsaquo;
+                            <a href="#">
+                                <span class="current-crumb">
+                                <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
+                            </a>
+                        </strong>
                 </span>
             </div>
         <hr/>
@@ -74,13 +83,14 @@
                 <div class="smsnf-dashboard-subs-stats">
                     <div class="smsnf-dashboard-subs-stats__icon--bestday"><!-- Icon --></div>
                     <div class="smsnf-dashboard-subs-stats__content">
-                        <h3 class="d-inline-block">Melhor dia</h3>
-                            <span class="e-goi-tooltip">
+                        <h3 class="d-inline-block">Melhor dia <span class="e-goi-tooltip">
                                 <span class="dashicons dashicons-editor-help"></span>
                                 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                                 </span>
                             </span>
+                        </h3>
+                            
                          <span class="smsnf-dashboard-subs-stats__content--result">8 Ago 2018</span>
                          <p>Total de 23 Subscrições</p> 
                     </div>
@@ -97,8 +107,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Username</th>
-                                <th>Email</th>
+                                <th>Name</th>
+                                <th class="hide-xs">Email</th>
                                 <th>Formulário</th>
                                 <th class="hide-xs">Data</th>
                                 <th>Lista</th>
@@ -107,35 +117,35 @@
                         <tbody>
                             <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
                                 <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                             <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
                                 <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                             <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
                                 <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                             <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
                                 <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
                             </tr>
                             <tr>
                                 <td>Maria Almeida</td>
-                                <td>mariaalmeida@e-goi.com</td>
+                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
                                 <td>Captação de Leads</td>
                                 <td class="hide-xs">2018/12/20 12h00</td>
                                 <td>Marketing</td>
@@ -150,7 +160,10 @@
                     </div>
                     <div class="smsnf-dashboard-subscribers-by-lists__chart">
                         <div class="smsnf-dashboard-subscribers-by-lists__content">
-                            <p>Total de Subscritores: <span>1223</span></p>
+                            <p>Total 
+                                <span class="hide-xs">de Subscritores:</span>
+                                <span>1223</span>
+                            </p>
                             <div>
                                 <select>
                                     <option value="Lista A">Lista A</option>
@@ -252,18 +265,6 @@
                                 <tr>
                                     <td>Formulário WERW</td>
                                     <td>123123</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>12321</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>123123</td>
-                                </tr>
-                                <tr>
-                                    <td>Formulário WERW</td>
-                                    <td>12321</td>
                                 </tr>
                             </tbody>
                         </table>
