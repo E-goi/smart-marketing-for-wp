@@ -2004,4 +2004,41 @@ class Egoi_For_Wp_Admin {
         return false;
     }
 
+    public function smsnf_get_last_campaigns() {
+        $last_campaigns = array('email' => null, 'sms' => null);
+
+        $api = new Egoi_For_Wp();
+        $campaigns = $api->getCampaigns();
+
+        foreach ($campaigns as $campaign) {
+
+            if (!in_array(null, $last_campaigns)) {
+                break;
+            }
+
+            if ($last_campaigns['email'] == null) {
+                if ($campaign->CHANNEL == 'email') {
+                    $last_campaigns['email'] = array(
+                        'id' => $campaign->REF,
+                        'name' => $campaign->SUBJECT
+                    );
+                    continue;
+                }
+            }
+
+            if ($last_campaigns['sms'] == null) {
+                if ($campaign->CHANNEL == 'sms_premium') {
+                    $last_campaigns['sms'] = array(
+                        'id' => $campaign->REF,
+                        'name' => $campaign->SUBJECT
+                    );
+                    continue;
+                }
+            }
+
+        }
+
+        return $last_campaigns;
+    }
+
 }

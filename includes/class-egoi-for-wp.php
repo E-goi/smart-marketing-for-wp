@@ -1088,5 +1088,32 @@ class Egoi_For_Wp {
 
         return $data;
     }
+
+    /**
+     * Get E-goi client campaigns
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function getCampaigns() {
+        $url = $this->restUrl.'getCampaigns&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'limit' => 1000,
+                    'plugin_key' => $this->plugin
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        $result = $result_client->Egoi_Api->getCampaigns;
+
+        foreach ($result as $key => $value) {
+            if ($value->INTERNAL_NAME == '') { // remove the double opt-in "campaigns"
+                unset($result->$key);
+            }
+        }
+
+        return $result;
+    }
 	
 }
