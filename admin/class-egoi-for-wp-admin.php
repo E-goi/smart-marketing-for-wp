@@ -1982,11 +1982,24 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_get_blog_posts($num_items = 2) {
-        $feed = fetch_feed('https://blog.e-goi.pt/feed/');
+        $blog = fetch_feed('https://blog.e-goi.pt/feed/');
 
-        if (!is_wp_error($feed)) {
-            $num_items = $feed->get_item_quantity( $num_items );
-            return $feed->get_items(0, $num_items);
+        if (!is_wp_error($blog)) {
+            $posts = array();
+            $num_items = $blog->get_item_quantity($num_items);
+            if ($num_items > 0) {
+                $items = $blog->get_items(0, $num_items);
+                foreach ($items as $item) {
+                    $posts[] = array(
+                        'title' => $item->get_title(),
+                        'date' => $item->get_date('d/m/Y'),
+                        'link' => $item->get_permalink(),
+                        'category' => $item->get_category()->term,
+                        'excerpt' => $item->get_description()
+                    );
+                }
+            }
+            return $posts;
         }
         return false;
     }
