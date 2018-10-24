@@ -71,54 +71,58 @@
                 </div>
             </div>
 
-            <!-- Global title -->
-            <div class="column col-12">
-                <h2 class="smsnf-dashboard-maintitle">Estatísticas dos subscritores</h2>
-            </div>
-
-            <!-- Registrations made today -->
-            <div class="column col-4 col-md-12 col-xs-12">
-                <div class="smsnf-dashboard-subs-stats">
-                    <div class="smsnf-dashboard-subs-stats__icon--today"><!-- Icon --></div>
-                    <div class="smsnf-dashboard-subs-stats__content">
-                        <h3>Registos efetuados hoje</h3>
-                        <span class="smsnf-dashboard-subs-stats__content--result">123</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Total Subscribers -->
-            <div class="column col-4 col-md-12 col-xs-12">
-                <div class="smsnf-dashboard-subs-stats">
-                    <div class="smsnf-dashboard-subs-stats__icon--total"><!-- Icon --></div>
-                    <div class="smsnf-dashboard-subs-stats__content">
-                        <h3>Total de Subscritores</h3>
-                        <span class="smsnf-dashboard-subs-stats__content--result">12312</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Best day -->
-            <div class="column col-4 col-md-12 col-xs-12">
-                <div class="smsnf-dashboard-subs-stats">
-                    <div class="smsnf-dashboard-subs-stats__icon--bestday"><!-- Icon --></div>
-                    <div class="smsnf-dashboard-subs-stats__content">
-                        <h3 class="d-inline-block">Melhor dia <span class="e-goi-tooltip">
-                                <span class="dashicons dashicons-editor-help"></span>
-                                <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-                                </span>
-                            </span>
-                        </h3>
-                         <span class="smsnf-dashboard-subs-stats__content--result">8 Ago 2018</span>
-                         <p>Total de 23 Subscrições</p> 
-                    </div>
-                </div>
-            </div>
-
             <!-- Column Left Start -->
             <!-- Last Subscribers table / Subscribers by List / Account / Subscribers by Form / Last Email Campaign -->
-            <div class="column col-8 col-md-12 col-xs-12">
+            <div class="column col-8 col-md-12 col-xs-12 mt-3">
+                <div class="columns">
+                    <!-- Registrations made today -->
+                    <div class="column col-4 col-md-12 col-xs-12">
+                        <div class="smsnf-dashboard-subs-stats">
+                            <div class="smsnf-dashboard-subs-stats__icon--today"><!-- Icon --></div>
+                            <div class="smsnf-dashboard-subs-stats__content">
+                                <h3>Registos de hoje</h3>
+                                <span class="smsnf-dashboard-subs-stats__content--result1">123</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Subscribers -->
+                    <div class="column col-4 col-md-12 col-xs-12">
+                        <div class="smsnf-dashboard-subs-stats">
+                            <div class="smsnf-dashboard-subs-stats__icon--total"><!-- Icon --></div>
+                            <div class="smsnf-dashboard-subs-stats__content">
+                                <h3>Total de Subscritores 
+                                    <span class="e-goi-tooltip">
+                                        <span class="dashicons dashicons-editor-help"></span>
+                                        <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+                                        </span>
+                                    </span>
+                                </h3>
+                                <span class="smsnf-dashboard-subs-stats__content--result2">12312</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Best day -->
+                    <div class="column col-4 col-md-12 col-xs-12">
+                        <div class="smsnf-dashboard-subs-stats">
+                            <div class="smsnf-dashboard-subs-stats__icon--bestday"><!-- Icon --></div>
+                            <div class="smsnf-dashboard-subs-stats__content">
+                                <h3 class="d-inline-block">Melhor dia 
+                                    <span class="e-goi-tooltip">
+                                        <span class="dashicons dashicons-editor-help"></span>
+                                        <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+                                        </span>
+                                    </span>
+                                </h3>
+                                <p>Total de 23 Subscrições</p> 
+                                <span class="smsnf-dashboard-subs-stats__content--result3">8 Ago 2018</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">
                     <div class="smsnf-dashboard-last-subscribers__title">
@@ -174,7 +178,7 @@
                     </table>
                 </div>
                 <div class="columns">
-                    <div class="column col-6 col-md-12 col-xs-12">
+                    <div class="column col-6 col-xl-12 col-xs-12">
                         <!-- Subscribers by List -->
                         <div class="smsnf-dashboard-subscribers-by-lists mt-3">
                             <div class="smsnf-dashboard-subscribers-by-lists__title">
@@ -183,7 +187,7 @@
                             <div class="smsnf-dashboard-subscribers-by-lists__chart">
                                 <div class="smsnf-dashboard-subscribers-by-lists__content">
                                     <p>Total 
-                                        <span class="hide-xs">de Subscritores:</span>
+                                        <span class="hide-xs hide-md">de Subscritores:</span>
                                         <span>1223</span>
                                     </p>
                                     <div>
@@ -223,7 +227,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="column col-6 col-md-12 col-xs-12">
+                    <div class="column col-6 col-xl-12 col-xs-12">
                         <!-- Subscribers by Form -->
                         <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
                             <div class="smsnf-dashboard-last-subscribers-by-form__title">
@@ -233,28 +237,28 @@
                                 <table class="table">
                                     <tbody>
                                         <tr>
-                                            <td>Formulário ABCFGHHGJ</td>
-                                            <td>56756743</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário ABCFGHHGJ</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">56756743</td>
                                         </tr>
                                         <tr>
-                                            <td>Formulário SDFA</td>
-                                            <td>1231231</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário SDFA</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">1231231</td>
                                         </tr>
                                         <tr>
-                                            <td>Formulário TRY</td>
-                                            <td>345345</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário TRY</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">345345</td>
                                         </tr>
                                         <tr>
-                                            <td>Formulário WERW</td>
-                                            <td>123123</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário WERW</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">123123</td>
                                         </tr>
                                         <tr>
-                                            <td>Formulário WERW</td>
-                                            <td>12321</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário WERW</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">12321</td>
                                         </tr>
                                         <tr>
-                                            <td>Formulário WERW</td>
-                                            <td>123123</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário WERW</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">123123</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -290,9 +294,9 @@
             </div> <!-- /col-8 -->
 
             <!-- Column Right Start -->
-            <div class="column col-4 col-md-12 col-xs-12">
+            <div class="column col-4 col-md-12 col-xs-12 mt-3">
                 <!-- Account -->
-                <div class="smsnf-dashboard-account mt-3">
+                <div class="smsnf-dashboard-account">
                     <!-- If the sms addon is active -->
                     <div style="display: inherit;">
                         <div class="smsnf-dashboard-account__title">
@@ -306,7 +310,7 @@
                                 <table class="table">
                                     <tbody>
                                         <tr>
-                                            <td>Saldo Atual</td>
+                                            <td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
                                             <td><span class="smsnf-dashboard-account__content__table--cash">201€</span></td>
                                         </tr>
                                     </tbody>
@@ -329,6 +333,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <hr>
                                 <p class="smsnf-dashboard-account__content__table--subtitle">Total de envios efetuados</p>
                                 <table class="table">
                                     <tbody>
@@ -346,6 +351,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                
                             </div>
                         </div>
                     </div>
