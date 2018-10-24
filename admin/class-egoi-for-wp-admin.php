@@ -2019,6 +2019,7 @@ class Egoi_For_Wp_Admin {
             if ($last_campaigns['email'] == null) {
                 if ($campaign->CHANNEL == 'email') {
                     $last_campaigns['email'] = array(
+                        'hash' => $campaign->HASH,
                         'id' => $campaign->REF,
                         'name' => $campaign->SUBJECT
                     );
@@ -2029,6 +2030,7 @@ class Egoi_For_Wp_Admin {
             if ($last_campaigns['sms'] == null) {
                 if ($campaign->CHANNEL == 'sms_premium') {
                     $last_campaigns['sms'] = array(
+                        'hash' => $campaign->HASH,
                         'id' => $campaign->REF,
                         'name' => $campaign->SUBJECT
                     );
