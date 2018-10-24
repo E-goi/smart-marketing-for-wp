@@ -6294,8 +6294,7 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-last-subscribers-by-form__table .table tr td:nth-child(2) {
-  color: #00aeda; 
-  font-size: 1rem;
+  font-size: 1rem; 
   text-align: right;
 }
 
@@ -6448,12 +6447,36 @@ div.eg-dropdown {
   width: 240px;
 }
 
+.smsnf-dashboard-account__title {
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.smsnf-dashboard-account__title__cta a {
+  border-radius: 2px; 
+  color: #00aeda;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.smsnf-dashboard-account__title__cta a:hover {
+  color: #00718e;
+}
+
+.dashicons,
+.dashicons-before:before {
+  color: #00aeda;
+  text-decoration: none;
+}
+
 .smsnf-dashboard-account__content {
   padding: 20px; 
   text-align: center;
 }
 
-.smsnf-dashboard-account__content p {
+.smsnf-dashboard-account__content .smsnf-dashboard-account__install-addon__text {
   font-size: 20px;
   line-height: 26px;
 }
@@ -6461,6 +6484,43 @@ div.eg-dropdown {
 .smsnf-dashboard-account__content .button-smsnf-primary {
   display: inline-block;
   margin: 0 0 20px;
+}
+
+.smsnf-dashboard-account__content__table hr {
+  margin-top: -2px;
+}
+
+.table {
+  background-color: #fff;
+  border-collapse: unset;
+  padding: 12px 12px;
+}
+
+.table tr td:first-child {
+  font-size: .9rem;
+  line-height: 20px;
+}
+
+.table tr td:nth-child(2) {
+  font-size: 1rem; 
+  text-align: right;
+}
+
+.smsnf-dashboard-account__content__table--cash {
+  border: 1px solid #93bd4d;
+  border-radius: 2px;
+  color: #93bd4d;
+  padding: 3px 10px;
+}
+
+.smsnf-dashboard-account__content__table--subtitle {
+  font-size: 16px;
+  font-weight: 500; 
+  line-height: 26px;
+  margin-bottom: 0;
+  margin-top: 19px;
+  padding-left: 12px;
+  text-align: left;
 }
 
 @media screen and (min-width: 841px) and (max-width: 1200px) {
@@ -6568,21 +6628,4 @@ div.eg-dropdown {
   .smsnf-header__breadcrumbs {
     display: none;
   }
-}
-
-.flexteste {
-  display: flex;
-  display: -ms-flexbox;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.grp-1 {
-  -ms-flex-order: 10;
-  order: 10;
-}
-
-.grp-2 {
-  -ms-flex-order: 20;
-  order: 20;
 }

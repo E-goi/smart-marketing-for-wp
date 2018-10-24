@@ -197,19 +197,29 @@
                                 <canvas id="smsnf-dsbl__lineChart" height="120"></canvas>
                             </div>
                         </div>
-                        <!-- Account -->
-                        <div class="smsnf-dashboard-account mt-3">
-                            <div class="smsnf-dashboard-account__title">
-                                A sua conta
+                        <!-- Last SMS Campaign --> 
+                        <div class="smsnf-dashboard-last-sms-campaign mt-3">
+                            <div class="smsnf-dashboard-last-sms-campaign__title">
+                                Última campanha de SMS Enviada
                             </div>
-                            <div class="smsnf-dashboard-account__content">
-                                <div class="smsnf-dashboard-account__install-addon"></div>
-                                <p>Envie notificações SMS aos seus clientes e 
-                                administradores por cada alteração ao estado da encomenda no
-                                seu wooCommerce</p>
-                                <a type="button" id="" class="button-smsnf-primary"> 
-                                    <?php echo __('Upgrade', 'egoi-for-wp');?>
-                                </a>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>Curso de HTML Avançado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>1231</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total de Envios</td>
+                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend">321</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="smsnf-dashboard-last-sms-campaign__chart">
+                                <canvas id="smsnf-dlsc__doughnutChart" height="120"></canvas>
                             </div>
                         </div>
                     </div>
@@ -250,31 +260,6 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- Last SMS Campaign --> 
-                        <div class="smsnf-dashboard-last-sms-campaign mt-3">
-                            <div class="smsnf-dashboard-last-sms-campaign__title">
-                                Última campanha de SMS Enviada
-                            </div>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>Nome</td>
-                                        <td>Curso de HTML Avançado</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ID</td>
-                                        <td>1231</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total de Envios</td>
-                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend">321</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="smsnf-dashboard-last-sms-campaign__chart">
-                                <canvas id="smsnf-dlsc__doughnutChart" height="120"></canvas>
-                            </div>
-                        </div>
                         <!-- Last Email Campaign --> 
                         <div class="smsnf-dashboard-last-email-campaign mt-3">
                             <div class="smsnf-dashboard-last-email-campaign__title">
@@ -306,6 +291,81 @@
 
             <!-- Column Right Start -->
             <div class="column col-4 col-md-12 col-xs-12">
+                <!-- Account -->
+                <div class="smsnf-dashboard-account mt-3">
+                    <!-- If the sms addon is active -->
+                    <div style="display: inherit;">
+                        <div class="smsnf-dashboard-account__title">
+                            <div>A sua conta</div>
+                            <div class="smsnf-dashboard-account__title__cta">
+                                <a href="#" target="_blank">Atualizar dados da conta<span class="dashicons dashicons-external"></span></a>
+                            </div>
+                        </div>
+                        <div class="smsnf-dashboard-account__content p-0">
+                            <div class="smsnf-dashboard-account__content__table">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Saldo Atual</td>
+                                            <td><span class="smsnf-dashboard-account__content__table--cash">201€</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <p class="smsnf-dashboard-account__content__table--subtitle">O seu plano atual inclui</p>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td><span class="">201€</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SMS</td>
+                                            <td><span class="">123</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Push</td>
+                                            <td><span class="">29</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="smsnf-dashboard-account__content__table--subtitle">Total de envios efetuados</p>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td><span class="">201€</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Push</td>
+                                            <td><span class="">123</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SMS Transacional</td>
+                                            <td><span class="">29</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- If sms addon is NOT active -->
+                    <div style="display: none;">
+                        <div class="smsnf-dashboard-account__title">
+                            <div>A sua conta</div>
+                        </div>
+                        <div class="smsnf-dashboard-account__content">
+                            <div class="smsnf-dashboard-account__install-addon"></div>
+                            <p class="smsnf-dashboard-account__install-addon__text">Envie notificações SMS aos seus clientes e 
+                            administradores por cada alteração ao estado da encomenda no
+                            seu wooCommerce</p>
+                            <a type="button" id="" class="button-smsnf-primary"> 
+                                <?php echo __('Install', 'egoi-for-wp');?>
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- /Account -->
+
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
@@ -342,7 +402,7 @@
                             </p>
                         </a>
                     </div>
-                </div>
+                </div><!-- /Blog Post's -->
             </div>
 
         </div><!-- / Columns -->
