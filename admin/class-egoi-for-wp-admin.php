@@ -1932,11 +1932,24 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_get_form_subscribers_last($num = 5) {
+        $api = new Egoi_For_Wp();
+
         global $wpdb;
 
         $sql = " SELECT * FROM {$wpdb->prefix}egoi_form_subscribers ORDER BY created_at DESC LIMIT $num";
 
-        return $wpdb->get_results($sql);
+        $subscribers = array();
+        foreach ($wpdb->get_results($sql) as $subscriber) {
+            $data = $api->getSubscriberById($subscriber->list_id, $subscriber->subscriber_id);
+            //$list = $api->getLists(false, false, $subscriber->list_id);
+
+            $subscribers[] = array(
+                'name' => $data->subscriber->FIRST_NAME.' '.$data->subscriber->LAST_NAME,
+                'email' => $data->subscriber->EMAIL
+            );
+        }
+
+        return $subscribers;
     }
 
     public function smsnf_get_form_subscriber_total_by($type) {

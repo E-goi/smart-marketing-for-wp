@@ -409,13 +409,16 @@ class Egoi_For_Wp {
         }
 	}
 
-    public function getLists($start = false, $limit = false) {
-
+    public function getLists($start = false, $limit = false, $list_id = false) {
+        $params = array(
+            'apikey' => $this->_valid['api_key'],
+            'plugin_key' => $this->plugin
+        );
+        if ($list_id) {
+            $params['listID'] = $list_id;
+        }
 		$url = $this->restUrl.'getLists&'.http_build_query(array(
-				'functionOptions' => array(
-					'apikey' => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin
-					)
+		            'functionOptions' => $params
 				),'','&');
 		
 		$result_client = json_decode($this->_getContent($url));
@@ -688,6 +691,23 @@ class Egoi_For_Wp {
         	return $result_client->Egoi_Api->subscriberData;
         }
 	}
+
+    public function getSubscriberById($listID, $id) {
+
+        $url = $this->restUrl.'subscriberData&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'plugin_key' => $this->plugin,
+                    'listID' => $listID,
+                    'subscriber' => $id
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        if($result_client->Egoi_Api->subscriberData->status=='success'){
+            return $result_client->Egoi_Api->subscriberData;
+        }
+    }
 
 	public function getForms($listID = false, $option = false) {
 
