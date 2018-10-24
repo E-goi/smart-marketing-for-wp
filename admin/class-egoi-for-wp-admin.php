@@ -2049,4 +2049,37 @@ class Egoi_For_Wp_Admin {
         return $last_campaigns;
     }
 
+    public function smsnf_last_campaigns_reports() {
+
+        $api = new Egoi_For_Wp();
+
+        $last_campaigns = $this->smsnf_get_last_campaigns();
+        $reports = array();
+
+        foreach ($last_campaigns as $channel => $campaign) {
+
+            $reports[$channel]['name'] = $campaign[0]['name'];
+
+            foreach ($campaign as $key => $value) {
+                $report = $api->getReport($value['hash']);
+
+                $reports[$channel]['id'] .= $value['id'].'; ';
+                $reports[$channel]['sent'] += $report->SENT;
+                if ($channel == 'email') {
+                    $reports[$channel]['opens'] += $report->VIEWS;
+                    $reports[$channel]['clicks'] += $report->CLICKS_SUB;
+                    $reports[$channel]['bounces'] += $report->RETURNED;
+                    $reports[$channel]['removes'] += $report->TOTAL_REMOVES;
+                    $reports[$channel]['complains'] += $report->COMPLAIN;
+                } else if ($channel == 'sms_premium') {
+                    $reports[$channel]['delivered'] += $report->DELIVERED;
+                    $reports[$channel]['not_delivered'] += $report->NOT_DELIVERED;
+                }
+
+            }
+
+        }
+        return $reports;
+    }
+
 }

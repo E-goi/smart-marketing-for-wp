@@ -1115,5 +1115,18 @@ class Egoi_For_Wp {
 
         return $result;
     }
+
+    public function getReport($campaign_hash) {
+        $url = $this->restUrl.'getReport&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'campaign' => $campaign_hash,
+                    'plugin_key' => $this->plugin
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        return $result_client->Egoi_Api->getReport;
+    }
 	
 }
