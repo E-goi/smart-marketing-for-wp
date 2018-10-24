@@ -6181,14 +6181,6 @@ div.eg-dropdown {
   text-decoration: underline;
 }
 
-.smsnf-dashboard-maintitle {
-  color: #333;
-  font-size: 18px;
-  -webkit-font-smoothing: antialiased;
-  font-weight: 700;
-  padding: 0;
-}
-
 .smsnf-dashboard-subs-stats {
   background-color: #fff;
   border-radius: 3px;
@@ -6247,7 +6239,7 @@ div.eg-dropdown {
 .smsnf-dashboard-subs-stats__content .smsnf-dashboard-subs-stats__content--result3 {
   color: #00aeda; 
   display: block;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: 600;
   margin-top: 9px;
 }
