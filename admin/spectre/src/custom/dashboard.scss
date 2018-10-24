@@ -30,7 +30,7 @@
 	h3{
 		line-height: 26px;
     margin: 0;
-    font-size: 23px;
+    font-size: 18px;
     font-family:'Montserrat', sans-serif;
 	}
 	p{
@@ -63,8 +63,11 @@
 //////////////////////////////
 
 .smsnf-dashboard-maintitle{
-	font-size: 24px;
-	font-weight: 500;
+  color: #333;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+  padding: 0px;
 }
 
 
@@ -238,7 +241,7 @@
 		}
 	}
 	select{
-		border: 1px solid rgba(0, 174, 218, 1);
+		border: 1px solid rgb(0, 174, 218);
 		font-size: 14px;
 		height: 35px;
 		width: 158px;
@@ -311,10 +314,28 @@
   margin: 0 auto;
 }
 
+.smsnf-dashboard-account__title{
+  display: flex;
+  justify-content: space-between;
+}
+.smsnf-dashboard-account__title__cta a{
+  color: rgb(0,174,218);
+  font-size: 13px;
+  font-weight:400;
+  border-radius: 2px;
+  &:hover{
+    color:#00718e;
+  }
+}
+.dashicons, .dashicons-before:before{
+  color: rgb(0,174,218); 
+  text-decoration: none;
+}
+
 .smsnf-dashboard-account__content{
   text-align: center;
   padding: 20px;
-  p{
+  .smsnf-dashboard-account__install-addon__text{
     font-size: 20px;
     line-height: 26px;
   }
@@ -322,6 +343,41 @@
     display: inline-block;
     margin: 0 0 20px;
   }
+}
+
+.smsnf-dashboard-account__content__table 
+  hr{
+    margin-top: -2px;
+  }
+  .table{
+	background-color: #fff;
+	border-collapse: unset;
+  padding: 12px 12px;
+  tr td:first-child{
+    font-size: 0.9rem;
+    line-height: 20px;
+  }
+	tr td:nth-child(2){
+    text-align: right;
+    font-size: 1rem;
+  }
+}
+
+.smsnf-dashboard-account__content__table--cash{
+  border: 1px solid #93BD4D;
+  border-radius: 2px;
+  color: #93BD4D;
+  padding: 3px 10px;
+}
+
+.smsnf-dashboard-account__content__table--subtitle{
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 0;
+  margin-top: 19px;
+  padding-left: 12px;
+  text-align: left;
+  font-weight: 500;
 }
 
 //////////////////////////////
@@ -421,14 +477,14 @@
 }
 
 
-@media screen and (min-width: 400px) and (max-width: 450px) {
+@media screen and (min-width: 350px) and (max-width: 450px) {
   .smsnf-header h1{
-    font-size: 24px !important;
+    font-size: 21px !important;
    }
 }
 
 @media (min-width:960px){
-  .breadcrumbs{
+  .smsnf-header__breadcrumbs{
     display: none;
   }
 }
