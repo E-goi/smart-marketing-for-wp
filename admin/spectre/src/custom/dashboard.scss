@@ -52,6 +52,7 @@
     margin-right: 20px;
     text-decoration: none;
     -webkit-appearance: initial;
+    color: gray;
     &:hover{
       text-decoration: underline;
     }
@@ -83,14 +84,6 @@
   padding: 10px 25px;
   display: flex;
 }
-
-.smsnf-dashboard-subs-stats__icon--today,
-.smsnf-dashboard-subs-stats__icon--total,
-.smsnf-dashboard-subs-stats__icon--bestday{
-  background-position: center center;
-  width: 100px;
-	height: 100px;
-}
 .smsnf-dashboard-subs-stats__icon--today{
   background: url("../img/subscribers-today.png") no-repeat;
 }
@@ -100,6 +93,15 @@
 .smsnf-dashboard-subs-stats__icon--bestday{
 	background: url("../img/bestday.png") no-repeat;
 }
+
+.smsnf-dashboard-subs-stats__icon--today,
+.smsnf-dashboard-subs-stats__icon--total,
+.smsnf-dashboard-subs-stats__icon--bestday{
+  background-position: center center;
+  background-size: 90%;
+  width: 100px;
+	height: 100px;
+}
 .smsnf-dashboard-subs-stats__content{
   display: flex;
   flex-direction: column;
@@ -108,19 +110,26 @@
 		font-size: 16px;
     font-weight: normal;
     color: gray;
+    margin-bottom: 0;
     -webkit-font-smoothing: antialiased;
 	}
 	p {
 		font-size: 11px;
-		margin-top: 10px;
+    margin-top: 3px;
     color: #999;
 	}
-	.smsnf-dashboard-subs-stats__content--result{
-		font-size: 28px;
+  .smsnf-dashboard-subs-stats__content--result1,
+  .smsnf-dashboard-subs-stats__content--result2,
+  .smsnf-dashboard-subs-stats__content--result3{
+    font-size: 23px;
+    font-weight: 600;
 		display: block;
-    margin-top: -7px;
-    color: rgb(0, 174, 218);
-	}
+    margin-top: 9px;
+    color: rgb(0,174,218);
+  }
+  .smsnf-dashboard-subs-stats__content--result3{
+    margin-top: -3px;
+  }
 }
 
 .smsnf-dashboard-subs-stats__content .dashicons{
@@ -153,6 +162,11 @@
   border: 1px solid #f3f3f3;
   border-radius: 3px;
 }
+.smsnf-dashboard-last-subscribers .table tr td{
+  font-size: 0.9rem;
+  text-align: left;
+}
+
 .smsnf-dashboard-last-subscribers-by-form{
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 	background-color: $light-color;
@@ -163,14 +177,14 @@
 	background-color: #fff;
 	border-collapse: unset;
   padding: 12px 12px;
-  tr td:first-child{
-    font-size: 0.9rem;
-    line-height: 20px;
-  }
-	tr td:nth-child(2){
-    text-align: right;
-    font-size: 1rem;
-	}
+}
+.smsnf-dashboard-last-subscribers-by-form__table__ltd{
+  font-size: 0.9rem;
+  line-height: 20px;
+}
+.smsnf-dashboard-last-subscribers-by-form__table__rtd{
+  text-align: right;
+  font-size: 1rem;
 }
 
 .smsnf-dashboard-last-subscribers .table,
@@ -197,12 +211,12 @@
 .smsnf-dashboard-account__title,
 .smsnf-dashboard-last-sms-campaign__title{
     color:#333;
-    background-color: #fefefe;
+    background-color: #f9f9f9;
     border-bottom: 1px solid #dedede;
     padding: 18px 12px;
     font-weight: bold;
     -webkit-font-smoothing: antialiased;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 //////////////////////////////
@@ -228,7 +242,7 @@
 	align-items: baseline;
 	padding:10px;
 	p{
-		font-size: 16px;
+		font-size: 14px;
 		span:nth-child(2){
         font-weight: bold;
         color: #00aeda;
@@ -345,29 +359,38 @@
   }
 }
 
-.smsnf-dashboard-account__content__table 
+.smsnf-dashboard-account__content__table {
+  
   hr{
     margin-top: -2px;
+    margin-left: 12px;
+    margin-right: 12px;
+    border: .05rem solid #efefef !important;
   }
   .table{
 	background-color: #fff;
 	border-collapse: unset;
   padding: 12px 12px;
-  tr td:first-child{
-    font-size: 0.9rem;
-    line-height: 20px;
   }
-	tr td:nth-child(2){
-    text-align: right;
+  .smsnf-dashboard-account__content__table--total{
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: #333;
+  }
+  td{
     font-size: 1rem;
   }
-}
-
-.smsnf-dashboard-account__content__table--cash{
-  border: 1px solid #93BD4D;
-  border-radius: 2px;
-  color: #93BD4D;
-  padding: 3px 10px;
+  td:last-child {
+    text-align: right;
+    color: #333;
+  }
+  .smsnf-dashboard-account__content__table--cash{
+    border: 1px solid #93BD4D;
+    border-radius: 2px;
+    color: #93BD4D;
+    padding: 3px 10px;  
+  }
 }
 
 .smsnf-dashboard-account__content__table--subtitle{
@@ -379,19 +402,24 @@
   text-align: left;
   font-weight: 500;
 }
+.smsnf-dashboard-account__content__table hr{
+  border: .05rem solid #efefef !important;
+}
 
 //////////////////////////////
 // Media Queries
 //////////////////////////////
 
 @media screen and (min-width: 841px) and (max-width: 1200px) {
-  .smsnf-dashboard-subs-stats__content--result{
+  .smsnf-dashboard-subs-stats__content--result1,
+  .smsnf-dashboard-subs-stats__content--result2,
+  .smsnf-dashboard-subs-stats__content--result3{
     font-size: 20px !important;
    }
   .smsnf-dashboard-subs-stats__icon--today,
   .smsnf-dashboard-subs-stats__icon--total,
   .smsnf-dashboard-subs-stats__icon--bestday{
-    background-size: 90%;
+    background-size: 60%;
     background-position: center center;
   }
 }
@@ -400,6 +428,31 @@
   .smsnf-dashboard-subs-stats {
     display: flex;
     margin: 6px 0px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 1300px) {
+  .smsnf-dashboard-subs-stats__icon--today,
+  .smsnf-dashboard-subs-stats__icon--total,
+  .smsnf-dashboard-subs-stats__icon--bestday {
+    display: none;
+  }
+  .smsnf-dashboard-subs-stats{
+    height: 120px;
+    padding: 10px 10px;
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 620px) {
+  .smsnf-dashboard-subs-stats__content{
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 840px) {
+  .smsnf-dashboard-subs-stats__icon--today,
+  .smsnf-dashboard-subs-stats__icon--total,
+  .smsnf-dashboard-subs-stats__icon--bestday {
+    display: inherit;
   }
 }
 
@@ -434,6 +487,9 @@
 .smsnf-dashboard .table tbody tr:last-child td {
   border-bottom: 0;
 }
+.smsnf-dashboard .table{
+  color: gray;
+}
 .button-smsnf-primary{
   font-size: 16px !important;
   background-color: #00aeda !important;
@@ -461,6 +517,7 @@
   align-items: center;
   width: 100%;
   height: 74px;
+  margin-top: 6px;
   h1{
     margin-left: 12px;
     color: #333;
