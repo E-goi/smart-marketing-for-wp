@@ -2005,39 +2005,45 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_get_last_campaigns() {
-        $last_campaigns = array('email' => null, 'sms' => null);
+        $last_campaigns_flag = array('email' => 0, 'sms_premium' => 0);
+        $last_campaigns = array();
+        $channels = array('email', 'sms_premium');
 
         $api = new Egoi_For_Wp();
         $campaigns = $api->getCampaigns();
 
         foreach ($campaigns as $campaign) {
 
-            if (!in_array(null, $last_campaigns)) {
+            if (!in_array(0, $last_campaigns_flag)) {
                 break;
             }
 
-            if ($last_campaigns['email'] == null) {
-                if ($campaign->CHANNEL == 'email') {
-                    $last_campaigns['email'] = array(
-                        'hash' => $campaign->HASH,
-                        'id' => $campaign->REF,
-                        'name' => $campaign->SUBJECT
-                    );
-                    continue;
-                }
-            }
+            foreach ($channels as $channel) {
 
-            if ($last_campaigns['sms'] == null) {
-                if ($campaign->CHANNEL == 'sms_premium') {
-                    $last_campaigns['sms'] = array(
-                        'hash' => $campaign->HASH,
-                        'id' => $campaign->REF,
-                        'name' => $campaign->SUBJECT
-                    );
-                    continue;
-                }
-            }
+                if ($channel == $campaign->CHANNEL) {
 
+                    if (!isset($last_campaigns[$channel]) ||
+                        (
+                            isset($campaigns_flag[$channel]) &&
+                            $campaigns_flag[$channel]['name'] == $campaign->SUBJECT &&
+                            $campaigns_flag[$channel]['start_time'] - strtotime($campaign->START) < 300
+                        )) {
+                        $last_campaigns[$channel][] = array(
+                            'hash' => $campaign->HASH,
+                            'id' => $campaign->REF,
+                            'name' => $campaign->SUBJECT
+                        );
+                        $campaigns_flag[$channel] = array(
+                            'name' => $campaign->SUBJECT,
+                            'start_time' => strtotime($campaign->START)
+                        );
+                    } else {
+                        $last_campaigns_flag[$channel] = 1;
+                    }
+
+                }
+
+            }
         }
 
         return $last_campaigns;
