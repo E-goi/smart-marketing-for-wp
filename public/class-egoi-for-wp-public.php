@@ -289,13 +289,12 @@ class Egoi_For_Wp_Public {
 				$error = $bar['text_already_subscribed'];
 			}
 
-            if (!isset($bar['double_optin']) || $bar['double_optin'] == 0) {
-                $status = 1;
-            } else {
-                $status = 0;
-            }
+            $status = !isset($bar['double_optin']) || $bar['double_optin'] == 0 ? 1 : 0;
 
 			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, $status, '', $tag);
+            if (!isset($add->ERROR) && !isset($add->MODIFICATION_DATE) ) {
+                $client->smsnf_save_form_subscriber(1, 'bar', $add);
+            }
 
 			$success = $bar['text_subscribed'];
 
@@ -426,6 +425,7 @@ class Egoi_For_Wp_Public {
 		$options = get_option($simple_form);
 		$data = json_decode($options);
 
+        $post .= '<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="'.$id.'">';
 		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="'.$data->list.'">';
 		$post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="'.$data->lang.'">';
 		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.$data->tag.'">';
@@ -483,6 +483,7 @@ class Egoi_For_Wp_Public {
 					simple_form.find( "#simple_form_result" ).hide();
 
 					var ajaxurl = "'.admin_url('admin-ajax.php').'";
+					var egoi_simple_form = simple_form.find("#egoi_simple_form").val();
 					var egoi_name = simple_form.find("#egoi_name").val();
 					var egoi_email = simple_form.find("#egoi_email").val();
 					var egoi_country_code	= simple_form.find("#egoi_country_code").val();
@@ -494,6 +495,7 @@ class Egoi_For_Wp_Public {
 
 					var data = {
 						"action": "my_action",
+						"egoi_simple_form": egoi_simple_form,
 						"egoi_name": egoi_name,
 						"egoi_email": egoi_email,
 						"egoi_country_code": egoi_country_code,

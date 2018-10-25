@@ -591,6 +591,21 @@ class Egoi_For_Wp {
 		return $result_client->Egoi_Api->addSubscriber;
 	}
 
+    public function addSubscriberWpForm($list_id, $subscriber) {
+        $params = array_merge(array(
+            'apikey' => $this->_valid['api_key'],
+            'plugin_key' => $this->plugin,
+            'listID' => $list_id
+        ), $subscriber);
+
+        $url = $this->restUrl.'addSubscriber&'.http_build_query(array(
+                'functionOptions' => $params
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        return $result_client->Egoi_Api->addSubscriber;
+    }
+
 	public function editSubscriber($listID, $subscriber, $role = 0, $fname = '', $lname = '', $fields = array(), $option = 0, $ref_fields = array()) {
 		
 		$apikey = $this->_valid['api_key'];
@@ -1147,6 +1162,35 @@ class Egoi_For_Wp {
 
         $result_client = json_decode($this->_getContent($url));
         return $result_client->Egoi_Api->getReport;
+    }
+
+
+    public function smsnf_save_form_subscriber($form_id, $form_type, $subscriber_data) {
+
+        $list = $this->getLists(false, false, $subscriber_data->LIST);
+
+        global $wpdb;
+
+        $table = $wpdb->prefix.'egoi_form_subscribers';
+
+        $subscriber = array(
+            'form_id' => $form_id,
+            'form_type' => $form_type,
+            'subscriber_id' => $subscriber_data->UID,
+            'subscriber_name' => $subscriber_data->FIRST_NAME,
+            'subscriber_email' => $subscriber_data->EMAIL,
+            'list_id' => $subscriber_data->LIST,
+            'list_title' => $list->key_0->title,
+            'created_at' => current_time('mysql'),
+        );
+
+        if ($form_type == 'simple-form') {
+            $subscriber['form_title'] = get_post($form_id)->post_title;
+        } else if ($form_type == 'bar') {
+            $subscriber['form_title'] = 'Subscriber Bar';
+        }
+
+        return $wpdb->insert($table, $subscriber);
     }
 	
 }

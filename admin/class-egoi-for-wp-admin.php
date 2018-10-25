@@ -1287,42 +1287,38 @@ class Egoi_For_Wp_Admin {
 
     // ADD A SIMPLE FORM SUBSCRIBER
 	public function subscribe_egoi_simple_form_add() {
-
-		$apikey = get_option('egoi_api_key');
-
-		$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
+        $api = new Egoi_For_Wp();
 
 		// double opt-in
-        if (filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1') {
-		    $status = 0;
-        } else {
-		    $status = 1;
-        }
+        $status = filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1' ? 0 : 1;
 
-		$params = array(
-			'apikey'    => $apikey['api_key'],
-			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
-			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
-			'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
-			'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
-			'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
-			'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
-			'status' => $status,
-		);
+		$result = $api->addSubscriberWpForm(
+            filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
+            array(
+                'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
+                'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
+                'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
+                'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
+                'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
+                'status' => $status,
+            )
+        );
 
-		$result = $client->addSubscriber($params);
+		if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
 
-		if (!isset($result['ERROR']) && !isset($result['MODIFICATION_DATE']) ) {
+		    $form_id = filter_var($_POST['egoi_simple_form'], FILTER_SANITIZE_NUMBER_INT);
+            $api->smsnf_save_form_subscriber($form_id, 'simple-form', $result);
+
 			echo $this->check_subscriber($result).' ';
 			_e('was successfully registered!', 'egoi-for-wp');
-		} else if (isset($result['MODIFICATION_DATE'])) {
+		} else if (isset($result->MODIFICATION_DATE)) {
 			_e('Subscriber data from', 'egoi-for-wp');
 			echo ' '.$this->check_subscriber($result).' ';
 			_e('has been updated!', 'egoi-for-wp');
-		} else if (isset($result['ERROR'])) {
-			if ($result['ERROR'] == 'NO_DATA_TO_INSERT') {
+		} else if (isset($result->ERROR)) {
+			if ($result->ERROR == 'NO_DATA_TO_INSERT') {
 				_e('ERROR: no data to insert', 'egoi-for-wp');
-			} else if ($result['ERROR'] == 'EMAIL_ADDRESS_INVALID_MX_ERROR') {
+			} else if ($result->ERROR == 'EMAIL_ADDRESS_INVALID_MX_ERROR') {
 				_e('ERROR: e-mail address is invalid', 'egoi-for-wp');
 			} else {
 				_e('ERROR: invalid data submitted', 'egoi-for-wp');
@@ -1337,8 +1333,8 @@ class Egoi_For_Wp_Admin {
 	public function check_subscriber($subscriber_data) {
 		$data = array('FIRST_NAME','EMAIL','CELLPHONE');
 		foreach ($data as $value) {
-            if ($subscriber_data[$value]) {
-                $subscriber = $subscriber_data[$value];
+            if ($subscriber_data->$value) {
+                $subscriber = $subscriber_data->$value;
                 break;
             }
         }
@@ -1861,6 +1857,8 @@ class Egoi_For_Wp_Admin {
         remove_all_actions('rdf_ns');
     }
 
+
+
     /**
      * @param $account
      * @return mixed
@@ -1897,16 +1895,6 @@ class Egoi_For_Wp_Admin {
      * Dashboard
      *
      */
-
-    public function smsnf_save_form_subscriber($subscriber) {
-        global $wpdb;
-
-        $table = $wpdb->prefix.'egoi_form_subscribers';
-
-        $subscriber['created_at'] = current_time('mysql');
-
-        return $wpdb->insert($table, $subscriber, array('%d', '%s', '%s', '%d', '%s'));
-    }
 
     public function smsnf_get_form_susbcribers_total($period = 'ever') {
         global $wpdb;
