@@ -705,7 +705,7 @@ class Egoi_For_Wp {
 
         $result_client = json_decode($this->_getContent($url));
         if($result_client->Egoi_Api->subscriberData->status=='success'){
-            return $result_client->Egoi_Api->subscriberData;
+            return $result_client->Egoi_Api->subscriberData->subscriber;
         }
     }
 
