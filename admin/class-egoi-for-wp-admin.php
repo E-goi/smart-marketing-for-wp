@@ -2025,8 +2025,12 @@ class Egoi_For_Wp_Admin {
         $api = new Egoi_For_Wp();
         $campaigns = $api->getCampaigns();
 
+        $count = 0;
         foreach ($campaigns as $campaign) {
-
+            if ($count == 0) {
+                $count = 1;
+                continue;
+            }
             if (!in_array(0, $last_campaigns_flag)) {
                 break;
             }
