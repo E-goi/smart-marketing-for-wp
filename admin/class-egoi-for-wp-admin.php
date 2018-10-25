@@ -1932,24 +1932,11 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_get_form_subscribers_last($num = 5) {
-        $api = new Egoi_For_Wp();
-
         global $wpdb;
 
         $sql = " SELECT * FROM {$wpdb->prefix}egoi_form_subscribers ORDER BY created_at DESC LIMIT $num";
 
-        $subscribers = array();
-        foreach ($wpdb->get_results($sql) as $subscriber) {
-            $data = $api->getSubscriberById($subscriber->list_id, $subscriber->subscriber_id);
-            //$list = $api->getLists(false, false, $subscriber->list_id);
-
-            $subscribers[] = array(
-                'name' => $data->subscriber->FIRST_NAME.' '.$data->subscriber->LAST_NAME,
-                'email' => $data->subscriber->EMAIL
-            );
-        }
-
-        return $subscribers;
+        return $wpdb->get_results($sql);
     }
 
     public function smsnf_get_form_subscriber_total_by($type) {
@@ -2025,12 +2012,8 @@ class Egoi_For_Wp_Admin {
         $api = new Egoi_For_Wp();
         $campaigns = $api->getCampaigns();
 
-        $count = 0;
         foreach ($campaigns as $campaign) {
-            if ($count == 0) {
-                $count = 1;
-                continue;
-            }
+
             if (!in_array(0, $last_campaigns_flag)) {
                 break;
             }
