@@ -2025,8 +2025,12 @@ class Egoi_For_Wp_Admin {
         $api = new Egoi_For_Wp();
         $campaigns = $api->getCampaigns();
 
+        $count = 0;
         foreach ($campaigns as $campaign) {
-
+            if ($count == 0) {
+                $count = 1;
+                continue;
+            }
             if (!in_array(0, $last_campaigns_flag)) {
                 break;
             }
@@ -2044,6 +2048,7 @@ class Egoi_For_Wp_Admin {
                         $last_campaigns[$channel][] = array(
                             'hash' => $campaign->HASH,
                             'id' => $campaign->REF,
+                            'list' => $campaign->LISTNUM,
                             'name' => $campaign->SUBJECT
                         );
                         $campaigns_flag[$channel] = array(
@@ -2077,6 +2082,7 @@ class Egoi_For_Wp_Admin {
                 $report = $api->getReport($value['hash']);
 
                 $reports[$channel]['id'] .= $value['id'].'; ';
+                $reports[$channel]['list'] .= $value['list'].'; ';
                 $reports[$channel]['sent'] += $report->SENT;
                 if ($channel == 'email') {
                     $reports[$channel]['opens'] += $report->VIEWS;
