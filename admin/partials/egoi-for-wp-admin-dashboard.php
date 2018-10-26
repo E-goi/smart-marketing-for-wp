@@ -18,9 +18,6 @@ foreach ($campains['sms_premium'] as $key => $value) {
 $emails_report = implode(",", $emails);
 $sms_report = implode(",", $sms);
 
-echo '<pre>';
-var_dump($emails_report, $sms_report);
-echo '</pre>';
 ?>
 <!-- Header -->
 <div class="container">
