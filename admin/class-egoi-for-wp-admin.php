@@ -1927,10 +1927,13 @@ class Egoi_For_Wp_Admin {
         return $wpdb->get_results($sql);
     }
 
-    public function smsnf_get_form_subscriber_total_by($type) {
+    public function smsnf_get_form_subscriber_total_by($type, $id = null) {
         global $wpdb;
 
-        $sql = " SELECT {$type}_id $type, COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers GROUP BY {$type}_id ";
+        $sql = " SELECT {$type}_id, {$type}_title title , COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers ";
+        $sql .= $id !== null ? " WHERE {$type}_id = $id " : null;
+        $sql .= " GROUP BY {$type}_id ";
+        $sql .= $type == 'form' ? ", form_type" : null;
 
         return $wpdb->get_results($sql);
     }
@@ -1978,12 +1981,13 @@ class Egoi_For_Wp_Admin {
             if ($num_items > 0) {
                 $items = $blog->get_items(0, $num_items);
                 foreach ($items as $item) {
+                    $excerpt = wp_trim_words($item->get_description(), 30);
                     $posts[] = array(
                         'title' => $item->get_title(),
                         'date' => $item->get_date('d/m/Y'),
                         'link' => $item->get_permalink(),
                         'category' => $item->get_category()->term,
-                        'excerpt' => $item->get_description()
+                        'excerpt' => $excerpt
                     );
                 }
             }

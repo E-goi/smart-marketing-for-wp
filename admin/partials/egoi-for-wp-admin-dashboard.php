@@ -1,4 +1,27 @@
-<?php if ( ! defined( 'ABSPATH' ) ) { die();} ?>
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) { die();}
+
+$campains = $this->smsnf_last_campaigns_reports();
+
+$not_include = array('name', 'id', 'list', 'sent');
+foreach ($campains['email'] as $key => $value) {
+    if (!in_array($key, $not_include)) {
+        $emails[] = $value;
+    }
+}
+foreach ($campains['sms_premium'] as $key => $value) {
+    if (!in_array($key, $not_include)) {
+        $sms[] = $value;
+    }
+}
+$emails_report = implode(",", $emails);
+$sms_report = implode(",", $sms);
+
+echo '<pre>';
+var_dump($emails_report, $sms_report);
+echo '</pre>';
+?>
 <!-- Header -->
 <div class="container">
   <div class="columns">
@@ -81,7 +104,9 @@
                             <div class="smsnf-dashboard-subs-stats__icon--today"><!-- Icon --></div>
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>Registos de hoje</h3>
-                                <span class="smsnf-dashboard-subs-stats__content--result1">123</span>
+                                <span class="smsnf-dashboard-subs-stats__content--result1">
+                                    <?php  echo $this->smsnf_get_form_susbcribers_total('today')->total; ?>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -99,7 +124,9 @@
                                         </span>
                                     </span>
                                 </h3>
-                                <span class="smsnf-dashboard-subs-stats__content--result2">12312</span>
+                                <span class="smsnf-dashboard-subs-stats__content--result2">
+                                    <?php  echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -117,8 +144,14 @@
                                         </span>
                                     </span>
                                 </h3>
-                                <p>Total de 23 Subscrições</p> 
-                                <span class="smsnf-dashboard-subs-stats__content--result3">8 Ago 2018</span>
+                                <p>
+                                    Total de
+                                    <?php echo $this->smsnf_get_form_subscribers_best_day()->total; ?>
+                                    Subscrições
+                                </p>
+                                <span class="smsnf-dashboard-subs-stats__content--result3">
+                                    <?php echo date('d M Y', strtotime($this->smsnf_get_form_subscribers_best_day()->date)); ?>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -131,7 +164,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Nome</th>
                                 <th class="hide-xs">Email</th>
                                 <th>Formulário</th>
                                 <th class="hide-xs">Data</th>
@@ -139,41 +172,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <?php foreach ($this->smsnf_get_form_subscribers_last(5) as $subscriber) { ?>
                             <tr>
-                                <td>Maria Almeida</td>
-                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
-                                <td>Captação de Leads</td>
-                                <td class="hide-xs">2018/12/20 12h00</td>
-                                <td>Marketing</td>
+                                <td><?php echo $subscriber->subscriber_name; ?></td>
+                                <td class="hide-xs"><?php echo $subscriber->subscriber_email; ?></td>
+                                <td><?php echo $subscriber->form_title; ?></td>
+                                <td class="hide-xs"><?php echo date('Y/m/d H\hm', strtotime($subscriber->created_at)); ?></td>
+                                <td><?php echo $subscriber->list_title; ?></td>
                             </tr>
-                            <tr>
-                                <td>Maria Almeida</td>
-                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
-                                <td>Captação de Leads</td>
-                                <td class="hide-xs">2018/12/20 12h00</td>
-                                <td>Marketing</td>
-                            </tr>
-                            <tr>
-                                <td>Maria Almeida</td>
-                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
-                                <td>Captação de Leads</td>
-                                <td class="hide-xs">2018/12/20 12h00</td>
-                                <td>Marketing</td>
-                            </tr>
-                            <tr>
-                                <td>Maria Almeida</td>
-                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
-                                <td>Captação de Leads</td>
-                                <td class="hide-xs">2018/12/20 12h00</td>
-                                <td>Marketing</td>
-                            </tr>
-                            <tr>
-                                <td>Maria Almeida</td>
-                                <td class="hide-xs">mariaalmeida@e-goi.com</td>
-                                <td>Captação de Leads</td>
-                                <td class="hide-xs">2018/12/20 12h00</td>
-                                <td>Marketing</td>
-                            </tr>
+                        <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -188,7 +195,9 @@
                                 <div class="smsnf-dashboard-subscribers-by-lists__content">
                                     <p>Total 
                                         <span class="hide-xs hide-md">de Subscritores:</span>
-                                        <span>1223</span>
+                                        <span>
+                                            <?php echo $this->smsnf_get_form_subscriber_total_by('list', 68)[0]->total; ?>
+                                        </span>
                                     </p>
                                     <div>
                                         <select>
@@ -201,7 +210,7 @@
                                 <canvas id="smsnf-dsbl__lineChart" height="120"></canvas>
                             </div>
                         </div>
-                        <!-- Last SMS Campaign --> 
+                        <!-- Last SMS Campaign -->
                         <div class="smsnf-dashboard-last-sms-campaign mt-3">
                             <div class="smsnf-dashboard-last-sms-campaign__title">
                                 Última campanha de SMS Enviada
@@ -210,15 +219,15 @@
                                 <tbody>
                                     <tr>
                                         <td>Nome</td>
-                                        <td>Curso de HTML Avançado</td>
+                                        <td><?=$campains['sms_premium']['name']?></td>
                                     </tr>
                                     <tr>
                                         <td>ID</td>
-                                        <td>1231</td>
+                                        <td><?php echo substr($campains['sms_premium']['id'], 0, -2);?></td>
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
-                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend">321</td>
+                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend"><?=$campains['sms_premium']['sent']?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -236,30 +245,12 @@
                             <div class="smsnf-dashboard-last-subscribers-by-form__table">
                                 <table class="table">
                                     <tbody>
+                                    <?php foreach ($this->smsnf_get_form_subscriber_total_by('form') as $form) { ?>
                                         <tr>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário ABCFGHHGJ</td>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">56756743</td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?=$form->title?></td>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd"><?=$form->total?></td>
                                         </tr>
-                                        <tr>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário SDFA</td>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">1231231</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário TRY</td>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">345345</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário WERW</td>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">123123</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário WERW</td>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">12321</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd">Formulário WERW</td>
-                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd">123123</td>
-                                        </tr>
+                                    <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -273,15 +264,15 @@
                                 <tbody>
                                     <tr>
                                         <td>Nome</td>
-                                        <td>Curso de HTML Avançado</td>
+                                        <td><?=$campains['email']['name']?></td>
                                     </tr>
                                     <tr>
                                         <td>ID</td>
-                                        <td>20192</td>
+                                        <td><?php echo substr($campains['email']['id'], 0, -2);?></td>
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
-                                        <td class="smsnf-dashboard-last-email-campaign__totalsend">2312</td>
+                                        <td class="smsnf-dashboard-last-email-campaign__totalsend"><?=$campains['email']['sent']?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -375,39 +366,28 @@
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
+                    <?php
+                        $post_num = 2;
+                        foreach ($this->smsnf_get_blog_posts($post_num) as $key => $post) {
+                    ?>
                     <div class="smsnf-dashboard-blog-last-post__content">
                         <div>
-                            <div>21-12-2018</div>
-                            <a href=""><small>CAPTAR</small></a>
+                            <div><?=$post['date']?></div>
+                            <a href=""><small><?=$post['category']?></small></a>
                         </div>
-                        <a href="">
+                        <a href="<?=$post['link']?>" target="_blank">
                             <h4 class="smsnf-dashboard-blog-last-post__content__title">
-                            Conheça as 4 principais tendências de marketing digital para 2019
+                            <?=$post['title']?>
                             </h4>
                         </a>
-                        <a href="">
+                        <a href="<?=$post['link']?>" target="_blank">
                             <p class="smsnf-dashboard-blog-last-post__content__description">
-                                Será que o seu negócio está atento às tendências do marketing digital para inovar e sair na frente da concorrência? Com o início do ano que se aproxima...
+                                <?=$post['excerpt']?>
                             </p>
                         </a>
-                        <hr>
+                       <?php echo $key != $post_num - 1 ? '<hr>' : null; ?>
                     </div>
-                    <div class="smsnf-dashboard-blog-last-post__content">
-                        <div>
-                            <div>21-12-2018</div>
-                            <a href=""><small>CAPTAR</small></a>
-                        </div>
-                        <a href="">
-                            <h4 class="smsnf-dashboard-blog-last-post__content__title">
-                            Conheça as 4 principais tendências de marketing digital para 2019
-                            </h4>
-                        </a>
-                        <a href="">
-                            <p class="smsnf-dashboard-blog-last-post__content__description">
-                                Será que o seu negócio está atento às tendências do marketing digital para inovar e sair na frente da concorrência? Com o início do ano que se aproxima...
-                            </p>
-                        </a>
-                    </div>
+                    <?php } ?>
                 </div><!-- /Blog Post's -->
             </div>
 
@@ -503,7 +483,7 @@
             labels: ["Abertura", "Cliques", "Bounces", "Remoções", "Queixas"],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2],
+                data: [<?php echo $emails_report; ?>],
                 backgroundColor: [
                     'rgba(0, 174, 218, 0.4)',
                     'rgba(147, 189, 77, 0.3)',
@@ -551,7 +531,7 @@
             labels: ["Entregues", "Não Entregues"],
             datasets: [{
                 label: '# of Votes',
-                data: [1020, 100],
+                data: [<?php echo $sms_report; ?>],
                 backgroundColor: [
                     'rgba(147, 189, 77, 0.3)',
                     'rgba(250, 70, 19, 0.4)'
