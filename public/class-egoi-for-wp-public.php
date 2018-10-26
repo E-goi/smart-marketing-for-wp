@@ -94,6 +94,9 @@ class Egoi_For_Wp_Public {
 
 		$bar_post = get_option(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 
+        wp_enqueue_script( 'ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-forms.js', array( 'jquery' ), $this->version, false );
+        wp_localize_script( 'ajax-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')) );
+
 		if(isset($bar_post['enabled']) && ($bar_post['enabled'])) {
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/e-goi.min.js', array( 'jquery' ), $this->version, false );
 			wp_localize_script( $this->plugin_name, 'url_egoi_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
@@ -593,6 +596,12 @@ class Egoi_For_Wp_Public {
         foreach ($options as $option) {
             add_feed($option->option_name, 'egoi_rss_feeds' );
         }
+    }
+
+
+    public function smsnf_save_advanced_form_subscriber() {
+        echo json_encode($_POST);
+        wp_die();
     }
 
 }

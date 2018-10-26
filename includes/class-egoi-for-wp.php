@@ -323,6 +323,8 @@ class Egoi_For_Wp {
 		add_shortcode('egoi_form_sync_5', array($plugin_public, 'shortcode_last3'));
 
 		$this->loader->add_action('admin_post_form_handler', $plugin_public, 'form_handler');
+
+        $this->loader->add_action('wp_ajax_smsnf_save_advanced_form_subscriber', $plugin_public, 'smsnf_save_advanced_form_subscriber');
 		
 	}
 
