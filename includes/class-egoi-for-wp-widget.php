@@ -154,7 +154,7 @@ class Egoi4Widget extends WP_Widget {
             }
 
             if ($lname){
-                echo "<label>".$fname_label."</label>";
+                echo "<label>".$lname_label."</label>";
                 echo "<div class='widget-text'><input type='text' placeholder='".$lname_placeholder."' name='egoi-lname-sub".$this->egoi_id."' id='egoi-lname-sub".$this->egoi_id."' style='".$this->input_width.";' /></div>";
             }
 
@@ -277,11 +277,11 @@ class Egoi4Widget extends WP_Widget {
             $lang_widget = esc_attr($instance['lang']);
 
             $default_tag = '';
+
+            $api = new Egoi_For_Wp();
             if($instance['tag-egoi']!=''){
-                $api = new Egoi_For_Wp();
                 $default_tag = $api->getTagByID($instance['tag-egoi']);
             }else{
-                $api = new Egoi_For_Wp();
                 $default_tag = $api->getTagByID($this->tag_egoi);
             }
 
@@ -536,12 +536,15 @@ function egoi_widget_request() {
 
         }else{
 
-            if (!isset($_POST['widget_double_optin']) || $_POST['widget_double_optin'] == 0) {
-                $status = 1;
-            } else {
-                $status = 0;
-            }
+            $status = !isset($_POST['widget_double_optin']) || $_POST['widget_double_optin'] == 0 ? 1 : 0;
+
             $result = $api->addSubscriber($list, $name, $email, $lang, $status, $mobile, $tag);
+
+            if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
+                $form_id = explode('-', $id);
+                $api->smsnf_save_form_subscriber($form_id[1], 'widget', $result);
+            }
+
             if($result){
 
                 $redirect = $Egoi4WP['redirect'];

@@ -1188,6 +1188,8 @@ class Egoi_For_Wp {
             $subscriber['form_title'] = get_post($form_id)->post_title;
         } else if ($form_type == 'bar') {
             $subscriber['form_title'] = 'Subscriber Bar';
+        } else if ($form_type == 'widget') {
+            $subscriber['form_title'] = get_option('widget_egoi4widget')[$form_id]['title'];
         }
 
         return $wpdb->insert($table, $subscriber);
