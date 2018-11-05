@@ -600,7 +600,23 @@ class Egoi_For_Wp_Public {
 
 
     public function smsnf_save_advanced_form_subscriber() {
-        echo json_encode($_POST);
+
+        $post = array();
+        parse_str($_POST['form_data'], $post);
+
+        $response = wp_remote_post('http:'.$_POST['url'], array(
+                'method' => 'POST',
+                'timeout' => 60,
+                'body' => $post,
+            )
+        );
+
+        if (is_wp_error($response)) {
+            $error_message = $response->get_error_message();
+            echo json_encode($error_message);
+        } else {
+            echo json_encode($response);
+        }
         wp_die();
     }
 
