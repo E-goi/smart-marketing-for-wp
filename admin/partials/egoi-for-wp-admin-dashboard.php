@@ -11,12 +11,12 @@
             <span class="prefix">
                 <?php echo __( 'You are here: ', 'egoi-for-wp' ); ?>
             </span>    
-                    <strong>Smart Marketing</a> &rsaquo;
-                        <a href="#">
-                            <span class="current-crumb">
-                            <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
-                        </a>
-                    </strong>
+                <strong>Smart Marketing</a> &rsaquo;
+                    <a href="#">
+                        <span class="current-crumb">
+                        <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
+                    </a>
+                </strong>
             </span>
         </div>
         <hr/>
@@ -117,7 +117,7 @@
                                         </span>
                                     </span>
                                 </h3>
-                                <p>Total de 23 Subscrições</p> 
+                                <!-- <p>Total de 23 Subscrições</p>  -->
                                 <span class="smsnf-dashboard-subs-stats__content--result3">8 Ago 2018</span>
                             </div>
                         </div>
@@ -128,7 +128,11 @@
                     <div class="smsnf-dashboard-last-subscribers__title">
                         Últimos 5 subscritores
                     </div>
-                    <table class="table">
+                    <div class="smsnf-dashboard-last-subscribers__empty">
+                         <p>Ainda não tem subscritores</p>
+                         <div></div>
+                    </div>
+                    <table class="table d-none">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -184,7 +188,10 @@
                             <div class="smsnf-dashboard-subscribers-by-lists__title">
                                 Subscritores por Listas
                             </div>
-                            <div class="smsnf-dashboard-subscribers-by-lists__chart">
+                            <div class="smsnf-dashboard-subscribers-by-lists__empty">
+                                <p>Ainda não tem registos</p>
+                            </div>
+                            <div class="smsnf-dashboard-subscribers-by-lists__chart d-none">
                                 <div class="smsnf-dashboard-subscribers-by-lists__content">
                                     <p>Total 
                                         <span class="hide-xs hide-md">de Subscritores:</span>
@@ -233,7 +240,10 @@
                             <div class="smsnf-dashboard-last-subscribers-by-form__title">
                                 Subscritores por Formulário
                             </div>
-                            <div class="smsnf-dashboard-last-subscribers-by-form__table">
+                            <div class="smsnf-dashboard-last-subscribers-by-form__empty">
+                                <p>Ainda não tem registos</p>
+                            </div>
+                            <div class="smsnf-dashboard-last-subscribers-by-form__table d-none">
                                 <table class="table">
                                     <tbody>
                                         <tr>
@@ -311,7 +321,7 @@
                                     <tbody>
                                         <tr>
                                             <td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
-                                            <td><span class="smsnf-dashboard-account__content__table--cash">201€</span></td>
+                                            <td><span class="smsnf-dashboard-account__content__table--cash">201</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -321,7 +331,7 @@
                                     <tbody>
                                         <tr>
                                             <td>Email</td>
-                                            <td><span class="">201€</span></td>
+                                            <td><span class="">2120</span></td>
                                         </tr>
                                         <tr>
                                             <td>SMS</td>
@@ -339,7 +349,7 @@
                                     <tbody>
                                         <tr>
                                             <td>Email</td>
-                                            <td><span class="">201€</span></td>
+                                            <td><span class="">20121</span></td>
                                         </tr>
                                         <tr>
                                             <td>Push</td>

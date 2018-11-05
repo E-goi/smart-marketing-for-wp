@@ -98,6 +98,7 @@
     color: $primary-color-darken; // #00313d
     margin-bottom: 0;
     -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.02rem;
 	}
 	p {
 		font-size: $font-size-xs;
@@ -107,14 +108,11 @@
   .smsnf-dashboard-subs-stats__content--result1,
   .smsnf-dashboard-subs-stats__content--result2,
   .smsnf-dashboard-subs-stats__content--result3{
-    font-size: $font-size-lg;
+    font-size: $font-size-24;
     font-weight: 600;
 		display: block;
     margin-top: 9px;
     color: $primary-color;
-  }
-  .smsnf-dashboard-subs-stats__content--result3{
-    margin-top: -3px;
   }
 }
 
@@ -128,7 +126,6 @@
 .dashicons-before:before{
   color: $gray-color;
 }
-
 .smsnf-dashboard-subs-stats .dashicons:hover{
   color: $primary-color;
 }
@@ -173,6 +170,29 @@
   font-size: 1rem;
 }
 
+.smsnf-dashboard-last-subscribers__empty,
+.smsnf-dashboard-subscribers-by-lists__empty,
+.smsnf-dashboard-last-subscribers-by-form__empty{
+  @include font-legibility;
+  padding: 0px 20px;
+  background-color: #efefef;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  p {
+    font-size: $font-size-md;
+    color: $dark-color;
+  }
+  div {
+    background: url("../img/subscribers-empty.png") no-repeat;
+    background-size: 90%;
+    background-position: center center;
+    width: 110px;
+    height: 70px;
+  }
+}
+
 .smsnf-dashboard-last-subscribers .table,
 .smsnf-dashboard-last-email-campaign .table,
 .smsnf-dashboard-last-sms-campaign .table {
@@ -200,9 +220,9 @@
     background-color: $gray-color-light; // #f9f9f9
     border-bottom: 1px solid darken($gray-color-light, 10%);// #dedede;
     padding: 18px 12px;
-    font-weight: bold;
+    font-weight: 600;
     -webkit-font-smoothing: antialiased;
-    font-size: $font-size-md;
+    font-size: $font-size-base;
 }
 
 //////////////////////////////
@@ -394,6 +414,13 @@
 // Media Queries
 //////////////////////////////
 
+@media screen and (min-width: 1298px) and (max-width: 1593px) {
+  .smsnf-dashboard-subs-stats__content--result1,
+  .smsnf-dashboard-subs-stats__content--result2,
+  .smsnf-dashboard-subs-stats__content--result3{
+    font-size: $font-size-base !important;
+   }
+}
 @media screen and (min-width: 841px) and (max-width: 1200px) {
   .smsnf-dashboard-subs-stats__content--result1,
   .smsnf-dashboard-subs-stats__content--result2,
@@ -403,7 +430,7 @@
   .smsnf-dashboard-subs-stats__icon--today,
   .smsnf-dashboard-subs-stats__icon--total,
   .smsnf-dashboard-subs-stats__icon--bestday{
-    background-size: 60%;
+    background-size: 55%;
     background-position: center center;
   }
 }
