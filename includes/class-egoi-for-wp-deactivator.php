@@ -29,6 +29,8 @@ class Egoi_For_Wp_Deactivator {
 		$email = $email->data->user_email;
 
 		self::serviceDeactivate(array('email' => $email));
+
+		self::smsnf_drop_table('egoi_form_subscribers');
 	}
 
 	public static function serviceDeactivate($data = array()) {
@@ -72,6 +74,14 @@ class Egoi_For_Wp_Deactivator {
 		curl_close($ch);
 
         return $server_output;
+    }
+
+    public static function smsnf_drop_table($table) {
+        global $wpdb;
+
+        $sql = "DROP TABLE IF EXISTS ".$wpdb->prefix.$table;
+
+        $wpdb->query($sql);
     }
 
 }
