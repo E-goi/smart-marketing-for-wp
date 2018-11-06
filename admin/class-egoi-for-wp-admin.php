@@ -1961,10 +1961,14 @@ class Egoi_For_Wp_Admin {
             $month = date('n', strtotime($start_day.' +'.$i.' month'));
 
             foreach ($lists as $list) {
+                if (!in_array($month, $total_subscribers['months'])) {
+                    $total_subscribers['months'][$month] = date('M', strtotime($start_day.' +'.$i.' month'));
+                }
+
                 if (isset($total_subscribers_flag[$list][$month])) {
-                    $total_subscribers[$list][$month] = $total_subscribers_flag[$list][$month];
+                    $total_subscribers[$list]['totals'][] = $total_subscribers_flag[$list][$month];
                 } else {
-                    $total_subscribers[$list][$month] = 0;
+                    $total_subscribers[$list]['totals'][] = 0;
                 }
             }
         }
@@ -2060,14 +2064,14 @@ class Egoi_For_Wp_Admin {
                 $reports[$channel]['list'] .= $value['list'].'; ';
                 $reports[$channel]['sent'] += $report->SENT;
                 if ($channel == 'email') {
-                    $reports[$channel]['opens'] += $report->VIEWS;
-                    $reports[$channel]['clicks'] += $report->CLICKS_SUB;
-                    $reports[$channel]['bounces'] += $report->RETURNED;
-                    $reports[$channel]['removes'] += $report->TOTAL_REMOVES;
-                    $reports[$channel]['complains'] += $report->COMPLAIN;
+                    $reports[$channel]['chart']['opens'] += $report->VIEWS;
+                    $reports[$channel]['chart']['clicks'] += $report->CLICKS_SUB;
+                    $reports[$channel]['chart']['bounces'] += $report->RETURNED;
+                    $reports[$channel]['chart']['removes'] += $report->TOTAL_REMOVES;
+                    $reports[$channel]['chart']['complains'] += $report->COMPLAIN;
                 } else if ($channel == 'sms_premium') {
-                    $reports[$channel]['delivered'] += $report->DELIVERED;
-                    $reports[$channel]['not_delivered'] += $report->NOT_DELIVERED;
+                    $reports[$channel]['chart']['delivered'] += $report->DELIVERED;
+                    $reports[$channel]['chart']['not_delivered'] += $report->NOT_DELIVERED;
                 }
 
             }

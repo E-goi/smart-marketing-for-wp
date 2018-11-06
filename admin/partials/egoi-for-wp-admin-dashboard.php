@@ -2,21 +2,18 @@
 
 if ( ! defined( 'ABSPATH' ) ) { die();}
 
-$campains = $this->smsnf_last_campaigns_reports();
+$campaigns = $this->smsnf_last_campaigns_reports();
 
-$not_include = array('name', 'id', 'list', 'sent');
-foreach ($campains['email'] as $key => $value) {
-    if (!in_array($key, $not_include)) {
-        $emails[] = $value;
-    }
-}
-foreach ($campains['sms_premium'] as $key => $value) {
-    if (!in_array($key, $not_include)) {
-        $sms[] = $value;
-    }
-}
-$emails_report = implode(",", $emails);
-$sms_report = implode(",", $sms);
+$campaign_email = implode(",", $campaigns['email']['chart']);
+$campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
+
+$lists = $this->smsnf_get_form_subscriber_total_by('list');
+
+$campaign_email = implode(",", $campaigns['email']['chart']);
+$campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
+
+$lists_chart = $this->smsnf_get_form_subscribers_list();
+$chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
 
 ?>
 <!-- Header -->
@@ -192,15 +189,21 @@ $sms_report = implode(",", $sms);
                                 <div class="smsnf-dashboard-subscribers-by-lists__content">
                                     <p>Total 
                                         <span class="hide-xs hide-md">de Subscritores:</span>
-                                        <span>
-                                            <?php echo $this->smsnf_get_form_subscriber_total_by('list', 68)[0]->total; ?>
+                                        <span id="list_subscribers_total">
+                                            <?php
+                                            foreach ($lists as $list) {
+                                                echo $list->list_id == $this->options_list['list'] ? $list->total : null;
+                                            }
+                                            ?>
                                         </span>
                                     </p>
                                     <div>
-                                        <select>
-                                            <option value="Lista A">Lista A</option>
-                                            <option value="Lista B">Lista B</option>
-                                            <option value="Lista C">Lista C</option>
+                                        <select id="chart_list">
+                                            <?php foreach ($lists as $list) { ?>
+                                                <option value="<?php echo implode(",", $lists_chart[$list->list_id]['totals']);?>" <?php selected($list->list_id, $this->options_list['list']);?> >
+                                                    <?=$list->title?>
+                                                </option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -216,15 +219,15 @@ $sms_report = implode(",", $sms);
                                 <tbody>
                                     <tr>
                                         <td>Nome</td>
-                                        <td><?=$campains['sms_premium']['name']?></td>
+                                        <td><?=$campaigns['sms_premium']['name']?></td>
                                     </tr>
                                     <tr>
                                         <td>ID</td>
-                                        <td><?php echo substr($campains['sms_premium']['id'], 0, -2);?></td>
+                                        <td><?php echo substr($campaigns['sms_premium']['id'], 0, -2);?></td>
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
-                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend"><?=$campains['sms_premium']['sent']?></td>
+                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend"><?=$campaigns['sms_premium']['sent']?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -261,15 +264,15 @@ $sms_report = implode(",", $sms);
                                 <tbody>
                                     <tr>
                                         <td>Nome</td>
-                                        <td><?=$campains['email']['name']?></td>
+                                        <td><?=$campaigns['email']['name']?></td>
                                     </tr>
                                     <tr>
                                         <td>ID</td>
-                                        <td><?php echo substr($campains['email']['id'], 0, -2);?></td>
+                                        <td><?php echo substr($campaigns['email']['id'], 0, -2);?></td>
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
-                                        <td class="smsnf-dashboard-last-email-campaign__totalsend"><?=$campains['email']['sent']?></td>
+                                        <td class="smsnf-dashboard-last-email-campaign__totalsend"><?=$campaigns['email']['sent']?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -398,41 +401,43 @@ $sms_report = implode(",", $sms);
 
 <!-- Total of subscribers Chart JS -->
 <script>
-    const CHART = document.getElementById("smsnf-dsbl__lineChart");
-    console.log(CHART);
 
-    let lineChart = new Chart(CHART, {
+
+    let listChartLabels = [<?php echo $chart_months; ?>];
+    let listChartData = [<?php echo implode(",", $lists_chart[$this->options_list['list']]['totals']);?>];
+
+    myListChartParams = {
         type: 'bar',
         data: {
-            labels: ["Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+            labels: listChartLabels,
             datasets: [
                 {
-                label: "Nº de Subscritores",
-                backgroundColor: [
-                    "rgba(0, 174, 218, 0.4)", 
-                    "rgba(0, 174, 218, 0.4)",
-                    "rgba(0, 174, 218, 0.4)",
-                    "rgba(0, 174, 218, 0.4)",
-                    "rgba(0, 174, 218, 0.4)",
-                    "rgba(0, 174, 218, 0.4)"
-                ],
-                hoverBackgroundColor: [
-                    "rgba(0, 174, 218, 0.5)", 
-                    "rgba(0, 174, 218, 0.5)",
-                    "rgba(0, 174, 218, 0.5)",
-                    "rgba(0, 174, 218, 0.5)",
-                    "rgba(0, 174, 218, 0.5)",
-                    "rgba(0, 174, 218, 0.5)"
-                ],
-                data: [300,800,600,200,120,150],
-                borderWidth: 0,
-                hoverBorderWidth: 0
+                    label: "Nº de Subscritores",
+                    backgroundColor: [
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)"
+                    ],
+                    hoverBackgroundColor: [
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)"
+                    ],
+                    data: listChartData,
+                    borderWidth: 0,
+                    hoverBorderWidth: 0
                 }
             ]
-            },
-            options: {
-            legend: { 
-                display: false 
+        },
+        options: {
+            legend: {
+                display: false
             },
             title: {
                 fontColor: 'blue',
@@ -467,7 +472,29 @@ $sms_report = implode(",", $sms);
                 }]
             }
         }
-    });
+    };
+
+    var ctx = document.getElementById('smsnf-dsbl__lineChart');
+    var myListChart = new Chart(ctx, myListChartParams);
+
+    var list = document.getElementById("chart_list");
+    list.addEventListener("change", changeChartData);
+
+    function changeChartData() {
+        var data = list.value.split(",");
+        myListChartParams.data.datasets[0].data = data;
+
+        var sum = 0;
+        data.forEach(function (e) {
+            sum = sum + parseInt(e);
+        });
+
+        myListChart.update();
+        document.getElementById("list_subscribers_total").innerHTML = sum;
+    }
+
+
+
 </script>
 
 <!-- Last Campaign Email Chart JS -->
@@ -480,7 +507,7 @@ $sms_report = implode(",", $sms);
             labels: ["Abertura", "Cliques", "Bounces", "Remoções", "Queixas"],
             datasets: [{
                 label: '# of Votes',
-                data: [<?php echo $emails_report; ?>],
+                data: [<?php echo $campaign_email; ?>],
                 backgroundColor: [
                     'rgba(0, 174, 218, 0.4)',
                     'rgba(147, 189, 77, 0.3)',
@@ -528,7 +555,7 @@ $sms_report = implode(",", $sms);
             labels: ["Entregues", "Não Entregues"],
             datasets: [{
                 label: '# of Votes',
-                data: [<?php echo $sms_report; ?>],
+                data: [<?php echo $campaign_sms; ?>],
                 backgroundColor: [
                     'rgba(147, 189, 77, 0.3)',
                     'rgba(250, 70, 19, 0.4)'
