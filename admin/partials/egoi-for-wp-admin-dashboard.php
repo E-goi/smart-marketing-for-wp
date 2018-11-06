@@ -138,11 +138,11 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                                         </span>
                                     </span>
                                 </h3>
-                                <p>
+                                <!--<p>
                                     Total de
                                     <?php echo $this->smsnf_get_form_subscribers_best_day()->total; ?>
                                     Subscrições
-                                </p>
+                                </p>-->
                                 <span class="smsnf-dashboard-subs-stats__content--result3">
                                     <?php echo date('d M Y', strtotime($this->smsnf_get_form_subscribers_best_day()->date)); ?>
                                 </span>
@@ -152,14 +152,15 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                 </div>
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">
+                    <?php $last_subscribers = $this->smsnf_get_form_subscribers_last(5); ?>
                     <div class="smsnf-dashboard-last-subscribers__title">
-                        Últimos 5 subscritores
+                        Últimos subscritores
                     </div>
-                    <div class="smsnf-dashboard-last-subscribers__empty">
+                    <div class="smsnf-dashboard-last-subscribers__empty <?php echo count($last_subscribers) > 0 ? 'd-none' : null;?>">
                          <p>Ainda não tem subscritores</p>
                          <div></div>
                     </div>
-                    <table class="table d-none">
+                    <table class="table <?php echo count($last_subscribers) == 0 ? 'd-none' : null;?>">
                         <thead>
                             <tr>
                                 <th>Nome</th>
@@ -170,7 +171,7 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($this->smsnf_get_form_subscribers_last(5) as $subscriber) { ?>
+                        <?php foreach ($last_subscribers as $subscriber) { ?>
                             <tr>
                                 <td><?php echo $subscriber->subscriber_name; ?></td>
                                 <td class="hide-xs"><?php echo $subscriber->subscriber_email; ?></td>
@@ -189,10 +190,10 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                             <div class="smsnf-dashboard-subscribers-by-lists__title">
                                 Subscritores por Listas
                             </div>
-                            <div class="smsnf-dashboard-subscribers-by-lists__empty">
+                            <div class="smsnf-dashboard-subscribers-by-lists__empty <?php echo count($lists) > 0 ? 'd-none' : null;?>">
                                 <p>Ainda não tem registos</p>
                             </div>
-                            <div class="smsnf-dashboard-subscribers-by-lists__chart d-none">
+                            <div class="smsnf-dashboard-subscribers-by-lists__chart <?php echo count($lists) == 0 ? 'd-none' : null;?>">
                                 <div class="smsnf-dashboard-subscribers-by-lists__content">
                                     <p>Total 
                                         <span class="hide-xs hide-md">de Subscritores:</span>
@@ -246,16 +247,17 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                     <div class="column col-6 col-xl-12 col-xs-12">
                         <!-- Subscribers by Form -->
                         <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
+                            <?php $forms = $this->smsnf_get_form_subscriber_total_by('form'); ?>
                             <div class="smsnf-dashboard-last-subscribers-by-form__title">
                                 Subscritores por Formulário
                             </div>
-                            <div class="smsnf-dashboard-last-subscribers-by-form__empty">
+                            <div class="smsnf-dashboard-last-subscribers-by-form__empty <?php echo count($forms) > 0 ? 'd-none' : null;?>">
                                 <p>Ainda não tem registos</p>
                             </div>
-                            <div class="smsnf-dashboard-last-subscribers-by-form__table d-none">
+                            <div class="smsnf-dashboard-last-subscribers-by-form__table <?php echo count($forms) == 0 ? 'd-none' : null;?>">
                                 <table class="table">
                                     <tbody>
-                                    <?php foreach ($this->smsnf_get_form_subscriber_total_by('form') as $form) { ?>
+                                    <?php foreach ($forms as $form) { ?>
                                         <tr>
                                             <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?=$form->title?></td>
                                             <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd"><?=$form->total?></td>
