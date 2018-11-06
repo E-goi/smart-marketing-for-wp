@@ -1,5 +1,5 @@
 // Variables and mixins
-@import "variables";
+@import "variables-custom";
 @import "mixins";
 
 /*! Spectre.css v#{$version} | MIT License | github.com/picturepan2/spectre */
@@ -70,6 +70,6 @@
 @import "icons/icons-action";
 @import "icons/icons-object";
 
-// Custom class
+// Custom
 @import "custom/egoi-for-wp-admin";
 @import "custom/dashboard";

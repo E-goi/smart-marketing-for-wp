@@ -28,12 +28,12 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
             <span class="prefix">
                 <?php echo __( 'You are here: ', 'egoi-for-wp' ); ?>
             </span>    
-                    <strong>Smart Marketing</a> &rsaquo;
-                        <a href="#">
-                            <span class="current-crumb">
-                            <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
-                        </a>
-                    </strong>
+                <strong>Smart Marketing</a> &rsaquo;
+                    <a href="#">
+                        <span class="current-crumb">
+                        <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
+                    </a>
+                </strong>
             </span>
         </div>
         <hr/>
@@ -155,7 +155,11 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                     <div class="smsnf-dashboard-last-subscribers__title">
                         Últimos 5 subscritores
                     </div>
-                    <table class="table">
+                    <div class="smsnf-dashboard-last-subscribers__empty">
+                         <p>Ainda não tem subscritores</p>
+                         <div></div>
+                    </div>
+                    <table class="table d-none">
                         <thead>
                             <tr>
                                 <th>Nome</th>
@@ -185,7 +189,10 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                             <div class="smsnf-dashboard-subscribers-by-lists__title">
                                 Subscritores por Listas
                             </div>
-                            <div class="smsnf-dashboard-subscribers-by-lists__chart">
+                            <div class="smsnf-dashboard-subscribers-by-lists__empty">
+                                <p>Ainda não tem registos</p>
+                            </div>
+                            <div class="smsnf-dashboard-subscribers-by-lists__chart d-none">
                                 <div class="smsnf-dashboard-subscribers-by-lists__content">
                                     <p>Total 
                                         <span class="hide-xs hide-md">de Subscritores:</span>
@@ -242,7 +249,10 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                             <div class="smsnf-dashboard-last-subscribers-by-form__title">
                                 Subscritores por Formulário
                             </div>
-                            <div class="smsnf-dashboard-last-subscribers-by-form__table">
+                            <div class="smsnf-dashboard-last-subscribers-by-form__empty">
+                                <p>Ainda não tem registos</p>
+                            </div>
+                            <div class="smsnf-dashboard-last-subscribers-by-form__table d-none">
                                 <table class="table">
                                     <tbody>
                                     <?php foreach ($this->smsnf_get_form_subscriber_total_by('form') as $form) { ?>
@@ -302,7 +312,7 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                                     <tbody>
                                         <tr>
                                             <td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
-                                            <td><span class="smsnf-dashboard-account__content__table--cash">201€</span></td>
+                                            <td><span class="smsnf-dashboard-account__content__table--cash">201</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -312,7 +322,7 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                                     <tbody>
                                         <tr>
                                             <td>Email</td>
-                                            <td><span class="">201€</span></td>
+                                            <td><span class="">2120</span></td>
                                         </tr>
                                         <tr>
                                             <td>SMS</td>
@@ -330,7 +340,7 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                                     <tbody>
                                         <tr>
                                             <td>Email</td>
-                                            <td><span class="">201€</span></td>
+                                            <td><span class="">20121</span></td>
                                         </tr>
                                         <tr>
                                             <td>Push</td>
