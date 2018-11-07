@@ -113,14 +113,11 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                         <div class="smsnf-dashboard-subs-stats">
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>Total<br>Subscritores
-                                    <!-- <span class="e-goi-tooltip">
-                                        <span class="dashicons dashicons-editor-help"></span>
-                                        <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-                                        </span>
-                                    </span> -->
-                                    <span class="smsnf-dashboard-subs-stats__content--result">
+                                    <span class="smsnf-dashboard-subs-stats__content--result e-goi-tooltip">
                                         <?php echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
+                                            <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
+                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+                                            </span>
                                     </span>
                                 </h3>
                             </div>
@@ -135,14 +132,11 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                         <div class="smsnf-dashboard-subs-stats">
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>Melhor<br>Dia
-                                    <!-- <span class="e-goi-tooltip">
-                                        <span class="dashicons dashicons-editor-help"></span>
-                                        <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-                                        </span>
-                                    </span> -->
-                                    <span class="smsnf-dashboard-subs-stats__content--result">
+                                    <span class="smsnf-dashboard-subs-stats__content--result bestday e-goi-tooltip">
                                         <?php echo date('d M Y', strtotime($this->smsnf_get_form_subscribers_best_day()->date)); ?>
+                                            <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
+                                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+                                            </span>
                                     </span>
                                 </h3>
                             </div>

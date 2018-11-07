@@ -6706,3 +6706,11 @@ div.eg-dropdown {
     display: none;
   }
 }
+
+.smsnf-dashboard-subs-stats__content--result.e-goi-tooltip .e-goi-tooltiptext {
+  margin-left: -85px;
+}
+
+.smsnf-dashboard-subs-stats__content--result.bestday.e-goi-tooltip .e-goi-tooltiptext {
+  margin-left: 90px;
+}
