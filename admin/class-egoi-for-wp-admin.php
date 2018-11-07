@@ -194,6 +194,9 @@ class Egoi_For_Wp_Admin {
 		wp_enqueue_script('wp-color-picker');
 
 		wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
+
+        wp_enqueue_script( 'ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array( 'jquery' ), $this->version, false );
+        wp_localize_script( 'ajax-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')) );
 	}
 
 	/**
@@ -2078,6 +2081,11 @@ class Egoi_For_Wp_Admin {
 
         }
         return $reports;
+    }
+
+    public function smsnf_hide_notification() {
+        echo 'teste';
+        wp_die();
     }
 
 }

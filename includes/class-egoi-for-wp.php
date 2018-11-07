@@ -270,6 +270,8 @@ class Egoi_For_Wp {
 		$this->loader->add_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links');
 		$this->loader->add_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'del_action_link');
 
+        $this->loader->add_action('wp_ajax_smsnf_hide_notification', $plugin_admin, 'smsnf_hide_notification');
+
 	}
 
 	/**
