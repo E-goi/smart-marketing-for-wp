@@ -69,50 +69,50 @@
   @include box-shadow($shadows);
   padding: 10px 25px;
   display: flex;
+  justify-content: space-between;
+  img{
+    max-width: 100%;
+    height: auto;
+  }
 }
-.smsnf-dashboard-subs-stats__icon--today{
-  background: url("../img/subscribers-today.png") no-repeat;
-}
-.smsnf-dashboard-subs-stats__icon--total{
-	background: url("../img/total-subscribers.png") no-repeat;
-}
-.smsnf-dashboard-subs-stats__icon--bestday{
-	background: url("../img/bestday.png") no-repeat;
-}
+// .smsnf-dashboard-subs-stats__icon--today{
+//   background: url("../img/subscribers-today.png") no-repeat;
+// }
+// .smsnf-dashboard-subs-stats__icon--total{
+// 	background: url("../img/total-subscribers.png") no-repeat;
+// }
+// .smsnf-dashboard-subs-stats__icon--bestday{
+// 	background: url("../img/bestday.png") no-repeat;
+// }
 
-.smsnf-dashboard-subs-stats__icon--today,
-.smsnf-dashboard-subs-stats__icon--total,
-.smsnf-dashboard-subs-stats__icon--bestday{
-  background-position: center center;
-  background-size: 90%;
-  width: 100px;
-	height: 100px;
-}
+// .smsnf-dashboard-subs-stats__icon--today,
+// .smsnf-dashboard-subs-stats__icon--total,
+// .smsnf-dashboard-subs-stats__icon--bestday{
+//   background-position: center center;
+//   background-size: 90%;
+//   width: 100px;
+// 	height: 100px;
+// }
 .smsnf-dashboard-subs-stats__content{
   display: flex;
-  flex-direction: column;
-  margin-left: 20px;
+  flex-direction: row;
 	h3 {
-		font-size: $font-size-base;
-    font-weight: normal;
-    color: $primary-color-darken; // #00313d
-    margin-bottom: 0;
+    color: #00313d;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.02rem;
-	}
-	p {
-		font-size: $font-size-xs;
-    margin-top: 3px;
-    color: $dark-color;
-	}
-  .smsnf-dashboard-subs-stats__content--result1,
-  .smsnf-dashboard-subs-stats__content--result2,
-  .smsnf-dashboard-subs-stats__content--result3{
-    font-size: $font-size-24;
-    font-weight: 600;
-		display: block;
+    font-weight: 400;
+    letter-spacing: -.02rem;
+    margin-bottom: 0;
+  }
+
+  .smsnf-dashboard-subs-stats__content--result{
+    color: #00aeda;
+    display: block!important;
+    font-size: 16px;
+    font-weight: 500;
     margin-top: 9px;
-    color: $primary-color;
+    position: absolute;
+    top: 75px;
   }
 }
 

@@ -95,12 +95,15 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                     <!-- Registrations made today -->
                     <div class="column col-4 col-md-12 col-xs-12">
                         <div class="smsnf-dashboard-subs-stats">
-                            <div class="smsnf-dashboard-subs-stats__icon--today"><!-- Icon --></div>
                             <div class="smsnf-dashboard-subs-stats__content">
-                                <h3>Registos de hoje</h3>
-                                <span class="smsnf-dashboard-subs-stats__content--result1">
-                                    <?php  echo $this->smsnf_get_form_susbcribers_total('today')->total; ?>
-                                </span>
+                                <h3>Registos<br>Hoje
+                                    <span class="smsnf-dashboard-subs-stats__content--result">
+                                        <?php echo $this->smsnf_get_form_susbcribers_total('today')->total; ?>
+                                    </span>
+                                </h3>
+                            </div>
+                            <div>
+                                <img src="<?php echo plugins_url().'/smart-marketing-for-wp/admin/img/subscribers-today.png'; ?>"/>
                             </div>
                         </div>
                     </div>
@@ -108,19 +111,21 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                     <!-- Total Subscribers -->
                     <div class="column col-4 col-md-12 col-xs-12">
                         <div class="smsnf-dashboard-subs-stats">
-                            <div class="smsnf-dashboard-subs-stats__icon--total"><!-- Icon --></div>
                             <div class="smsnf-dashboard-subs-stats__content">
-                                <h3>Total de Subscritores 
-                                    <span class="e-goi-tooltip">
+                                <h3>Total<br>Subscritores
+                                    <!-- <span class="e-goi-tooltip">
                                         <span class="dashicons dashicons-editor-help"></span>
                                         <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
                                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                                         </span>
+                                    </span> -->
+                                    <span class="smsnf-dashboard-subs-stats__content--result">
+                                        <?php echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
                                     </span>
                                 </h3>
-                                <span class="smsnf-dashboard-subs-stats__content--result2">
-                                    <?php  echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
-                                </span>
+                            </div>
+                            <div>
+                                <img src="<?php echo plugins_url().'/smart-marketing-for-wp/admin/img/total-subscribers.png'; ?>"/>
                             </div>
                         </div>
                     </div>
@@ -128,27 +133,26 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                     <!-- Best day -->
                     <div class="column col-4 col-md-12 col-xs-12">
                         <div class="smsnf-dashboard-subs-stats">
-                            <div class="smsnf-dashboard-subs-stats__icon--bestday"><!-- Icon --></div>
                             <div class="smsnf-dashboard-subs-stats__content">
-                                <h3 class="d-inline-block">Melhor dia 
-                                    <span class="e-goi-tooltip">
+                                <h3>Melhor<br>Dia
+                                    <!-- <span class="e-goi-tooltip">
                                         <span class="dashicons dashicons-editor-help"></span>
                                         <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
                                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                                         </span>
+                                    </span> -->
+                                    <span class="smsnf-dashboard-subs-stats__content--result">
+                                        <?php echo date('d M Y', strtotime($this->smsnf_get_form_subscribers_best_day()->date)); ?>
                                     </span>
                                 </h3>
-                                <!--<p>
-                                    Total de
-                                    <?php echo $this->smsnf_get_form_subscribers_best_day()->total; ?>
-                                    Subscrições
-                                </p>-->
-                                <span class="smsnf-dashboard-subs-stats__content--result3">
-                                    <?php echo date('d M Y', strtotime($this->smsnf_get_form_subscribers_best_day()->date)); ?>
-                                </span>
+                            </div>
+                            <div>
+                                <img src="<?php echo plugins_url().'/smart-marketing-for-wp/admin/img/bestday.png'; ?>"/>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">

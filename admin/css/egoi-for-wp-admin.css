@@ -6186,63 +6186,42 @@ div.eg-dropdown {
   border-radius: 3px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, .15);
   display: -ms-flexbox;
-  display: flex; 
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between; 
   padding: 10px 25px;
   position: relative;
 }
 
-.smsnf-dashboard-subs-stats__icon--today {
-  background: url("../img/subscribers-today.png") no-repeat;
-}
-
-.smsnf-dashboard-subs-stats__icon--total {
-  background: url("../img/total-subscribers.png") no-repeat;
-}
-
-.smsnf-dashboard-subs-stats__icon--bestday {
-  background: url("../img/bestday.png") no-repeat;
-}
-
-.smsnf-dashboard-subs-stats__icon--today,
-.smsnf-dashboard-subs-stats__icon--total,
-.smsnf-dashboard-subs-stats__icon--bestday {
-  background-position: center center;
-  background-size: 90%;
-  height: 100px; 
-  width: 100px;
+.smsnf-dashboard-subs-stats img {
+  height: auto; 
+  max-width: 100%;
 }
 
 .smsnf-dashboard-subs-stats__content {
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  margin-left: 20px;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
 .smsnf-dashboard-subs-stats__content h3 {
   color: #00313d;
-  font-size: 1rem;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
-  font-weight: normal;
-  letter-spacing: -.02rem; 
+  font-weight: 400;
+  letter-spacing: -.02rem;
   margin-bottom: 0;
 }
 
-.smsnf-dashboard-subs-stats__content p {
-  color: #454d5d; 
-  font-size: .75rem;
-  margin-top: 3px;
-}
-
-.smsnf-dashboard-subs-stats__content .smsnf-dashboard-subs-stats__content--result1,
-.smsnf-dashboard-subs-stats__content .smsnf-dashboard-subs-stats__content--result2,
-.smsnf-dashboard-subs-stats__content .smsnf-dashboard-subs-stats__content--result3 {
-  color: #00aeda; 
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 600;
+.smsnf-dashboard-subs-stats__content .smsnf-dashboard-subs-stats__content--result {
+  color: #00aeda;
+  display: block !important;
+  font-size: 16px;
+  font-weight: 500;
   margin-top: 9px;
+  position: absolute;
+  top: 75px;
 }
 
 .smsnf-dashboard-subs-stats__content .dashicons {
