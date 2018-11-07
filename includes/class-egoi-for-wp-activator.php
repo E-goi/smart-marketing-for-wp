@@ -35,7 +35,7 @@ class Egoi_For_Wp_Activator {
             form_id INT(11) NOT NULL, 
             form_type VARCHAR(255) NOT NULL, 
             form_title VARCHAR(255) NOT NULL,
-            subscriber_id VARCHAR(255) NOT NULL,
+            subscriber_id VARCHAR(255) NULL,
             subscriber_name VARCHAR(255) NULL,
             subscriber_email VARCHAR(255) NULL, 
             list_id INT(11) NOT NULL, 

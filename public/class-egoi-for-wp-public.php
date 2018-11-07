@@ -600,14 +600,17 @@ class Egoi_For_Wp_Public {
 
 
     public function smsnf_save_advanced_form_subscriber() {
+        $success_messages = array(
+            'Está quase! Só falta confirmar o seu email.'
+        );
 
-        $post = array();
-        parse_str($_POST['form_data'], $post);
+        $form_data = array();
+        parse_str($_POST['form_data'], $form_data);
 
         $response = wp_remote_post('http:'.$_POST['url'], array(
                 'method' => 'POST',
                 'timeout' => 60,
-                'body' => $post,
+                'body' => $form_data,
             )
         );
 
@@ -615,8 +618,33 @@ class Egoi_For_Wp_Public {
             $error_message = $response->get_error_message();
             echo json_encode($error_message);
         } else {
-            echo json_encode($response);
+            foreach ($success_messages as $message) {
+                if (strpos($response['body'], $message) !== false) {
+                    $output = $message;
+
+                    $subscriber = (object) array(
+                        'UID' => null,
+                        'FIRST_NAME' => $_POST['fname'].' '.$_POST['lname'],
+                        'EMAIL' => $_POST['email'],
+                        'LIST' => $form_data['lista']
+                    );
+
+                    for ($i=1; $i<=10; $i++) {
+                        $form = get_option('egoi_form_sync_'.$i);
+                        if ($form && strpos($form['egoi_form_sync']['form_content'], $_POST['form_id']) !== false) {
+                            $form_id = $form['egoi_form_sync']['form_id'];
+                            $form_title = $form['egoi_form_sync']['form_name'];
+                            break;
+                        }
+                    }
+
+                    $api = new Egoi_For_Wp();
+                    $api->smsnf_save_form_subscriber($form_id, 'advanced-form', $subscriber, $form_title);
+                    break;
+                }
+            }
         }
+        echo $output;
         wp_die();
     }
 

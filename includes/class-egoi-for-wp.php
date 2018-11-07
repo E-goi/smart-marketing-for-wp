@@ -1167,7 +1167,7 @@ class Egoi_For_Wp {
     }
 
 
-    public function smsnf_save_form_subscriber($form_id, $form_type, $subscriber_data) {
+    public function smsnf_save_form_subscriber($form_id, $form_type, $subscriber_data, $form_title = null) {
 
         $list = $this->getLists(false, false, $subscriber_data->LIST);
 
@@ -1186,7 +1186,9 @@ class Egoi_For_Wp {
             'created_at' => current_time('mysql'),
         );
 
-        if ($form_type == 'simple-form') {
+        if ($form_title) {
+            $subscriber['form_title'] = $form_title;
+        } else if ($form_type == 'simple-form') {
             $subscriber['form_title'] = get_post($form_id)->post_title;
         } else if ($form_type == 'bar') {
             $subscriber['form_title'] = 'Subscriber Bar';

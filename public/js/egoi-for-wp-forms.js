@@ -24,12 +24,8 @@
             };
 
             $.post(ajax_object.ajax_url, data, function(response) {
-
-                console.log(response);
-
+                alert(response);
             });
-
-            //this.submit();
 
         });
 
