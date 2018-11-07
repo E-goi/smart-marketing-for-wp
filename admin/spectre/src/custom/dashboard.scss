@@ -145,9 +145,11 @@
   border: 1px solid #f3f3f3;
   border-radius: $border-radius;
 }
-.smsnf-dashboard-last-subscribers .table tr td{
+.smsnf-dashboard-last-subscribers{
+  .table tr td{
   font-size: 0.9rem;
   text-align: left;
+  }
 }
 
 .smsnf-dashboard-last-subscribers-by-form{
@@ -156,17 +158,22 @@
   border: 1px solid #f3f3f3;
   border-radius: 3px;
 }
-.smsnf-dashboard-last-subscribers-by-form__table .table{
+.smsnf-dashboard-last-subscribers-by-form__table {
+  th{
+   font-size: 11px;
+   font-weight: normal; 
+  }
+  .table{
 	background-color: #fff;
 	border-collapse: unset;
   padding: 12px 12px;
+  }
 }
 .smsnf-dashboard-last-subscribers-by-form__table__ltd{
   font-size: 0.9rem;
   line-height: 20px;
 }
 .smsnf-dashboard-last-subscribers-by-form__table__rtd{
-  text-align: right;
   font-size: 1rem;
 }
 
@@ -202,7 +209,7 @@
 }
 .smsnf-dashboard-last-subscribers .table th{
    font-weight: normal;
-   font-size: $font-size-sm;
+   font-size: $font-size-xs;
 }
 .smsnf-dashboard-last-subscribers .table tbody tr.active, 
 .table.table-striped tbody tr.active{
@@ -245,8 +252,8 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: baseline;
-	padding:10px;
+	align-items: center;
+  padding: 20px 10px;
 	p{
 		font-size: $font-size-sm;
 		span:nth-child(2){
@@ -257,21 +264,21 @@
         padding: 4px 5px;
         border-radius: 2px;
         background-color: $secondary-color-lighting; // #f6fdff;
-        margin-left: $unit-16;
 		}
 	}
 	select{
-		border: 1px solid $primary-color;
-		font-size: $font-size-lg;
-		height: 35px;
-		width: 158px;
-		@include box-shadow($shadows);
-    color: $primary-color-dark;
+		border: 1px solid #ddd;
+		font-size: 13px;
+		height: 32px;
+		width: 100%;
+    color: #454d5d;
 		&:hover{
-      color: $primary-color;
-      border: 1px solid $primary-color-dark;
-		}
-	}
+      color: #454d5d;		
+    }
+  }
+  .smsnf-dashboard-subscribers-by-lists__content--total{
+    font-weight: 700;
+  }
 }
 
 //////////////////////////////

@@ -195,17 +195,9 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                             </div>
                             <div class="smsnf-dashboard-subscribers-by-lists__chart <?php echo count($lists) == 0 ? 'd-none' : null;?>">
                                 <div class="smsnf-dashboard-subscribers-by-lists__content">
-                                    <p>Total 
-                                        <span class="hide-xs hide-md">de Subscritores:</span>
-                                        <span id="list_subscribers_total">
-                                            <?php
-                                            foreach ($lists as $list) {
-                                                echo $list->list_id == $this->options_list['list'] ? $list->total : null;
-                                            }
-                                            ?>
-                                        </span>
-                                    </p>
+                                    
                                     <div>
+                                        <!-- <p style="font-size: 11px; margin: 0;">Seleccione a Lista</p> -->
                                         <select id="chart_list">
                                             <?php foreach ($lists as $list) { ?>
                                                 <option value="<?php echo implode(",", $lists_chart[$list->list_id]['totals']);?>" <?php selected($list->list_id, $this->options_list['list']);?> >
@@ -214,6 +206,17 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                                             <?php } ?>
                                         </select>
                                     </div>
+                                    
+                                    <div>Total:
+                                        <span class="smsnf-dashboard-subscribers-by-lists__content--total" id="list_subscribers_total">
+                                            <?php
+                                            foreach ($lists as $list) {
+                                                echo $list->list_id == $this->options_list['list'] ? $list->total : null;
+                                            }
+                                            ?>
+                                        </span>
+                                    </div>
+
                                 </div>
                                 <canvas id="smsnf-dsbl__lineChart" height="120"></canvas>
                             </div>
@@ -257,6 +260,12 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                             <div class="smsnf-dashboard-last-subscribers-by-form__table <?php echo count($forms) == 0 ? 'd-none' : null;?>">
                                 <table class="table">
                                     <tbody>
+                                        <th>
+                                            Nome do Formulário
+                                        </th>
+                                        <th>
+                                           Nº de subscritores
+                                        </th>
                                     <?php foreach ($forms as $form) { ?>
                                         <tr>
                                             <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?=$form->title?></td>
