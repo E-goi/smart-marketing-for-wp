@@ -2,13 +2,25 @@
     'use strict';
 
     $( document ).ready(function() {
-        var data = {
-            'action' : 'smsnf_hide_notification'
-        };
 
-        $.post(ajax_object.ajax_url, data, function(response) {
-            alert(response);
+        $('.hide-notification-button').on('click', function () {
+
+            var notification = {
+                div: $(this).closest('.column'),
+                type: $(this).data('notification'),
+            };
+
+            var data = {
+                'action' : 'smsnf_hide_notification',
+                'notification': notification.type
+            };
+
+            $.post(ajax_object.ajax_url, data, function() {
+                notification.div.slideUp(150);
+            });
+
         });
+
     });
 
 })( jQuery );

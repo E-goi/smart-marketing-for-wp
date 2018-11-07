@@ -2084,7 +2084,9 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_hide_notification() {
-        echo 'teste';
+        $notifications = get_option('egoi_notifications');
+        $notifications[$_POST['notification']] = current_time('mysql');
+        update_option('egoi_notifications', $notifications);
         wp_die();
     }
 

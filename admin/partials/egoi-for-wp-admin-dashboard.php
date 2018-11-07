@@ -15,6 +15,8 @@ $campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
 $lists_chart = $this->smsnf_get_form_subscribers_list();
 $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
 
+$notifications = get_option('egoi_notifications');
+
 ?>
 <!-- Header -->
 <div class="container">
@@ -47,6 +49,7 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
         <div class="columns">
 
             <!-- Notifications | Upgrade Account -->
+            <?php if (!isset($notifications['upgrade-account']) || date('Y-m') != date('Y-m', strtotime($notifications['upgrade-account']))) { ?>
             <div class="column col-12">
                 <div class="smsnf-dashboard-notifications notice is-dismissible">
                     <div class="smsnf-dashboard-notifications__img">
@@ -57,7 +60,7 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
-                        <a class="hide-sm hide-xs" type="button" id=""> 
+                        <a class="hide-sm hide-xs hide-notification-button" type="button" data-notification="upgrade-account">
 						    <?php echo __('Hide notification', 'egoi-for-wp');?>
 						</a>
                         <a type="button" id="" class="button-smsnf-primary"> 
@@ -66,7 +69,9 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                     </div>
                 </div>
             </div>
-            
+            <?php } ?>
+
+            <?php if (!isset($notifications['account-limit']) || date('Y-m') != date('Y-m', strtotime($notifications['account-limit']))) { ?>
             <!-- Notifications | Account -->
             <div class="column col-12">
                 <div class="smsnf-dashboard-notifications notice is-dismissible">
@@ -78,7 +83,7 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
-                        <a class="hide-sm hide-xs" type="button" id=""> 
+                        <a class="hide-sm hide-xs hide-notification-button" type="button" data-notification="account-limit">
 						    <?php echo __('Hide notification', 'egoi-for-wp');?>
 						</a>
                         <a type="button" id="" class="button-smsnf-primary"> 
@@ -87,6 +92,7 @@ $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
                     </div>
                 </div>
             </div>
+            <?php } ?>
 
             <!-- Column Left Start -->
             <!-- Last Subscribers table / Subscribers by List / Account / Subscribers by Form / Last Email Campaign -->
