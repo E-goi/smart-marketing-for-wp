@@ -491,7 +491,8 @@ class Egoi_For_Wp {
 						'lang' => $lang,
 						'first_name' => $fname, 
 						'last_name' => $lname,
-						'email' => $email, 
+						'email' => $email,
+						'cellphone' => $mobile,
 						'status' => $status,
 						'tags' => array($tag)
 						)
@@ -505,7 +506,8 @@ class Egoi_For_Wp {
 						'lang' => $lang,
 						'first_name' => $fname, 
 						'last_name' => $lname,
-						'email' => $email, 
+						'email' => $email,
+                        'cellphone' => $mobile,
 						'status' => $status
 						)
 					),'','&');
