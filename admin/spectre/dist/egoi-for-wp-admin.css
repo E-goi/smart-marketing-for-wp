@@ -6216,11 +6216,14 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subs-stats__content .smsnf-dashboard-subs-stats__content--result {
-  color: #00aeda;
+  background-color: rgba(0, 174, 218, .7);
+  border-radius: 2px;
+  color: #fff;
   display: block !important;
   font-size: 16px;
   font-weight: 500;
   margin-top: 9px;
+  padding: 3px 10px;
   position: absolute;
   top: 75px;
 }
@@ -6715,9 +6718,9 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subs-stats__content--result.e-goi-tooltip .e-goi-tooltiptext {
-  margin-left: -85px;
+  margin-left: -34px;
 }
 
 .smsnf-dashboard-subs-stats__content--result.bestday.e-goi-tooltip .e-goi-tooltiptext {
-  margin-left: 90px;
+  margin-left: 140px;
 }
