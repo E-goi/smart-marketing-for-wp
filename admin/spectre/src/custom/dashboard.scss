@@ -75,24 +75,6 @@
     height: auto;
   }
 }
-// .smsnf-dashboard-subs-stats__icon--today{
-//   background: url("../img/subscribers-today.png") no-repeat;
-// }
-// .smsnf-dashboard-subs-stats__icon--total{
-// 	background: url("../img/total-subscribers.png") no-repeat;
-// }
-// .smsnf-dashboard-subs-stats__icon--bestday{
-// 	background: url("../img/bestday.png") no-repeat;
-// }
-
-// .smsnf-dashboard-subs-stats__icon--today,
-// .smsnf-dashboard-subs-stats__icon--total,
-// .smsnf-dashboard-subs-stats__icon--bestday{
-//   background-position: center center;
-//   background-size: 90%;
-//   width: 100px;
-// 	height: 100px;
-// }
 .smsnf-dashboard-subs-stats__content{
   display: flex;
   flex-direction: row;
@@ -103,6 +85,7 @@
     font-weight: 400;
     letter-spacing: -.02rem;
     margin-bottom: 0;
+    line-height: 20px;
   }
 
   .smsnf-dashboard-subs-stats__content--result{
@@ -146,9 +129,13 @@
   border-radius: $border-radius;
 }
 .smsnf-dashboard-last-subscribers{
+  .table{
+    table-layout: fixed;
+  }
   .table tr td{
-  font-size: 0.9rem;
-  text-align: left;
+    font-size: 0.9rem;
+    text-align: left;
+    word-wrap: break-word;
   }
 }
 
@@ -162,11 +149,12 @@
   th{
    font-size: 11px;
    font-weight: normal; 
+   width: 100px;
   }
   .table{
-	background-color: #fff;
-	border-collapse: unset;
-  padding: 12px 12px;
+    background-color: #fff;
+    border-collapse: unset;
+    padding: 12px 12px;
   }
 }
 .smsnf-dashboard-last-subscribers-by-form__table__ltd{
@@ -500,7 +488,7 @@
 // Style table
 .smsnf-dashboard .table td, .table th{
   border-bottom: .05rem solid #efefef;
-  padding: .5rem 0.1rem;
+  padding: .5rem 0.4rem;
 }
 .smsnf-dashboard .table tbody tr:last-child td {
   border-bottom: 0;
@@ -564,6 +552,7 @@
   }
 }
 
+// Tooltip Custom
 .smsnf-dashboard-subs-stats__content--result.e-goi-tooltip .e-goi-tooltiptext{
   margin-left: -85px;
 }

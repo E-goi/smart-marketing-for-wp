@@ -95,7 +95,7 @@ $notifications = get_option('egoi_notifications');
             <?php } ?>
 
             <!-- Column Left Start -->
-            <!-- Last Subscribers table / Subscribers by List / Account / Subscribers by Form / Last Email Campaign -->
+            <!-- Last Subscribers table / Subscribers by List / Subscribers by Form / Last Email Campaign /  Last SMS Campaign  -->
             <div class="column col-8 col-md-12 col-xs-12 mt-3">
                 <div class="columns">
                     <!-- Registrations made today -->

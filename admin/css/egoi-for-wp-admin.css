@@ -6211,6 +6211,7 @@ div.eg-dropdown {
   -webkit-font-smoothing: antialiased;
   font-weight: 400;
   letter-spacing: -.02rem;
+  line-height: 20px; 
   margin-bottom: 0;
 }
 
@@ -6253,9 +6254,14 @@ div.eg-dropdown {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, .15);
 }
 
+.smsnf-dashboard-last-subscribers .table {
+  table-layout: fixed;
+}
+
 .smsnf-dashboard-last-subscribers .table tr td {
   font-size: .9rem;
   text-align: left;
+  word-wrap: break-word;
 }
 
 .smsnf-dashboard-last-subscribers-by-form {
@@ -6268,6 +6274,7 @@ div.eg-dropdown {
 .smsnf-dashboard-last-subscribers-by-form__table th {
   font-size: 11px;
   font-weight: normal;
+  width: 100px;
 }
 
 .smsnf-dashboard-last-subscribers-by-form__table .table {
@@ -6637,7 +6644,7 @@ div.eg-dropdown {
 .smsnf-dashboard .table td,
 .table th {
   border-bottom: .05rem solid #efefef;
-  padding: .5rem .1rem;
+  padding: .5rem .4rem;
 }
 
 .smsnf-dashboard .table tbody tr:last-child td {
