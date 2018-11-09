@@ -578,8 +578,8 @@ template {
 }
 
 .btn-group {
-  display: -ms-inline-flexbox;
   display: inline-flex;
+  display: -ms-inline-flexbox;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
@@ -613,8 +613,8 @@ template {
 }
 
 .btn-group.btn-group-block {
+  display: flex; 
   display: -ms-flexbox;
-  display: flex;
 }
 
 .btn-group.btn-group-block .btn {
@@ -979,8 +979,8 @@ textarea.form-input {
 }
 
 .input-group {
+  display: flex; 
   display: -ms-flexbox;
-  display: flex;
 }
 
 .input-group .input-group-addon {
@@ -1050,8 +1050,8 @@ textarea.form-input {
 }
 
 .input-group.input-inline {
+  display: inline-flex; 
   display: -ms-inline-flexbox;
-  display: inline-flex;
 }
 
 .has-success .form-input,
@@ -1159,8 +1159,8 @@ input.disabled + .form-icon {
 }
 
 .form-horizontal .form-group {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
@@ -1347,8 +1347,8 @@ video.video-responsive::before {
 }
 
 .columns {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   margin-left: -.4rem;
@@ -1765,8 +1765,8 @@ video.video-responsive::before {
 
 .navbar {
   align-items: stretch;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: stretch;
   -ms-flex-pack: justify;
   -ms-flex-wrap: wrap;
@@ -1776,8 +1776,8 @@ video.video-responsive::before {
 
 .navbar .navbar-section {
   align-items: center;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex: 1 0 0;
   flex: 1 0 0; 
   -ms-flex-align: center;
@@ -1790,8 +1790,8 @@ video.video-responsive::before {
 
 .navbar .navbar-center {
   align-items: center;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto; 
   -ms-flex-align: center;
@@ -2003,8 +2003,8 @@ summary.accordion-header::-webkit-details-marker {
 .bar {
   background: #f0f1f4;
   border-radius: .1rem;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
   height: .8rem;
@@ -2079,8 +2079,8 @@ summary.accordion-header::-webkit-details-marker {
   background: #fff;
   border: .05rem solid #e7e9ed;
   border-radius: .1rem;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-direction: column;
   flex-direction: column;
 }
@@ -2126,8 +2126,8 @@ summary.accordion-header::-webkit-details-marker {
   background: #f0f1f4;
   border-radius: 5rem;
   color: #667189;
-  display: -ms-inline-flexbox;
   display: inline-flex;
+  display: -ms-inline-flexbox;
   -ms-flex-align: center;
   font-size: 90%;
   height: 1.2rem;
@@ -2290,8 +2290,8 @@ summary.accordion-header::-webkit-details-marker {
 
 .modal:target,
 .modal.active {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   opacity: 1;
   z-index: 400;
 }
@@ -2332,8 +2332,8 @@ summary.accordion-header::-webkit-details-marker {
   background: #fff;
   border-radius: .1rem;
   box-shadow: 0 .2rem .5rem rgba(69, 77, 93, .3);
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-direction: column;
   flex-direction: column;
   max-height: 75vh;
@@ -2363,8 +2363,8 @@ summary.accordion-header::-webkit-details-marker {
 }
 
 .nav {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-direction: column;
   flex-direction: column;
   list-style: none;
@@ -2398,8 +2398,8 @@ summary.accordion-header::-webkit-details-marker {
 }
 
 .pagination {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   list-style: none;
   margin: .2rem 0;
   padding: .2rem 0;
@@ -2460,8 +2460,8 @@ summary.accordion-header::-webkit-details-marker {
 .panel {
   border: .05rem solid #e7e9ed;
   border-radius: .1rem;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-direction: column;
   flex-direction: column;
 }
@@ -2545,8 +2545,8 @@ summary.accordion-header::-webkit-details-marker {
 }
 
 .step {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
   list-style: none;
@@ -2611,8 +2611,8 @@ summary.accordion-header::-webkit-details-marker {
 .tab {
   align-items: center;
   border-bottom: .05rem solid #e7e9ed;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -2678,8 +2678,8 @@ summary.accordion-header::-webkit-details-marker {
 .tile {
   align-content: space-between;
   align-items: flex-start;
-  display: -ms-flexbox;
   display: flex; 
+  display: -ms-flexbox;
   -ms-flex-align: start;
   -ms-flex-line-pack: justify;
 }
@@ -3037,13 +3037,13 @@ a.text-error:visited {
 }
 
 .d-flex {
+  display: flex; 
   display: -ms-flexbox;
-  display: flex;
 }
 
 .d-inline-flex {
+  display: inline-flex; 
   display: -ms-inline-flexbox;
-  display: inline-flex;
 }
 
 .d-none,
@@ -3202,8 +3202,8 @@ a.text-error:visited {
 
 .flex-centered {
   align-items: center;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -3472,8 +3472,8 @@ a.text-error:visited {
 
 .form-autocomplete .form-autocomplete-input {
   align-content: flex-start;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-line-pack: start;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -3529,8 +3529,8 @@ a.text-error:visited {
   background: #f8f9fa;
   border-top-left-radius: .1rem;
   border-top-right-radius: .1rem;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   font-size: 1.25rem;
   padding: .4rem;
@@ -3538,8 +3538,8 @@ a.text-error:visited {
 
 .calendar .calendar-header,
 .calendar .calendar-body {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-pack: center;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -3682,8 +3682,8 @@ a.text-error:visited {
 .calendar.calendar-lg .calendar-body .calendar-date {
   border-bottom: .05rem solid #e7e9ed;
   border-right: .05rem solid #e7e9ed;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-direction: column;
   flex-direction: column;
   height: 5.5rem;
@@ -3815,8 +3815,8 @@ a.text-error:visited {
 
 .carousel .carousel-nav {
   bottom: .4rem;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-pack: center;
   justify-content: center;
   left: 50%;
@@ -4014,8 +4014,8 @@ a.text-error:visited {
 }
 
 .filter .filter-body {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
@@ -4079,8 +4079,8 @@ a.text-error:visited {
 }
 
 .off-canvas {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-flow: nowrap;
   flex-flow: nowrap;
   height: 100%;
@@ -4186,8 +4186,8 @@ a.text-error:visited {
 .parallax .parallax-front {
   align-items: center;
   color: #fff;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-pack: center;
   height: 100%;
@@ -4453,8 +4453,8 @@ a.text-error:visited {
 }
 
 .timeline .timeline-item {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   margin-bottom: 1.2rem;
   position: relative;
 }
@@ -5148,8 +5148,8 @@ a.text-error:visited {
 .e-goi-fcenter {
   align-content: center !important; 
   align-items: center !important;
-  display: -ms-flexbox !important;
   display: flex !important;
+  display: -ms-flexbox !important;
   -ms-flex-align: center !important;
   -ms-flex-line-pack: center !important;
 }
@@ -5174,8 +5174,8 @@ a.text-error:visited {
   left: 50%;
   margin-left: -60px;
   opacity: 0;
-  padding: 10px;
   padding: 5px 0;
+  padding: 10px;
   position: absolute;
   text-align: center;
   transition: opacity .3s; 
@@ -5283,8 +5283,8 @@ a.text-error:visited {
 .e-goi-account-apikey__connect-failed {
   align-content: center;
   align-items: center; 
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-line-pack: center;
 }
@@ -5318,8 +5318,8 @@ a.text-error:visited {
 .e-goi-account-apikey--grp {
   align-content: center !important;
   align-items: baseline;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: baseline;
   -ms-flex-line-pack: center !important;
   padding: 0 0 20px;
@@ -5425,8 +5425,8 @@ a.text-error:visited {
 /* Icon valid */
 .e-goi-account-apikey .dashicons.dashicons-yes {
   color: darkseagreen;
-  position: absolute;
   position: relative; 
+  position: absolute;
   right: 118px;
   top: 0;
 }
@@ -5434,8 +5434,8 @@ a.text-error:visited {
 .e-goi-delete-account--actions {
   align-content: center;
   align-items: center; 
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-line-pack: center;
 }
@@ -5513,8 +5513,8 @@ a.text-error:visited {
 .e-goi-form-title {
   align-content: center;
   align-items: center; 
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-line-pack: center;
 }
@@ -5543,8 +5543,8 @@ a.text-error:visited {
 
 .e-goi-header-textarea {
   align-items: center;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-pack: start;
   justify-content: flex-start;
@@ -5878,8 +5878,8 @@ div.eg-dropdown {
 .e-goi-iframe-select-form {
   align-content: center;
   align-items: center; 
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-line-pack: center;
 }
@@ -5902,8 +5902,8 @@ div.eg-dropdown {
 }
 
 .e-goi-help-shortcode-text {
-  display: -ms-inline-flexbox;
   display: inline-flex;
+  display: -ms-inline-flexbox;
   margin-left: 20px; 
   width: 300px;
 }
@@ -6119,8 +6119,8 @@ div.eg-dropdown {
 .smsnf-dashboard-notifications {
   align-items: center;
   border-left: 3px solid #00aeda !important;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   padding: 12px 38px 9px 12px;
 }
@@ -6160,8 +6160,8 @@ div.eg-dropdown {
 
 .smsnf-dashboard-notifications__btn {
   align-items: center;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   margin-bottom: 10px; 
   margin-left: auto;
@@ -6185,8 +6185,8 @@ div.eg-dropdown {
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, .15);
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-pack: justify;
   justify-content: space-between; 
   padding: 10px 25px;
@@ -6199,8 +6199,8 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subs-stats__content {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-direction: row;
   flex-direction: row;
 }
@@ -6297,8 +6297,8 @@ div.eg-dropdown {
 .smsnf-dashboard-last-subscribers-by-form__empty {
   align-items: center; 
   background-color: #efefef;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -6375,8 +6375,8 @@ div.eg-dropdown {
 
 .smsnf-dashboard-subscribers-by-lists__content {
   align-items: center;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -6394,8 +6394,8 @@ div.eg-dropdown {
   border: 1px solid #00a2cb;
   border-radius: 2px;
   color: #00aeda;
-  font-weight: bold;
   font-weight: 700;
+  font-weight: bold;
   padding: 4px 5px;
 }
 
@@ -6425,8 +6425,8 @@ div.eg-dropdown {
 
 .smsnf-dashboard-blog-last-post__content div:first-child {
   align-items: center; 
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -6478,8 +6478,8 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-account__title {
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
@@ -6590,8 +6590,8 @@ div.eg-dropdown {
 
 @media screen and (min-width: 400px) and (max-width: 840px) {
   .smsnf-dashboard-subs-stats {
-    display: -ms-flexbox;
     display: flex;
+    display: -ms-flexbox;
     margin: 6px 0;
   }
 }
@@ -6680,8 +6680,8 @@ div.eg-dropdown {
 
 .smsnf-header {
   align-items: center;
-  display: -ms-flexbox;
   display: flex;
+  display: -ms-flexbox;
   -ms-flex-align: center;
   height: 74px;
   margin-top: 6px; 
