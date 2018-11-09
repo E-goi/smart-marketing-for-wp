@@ -430,7 +430,6 @@ $notifications = get_option('egoi_notifications');
 <!-- Total of subscribers Chart JS -->
 <script>
 
-
     let listChartLabels = [<?php echo $chart_months; ?>];
     let listChartData = [<?php echo implode(",", $lists_chart[$this->options_list['list']]['totals']);?>];
 
@@ -479,10 +478,15 @@ $notifications = get_option('egoi_notifications');
             },
             scales: {
                 yAxes:[{
-                    ticks:{
+                    ticks: {
                         fontSize: 12,
                         padding: 20,
                         beginAtZero: true,
+                        userCallback: function(label, index, labels) {
+                            if (Math.floor(label) === label) {
+                            return label;
+                            }
+                        },
                     }
                 }],
                 xAxes: [{
@@ -502,6 +506,9 @@ $notifications = get_option('egoi_notifications');
         }
     };
 
+
+    
+
     var ctx = document.getElementById('smsnf-dsbl__lineChart');
     var myListChart = new Chart(ctx, myListChartParams);
 
@@ -520,9 +527,6 @@ $notifications = get_option('egoi_notifications');
         myListChart.update();
         document.getElementById("list_subscribers_total").innerHTML = sum;
     }
-
-
-
 </script>
 
 <!-- Last Campaign Email Chart JS -->
