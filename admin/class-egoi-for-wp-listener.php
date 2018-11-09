@@ -94,6 +94,21 @@ class Egoi_For_Wp_Listener {
             $ref_fields['cell'] = $_POST['billing_cellphone'];
         }
 
+        // micro integration with woocommerce checkout fields brazil plugin
+        if (is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')) {
+
+            preg_match('#\((.*?)\)#', $_POST['billing_phone'], $match_phone);
+            if (isset($match_phone[1])) {
+                $ref_fields['tel'] = '55-'.preg_replace('/[^0-9]/', '', $_POST['billing_phone']);
+            }
+
+            preg_match('#\((.*?)\)#', $_POST['billing_cellphone'], $match_cellphone);
+            if (isset($match_cellphone[1])) {
+                $ref_fields['cell'] = '55-'.preg_replace('/[^0-9]/', '', $_POST['billing_cellphone']);
+            }
+
+        }
+
 		if($role == $user->roles[0]){
 			
 			$addtags = $admin->addTag($user->roles[0]);
