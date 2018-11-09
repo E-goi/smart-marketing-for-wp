@@ -89,16 +89,16 @@
   }
 
   .smsnf-dashboard-subs-stats__content--result{
-    background-color: #00aeda;
+    background-color: rgba(0, 174, 218, 0.7);
+    border-radius: 2px;
     color: #fff;
     display: block!important;
     font-size: 16px;
     font-weight: 500;
     margin-top: 9px;
+    padding: 3px 10px;
     position: absolute;
     top: 75px;
-    padding: 3px 10px;
-    border-radius: 2px;
   }
 }
 
@@ -557,8 +557,8 @@
 
 // Tooltip Custom
 .smsnf-dashboard-subs-stats__content--result.e-goi-tooltip .e-goi-tooltiptext{
-  margin-left: -85px;
+  margin-left: -34px;
 }
 .smsnf-dashboard-subs-stats__content--result.bestday.e-goi-tooltip .e-goi-tooltiptext{
-  margin-left: 90px;
+  margin-left: 140px;
 }
