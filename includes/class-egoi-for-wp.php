@@ -466,7 +466,7 @@ class Egoi_For_Wp {
         return $result_client->Egoi_Api->addSubscriber;
 	}
 
-	public function addSubscriber($listID, $name = '', $email, $lang = '', $status = false, $mobile = '', $tag = false) {
+	public function addSubscriber($listID, $name = '', $email, $lang = '', $status = false, $mobile = '', $tag = false, $phone = '') {
 
 		$full_name = explode(' ', $name);
 		$fname = $full_name[0];
@@ -486,6 +486,7 @@ class Egoi_For_Wp {
 						'last_name' => $lname,
 						'email' => $email,
 						'cellphone' => $mobile,
+						'telephone' => $phone,
 						'status' => $status,
 						'tags' => array($tag)
 						)
@@ -501,6 +502,7 @@ class Egoi_For_Wp {
 						'last_name' => $lname,
 						'email' => $email,
                         'cellphone' => $mobile,
+                        'telephone' => $phone,
 						'status' => $status
 						)
 					),'','&');
