@@ -511,6 +511,7 @@ class Egoi_For_Wp_Admin {
 					}
 				}
 
+
 		    	foreach ($users as $user) {
 			        if($current_email != $user->user_email){
 
@@ -540,6 +541,9 @@ class Egoi_For_Wp_Admin {
 		                foreach($woocommerce as $key => $value){
 		                    $subscribers[str_replace('key', 'extra', $key)] = $user->$value;
 		                }
+
+		                $subscribers['telephone'] = $api->smsnf_get_valid_phone($subscribers['telephone']);
+                        $subscribers['cellphone'] = $api->smsnf_get_valid_phone($subscribers['cellphone']);
 
 	                	$subs[] = $subscribers;
 			        }
@@ -786,17 +790,9 @@ class Egoi_For_Wp_Admin {
 						$cellphone = $_POST['billing_cellphone'];
 						$name = $first_name.' '.$last_name;
 
-						// micro integration with woocommerce checkout fields brazil plugin
-						if (is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')) {
-						    preg_match('#\((.*?)\)#', $phone, $match_phone);
-						    if (isset($match_phone[1])) {
-                                $phone = '55-'.preg_replace('/[^0-9]/', '', $phone);
-                            }
-                            preg_match('#\((.*?)\)#', $cellphone, $match_cellphone);
-                            if (isset($match_cellphone[1])) {
-                                $cellphone = '55-'.preg_replace('/[^0-9]/', '', $cellphone);
-                            }
-                        }
+                        $phone = $api->smsnf_get_valid_phone($phone);
+						$cellphone = $api->smsnf_get_valid_phone($cellphone);
+
 						$api->addSubscriber($this->options_list['list'], $name, $guest_email, '', 1, $cellphone, 'Guest', $phone);
 					}
 				}
@@ -1891,6 +1887,7 @@ class Egoi_For_Wp_Admin {
         return $response['body'];
 
     }
+
 
 
 }

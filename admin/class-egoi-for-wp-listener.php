@@ -93,20 +93,8 @@ class Egoi_For_Wp_Listener {
 		$role = $this->options_listen['role'];
 		$email = $user->user_email;
 
-        // micro integration with woocommerce checkout fields brazil plugin
-        if (is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')) {
-
-            preg_match('#\((.*?)\)#', $fields['telephone'], $match_phone);
-            if (isset($match_phone[1])) {
-                $fields['telephone'] = '55-'.preg_replace('/[^0-9]/', '', $fields['telephone']);
-            }
-
-            preg_match('#\((.*?)\)#', $fields['cellphone'], $match_cellphone);
-            if (isset($match_cellphone[1])) {
-                $fields['cellphone'] = '55-'.preg_replace('/[^0-9]/', '', $fields['cellphone']);
-            }
-
-        }
+        $fields['telephone'] = $admin->smsnf_get_valid_phone($fields['telephone']);
+        $fields['cellphone'] = $admin->smsnf_get_valid_phone($fields['cellphone']);
 
 		if($role == $user->roles[0]){
 			
@@ -175,19 +163,8 @@ class Egoi_For_Wp_Listener {
 
             }
 
-            if (is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')) {
-
-                preg_match('#\((.*?)\)#', $fields['telephone'], $match_phone);
-                if (isset($match_phone[1])) {
-                    $fields['telephone'] = '55-'.preg_replace('/[^0-9]/', '', $fields['telephone']);
-                }
-
-                preg_match('#\((.*?)\)#', $fields['cellphone'], $match_cellphone);
-                if (isset($match_cellphone[1])) {
-                    $fields['cellphone'] = '55-'.preg_replace('/[^0-9]/', '', $fields['cellphone']);
-                }
-
-            }
+            $fields['telephone'] = $admin->smsnf_get_valid_phone($fields['telephone']);
+            $fields['cellphone'] = $admin->smsnf_get_valid_phone($fields['cellphone']);
 
             $get_user = $admin->editSubscriber($list, $email, $role, $fname, '', $fields, $op);
 

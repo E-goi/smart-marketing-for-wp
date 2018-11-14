@@ -1091,5 +1091,21 @@ class Egoi_For_Wp {
 
         return $data;
     }
+
+
+    /**
+     * @param $phone
+     * @return string
+     */
+    public function smsnf_get_valid_phone($phone) {
+        // micro integration with woocommerce checkout fields brazil plugin
+        if (is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')) {
+            preg_match('#\((.*?)\)#', $phone, $match_phone);
+            if (isset($match_phone[1])) {
+                return '55-'.preg_replace('/[^0-9]/', '', $phone);
+            }
+        }
+        return $phone;
+    }
 	
 }
