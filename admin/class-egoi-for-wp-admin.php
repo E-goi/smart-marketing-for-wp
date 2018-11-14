@@ -514,10 +514,17 @@ class Egoi_For_Wp_Admin {
 
 		    	foreach ($users as $user) {
 			        if($current_email != $user->user_email){
+                        $user_meta = get_user_meta($user->ID);
 
                         if (isset($user->first_name) && $user->first_name != "" && isset($user->last_name) && $user->last_name != "") {
                             $fname = $user->first_name;
                             $lname = $user->last_name;
+                        } else if (
+                            (isset($user_meta['first_name'][0]) && $user_meta['first_name'][0] != "")
+                            || (isset($user_meta['last_name'][0]) && $user_meta['last_name'][0] != "")
+                        ) {
+                            $fname = $user_meta['first_name'][0];
+                            $lname = $user_meta['last_name'][0];
                         } else {
                             $name = $user->display_name ? $user->display_name : $user->user_login;
                             $full_name = explode(' ', $name);
@@ -539,7 +546,11 @@ class Egoi_For_Wp_Admin {
 		                $subscribers['lang'] = '';
 
 		                foreach($woocommerce as $key => $value){
-		                    $subscribers[str_replace('key', 'extra', $key)] = $user->$value;
+		                    if (isset($user->$value)) {
+                                $subscribers[str_replace('key', 'extra', $key)] = $user->$value;
+                            } else if (isset($user_meta[0][$value])) {
+                                $subscribers[str_replace('key', 'extra', $key)] = $user_meta[0][$value];
+                            }
 		                }
 
 		                $subscribers['telephone'] = $api->smsnf_get_valid_phone($subscribers['telephone']);
@@ -549,7 +560,7 @@ class Egoi_For_Wp_Admin {
 			        }
 			    }
 
-			    if($count_users['total_users'] >= $this->limit_subs){
+			    if(isset($subs) && count($subs) >= $this->limit_subs){
 				    $subs = array_chunk($subs, $this->limit_subs, true);
 				    for($x=0; $x<=9; $x++){
 				    	$api->addSubscriberBulk($listID, $tags, $subs[$x]);
