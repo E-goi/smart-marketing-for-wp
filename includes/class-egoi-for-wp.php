@@ -1103,6 +1103,11 @@ class Egoi_For_Wp {
             preg_match('#\((.*?)\)#', $phone, $match_phone);
             if (isset($match_phone[1])) {
                 return '55-'.preg_replace('/[^0-9]/', '', $phone);
+            } else {
+                $match = explode("-", $phone);
+                if (isset($match) && count($match) == 4) {
+                    return '55-'.preg_replace('/[^0-9]/', '', $phone);
+                }
             }
         }
         return $phone;

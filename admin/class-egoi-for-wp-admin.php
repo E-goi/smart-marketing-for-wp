@@ -548,8 +548,8 @@ class Egoi_For_Wp_Admin {
 		                foreach($woocommerce as $key => $value){
 		                    if (isset($user->$value)) {
                                 $subscribers[str_replace('key', 'extra', $key)] = $user->$value;
-                            } else if (isset($user_meta[0][$value])) {
-                                $subscribers[str_replace('key', 'extra', $key)] = $user_meta[0][$value];
+                            } else if (isset($user_meta[$value][0])) {
+                                $subscribers[str_replace('key', 'extra', $key)] = $user_meta[$value][0];
                             }
 		                }
 
