@@ -251,8 +251,6 @@ class Egoi4Widget extends WP_Widget {
                 )
             );
 
-            //var_dump($instance);
-
             $widgetid = esc_attr($instance['widgetid']);
             $list_id = $this->listID;
             $title = esc_attr($instance['title']);
