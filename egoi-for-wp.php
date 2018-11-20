@@ -2199,3 +2199,6 @@ function run_egoi_for_wp() {
 
 }
 run_egoi_for_wp();
+
+// bloco shortcode gutenberg
+include(plugin_dir_path( __FILE__ ) . '/blocks/shortcode.php');
