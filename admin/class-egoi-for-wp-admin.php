@@ -104,7 +104,7 @@ class Egoi_For_Wp_Admin {
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_5, Egoi_For_Wp_Admin::FORM_OPTION_5);
 
 		// hooks Core
-        add_action('init', array($this, 'smsnf_clean_te_user_id'), 10, 1);
+        //add_action('init', array($this, 'smsnf_clean_te_user_id'), 10, 1);
 
 		if(!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order') {
 			add_action('wp_footer', array($this, 'hookEcommerce'), 10, 1);
@@ -637,7 +637,7 @@ class Egoi_For_Wp_Admin {
                                     $te_user_id = $this->smsnf_check_te_user_id();
                                     if ($te_user_id) {
                                         $te_order_id = get_option('egoi_te_order_id_'.$te_user_id);
-                                        $test = get_option('egoi_track_order_'.$te_user_id);
+                                        $test = get_option('egoi_track_order_'.$te_order_id);
                                         echo html_entity_decode($test[0], ENT_QUOTES);
                                     }
                                 }else{
@@ -1912,37 +1912,13 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_check_te_user_id() {
-        if (isset($_COOKIE['egoi_te_user_id']) && $_COOKIE['egoi_te_user_id']) {
-            return $_COOKIE['egoi_te_user_id'];
-        } else {
-            /*
-            if (!isset($_COOKIE['egoi_te_user_id'])) {
-                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $charactersLength = strlen($characters);
-                $randomString = '';
-                for ($i = 0; $i < 16; $i++) {
-                    $randomString .= $characters[rand(0, $charactersLength - 1)];
-                }
-                setcookie('egoi_te_user_id', $randomString);
+        foreach ($_COOKIE as $key => $value) {
+            if (strpos($key, 'wp_woocommerce_session_') !== false) {
+                $wc_session = explode("||", $_COOKIE[$key]);
+                return $wc_session[0];
             }
-            */
-            setcookie('egoi_te_user_id', base64_encode($_SERVER['REMOTE_ADDR']));
-            return $_COOKIE['egoi_te_user_id'];
         }
-    }
-
-    public function smsnf_clean_te_user_id() {
-        //unset($_COOKIE['egoi_te_user_id']);
-        //setcookie('egoi_te_user_id', '', time() - 3600);
-        if (!isset($_COOKIE['egoi_te_user_id'])) {
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $charactersLength = strlen($characters);
-            $randomString = '';
-            for ($i = 0; $i < 16; $i++) {
-                $randomString .= $characters[rand(0, $charactersLength - 1)];
-            }
-            setcookie('egoi_te_user_id', $randomString);
-        }
+        return false;
     }
 
 }

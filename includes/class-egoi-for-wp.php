@@ -323,8 +323,8 @@ class Egoi_For_Wp {
 		add_shortcode('egoi_form_sync_5', array($plugin_public, 'shortcode_last3'));
 
 		$this->loader->add_action('admin_post_form_handler', $plugin_public, 'form_handler');
-		
-	}
+
+    }
 
 	/**
 	 * Register Profile Hooks
