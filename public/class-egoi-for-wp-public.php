@@ -33,7 +33,6 @@ class Egoi_For_Wp_Public {
 	 * @param    string    $version    The version of this plugin.
 	 */
 	public function __construct($plugin_name = '', $version = '') {
-
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
@@ -597,7 +596,6 @@ class Egoi_For_Wp_Public {
             add_feed($option->option_name, 'egoi_rss_feeds' );
         }
     }
-
 
     public function smsnf_save_advanced_form_subscriber() {
         $success_messages = array(

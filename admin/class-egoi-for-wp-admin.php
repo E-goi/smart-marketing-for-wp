@@ -104,6 +104,7 @@ class Egoi_For_Wp_Admin {
 		register_setting( Egoi_For_Wp_Admin::FORM_OPTION_5, Egoi_For_Wp_Admin::FORM_OPTION_5);
 
 		// hooks Core
+        //add_action('init', array($this, 'smsnf_clean_te_user_id'), 10, 1);
 
 		if(!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order') {
 			add_action('wp_footer', array($this, 'hookEcommerce'), 10, 1);
@@ -526,12 +527,20 @@ class Egoi_For_Wp_Admin {
 					}
 				}
 
+
 		    	foreach ($users as $user) {
 			        if($current_email != $user->user_email){
+                        $user_meta = get_user_meta($user->ID);
 
                         if (isset($user->first_name) && $user->first_name != "" && isset($user->last_name) && $user->last_name != "") {
                             $fname = $user->first_name;
                             $lname = $user->last_name;
+                        } else if (
+                            (isset($user_meta['first_name'][0]) && $user_meta['first_name'][0] != "")
+                            || (isset($user_meta['last_name'][0]) && $user_meta['last_name'][0] != "")
+                        ) {
+                            $fname = $user_meta['first_name'][0];
+                            $lname = $user_meta['last_name'][0];
                         } else {
                             $name = $user->display_name ? $user->display_name : $user->user_login;
                             $full_name = explode(' ', $name);
@@ -553,14 +562,21 @@ class Egoi_For_Wp_Admin {
 		                $subscribers['lang'] = '';
 
 		                foreach($woocommerce as $key => $value){
-		                    $subscribers[str_replace('key', 'extra', $key)] = $user->$value;
+		                    if (isset($user->$value)) {
+                                $subscribers[str_replace('key', 'extra', $key)] = $user->$value;
+                            } else if (isset($user_meta[$value][0])) {
+                                $subscribers[str_replace('key', 'extra', $key)] = $user_meta[$value][0];
+                            }
 		                }
+
+		                $subscribers['telephone'] = $api->smsnf_get_valid_phone($subscribers['telephone']);
+                        $subscribers['cellphone'] = $api->smsnf_get_valid_phone($subscribers['cellphone']);
 
 	                	$subs[] = $subscribers;
 			        }
 			    }
 
-			    if($count_users['total_users'] >= $this->limit_subs){
+			    if(isset($subs) && count($subs) >= $this->limit_subs){
 				    $subs = array_chunk($subs, $this->limit_subs, true);
 				    for($x=0; $x<=9; $x++){
 				    	$api->addSubscriberBulk($listID, $tags, $subs[$x]);
@@ -633,10 +649,12 @@ class Egoi_For_Wp_Admin {
 							if($validated_cart && $validated_order){
 
                                 if (isset($_GET['key'])) {
-
-                                    $test = get_option('egoi_track_order_'.$_SESSION['egoi_order_id']);
-                                    echo html_entity_decode($test[0], ENT_QUOTES);
-
+                                    $te_user_id = $this->smsnf_check_te_user_id();
+                                    if ($te_user_id) {
+                                        $te_order_id = get_option('egoi_te_order_id_'.$te_user_id);
+                                        $test = get_option('egoi_track_order_'.$te_order_id);
+                                        echo html_entity_decode($test[0], ENT_QUOTES);
+                                    }
                                 }else{
 
                                     // check && execute now for page view
@@ -693,23 +711,24 @@ class Egoi_For_Wp_Admin {
 			$client_info = get_option('egoi_client');
 			if(isset($client_info->CLIENTE_ID) && ($client_info->CLIENTE_ID)) {
 
-				// if it is a guest
-				$session = base64_encode('guest_'.time());
-
 				$user = wp_get_current_user();
 			 	$user_id = $user->data->ID;
 			 	$user_email = $user->data->user_email;
 
 				$client_id = $client_info->CLIENTE_ID;
 
+                $te_user_id = $this->smsnf_check_te_user_id();
+
 			 	$data = array(
 			 		'client_id' => $client_id,
 			 		'list_id' => $list_id,
 			 		'user_email' => $user_email,
-			 		'hash_cart' => $user_id ?: $session
+			 		'hash_cart' => $user_id ?: $te_user_id
 			 	);
 
-			 	$_SESSION['egoi_session_cart'] = $data['hash_cart'];
+                if ($te_user_id) {
+                    update_option('egoi_te_session_cart_' . $te_user_id, $data['hash_cart']);
+                }
 
 			 	$args = array(
 			 		'post_type' => 'product'
@@ -756,7 +775,6 @@ class Egoi_For_Wp_Admin {
 			}
 
 			$cart_zero = empty($products) ? 1 : 0;
-
 			$te = $this->execEc($client_id, $list_id, $user_email, $products, array(), $sum_price, $cart_zero);
 			$content = stripslashes(htmlspecialchars($te, ENT_QUOTES, 'UTF-8'));
 			update_option('egoi_track_addtocart_'.$hash_cart, array($content));
@@ -801,17 +819,9 @@ class Egoi_For_Wp_Admin {
 						$cellphone = $_POST['billing_cellphone'];
 						$name = $first_name.' '.$last_name;
 
-						// micro integration with woocommerce checkout fields brazil plugin
-						if (is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')) {
-						    preg_match('#\((.*?)\)#', $phone, $match_phone);
-						    if (isset($match_phone[1])) {
-                                $phone = '55-'.preg_replace('/[^0-9]/', '', $phone);
-                            }
-                            preg_match('#\((.*?)\)#', $cellphone, $match_cellphone);
-                            if (isset($match_cellphone[1])) {
-                                $cellphone = '55-'.preg_replace('/[^0-9]/', '', $cellphone);
-                            }
-                        }
+                        $phone = $api->smsnf_get_valid_phone($phone);
+						$cellphone = $api->smsnf_get_valid_phone($cellphone);
+
 						$api->addSubscriber($this->options_list['list'], $name, $guest_email, '', 1, $cellphone, 'Guest', $phone);
 					}
 				}
@@ -859,11 +869,13 @@ class Egoi_For_Wp_Admin {
 						'order_shipping' => $order->get_total_shipping(),
 						'order_discount' => $order->get_total_discount()
 					);
-
 					$te = $this->execEc($client_id, $list_id, $user_email, $products, $order_items);
 					$content = stripslashes(htmlspecialchars($te, ENT_QUOTES, 'UTF-8'));
 					update_option('egoi_track_order_'.$order_id, array($content));
-					$_SESSION['egoi_order_id'] = $order_id;
+                    $te_user_id = $this->smsnf_check_te_user_id();
+                    if ($te_user_id) {
+                        update_option('egoi_te_order_id_' . $te_user_id, $order_id);
+                    }
 
 				}
 			}
@@ -883,16 +895,20 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.1.2
 	 */
 	public function checkForCart(){
+        $te_user_id = $this->smsnf_check_te_user_id();
+        $te = get_option('egoi_te_session_cart_'.$te_user_id);
 
-		if(isset($_SESSION['egoi_session_cart']) && ($_SESSION['egoi_session_cart'])){
+		if(isset($te) && $te){
 
-			$option = 'egoi_track_addtocart_'.$_SESSION['egoi_session_cart'];
+			$option = 'egoi_track_addtocart_'.$te;
 
 			$content = get_option($option);
+
 			echo html_entity_decode($content[0], ENT_QUOTES);
 
 			delete_option($option);
-			unset($_SESSION['egoi_session_cart']);
+			delete_option('egoi_te_session_cart_'.$te_user_id);
+
 			return false;
 		}
 
@@ -908,15 +924,18 @@ class Egoi_For_Wp_Admin {
 	public function checkForOrder(){
 
 		if (!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order'){
-			if(isset($_SESSION['egoi_order_id']) && ($_SESSION['egoi_order_id'])){
+            $te_user_id = $this->smsnf_check_te_user_id();
+		    $te_order_id = get_option('egoi_te_order_id_'.$te_user_id);
+			if(isset($te_order_id) && $te_order_id){
 
-				$order_id = $_SESSION['egoi_order_id'];
+				$order_id = $te_order_id;
 				$content = get_option('egoi_track_order_'.$order_id);
 
 				echo html_entity_decode($content[0], ENT_QUOTES);
 				delete_option('egoi_track_order_'.$order_id);
 
-				unset($_SESSION['egoi_order_id']);
+				delete_option('egoi_te_order_id_'.$te_user_id);
+
 				return false;
 			}
 		}
@@ -1905,6 +1924,15 @@ class Egoi_For_Wp_Admin {
 
     }
 
+    public function smsnf_check_te_user_id() {
+        foreach ($_COOKIE as $key => $value) {
+            if (strpos($key, 'wp_woocommerce_session_') !== false) {
+                $wc_session = explode("||", $_COOKIE[$key]);
+                return $wc_session[0];
+            }
+        }
+        return false;
+    }
 
     /**
      *

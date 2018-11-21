@@ -614,54 +614,54 @@ class Egoi_For_Wp {
         return $result_client->Egoi_Api->addSubscriber;
     }
 
-	public function editSubscriber($listID, $subscriber, $role = 0, $fname = '', $lname = '', $fields = array(), $option = 0, $ref_fields = array()) {
-		
-		$apikey = $this->_valid['api_key'];
-		$plugin_key = $this->plugin;
+    public function editSubscriber($listID, $subscriber, $role = 0, $fname = '', $lname = '', $fields = array(), $option = 0, $ref_fields = array()) {
 
-		$telephone = $ref_fields['tel'];
-		$cellphone = $ref_fields['cell'];
-		$birth_date = $ref_fields['bd'];
-		$fax = $ref_fields['fax'];
-		$lang = $ref_fields['lang'];
-		
-		$params = compact(
-			'apikey',
-			'plugin_key',
-			'listID',
-			'subscriber',
-			'telephone', 
-			'cellphone', 
-			'birth_date', 
-			'fax', 
-			'lang', 
-			$params
-		);
+        $apikey = $this->_valid['api_key'];
+        $plugin_key = $this->plugin;
 
-		// role
-		if($role){
-			$params['tags'] = $role;
-		}
-		// first name
-		if($fname){
-			$params['first_name'] = $fname;
-		}
-		// last name
-		if($lname){
-			$params['last_name'] = $lname;
-		}
+        $telephone = $ref_fields['tel'];
+        $cellphone = $ref_fields['cell'];
+        $birth_date = $ref_fields['bd'];
+        $fax = $ref_fields['fax'];
+        $lang = $ref_fields['lang'];
 
-		if($option){
-			foreach ($fields as $key => $value) {
-				$params[str_replace('key_', 'extra_', $key)] = $value;	
-			}
-		}
+        $params = compact(
+            'apikey',
+            'plugin_key',
+            'listID',
+            'subscriber',
+            'telephone',
+            'cellphone',
+            'birth_date',
+            'fax',
+            'lang',
+            $params
+        );
 
-		$url = $this->restUrl.'editSubscriber&'.http_build_query(array('functionOptions' => $params),'','&');
-		$result_client = json_decode($this->_getContent($url));
+        // role
+        if($role){
+            $params['tags'] = $role;
+        }
+        // first name
+        if($fname){
+            $params['first_name'] = $fname;
+        }
+        // last name
+        if($lname){
+            $params['last_name'] = $lname;
+        }
 
-		return $result_client->Egoi_Api->editSubscriber;	
-	}
+        if($option){
+            foreach ($fields as $key => $value) {
+                $params[str_replace('key_', 'extra_', $key)] = $value;
+            }
+        }
+
+        $url = $this->restUrl.'editSubscriber&'.http_build_query(array('functionOptions' => $params),'','&');
+        $result_client = json_decode($this->_getContent($url));
+
+        return $result_client->Egoi_Api->editSubscriber;
+    }
 
 	public function delSubscriber($listID,$email) {
 
@@ -1035,7 +1035,6 @@ class Egoi_For_Wp {
 		$args = array(
 			'form_id' => $form_post_array['form_id']
 		);
-		//var_dump($form_post_array);
 		$preview_url = add_query_arg($args, $base_url);
 
 		return $preview_url;
@@ -1203,6 +1202,26 @@ class Egoi_For_Wp {
         }
 
         return $wpdb->insert($table, $subscriber);
+    }
+
+    /**
+     * @param $phone
+     * @return string
+     */
+    public function smsnf_get_valid_phone($phone) {
+        // micro integration with woocommerce checkout fields brazil plugin
+        if (is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')) {
+            preg_match('#\((.*?)\)#', $phone, $match_phone);
+            if (isset($match_phone[1])) {
+                return '55-'.preg_replace('/[^0-9]/', '', $phone);
+            } else {
+                $match = explode("-", $phone);
+                if (isset($match) && count($match) == 4) {
+                    return '55-'.preg_replace('/[^0-9]/', '', $phone);
+                }
+            }
+        }
+        return $phone;
     }
 	
 }
