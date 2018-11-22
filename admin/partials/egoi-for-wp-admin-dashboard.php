@@ -20,6 +20,13 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
 } else {
     $options_list = $this->options_list['list'];
 }
+
+$last_subscribers = $this->smsnf_get_form_subscribers_last(5);
+
+$forms = $this->smsnf_get_form_subscriber_total_by('form');
+
+$blog_posts = $this->smsnf_get_blog_posts(2);
+
 ?>
 <!-- Header -->
 <div class="container">
@@ -159,7 +166,6 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                 </div>
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">
-                    <?php $last_subscribers = $this->smsnf_get_form_subscribers_last(5); ?>
                     <div class="smsnf-dashboard-last-subscribers__title">
                         Últimos subscritores
                     </div>
@@ -172,6 +178,7 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                             <tr>
                                 <th>Nome</th>
                                 <th class="hide-xs">Email</th>
+                                <th>Formulário ID</th>
                                 <th>Formulário</th>
                                 <th class="hide-xs">Data</th>
                                 <th>Lista</th>
@@ -182,6 +189,7 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                             <tr>
                                 <td><?php echo $subscriber->subscriber_name; ?></td>
                                 <td class="hide-xs"><?php echo $subscriber->subscriber_email; ?></td>
+                                <td><?php echo $subscriber->form_id; ?></td>
                                 <td><?php echo $subscriber->form_title; ?></td>
                                 <td class="hide-xs"><?php echo date('Y/m/d H\hm', strtotime($subscriber->created_at)); ?></td>
                                 <td><?php echo $subscriber->list_title; ?></td>
@@ -242,6 +250,10 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                                         <td><?=$campaigns['sms_premium']['name']?></td>
                                     </tr>
                                     <tr>
+                                        <td>Nome Interno</td>
+                                        <td><?=$campaigns['sms_premium']['internal_name']?></td>
+                                    </tr>
+                                    <tr>
                                         <td>ID</td>
                                         <td><?php echo $campaigns['sms_premium']['id'];?></td>
                                     </tr>
@@ -256,16 +268,13 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                                 <canvas id="smsnf-dlsc__doughnutChart" height="120"></canvas>
                             </div>
                             <?php } else { ?>
-                            <div>
-                                A guardar resultados
-                            </div>
+                            <div>A guardar resultados</div>
                             <?php } ?>
                         </div>
                     </div>
                     <div class="column col-6 col-xl-12 col-xs-12">
                         <!-- Subscribers by Form -->
                         <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
-                            <?php $forms = $this->smsnf_get_form_subscriber_total_by('form'); ?>
                             <div class="smsnf-dashboard-last-subscribers-by-form__title">
                                 Subscritores por Formulário
                             </div>
@@ -275,14 +284,12 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                             <div class="smsnf-dashboard-last-subscribers-by-form__table <?php echo count($forms) == 0 ? 'd-none' : null;?>">
                                 <table class="table">
                                     <tbody>
-                                        <th>
-                                            Nome do Formulário
-                                        </th>
-                                        <th>
-                                           Nº de subscritores
-                                        </th>
+                                        <th>ID do Formulário</th>
+                                        <th>Nome do Formulário</th>
+                                        <th>Nº de subscritores</th>
                                     <?php foreach ($forms as $form) { ?>
                                         <tr>
+                                            <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?=$form->form_id?></td>
                                             <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?=$form->title?></td>
                                             <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd"><?=$form->total?></td>
                                         </tr>
@@ -303,6 +310,10 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                                         <td><?=$campaigns['email']['name']?></td>
                                     </tr>
                                     <tr>
+                                        <td>Nome Interno</td>
+                                        <td><?=$campaigns['email']['internal_name']?></td>
+                                    </tr>
+                                    <tr>
                                         <td>ID</td>
                                         <td><?php echo $campaigns['email']['id'];?></td>
                                     </tr>
@@ -317,9 +328,7 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                                 <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
                             </div>
                             <?php } else { ?>
-                            <div>
-                                A aguardar resultado
-                            </div>
+                            <div>A aguardar resultado</div>
                             <?php } ?>
                         </div>
                     </div>
@@ -408,10 +417,7 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
-                    <?php
-                        $post_num = 2;
-                        foreach ($this->smsnf_get_blog_posts($post_num) as $key => $post) {
-                    ?>
+                    <?php foreach ($blog_posts as $key => $post) { ?>
                     <div class="smsnf-dashboard-blog-last-post__content">
                         <div>
                             <div><?=$post['date']?></div>
@@ -427,7 +433,7 @@ if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
                                 <?=$post['excerpt']?>
                             </p>
                         </a>
-                       <?php echo $key != $post_num - 1 ? '<hr>' : null; ?>
+                       <?php echo $key != count($blog_posts) - 1 ? '<hr>' : null; ?>
                     </div>
                     <?php } ?>
                 </div><!-- /Blog Post's -->

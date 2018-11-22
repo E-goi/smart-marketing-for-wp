@@ -197,8 +197,8 @@ class Egoi_For_Wp_Admin {
 
 		wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
 
-        wp_enqueue_script( 'ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
-        wp_localize_script( 'ajax-script', 'ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
+        wp_enqueue_script( 'smsnf-notifications-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
+        wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
 	}
 
 	/**
@@ -2073,7 +2073,8 @@ class Egoi_For_Wp_Admin {
                             'hash' => $campaign->HASH,
                             'id' => $campaign->REF,
                             'list' => $campaign->LISTNUM,
-                            'name' => $campaign->SUBJECT
+                            'name' => $campaign->SUBJECT,
+                            'internal_name' => $campaign->INTERNAL_NAME
                         );
                         $campaigns_flag[$channel] = array(
                             'name' => $campaign->SUBJECT,
@@ -2100,7 +2101,10 @@ class Egoi_For_Wp_Admin {
 
         foreach ($last_campaigns as $channel => $campaign) {
 
-            $reports[$channel]['name'] = str_replace('"', '', $campaign[0]['name']);
+            $reports[$channel] = array(
+                'name' => str_replace('"', '', $campaign[0]['name']),
+                'internal_name' => str_replace('"', '', $campaign[0]['internal_name'])
+            );
 
             foreach ($campaign as $key => $value) {
                 $report = $api->getReport($value['hash']);

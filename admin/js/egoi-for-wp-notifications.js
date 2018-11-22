@@ -15,7 +15,7 @@
                 'notification': notification.type
             };
 
-            $.post(ajax_object.ajax_url, data, function() {
+            $.post(smsnf_notifications_ajax_object.ajax_url, data, function() {
                 notification.div.slideUp(150);
             });
 
