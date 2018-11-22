@@ -192,12 +192,13 @@ class Egoi_For_Wp_Admin {
 		wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
 		wp_enqueue_script('custom-script5');
 
+
 		wp_enqueue_script('wp-color-picker');
 
 		wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
 
-        wp_enqueue_script( 'ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array( 'jquery' ), $this->version, false );
-        wp_localize_script( 'ajax-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')) );
+        wp_enqueue_script( 'ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
+        wp_localize_script( 'ajax-script', 'ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
 	}
 
 	/**
@@ -2099,17 +2100,17 @@ class Egoi_For_Wp_Admin {
 
         foreach ($last_campaigns as $channel => $campaign) {
 
-            $reports[$channel]['name'] = $campaign[0]['name'];
+            $reports[$channel]['name'] = str_replace('"', '', $campaign[0]['name']);
 
             foreach ($campaign as $key => $value) {
                 $report = $api->getReport($value['hash']);
 
-                $reports[$channel]['id'] .= $value['id'].'; ';
-                $reports[$channel]['list'] .= $value['list'].'; ';
+                $reports[$channel]['id'] .= $value['id'].' | ';
+                $reports[$channel]['list'] .= $value['list'].' | ';
                 $reports[$channel]['sent'] += $report->SENT;
                 if ($channel == 'email') {
-                    $reports[$channel]['chart']['opens'] += $report->VIEWS;
-                    $reports[$channel]['chart']['clicks'] += $report->CLICKS_SUB;
+                    $reports[$channel]['chart']['opens'] += $report->UNIQUE_VIEWS;
+                    $reports[$channel]['chart']['clicks'] += $report->UNIQUE_CLICKS;
                     $reports[$channel]['chart']['bounces'] += $report->RETURNED;
                     $reports[$channel]['chart']['removes'] += $report->TOTAL_REMOVES;
                     $reports[$channel]['chart']['complains'] += $report->COMPLAIN;
@@ -2120,6 +2121,9 @@ class Egoi_For_Wp_Admin {
 
             }
 
+            $reports[$channel]['id'] = substr($reports[$channel]['id'], 0, -2);
+            $reports[$channel]['list'] = substr($reports[$channel]['list'], 0, -2);
+
         }
         return $reports;
     }
@@ -2129,6 +2133,21 @@ class Egoi_For_Wp_Admin {
         $notifications[$_POST['notification']] = current_time('mysql');
         update_option('egoi_notifications', $notifications);
         wp_die();
+    }
+
+    public function smsnf_show_notification($notification) {
+        $notifications = get_option('egoi_notifications');
+        $time = 15*24*60*60;
+        if (
+            !isset($notifications[$notification]) ||
+            (
+                date('Y-m') != date('Y-m', strtotime($notifications[$notification])) &&
+                strtotime(date('Y-m-d')) - strtotime($notifications[$notification]) > $time
+            )
+        ) {
+            return true;
+        }
+        return false;
     }
 
 }

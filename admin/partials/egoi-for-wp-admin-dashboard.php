@@ -12,11 +12,14 @@ $lists = $this->smsnf_get_form_subscriber_total_by('list');
 $campaign_email = implode(",", $campaigns['email']['chart']);
 $campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
 
-$lists_chart = $this->smsnf_get_form_subscribers_list();
+$lists_chart = $this->smsnf_get_form_subscribers_list(null, 12);
 $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
 
-$notifications = get_option('egoi_notifications');
-
+if (!isset($this->options_list['list']) || $this->options_list['list'] == "") {
+    $options_list = $lists[0]->list_id;
+} else {
+    $options_list = $this->options_list['list'];
+}
 ?>
 <!-- Header -->
 <div class="container">
@@ -49,7 +52,7 @@ $notifications = get_option('egoi_notifications');
         <div class="columns">
 
             <!-- Notifications | Upgrade Account -->
-            <?php if (!isset($notifications['upgrade-account']) || date('Y-m') != date('Y-m', strtotime($notifications['upgrade-account']))) { ?>
+            <?php if ($this->smsnf_show_notification('upgrade-account') == true) { ?>
             <div class="column col-12">
                 <div class="smsnf-dashboard-notifications notice is-dismissible">
                     <div class="smsnf-dashboard-notifications__img">
@@ -71,7 +74,7 @@ $notifications = get_option('egoi_notifications');
             </div>
             <?php } ?>
 
-            <?php if (!isset($notifications['account-limit']) || date('Y-m') != date('Y-m', strtotime($notifications['account-limit']))) { ?>
+            <?php if ($this->smsnf_show_notification('account-limit') == true) { ?>
             <!-- Notifications | Account -->
             <div class="column col-12">
                 <div class="smsnf-dashboard-notifications notice is-dismissible">
@@ -204,7 +207,7 @@ $notifications = get_option('egoi_notifications');
                                         <!-- <p style="font-size: 11px; margin: 0;">Seleccione a Lista</p> -->
                                         <select id="chart_list">
                                             <?php foreach ($lists as $list) { ?>
-                                                <option value="<?php echo implode(",", $lists_chart[$list->list_id]['totals']);?>" <?php selected($list->list_id, $this->options_list['list']);?> >
+                                                <option value="<?php echo implode(",", $lists_chart[$list->list_id]['totals']);?>" <?php selected($list->list_id, $options_list);?> >
                                                     <?=$list->title?>
                                                 </option>
                                             <?php } ?>
@@ -214,9 +217,11 @@ $notifications = get_option('egoi_notifications');
                                     <div>Total:
                                         <span class="smsnf-dashboard-subscribers-by-lists__content--total" id="list_subscribers_total">
                                             <?php
+                                            $total = 0;
                                             foreach ($lists as $list) {
-                                                echo $list->list_id == $this->options_list['list'] ? $list->total : null;
+                                                $total = $list->list_id == $options_list ? $list->total : null;
                                             }
+                                            echo $total == 0 ? $lists[0]->total : $total;
                                             ?>
                                         </span>
                                     </div>
@@ -238,7 +243,7 @@ $notifications = get_option('egoi_notifications');
                                     </tr>
                                     <tr>
                                         <td>ID</td>
-                                        <td><?php echo substr($campaigns['sms_premium']['id'], 0, -2);?></td>
+                                        <td><?php echo $campaigns['sms_premium']['id'];?></td>
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
@@ -246,9 +251,15 @@ $notifications = get_option('egoi_notifications');
                                     </tr>
                                 </tbody>
                             </table>
+                            <?php if ($campaigns['sms_premium']['sent'] > 0) { ?>
                             <div class="smsnf-dashboard-last-sms-campaign__chart">
                                 <canvas id="smsnf-dlsc__doughnutChart" height="120"></canvas>
                             </div>
+                            <?php } else { ?>
+                            <div>
+                                A guardar resultados
+                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="column col-6 col-xl-12 col-xs-12">
@@ -293,7 +304,7 @@ $notifications = get_option('egoi_notifications');
                                     </tr>
                                     <tr>
                                         <td>ID</td>
-                                        <td><?php echo substr($campaigns['email']['id'], 0, -2);?></td>
+                                        <td><?php echo $campaigns['email']['id'];?></td>
                                     </tr>
                                     <tr>
                                         <td>Total de Envios</td>
@@ -301,9 +312,15 @@ $notifications = get_option('egoi_notifications');
                                     </tr>
                                 </tbody>
                             </table>
+                            <?php if ($campaigns['email']['sent'] > 0) { ?>
                             <div class="smsnf-dashboard-last-email-campaign__chart">
                                 <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
                             </div>
+                            <?php } else { ?>
+                            <div>
+                                A aguardar resultado
+                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div><!-- /columns -->
@@ -431,7 +448,7 @@ $notifications = get_option('egoi_notifications');
 <script>
 
     let listChartLabels = [<?php echo $chart_months; ?>];
-    let listChartData = [<?php echo implode(",", $lists_chart[$this->options_list['list']]['totals']);?>];
+    let listChartData = [<?php echo implode(",", $lists_chart[$options_list]['totals']);?>];
 
     myListChartParams = {
         type: 'bar',
@@ -446,9 +463,21 @@ $notifications = get_option('egoi_notifications');
                         "rgba(0, 174, 218, 0.4)",
                         "rgba(0, 174, 218, 0.4)",
                         "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(0, 174, 218, 0.4)",
                         "rgba(0, 174, 218, 0.4)"
                     ],
                     hoverBackgroundColor: [
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(0, 174, 218, 0.5)",
                         "rgba(0, 174, 218, 0.5)",
                         "rgba(0, 174, 218, 0.5)",
                         "rgba(0, 174, 218, 0.5)",
@@ -530,13 +559,14 @@ $notifications = get_option('egoi_notifications');
 </script>
 
 <!-- Last Campaign Email Chart JS -->
+<?php if ($campaigns['email']['sent'] > 0) { ?>
 <script>
     Chart.defaults.global.legend.labels.usePointStyle = true;
     var ctx = document.getElementById("smsnf-dlec__doughnutChart").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ["Abertura", "Cliques", "Bounces", "Remoções", "Queixas"],
+            labels: ["Aberturas", "Cliques", "Bounces", "Remoções", "Queixas"],
             datasets: [{
                 label: '# of Votes',
                 data: [<?php echo $campaign_email; ?>],
@@ -576,8 +606,11 @@ $notifications = get_option('egoi_notifications');
         }
     });
 </script>
+<?php } ?>
 
 <!-- Last Campaign SMS Chart JS -->
+
+<?php if ($campaigns['sms_premium']['sent'] > 0) { ?>
 <script>
     Chart.defaults.global.legend.labels.usePointStyle = true;
     var ctx = document.getElementById("smsnf-dlsc__doughnutChart").getContext('2d');
@@ -618,7 +651,7 @@ $notifications = get_option('egoi_notifications');
         }
     });
 </script>
-
+<?php } ?>
 
 
 
