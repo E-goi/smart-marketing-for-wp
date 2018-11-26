@@ -4,11 +4,7 @@ Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
 Tested up to: 4.9.8
-<<<<<<< HEAD
 Stable tag: 2.6.0
-=======
-Stable tag: 2.5.2
->>>>>>> 2efb6944c0583313eb42ecc1d27342b831eb9c2f
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

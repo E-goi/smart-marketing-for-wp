@@ -2154,4 +2154,25 @@ class Egoi_For_Wp_Admin {
         return false;
     }
 
+    public function smsnf_get_account_info() {
+
+        $api = new Egoi_For_Wp();
+
+        $client = $api->getClient();
+
+        /*
+        $apikey = get_option('egoi_api_key');
+        $response = wp_remote_get('http://www.smart-marketing-addon-sms-order-middleware.local/plan', array(
+            'timeout' => 60,
+            'headers' => array('apikey' => $apikey['api_key'])
+        ));
+        $client_plan = json_decode(wp_remote_retrieve_body($response));
+
+        $client->PLAN_NAME = $client_plan->data->name;
+        $client->PLAN_TRANSLATE = $client_plan->data->translate;
+        */
+
+        return $client;
+    }
+
 }

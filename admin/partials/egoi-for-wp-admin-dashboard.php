@@ -27,6 +27,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
 
 $blog_posts = $this->smsnf_get_blog_posts(2);
 
+$client = $this->smsnf_get_account_info();
 ?>
 <!-- Header -->
 <div class="container">
@@ -353,7 +354,15 @@ $blog_posts = $this->smsnf_get_blog_posts(2);
                                     <tbody>
                                         <tr>
                                             <td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
-                                            <td><span class="smsnf-dashboard-account__content__table--cash">201</span></td>
+                                            <td><span class="smsnf-dashboard-account__content__table--cash"><?=$client->CREDITS?></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="smsnf-dashboard-account__content__table--total">Plano</span></td>
+                                            <td><span class="smsnf-dashboard-account__content__table--cash"><?=$client->CONTRACT?></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="smsnf-dashboard-account__content__table--total">Expira em</span></td>
+                                            <td><span class="smsnf-dashboard-account__content__table--cash"><?=$client->CONTRACT_EXPIRE_DATE?></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -362,16 +371,12 @@ $blog_posts = $this->smsnf_get_blog_posts(2);
                                 <table class="table">
                                     <tbody>
                                         <tr>
-                                            <td>Email</td>
-                                            <td><span class="">2120</span></td>
+                                            <td>Email/Push</td>
+                                            <td><span class=""><?=$client->PLAN_EMAIL_LIMIT?></span></td>
                                         </tr>
                                         <tr>
                                             <td>SMS</td>
-                                            <td><span class="">123</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Push</td>
-                                            <td><span class="">29</span></td>
+                                            <td><span class=""><?=$client->PLAN_SMS_LIMIT?></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -380,16 +385,12 @@ $blog_posts = $this->smsnf_get_blog_posts(2);
                                 <table class="table">
                                     <tbody>
                                         <tr>
-                                            <td>Email</td>
-                                            <td><span class="">20121</span></td>
+                                            <td>Email/Push</td>
+                                            <td><span class=""><?=$client->PLAN_EMAIL_SENT?></span></td>
                                         </tr>
                                         <tr>
-                                            <td>Push</td>
-                                            <td><span class="">123</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>SMS Transacional</td>
-                                            <td><span class="">29</span></td>
+                                            <td>SMS</td>
+                                            <td><span class=""><?=$client->PLAN_SMS_SENT?></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
