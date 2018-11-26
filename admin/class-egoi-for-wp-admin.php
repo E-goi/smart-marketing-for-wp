@@ -174,7 +174,6 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
 
 		wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'));
@@ -199,6 +198,11 @@ class Egoi_For_Wp_Admin {
 
         wp_enqueue_script( 'smsnf-notifications-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
         wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
+
+        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
+            wp_enqueue_script( 'smsnf-dashboard-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-dashboard.js', array('jquery') );
+            wp_localize_script( 'smsnf-dashboard-ajax-script', 'smsnf_dashboard_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
+        }
 	}
 
 	/**
@@ -2021,8 +2025,9 @@ class Egoi_For_Wp_Admin {
         return $total_subscribers;
     }
 
-    public function smsnf_get_blog_posts($num_items = 2) {
+    public function smsnf_get_blog_posts() {
         $blog = fetch_feed('https://blog.e-goi.pt/feed/');
+        $num_items = 2;
 
         if (!is_wp_error($blog)) {
             $posts = array();
@@ -2040,9 +2045,11 @@ class Egoi_For_Wp_Admin {
                     );
                 }
             }
-            return $posts;
+            echo json_encode($posts);
+            wp_die();
         }
-        return false;
+        echo json_encode(['error' => 'Can\'t load feed']);
+        wp_die();
     }
 
     public function smsnf_get_last_campaigns() {

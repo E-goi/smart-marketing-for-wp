@@ -2,15 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { die();}
 
-$campaigns = $this->smsnf_last_campaigns_reports();
-
-$campaign_email = implode(",", $campaigns['email']['chart']);
-$campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
-
 $lists = $this->smsnf_get_form_subscriber_total_by('list');
-
-$campaign_email = implode(",", $campaigns['email']['chart']);
-$campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
 
 $lists_chart = $this->smsnf_get_form_subscribers_list(null, 12);
 $chart_months = "\"".implode("\",\"", $lists_chart['months'])."\"";
@@ -25,9 +17,15 @@ $last_subscribers = $this->smsnf_get_form_subscribers_last(5);
 
 $forms = $this->smsnf_get_form_subscriber_total_by('form');
 
-$blog_posts = $this->smsnf_get_blog_posts(2);
 
+// AJAX
 $client = $this->smsnf_get_account_info();
+
+$campaigns = $this->smsnf_last_campaigns_reports();
+
+$campaign_email = implode(",", $campaigns['email']['chart']);
+$campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
+
 ?>
 <!-- Header -->
 <div class="container">
@@ -418,25 +416,31 @@ $client = $this->smsnf_get_account_info();
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
-                    <?php foreach ($blog_posts as $key => $post) { ?>
                     <div class="smsnf-dashboard-blog-last-post__content">
                         <div>
-                            <div><?=$post['date']?></div>
-                            <a href=""><small><?=$post['category']?></small></a>
+                            <div id="blog_post_0_date"></div>
+                            <a class="blog_post_0_link" href=""><small id="blog_post_0_category"></small></a>
                         </div>
-                        <a href="<?=$post['link']?>" target="_blank">
-                            <h4 class="smsnf-dashboard-blog-last-post__content__title">
-                            <?=$post['title']?>
-                            </h4>
+                        <a class="blog_post_0_link" href="" target="_blank">
+                            <h4 class="smsnf-dashboard-blog-last-post__content__title" id="blog_post_0_title"></h4>
                         </a>
-                        <a href="<?=$post['link']?>" target="_blank">
-                            <p class="smsnf-dashboard-blog-last-post__content__description">
-                                <?=$post['excerpt']?>
-                            </p>
+                        <a class="blog_post_0_link" href="" target="_blank">
+                            <p class="smsnf-dashboard-blog-last-post__content__description" id="blog_post_0_excerpt"></p>
                         </a>
-                       <?php echo $key != count($blog_posts) - 1 ? '<hr>' : null; ?>
+                        <hr>
                     </div>
-                    <?php } ?>
+                    <div class="smsnf-dashboard-blog-last-post__content">
+                        <div>
+                            <div id="blog_post_1_date"></div>
+                            <a class="blog_post_1_link" href=""><small id="blog_post_1_category"></small></a>
+                        </div>
+                        <a class="blog_post_1_link" href="" target="_blank">
+                            <h4 class="smsnf-dashboard-blog-last-post__content__title" id="blog_post_1_title"></h4>
+                        </a>
+                        <a class="blog_post_1_link" href="" target="_blank">
+                            <p class="smsnf-dashboard-blog-last-post__content__description" id="blog_post_1_excerpt"></p>
+                        </a>
+                    </div>
                 </div><!-- /Blog Post's -->
             </div>
 
