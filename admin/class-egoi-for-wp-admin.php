@@ -2025,9 +2025,8 @@ class Egoi_For_Wp_Admin {
         return $total_subscribers;
     }
 
-    public function smsnf_get_blog_posts() {
+    public function smsnf_get_blog_posts($num_items = 2) {
         $blog = fetch_feed('https://blog.e-goi.pt/feed/');
-        $num_items = 2;
 
         if (!is_wp_error($blog)) {
             $posts = array();
@@ -2045,10 +2044,31 @@ class Egoi_For_Wp_Admin {
                     );
                 }
             }
-            echo json_encode($posts);
-            wp_die();
+            return $posts;
         }
-        echo json_encode(['error' => 'Can\'t load feed']);
+        return false;
+    }
+
+    public function smsnf_show_blog_posts() {
+        $output = '';
+        $posts = $this->smsnf_get_blog_posts();
+        foreach ($posts as $key => $post) {
+            $output .= '
+                <div class="smsnf-dashboard-blog-last-post__content">
+                    <div>
+                        <div>'.$post['date'].'</div>
+                        <a href="'.$post['link'].'"><small>'.$post['category'].'</small></a>
+                    </div>
+                    <a href="'.$post['link'].'" target="_blank">
+                        <h4 class="smsnf-dashboard-blog-last-post__content__title">'.$post['title'].'</h4>
+                    </a>
+                    <a href="'.$post['link'].'" target="_blank">
+                        <p class="smsnf-dashboard-blog-last-post__content__description">'.$post['excerpt'].'</p>
+                    </a>
+            ';
+            $output .= count($posts)-1 > $key ? '<hr></div>' : '</div>';
+        }
+        echo $output;
         wp_die();
     }
 
@@ -2165,7 +2185,7 @@ class Egoi_For_Wp_Admin {
 
         $api = new Egoi_For_Wp();
 
-        $client = $api->getClient();
+        $customer = $api->getClient();
 
         /*
         $apikey = get_option('egoi_api_key');
@@ -2179,7 +2199,61 @@ class Egoi_For_Wp_Admin {
         $client->PLAN_TRANSLATE = $client_plan->data->translate;
         */
 
-        return $client;
+        return $customer;
+    }
+
+    public function smsnf_show_account_info() {
+        $customer = $this->smsnf_get_account_info();
+
+        $output = '
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
+                        <td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CREDITS.'</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="smsnf-dashboard-account__content__table--total">Plano</span></td>
+                        <td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CONTRACT.'</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="smsnf-dashboard-account__content__table--total">Expira em</span></td>
+                        <td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CONTRACT_EXPIRE_DATE.'</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <p class="smsnf-dashboard-account__content__table--subtitle">O seu plano atual inclui</p>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Email/Push</td>
+                        <td><span class="">'.$customer->PLAN_EMAIL_LIMIT.'</span></td>
+                    </tr>
+                    <tr>
+                        <td>SMS</td>
+                        <td><span class="">'.$customer->PLAN_SMS_LIMIT.'</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <p class="smsnf-dashboard-account__content__table--subtitle">Total de envios efetuados</p>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Email/Push</td>
+                        <td><span class="">'.$customer->PLAN_EMAIL_SENT.'</span></td>
+                    </tr>
+                    <tr>
+                        <td>SMS</td>
+                        <td><span class="">'.$customer->PLAN_SMS_SENT.'</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        ';
+
+        echo $output;
+        wp_die();
     }
 
 }

@@ -19,12 +19,10 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
 
 
 // AJAX
-$client = $this->smsnf_get_account_info();
+//$campaigns = $this->smsnf_last_campaigns_reports();
 
-$campaigns = $this->smsnf_last_campaigns_reports();
-
-$campaign_email = implode(",", $campaigns['email']['chart']);
-$campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
+//$campaign_email = implode(",", $campaigns['email']['chart']);
+//$campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
 
 ?>
 <!-- Header -->
@@ -348,51 +346,6 @@ $campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
                         </div>
                         <div class="smsnf-dashboard-account__content p-0">
                             <div class="smsnf-dashboard-account__content__table">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
-                                            <td><span class="smsnf-dashboard-account__content__table--cash"><?=$client->CREDITS?></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="smsnf-dashboard-account__content__table--total">Plano</span></td>
-                                            <td><span class="smsnf-dashboard-account__content__table--cash"><?=$client->CONTRACT?></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="smsnf-dashboard-account__content__table--total">Expira em</span></td>
-                                            <td><span class="smsnf-dashboard-account__content__table--cash"><?=$client->CONTRACT_EXPIRE_DATE?></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <p class="smsnf-dashboard-account__content__table--subtitle">O seu plano atual inclui</p>
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Email/Push</td>
-                                            <td><span class=""><?=$client->PLAN_EMAIL_LIMIT?></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>SMS</td>
-                                            <td><span class=""><?=$client->PLAN_SMS_LIMIT?></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <p class="smsnf-dashboard-account__content__table--subtitle">Total de envios efetuados</p>
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Email/Push</td>
-                                            <td><span class=""><?=$client->PLAN_EMAIL_SENT?></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>SMS</td>
-                                            <td><span class=""><?=$client->PLAN_SMS_SENT?></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                
                             </div>
                         </div>
                     </div>
@@ -416,31 +369,6 @@ $campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
-                    <div class="smsnf-dashboard-blog-last-post__content">
-                        <div>
-                            <div id="blog_post_0_date"></div>
-                            <a class="blog_post_0_link" href=""><small id="blog_post_0_category"></small></a>
-                        </div>
-                        <a class="blog_post_0_link" href="" target="_blank">
-                            <h4 class="smsnf-dashboard-blog-last-post__content__title" id="blog_post_0_title"></h4>
-                        </a>
-                        <a class="blog_post_0_link" href="" target="_blank">
-                            <p class="smsnf-dashboard-blog-last-post__content__description" id="blog_post_0_excerpt"></p>
-                        </a>
-                        <hr>
-                    </div>
-                    <div class="smsnf-dashboard-blog-last-post__content">
-                        <div>
-                            <div id="blog_post_1_date"></div>
-                            <a class="blog_post_1_link" href=""><small id="blog_post_1_category"></small></a>
-                        </div>
-                        <a class="blog_post_1_link" href="" target="_blank">
-                            <h4 class="smsnf-dashboard-blog-last-post__content__title" id="blog_post_1_title"></h4>
-                        </a>
-                        <a class="blog_post_1_link" href="" target="_blank">
-                            <p class="smsnf-dashboard-blog-last-post__content__description" id="blog_post_1_excerpt"></p>
-                        </a>
-                    </div>
                 </div><!-- /Blog Post's -->
             </div>
 
