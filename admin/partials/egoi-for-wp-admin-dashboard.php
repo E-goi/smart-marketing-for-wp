@@ -17,13 +17,6 @@ $last_subscribers = $this->smsnf_get_form_subscribers_last(5);
 
 $forms = $this->smsnf_get_form_subscriber_total_by('form');
 
-
-// AJAX
-//$campaigns = $this->smsnf_last_campaigns_reports();
-
-//$campaign_email = implode(",", $campaigns['email']['chart']);
-//$campaign_sms = implode(",", $campaigns['sms_premium']['chart']);
-
 ?>
 <!-- Header -->
 <div class="container">
@@ -240,33 +233,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-last-sms-campaign__title">
                                 Última campanha de SMS Enviada
                             </div>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>Nome</td>
-                                        <td><?=$campaigns['sms_premium']['name']?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nome Interno</td>
-                                        <td><?=$campaigns['sms_premium']['internal_name']?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>ID</td>
-                                        <td><?php echo $campaigns['sms_premium']['id'];?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total de Envios</td>
-                                        <td class="smsnf-dashboard-last-sms-campaign__totalsend"><?=$campaigns['sms_premium']['sent']?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <?php if ($campaigns['sms_premium']['sent'] > 0) { ?>
-                            <div class="smsnf-dashboard-last-sms-campaign__chart">
-                                <canvas id="smsnf-dlsc__doughnutChart" height="120"></canvas>
-                            </div>
-                            <?php } else { ?>
-                            <div>A guardar resultados</div>
-                            <?php } ?>
+                            <div class="loading loading-lg" id="last_sms_campaign_loading"></div>
                         </div>
                     </div>
                     <div class="column col-6 col-xl-12 col-xs-12">
@@ -300,33 +267,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-last-email-campaign__title">
                                 Última campanha de Email Enviada
                             </div>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>Nome</td>
-                                        <td><?=$campaigns['email']['name']?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nome Interno</td>
-                                        <td><?=$campaigns['email']['internal_name']?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>ID</td>
-                                        <td><?php echo $campaigns['email']['id'];?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total de Envios</td>
-                                        <td class="smsnf-dashboard-last-email-campaign__totalsend"><?=$campaigns['email']['sent']?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <?php if ($campaigns['email']['sent'] > 0) { ?>
-                            <div class="smsnf-dashboard-last-email-campaign__chart">
-                                <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
-                            </div>
-                            <?php } else { ?>
-                            <div>A aguardar resultado</div>
-                            <?php } ?>
+                            <div class="loading loading-lg" id="last_email_campaign_loading"></div>
                         </div>
                     </div>
                 </div><!-- /columns -->
@@ -346,6 +287,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         </div>
                         <div class="smsnf-dashboard-account__content p-0">
                             <div class="smsnf-dashboard-account__content__table">
+                                <div class="loading loading-lg" id="account_content_loading"></div>
                             </div>
                         </div>
                     </div>
@@ -369,6 +311,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
+                    <div class="loading loading-lg" id="blog_posts_content_loading"></div>
                 </div><!-- /Blog Post's -->
             </div>
 
@@ -497,100 +440,6 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
     }
 </script>
 
-<!-- Last Campaign Email Chart JS -->
-<?php if ($campaigns['email']['sent'] > 0) { ?>
-<script>
-    Chart.defaults.global.legend.labels.usePointStyle = true;
-    var ctx = document.getElementById("smsnf-dlec__doughnutChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["Aberturas", "Cliques", "Bounces", "Remoções", "Queixas"],
-            datasets: [{
-                label: '# of Votes',
-                data: [<?php echo $campaign_email; ?>],
-                backgroundColor: [
-                    'rgba(0, 174, 218, 0.4)',
-                    'rgba(147, 189, 77, 0.3)',
-                    'rgba(246, 116, 73, 0.3)',
-                    'rgba(250, 70, 19, 0.4)',
-                    'rgba(237, 60, 47, 0.6)'
-                ],
-                borderColor: [
-                    'rgba(0, 174, 218, 0.5)',
-                    'rgba(147, 189, 77, 0.4)',
-                    'rgba(246, 116, 73, 0.4)',
-                    'rgba(242, 91, 41, 0.5)',
-                    'rgba(237, 60, 47, 0.7)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            legend: {
-                display: true,
-                position: 'right',
-                labels: {
-                    fontColor: '#333',
-                }
-            },
-            layout: {
-                padding: {
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0
-                }
-            }
-        }
-    });
-</script>
-<?php } ?>
-
-<!-- Last Campaign SMS Chart JS -->
-
-<?php if ($campaigns['sms_premium']['sent'] > 0) { ?>
-<script>
-    Chart.defaults.global.legend.labels.usePointStyle = true;
-    var ctx = document.getElementById("smsnf-dlsc__doughnutChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["Entregues", "Não Entregues"],
-            datasets: [{
-                label: '# of Votes',
-                data: [<?php echo $campaign_sms; ?>],
-                backgroundColor: [
-                    'rgba(147, 189, 77, 0.3)',
-                    'rgba(250, 70, 19, 0.4)'
-                ],
-                borderColor: [
-                    'rgba(147, 189, 77, 0.4)',
-                    'rgba(250, 70, 19, 0.5)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            legend: {
-                display: true,
-                position: 'right',
-                labels: {
-                    fontColor: '#333',
-                }
-            },
-            layout: {
-                padding: {
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0
-                }
-            }
-        }
-    });
-</script>
-<?php } ?>
 
 
 

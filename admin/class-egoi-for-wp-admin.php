@@ -2159,6 +2159,118 @@ class Egoi_For_Wp_Admin {
         return $reports;
     }
 
+    public function smsnf_show_last_campaigns_reports() {
+        $output = array('email' => '', 'sms_premium' => '');
+
+        $campaigns = $this->smsnf_last_campaigns_reports();
+
+        foreach ($output as $type => $value) {
+            $campaign_chart = implode(",", $campaigns[$type]['chart']);
+            $type_clean = str_replace('_premium', '', $type);
+            $output[$type] .= '
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Nome</td>
+                            <td>'.$campaigns[$type]['name'].'</td>
+                        </tr>
+                        <tr>
+                            <td>Nome Interno</td>
+                            <td>'.$campaigns[$type]['internal_name'].'</td>
+                        </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td>'.$campaigns[$type]['id'].'</td>
+                        </tr>
+                        <tr>
+                            <td>Total de Envios</td>
+                            <td class="smsnf-dashboard-last-'.$type_clean.'-campaign__totalsend">'.$campaigns[$type]['sent'].'</td>
+                        </tr>
+                    </tbody>
+                </table>
+                ';
+            if ($campaigns[$type]['sent'] > 0) {
+
+                if ($type == 'email') {
+                    $labels = '"Aberturas", "Cliques", "Bounces", "Remoções", "Queixas"';
+                    $background_color = '
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(147, 189, 77, 0.3)",
+                        "rgba(246, 116, 73, 0.3)",
+                        "rgba(250, 70, 19, 0.4)",
+                        "rgba(237, 60, 47, 0.6)"
+                    ';
+                    $border_color = '
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(147, 189, 77, 0.4)",
+                        "rgba(246, 116, 73, 0.4)",
+                        "rgba(242, 91, 41, 0.5)",
+                        "rgba(237, 60, 47, 0.7)"
+                    ';
+                } else if ($type == 'sms_premium') {
+                    $labels = '"Entregues", "Não Entregues"';
+                    $background_color = '
+                        "rgba(147, 189, 77, 0.3)",
+                        "rgba(250, 70, 19, 0.4",
+                    ';
+                    $border_color = '
+                        "rgba(147, 189, 77, 0.4)",
+                        "rgba(250, 70, 19, 0.5)"
+                    ';
+                }
+
+                $output[$type] .= '
+                    <div class="smsnf-dashboard-last-'.$type_clean.'-campaign__chart">
+                        <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
+                    </div>
+                    <script>
+                    Chart.defaults.global.legend.labels.usePointStyle = true;
+                    var ctx = document.getElementById("smsnf-dlec__doughnutChart").getContext("2d");
+                    var myChart = new Chart(ctx, {
+                        type: "doughnut",
+                        data: {
+                            labels: ['.$labels.'],
+                            datasets: [{
+                                label: "# of Votes",
+                                data: ['.$campaign_chart.'],
+                                backgroundColor: ['.$background_color.'],
+                                borderColor: ['.$border_color.'],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                display: true,
+                                position: "right",
+                                labels: {
+                                    fontColor: "#333",
+                                }
+                            },
+                            layout: {
+                                padding: {
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0
+                                }
+                            }
+                        }
+                    });
+                </script>
+                ';
+            } else {
+                $output[$type] .= '
+                    <div>A aguardar resultado</div>
+                    ';
+            }
+        }
+
+        echo json_encode($output);
+        wp_die();
+    }
+
+
+
     public function smsnf_hide_notification() {
         $notifications = get_option('egoi_notifications');
         $notifications[$_POST['notification']] = current_time('mysql');

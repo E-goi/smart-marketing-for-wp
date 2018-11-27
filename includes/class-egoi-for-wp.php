@@ -275,6 +275,7 @@ class Egoi_For_Wp {
         // Dashboard
         $this->loader->add_action('wp_ajax_smsnf_show_blog_posts', $plugin_admin, 'smsnf_show_blog_posts');
         $this->loader->add_action('wp_ajax_smsnf_show_account_info', $plugin_admin, 'smsnf_show_account_info');
+        $this->loader->add_action('wp_ajax_smsnf_show_last_campaigns_reports', $plugin_admin, 'smsnf_show_last_campaigns_reports');
 
 	}
 
