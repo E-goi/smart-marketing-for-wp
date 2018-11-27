@@ -1939,6 +1939,9 @@ class Egoi_For_Wp_Admin {
         return false;
     }
 
+
+
+
     /**
      *
      * Dashboard
@@ -2270,7 +2273,6 @@ class Egoi_For_Wp_Admin {
     }
 
 
-
     public function smsnf_hide_notification() {
         $notifications = get_option('egoi_notifications');
         $notifications[$_POST['notification']] = current_time('mysql');
@@ -2278,7 +2280,7 @@ class Egoi_For_Wp_Admin {
         wp_die();
     }
 
-    public function smsnf_show_notification($notification) {
+    public function smsnf_check_notification_option($notification) {
         $notifications = get_option('egoi_notifications');
         $time = 15*24*60*60;
         if (
@@ -2291,6 +2293,33 @@ class Egoi_For_Wp_Admin {
             return true;
         }
         return false;
+    }
+
+    public function smsnf_show_notifications($customer) {
+
+        $notifications = array(
+            'limit' => false,
+            'upgrade' => false
+        );
+
+        if (
+            ($customer->PLAN_EMAIL_LIMIT != 0 && $customer->PLAN_EMAIL_SENT/$customer->PLAN_EMAIL_LIMIT >= 0.8 ||
+            $customer->PLAN_SMS_LIMIT != 0 && $customer->PLAN_SMS_SENT/$customer->PLAN_SMS_LIMIT >= 0.8) &&
+            $this->smsnf_check_notification_option('account-limit')
+        ) {
+            $notifications['limit'] = true;
+        }
+
+        if (
+            (strpos($customer->CONTRACT, '5001') !== false ||
+            strpos($customer->CONTRACT, 'Pay With Love') !== false ||
+            strpos($customer->CONTRACT, 'paywithlove') !== false) &&
+            $this->smsnf_check_notification_option('upgrade-account')
+        ) {
+            $notifications['upgrade'] = true;
+        }
+
+        return $notifications;
     }
 
     public function smsnf_get_account_info() {
@@ -2317,7 +2346,9 @@ class Egoi_For_Wp_Admin {
     public function smsnf_show_account_info() {
         $customer = $this->smsnf_get_account_info();
 
-        $output = '
+        $output['notifications'] = $this->smsnf_show_notifications($customer);
+
+        $output['account'] = '
             <table class="table">
                 <tbody>
                     <tr>
@@ -2364,7 +2395,7 @@ class Egoi_For_Wp_Admin {
             </table>
         ';
 
-        echo $output;
+        echo json_encode($output);
         wp_die();
     }
 

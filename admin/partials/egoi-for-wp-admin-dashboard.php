@@ -49,8 +49,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
         <div class="columns">
 
             <!-- Notifications | Upgrade Account -->
-            <?php if ($this->smsnf_show_notification('upgrade-account') == true) { ?>
-            <div class="column col-12">
+            <div class="column col-12 d-none" id="notification_upgrade_account">
                 <div class="smsnf-dashboard-notifications notice is-dismissible">
                     <div class="smsnf-dashboard-notifications__img">
                         <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--upgrade"></figure>
@@ -69,11 +68,9 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                     </div>
                 </div>
             </div>
-            <?php } ?>
 
-            <?php if ($this->smsnf_show_notification('account-limit') == true) { ?>
-            <!-- Notifications | Account -->
-            <div class="column col-12">
+            <!-- Notifications | Account Limit -->
+            <div class="column col-12 d-none" id="notification_account_limit">
                 <div class="smsnf-dashboard-notifications notice is-dismissible">
                     <div class="smsnf-dashboard-notifications__img">
                         <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--limit"></figure>
@@ -92,7 +89,6 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                     </div>
                 </div>
             </div>
-            <?php } ?>
 
             <!-- Column Left Start -->
             <!-- Last Subscribers table / Subscribers by List / Subscribers by Form / Last Email Campaign /  Last SMS Campaign  -->
