@@ -6,7 +6,7 @@
         $.post(
             smsnf_dashboard_ajax_object.ajax_url,
             {
-                'action': 'smsnf_show_account_info'
+                'action': 'smsnf_show_account_info_ajax'
             },
             function(response) {
                 var output = jQuery.parseJSON(response);

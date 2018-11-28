@@ -148,6 +148,9 @@ class Egoi_For_Wp_Admin {
 			vc_lean_map( 'egoi_vc_shortcode', array( $this, 'egoi_vc_shortcode_map' ) );
 		}
 
+		// Add widget to main WP dashboard
+        add_action( 'wp_dashboard_setup', array($this, 'smsnf_main_dashboard_widget') );
+
 		// hook map fields to E-goi
 		$this->mapFieldsEgoi();
 
@@ -156,6 +159,14 @@ class Egoi_For_Wp_Admin {
 			$this->saveRMData($rmdata);
 		}
 	}
+
+	public function smsnf_main_dashboard_widget() {
+        wp_add_dashboard_widget(
+            'egoi_main_dashboard_widget',         // Widget slug.
+            'E-goi',         // Title.
+            array($this, 'smsnf_main_dashboard_widget_content') // Display function.
+        );
+    }
 
 	/**
 	 * Register the stylesheets for the admin area.
@@ -2029,7 +2040,8 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_get_blog_posts($num_items = 2) {
-        $blog = fetch_feed('https://blog.e-goi.pt/feed/');
+        $url = __('https://blog.e-goi.com/feed/egoi', 'egoi-for-wp');
+        $blog = fetch_feed($url);
 
         if (!is_wp_error($blog)) {
             $posts = array();
@@ -2391,12 +2403,43 @@ class Egoi_For_Wp_Admin {
                         <td>SMS</td>
                         <td><span class="">'.$customer->PLAN_SMS_SENT.'</span></td>
                     </tr>
-                </tbody>
-            </table>
         ';
 
-        echo json_encode($output);
+        if (!is_plugin_active( 'smart-marketing-addon-sms-order/smart-marketing-addon-sms-order.php' )) {
+            $output['account'] .= '
+                    </tbody>
+                </table>
+                <div>Não tem o SMS Orders Alert/Notifications for WooCommerce ativo</div>
+            ';
+        } else {
+            $output['account'] .= '
+                        <tr>
+                            <td>SMS Transacionais</td>
+                            <td><span class="">'.get_option('egoi_sms_counter').'</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            ';
+        }
+
+        return json_encode($output);
+    }
+
+    public function smsnf_show_account_info_ajax() {
+        $output = $this->smsnf_show_account_info();
+        echo $output;
         wp_die();
+    }
+
+    public function smsnf_main_dashboard_widget_content() {
+        $content = json_decode($this->smsnf_show_account_info());
+
+        echo '
+            <div class="smsnf-dashboard-account__content__table">
+                '.$content->account.'
+            </div>
+        ';
+
     }
 
 }
