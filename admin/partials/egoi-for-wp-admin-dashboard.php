@@ -147,8 +147,6 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             </div>
                         </div>
                     </div>
-
-
                 </div>
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">
@@ -164,8 +162,8 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <tr>
                                 <th>Nome</th>
                                 <th class="hide-xs">Email</th>
-                                <th>Formulário ID</th>
-                                <th>Formulário</th>
+                                <th class="hide-xs">Formulário ID</th>
+                                <th class="hide-xs">Formulário</th>
                                 <th class="hide-xs">Data</th>
                                 <th>Lista</th>
                             </tr>
@@ -175,8 +173,8 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <tr>
                                 <td><?php echo $subscriber->subscriber_name; ?></td>
                                 <td class="hide-xs"><?php echo $subscriber->subscriber_email; ?></td>
-                                <td><?php echo $subscriber->form_id; ?></td>
-                                <td><?php echo $subscriber->form_title; ?></td>
+                                <td class="hide-xs"><?php echo $subscriber->form_id; ?></td>
+                                <td class="hide-xs"><?php echo $subscriber->form_title; ?></td>
                                 <td class="hide-xs"><?php echo date('Y/m/d H\hm', strtotime($subscriber->created_at)); ?></td>
                                 <td><?php echo $subscriber->list_title; ?></td>
                             </tr>
@@ -229,7 +227,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-last-sms-campaign__title">
                                 Última campanha de SMS Enviada
                             </div>
-                            <div class="loading loading-lg" id="last_sms_campaign_loading"></div>
+                            <div class="loading loading-lg" style="padding: 40px;" id="last_sms_campaign_loading"></div>
                         </div>
                     </div>
                     <div class="column col-6 col-xl-12 col-xs-12">
@@ -263,7 +261,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-last-email-campaign__title">
                                 Última campanha de Email Enviada
                             </div>
-                            <div class="loading loading-lg" id="last_email_campaign_loading"></div>
+                            <div class="loading loading-lg" style="padding: 40px;" id="last_email_campaign_loading"></div>
                         </div>
                     </div>
                 </div><!-- /columns -->
@@ -283,7 +281,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         </div>
                         <div class="smsnf-dashboard-account__content p-0">
                             <div class="smsnf-dashboard-account__content__table">
-                                <div class="loading loading-lg" id="account_content_loading"></div>
+                                <div class="loading loading-lg" style="padding: 40px;" id="account_content_loading"></div>
                             </div>
                         </div>
                     </div>
@@ -307,7 +305,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
-                    <div class="loading loading-lg" id="blog_posts_content_loading"></div>
+                        <div class="loading loading-lg" style="padding: 40px;" id="blog_posts_content_loading"></div>
                 </div><!-- /Blog Post's -->
             </div>
 

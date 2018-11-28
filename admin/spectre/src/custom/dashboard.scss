@@ -4,7 +4,8 @@
 
 .smsnf-dashboard-notifications.notice{
 	border-left: 0;
-	margin: 0;
+  margin: 0;
+  margin-bottom: 2px;
 }
 .smsnf-dashboard-notifications{
 	display: flex;
@@ -82,7 +83,7 @@
     color: #00313d;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: -.02rem;
     margin-bottom: 0;
     line-height: 20px;
@@ -179,7 +180,7 @@
   justify-content: space-between;
   align-items: center;
   p {
-    font-size: $font-size-md;
+    font-size: $font-size-base;
     color: $dark-color;
   }
   div {
@@ -223,6 +224,9 @@
     font-size: $font-size-base;
 }
 
+.smsnf-dashboard-campaigns--table td:first-child{
+  width:120px;
+}
 //////////////////////////////
 // Subscribers by List
 //////////////////////////////
@@ -280,7 +284,7 @@
     background-color: #ffffff;
 }
 .smsnf-dashboard-blog-last-post__content{
-    padding: 10px 20px;
+    padding: 20px 20px 10px;
 }
 .smsnf-dashboard-blog-last-post__content div:first-child{
     display: flex;
@@ -300,8 +304,8 @@
     color: $primary-color-darken;
 }
 .smsnf-dashboard-blog-last-post__content__title{
-    font-size: $font-size-lg;
-    line-height: 26px;
+    font-size: $font-size-base;
+    line-height: 20px;
     margin: 10px 0 0 0;
     &:hover{
       color: $primary-color;
@@ -311,11 +315,21 @@
 .smsnf-dashboard-blog-last-post__content__description{
   font-size: 0.9rem;
   color: $dark-color;
+  margin-top: 8px;
 }
 
 .smsnf-dashboard-last-email-campaign__totalsend,
 .smsnf-dashboard-last-sms-campaign__totalsend{
   font-weight: bold;
+}
+.totalsend--wait{
+  font-weight: bold;
+  display: inline-block;
+  background-color: #d0d0d0;
+  border-radius: 5px;
+  color: white;
+  padding: 6px 10px !important; 
+  margin-top: 2px;
 }
 
 //////////////////////////////
@@ -363,6 +377,7 @@
 }
 
 .smsnf-dashboard-account__content__table {
+  color: $primary-color-darken;
   hr{
     margin-top: -2px;
     margin-left: 12px;
@@ -378,14 +393,12 @@
     font-size: $font-size-base;
     font-weight: 500;
     text-align: left;
-    color: $primary-color-darken;
   }
   td{
     font-size: 1rem;
   }
   td:last-child {
     text-align: right;
-    color: $primary-color-darken;
   }
   .smsnf-dashboard-account__content__table--cash{
     border: 1px solid $success-color;
@@ -403,6 +416,7 @@
   padding-left: 12px;
   text-align: left;
   font-weight: 500;
+  color: $primary-color-darken;
 }
 .smsnf-dashboard-account__content__table hr{
   border: .05rem solid #efefef !important;
@@ -479,7 +493,7 @@
     }
   }
   .smsnf-dashboard-notifications.notice.is-dismissible{
-    padding-right: 12px !important;
+      padding-right: 12px !important;
     }
   }
 
@@ -491,7 +505,7 @@
 // Style table
 .smsnf-dashboard .table td, .table th{
   border-bottom: .05rem solid #efefef;
-  padding: .5rem 0.4rem;
+  padding: .5rem 0rem;
 }
 .smsnf-dashboard .table tbody tr:last-child td {
   border-bottom: 0;
@@ -561,4 +575,21 @@
 }
 .smsnf-dashboard-subs-stats__content--result.bestday.e-goi-tooltip .e-goi-tooltiptext{
   margin-left: 140px;
+}
+
+// Account Addon Plugin
+.smsnf-dashboard-plugin-sms{
+  background-color: #ffffff; 
+  padding:20px;
+  text-align: center;
+  .smsnf-dashboard-plugin-sms__img{
+    max-width:100%; 
+    height:auto; 
+    width:160px;
+  }
+  .smsnf-dashboard-plugin-sms__text{
+    padding: 20px;
+    font-size: 18px;
+    line-height:24px;
+  }
 }
