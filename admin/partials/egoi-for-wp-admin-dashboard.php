@@ -315,13 +315,6 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
     </div><!-- / Container -->
 </div><!-- / Wrap -->
 
-
-<script>
-
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-
 <!-- Total of subscribers Chart JS -->
 <script>
 
@@ -412,9 +405,6 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
             }
         }
     };
-
-
-    
 
     var ctx = document.getElementById('smsnf-dsbl__lineChart');
     var myListChart = new Chart(ctx, myListChartParams);
