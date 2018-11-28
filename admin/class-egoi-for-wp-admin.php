@@ -2072,7 +2072,6 @@ class Egoi_For_Wp_Admin {
                 <div class="smsnf-dashboard-blog-last-post__content">
                     <div>
                         <div>'.$post['date'].'</div>
-                        <a href="'.$post['link'].'"><small>'.$post['category'].'</small></a>
                     </div>
                     <a href="'.$post['link'].'" target="_blank">
                         <h4 class="smsnf-dashboard-blog-last-post__content__title">'.$post['title'].'</h4>
@@ -2199,11 +2198,17 @@ class Egoi_For_Wp_Admin {
                         </tr>
                         <tr>
                             <td>Total de Envios</td>
-                            <td class="smsnf-dashboard-last-'.$type_clean.'-campaign__totalsend">'.$campaigns[$type]['sent'].'</td>
+                            <td class="smsnf-dashboard-last-'.$type_clean.'-campaign__totalsend">';
+
+            $output[$type] .= $campaigns[$type]['sent'] == 0 ? 'A aguardar resultados' : $campaigns[$type]['sent'];
+
+            $output[$type] .= '
+                            </td>
                         </tr>
                     </tbody>
                 </table>
                 ';
+
             if ($campaigns[$type]['sent'] > 0) {
 
                 if ($type == 'email') {
@@ -2273,10 +2278,6 @@ class Egoi_For_Wp_Admin {
                     });
                 </script>
                 ';
-            } else {
-                $output[$type] .= '
-                    <div>A aguardar resultado</div>
-                    ';
             }
         }
 

@@ -1,25 +1,7 @@
 (function( $ ) {
     'use strict';
 
-    // Here's how you'd do this with jQuery
-
-
     $( document ).ready(function() {
-
-        /*
-        function sayHi() {
-            var iframe = $('#egoi-window-widget-content-87a772d62e0383837711da05172057be iframe');
-            console.log(iframe[0]);
-            var elmnt = iframe[0].contentWindow.document.getElementById("fname_200");
-            console.log(elmnt);
-
-            elmnt.click(function () {
-                console.log('test');
-            });
-
-        }
-        setTimeout(sayHi, 5000);
-        */
 
         $('form[id^="easyform_"]').on("submit", function () {
 
@@ -48,6 +30,5 @@
         });
 
     });
-
 
 })( jQuery );
