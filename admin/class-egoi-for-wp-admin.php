@@ -2371,11 +2371,18 @@ class Egoi_For_Wp_Admin {
                     <tr>
                         <td><span class="smsnf-dashboard-account__content__table--total">Plano</span></td>
                         <td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CONTRACT.'</span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="smsnf-dashboard-account__content__table--total">Expira em</span></td>
-                        <td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CONTRACT_EXPIRE_DATE.'</span></td>
-                    </tr>
+                    </tr>';
+
+        if ($customer->CONTRACT_EXPIRE_DATE) {
+            $output['account'] .= '
+                        <tr>
+                            <td><span class="smsnf-dashboard-account__content__table--total">Expira em</span></td>
+                            <td><span class="smsnf-dashboard-account__content__table--cash">' . $customer->CONTRACT_EXPIRE_DATE . '</span></td>
+                        </tr>
+                        ';
+        }
+
+        $output['account'] .= '
                 </tbody>
             </table>
             <hr>
