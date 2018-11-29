@@ -2188,7 +2188,7 @@ class Egoi_For_Wp_Admin {
             $campaign_chart = implode(",", $campaigns[$type]['chart']);
             $type_clean = str_replace('_premium', '', $type);
             $output[$type] .= '
-                <table class="table">
+                <table class="table smsnf-dashboard-campaigns--table">
                     <tbody>
                         <tr>
                             <td>Nome</td>
@@ -2206,7 +2206,7 @@ class Egoi_For_Wp_Admin {
                             <td>Total de Envios</td>
                             <td class="smsnf-dashboard-last-'.$type_clean.'-campaign__totalsend">';
 
-            $output[$type] .= $campaigns[$type]['sent'] === 'NO_DATA' ? 'A aguardar resultados' : $campaigns[$type]['sent'] ;
+            $output[$type] .= $campaigns[$type]['sent'] === 'NO_DATA' ? '<span class="totalsend--wait">A aguardar resultados...</span>' : $campaigns[$type]['sent'];
 
             $output[$type] .= '
                             </td>
@@ -2317,8 +2317,8 @@ class Egoi_For_Wp_Admin {
     public function smsnf_show_notifications($customer) {
 
         $notifications = array(
-            'limit' => false,
-            'upgrade' => false
+            'limit' => true,
+            'upgrade' => true
         );
 
         if (
@@ -2370,20 +2370,20 @@ class Egoi_For_Wp_Admin {
         $output['account'] = '
             <table class="table">
                 <tbody>
-                    <tr>
-                        <td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
-                        <td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CREDITS.'</span></td>
+					<tr>
+						<td><span class="smsnf-dashboard-account__content__table--total">Plano</span></td>
+						<td><span class="">'.$customer->CONTRACT.'</span></td>
                     </tr>
                     <tr>
-                        <td><span class="smsnf-dashboard-account__content__table--total">Plano</span></td>
-                        <td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CONTRACT.'</span></td>
+						<td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
+						<td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CREDITS.'</span></td>
                     </tr>';
 
         if ($customer->CONTRACT_EXPIRE_DATE) {
             $output['account'] .= '
                         <tr>
                             <td><span class="smsnf-dashboard-account__content__table--total">Expira em</span></td>
-                            <td><span class="smsnf-dashboard-account__content__table--cash">' . $customer->CONTRACT_EXPIRE_DATE . '</span></td>
+                            <td><span class="">' . $customer->CONTRACT_EXPIRE_DATE . '</span></td>
                         </tr>
                         ';
         }
@@ -2391,7 +2391,6 @@ class Egoi_For_Wp_Admin {
         $output['account'] .= '
                 </tbody>
             </table>
-            <hr>
             <p class="smsnf-dashboard-account__content__table--subtitle">O seu plano atual inclui</p>
             <table class="table">
                 <tbody>
@@ -2405,7 +2404,6 @@ class Egoi_For_Wp_Admin {
                     </tr>
                 </tbody>
             </table>
-            <hr>
             <p class="smsnf-dashboard-account__content__table--subtitle">Total de envios efetuados</p>
             <table class="table">
                 <tbody>
@@ -2422,8 +2420,12 @@ class Egoi_For_Wp_Admin {
         if (!is_plugin_active( 'smart-marketing-addon-sms-order/smart-marketing-addon-sms-order.php' )) {
             $output['account'] .= '
                     </tbody>
-                </table>
-                <div>Não tem o SMS Orders Alert/Notifications for WooCommerce ativo</div>
+				</table>
+				<div class="smsnf-dashboard-plugin-sms">
+					<img class="smsnf-dashboard-plugin-sms__img" src="'.plugins_url().'/smart-marketing-for-wp/admin/img/addon-sms-notification.png">
+					<div class="smsnf-dashboard-plugin-sms__text">Envie notificações SMS aos seus clientes e administradores por cada alteração ao estado da encomenda no seu WooCommerce</div>
+					<a type="button" class="button-smsnf-primary">Instalar Plugin</a>
+				</div>
             ';
         } else {
             $output['account'] .= '
