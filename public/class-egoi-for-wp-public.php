@@ -599,13 +599,16 @@ class Egoi_For_Wp_Public {
 
     public function smsnf_save_advanced_form_subscriber() {
         $success_messages = array(
-            'Está quase! Só falta confirmar o seu email.'
+            'Está quase! Só falta confirmar o seu email.',
+            'You\'re almost there! We just need to confirm your email address.',
+            'Solamente necesitamos confirmar su correo electrónico.'
         );
 
         $form_data = array();
         parse_str($_POST['form_data'], $form_data);
 
-        $response = wp_remote_post('http:'.$_POST['url'], array(
+        $url = strpos($_POST['url'], 'http') !== false ? $_POST['url'] : 'http:'.$_POST['url'];
+        $response = wp_remote_post($url, array(
                 'method' => 'POST',
                 'timeout' => 60,
                 'body' => $form_data,
@@ -616,6 +619,7 @@ class Egoi_For_Wp_Public {
             $error_message = $response->get_error_message();
             echo json_encode($error_message);
         } else {
+            $output = $response['body'];
             foreach ($success_messages as $message) {
                 if (strpos($response['body'], $message) !== false) {
                     $output = $message;

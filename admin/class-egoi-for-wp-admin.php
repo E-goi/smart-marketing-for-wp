@@ -2152,19 +2152,22 @@ class Egoi_For_Wp_Admin {
 
             foreach ($campaign as $key => $value) {
                 $report = $api->getReport($value['hash']);
-
                 $reports[$channel]['id'] .= $value['id'].' | ';
                 $reports[$channel]['list'] .= $value['list'].' | ';
-                $reports[$channel]['sent'] += $report->SENT;
-                if ($channel == 'email') {
-                    $reports[$channel]['chart']['opens'] += $report->UNIQUE_VIEWS;
-                    $reports[$channel]['chart']['clicks'] += $report->UNIQUE_CLICKS;
-                    $reports[$channel]['chart']['bounces'] += $report->RETURNED;
-                    $reports[$channel]['chart']['removes'] += $report->TOTAL_REMOVES;
-                    $reports[$channel]['chart']['complains'] += $report->COMPLAIN;
-                } else if ($channel == 'sms_premium') {
-                    $reports[$channel]['chart']['delivered'] += $report->DELIVERED;
-                    $reports[$channel]['chart']['not_delivered'] += $report->NOT_DELIVERED;
+                if (!isset($report->ERROR)) {
+                    $reports[$channel]['sent'] += $report->SENT;
+                    if ($channel == 'email') {
+                        $reports[$channel]['chart']['opens'] += $report->UNIQUE_VIEWS;
+                        $reports[$channel]['chart']['clicks'] += $report->UNIQUE_CLICKS;
+                        $reports[$channel]['chart']['bounces'] += $report->RETURNED;
+                        $reports[$channel]['chart']['removes'] += $report->TOTAL_REMOVES;
+                        $reports[$channel]['chart']['complains'] += $report->COMPLAIN;
+                    } else if ($channel == 'sms_premium') {
+                        $reports[$channel]['chart']['delivered'] += $report->DELIVERED;
+                        $reports[$channel]['chart']['not_delivered'] += $report->NOT_DELIVERED;
+                    }
+                } else {
+                    $reports[$channel]['sent'] = $report->ERROR;
                 }
 
             }
@@ -2203,7 +2206,7 @@ class Egoi_For_Wp_Admin {
                             <td>Total de Envios</td>
                             <td class="smsnf-dashboard-last-'.$type_clean.'-campaign__totalsend">';
 
-            $output[$type] .= $campaigns[$type]['sent'] == 0 ? 'A aguardar resultados' : $campaigns[$type]['sent'];
+            $output[$type] .= $campaigns[$type]['sent'] === 'NO_DATA' ? 'A aguardar resultados' : $campaigns[$type]['sent'] ;
 
             $output[$type] .= '
                             </td>

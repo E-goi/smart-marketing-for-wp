@@ -309,6 +309,8 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                     <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
                     <div class="loading loading-lg" id="blog_posts_content_loading"></div>
                 </div><!-- /Blog Post's -->
+
+                <iframe id="iframe" src="https://eg.e-goi.com/pluginbanners/wp-iframe.php?type=v&lang=<?php echo get_locale(); ?>" ></iframe>
             </div>
 
         </div><!-- / Columns -->
@@ -421,7 +423,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
             sum = sum + parseInt(e);
         });
 
-        myListChart.update();
+        myListChart.update(1000);
         document.getElementById("list_subscribers_total").innerHTML = sum;
     }
 </script>
