@@ -2317,8 +2317,8 @@ class Egoi_For_Wp_Admin {
     public function smsnf_show_notifications($customer) {
 
         $notifications = array(
-            'limit' => true,
-            'upgrade' => true
+            'limit' => false,
+            'upgrade' => false
         );
 
         if (

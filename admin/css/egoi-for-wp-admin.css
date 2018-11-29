@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! Spectre.css v0.5.3 | MIT License | github.com/picturepan2/spectre */
 /* Manually forked from Normalize.css */
 /* normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
@@ -6114,6 +6115,7 @@ div.eg-dropdown {
 .smsnf-dashboard-notifications.notice {
   border-left: 0;
   margin: 0;
+  margin-bottom: 2px;
 }
 
 .smsnf-dashboard-notifications {
@@ -6209,7 +6211,7 @@ div.eg-dropdown {
   color: #00313d;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -.02rem;
   line-height: 20px; 
   margin-bottom: 0;
@@ -6318,7 +6320,7 @@ div.eg-dropdown {
 .smsnf-dashboard-subscribers-by-lists__empty p,
 .smsnf-dashboard-last-subscribers-by-form__empty p {
   color: #454d5d; 
-  font-size: 1.15rem;
+  font-size: 1rem;
 }
 
 .smsnf-dashboard-last-subscribers__empty div,
@@ -6363,6 +6365,10 @@ div.eg-dropdown {
   -webkit-font-smoothing: antialiased;
   font-weight: 600;
   padding: 18px 12px;
+}
+
+.smsnf-dashboard-campaigns--table td:first-child {
+  width: 120px;
 }
 
 .smsnf-dashboard-last-email-campaign__chart,
@@ -6423,7 +6429,7 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-blog-last-post__content {
-  padding: 10px 20px;
+  padding: 20px 20px 10px;
 }
 
 .smsnf-dashboard-blog-last-post__content div:first-child {
@@ -6451,8 +6457,8 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-blog-last-post__content__title {
-  font-size: 1.25rem;
-  line-height: 26px;
+  font-size: 1rem;
+  line-height: 20px;
   margin: 10px 0 0 0;
 }
 
@@ -6462,13 +6468,24 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-blog-last-post__content__description {
-  color: #454d5d; 
+  color: #454d5d;
   font-size: .9rem;
+  margin-top: 8px;
 }
 
 .smsnf-dashboard-last-email-campaign__totalsend,
 .smsnf-dashboard-last-sms-campaign__totalsend {
   font-weight: bold;
+}
+
+.totalsend--wait {
+  display:  inline-block;
+  font-weight: bold;
+    background-color:   #d0d0d0;
+    border-radius:  5px;
+    color:  white;
+    margin-top:  2px; 
+    padding:  6px 10px !important;
 }
 
 .smsnf-dashboard-account__install-addon {
@@ -6519,6 +6536,10 @@ div.eg-dropdown {
   margin: 0 0 20px;
 }
 
+.smsnf-dashboard-account__content__table {
+  color: #00313d;
+}
+
 .smsnf-dashboard-account__content__table hr {
   border: .05rem solid #efefef !important; 
   margin-left: 12px;
@@ -6533,7 +6554,6 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-account__content__table .smsnf-dashboard-account__content__table--total {
-  color: #00313d; 
   font-size: 1rem;
   font-weight: 500;
   text-align: left;
@@ -6544,7 +6564,6 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-account__content__table td:last-child {
-  color: #00313d; 
   text-align: right;
 }
 
@@ -6556,8 +6575,9 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-account__content__table--subtitle {
+  color: #00313d; 
   font-size: 1rem;
-  font-weight: 500; 
+  font-weight: 500;
   line-height: 26px;
   margin-bottom: 0;
   margin-top: 19px;
@@ -6647,7 +6667,7 @@ div.eg-dropdown {
 .smsnf-dashboard .table td,
 .table th {
   border-bottom: .05rem solid #efefef;
-  padding: .5rem .4rem;
+  padding: .5rem 0rem;
 }
 
 .smsnf-dashboard .table tbody tr:last-child td {
@@ -6718,9 +6738,27 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subs-stats__content--result.e-goi-tooltip .e-goi-tooltiptext {
-  margin-left: -34px;
+  margin-left: -17px;
 }
 
 .smsnf-dashboard-subs-stats__content--result.bestday.e-goi-tooltip .e-goi-tooltiptext {
   margin-left: 140px;
+}
+
+.smsnf-dashboard-plugin-sms {
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.smsnf-dashboard-plugin-sms .smsnf-dashboard-plugin-sms__img {
+  height: auto;
+  max-width: 100%;
+  width: 160px;
+}
+
+.smsnf-dashboard-plugin-sms .smsnf-dashboard-plugin-sms__text {
+  font-size: 18px;
+  line-height: 24px; 
+  padding: 20px;
 }
