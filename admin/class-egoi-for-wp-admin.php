@@ -2127,12 +2127,9 @@ class Egoi_For_Wp_Admin {
                     } else {
                         $last_campaigns_flag[$channel] = 1;
                     }
-
                 }
-
             }
         }
-
         return $last_campaigns;
     }
 
@@ -2191,11 +2188,11 @@ class Egoi_For_Wp_Admin {
                 <table class="table smsnf-dashboard-campaigns--table">
                     <tbody>
                         <tr>
-                            <td>Nome</td>
+                            <td>'.__('Name', 'egoi-for-wp').'</td>
                             <td>'.$campaigns[$type]['name'].'</td>
                         </tr>
                         <tr>
-                            <td>Nome Interno</td>
+                            <td>'.__('Internal Name', 'egoi-for-wp').'</td>
                             <td>'.$campaigns[$type]['internal_name'].'</td>
                         </tr>
                         <tr>
@@ -2203,10 +2200,10 @@ class Egoi_For_Wp_Admin {
                             <td>'.$campaigns[$type]['id'].'</td>
                         </tr>
                         <tr>
-                            <td>Total de Envios</td>
+                            <td>'.__('Total sent', 'egoi-for-wp').'</td>
                             <td class="smsnf-dashboard-last-'.$type_clean.'-campaign__totalsend">';
 
-            $output[$type] .= $campaigns[$type]['sent'] === 'NO_DATA' ? '<span class="totalsend--wait">A aguardar resultados...</span>' : $campaigns[$type]['sent'];
+            $output[$type] .= $campaigns[$type]['sent'] === 'NO_DATA' ? '<span class="totalsend--wait">'.__('A aguardar resultados...', 'egoi-for-wp').'</span>' : $campaigns[$type]['sent'];
 
             $output[$type] .= '
                             </td>
@@ -2371,18 +2368,18 @@ class Egoi_For_Wp_Admin {
             <table class="table">
                 <tbody>
 					<tr>
-						<td><span class="smsnf-dashboard-account__content__table--total">Plano</span></td>
+						<td><span class="smsnf-dashboard-account__content__table--total">'.__('Plan', 'egoi-for-wp').'</span></td>
 						<td><span class="">'.$customer->CONTRACT.'</span></td>
                     </tr>
                     <tr>
-						<td><span class="smsnf-dashboard-account__content__table--total">Saldo Atual</span></td>
+						<td><span class="smsnf-dashboard-account__content__table--total">'.__('Current Balance', 'egoi-for-wp').'</span></td>
 						<td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CREDITS.'</span></td>
                     </tr>';
 
         if ($customer->CONTRACT_EXPIRE_DATE) {
             $output['account'] .= '
                         <tr>
-                            <td><span class="smsnf-dashboard-account__content__table--total">Expira em</span></td>
+                            <td><span class="smsnf-dashboard-account__content__table--total">'.__('Expires in', 'egoi-for-wp').'</span></td>
                             <td><span class="">' . $customer->CONTRACT_EXPIRE_DATE . '</span></td>
                         </tr>
                         ';
@@ -2391,7 +2388,7 @@ class Egoi_For_Wp_Admin {
         $output['account'] .= '
                 </tbody>
             </table>
-            <p class="smsnf-dashboard-account__content__table--subtitle">O seu plano atual inclui</p>
+            <p class="smsnf-dashboard-account__content__table--subtitle">'.__('Your current plan includes', 'egoi-for-wp').'</p>
             <table class="table">
                 <tbody>
                     <tr>
@@ -2404,7 +2401,7 @@ class Egoi_For_Wp_Admin {
                     </tr>
                 </tbody>
             </table>
-            <p class="smsnf-dashboard-account__content__table--subtitle">Total de envios efetuados</p>
+            <p class="smsnf-dashboard-account__content__table--subtitle">'.__('Total sent', 'egoi-for-wp').'</p>
             <table class="table">
                 <tbody>
                     <tr>
@@ -2423,14 +2420,14 @@ class Egoi_For_Wp_Admin {
 				</table>
 				<div class="smsnf-dashboard-plugin-sms">
 					<img class="smsnf-dashboard-plugin-sms__img" src="'.plugins_url().'/smart-marketing-for-wp/admin/img/addon-sms-notification.png">
-					<div class="smsnf-dashboard-plugin-sms__text">Envie notificações SMS aos seus clientes e administradores por cada alteração ao estado da encomenda no seu WooCommerce</div>
-					<a type="button" class="button-smsnf-primary">Instalar Plugin</a>
+					<div class="smsnf-dashboard-plugin-sms__text">'.__('Envie notificações SMS aos seus clientes e administradores por cada alteração ao estado da encomenda no seu WooCommerce', 'egoi-for-wp').'</div>
+					<a href="https://wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/" type="button" class="button-smsnf-primary">'.__('Instalar Plugin', 'egoi-for-wp').'</a>
 				</div>
             ';
         } else {
             $output['account'] .= '
                         <tr>
-                            <td>SMS Transacionais</td>
+                            <td>'.__('SMS Transacionais', 'egoi-for-wp').'</td>
                             <td><span class="">'.get_option('egoi_sms_counter').'</span></td>
                         </tr>
                     </tbody>

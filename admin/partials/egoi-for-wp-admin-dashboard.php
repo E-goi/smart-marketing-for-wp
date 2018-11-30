@@ -55,15 +55,15 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--upgrade"></figure>
                     </div>
                     <div class="smsnf-dashboard-notifications__copy">
-                        <h3>Upgrade da Conta</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
+                        <h3><?php _e('Upgrade da Conta', 'egoi-for-wp');?></h3>
+                        <p><?php _e('Lorem ipsum', 'egoi-for-wp');?></p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
                         <a class="hide-sm hide-xs hide-notification-button" type="button" data-notification="upgrade-account">
-						    <?php echo __('Hide notification', 'egoi-for-wp');?>
+						    <?php _e('Hide notification', 'egoi-for-wp');?>
 						</a>
                         <a type="button" id="" class="button-smsnf-primary"> 
-						    <?php echo __('Upgrade', 'egoi-for-wp');?>
+						    <?php _e('Upgrade', 'egoi-for-wp');?>
 						</a>
                     </div>
                 </div>
@@ -76,15 +76,15 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--limit"></figure>
                     </div>
                     <div class="smsnf-dashboard-notifications__copy">
-                        <h3>Já atingiu 80% do seu saldo disponível</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
+                        <h3><?php  _e('Já atingiu 80% do seu saldo disponível', 'egoi-for-wp');?></h3>
+                        <p><?php _e('Lorem ipsum', 'egoi-for-wp');?></p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
                         <a class="hide-sm hide-xs hide-notification-button" type="button" data-notification="account-limit">
-						    <?php echo __('Hide notification', 'egoi-for-wp');?>
+						    <?php _e('Hide notification', 'egoi-for-wp');?>
 						</a>
                         <a type="button" id="" class="button-smsnf-primary"> 
-						    <?php echo __('Upgrade', 'egoi-for-wp');?>
+						    <?php _e('Upgrade', 'egoi-for-wp');?>
 						</a>
                     </div>
                 </div>
@@ -98,7 +98,8 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                     <div class="column col-4 col-md-12 col-xs-12">
                         <div class="smsnf-dashboard-subs-stats">
                             <div class="smsnf-dashboard-subs-stats__content">
-                                <h3>Registos<br>Hoje
+                                <h3>
+                                    <?php _e('Today\'s<br>subscribers', 'egoi-for-wp'); ?>
                                     <span class="smsnf-dashboard-subs-stats__content--result">
                                         <?php echo $this->smsnf_get_form_susbcribers_total('today')->total; ?>
                                     </span>
@@ -114,11 +115,12 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                     <div class="column col-4 col-md-12 col-xs-12">
                         <div class="smsnf-dashboard-subs-stats">
                             <div class="smsnf-dashboard-subs-stats__content">
-                                <h3>Total<br>Subscritores
+                                <h3>
+                                    <?php _e('Total<br>Subscribers', 'egoi-for-wp'); ?>
                                     <span class="smsnf-dashboard-subs-stats__content--result e-goi-tooltip">
                                         <?php echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
                                             <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+                                                <?php _e('Lorem ipsum', 'egoi-for-wp'); ?>
                                             </span>
                                     </span>
                                 </h3>
@@ -133,11 +135,12 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                     <div class="column col-4 col-md-12 col-xs-12">
                         <div class="smsnf-dashboard-subs-stats">
                             <div class="smsnf-dashboard-subs-stats__content">
-                                <h3>Melhor<br>Dia
+                                <h3>
+                                    <?php _e('Best<br>day', 'egoi-for-wp'); ?>
                                     <span class="smsnf-dashboard-subs-stats__content--result bestday e-goi-tooltip">
                                         <?php echo date('d M Y', strtotime($this->smsnf_get_form_subscribers_best_day()->date)); ?>
                                             <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+                                                <?php _e('Lorem ipsum', 'egoi-for-wp'); ?>
                                             </span>
                                     </span>
                                 </h3>
@@ -151,21 +154,21 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                 <!-- Last Subscribers table -->
                 <div class="smsnf-dashboard-last-subscribers mt-3">
                     <div class="smsnf-dashboard-last-subscribers__title">
-                        Últimos subscritores
+                        <?php _e('Latest Subscribers', 'egoi-for-wp'); ?>
                     </div>
                     <div class="smsnf-dashboard-last-subscribers__empty <?php echo count($last_subscribers) > 0 ? 'd-none' : null;?>">
-                         <p>Ainda não tem subscritores</p>
+                         <p><?php _e('You have no subscribers yet', 'egoi-for-wp'); ?></p>
                          <div></div>
                     </div>
                     <table class="table <?php echo count($last_subscribers) == 0 ? 'd-none' : null;?>">
                         <thead>
                             <tr>
-                                <th>Nome</th>
-                                <th class="hide-xs">Email</th>
-                                <th class="hide-xs">Formulário ID</th>
-                                <th class="hide-xs">Formulário</th>
-                                <th class="hide-xs">Data</th>
-                                <th>Lista</th>
+                                <th><?php _e('Name', 'egoi-for-wp'); ?></th>
+                                <th class="hide-xs"><?php _e('Email', 'egoi-for-wp'); ?></th>
+                                <th class="hide-xs"><?php _e('Form ID', 'egoi-for-wp'); ?></th>
+                                <th class="hide-xs"><?php _e('Form', 'egoi-for-wp'); ?></th>
+                                <th class="hide-xs"><?php _e('Date', 'egoi-for-wp'); ?></th>
+                                <th><?php _e('List', 'egoi-for-wp'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -187,10 +190,10 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <!-- Subscribers by List -->
                         <div class="smsnf-dashboard-subscribers-by-lists mt-3">
                             <div class="smsnf-dashboard-subscribers-by-lists__title">
-                                Subscritores por Listas
+                                <?php _e('Subscribers by Lists', 'egoi-for-wp'); ?>
                             </div>
                             <div class="smsnf-dashboard-subscribers-by-lists__empty <?php echo count($lists) > 0 ? 'd-none' : null;?>">
-                                <p>Ainda não tem registos</p>
+                                <p><?php _e('You have no subscribers yet', 'egoi-for-wp'); ?></p>
                             </div>
                             <div class="smsnf-dashboard-subscribers-by-lists__chart <?php echo count($lists) == 0 ? 'd-none' : null;?>">
                                 <div class="smsnf-dashboard-subscribers-by-lists__content">
@@ -225,7 +228,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <!-- Last SMS Campaign -->
                         <div class="smsnf-dashboard-last-sms-campaign mt-3">
                             <div class="smsnf-dashboard-last-sms-campaign__title">
-                                Última campanha de SMS Enviada
+                                <?php _e('Last Sent SMS Campaign', 'egoi-for-wp'); ?>
                             </div>
                             <div class="loading loading-lg" style="padding: 40px;" id="last_sms_campaign_loading"></div>
                         </div>
@@ -234,17 +237,17 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <!-- Subscribers by Form -->
                         <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
                             <div class="smsnf-dashboard-last-subscribers-by-form__title">
-                                Subscritores por Formulário
+                                <?php _e('Subscribers by Form', 'egoi-for-wp'); ?>
                             </div>
                             <div class="smsnf-dashboard-last-subscribers-by-form__empty <?php echo count($forms) > 0 ? 'd-none' : null;?>">
-                                <p>Ainda não tem registos</p>
+                                <p><?php _e('You have no subscribers yet', 'egoi-for-wp'); ?></p>
                             </div>
                             <div class="smsnf-dashboard-last-subscribers-by-form__table <?php echo count($forms) == 0 ? 'd-none' : null;?>">
                                 <table class="table">
                                     <tbody>
-                                        <th>ID do Formulário</th>
-                                        <th>Nome do Formulário</th>
-                                        <th>Nº de subscritores</th>
+                                        <th><?php _e('Form ID', 'egoi-for-wp'); ?></th>
+                                        <th><?php _e('Form Name', 'egoi-for-wp'); ?></th>
+                                        <th><?php _e('Nº Subscribers', 'egoi-for-wp'); ?></th>
                                     <?php foreach ($forms as $form) { ?>
                                         <tr>
                                             <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?=$form->form_id?></td>
@@ -259,7 +262,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <!-- Last Email Campaign --> 
                         <div class="smsnf-dashboard-last-email-campaign mt-3">
                             <div class="smsnf-dashboard-last-email-campaign__title">
-                                Última campanha de Email Enviada
+                                <?php _e('Last Sent Email Campaign', 'egoi-for-wp'); ?>
                             </div>
                             <div class="loading loading-lg" style="padding: 40px;" id="last_email_campaign_loading"></div>
                         </div>
@@ -274,9 +277,9 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                     <!-- If the sms addon is active -->
                     <div style="display: inherit;">
                         <div class="smsnf-dashboard-account__title">
-                            <div>A sua conta</div>
+                            <div><?php _e('Your account', 'egoi-for-wp'); ?></div>
                             <div class="smsnf-dashboard-account__title__cta">
-                                <a href="#" target="_blank">Atualizar dados da conta<span class="dashicons dashicons-external"></span></a>
+                                <a href="#" target="_blank"><?php _e('Update account information', 'egoi-for-wp'); ?><span class="dashicons dashicons-external"></span></a>
                             </div>
                         </div>
                         <div class="smsnf-dashboard-account__content p-0">
@@ -285,30 +288,14 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             </div>
                         </div>
                     </div>
-                    <!-- If sms addon is NOT active -->
-                    <div style="display: none;">
-                        <div class="smsnf-dashboard-account__title">
-                            <div>A sua conta</div>
-                        </div>
-                        <div class="smsnf-dashboard-account__content">
-                            <div class="smsnf-dashboard-account__install-addon"></div>
-                            <p class="smsnf-dashboard-account__install-addon__text">Envie notificações SMS aos seus clientes e 
-                            administradores por cada alteração ao estado da encomenda no
-                            seu wooCommerce</p>
-                            <a type="button" id="" class="button-smsnf-primary"> 
-                                <?php echo __('Install', 'egoi-for-wp');?>
-                            </a>
-                        </div>
-                    </div>
                 </div><!-- /Account -->
 
                 <!-- Blog Post's -->
                 <div class="smsnf-dashboard-blog-last-post mt-3">
-                    <div class="smsnf-dashboard-blog-last-post__title">Últimos Post's do Blog</div>
+                    <div class="smsnf-dashboard-blog-last-post__title"><?php _e('Latest Blog Entries', 'egoi-for-wp'); ?></div>
                         <div class="loading loading-lg" style="padding: 40px;" id="blog_posts_content_loading"></div>
                 </div><!-- /Blog Post's -->
 
-                <iframe id="iframe" src="https://eg.e-goi.com/pluginbanners/wp-iframe.php?type=v&lang=<?php echo get_locale(); ?>" ></iframe>
             </div>
 
         </div><!-- / Columns -->
