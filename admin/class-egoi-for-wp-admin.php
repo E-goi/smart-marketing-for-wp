@@ -40,6 +40,7 @@ class Egoi_For_Wp_Admin {
 	/**
 	 * Limit Subscribers
 	 *
+	 *
 	 * @var integer
 	 */
 	private $limit_subs = 10000;
@@ -2344,18 +2345,6 @@ class Egoi_For_Wp_Admin {
 
         $customer = $api->getClient();
 
-        /*
-        $apikey = get_option('egoi_api_key');
-        $response = wp_remote_get('http://www.smart-marketing-addon-sms-order-middleware.local/plan', array(
-            'timeout' => 60,
-            'headers' => array('apikey' => $apikey['api_key'])
-        ));
-        $client_plan = json_decode(wp_remote_retrieve_body($response));
-
-        $client->PLAN_NAME = $client_plan->data->name;
-        $client->PLAN_TRANSLATE = $client_plan->data->translate;
-        */
-
         return $customer;
     }
 
@@ -2363,6 +2352,8 @@ class Egoi_For_Wp_Admin {
         $customer = $this->smsnf_get_account_info();
 
         $output['notifications'] = $this->smsnf_show_notifications($customer);
+        $email_limit = $customer->PLAN_EMAIL_LIMIT != 0 ? $customer->PLAN_EMAIL_LIMIT : __('Unlimited', 'egoi-for-wp');
+        $sms_limit = $customer->PLAN_SMS_LIMIT != 0 ? $customer->PLAN_SMS_LIMIT : __('Unlimited', 'egoi-for-wp');
 
         $output['account'] = '
             <table class="table">
@@ -2393,11 +2384,11 @@ class Egoi_For_Wp_Admin {
                 <tbody>
                     <tr>
                         <td>Email/Push</td>
-                        <td><span class="">'.$customer->PLAN_EMAIL_LIMIT.'</span></td>
+                        <td><span class="">'.$email_limit.'</span></td>
                     </tr>
                     <tr>
                         <td>SMS</td>
-                        <td><span class="">'.$customer->PLAN_SMS_LIMIT.'</span></td>
+                        <td><span class="">'.$sms_limit.'</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -2414,7 +2405,7 @@ class Egoi_For_Wp_Admin {
                     </tr>
         ';
 
-        if (!is_plugin_active( 'smart-marketing-addon-sms-order/smart-marketing-addon-sms-order.php' )) {
+        if (!is_plugin_active( 'sms-orders-alertnotifications-for-woocommerce/smart-marketing-addon-sms-order.php' )) {
             $output['account'] .= '
                     </tbody>
 				</table>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-29 18:17+0000\n"
-"PO-Revision-Date: 2018-11-29 18:25+0000\n"
+"POT-Creation-Date: 2018-11-30 10:02+0000\n"
+"PO-Revision-Date: 2018-11-30 10:02+0000\n"
 "Last-Translator: Admin <procha@e-goi.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -214,7 +214,7 @@ msgid "Internal Name"
 msgstr "Nombre interno"
 
 #: admin/class-egoi-for-wp-admin.php:2203
-#: admin/class-egoi-for-wp-admin.php:2404
+#: admin/class-egoi-for-wp-admin.php:2406
 msgid "Total sent"
 msgstr "Total de envíos"
 
@@ -222,33 +222,38 @@ msgstr "Total de envíos"
 msgid "A aguardar resultados..."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2371
+#: admin/class-egoi-for-wp-admin.php:2366
+#: admin/class-egoi-for-wp-admin.php:2367
+msgid "Unlimited"
+msgstr "Ilimitado"
+
+#: admin/class-egoi-for-wp-admin.php:2373
 msgid "Plan"
 msgstr "Plan"
 
-#: admin/class-egoi-for-wp-admin.php:2375
+#: admin/class-egoi-for-wp-admin.php:2377
 msgid "Current Balance"
 msgstr "Saldo actual"
 
-#: admin/class-egoi-for-wp-admin.php:2382
+#: admin/class-egoi-for-wp-admin.php:2384
 msgid "Expires in"
 msgstr "Expira en"
 
-#: admin/class-egoi-for-wp-admin.php:2391
+#: admin/class-egoi-for-wp-admin.php:2393
 msgid "Your current plan includes"
 msgstr "Su plan actual incluye"
 
-#: admin/class-egoi-for-wp-admin.php:2423
+#: admin/class-egoi-for-wp-admin.php:2425
 msgid ""
 "Envie notificações SMS aos seus clientes e administradores por cada "
 "alteração ao estado da encomenda no seu WooCommerce"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2424
+#: admin/class-egoi-for-wp-admin.php:2426
 msgid "Instalar Plugin"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2430
+#: admin/class-egoi-for-wp-admin.php:2432
 msgid "SMS Transacionais"
 msgstr ""
 
