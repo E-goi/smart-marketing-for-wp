@@ -1102,12 +1102,12 @@ class Egoi_For_Wp {
 			$url = $this->restUrl.'getClientData&'.http_build_query(array('functionOptions' => array('apikey' => $key)),'','&');
 		    $result_client = json_decode($this->_getContent($url));
 
-	       	if($result_client->Egoi_Api->getClientData->response=='INVALID'){
+	       	if(!isset($result_client->Egoi_Api->getClientData->CLIENTE_ID)){
 	        	header('HTTP/1.1 404 Not Found');
 				exit;
 	        }else{
 	        	$this->callClient($result_client->Egoi_Api->getClientData, $key, 1);
-	        	echo "SUCCESS";
+	        	echo 'SUCCESS';
 	        	exit;
 	        }
 		}

@@ -13,33 +13,32 @@ jQuery(document).ready(function($) {
 		var key = $(this).val();
 		if(key.length == 40){
 
-			$("#load").addClass('spin').show();
-			$("#api-save-text").hide();
+			$(".icon-load").show();
+            $(".icon-valid").hide();
+            $(".icon-error").hide();
+
 			$.ajax({
 			    type: 'POST',
 			    data:({
 			        egoi_key: key
 			    }),
 			    success:function(data, status) {
-			        
 			        if(status == '404'){
-			        	$("#error").show();
-			        	$("#valid").hide();
-			        	$("#load").removeClass('spin').hide();
-			        	$("#api-save-text").show();
+			        	$(".icon-error").show();
+			        	$(".icon-valid").hide();
+			        	$(".icon-load").hide();
 			        }else{
-			        	$("#valid").show();
-			        	$("#error").hide();
-			        	$("#load").removeClass('spin').hide();
-			        	$("#api-save-text").show();
+			        	$(".icon-valid").show();
+			        	$(".icon-error").hide();
+			        	$(".icon-load").hide();
 			        	btn_submit.prop('disabled', false);
 			        }
 			    },
 			    error:function(status){
 			    	if(status){
-				    	$("#valid").hide();
-				    	$("#error").show();
-				    	$("#load").removeClass('spin').hide();
+				    	$(".icon-valid").hide();
+				    	$(".icon-error").show();
+				    	$(".icon-load").hide();
 				    	$("#api-save-text").show();
 				    }
 			    }
@@ -98,12 +97,12 @@ jQuery(document).ready(function($) {
 		    success:function(data, status) {
 		        $("#remove_valid").show();
 		        $("#load_data").hide();
-		        $("#error").hide();
+		        $(".icon-error").hide();
 		    },
 		    error:function(status){
 		    	if(status){
 			    	$("#remove_valid").hide();
-			    	$("#error").show();
+			    	$(".icon-error").show();
 			    }
 		    }
 		});

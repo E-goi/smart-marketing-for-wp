@@ -116,7 +116,7 @@ if(!$egoiwidget['enabled']){
 
                                 <span id="e-goi-lists_ct_widget" style="display: none;"><?php echo $egoiwidget['list'];?></span>
 
-                                <span class="loading_lists-widget dashicons dashicons-update" style="display: none;"></span>
+                                <span class="loading loading_lists-widget" style="margin-left: 10px; display: none;"></span>
                                 <select name="egoi_widget[list]" class="lists" id="e-goi-list-widget" style="display: none;" required>
                                     <option disabled <?php selected($egoiwidget['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
                                 </select>
@@ -129,7 +129,7 @@ if(!$egoiwidget['enabled']){
                             <td>
                                 <span id="lang_widget" style="display: none;"><?php echo $egoiwidget['lang'];?></span>
 
-                                <span class="loading_lang-widget dashicons dashicons-update" style="display: none;"></span>
+                                <span class="loading loading_lang-widget" style="margin-left: 10px; display: none;"></span>
                                 <select name="egoi_widget[lang]"  id="e-goi-lang-widget" style="display: none;">
 
                                 </select>
@@ -158,7 +158,7 @@ if(!$egoiwidget['enabled']){
 
                                     <span id="e-goi-tags_ct_widget" style="display: none;"><?php echo $tag;?></span>
 
-                                    <span class="loading_tags-widget dashicons dashicons-update" style="display: none;"></span>
+                                    <span class="loading loading_tags-widget" style="margin-left: 10px; display: none;"></span>
                                     <select name="egoi_widget[tag-egoi]" class="tags" id="e-goi-tags-widget" style="display: none;">
                                         <option disabled <?php selected($tag, ''); ?>><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
                                     </select>

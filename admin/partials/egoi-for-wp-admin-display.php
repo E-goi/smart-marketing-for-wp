@@ -267,19 +267,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<form name='egoi_apikey_form' method='post' action='<?php echo admin_url('options.php'); ?>' autocomplete="off">
 							<?php settings_fields(Egoi_For_Wp_Admin::API_OPTION); settings_errors(); ?>
 
-							<input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi\'s API key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey--grp--form__input" name='egoi_api_key[api_key]' id="egoi_api_key_input" /> 
-						
+                            <span class="has-icon-right">
+                                <input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi\'s API key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey--grp--form__input" name='egoi_api_key[api_key]' id="egoi_api_key_input" />
+                                <i class="form-icon icon icon-check icon-valid" style="margin-right: 30px; display: none;"></i>
+                                <i class="form-icon icon icon-cross icon-error" style="margin-right: 30px; display: none;"></i>
+                                <i class="form-icon loading icon-load" style="margin-right: 30px; display: none;"></i>
+                            </span>
 							<button type="submit" class='button-primary button-primary--custom' id="egoi_4_wp_login" disabled="disabled">
-								<span id="load" class="dashicons dashicons-update" style="display: none;"></span>
 								<span id="api-save-text"><?php echo __('Save', 'egoi-for-wp');?></span>
 							</button>
-
-							<div id="valid" style="display:none;">
-								<span class="dashicons dashicons-yes"></span>
-							</div>
-							<div id="error" style="display:none;">
-								<span class="dashicons dashicons-no-alt"></span>
-							</div>
 
 							<!-- Tooltip - help -->					
 							<p class="e-goi-help-text">

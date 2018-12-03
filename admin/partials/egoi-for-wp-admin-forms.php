@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</select>
 					<input type="hidden" id="type_frm_saved" value="<?php echo $_GET['type'];?>">
 
-					<span id="load_frm_change" class="dashicons dashicons-update" style="display: none;"></span>
+                    <span id="load_frm_change" class="loading d-none" style="margin-left: 10px;"></span>
 				</form>
 
 				<!-- FORM E-GOI -->
@@ -250,13 +250,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 												
 												<span id="e-goi-lists_ct_forms" hidden><?php echo $opt['egoi_form_sync']['list'];?></span> 
 
-												<span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
+                                                <span class="loading loading_lists" style="margin-left: 10px; display: none;"></span>
+
 												<select name="egoi_form_sync[list]" id="e-goi-list-frm" style="display: none;">
 													<option value="" selected disabled>
 														<?php _e( 'Select List', 'egoi-for-wp' ); ?>
 													</option>
 												</select>
-												<span id="load_forms" class="dashicons dashicons-update" style="display: none;"></span>
+
 											</span>
 										</div><!-- .e-goi-iframe-select-list -->
 											
@@ -282,6 +283,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 														}
 													} ?>
 												</select>
+
+                                                <span id="load_forms" class="loading" style="margin-left: 10px; display: none;"></span>
 											</span>
 										</div>
 
@@ -414,7 +417,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</td>
 							<!-- Option -->
 							<td style="text-align:right;">
-								<a title="<?php _e('Edit', 'egoi-for-wp');?>" href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo $j;?>&type=<?php echo $form['egoi_form_sync']['egoi'];?>"><span class="dashicons dashicons-edit"></span></a> 
+								<a title="<?php _e('Edit', 'egoi-for-wp');?>" href="<?php echo $_SERVER['REQUEST_URI'];?>&form=<?php echo $j;?>&type=<?php echo $form['egoi_form_sync']['egoi'];?>"><span class="dashicons dashicons-edit"></span></a>
 							</td>
 						</tr>
 						<?php
