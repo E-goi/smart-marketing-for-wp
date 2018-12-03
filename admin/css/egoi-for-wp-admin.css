@@ -3190,10 +3190,6 @@ a.text-error:visited {
   position: absolute !important;
 }
 
-.fixed {
-  position: fixed !important;
-}
-
 .centered {
   display: block;
   float: none;
@@ -6761,4 +6757,8 @@ div.eg-dropdown {
   font-size: 18px;
   line-height: 24px; 
   padding: 20px;
+}
+
+.smsnf-dashboard-ads {
+  height: 490px;
 }
