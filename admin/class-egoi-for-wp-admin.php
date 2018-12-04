@@ -241,9 +241,7 @@ class Egoi_For_Wp_Admin {
 
 		add_menu_page( 'Smart Marketing - Main Page', 'Smart Marketing', 'Egoi_Plugin', $this->plugin_name, array($this, 'display_plugin_setup_page'), plugin_dir_url( __FILE__ ).'img/logo_small.png');
 
-		$capability = 'manage_options';
-		add_submenu_page($this->plugin_name, __('Account', 'egoi-for-wp'), __('Account', 'egoi-for-wp'), $capability, 'egoi-4-wp-account', array($this, 'display_plugin_setup_page'));
-
+        $capability = 'manage_options';
 		$apikey = get_option('egoi_api_key');
 		$haslists = get_option('egoi_has_list');
 		if(isset($apikey['api_key']) && ($apikey['api_key']) && ($haslists)) {
@@ -263,6 +261,8 @@ class Egoi_For_Wp_Admin {
             add_submenu_page($this->plugin_name, __('RSS Feed', 'egoi-for-wp'), __('RSS Feed', 'egoi-for-wp'), $capability, 'egoi-4-wp-rssfeed', array($this, 'display_plugin_rssfeed'));
 
 		}
+
+        add_submenu_page($this->plugin_name, __('Account', 'egoi-for-wp'), __('Account', 'egoi-for-wp'), $capability, 'egoi-4-wp-account', array($this, 'display_plugin_setup_page'));
 	}
 
 	public function add_action_links($links) {

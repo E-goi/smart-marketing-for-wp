@@ -6750,15 +6750,46 @@ div.eg-dropdown {
 .smsnf-dashboard-plugin-sms .smsnf-dashboard-plugin-sms__img {
   height: auto;
   max-width: 100%;
-  width: 160px;
+  width: 100%;
 }
 
 .smsnf-dashboard-plugin-sms .smsnf-dashboard-plugin-sms__text {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px; 
   padding: 20px;
 }
 
 .smsnf-dashboard-ads {
   height: 490px;
+}
+
+.smsnf-wpdash-table--head {
+  align-items: center;
+  background-color: #00aeda;
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-align: center;
+  -ms-flex-direction: row;
+  flex-direction: row; 
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.smsnf-wpdash-table--head img {
+  margin-left: 11px; 
+  width: 40px;
+}
+
+.smsnf-wpdash-table--head p {
+  color: white;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 18px; 
+  margin-left: 11px;
+  text-align: left;
+}
+
+.smsnf-wpdash--table td {
+  padding: .6rem 0rem;
 }
