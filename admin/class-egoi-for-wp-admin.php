@@ -2100,6 +2100,10 @@ class Egoi_For_Wp_Admin {
 
         foreach ($campaigns as $campaign) {
 
+            if ($campaign->STATUS != 'finished' && $campaign->STATUS != 'archived') {
+                continue;
+            }
+
             if (!in_array(0, $last_campaigns_flag)) {
                 break;
             }
@@ -2119,7 +2123,8 @@ class Egoi_For_Wp_Admin {
                             'id' => $campaign->REF,
                             'list' => $campaign->LISTNUM,
                             'name' => $campaign->SUBJECT,
-                            'internal_name' => $campaign->INTERNAL_NAME
+                            'internal_name' => $campaign->INTERNAL_NAME,
+                            'status' => $campaign->STATUS
                         );
                         $campaigns_flag[$channel] = array(
                             'name' => $campaign->SUBJECT,
