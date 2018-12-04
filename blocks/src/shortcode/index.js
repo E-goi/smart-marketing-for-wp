@@ -1,10 +1,9 @@
 ( function( wp ) {
 	const {registerBlockType} = wp.blocks;
-	const {InspectorControls, MediaUpload, InnerBlocks} = wp.editor;
 	const {Component, Fragment} = wp.element;
-	const {Button, PanelBody, TextControl, TextareaControl, CheckboxControl, SelectControl, Spinner} = wp.components;
+	const {SelectControl, Spinner} = wp.components;
 
-	registerBlockType( 'blocos/shortcode', {
+	registerBlockType( 'egoi-for-wp/shortcode', {
 		title: 'E-goi - Formulários',
 		description: 'Shortcode dos formularios criados no plugin do E-goi',
 		category: 'embed',
@@ -54,7 +53,7 @@
 					justifyContent: 'center',
 					height: '65px',
 					backgroundColor: 'rgba(139,139,150,.1)',
-				}
+				};
 
 				let forms = this.state.forms;
 				let loading = this.state.loading;
