@@ -2340,22 +2340,28 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_get_account_info() {
-
         $api = new Egoi_For_Wp();
-
         $customer = $api->getClient();
 
         return $customer;
     }
 
-    public function smsnf_show_account_info() {
+    public function smsnf_show_account_info($destination) {
         $customer = $this->smsnf_get_account_info();
 
         $output['notifications'] = $this->smsnf_show_notifications($customer);
         $email_limit = $customer->PLAN_EMAIL_LIMIT != 0 ? $customer->PLAN_EMAIL_LIMIT : __('Unlimited', 'egoi-for-wp');
         $sms_limit = $customer->PLAN_SMS_LIMIT != 0 ? $customer->PLAN_SMS_LIMIT : __('Unlimited', 'egoi-for-wp');
 
-        $output['account'] = '
+        if ($destination == 'wp-dashboard') {
+            $output['account'] = '
+                 
+            ';
+        } else {
+            $output['account'] = '';
+        }
+
+        $output['account'] .= '
             <table class="table">
                 <tbody>
 					<tr>
@@ -2406,15 +2412,27 @@ class Egoi_For_Wp_Admin {
         ';
 
         if (!is_plugin_active( 'sms-orders-alertnotifications-for-woocommerce/smart-marketing-addon-sms-order.php' )) {
+
             $output['account'] .= '
                     </tbody>
 				</table>
+			';
+
+            $locale = get_locale();
+            if ($locale == 'pt_PT') {
+
+            } else {
+
+            }
+
+            $output['account'] .= '
 				<div class="smsnf-dashboard-plugin-sms">
 					<img class="smsnf-dashboard-plugin-sms__img" src="'.plugins_url().'/smart-marketing-for-wp/admin/img/addon-sms-notification.png">
 					<div class="smsnf-dashboard-plugin-sms__text">'.__('Envie notificações SMS aos seus clientes e administradores por cada alteração ao estado da encomenda no seu WooCommerce', 'egoi-for-wp').'</div>
 					<a href="https://wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/" type="button" class="button-smsnf-primary">'.__('Instalar Plugin', 'egoi-for-wp').'</a>
 				</div>
             ';
+
         } else {
             $output['account'] .= '
                         <tr>
@@ -2430,13 +2448,13 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_show_account_info_ajax() {
-        $output = $this->smsnf_show_account_info();
+        $output = $this->smsnf_show_account_info('smart-marketing-dashboard');
         echo $output;
         wp_die();
     }
 
     public function smsnf_main_dashboard_widget_content() {
-        $content = json_decode($this->smsnf_show_account_info());
+        $content = json_decode($this->smsnf_show_account_info('wp-dashboard'));
 
         echo '
             <div class="smsnf-dashboard-account__content__table">
