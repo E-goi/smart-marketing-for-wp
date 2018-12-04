@@ -83,8 +83,12 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
-= 2.6.0 =
+= 2.7.0 =
 - E-goi client account dashboard
+
+= 2.6.0 =
+- Integration with Gutenberg
+- Blocks for Gutenberg
 
 = 2.5.2 =
 - Minor bug fixes
