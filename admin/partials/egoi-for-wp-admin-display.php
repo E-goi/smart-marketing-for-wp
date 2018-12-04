@@ -269,9 +269,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                             <span class="has-icon-right">
                                 <input type='text' size='55' placeholder="<?php echo __('Paste here your E-goi\'s API key', 'egoi-for-wp'); ?>" maxlength="40" class="e-goi-account-apikey--grp--form__input" name='egoi_api_key[api_key]' id="egoi_api_key_input" />
-                                <i class="form-icon icon icon-check icon-valid" style="margin-right: 30px; display: none;"></i>
-                                <i class="form-icon icon icon-cross icon-error" style="margin-right: 30px; display: none;"></i>
-                                <i class="form-icon loading icon-load" style="margin-right: 30px; display: none;"></i>
+                                <i class="form-icon icon icon-check icon-valid text-success" style="margin-right: 30px; display: none;"></i>
+                                <i class="form-icon icon icon-cross icon-error text-error" style="margin-right: 30px; display: none;"></i>
+                                <i class="form-icon loading icon-load text-primary" style="margin-right: 30px; display: none;"></i>
                             </span>
 							<button type="submit" class='button-primary button-primary--custom' id="egoi_4_wp_login" disabled="disabled">
 								<span id="api-save-text"><?php echo __('Save', 'egoi-for-wp');?></span>
