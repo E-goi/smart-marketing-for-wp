@@ -30,7 +30,7 @@
     line-height: 26px;
     color: $primary-color-darken; // #00313d
     margin: 0;
-    font-size: 18px;
+    font-size: $font-size-md;
     font-family:'Montserrat', sans-serif;
 	}
 	p{
@@ -81,7 +81,7 @@
   flex-direction: row;
 	h3 {
     color: #00313d;
-    font-size: 16px;
+    font-size: $font-size-base;
     -webkit-font-smoothing: antialiased;
     font-weight: 600;
     letter-spacing: -.02rem;
@@ -94,7 +94,7 @@
     border-radius: 2px;
     color: #fff;
     display: block!important;
-    font-size: 16px;
+    font-size: $font-size-base;
     font-weight: 500;
     margin-top: 9px;
     padding: 3px 10px;
@@ -137,7 +137,7 @@
     table-layout: fixed;
   }
   .table tr td{
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
     text-align: left;
     word-wrap: break-word;
   }
@@ -151,7 +151,7 @@
 }
 .smsnf-dashboard-last-subscribers-by-form__table {
   th{
-   font-size: 11px;
+   font-size: $font-size-xs;
    font-weight: normal; 
    width: 100px;
   }
@@ -162,7 +162,7 @@
   }
 }
 .smsnf-dashboard-last-subscribers-by-form__table__ltd{
-  font-size: 0.9rem;
+  font-size:$font-size-sm;
   line-height: 20px;
 }
 .smsnf-dashboard-last-subscribers-by-form__table__rtd{
@@ -263,7 +263,7 @@
 	}
 	select{
 		border: 1px solid #ddd;
-		font-size: 13px;
+		font-size: $font-size-sm;
 		height: 32px;
 		width: 100%;
     color: #454d5d;
@@ -313,7 +313,7 @@
     }
 }
 .smsnf-dashboard-blog-last-post__content__description{
-  font-size: 0.9rem;
+  font-size: $font-size-sm;
   color: $dark-color;
   margin-top: 8px;
 }
@@ -395,7 +395,7 @@
     text-align: left;
   }
   td{
-    font-size: 1rem;
+    font-size: $font-size-base;
   }
   td:last-child {
     text-align: right;
@@ -559,7 +559,7 @@
 
 @media screen and (min-width: 350px) and (max-width: 450px) {
   .smsnf-header h1{
-    font-size: 21px !important;
+    font-size: $font-size-lg !important;
    }
 }
 
@@ -589,7 +589,7 @@
   }
   .smsnf-dashboard-plugin-sms__text{
     padding: 20px;
-    font-size: 16px;
+    font-size: $font-size-base;
     line-height:24px;
   }
 }
@@ -616,7 +616,7 @@
     font-family: 'Montserrat', Arial, sans-serif;
     text-align: left;
     font-weight: 600;
-    font-size: 17px;
+    font-size: $font-size-base;
     line-height: 18px;
   }
 }
