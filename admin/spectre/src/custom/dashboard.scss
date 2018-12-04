@@ -585,24 +585,22 @@
   .smsnf-dashboard-plugin-sms__img{
     max-width:100%; 
     height:auto; 
-    width:160px;
+    width:100%;
   }
   .smsnf-dashboard-plugin-sms__text{
     padding: 20px;
-    font-size: 18px;
+    font-size: 16px;
     line-height:24px;
   }
 }
 
 .smsnf-dashboard-ads {
-  // @include box-shadow($shadows);
-  // background-color: $light-color;
-  // border: 1px solid #f3f3f3;
-  // border-radius: $border-radius;
   height:490px;
 }
 
-.smsnf-dashboard-account__content__table--head{
+
+// SMSNF WP Dashboard
+.smsnf-wpdash-table--head{
   background-color: rgb(0,174,218);
   display: flex;
   align-items: center;
@@ -621,4 +619,8 @@
     font-size: 17px;
     line-height: 18px;
   }
+}
+
+.smsnf-wpdash--table td{
+  padding: .6rem 0rem;
 }

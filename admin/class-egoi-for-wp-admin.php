@@ -2354,15 +2354,20 @@ class Egoi_For_Wp_Admin {
         $sms_limit = $customer->PLAN_SMS_LIMIT != 0 ? $customer->PLAN_SMS_LIMIT : __('Unlimited', 'egoi-for-wp');
 
         if ($destination == 'wp-dashboard') {
+			$table_class = 'table smsnf-wpdash--table';
             $output['account'] = '
-                 
+			<div class="smsnf-wpdash-table--head">
+				<img src="'.plugins_url().'/smart-marketing-for-wp/admin/img/symbol.png"/>
+				<p>E-goi - Smart Marketing</p>
+			</div>
             ';
         } else {
+			$table_class = 'table';
             $output['account'] = '';
         }
 
         $output['account'] .= '
-            <table class="table">
+            <table class="'.$table_class.'">
                 <tbody>
 					<tr>
 						<td><span class="smsnf-dashboard-account__content__table--total">'.__('Plan', 'egoi-for-wp').'</span></td>
@@ -2386,7 +2391,7 @@ class Egoi_For_Wp_Admin {
                 </tbody>
             </table>
             <p class="smsnf-dashboard-account__content__table--subtitle">'.__('Your current plan includes', 'egoi-for-wp').'</p>
-            <table class="table">
+            <table class="'.$table_class.'">
                 <tbody>
                     <tr>
                         <td>Email/Push</td>
@@ -2399,7 +2404,7 @@ class Egoi_For_Wp_Admin {
                 </tbody>
             </table>
             <p class="smsnf-dashboard-account__content__table--subtitle">'.__('Total sent', 'egoi-for-wp').'</p>
-            <table class="table">
+            <table class="'.$table_class.'">
                 <tbody>
                     <tr>
                         <td>Email/Push</td>
@@ -2416,18 +2421,17 @@ class Egoi_For_Wp_Admin {
             $output['account'] .= '
                     </tbody>
 				</table>
+				<div class="smsnf-dashboard-plugin-sms">
 			';
 
             $locale = get_locale();
             if ($locale == 'pt_PT') {
-
+				$output['account'] .= '<img class="smsnf-dashboard-plugin-sms__img" src="'.plugins_url().'/smart-marketing-for-wp/admin/img/sm-sms-pt.png">';
             } else {
-
+				$output['account'] .= '<img class="smsnf-dashboard-plugin-sms__img" src="'.plugins_url().'/smart-marketing-for-wp/admin/img/sm-sms-lang.png">';
             }
 
             $output['account'] .= '
-				<div class="smsnf-dashboard-plugin-sms">
-					<img class="smsnf-dashboard-plugin-sms__img" src="'.plugins_url().'/smart-marketing-for-wp/admin/img/addon-sms-notification.png">
 					<div class="smsnf-dashboard-plugin-sms__text">'.__('Envie notificações SMS aos seus clientes e administradores por cada alteração ao estado da encomenda no seu WooCommerce', 'egoi-for-wp').'</div>
 					<a href="https://wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/" type="button" class="button-smsnf-primary">'.__('Instalar Plugin', 'egoi-for-wp').'</a>
 				</div>

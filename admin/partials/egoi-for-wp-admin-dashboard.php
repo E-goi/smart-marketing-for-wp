@@ -284,10 +284,6 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         </div>
                         <div class="smsnf-dashboard-account__content p-0">
                             <div class="smsnf-dashboard-account__content__table">
-                                <div class="smsnf-dashboard-account__content__table--head" style="">
-                                    <img src="<?php echo plugins_url().'/smart-marketing-for-wp/admin/img/symbol.png'; ?>"/>
-                                    <p style="">E-goi - Smart Marketing</p>
-                                </div>
                                 <div class="loading loading-lg" style="padding: 40px;" id="account_content_loading"></div>
                             </div>
                         </div>
@@ -299,9 +295,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                     <div class="smsnf-dashboard-blog-last-post__title"><?php _e('Latest Blog Entries', 'egoi-for-wp'); ?></div>
                         <div class="loading loading-lg" style="padding: 40px;" id="blog_posts_content_loading"></div>
                 </div><!-- /Blog Post's -->
-
             </div>
-
         </div><!-- / Columns -->
     </div><!-- / Container -->
 </div><!-- / Wrap -->
