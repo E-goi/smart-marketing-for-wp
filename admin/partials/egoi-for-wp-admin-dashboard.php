@@ -18,30 +18,8 @@ $last_subscribers = $this->smsnf_get_form_subscribers_last(5);
 $forms = $this->smsnf_get_form_subscriber_total_by('form');
 
 ?>
-<!-- Header -->
-<div class="container">
-  <div class="columns">
-    <div class="column">
-        <div class="smsnf-header">
-            <span class="smsnf-header__logo"></span>
-            <h1>Smart Marketing - <?php _e( 'Dashboard', 'egoi-for-wp' ); ?></h1>
-        </div>
-        <div class="smsnf-header__breadcrumbs">
-            <span class="prefix">
-                <?php echo __( 'You are here: ', 'egoi-for-wp' ); ?>
-            </span>    
-                <strong>Smart Marketing</a> &rsaquo;
-                    <a href="#">
-                        <span class="current-crumb">
-                        <?php _e( 'Dashboard', 'egoi-for-wp' ); ?>
-                    </a>
-                </strong>
-            </span>
-        </div>
-        <hr/>
-    </div>
-  </div>
-</div><!-- /header -->
+
+<?php include ('egoi-for-wp-admin-header.php'); ?>
 
 <!-- Wrap -->
 <div class="smsnf-dashboard">
@@ -138,10 +116,13 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                                 <h3>
                                     <?php _e('Best<br>day', 'egoi-for-wp'); ?>
                                     <span class="smsnf-dashboard-subs-stats__content--result bestday e-goi-tooltip">
-                                        <?php echo date('d M Y', strtotime($this->smsnf_get_form_subscribers_best_day()->date)); ?>
-                                            <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                                                <?php _e('Lorem ipsum', 'egoi-for-wp'); ?>
-                                            </span>
+                                        <?php
+                                        $best_day = $this->smsnf_get_form_subscribers_best_day()->date;
+                                        echo $best_day ? date('d M Y', strtotime($best_day)) : '-';
+                                        ?>
+                                        <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
+                                            <?php _e('Lorem ipsum', 'egoi-for-wp'); ?>
+                                        </span>
                                     </span>
                                 </h3>
                             </div>
