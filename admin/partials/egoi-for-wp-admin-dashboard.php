@@ -78,9 +78,10 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>
                                     <?php _e('Today\'s<br>subscribers', 'egoi-for-wp'); ?>
-                                    <span class="smsnf-dashboard-subs-stats__content--result">
-                                        <?php echo $this->smsnf_get_form_susbcribers_total('today')->total; ?>
-                                    </span>
+                                    <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" 
+                                        data-tooltip="<?php _e('Lorem ipsum', 'egoi-for-wp'); ?>">
+                                              <?php echo $this->smsnf_get_form_susbcribers_total('today')->total; ?>
+                                    </button>
                                 </h3>
                             </div>
                             <div>
@@ -95,14 +96,13 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>
                                     <?php _e('Total<br>Subscribers', 'egoi-for-wp'); ?>
-                                    <span class="smsnf-dashboard-subs-stats__content--result e-goi-tooltip">
-                                        <?php echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
-                                            <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                                                <?php _e('Lorem ipsum', 'egoi-for-wp'); ?>
-                                            </span>
-                                    </span>
+                                    <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" 
+                                        data-tooltip="<?php _e('Lorem ipsum', 'egoi-for-wp'); ?>">
+                                            <?php echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
+                                    </button>
                                 </h3>
                             </div>
+                            
                             <div>
                                 <img src="<?php echo plugins_url().'/smart-marketing-for-wp/admin/img/total-subscribers.png'; ?>"/>
                             </div>
@@ -115,15 +115,13 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>
                                     <?php _e('Best<br>day', 'egoi-for-wp'); ?>
-                                    <span class="smsnf-dashboard-subs-stats__content--result bestday e-goi-tooltip">
+                                    <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" 
+                                        data-tooltip="<?php _e('24 de Agosto 2018 texte \n Second line here', 'egoi-for-wp'); ?>">
                                         <?php
-                                        $best_day = $this->smsnf_get_form_subscribers_best_day()->date;
-                                        echo $best_day ? date('d M Y', strtotime($best_day)) : '-';
+                                            $best_day = $this->smsnf_get_form_subscribers_best_day()->date;
+                                                echo $best_day ? date('d M Y', strtotime($best_day)) : '-';
                                         ?>
-                                        <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                                            <?php _e('Lorem ipsum', 'egoi-for-wp'); ?>
-                                        </span>
-                                    </span>
+                                    </button>
                                 </h3>
                             </div>
                             <div>
