@@ -1311,6 +1311,42 @@ video.video-responsive::before {
   margin-top: .4rem;
 }
 
+/* latin-ext */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  src: local("Montserrat SemiBold"), local("Montserrat-SemiBold"), url(https://fonts.gstatic.com/s/montserrat/v12/JTURjIg1_i6t8kCHKm45_bZF3gfD_vx3rCubqg.woff2) format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  src: local("Montserrat SemiBold"), local("Montserrat-SemiBold"), url(https://fonts.gstatic.com/s/montserrat/v12/JTURjIg1_i6t8kCHKm45_bZF3gnD_vx3rCs.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Montserrat Bold"), local("Montserrat-Bold"), url(https://fonts.gstatic.com/s/montserrat/v12/JTURjIg1_i6t8kCHKm45_dJE3gfD_vx3rCubqg.woff2) format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Montserrat Bold"), local("Montserrat-Bold"), url(https://fonts.gstatic.com/s/montserrat/v12/JTURjIg1_i6t8kCHKm45_dJE3gnD_vx3rCs.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 .container {
   margin-left: auto;
   margin-right: auto;
@@ -6144,7 +6180,7 @@ div.eg-dropdown {
 .smsnf-dashboard-notifications__copy h3 {
   color: #00313d;
   font-family: "Montserrat", sans-serif; 
-  font-size: 18px;
+  font-size: 1.15rem;
   line-height: 26px;
   margin: 0;
 }
@@ -6205,7 +6241,7 @@ div.eg-dropdown {
 
 .smsnf-dashboard-subs-stats__content h3 {
   color: #00313d;
-  font-size: 16px;
+  font-size: 1rem;
   -webkit-font-smoothing: antialiased;
   font-weight: 600;
   letter-spacing: -.02rem;
@@ -6218,7 +6254,7 @@ div.eg-dropdown {
   border-radius: 2px;
   color: #fff;
   display: block !important;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   margin-top: 9px;
   padding: 3px 10px;
@@ -6260,7 +6296,7 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-last-subscribers .table tr td {
-  font-size: .9rem;
+  font-size: .85rem;
   text-align: left;
   word-wrap: break-word;
 }
@@ -6273,7 +6309,7 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-last-subscribers-by-form__table th {
-  font-size: 11px;
+  font-size: .75rem;
   font-weight: normal;
   width: 100px;
 }
@@ -6285,7 +6321,7 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-last-subscribers-by-form__table__ltd {
-  font-size: .9rem;
+  font-size: .85rem;
   line-height: 20px;
 }
 
@@ -6407,7 +6443,7 @@ div.eg-dropdown {
 .smsnf-dashboard-subscribers-by-lists__content select {
   border: 1px solid #ddd;
   color: #454d5d; 
-  font-size: 13px;
+  font-size: .85rem;
   height: 32px;
   width: 100%;
 }
@@ -6465,7 +6501,7 @@ div.eg-dropdown {
 
 .smsnf-dashboard-blog-last-post__content__description {
   color: #454d5d;
-  font-size: .9rem;
+  font-size: .85rem;
   margin-top: 8px;
 }
 
@@ -6723,7 +6759,7 @@ div.eg-dropdown {
 
 @media screen and (min-width: 350px) and (max-width: 450px) {
   .smsnf-header h1 {
-    font-size: 21px !important;
+    font-size: 1.25rem !important;
   }
 }
 
@@ -6734,11 +6770,11 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subs-stats__content--result.e-goi-tooltip .e-goi-tooltiptext {
-  margin-left: -17px;
+  margin-left: -34px;
 }
 
 .smsnf-dashboard-subs-stats__content--result.bestday.e-goi-tooltip .e-goi-tooltiptext {
-  margin-left: 140px;
+  margin-left: 128px;
 }
 
 .smsnf-dashboard-plugin-sms {
@@ -6750,15 +6786,46 @@ div.eg-dropdown {
 .smsnf-dashboard-plugin-sms .smsnf-dashboard-plugin-sms__img {
   height: auto;
   max-width: 100%;
-  width: 160px;
+  width: 100%;
 }
 
 .smsnf-dashboard-plugin-sms .smsnf-dashboard-plugin-sms__text {
-  font-size: 18px;
+  font-size: 1rem;
   line-height: 24px; 
   padding: 20px;
 }
 
 .smsnf-dashboard-ads {
   height: 490px;
+}
+
+.smsnf-wpdash-table--head {
+  align-items: center;
+  background-color: #00aeda;
+  display: flex;
+  display: -ms-flexbox;
+  -ms-flex-align: center;
+  -ms-flex-direction: row;
+  flex-direction: row; 
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.smsnf-wpdash-table--head img {
+  margin-left: 11px; 
+  width: 40px;
+}
+
+.smsnf-wpdash-table--head p {
+  color: white;
+  font-family: "Montserrat", Helvetica, "Roboto", Sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 18px; 
+  margin-left: 11px;
+  text-align: left;
+}
+
+.smsnf-wpdash--table td {
+  padding: .6rem 0rem;
 }
