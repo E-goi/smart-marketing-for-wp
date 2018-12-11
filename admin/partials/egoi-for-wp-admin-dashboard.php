@@ -33,14 +33,19 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--upgrade"></figure>
                     </div>
                     <div class="smsnf-dashboard-notifications__copy">
-                        <h3><?php _e('Upgrade da Conta', 'egoi-for-wp');?></h3>
-                        <p><?php _e('Lorem ipsum', 'egoi-for-wp');?></p>
+                        <h3>
+                            <?php
+                            _e('Do you have a free 5001 plan? This plan has some limitations', 'egoi-for-wp');
+                            _e(' (<a href="https://helpdesk.e-goi.com/265487-Signing-up-for-the-free-5001-plan" target="_blank">learn more</a>)', 'egoi-for-wp');
+                            ?>
+                        </h3>
+                        <p><?php _e('To overcome these limitations, upgrade to a subscription plan.', 'egoi-for-wp');?></p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
                         <a class="hide-sm hide-xs hide-notification-button" type="button" data-notification="upgrade-account">
 						    <?php _e('Hide notification', 'egoi-for-wp');?>
 						</a>
-                        <a type="button" id="" class="button-smsnf-primary"> 
+                        <a href="https://login.egoiapp.com/login?from=%2F%3Faction%3Dconta-corrente_carregamentos%26doadd%3Dyes%26tipo%3Demail%26category_level1%3Demail_plan%26limitsubsinterval%3D5001_10000%26category_level2%3D304%26period%3Dmensal" type="button" id="" class="button-smsnf-primary" target="_blank">
 						    <?php _e('Upgrade', 'egoi-for-wp');?>
 						</a>
                     </div>
@@ -54,14 +59,14 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <figure class="avatar avatar-xl smsnf-dashboard-notifications__img--limit"></figure>
                     </div>
                     <div class="smsnf-dashboard-notifications__copy">
-                        <h3><?php  _e('Já atingiu 80% do seu saldo disponível', 'egoi-for-wp');?></h3>
-                        <p><?php _e('Lorem ipsum', 'egoi-for-wp');?></p>
+                        <h3><?php  _e('You are almost reaching the limit of your Plan!', 'egoi-for-wp');?></h3>
+                        <p><?php _e('To prevent this from happening, upgrade to a higher plan.', 'egoi-for-wp');?></p>
                     </div>
                     <div class="smsnf-dashboard-notifications__btn">
                         <a class="hide-sm hide-xs hide-notification-button" type="button" data-notification="account-limit">
 						    <?php _e('Hide notification', 'egoi-for-wp');?>
 						</a>
-                        <a type="button" id="" class="button-smsnf-primary"> 
+                        <a href="https://login.egoiapp.com/login?from=%2F%3Faction%3Dconta-corrente_carregamentos%26doadd%3Dyes%26tipo%3Demail%26category_level1%3Demail_plan%26limitsubsinterval%3D10001_25000%26category_level2%3D306%26period%3Dmensal" type="button" id="" class="button-smsnf-primary" target="_blank">
 						    <?php _e('Upgrade', 'egoi-for-wp');?>
 						</a>
                     </div>
@@ -78,9 +83,8 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>
                                     <?php _e('Today\'s<br>subscribers', 'egoi-for-wp'); ?>
-                                    <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" 
-                                        data-tooltip="<?php _e('Lorem ipsum', 'egoi-for-wp'); ?>">
-                                              <?php echo $this->smsnf_get_form_susbcribers_total('today')->total; ?>
+                                    <button class="smsnf-dashboard-subs-stats__content--result btn">
+                                        <?php echo $this->smsnf_get_form_susbcribers_total('today')->total; ?>
                                     </button>
                                 </h3>
                             </div>
@@ -97,7 +101,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                                 <h3>
                                     <?php _e('Total<br>Subscribers', 'egoi-for-wp'); ?>
                                     <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" 
-                                        data-tooltip="<?php _e('Lorem ipsum', 'egoi-for-wp'); ?>">
+                                        data-tooltip="<?php _e('Total subscribers registered directly in the plugin', 'egoi-for-wp'); ?>">
                                             <?php echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
                                     </button>
                                 </h3>
@@ -116,7 +120,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                                 <h3>
                                     <?php _e('Best<br>day', 'egoi-for-wp'); ?>
                                     <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" 
-                                        data-tooltip="<?php _e('24 de Agosto 2018 texte \n Second line here', 'egoi-for-wp'); ?>">
+                                        data-tooltip="<?php _e('Best day of subscribers registered directly in the plugin', 'egoi-for-wp'); ?>">
                                         <?php
                                             $best_day = $this->smsnf_get_form_subscribers_best_day()->date;
                                                 echo $best_day ? date('d M Y', strtotime($best_day)) : '-';

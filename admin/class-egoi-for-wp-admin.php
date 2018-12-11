@@ -2320,8 +2320,8 @@ class Egoi_For_Wp_Admin {
     public function smsnf_show_notifications($customer) {
 
         $notifications = array(
-            'limit' => false,
-            'upgrade' => false
+            'limit' => true,
+            'upgrade' => true
         );
 
         if (
@@ -2437,7 +2437,7 @@ class Egoi_For_Wp_Admin {
             }
 
             $output['account'] .= '
-					<div class="smsnf-dashboard-plugin-sms__text">'.__('Envie notificações SMS aos seus clientes e administradores por cada alteração ao estado da encomenda no seu WooCommerce', 'egoi-for-wp').'</div>
+					<div class="smsnf-dashboard-plugin-sms__text">'.__('Send SMS notifications to your customers and administrators for each change to the order status on your WooCommerce', 'egoi-for-wp').'</div>
 					<a href="https://wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/" type="button" class="button-smsnf-primary">'.__('Instalar Plugin', 'egoi-for-wp').'</a>
 				</div>
             ';
@@ -2445,7 +2445,7 @@ class Egoi_For_Wp_Admin {
         } else {
             $output['account'] .= '
                         <tr>
-                            <td>'.__('SMS Transacionais', 'egoi-for-wp').'</td>
+                            <td>'.__('Transactional SMS', 'egoi-for-wp').'</td>
                             <td><span class="">'.get_option('egoi_sms_counter').'</span></td>
                         </tr>
                     </tbody>
