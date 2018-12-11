@@ -270,6 +270,13 @@ class Egoi_For_Wp {
 		$this->loader->add_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links');
 		$this->loader->add_filter('plugin_action_links_' . $plugin_basename, $plugin_admin, 'del_action_link');
 
+        $this->loader->add_action('wp_ajax_smsnf_hide_notification', $plugin_admin, 'smsnf_hide_notification');
+
+        // Dashboard
+        $this->loader->add_action('wp_ajax_smsnf_show_blog_posts', $plugin_admin, 'smsnf_show_blog_posts');
+        $this->loader->add_action('wp_ajax_smsnf_show_account_info_ajax', $plugin_admin, 'smsnf_show_account_info_ajax');
+        $this->loader->add_action('wp_ajax_smsnf_show_last_campaigns_reports', $plugin_admin, 'smsnf_show_last_campaigns_reports');
+
 	}
 
 	/**
@@ -324,7 +331,9 @@ class Egoi_For_Wp {
 
 		$this->loader->add_action('admin_post_form_handler', $plugin_public, 'form_handler');
 
-    }
+        $this->loader->add_action('wp_ajax_smsnf_save_advanced_form_subscriber', $plugin_public, 'smsnf_save_advanced_form_subscriber');
+		
+	}
 
 	/**
 	 * Register Profile Hooks
@@ -409,13 +418,16 @@ class Egoi_For_Wp {
         }
 	}
 
-    public function getLists($start = false, $limit = false) {
-
+    public function getLists($start = false, $limit = false, $list_id = false) {
+        $params = array(
+            'apikey' => $this->_valid['api_key'],
+            'plugin_key' => $this->plugin
+        );
+        if ($list_id) {
+            $params['listID'] = $list_id;
+        }
 		$url = $this->restUrl.'getLists&'.http_build_query(array(
-				'functionOptions' => array(
-					'apikey' => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin
-					)
+		            'functionOptions' => $params
 				),'','&');
 		
 		$result_client = json_decode($this->_getContent($url));
@@ -592,6 +604,21 @@ class Egoi_For_Wp {
 		return $result_client->Egoi_Api->addSubscriber;
 	}
 
+    public function addSubscriberWpForm($list_id, $subscriber) {
+        $params = array_merge(array(
+            'apikey' => $this->_valid['api_key'],
+            'plugin_key' => $this->plugin,
+            'listID' => $list_id
+        ), $subscriber);
+
+        $url = $this->restUrl.'addSubscriber&'.http_build_query(array(
+                'functionOptions' => $params
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        return $result_client->Egoi_Api->addSubscriber;
+    }
+
     public function editSubscriber($listID, $subscriber, $role = 0, $fname = '', $lname = '', $fields = array(), $option = 0, $ref_fields = array()) {
 
         $apikey = $this->_valid['api_key'];
@@ -692,6 +719,23 @@ class Egoi_For_Wp {
         	return $result_client->Egoi_Api->subscriberData;
         }
 	}
+
+    public function getSubscriberById($listID, $id) {
+
+        $url = $this->restUrl.'subscriberData&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'plugin_key' => $this->plugin,
+                    'listID' => $listID,
+                    'subscriber' => $id
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        if($result_client->Egoi_Api->subscriberData->status=='success'){
+            return $result_client->Egoi_Api->subscriberData->subscriber;
+        }
+    }
 
 	public function getForms($listID = false, $option = false) {
 
@@ -1058,12 +1102,12 @@ class Egoi_For_Wp {
 			$url = $this->restUrl.'getClientData&'.http_build_query(array('functionOptions' => array('apikey' => $key)),'','&');
 		    $result_client = json_decode($this->_getContent($url));
 
-	       	if($result_client->Egoi_Api->getClientData->response=='INVALID'){
+	       	if(!isset($result_client->Egoi_Api->getClientData->CLIENTE_ID)){
 	        	header('HTTP/1.1 404 Not Found');
 				exit;
 	        }else{
 	        	$this->callClient($result_client->Egoi_Api->getClientData, $key, 1);
-	        	echo "SUCCESS";
+	        	echo 'SUCCESS';
 	        	exit;
 	        }
 		}
@@ -1092,6 +1136,78 @@ class Egoi_For_Wp {
         return $data;
     }
 
+    /**
+     * Get E-goi client campaigns
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function getCampaigns() {
+        $url = $this->restUrl.'getCampaigns&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'limit' => 1000,
+                    'plugin_key' => $this->plugin
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        $result = $result_client->Egoi_Api->getCampaigns;
+
+        foreach ($result as $key => $value) {
+            if ($value->INTERNAL_NAME == '') { // remove the double opt-in "campaigns"
+                unset($result->$key);
+            }
+        }
+
+        return $result;
+    }
+
+    public function getReport($campaign_hash) {
+        $url = $this->restUrl.'getReport&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'campaign' => $campaign_hash,
+                    'plugin_key' => $this->plugin
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        return $result_client->Egoi_Api->getReport;
+    }
+
+
+    public function smsnf_save_form_subscriber($form_id, $form_type, $subscriber_data, $form_title = null) {
+
+        $list = $this->getLists(false, false, $subscriber_data->LIST);
+
+        global $wpdb;
+
+        $table = $wpdb->prefix.'egoi_form_subscribers';
+
+        $subscriber = array(
+            'form_id' => $form_id,
+            'form_type' => $form_type,
+            'subscriber_id' => $subscriber_data->UID,
+            'subscriber_name' => $subscriber_data->FIRST_NAME,
+            'subscriber_email' => $subscriber_data->EMAIL,
+            'list_id' => $subscriber_data->LIST,
+            'list_title' => $list->key_0->title,
+            'created_at' => current_time('mysql'),
+        );
+
+        if ($form_title) {
+            $subscriber['form_title'] = $form_title;
+        } else if ($form_type == 'simple-form') {
+            $subscriber['form_title'] = get_post($form_id)->post_title;
+        } else if ($form_type == 'bar') {
+            $subscriber['form_title'] = 'Subscriber Bar';
+        } else if ($form_type == 'widget') {
+            $subscriber['form_title'] = get_option('widget_egoi4widget')[$form_id]['title'];
+        }
+
+        return $wpdb->insert($table, $subscriber);
+    }
 
     /**
      * @param $phone

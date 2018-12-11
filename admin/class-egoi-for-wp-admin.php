@@ -40,6 +40,7 @@ class Egoi_For_Wp_Admin {
 	/**
 	 * Limit Subscribers
 	 *
+	 *
 	 * @var integer
 	 */
 	private $limit_subs = 10000;
@@ -148,6 +149,9 @@ class Egoi_For_Wp_Admin {
 			vc_lean_map( 'egoi_vc_shortcode', array( $this, 'egoi_vc_shortcode_map' ) );
 		}
 
+		// Add widget to main WP dashboard
+        add_action( 'wp_dashboard_setup', array($this, 'smsnf_main_dashboard_widget') );
+
 		// hook map fields to E-goi
 		$this->mapFieldsEgoi();
 
@@ -157,6 +161,14 @@ class Egoi_For_Wp_Admin {
 		}
 	}
 
+	public function smsnf_main_dashboard_widget() {
+        wp_add_dashboard_widget(
+            'egoi_main_dashboard_widget',         // Widget slug.
+            'E-goi',         // Title.
+            array($this, 'smsnf_main_dashboard_widget_content') // Display function.
+        );
+    }
+
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
@@ -164,7 +176,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style('wp-color-picker');
 	}
 
@@ -174,7 +186,6 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
 
 		wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'));
@@ -192,9 +203,21 @@ class Egoi_For_Wp_Admin {
 		wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
 		wp_enqueue_script('custom-script5');
 
+
 		wp_enqueue_script('wp-color-picker');
 
 		wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
+
+        wp_enqueue_script( 'smsnf-notifications-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
+        wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
+
+        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
+            wp_register_script('chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js');
+            wp_enqueue_script('chartjs');
+
+            wp_enqueue_script( 'smsnf-dashboard-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-dashboard.js', array('jquery') );
+            wp_localize_script( 'smsnf-dashboard-ajax-script', 'smsnf_dashboard_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
+        }
 	}
 
 	/**
@@ -218,12 +241,12 @@ class Egoi_For_Wp_Admin {
 
 		add_menu_page( 'Smart Marketing - Main Page', 'Smart Marketing', 'Egoi_Plugin', $this->plugin_name, array($this, 'display_plugin_setup_page'), plugin_dir_url( __FILE__ ).'img/logo_small.png');
 
-		$capability = 'manage_options';
-		add_submenu_page($this->plugin_name, __('Account', 'egoi-for-wp'), __('Account', 'egoi-for-wp'), $capability, 'egoi-4-wp-account', array($this, 'display_plugin_setup_page'));
-
+        $capability = 'manage_options';
 		$apikey = get_option('egoi_api_key');
 		$haslists = get_option('egoi_has_list');
 		if(isset($apikey['api_key']) && ($apikey['api_key']) && ($haslists)) {
+
+            add_submenu_page($this->plugin_name, __('Dashboard', 'egoi-for-wp'), __('Dashboard', 'egoi-for-wp'), $capability, 'egoi-4-wp-dashboard', array($this, 'display_plugin_dashboard'));
 
 			add_submenu_page($this->plugin_name, __('Capture Contacts', 'egoi-for-wp'), __('Capture Contacts', 'egoi-for-wp'), $capability, 'egoi-4-wp-form', array($this, 'display_plugin_subscriber_form'));
 
@@ -238,6 +261,8 @@ class Egoi_For_Wp_Admin {
             add_submenu_page($this->plugin_name, __('RSS Feed', 'egoi-for-wp'), __('RSS Feed', 'egoi-for-wp'), $capability, 'egoi-4-wp-rssfeed', array($this, 'display_plugin_rssfeed'));
 
 		}
+
+        add_submenu_page($this->plugin_name, __('Account', 'egoi-for-wp'), __('Account', 'egoi-for-wp'), $capability, 'egoi-4-wp-account', array($this, 'display_plugin_setup_page'));
 	}
 
 	public function add_action_links($links) {
@@ -348,6 +373,16 @@ class Egoi_For_Wp_Admin {
             wp_die('You do not have sufficient permissions to access this page.');
         } else {
             include_once( 'partials/egoi-for-wp-admin-rssfeed.php' );
+        }
+
+    }
+
+    public function display_plugin_dashboard() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-dashboard.php' );
         }
 
     }
@@ -1307,42 +1342,38 @@ class Egoi_For_Wp_Admin {
 
     // ADD A SIMPLE FORM SUBSCRIBER
 	public function subscribe_egoi_simple_form_add() {
-
-		$apikey = get_option('egoi_api_key');
-
-		$client = new SoapClient('http://api.e-goi.com/v2/soap.php?wsdl');
+        $api = new Egoi_For_Wp();
 
 		// double opt-in
-        if (filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1') {
-		    $status = 0;
-        } else {
-		    $status = 1;
-        }
+        $status = filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1' ? 0 : 1;
 
-		$params = array(
-			'apikey'    => $apikey['api_key'],
-			'listID' => filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
-			'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
-			'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
-			'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
-			'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
-			'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
-			'status' => $status,
-		);
+		$result = $api->addSubscriberWpForm(
+            filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
+            array(
+                'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
+                'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
+                'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
+                'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
+                'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
+                'status' => $status,
+            )
+        );
 
-		$result = $client->addSubscriber($params);
+		if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
 
-		if (!isset($result['ERROR']) && !isset($result['MODIFICATION_DATE']) ) {
+		    $form_id = filter_var($_POST['egoi_simple_form'], FILTER_SANITIZE_NUMBER_INT);
+            $api->smsnf_save_form_subscriber($form_id, 'simple-form', $result);
+
 			echo $this->check_subscriber($result).' ';
 			_e('was successfully registered!', 'egoi-for-wp');
-		} else if (isset($result['MODIFICATION_DATE'])) {
+		} else if (isset($result->MODIFICATION_DATE)) {
 			_e('Subscriber data from', 'egoi-for-wp');
 			echo ' '.$this->check_subscriber($result).' ';
 			_e('has been updated!', 'egoi-for-wp');
-		} else if (isset($result['ERROR'])) {
-			if ($result['ERROR'] == 'NO_DATA_TO_INSERT') {
+		} else if (isset($result->ERROR)) {
+			if ($result->ERROR == 'NO_DATA_TO_INSERT') {
 				_e('ERROR: no data to insert', 'egoi-for-wp');
-			} else if ($result['ERROR'] == 'EMAIL_ADDRESS_INVALID_MX_ERROR') {
+			} else if ($result->ERROR == 'EMAIL_ADDRESS_INVALID_MX_ERROR') {
 				_e('ERROR: e-mail address is invalid', 'egoi-for-wp');
 			} else {
 				_e('ERROR: invalid data submitted', 'egoi-for-wp');
@@ -1357,8 +1388,8 @@ class Egoi_For_Wp_Admin {
 	public function check_subscriber($subscriber_data) {
 		$data = array('FIRST_NAME','EMAIL','CELLPHONE');
 		foreach ($data as $value) {
-            if ($subscriber_data[$value]) {
-                $subscriber = $subscriber_data[$value];
+            if ($subscriber_data->$value) {
+                $subscriber = $subscriber_data->$value;
                 break;
             }
         }
@@ -1881,6 +1912,8 @@ class Egoi_For_Wp_Admin {
         remove_all_actions('rdf_ns');
     }
 
+
+
     /**
      * @param $account
      * @return mixed
@@ -1919,6 +1952,525 @@ class Egoi_For_Wp_Admin {
             }
         }
         return false;
+    }
+
+
+
+
+    /**
+     *
+     * Dashboard
+     *
+     */
+
+    public function smsnf_get_form_susbcribers_total($period = 'ever') {
+        global $wpdb;
+
+        $today = date('Y-m-d');
+
+        $sql = "SELECT COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers ";
+
+        if ($period == 'today') {
+            return $wpdb->get_row($sql." WHERE created_at BETWEEN '$today' AND '".date('Y-m-d', strtotime($today. ' +1 day'))."' ");
+        } else if ($period == 'ever') {
+            return $wpdb->get_row($sql);
+        }
+        return false;
+    }
+
+    public function smsnf_get_form_subscribers_best_day() {
+        global $wpdb;
+
+        $sql = "SELECT DATE(created_at) date, COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers GROUP BY date ORDER BY total DESC ";
+
+        return $wpdb->get_row($sql);
+    }
+
+    public function smsnf_get_form_subscribers_last($num = 5) {
+        global $wpdb;
+
+        $sql = " SELECT * FROM {$wpdb->prefix}egoi_form_subscribers ORDER BY created_at DESC LIMIT $num";
+
+        return $wpdb->get_results($sql);
+    }
+
+    public function smsnf_get_form_subscriber_total_by($type, $id = null) {
+        global $wpdb;
+
+        $sql = " SELECT {$type}_id, {$type}_title title , COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers ";
+        $sql .= $id !== null ? " WHERE {$type}_id = $id " : null;
+        $sql .= " GROUP BY {$type}_id ";
+        $sql .= $type == 'form' ? ", form_type" : null;
+
+        return $wpdb->get_results($sql);
+    }
+
+    public function smsnf_get_form_subscribers_list($list = null, $period = 6) {
+        global $wpdb;
+
+        $period--;
+        $start_day = date('Y-m', strtotime(date(). ' -'.$period.' month')).'-01';
+
+        $sql = " SELECT list_id list, MONTH(created_at) month, YEAR(created_at) year, COUNT(*) total FROM {$wpdb->prefix}egoi_form_subscribers WHERE  created_at >= '$start_day' ";
+        $sql .= $list ? " AND list_id = '$list' " : null;
+        $sql .= " GROUP BY list_id, month, year ORDER BY list, year, month";
+
+        $total_subscribers_flag = $total_subscribers = $lists = array();
+
+        foreach ($wpdb->get_results($sql) as $row) {
+            $total_subscribers_flag[$row->list][$row->month] = $row->total;
+            if (!in_array($row->list, $lists)) {
+                $lists[] = $row->list;
+            }
+        }
+
+        for ($i=0; $i<=$period; $i++) {
+            $month = date('n', strtotime($start_day.' +'.$i.' month'));
+
+            foreach ($lists as $list) {
+                if (!in_array($month, $total_subscribers['months'])) {
+                    $total_subscribers['months'][$month] = date('M', strtotime($start_day.' +'.$i.' month'));
+                }
+
+                if (isset($total_subscribers_flag[$list][$month])) {
+                    $total_subscribers[$list]['totals'][] = $total_subscribers_flag[$list][$month];
+                } else {
+                    $total_subscribers[$list]['totals'][] = 0;
+                }
+            }
+        }
+
+        return $total_subscribers;
+    }
+
+    public function smsnf_get_blog_posts($num_items = 2) {
+        $url = __('https://blog.e-goi.com/feed/egoi', 'egoi-for-wp');
+        $blog = fetch_feed($url);
+
+        if (!is_wp_error($blog)) {
+            $posts = array();
+            $num_items = $blog->get_item_quantity($num_items);
+            if ($num_items > 0) {
+                $items = $blog->get_items(0, $num_items);
+                foreach ($items as $item) {
+                    $excerpt = wp_trim_words($item->get_description(), 30);
+                    $posts[] = array(
+                        'title' => $item->get_title(),
+                        'date' => $item->get_date('d/m/Y'),
+                        'link' => $item->get_permalink(),
+                        'category' => $item->get_category()->term,
+                        'excerpt' => $excerpt
+                    );
+                }
+            }
+            return $posts;
+        }
+        return false;
+    }
+
+    public function smsnf_show_blog_posts() {
+        $output = '';
+        $posts = $this->smsnf_get_blog_posts();
+        foreach ($posts as $key => $post) {
+            $output .= '
+                <div class="smsnf-dashboard-blog-last-post__content">
+                    <div>
+                        <div>'.$post['date'].'</div>
+                    </div>
+                    <a href="'.$post['link'].'" target="_blank">
+                        <h4 class="smsnf-dashboard-blog-last-post__content__title">'.$post['title'].'</h4>
+                    </a>
+                    <a href="'.$post['link'].'" target="_blank">
+                        <p class="smsnf-dashboard-blog-last-post__content__description">'.$post['excerpt'].'</p>
+                    </a>
+            ';
+            $output .= count($posts)-1 > $key ? '<hr></div>' : '</div>';
+        }
+        echo $output;
+        wp_die();
+    }
+
+    public function smsnf_get_last_campaigns() {
+        $last_campaigns_flag = array('email' => 0, 'sms_premium' => 0);
+        $last_campaigns = array();
+        $channels = array('email', 'sms_premium');
+
+        $api = new Egoi_For_Wp();
+        $campaigns = $api->getCampaigns();
+
+        foreach ($campaigns as $campaign) {
+
+            if ($campaign->STATUS != 'finished' && $campaign->STATUS != 'archived') {
+                continue;
+            }
+
+            if (!in_array(0, $last_campaigns_flag)) {
+                break;
+            }
+
+            foreach ($channels as $channel) {
+
+                if ($channel == $campaign->CHANNEL) {
+
+                    if (!isset($last_campaigns[$channel]) ||
+                        (
+                            isset($campaigns_flag[$channel]) &&
+                            $campaigns_flag[$channel]['name'] == $campaign->SUBJECT &&
+                            $campaigns_flag[$channel]['start_time'] - strtotime($campaign->START) < 300
+                        )) {
+                        $last_campaigns[$channel][] = array(
+                            'hash' => $campaign->HASH,
+                            'id' => $campaign->REF,
+                            'list' => $campaign->LISTNUM,
+                            'name' => $campaign->SUBJECT,
+                            'internal_name' => $campaign->INTERNAL_NAME,
+                            'status' => $campaign->STATUS
+                        );
+                        $campaigns_flag[$channel] = array(
+                            'name' => $campaign->SUBJECT,
+                            'start_time' => strtotime($campaign->START)
+                        );
+                    } else {
+                        $last_campaigns_flag[$channel] = 1;
+                    }
+                }
+            }
+        }
+        return $last_campaigns;
+    }
+
+    public function smsnf_last_campaigns_reports() {
+
+        $api = new Egoi_For_Wp();
+
+        $last_campaigns = $this->smsnf_get_last_campaigns();
+        $reports = array();
+
+        foreach ($last_campaigns as $channel => $campaign) {
+
+            $reports[$channel] = array(
+                'name' => str_replace('"', '', $campaign[0]['name']),
+                'internal_name' => str_replace('"', '', $campaign[0]['internal_name'])
+            );
+
+            foreach ($campaign as $key => $value) {
+                $report = $api->getReport($value['hash']);
+                $reports[$channel]['id'] .= $value['id'].' | ';
+                $reports[$channel]['list'] .= $value['list'].' | ';
+                if (!isset($report->ERROR)) {
+                    $reports[$channel]['sent'] += $report->SENT;
+                    if ($channel == 'email') {
+                        $reports[$channel]['chart']['opens'] += $report->UNIQUE_VIEWS;
+                        $reports[$channel]['chart']['clicks'] += $report->UNIQUE_CLICKS;
+                        $reports[$channel]['chart']['bounces'] += $report->RETURNED;
+                        $reports[$channel]['chart']['removes'] += $report->TOTAL_REMOVES;
+                        $reports[$channel]['chart']['complains'] += $report->COMPLAIN;
+                    } else if ($channel == 'sms_premium') {
+                        $reports[$channel]['chart']['delivered'] += $report->DELIVERED;
+                        $reports[$channel]['chart']['not_delivered'] += $report->NOT_DELIVERED;
+                    }
+                } else {
+                    $reports[$channel]['sent'] = $report->ERROR;
+                }
+
+            }
+
+            $reports[$channel]['id'] = substr($reports[$channel]['id'], 0, -2);
+            $reports[$channel]['list'] = substr($reports[$channel]['list'], 0, -2);
+
+        }
+        return $reports;
+    }
+
+    public function smsnf_show_last_campaigns_reports() {
+        $output = array('email' => '', 'sms_premium' => '');
+
+        $campaigns = $this->smsnf_last_campaigns_reports();
+
+        foreach ($output as $type => $value) {
+            $campaign_chart = implode(",", $campaigns[$type]['chart']);
+            $type_clean = str_replace('_premium', '', $type);
+            $output[$type] .= '
+                <table class="table smsnf-dashboard-campaigns--table">
+                    <tbody>
+                        <tr>
+                            <td>'.__('Name', 'egoi-for-wp').'</td>
+                            <td>'.$campaigns[$type]['name'].'</td>
+                        </tr>
+                        <tr>
+                            <td>'.__('Internal Name', 'egoi-for-wp').'</td>
+                            <td>'.$campaigns[$type]['internal_name'].'</td>
+                        </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td>'.$campaigns[$type]['id'].'</td>
+                        </tr>
+                        <tr>
+                            <td>'.__('Total sent', 'egoi-for-wp').'</td>
+                            <td class="smsnf-dashboard-last-'.$type_clean.'-campaign__totalsend">';
+
+            $output[$type] .= $campaigns[$type]['sent'] === 'NO_DATA' ? '<span class="totalsend--wait">'.__('A aguardar resultados...', 'egoi-for-wp').'</span>' : $campaigns[$type]['sent'];
+
+            $output[$type] .= '
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                ';
+
+            if ($campaigns[$type]['sent'] > 0) {
+
+                if ($type == 'email') {
+                    $labels = '"Aberturas", "Cliques", "Bounces", "Remoções", "Queixas"';
+                    $background_color = '
+                        "rgba(0, 174, 218, 0.4)",
+                        "rgba(147, 189, 77, 0.3)",
+                        "rgba(246, 116, 73, 0.3)",
+                        "rgba(250, 70, 19, 0.4)",
+                        "rgba(237, 60, 47, 0.6)"
+                    ';
+                    $border_color = '
+                        "rgba(0, 174, 218, 0.5)",
+                        "rgba(147, 189, 77, 0.4)",
+                        "rgba(246, 116, 73, 0.4)",
+                        "rgba(242, 91, 41, 0.5)",
+                        "rgba(237, 60, 47, 0.7)"
+                    ';
+                } else if ($type == 'sms_premium') {
+                    $labels = '"Entregues", "Não Entregues"';
+                    $background_color = '
+                        "rgba(147, 189, 77, 0.3)",
+                        "rgba(250, 70, 19, 0.4",
+                    ';
+                    $border_color = '
+                        "rgba(147, 189, 77, 0.4)",
+                        "rgba(250, 70, 19, 0.5)"
+                    ';
+                }
+
+                $output[$type] .= '
+                    <div class="smsnf-dashboard-last-'.$type_clean.'-campaign__chart">
+                        <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
+                    </div>
+                    <script>
+                    Chart.defaults.global.legend.labels.usePointStyle = true;
+                    var ctx = document.getElementById("smsnf-dlec__doughnutChart").getContext("2d");
+                    var myChart = new Chart(ctx, {
+                        type: "doughnut",
+                        data: {
+                            labels: ['.$labels.'],
+                            datasets: [{
+                                label: "# of Votes",
+                                data: ['.$campaign_chart.'],
+                                backgroundColor: ['.$background_color.'],
+                                borderColor: ['.$border_color.'],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                display: true,
+                                position: "right",
+                                labels: {
+                                    fontColor: "#333",
+                                }
+                            },
+                            layout: {
+                                padding: {
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0
+                                }
+                            }
+                        }
+                    });
+                </script>
+                ';
+            }
+        }
+
+        echo json_encode($output);
+        wp_die();
+    }
+
+
+    public function smsnf_hide_notification() {
+        $notifications = get_option('egoi_notifications');
+        $notifications[$_POST['notification']] = current_time('mysql');
+        update_option('egoi_notifications', $notifications);
+        wp_die();
+    }
+
+    public function smsnf_check_notification_option($notification) {
+        $notifications = get_option('egoi_notifications');
+        $time = 15*24*60*60;
+        if (
+            !isset($notifications[$notification]) ||
+            (
+                date('Y-m') != date('Y-m', strtotime($notifications[$notification])) &&
+                strtotime(date('Y-m-d')) - strtotime($notifications[$notification]) > $time
+            )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function smsnf_show_notifications($customer) {
+
+        $notifications = array(
+            'limit' => false,
+            'upgrade' => false
+        );
+
+        if (
+            ($customer->PLAN_EMAIL_LIMIT != 0 && $customer->PLAN_EMAIL_SENT/$customer->PLAN_EMAIL_LIMIT >= 0.8 ||
+            $customer->PLAN_SMS_LIMIT != 0 && $customer->PLAN_SMS_SENT/$customer->PLAN_SMS_LIMIT >= 0.8) &&
+            $this->smsnf_check_notification_option('account-limit')
+        ) {
+            $notifications['limit'] = true;
+        }
+
+        if (
+            (strpos($customer->CONTRACT, '5001') !== false ||
+            strpos($customer->CONTRACT, 'Pay With Love') !== false ||
+            strpos($customer->CONTRACT, 'paywithlove') !== false) &&
+            $this->smsnf_check_notification_option('upgrade-account')
+        ) {
+            $notifications['upgrade'] = true;
+        }
+
+        return $notifications;
+    }
+
+    public function smsnf_get_account_info() {
+        $api = new Egoi_For_Wp();
+        $customer = $api->getClient();
+
+        return $customer;
+    }
+
+    public function smsnf_show_account_info($destination) {
+        $customer = $this->smsnf_get_account_info();
+
+        $output['notifications'] = $this->smsnf_show_notifications($customer);
+        $email_limit = $customer->PLAN_EMAIL_LIMIT != 0 ? $customer->PLAN_EMAIL_LIMIT : __('Unlimited', 'egoi-for-wp');
+        $sms_limit = $customer->PLAN_SMS_LIMIT != 0 ? $customer->PLAN_SMS_LIMIT : __('Unlimited', 'egoi-for-wp');
+
+        if ($destination == 'wp-dashboard') {
+			$table_class = 'table smsnf-wpdash--table';
+            $output['account'] = '
+			<div class="smsnf-wpdash-table--head">
+				<img src="'.plugins_url().'/smart-marketing-for-wp/admin/img/symbol.png"/>
+				<p>E-goi - Smart Marketing</p>
+			</div>
+            ';
+        } else {
+			$table_class = 'table';
+            $output['account'] = '';
+        }
+
+        $output['account'] .= '
+            <table class="'.$table_class.'">
+                <tbody>
+					<tr>
+						<td><span class="smsnf-dashboard-account__content__table--total">'.__('Plan', 'egoi-for-wp').'</span></td>
+						<td><span class="">'.$customer->CONTRACT.'</span></td>
+                    </tr>
+                    <tr>
+						<td><span class="smsnf-dashboard-account__content__table--total">'.__('Current Balance', 'egoi-for-wp').'</span></td>
+						<td><span class="smsnf-dashboard-account__content__table--cash">'.$customer->CREDITS.'</span></td>
+                    </tr>';
+
+        if ($customer->CONTRACT_EXPIRE_DATE) {
+            $output['account'] .= '
+                        <tr>
+                            <td><span class="smsnf-dashboard-account__content__table--total">'.__('Expires in', 'egoi-for-wp').'</span></td>
+                            <td><span class="">' . $customer->CONTRACT_EXPIRE_DATE . '</span></td>
+                        </tr>
+                        ';
+        }
+
+        $output['account'] .= '
+                </tbody>
+            </table>
+            <p class="smsnf-dashboard-account__content__table--subtitle">'.__('Your current plan includes', 'egoi-for-wp').'</p>
+            <table class="'.$table_class.'">
+                <tbody>
+                    <tr>
+                        <td>Email/Push</td>
+                        <td><span class="">'.$email_limit.'</span></td>
+                    </tr>
+                    <tr>
+                        <td>SMS</td>
+                        <td><span class="">'.$sms_limit.'</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="smsnf-dashboard-account__content__table--subtitle">'.__('Total sent', 'egoi-for-wp').'</p>
+            <table class="'.$table_class.'">
+                <tbody>
+                    <tr>
+                        <td>Email/Push</td>
+                        <td><span class="">'.$customer->PLAN_EMAIL_SENT.'</span></td>
+                    </tr>
+                    <tr>
+                        <td>SMS</td>
+                        <td><span class="">'.$customer->PLAN_SMS_SENT.'</span></td>
+                    </tr>
+        ';
+
+        if (!is_plugin_active( 'sms-orders-alertnotifications-for-woocommerce/smart-marketing-addon-sms-order.php' )) {
+
+            $output['account'] .= '
+                    </tbody>
+				</table>
+				<div class="smsnf-dashboard-plugin-sms">
+			';
+
+            $locale = get_locale();
+            if ($locale == 'pt_PT') {
+				$output['account'] .= '<img class="smsnf-dashboard-plugin-sms__img" src="'.plugins_url().'/smart-marketing-for-wp/admin/img/sm-sms-pt.png">';
+            } else {
+				$output['account'] .= '<img class="smsnf-dashboard-plugin-sms__img" src="'.plugins_url().'/smart-marketing-for-wp/admin/img/sm-sms-lang.png">';
+            }
+
+            $output['account'] .= '
+					<div class="smsnf-dashboard-plugin-sms__text">'.__('Send SMS notifications to your customers and administrators for each change to the order status on your WooCommerce', 'egoi-for-wp').'</div>
+					<a href="https://wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/" type="button" class="button-smsnf-primary">'.__('Instalar Plugin', 'egoi-for-wp').'</a>
+				</div>
+            ';
+
+        } else {
+            $output['account'] .= '
+                        <tr>
+                            <td>'.__('Transactional SMS', 'egoi-for-wp').'</td>
+                            <td><span class="">'.get_option('egoi_sms_counter').'</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            ';
+        }
+
+        return json_encode($output);
+    }
+
+    public function smsnf_show_account_info_ajax() {
+        $output = $this->smsnf_show_account_info('smart-marketing-dashboard');
+        echo $output;
+        wp_die();
+    }
+
+    public function smsnf_main_dashboard_widget_content() {
+        $content = json_decode($this->smsnf_show_account_info('wp-dashboard'));
+
+        echo '
+            <div class="smsnf-dashboard-account__content__table">
+                '.$content->account.'
+            </div>
+        ';
+
     }
 
 }

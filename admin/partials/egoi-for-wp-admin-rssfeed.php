@@ -82,9 +82,11 @@ if (isset($_GET['del'])) {
                         <button class="copy_url button button--custom" style="width: 90px;" data-rss-feed="url_<?=$option->option_name?>"><?php _e('Copy URL', 'egoi-for-wp');?></button>
                     </td>
                     <td style="vertical-align: middle;" align="right" width="70" nowrap>
+                        <nobr>
                         <a class="cd-popup-trigger-del" data-id-form="<?=$option->option_name?>" data-type-form="rss-feed" href="" title="<?php _e('Delete', 'egoi-for-wp'); ?>"><i style="padding-right: 3px;" class="far fa-trash-alt"></i></a>
                         <a title="<?php _e('Edit', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&edit='.$option->option_name);?>"><i style="padding-right: 2px;" class="far fa-edit"></i></a>
                         <a title="<?php _e('Preview', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&view='.$option->option_name);?>"><i class="fas fa-eye"></i></a>
+                        </nobr>
                     </td>
                 </tr>
             <?php } ?>
@@ -127,7 +129,7 @@ if (isset($_GET['del'])) {
         <div class="main-content">
 
             <!-- Main Content -->
-            <div class="col-4" style="max-width: 900px;">
+            <div class="eg-col-4" style="max-width: 900px;">
                 <form id="egoi_simple_form" method="post" action="<?php echo $this->prepareUrl('&edit=egoi_rssfeed_'.$code); ?>">
                     <?php
                     settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );

@@ -14,7 +14,7 @@ else{
     $tag = $this->bar_post['tag-egoi'];
 }
 ?>
-<div class="main-content col col-4">
+<div class="main-content col eg-col-4">
 <div class="wrap" id="egoi4wp-admin" style="width:100%;">
 
     <div id="egoi-tabs-bar">
@@ -103,7 +103,7 @@ else{
 
                         <span id="e-goi-lists_ct_bar" style="display: none;"><?php echo $this->bar_post['list'];?></span>
 
-                        <span class="loading_lists dashicons dashicons-update" style="display: none;"></span>
+                        <span class="loading loading_lists" style="margin-left: 10px; display: none;"></span>
                         <select name="egoi_bar_sync[list]" class="lists" id="e-goi-list-bar" style="display: none;" required>
                             <option disabled <?php selected($this->bar_post['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
                         </select>
@@ -117,7 +117,7 @@ else{
                     <td>
                         <span id="lang_bar" style="display: none;"><?php echo $this->bar_post['lang'];?></span>
 
-                        <span class="loading_lang-bar dashicons dashicons-update" style="display: none;" required></span>
+                        <span class="loading loading_lang-bar" style="margin-left: 10px; display: none;" required></span>
                         <select name="egoi_bar_sync[lang]"  id="e-goi-lang-bar" style="display: none;">
                             <option disabled <?php selected($this->bar_post['lang'], ''); ?>><?php _e( 'Select a lang..', 'egoi-for-wp' ); ?></option>
                         </select>
@@ -144,7 +144,7 @@ else{
 
                             <span id="e-goi-tags_ct_bar" style="display: none;"><?php echo $tag;?></span>
 
-                            <span class="loading_tags-bar dashicons dashicons-update" style="display: none;"></span>
+                            <span class="loading loading_tags-bar" style="margin-left: 10px; display: none;"></span>
                             <select name="egoi_bar_sync[tag-egoi]" class="tags" id="e-goi-tags-bar" style="display: none;">
                                 <option disabled <?php selected($tag, ''); ?>><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
                             </select>
@@ -200,7 +200,7 @@ else{
 
 
         <!-- Appearance Tab -->
-        <div class="tab" id="tab-appearance">
+        <div class="eg-tab" id="tab-appearance">
 
             <div class="row">
                 <div class="col col-2">
@@ -338,7 +338,7 @@ else{
         </div>
 
         <!-- Form Messages -->
-        <div class="tab" id="tab-messages">
+        <div class="eg-tab" id="tab-messages">
 
             <table class="form-table">
                 <tr valign="top">

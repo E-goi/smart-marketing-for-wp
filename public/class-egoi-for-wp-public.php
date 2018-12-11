@@ -93,6 +93,9 @@ class Egoi_For_Wp_Public {
 
 		$bar_post = get_option(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 
+        wp_enqueue_script( 'ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-forms.js', array( 'jquery' ), $this->version, false );
+        wp_localize_script( 'ajax-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')) );
+
 		if(isset($bar_post['enabled']) && ($bar_post['enabled'])) {
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/e-goi.min.js', array( 'jquery' ), $this->version, false );
 			wp_localize_script( $this->plugin_name, 'url_egoi_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
@@ -288,13 +291,12 @@ class Egoi_For_Wp_Public {
 				$error = $bar['text_already_subscribed'];
 			}
 
-            if (!isset($bar['double_optin']) || $bar['double_optin'] == 0) {
-                $status = 1;
-            } else {
-                $status = 0;
-            }
+            $status = !isset($bar['double_optin']) || $bar['double_optin'] == 0 ? 1 : 0;
 
 			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, $status, '', $tag);
+            if (!isset($add->ERROR) && !isset($add->MODIFICATION_DATE) ) {
+                $client->smsnf_save_form_subscriber(1, 'bar', $add);
+            }
 
 			$success = $bar['text_subscribed'];
 
@@ -425,6 +427,7 @@ class Egoi_For_Wp_Public {
 		$options = get_option($simple_form);
 		$data = json_decode($options);
 
+        $post .= '<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="'.$id.'">';
 		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="'.$data->list.'">';
 		$post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="'.$data->lang.'">';
 		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.$data->tag.'">';
@@ -482,6 +485,7 @@ class Egoi_For_Wp_Public {
 					simple_form.find( "#simple_form_result" ).hide();
 
 					var ajaxurl = "'.admin_url('admin-ajax.php').'";
+					var egoi_simple_form = simple_form.find("#egoi_simple_form").val();
 					var egoi_name = simple_form.find("#egoi_name").val();
 					var egoi_email = simple_form.find("#egoi_email").val();
 					var egoi_country_code	= simple_form.find("#egoi_country_code").val();
@@ -493,6 +497,7 @@ class Egoi_For_Wp_Public {
 
 					var data = {
 						"action": "my_action",
+						"egoi_simple_form": egoi_simple_form,
 						"egoi_name": egoi_name,
 						"egoi_email": egoi_email,
 						"egoi_country_code": egoi_country_code,
@@ -591,4 +596,58 @@ class Egoi_For_Wp_Public {
             add_feed($option->option_name, 'egoi_rss_feeds' );
         }
     }
+
+    public function smsnf_save_advanced_form_subscriber() {
+        $success_messages = array(
+            'Está quase! Só falta confirmar o seu email.',
+            'You\'re almost there! We just need to confirm your email address.',
+            'Solamente necesitamos confirmar su correo electrónico.'
+        );
+
+        $form_data = array();
+        parse_str($_POST['form_data'], $form_data);
+
+        $url = strpos($_POST['url'], 'http') !== false ? $_POST['url'] : 'http:'.$_POST['url'];
+        $response = wp_remote_post($url, array(
+                'method' => 'POST',
+                'timeout' => 60,
+                'body' => $form_data,
+            )
+        );
+
+        if (is_wp_error($response)) {
+            $error_message = $response->get_error_message();
+            echo json_encode($error_message);
+        } else {
+            $output = $response['body'];
+            foreach ($success_messages as $message) {
+                if (strpos($response['body'], $message) !== false) {
+                    $output = $message;
+
+                    $subscriber = (object) array(
+                        'UID' => null,
+                        'FIRST_NAME' => $_POST['fname'].' '.$_POST['lname'],
+                        'EMAIL' => $_POST['email'],
+                        'LIST' => $form_data['lista']
+                    );
+
+                    for ($i=1; $i<=10; $i++) {
+                        $form = get_option('egoi_form_sync_'.$i);
+                        if ($form && strpos($form['egoi_form_sync']['form_content'], $_POST['form_id']) !== false) {
+                            $form_id = $form['egoi_form_sync']['form_id'];
+                            $form_title = $form['egoi_form_sync']['form_name'];
+                            break;
+                        }
+                    }
+
+                    $api = new Egoi_For_Wp();
+                    $api->smsnf_save_form_subscriber($form_id, 'advanced-form', $subscriber, $form_title);
+                    break;
+                }
+            }
+        }
+        echo $output;
+        wp_die();
+    }
+
 }

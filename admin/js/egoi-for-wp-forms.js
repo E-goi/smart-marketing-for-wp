@@ -31,7 +31,6 @@ jQuery(document).ready(function($) {
 		    $.post(url_egoi_script.ajaxurl, data_lists, function(response) {
 			    $(".loading_lists").removeClass('spin').hide();
 			    current_lists = JSON.parse(response);
-				
 				if(current_lists.ERROR){
 					$('.e-goi-lists_not_found').show();
 
@@ -64,8 +63,9 @@ jQuery(document).ready(function($) {
 				        		select_lists_bar.val(val.listnum);
 				        	}
 			            }
-			        });	
-				    	
+			        });
+
+                    select_lists_bar.show();
 				}
 			});
 		}
@@ -115,7 +115,7 @@ jQuery(document).ready(function($) {
 			$('.cd-popup-trigger-change').trigger('click');
 
 		}else{
-			$("#load_frm_change").addClass('spin').show();
+			$("#load_frm_change").removeClass('d-none');
 			document.getElementById("e-goi-form-options").submit();
 		}
 

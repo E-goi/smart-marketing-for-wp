@@ -109,7 +109,7 @@ jQuery(document).ready(function($) {
 	<div class="main-content">
 
 		<!-- Main Content -->
-		<div class="col-4">
+		<div class="eg-col-4">
 
 			<form method="post" action="<?php echo admin_url('options.php'); ?>"><?php 
 				

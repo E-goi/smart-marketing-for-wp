@@ -191,7 +191,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                                     <span id="e-goi-lists_ct_simple_form" style="display: none;"><?php echo $shortcode['list'];?></span>
 
-                                    <span class="loading_lists-simple-form dashicons dashicons-update" style="display: none;"></span>
+                                    <span class="loading loading_lists-simple-form" style="margin-left: 10px; display: none;"></span>
                                     <select name="list" class="lists" id="e-goi-list-simple-form" style="display: none;">
                                         <option disabled <?php selected($shortcode['list'], ''); ?>><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
                                     </select>
@@ -205,7 +205,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <td>
                                     <span id="lang_simple_form" style="display: none;"><?php echo $shortcode['lang'];?></span>
 
-                                    <span class="loading_lang-simple-form dashicons dashicons-update" style="display: none;"></span>
+                                    <span class="loading loading_lang-simple-form" style="margin: 10px 0 0 10px; display: none;"></span>
                                     <select name="lang" id="e-goi-lang-simple-form" style="display: none;">
                                     </select>
                                 </td>
@@ -231,7 +231,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                                         <span id="e-goi-tags_ct_simple-form" style="display: none;"><?php echo $shortcode['tag'];?></span>
 
-                                        <span class="loading_tags-simple-form dashicons dashicons-update" style="display: none;"></span>
+                                        <span class="loading loading_tags-simple-form" style="margin-left: 10px; display: none;"></span>
                                         <select name="tag-egoi" class="tags" id="e-goi-tags-simple-form" style="display: none;">
                                             <option disabled <?php selected($shortcode['tag'], ''); ?>><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
                                         </select>
@@ -605,7 +605,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             ?>
 
             <!-- List -->
-            <div class="main-content col col-4" style="margin:0 0 20px;">
+            <div class="main-content col eg-col-4" style="margin:0 0 20px;">
                 <div style="font-size:14px; margin:10px 0;">
                     <?php _e('Simple Forms', 'egoi-for-wp');?>
                 </div>
