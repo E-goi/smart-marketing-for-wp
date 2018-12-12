@@ -100,8 +100,8 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>
                                     <?php _e('Total<br>Subscribers', 'egoi-for-wp'); ?>
-                                    <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" 
-                                        data-tooltip="<?php _e('Total subscribers registered directly in the plugin', 'egoi-for-wp'); ?>">
+                                    <?php $string = __("Total subscribers registered\ndirectly in the plugin", 'egoi-for-wp'); ?>
+                                    <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" data-tooltip="<?=$string?>">
                                             <?php echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
                                     </button>
                                 </h3>
@@ -119,11 +119,11 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                             <div class="smsnf-dashboard-subs-stats__content">
                                 <h3>
                                     <?php _e('Best<br>day', 'egoi-for-wp'); ?>
-                                    <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" 
-                                        data-tooltip="<?php _e('Best day of subscribers registered directly in the plugin', 'egoi-for-wp'); ?>">
+                                    <?php $string = __("Best day of subscribers registered\ndirectly in the plugin", 'egoi-for-wp'); ?>
+                                    <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" data-tooltip="<?=$string?>">
                                         <?php
                                             $best_day = $this->smsnf_get_form_subscribers_best_day()->date;
-                                                echo $best_day ? date('d M Y', strtotime($best_day)) : '-';
+                                            echo $best_day ? date('d M Y', strtotime($best_day)) : '-';
                                         ?>
                                     </button>
                                 </h3>
@@ -262,7 +262,7 @@ $forms = $this->smsnf_get_form_subscriber_total_by('form');
                         <div class="smsnf-dashboard-account__title">
                             <div><?php _e('Your account', 'egoi-for-wp'); ?></div>
                             <div class="smsnf-dashboard-account__title__cta">
-                                <a href="#" target="_blank"><?php _e('Update account information', 'egoi-for-wp'); ?><span class="dashicons dashicons-external"></span></a>
+                                <a href="https://login.egoiapp.com/#/login/?action=login&from=%2F%3Faction%3Ddados_cliente&menu=sec" target="_blank"><?php _e('Update account information', 'egoi-for-wp'); ?><span class="dashicons dashicons-external"></span></a>
                             </div>
                         </div>
                         <div class="smsnf-dashboard-account__content p-0">

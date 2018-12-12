@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-11 18:06+0000\n"
-"PO-Revision-Date: 2018-12-11 18:10+0000\n"
+"POT-Creation-Date: 2018-12-12 10:22+0000\n"
+"PO-Revision-Date: 2018-12-12 10:24+0000\n"
 "Last-Translator: Admin <procha@e-goi.com>\n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -1111,17 +1111,25 @@ msgstr "Registros<br>Hoy"
 msgid "Total<br>Subscribers"
 msgstr "Total<br>Suscriptores"
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:104
-msgid "Total subscribers registered directly in the plugin"
-msgstr "Total de suscriptores registrados directamente en el plugin"
+#: admin/partials/egoi-for-wp-admin-dashboard.php:103
+msgid ""
+"Total subscribers registered\n"
+"directly in the plugin"
+msgstr ""
+"Total de suscriptores registrados\n"
+"directamente en el plugin"
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:121
 msgid "Best<br>day"
 msgstr "Mejor<br>día"
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:123
-msgid "Best day of subscribers registered directly in the plugin"
-msgstr "Mejor día de suscriptores registrados directamente en el plugin"
+#: admin/partials/egoi-for-wp-admin-dashboard.php:122
+msgid ""
+"Best day of subscribers registered\n"
+"directly in the plugin"
+msgstr ""
+"Mejor día de suscriptores registrados\n"
+"directamente en el plugin"
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:140
 msgid "Latest Subscribers"
