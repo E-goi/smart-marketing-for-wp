@@ -2118,12 +2118,13 @@ class Egoi_For_Wp_Admin {
                             $campaigns_flag[$channel]['name'] == $campaign->SUBJECT &&
                             $campaigns_flag[$channel]['start_time'] - strtotime($campaign->START) < 300
                         )) {
+
                         $last_campaigns[$channel][] = array(
                             'hash' => $campaign->HASH,
                             'id' => $campaign->REF,
                             'list' => $campaign->LISTNUM,
-                            'name' => $campaign->SUBJECT,
-                            'internal_name' => $campaign->INTERNAL_NAME,
+                            'name' => $this->isJson($campaign->SUBJECT) ? json_decode($campaign->SUBJECT) : $campaign->SUBJECT,
+                            'internal_name' => $this->isJson($campaign->INTERNAL_NAME) ? json_decode($campaign->INTERNAL_NAME) : $campaign->INTERNAL_NAME,
                             'status' => $campaign->STATUS
                         );
                         $campaigns_flag[$channel] = array(
@@ -2137,6 +2138,11 @@ class Egoi_For_Wp_Admin {
             }
         }
         return $last_campaigns;
+    }
+
+    public function isJson($string) {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
     }
 
     public function smsnf_last_campaigns_reports() {
@@ -2194,7 +2200,7 @@ class Egoi_For_Wp_Admin {
                 <table class="table smsnf-dashboard-campaigns--table">
                     <tbody>
                         <tr>
-                            <td>'.__('Name', 'egoi-for-wp').'</td>
+                            <td>'.__('Subject', 'egoi-for-wp').'</td>
                             <td>'.$campaigns[$type]['name'].'</td>
                         </tr>
                         <tr>
