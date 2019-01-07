@@ -30,7 +30,7 @@ class Egoi_For_Wp_Deactivator {
 
 		self::serviceDeactivate(array('email' => $email));
 
-		self::smsnf_drop_table('egoi_form_subscribers');
+		//self::smsnf_drop_table('egoi_form_subscribers');
 	}
 
 	public static function serviceDeactivate($data = array()) {

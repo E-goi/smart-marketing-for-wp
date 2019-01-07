@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-12 15:07+0000\n"
-"PO-Revision-Date: 2018-12-12 15:07+0000\n"
+"PO-Revision-Date: 2019-01-07 10:20+0000\n"
 "Last-Translator: Admin <procha@e-goi.com>\n"
 "Language-Team: Português do Brasil\n"
 "Language: pt_BR\n"
@@ -21,7 +21,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: pt_PT\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.2.0; wp-5.0"
+"X-Loco-Version: 2.2.0; wp-5.0.2"
 
 #: includes/class-egoi-for-wp-widget.php:336
 msgid "Widget Title"
@@ -1133,7 +1133,7 @@ msgstr "Últimos subscritores"
 #: admin/partials/egoi-for-wp-admin-dashboard.php:179
 #: admin/partials/egoi-for-wp-admin-dashboard.php:226
 msgid "You have no subscribers yet"
-msgstr "Ainda não tem subscriotores"
+msgstr "Ainda não tem subscritores"
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:152
 msgid "Form"
