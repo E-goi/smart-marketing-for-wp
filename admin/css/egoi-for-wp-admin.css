@@ -69,17 +69,9 @@ address {
 
 /** 1. Remove the bottom border in Firefox 39-. 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari. (removed) */
 /** Prevent the duplicate application of `bolder` by the next rule in Safari 6. */
-b,
-strong {
-  font-weight: inherit;
-}
-
+/* b, strong { font-weight: inherit; } */
 /** Add the correct font weight in Chrome, Edge, and Safari. */
-b,
-strong {
-  font-weight: bolder;
-}
-
+/* b, strong { font-weight: bolder; } */
 /** 1. Correct the inheritance and scaling of font size in all browsers. 2. Correct the odd `em` font sizing in all browsers. */
 code,
 kbd,
@@ -6774,7 +6766,7 @@ div.eg-dropdown {
 }
 
 .smsnf-dashboard-subs-stats__content--result.bestday.e-goi-tooltip .e-goi-tooltiptext {
-  margin-left: 128px;
+  margin-left: -41px;
 }
 
 .smsnf-dashboard-plugin-sms {
@@ -6828,4 +6820,8 @@ div.eg-dropdown {
 
 .smsnf-wpdash--table td {
   padding: .6rem 0rem;
+}
+
+.tooltip::after {
+  background-color: #22272d;
 }
