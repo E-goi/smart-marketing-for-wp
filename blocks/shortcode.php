@@ -42,7 +42,19 @@ function get_egoi_forms() {
 		);
     }
 
-    /* FALTAM OS ADVANCED FORMS */
+    for ($i = 1; $i <= 5; $i++) {
+		$form = get_option('egoi_form_sync_'. $i);
+
+		if (!$form['egoi_form_sync']['form_id']) {
+			continue;
+		}
+
+		$forms[] = array(
+			'id' => $i,
+			'shortcode' => "[egoi_form_sync_$i]",
+			'title' => $form['egoi_form_sync']['form_name'],
+		);
+	}
 
     echo json_encode($forms);
 
