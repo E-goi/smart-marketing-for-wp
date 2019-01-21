@@ -144,6 +144,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 2.7.4 =
+- Gutenberg Blocks improvements
+
 = 2.7.3 =
 - Minor bug fixes
 
