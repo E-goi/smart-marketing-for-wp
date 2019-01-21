@@ -10,10 +10,60 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
+**Poupe Tempo, Aumente Tráfego e Transforme Oportunidades de Negócio (Leads) em Clientes Fiéis!**
+
+É muito fácil personalizar as cores, o botão e os tipo de letra do seu formulário e até pode posicioná-lo onde quiser!
+
+Está disponível neste plugin a instalação no seu site, de forma muito simples, um sistema de Web Push para aumentar o alcance da sua comunicação e enviar mensagens que são realmente abertas no navegador dos seus clientes! E ainda pode escolher as categorias ou tags que quiser para personalizar os conteúdos ou produtos que quer enviar por email ou Web Push para os seus subscritores ou clientes!
+
+**Usa Woocommerce?**
+
+Então não deixe de activar o Track & Engage, um sistema para rastrear todo o comportamento dos clientes no seu e-commerce que pode aproveitar para realizar campanhas em tempo real! (ex: carrinho abandonado, retargeting, up selling e cross selling, etc)
+
+**Funcionalidades:**
+* 100% Gratuito
+* Sincronização automática de contactos
+* Formulários simples
+* Formulários Avançados Html
+* Barra de subscrição
+* Formulários Pop-up
+* Formulários Widgets
+* Associação de Tags a formulários
+* Opção de validação dos contactos com Double Opt-in (RGPD)
+* Integração com o WooCommerce
+* Integração com o CF7
+* Integração com o Visual Composer
+* Integração com o Page Builder
+* Mapeamento de campos adicionais (incl. WooCommerce)
+* E-goi Track & Engage
+* Notificações Web Push
+* RSS Feed por categorias, tags ou produtos.
+* Bloco E-goi para Gutenberg
+
+**Add-on**
+
+Plugin [WooCommerce SMS – Notificações Estados Encomendas](https://pt.wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/ "SMS Orders Alert/Notifications for WooCommerce")
+
+**Requisitos**
+
+Já tem uma conta E-goi? [Criar conta E-goi Gratuita](https://login.egoiapp.com/signup "Criar conta E-goi")
+
+---
+
+**Save Time, Increase Traffic, and Transform Business Opportunities (Leads) into Trusted Customers!**
+
+It's very easy to customize the colors, the button and the fonts of your form and you can even position it where you want!
+
+It is available in this plugin to install on your website, very simply, a Web Push system to increase the reach of your communication and send messages that are really open in your customers browser! And you can even choose the categories, tags or products you want to customize the content and send it by email or Web Push to your subscribers or customers!
+
+**Use Woocommerce?**
+
+So be sure to enable Track & Engage system to track all customer behavior in your e-commerce and then take the advantage of run real-time campaigns! (ex: abandoned cart, retargeting, up selling and cross selling, etc)
+
 100% adjustable forms subscription Plugin, Widget, Popup with multiple configurations, Contact Form 7, integrates with E-goi system: Newsletters, SMS and all kinds of automation for e-commerce and bloggers.
 
 **What you get**
-
+* 100% Free
 * WP/E-goi contact sync-up
 * Quick sign-up bar
 * Full sign-up bar customisation
@@ -27,6 +77,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * Easy E-goi/WP field mapping; send anything over to E-goi!
 * Web Push Notifications
 * RSS Feed
+* Gutenberg E-goi Block
+
+**Add-on**
+
+[SMS Orders Alert/Notifications for WooCommerce plugin.](https://pt.wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/ "SMS Orders Alert/Notifications for WooCommerce")
+
+**Requirements**
+
+Do you need an E-goi account ? [Click and create a free E-goi account](https://login.egoiapp.com/signup "Create E-goi account")
 
 = User Guide WordPress and WooCommerce =
 
@@ -55,7 +114,7 @@ Now the plugin is ready to be configured and waiting for your users newsletter s
 == Frequently Asked Questions ==
 
 = Which PHP version this plugin is compatible? =
-This plugin is compatible with PHP Version 5.3.0 and above.
+This plugin is compatible with PHP Version 5.6 and above.
 
 = This plugin integrates with WooCommerce, but which version this plugin is compatible? =
 This plugin is compatible with WooCommerce Version 2.6 and above.
@@ -74,11 +133,13 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Screenshots ==
 
-1. Subscribers Config Page
+1. Dashboard Page
 2. Subscriber Bar Config Page
 3. Forms Config Page
 4. Widgets Config Page
 5. Integrations Config Page
+6. Subscribers Config Page
+7. RSS Feed Page
 
 
 == Changelog ==
