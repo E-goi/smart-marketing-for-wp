@@ -784,7 +784,13 @@ class Egoi_For_Wp_Admin {
 			foreach($woocommerce->cart->get_cart() as $k => $product){
 
 				$product_info = wc_get_product($product['data']->get_id());
-				$price = get_post_meta($product['product_id'], '_sale_price', true) ?: get_post_meta($product['product_id'], '_regular_price', true);
+				if (get_post_meta($product['product_id'], '_sale_price', true)) {
+                    $price = get_post_meta($product['product_id'], '_sale_price', true);
+                } else if (get_post_meta($product['product_id'], '_regular_price', true)) {
+                    $price = get_post_meta($product['product_id'], '_regular_price', true);
+                } else {
+                    $price = get_post_meta($product['product_id'], '_price', true);
+                }
 
 				$products[$k]['id'] = $product['product_id'];
 				$products[$k]['name'] = $product_info->get_title();
@@ -871,13 +877,18 @@ class Egoi_For_Wp_Admin {
 					$products = array();
 					foreach($items as $k => $item){
 
-						$sale_price = get_post_meta($item['product_id'] , '_sale_price', true);
-						$regular_price = get_post_meta($item['product_id'] , '_regular_price', true);
+                        if (get_post_meta($product['product_id'], '_sale_price', true)) {
+                            $price = get_post_meta($product['product_id'], '_sale_price', true);
+                        } else if (get_post_meta($product['product_id'], '_regular_price', true)) {
+                            $price = get_post_meta($product['product_id'], '_regular_price', true);
+                        } else {
+                            $price = get_post_meta($product['product_id'], '_price', true);
+                        }
 
 						$products[$k]['id'] = $item['product_id'];
 						$products[$k]['name'] = $item['name'];
 						$products[$k]['cat'] = ' - ';
-						$products[$k]['price'] = $sale_price ?: $regular_price;
+						$products[$k]['price'] = $price;
 						$products[$k]['quantity'] = $item['qty'];
 					}
 
@@ -918,16 +929,18 @@ class Egoi_For_Wp_Admin {
         $te_user_id = $this->smsnf_check_te_user_id();
         $te = get_option('egoi_te_session_cart_'.$te_user_id);
 
-		if(isset($te) && $te){
+		if((isset($te) && $te) || get_option('egoi_te_session_cart_on')){
 
-			$option = 'egoi_track_addtocart_'.$te;
+		    $option = isset($te) && $te ? 'egoi_track_addtocart_'.$te : 'egoi_track_addtocart_on';
 
 			$content = get_option($option);
 
 			echo html_entity_decode($content[0], ENT_QUOTES);
 
-			delete_option($option);
+			delete_option('egoi_track_addtocart_'.$te);
+            delete_option('egoi_track_addtocart_on');
 			delete_option('egoi_te_session_cart_'.$te_user_id);
+            delete_option('egoi_te_session_cart_on');
 
 			return false;
 		}
@@ -946,15 +959,18 @@ class Egoi_For_Wp_Admin {
 		if (!isset($_GET['key']) || substr($_GET['key'], 0, 8) != 'wc_order'){
             $te_user_id = $this->smsnf_check_te_user_id();
 		    $te_order_id = get_option('egoi_te_order_id_'.$te_user_id);
-			if(isset($te_order_id) && $te_order_id){
+			if((isset($te_order_id) && $te_order_id) || get_option('egoi_te_order_id_on')){
 
-				$order_id = $te_order_id;
+			    $order_id = isset($te_order_id) && $te_order_id ? $te_order_id : 'on';
+
 				$content = get_option('egoi_track_order_'.$order_id);
 
 				echo html_entity_decode($content[0], ENT_QUOTES);
-				delete_option('egoi_track_order_'.$order_id);
 
+				delete_option('egoi_track_order_'.$order_id);
 				delete_option('egoi_te_order_id_'.$te_user_id);
+                delete_option('egoi_track_order_on');
+                delete_option('egoi_te_order_id_on');
 
 				return false;
 			}
@@ -1945,16 +1961,33 @@ class Egoi_For_Wp_Admin {
     }
 
     public function smsnf_check_te_user_id() {
+
         foreach ($_COOKIE as $key => $value) {
             if (strpos($key, 'wp_woocommerce_session_') !== false) {
                 $wc_session = explode("||", $_COOKIE[$key]);
                 return $wc_session[0];
             }
         }
-        return false;
+
+        $current_user = wp_get_current_user();
+        if (isset($current_user->ID) && $current_user->ID) {
+            return $current_user->ID;
+        }
+
+        setcookie('egoi_te_cart_session', 'on');
+        return 'on';
+
     }
 
-
+    public function smsnf_generate_random_string($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 
 
     /**
