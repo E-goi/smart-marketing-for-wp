@@ -176,8 +176,15 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
-		wp_enqueue_style('wp-color-picker');
+		//only load CSS on smart marketing pages or in pages with smart marketing elements
+		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
+            strpos(get_current_screen()->id, 'widgets') !== false ||
+            strpos(get_current_screen()->id, 'shop-order') !== false
+        ) {
+
+			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style('wp-color-picker');
+		}
 	}
 
 	/**
@@ -186,38 +193,46 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
 
-		wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'));
-		wp_enqueue_script('custom-script1');
+		//only load CSS on smart marketing pages or in pages with smart marketing elements
+		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
+            strpos(get_current_screen()->id, 'widgets') !== false ||
+            strpos(get_current_screen()->id, 'shop-order') !== false
+        ) {
 
-		wp_register_script('custom-script2', plugin_dir_url(__FILE__) . 'js/forms.min.js', array('jquery'));
-		wp_enqueue_script('custom-script2');
+			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
 
-		wp_register_script('custom-script3', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-map.js', array('jquery'));
-		wp_enqueue_script('custom-script3');
+			wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'));
+			wp_enqueue_script('custom-script1');
 
-		wp_register_script('custom-script4', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-widget.js', array('jquery'));
-		wp_enqueue_script('custom-script4');
+			wp_register_script('custom-script2', plugin_dir_url(__FILE__) . 'js/forms.min.js', array('jquery'));
+			wp_enqueue_script('custom-script2');
 
-		wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
-		wp_enqueue_script('custom-script5');
+			wp_register_script('custom-script3', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-map.js', array('jquery'));
+			wp_enqueue_script('custom-script3');
+
+			wp_register_script('custom-script4', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-widget.js', array('jquery'));
+			wp_enqueue_script('custom-script4');
+
+			wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
+			wp_enqueue_script('custom-script5');
 
 
-		wp_enqueue_script('wp-color-picker');
+			wp_enqueue_script('wp-color-picker');
 
-		wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
+			wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
 
-        wp_enqueue_script( 'smsnf-notifications-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
-        wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
+	        wp_enqueue_script( 'smsnf-notifications-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
+	        wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
 
-        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
-            wp_register_script('chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js');
-            wp_enqueue_script('chartjs');
+	        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
+	            wp_register_script('chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js');
+	            wp_enqueue_script('chartjs');
 
-            wp_enqueue_script( 'smsnf-dashboard-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-dashboard.js', array('jquery') );
-            wp_localize_script( 'smsnf-dashboard-ajax-script', 'smsnf_dashboard_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
-        }
+	            wp_enqueue_script( 'smsnf-dashboard-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-dashboard.js', array('jquery') );
+	            wp_localize_script( 'smsnf-dashboard-ajax-script', 'smsnf_dashboard_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
+	        }
+    	}
 	}
 
 	/**
