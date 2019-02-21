@@ -179,7 +179,8 @@ class Egoi_For_Wp_Admin {
 		//only load CSS on smart marketing pages or in pages with smart marketing elements
 		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'widgets') !== false ||
-            strpos(get_current_screen()->id, 'shop-order') !== false
+            strpos(get_current_screen()->id, 'shop-order') !== false ||
+            strpos(get_current_screen()->id, 'dashboard') !== false
         ) {
 
 			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
@@ -197,7 +198,8 @@ class Egoi_For_Wp_Admin {
 		//only load CSS on smart marketing pages or in pages with smart marketing elements
 		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'widgets') !== false ||
-            strpos(get_current_screen()->id, 'shop-order') !== false
+            strpos(get_current_screen()->id, 'shop-order') !== false ||
+            strpos(get_current_screen()->id, 'dashboard') !== false
         ) {
 
 			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
