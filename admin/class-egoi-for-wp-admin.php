@@ -183,7 +183,7 @@ class Egoi_For_Wp_Admin {
             strpos(get_current_screen()->id, 'dashboard') !== false
         ) {
 
-			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );//mudar min
+			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style('wp-color-picker');
 		}
 	}
