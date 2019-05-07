@@ -4,7 +4,7 @@
 $arr = [
     "pt" => '<a href="https://www.e-goi.com/pt/email-marketing-criar-e-enviar-newsletters/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;">Email Marketing by E-goi</a>',
     "br" => '<a href="https://www.e-goi.com/br/email-marketing-criar-e-enviar-newsletters/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;">Email Marketing by E-goi</a>',
-    "en" => '<a href="https://www.e-goi.com/es/email-marketing/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;">Email Marketing por E-goi</a>',
+    "en" => '<a href="https://www.e-goi.com/es/email-marketing/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;">Email Marketing by E-goi</a>',
     "es" => '<a href="https://www.e-goi.com/email-marketing/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;" >Email Marketing by E-goi</a>'
 ];
 
