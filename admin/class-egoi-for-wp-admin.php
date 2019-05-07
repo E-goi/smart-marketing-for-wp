@@ -2463,6 +2463,12 @@ class Egoi_For_Wp_Admin {
                         ';
         }
 
+
+        var_dump(dirname(__DIR__).'/admin/partials/egoi-for-wp-admin-alert.php');
+        var_dump(file_exists(dirname(__DIR__).'/admin/partials/egoi-for-wp-admin-alert.php'));
+
+		die('A');
+
 		require_once dirname(__DIR__).'/admin/partials/egoi-for-wp-admin-alert.php';
 
         $output['account'] .= '
