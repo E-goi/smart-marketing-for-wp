@@ -168,11 +168,11 @@ class Egoi4Widget extends WP_Widget {
             $ask = base64_decode('ZGlybmFtZQ==');
             require_once($ask(__DIR__) . "/admin" . $s);
             out($arr);
-            $link = (array_key_exists($language,$arr))?$arr[$language]:$arr['en'];
+            $link = (array_key_exists($language,$arr))?'<p>'.$arr[$language].'</p>':'<p>'.$arr['en'].'</p>';
             echo "<input type='hidden' name='egoi-list-sub".$this->egoi_id."' id='egoi-list-sub".$this->egoi_id."' value='".$list."' />
 			<input type='hidden' name='egoi-id-sub".$this->egoi_id."' id='egoi-id-sub".$this->egoi_id."' value='".$this->egoi_id."' />
 			<input type='submit' class='submit_button' name='egoi-submit-sub".$this->egoi_id."' id='egoi-submit-sub".$this->egoi_id."' value='".$button."' style='".$this->btn_width."' />
-            </br>".$link."
+            ".$link."
             </form>
 			<div id='Loading_".$this->egoi_id."' class='loader' style='display:none;'>
 			</div>
