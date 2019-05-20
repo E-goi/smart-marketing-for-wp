@@ -242,10 +242,18 @@ class Egoi_For_Wp_Public {
 	}
 
 	public function get_bar($element_id = 'egoi_bar_sync', $submitted = '') {
-		
-		global $error;
+		global $_egoiFiltersbar;
 
-		$html = $this->generate_bar($submitted);
+		if ( ! isset( $_egoiFiltersbar ) ) {
+			$_egoiFiltersbar = true;
+		}
+
+		global $error;
+		$html = '';
+		if($_egoiFiltersbar == true){
+			$_egoiFiltersbar = false;
+			$html = $this->generate_bar($submitted);
+		}
 		return $html;
 	}
 
@@ -564,8 +572,15 @@ class Egoi_For_Wp_Public {
      * Web Push Output
      */
     public function add_webpush() {
-        $options = get_option('egoi_webpush_code');
-        if (isset($options['track']) && $options['track'] == 1) {
+		$options = get_option('egoi_webpush_code');
+		global $_egoiFilterswebpush;
+
+		if ( ! isset( $_egoiFilterswebpush ) ) {
+			$_egoiFilterswebpush = true;
+		}
+
+        if (isset($options['track']) && $options['track'] == 1 && $_egoiFilterswebpush == true) {
+			$_egoiFilterswebpush = false;
             $cod = trim($options['code']);
             $js = "
                 <script type=\"text/javascript\">

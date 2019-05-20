@@ -4,11 +4,20 @@ if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
 
+global $_egoiFilterstrack;
+
+if ( ! isset( $_egoiFilterstrack ) ) {
+	$_egoiFilterstrack = true;
+}
+if($_egoiFilterstrack == false)
+	return '';
+
+$_egoiFilterstrack = false;
 $te = "
 		<script type='text/javascript'>
 			var _egoiaq = _egoiaq || [];
 			(function(){
-			var u=((\"https:\" == document.location.protocol) ? \"https://te.e-goi.com/\" : \"http://te.e-goi.com/\");
+			var u=((\"https:\" == document.location.protocol) ? \"https://egoimmerce.e-goi.com/\" : \"http://egoimmerce.e-goi.com/\");
 			_egoiaq.push(['setClientId', \"$client_id\"]);
 			_egoiaq.push(['setListId', \"$list_id\"]);
 			_egoiaq.push(['setSubscriber', \"$user_email\"]);
