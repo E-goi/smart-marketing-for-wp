@@ -1,5 +1,6 @@
 <?php
 require_once(ABSPATH . '/wp-admin/includes/plugin.php');
+require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.php');
 
 /**
  * The admin-specific functionality of the plugin.
@@ -199,7 +200,8 @@ class Egoi_For_Wp_Admin {
 		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'widgets') !== false ||
             strpos(get_current_screen()->id, 'shop-order') !== false ||
-            strpos(get_current_screen()->id, 'dashboard') !== false
+            strpos(get_current_screen()->id, 'dashboard') !== false ||
+            strpos(get_current_screen()->id, 'rssfeed') !== false
         ) {
 
 			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
@@ -223,6 +225,12 @@ class Egoi_For_Wp_Admin {
 			wp_enqueue_script('wp-color-picker');
 
 			wp_localize_script($this->plugin_name, 'url_egoi_script', array('ajaxurl' => admin_url('admin-ajax.php')));
+
+            wp_enqueue_script(  $this->plugin_name, 'egoi-for-wp-rssfeed-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-rssfeed.js', array('jquery') );
+            wp_localize_script( $this->plugin_name, 'egoi_config_ajax_object', array(
+                'ajax_url' => admin_url( 'admin-ajax.php' ),
+                'ajax_nonce' => wp_create_nonce('egoi_create_campaign'),
+            ) );
 
 	        wp_enqueue_script( 'smsnf-notifications-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
 	        wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
@@ -1347,10 +1355,15 @@ class Egoi_For_Wp_Admin {
     }
 
     public function get_lists() {
-
+        $options = get_option('egoi_sync');
         if(!empty($_POST)){
             $api = new Egoi_For_Wp();
-            echo json_encode($api->getLists($_POST['listID']));
+            if(!empty($options['list'])){
+                $a = json_encode($api->getLists($_POST['listID']));
+                echo json_encode(array_merge(json_decode($a,true),['default'=>$options['list']]));
+            }
+            else
+                echo json_encode($api->getLists($_POST['listID']));
         }
         wp_die();
     }
@@ -1658,7 +1671,7 @@ class Egoi_For_Wp_Admin {
     }
 
     public function egoi_rss_feeds_content() {
-
+        $maxItems = 20;
         $feed = filter_var($_GET['feed'], FILTER_SANITIZE_STRING);
         $feed_configs = get_option($feed);
 
@@ -1671,9 +1684,9 @@ class Egoi_For_Wp_Admin {
         $args = $this->get_egoi_rss_feed_args($feed_configs);
 
         $query = new WP_Query( $args );
-
-        while ( $query->have_posts() ) : $query->the_post();
-
+        $count = 0;
+        while ( $query->have_posts() && $count <= $maxItems) : $query->the_post();
+            $count++;
             $description = $this->egoi_rss_feed_description(get_the_excerpt(), $feed_configs['max_characters']);
 
             $all_content = implode(' ', get_extended(  get_post_field( 'post_content', get_the_ID() ) )) ;
@@ -2251,6 +2264,94 @@ class Egoi_For_Wp_Admin {
 
         }
         return $reports;
+    }
+
+    public function egoi_deploy_rss(){
+        check_ajax_referer( 'egoi_create_campaign', 'security' );
+
+        if(!isset($_POST['campaing_hash']))
+            return;
+
+        $apikey = $this->get_apikey();
+        if(empty($apikey))
+            wp_die();
+
+        $api = new EgoiApiV3($apikey);
+
+        echo $api->deployEmailRssCampaign(trim($_POST['campaing_hash']));
+        wp_die();
+    }
+
+    public function egoi_get_email_senders(){
+        check_ajax_referer( 'egoi_create_campaign', 'security' );
+
+        $apikey = $this->get_apikey();
+        if(empty($apikey))
+            wp_die();
+
+        $api = new EgoiApiV3($apikey);
+
+        echo $api->getSenders();
+        wp_die();
+    }
+
+    public function egoi_rss_campaign(){
+        check_ajax_referer( 'egoi_create_campaign', 'security' );
+
+        $apikey = $this->get_apikey();
+        if(empty($apikey))
+            wp_die();
+
+        $api = new EgoiApiV3($apikey);
+
+        echo $api->createEmailRssCampaign([
+            'list_id'       => trim($_POST['list']),
+            'internal_name' => filter_var($_POST['subject'], FILTER_SANITIZE_STRING),
+            'subject'       => filter_var($_POST['subject'], FILTER_SANITIZE_STRING),
+            'sender_id'     => trim($_POST['sender']),
+            'reply_to'      => trim($_POST['sender']),
+            'content'       => [
+                'feed'          => get_site_url().'/?feed='.trim($_POST['feed']),
+                'body'          => $this->get_themes($_POST, 0),
+                'items_page'    => trim($_POST['items']),
+                'snippet'       => filter_var($_POST['snippet'], FILTER_SANITIZE_STRING)
+            ]
+        ]);
+
+        wp_die();
+    }
+
+    private function get_apikey(){
+        $apikey = get_option('egoi_api_key');
+        if(!empty($apikey['api_key']))
+            return $apikey['api_key'];
+        return false;
+    }
+
+    private function get_themes($data,$id){
+        $themes = [
+                '<head><style rel="stylesheet" type="text/css">@media only screen and (min-device-width:320px) and (max-device-width:374px){.email-container{min-width:320px!important}}@media only screen and (min-device-width:375px) and (max-device-width:413px){.email-container{min-width:375px!important}}@media only screen and (min-device-width:414px){.email-container{min-width:414px!important}}@media screen and (max-width:600px){.email-container{width:100%!important;margin:auto!important}.fluid{max-width:100%!important;height:auto!important;margin-left:auto!important;margin-right:auto!important}.stack-column,.stack-column-center{display:block!important;width:100%!important;max-width:100%!important;direction:ltr!important}.stack-column-center{text-align:center!important}.center-on-narrow{text-align:center!important;display:block!important;margin-left:auto!important;margin-right:auto!important;float:none!important}table.center-on-narrow{display:inline-block!important}}@media only screen and (max-width:600px){.email-container{width:95%!important;min-width:0!important}table.button.small-expanded{width:100%}img.fluid{height:auto!important}td.columns,th.columns{box-sizing:border-box!important;padding:0!important;display:block!important;width:100%!important}td.columns.first,th.columns.first{padding-bottom:20px!important;padding-right:0!important}td.columns.middle,th.columns.middle{padding-bottom:20px!important}td.columns.last,th.columns.last{padding-left:0!important}}</style></head><body width="100%" style="padding: 0px; height: 100%; width: 100%; margin: 0px;"><div><div class="eb-mail-content"><table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto; background-color: rgb(246, 246, 246); background-position: center center; background-repeat: no-repeat; background-size: cover;"><tbody class="cerberus-tbody"><tr id="687fb1ca-c1df-5d67-abee-f489781379b9"><td class="td-container" style="font-size: 0px; background-color: transparent;" valign="top" align="center"><div class="builder-actions-control selected"><table border="0" cellpadding="0" cellspacing="0" class="email-container" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: auto;" width="600" align="center" data-compile="true"><tbody><tr><td dir="ltr" valign="top" width="100%" bgcolor="#ffffff" style="background-color: rgb(255, 255, 255); padding: 20px;"><table border="0" cellpadding="0" cellspacing="0" class="row" width="100%" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><th class="stack-column-center columns" valign="top" width="100%" style="font-weight: 400;"><table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td dir="ltr" style="padding: 0px;" valign="top"><table data-control="title" width="100%" class="title-2737e91862c675f0670c27ebc7fd9629" id="2737e918-62c6-75f0-670c-27ebc7fd9629" data-compile="true" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td  style="font-family: Arial; font-size: 24px; color: rgb(0, 0, 0); text-align: center; line-height: 150%;"><p style="font-family: Arial; font-size: 24px; color: rgb(0, 0, 0); line-height: 150%; text-align: center; padding-top: 0px; padding-bottom: 0px; margin: 0px;">{{AMAZING_TITLE}}</p></td></tr></tbody></table></td></tr></tbody></table></th></tr></tbody></table></td></tr></tbody></table></div></td></tr><tr id="e987dc3c-4bdb-04e0-6837-db88648faee0"><td class="td-container" style="font-size: 0px; background-color: transparent;" valign="top" align="center">{{FEEDBLOCK:https://localhost/}}{{FEEDITEMS:count=4}}<div class="builder-actions-control selected"><table border="0" cellpadding="0" cellspacing="0" class="email-container" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: auto;" width="600" align="center" data-compile="true"><tbody><tr><td dir="ltr" valign="top" width="100%" bgcolor="#ffffff" style="background-color: rgb(255, 255, 255); padding: 20px;"><table border="0" cellpadding="0" cellspacing="0" class="row" width="100%" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><th class="stack-column-center columns first" valign="top" width="33.333333333333336%" style="font-weight: 400; padding-right: 8px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td dir="ltr" style="padding: 0px;" valign="top"><table border="0" cellpadding="0" cellspacing="0" class="builder-image-control image-6cbc6cd4b0f6c869b1d651e4288caa1c" data-control="image" width="100%" data-compile="true" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td valign="top" style=""><table border="0" cellpadding="0" cellspacing="0" align="center" width="" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td style="border: 0px;"><a href="{{FEEDITEM:LINK}}"><img align="center" border="0" class="float-center fluid" style="display: block; margin: 0px auto; height: auto; max-width: 179px; border: 0px !important; outline: none !important; text-decoration: none !important;" src="{{FEEDITEM:IMAGE}}" alt="beanie-768x768" height="179" width="179"></a></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></th><th class="stack-column-center columns last" valign="top" width="66.66666666666667%" style="font-weight: 400; padding-left: 8px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td dir="ltr" style="padding: 0px;" valign="top"><table data-control="title" width="100%" class="title-641c2ce04833885b026fd1e0f46c2973" id="641c2ce0-4833-885b-026f-d1e0f46c2973" data-compile="true" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td style=""><p style="font-family: Arial; font-size: 24px; color: rgb(0, 0, 0); line-height: 150%; text-align: left; padding-top: 0px; padding-bottom: 0px; margin: 0px;">{{FEEDITEM:TITLE}}</p></td></tr></tbody></table><table data-control="paragraph" width="100%" class="paragraph-12fc4dd322cf0a3cd43032e85db67593" id="12fc4dd3-22cf-0a3c-d430-32e85db67593" data-compile="true" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td class="undefined" style=""><p style="font-family: Arial; font-size: 16px; color: rgb(109, 109, 109); line-height: 200%; text-align: left; padding-top: 0px; padding-bottom: 0px; margin: 0px; overflow: hidden;">{{FEEDITEM:DESCRIPTION}}</p></td></tr></tbody></table></td></tr></tbody></table></th></tr></tbody></table></td></tr></tbody></table></div>{{ENDFEEDITEMS}}{{ENDFEEDBLOCK}}</td></tr><tr id="07eec34e-72ec-1069-951d-75713aab2bf8"><td class="td-container" style="font-size: 0px; background-color: transparent;" valign="top" align="center"><div class="builder-actions-control selected"><table border="0" cellpadding="0" cellspacing="0" class="email-container" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: auto;" width="600" align="center" data-compile="true"><tbody><tr><td dir="ltr" valign="top" width="100%" bgcolor="#ffffff" style="background-color: rgb(255, 255, 255); padding: 20px;"><table border="0" cellpadding="0" cellspacing="0" class="row" width="100%" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><th class="stack-column-center columns" valign="top" width="100%" style="font-weight: 400;"><table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td dir="ltr" style="padding: 0px;" valign="top"><table data-control="paragraph" width="100%" class="paragraph-5863dda6b90eb8c8cd500f9eca79836d" id="5863dda6-b90e-b8c8-cd50-0f9eca79836d" data-compile="true" style="border-spacing: 0px; border-collapse: collapse; table-layout: fixed; margin: 0px auto;"><tbody><tr><td  style=""><p style="font-family: Arial; font-size: 16px; color: rgb(109, 109, 109); line-height: 200%; text-align: left; padding-top: 0px; padding-bottom: 0px; margin: 0px; overflow: hidden;">{{AMAZING_TEXT_AFTER}}</p></td></tr></tbody></table></td></tr></tbody></table></th></tr></tbody></table></td></tr></tbody></table></div></td></tr></tbody></table></div></div></body>'
+        ];
+
+        $themes[$id] = $this->replaceTitle(
+            ! empty($data['title'])?$data['title']:'Newsletter',
+            $themes[$id]
+        );
+
+        $themes[$id] = $this->replaceTextAfter(
+            ! empty($data['text_after'])?$data['text_after']:'',
+            $themes[$id]
+        );
+
+        return $themes[$id];
+    }
+
+    private function replaceTitle($string, $theme){
+        return str_replace('{{AMAZING_TITLE}}',$string, $theme);
+    }
+
+    private function replaceTextAfter($string, $theme){
+        return str_replace('{{AMAZING_TEXT_AFTER}}', $string, $theme);
     }
 
     public function smsnf_show_last_campaigns_reports() {

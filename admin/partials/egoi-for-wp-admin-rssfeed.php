@@ -96,6 +96,127 @@ if (isset($_GET['del'])) {
             <a href="<?php echo $this->prepareUrl('&add=1');?>" class='button-primary'><?php _e('Create RSS Feed +', 'egoi-for-wp');?></a>
         </p>
     </div>
+<style>
+    .egoi_create_campaign_table{
+        display: none;
+    }
+</style>
+    <div class="wrap-content wrap-content--list">
+
+        <div class="e-goi-account-list__title">
+            <?php echo __('RSS Campaign Creator', 'egoi-for-wp'); ?>
+        </div>
+
+        <p class="nav-tab-wrapper">
+            <a class="nav-tab nav-tab-addon nav-tab-active" id="nav-tab-email-rss">
+                <?php _e('Email', 'egoi-for-wp'); ?>
+            </a>
+        </p>
+        <div class="wrap tab wrap-addon" id="tab-email-rss">
+            <table border='0' class="form form-table">
+                <tr valign="top">
+                    <th scope="row">
+                        <label><?php echo __('RSS Feed', 'egoi-for-wp'); ?></label>
+                    </th>
+                    <td>
+                        <select id="egoi_add_campaign" style="height: 28px !important;width: 100%;box-sizing: border-box;float: left;">
+                            <option value="0"><?php _e('Select an feed...', 'egoi-for-wp'); ?></option>
+                            <?php foreach ($options as $option){
+                                $feed = get_option($option->option_name); ?>
+                                <option value="<?=$option->option_name; ?>"><?=$feed['name']?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr valign="top" class="egoi_create_campaign_table">
+                    <th scope="row" style="display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: space-between;padding: 15px 0px 10px 0!important;width: auto;">
+                        <div><span><?= __('List', 'egoi-for-wp');?> </span></div>
+                        <div class="text-right"><i class="loading" id="egoi_list_loading">x</i></div>
+                    </th>
+                    <td>
+                        <select id="egoi_list" style="height: 28px !important;width: 100%;box-sizing: border-box;float: left;">
+                            <option value="0"><?php _e('Select a list...', 'egoi-for-wp'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr valign="top" class="egoi_create_campaign_table">
+                    <th scope="row" style="display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: space-between;padding: 15px 0px 10px 0!important;width: auto;">
+                        <div><span><?= __('Sender', 'egoi-for-wp');?> </span></div>
+                        <div class="text-right"><i class="loading" id="egoi_senders_loading">x</i></div>
+                    </th>
+                    <td>
+                        <select id="egoi_senders" style="height: 28px !important;width: 100%;box-sizing: border-box;float: left;">
+                            <option value="0"><?php _e('Select a sender...', 'egoi-for-wp'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr valign="top" class="egoi_create_campaign_table">
+                    <th scope="row">
+                        <span><?= __('Subject', 'egoi-for-wp');?></span>
+                    </th>
+                    <td>
+                        <input class = "form-control" type="text" style="width:100%;" id="campaign_subject" name="campaign_subject" placeholder="<?= __('Choose a subject for your campaign', 'egoi-for-wp');?>" value="" required/>
+                    </td>
+                </tr>
+
+                <tr valign="top" class="egoi_create_campaign_table">
+                    <th scope="row">
+                        <span><?= __('Snippet', 'egoi-for-wp');?> </span><a class="egoi_tooltip" id="help_snippet"><i class="qtip tip-right" data-tip=" <?= __('This is the small email\'s resume', 'egoi-for-wp'); ?>">?</i></a>
+                    </th>
+                    <td>
+                        <input class = "form-control" type="text" style="width:100%;" id="campaign_snippet" name="campaign_snippet" placeholder="<?= __('Choose a snippet for your campaign', 'egoi-for-wp');?>" value="" required/>
+                    </td>
+                </tr>
+
+                <tr valign="top" class="egoi_create_campaign_table">
+                    <th scope="row">
+                        <span><?= __('Title', 'egoi-for-wp');?> </span>
+                    </th>
+                    <td>
+                        <input class = "form-control" type="text" style="width:100%;" id="campaign_title" name="campaign_title" placeholder="<?= __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required/>
+                    </td>
+                </tr>
+
+                <tr valign="top" class="egoi_create_campaign_table">
+                    <th scope="row">
+                        <span><?= __('Items per Email', 'egoi-for-wp');?> </span>
+                    </th>
+                    <td>
+                        <div class="input-group number-spinner">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" data-dir="dwn"><span class="fas fa-minus"></span></button>
+                            </span>
+                                        <input type="text" class="form-control text-center" value="5">
+                                        <span class="input-group-btn">
+                                <button class="btn btn-default" data-dir="up"><span class="fas fa-plus"></span></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr valign="top" class="egoi_create_campaign_table">
+                    <th scope="row">
+                        <p>
+                            <span id="egoi_create_campaign" class='button-primary'><?php _e('Create RSS Campaign +', 'egoi-for-wp');?></span>
+                            <i class="loading" id="egoi_create_campaign_loading" style="display: none;">x</i>
+                        </p>
+                    </th>
+                    <td>
+                        <input hidden value="" id="campaign_hash_deploy" />
+                        <input hidden value="" id="campaign_list_id_deploy" />
+
+                        <span id="egoi_edit_campaign" class='button-primary' style="display: none;"><?php _e('Edit Campaign in E-goi', 'egoi-for-wp');?></span>
+
+                        <span id="egoi_send_campaign" class='button-primary' style="display: none;"><?php _e('Send Campaign >', 'egoi-for-wp');?></span>
+                        <i class="loading" id="egoi_send_campaign_loading" style="display: none;">x</i>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 <?php } else if (isset($_GET['add']) || isset($_GET['edit'])) { ?>
 
@@ -318,6 +439,28 @@ if (isset($_GET['del'])) {
                                             </option>
                                         <?php } ?>
                                     </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr>
+                    <div>
+                        <p>
+                            <a class='button button--custom' id="egoi_toggle_create_campaign">
+                                <?php _e('Create RSS Campaign', 'egoi-for-wp');?>
+                                <i class="fas fa-arrow-down" id="egoi_campaign_arrow"></i>
+                            </a>
+
+                        </p>
+                        <table class="form-table" style="table-layout: fixed;display: none;" id="egoi_create_campaign">
+                            <tr valign="top">
+                                <th scope="row">
+                                    <label><?php _e( 'Subject', 'egoi-for-wp' ); ?></label>
+                                </th>
+                                <td>
+                                    <input type="text" style="width:90%;" id="name" name="name"
+                                           placeholder="<?php _e( 'Choose a name for your new RSS Feed', 'egoi-for-wp' ); ?>"
+                                           value="<?php echo isset($feed) ? $feed['name'] : null; ?>" required />
                                 </td>
                             </tr>
                         </table>

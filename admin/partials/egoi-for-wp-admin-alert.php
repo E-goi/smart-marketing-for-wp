@@ -60,7 +60,7 @@ if(array_filter($arr)){
         </div>
 
         <div id="text" style="width:80%">
-            <p class="subtitle">'.__('Remove Email Markting by Egoi', 'egoi-for-wp').'</p>
+            <p class="subtitle">'.__('Remove Email Marketing by E-goi', 'egoi-for-wp').'</p>
             <p class="sub-subtitle">'.__('Available only with', 'egoi-for-wp').' <a href="https://www.e-goi.com/pricing/" target="_blank">'.__('Egoi paid plan »', 'egoi-for-wp').'</a></p>
         </div>
 
