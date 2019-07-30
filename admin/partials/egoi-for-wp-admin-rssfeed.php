@@ -443,28 +443,6 @@ if (isset($_GET['del'])) {
                             </tr>
                         </table>
                     </div>
-                    <hr>
-                    <div>
-                        <p>
-                            <a class='button button--custom' id="egoi_toggle_create_campaign">
-                                <?php _e('Create RSS Campaign', 'egoi-for-wp');?>
-                                <i class="fas fa-arrow-down" id="egoi_campaign_arrow"></i>
-                            </a>
-
-                        </p>
-                        <table class="form-table" style="table-layout: fixed;display: none;" id="egoi_create_campaign">
-                            <tr valign="top">
-                                <th scope="row">
-                                    <label><?php _e( 'Subject', 'egoi-for-wp' ); ?></label>
-                                </th>
-                                <td>
-                                    <input type="text" style="width:90%;" id="name" name="name"
-                                           placeholder="<?php _e( 'Choose a name for your new RSS Feed', 'egoi-for-wp' ); ?>"
-                                           value="<?php echo isset($feed) ? $feed['name'] : null; ?>" required />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
                     <?php submit_button(); ?>
                 </form>
             </div>
