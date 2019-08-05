@@ -13,13 +13,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class EgoiApiV3
 {
-    const APIV3     = 'https://api.egoiapp.com';
+    const APIV3     = 'https://dev-api.egoiapp.com';//TODO:CHANGE THIS TO PROD
     const PLUGINKEY = '908361f0368fd37ffa5cc7c483ffd941';
     const APIURLS   = [
         'deployEmailRssCampaign'    => '/campaigns/email/rss/{campaign_hash}/actions/send',
         'createEmailRssCampaign'    => '/campaigns/email/rss',
         'getSenders'                => '/senders/{channel}?status=active',
-        'getLists'                  => '/lists?limit=10&order=desc&order_by=list_id'
+        'getLists'                  => '/lists?limit=10&order=desc&order_by=list_id',
+        'createWebPushRssCampaign'  => '/campaigns/webpush/rss',
+        'deployWebPushRssCampaign'  => '/campaigns/webpush/rss/{campaign_hash}/actions/send',
+        'getWebPushSites'           => '/webpush/site',
     ];
     protected $apiKey;
     protected $headers;
@@ -27,6 +30,67 @@ class EgoiApiV3
     {
         $this->apiKey = $apiKey;
         $this->headers = ['ApiKey: '.$this->apiKey,'PluginKey: '.self::PLUGINKEY,'Content-Type: application/json'];
+    }
+
+    /**
+     * @param $data
+     * @return false|string
+     */
+    public function createWebPushRssCampaign($data){
+
+        $client = new ClientHttp(
+            self::APIV3.self::APIURLS[__FUNCTION__],
+            'POST',
+            $this->headers,
+            json_encode($data)
+        );
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        return $client->getCode()==200
+            ?$client->getResponse()
+            :$this->processErrors($client->getResponse());
+    }
+
+    /**
+     * @param $id
+     * @return false|string
+     */
+    public function deployWebPushRssCampaign($id){
+        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],'{campaign_hash}', $id);
+        $client = new ClientHttp($path,'POST',
+            $this->headers,
+            json_encode([])
+        );
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        return $client->getCode()==200
+            ?$client->getResponse()
+            :$this->processErrors($client->getResponse());
+    }
+
+    public function getWebPushSites(){
+        $path = self::APIV3.self::APIURLS[__FUNCTION__];
+
+        $client = new ClientHttp(
+            $path,
+            'GET',
+            $this->headers
+        );
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+        return $client->getCode()==200 && isset($resp['items'])
+            ?json_encode($resp['items'])
+            :$this->processErrors();
     }
 
     /**
@@ -43,7 +107,7 @@ class EgoiApiV3
         );
 
         if($client->success() !== true){
-            return $this->processErrors('curl');
+            return $this->processErrors($client->getError());
         }
 
         return $client->getCode()==200
@@ -59,11 +123,12 @@ class EgoiApiV3
     public function deployEmailRssCampaign($id){
         $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],'{campaign_hash}', $id);
         $client = new ClientHttp($path,'POST',
-           $this->headers
+            $this->headers,
+            json_encode([])
         );
 
         if($client->success() !== true){
-            return $this->processErrors('curl');
+            return $this->processErrors($client->getError());
         }
 
         return $client->getCode()==200
@@ -84,7 +149,7 @@ class EgoiApiV3
         );
 
         if($client->success() !== true){
-            return $this->processErrors('curl');
+            return $this->processErrors($client->getError());
         }
         $resp = json_decode($client->getResponse(),true);
         return $client->getCode()==200 && isset($resp['items'])
@@ -104,7 +169,7 @@ class EgoiApiV3
         );
 
         if($client->success() !== true){
-            return $this->processErrors('curl');
+            return $this->processErrors($client->getError());
         }
 
         $resp = json_decode($client->getResponse(),true);

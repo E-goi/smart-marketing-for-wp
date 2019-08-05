@@ -53,22 +53,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</p>
 
 	<h2 class="nav-tab-wrapper" id="egoi-tabs">
-		<a class="nav-tab nav-tab-forms nav-tab-active" id="nav-tab-forms" 
-		onclick="tabs('show_forms');"><?php _e('Advanced Forms', 'egoi-for-wp'); ?></a>
+		<a class="nav-tab nav-tab-addon nav-tab-forms nav-tab-active" id="nav-tab-forms"><?php _e('Advanced Forms', 'egoi-for-wp'); ?></a>
 
-		<a class="nav-tab nav-tab-simple-forms" id="nav-tab-simple-forms" 
-		onclick="tabs('show_simple_forms');"><?php _e('Simple Forms', 'egoi-for-wp'); ?></a>
+		<a class="nav-tab nav-tab-addon nav-tab-simple-forms" id="nav-tab-simple-forms"><?php _e('Simple Forms', 'egoi-for-wp'); ?></a>
 
-		<a class="nav-tab nav-tab-main-bar" id="nav-tab-main-bar" 
-		onclick="tabs('show_bar');"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a>
+		<a class="nav-tab nav-tab-addon nav-tab-main-bar" id="nav-tab-main-bar"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a>
 
-		<a class="nav-tab nav-tab-widget" id="nav-tab-widget" 
-		onclick="tabs('show_widget');"><?php _e('Widget Options', 'egoi-for-wp'); ?></a>
+		<a class="nav-tab nav-tab-addon nav-tab-widget" id="nav-tab-widget"><?php _e('Widget Options', 'egoi-for-wp'); ?></a>
 	</h2>
 	
 
 	<!-- wrap Forms -->
-	<div class="wrap egoi4wp-settings" id="tab-forms">
+	<div class="wrap wrap-addon egoi4wp-settings" id="tab-forms">
 		<div class="row">
 		<?php
 		if(isset($_GET['form']) && ($_GET['type']) && ($_GET['form'] <= 5)){
@@ -456,17 +452,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<!-- wrap Simple Forms -->
-	<div class="wrap eg-tab" id="tab-simple-forms">
+	<div class="wrap wrap-addon eg-tab" id="tab-simple-forms">
 		<?php include ('egoi-for-wp-admin-simple-forms.php'); ?>
 	</div>
 
 	<!-- wrap Subscriber Bar -->
-	<div class="wrap eg-tab" id="tab-main-bar">
+	<div class="wrap wrap-addon eg-tab" id="tab-main-bar">
 		<?php include ('egoi-for-wp-admin-bar.php'); ?>
 	</div>
 
 	<!-- wrap Widget Options -->
-	<div class="wrap eg-tab" id="tab-widget">
+	<div class="wrap wrap-addon eg-tab" id="tab-widget">
 		<?php include ('egoi-for-wp-admin-widget.php'); ?>
 	</div>
 
@@ -483,10 +479,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			var option = "nav-tab ";
 
-			jQuery('#nav-tab-forms').attr('class', option + 'nav-tab-forms');
-			jQuery('#nav-tab-main-bar').attr('class', option + 'nav-tab-main-bar');
-			jQuery('#nav-tab-widget').attr('class', option + 'nav-tab-widget');
-			jQuery('#nav-tab-simple-forms').addClass('nav-tab-active');
+			jQuery('#nav-tab-forms').attr('class', option + 'nav-tab-addon nav-tab-forms');
+			jQuery('#nav-tab-main-bar').attr('class', option + 'nav-tab-addon nav-tab-main-bar');
+			jQuery('#nav-tab-widget').attr('class', option + 'nav-tab-addon nav-tab-widget');
+			jQuery('#nav-tab-simple-forms').addClass('nav-tab-addon nav-tab-active');
 
 		</script>
 	<?php } ?>

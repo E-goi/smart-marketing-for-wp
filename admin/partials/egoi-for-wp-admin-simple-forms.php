@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             if (isset($_POST['id_simple_form'])) {
 
+                if (!wp_verify_nonce($_POST['_wpnonce'], 'egoi_simple_form_action' ) ) die( 'Failed security check' );
+
                 function saveSimpleForm() {
                     global $wpdb;
 
@@ -153,6 +155,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             <div class="nav-tab-forms-options-mt">
                 <form id="egoi_simple_form" method="post" action="#">
+                    <?php wp_nonce_field('egoi_simple_form_action'); ?>
                     <input name="id_simple_form" type="hidden" value="<?=$id_simple_form?>" />
                     <input name="action" type="hidden" value="1" />
                     <div id="simple-form-submit-error"></div>

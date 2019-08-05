@@ -100,6 +100,9 @@ if (isset($_GET['del'])) {
     .egoi_create_campaign_table{
         display: none;
     }
+    .egoi_create_campaign_webpush_table{
+        display: none;
+    }
 </style>
     <div class="wrap-content wrap-content--list">
 
@@ -110,6 +113,9 @@ if (isset($_GET['del'])) {
         <p class="nav-tab-wrapper">
             <a class="nav-tab nav-tab-addon nav-tab-active" id="nav-tab-email-rss">
                 <?php _e('Email', 'egoi-for-wp'); ?>
+            </a>
+            <a class="nav-tab nav-tab-addon" id="nav-tab-webpush-rss">
+                <?php _e('WebPush', 'egoi-for-wp'); ?>
             </a>
         </p>
         <div class="wrap tab wrap-addon" id="tab-email-rss">
@@ -212,9 +218,93 @@ if (isset($_GET['del'])) {
 
                         <span id="egoi_send_campaign" class='button-primary' style="display: none;"><?php _e('Send Campaign >', 'egoi-for-wp');?></span>
                         <i class="loading" id="egoi_send_campaign_loading" style="display: none;">x</i>
+
+                        <div id="success_email" class="alert alert-success" role="alert" style="display: none;">
+                            <i class="form-icon icon icon-check icon-valid text-success" style="margin-right: 30px;"></i>
+                            <a><?= __('Campaign sent successfully!', 'egoi-for-wp');?></a>
+
+                        </div>
                     </td>
                 </tr>
             </table>
+        </div>
+        <div class="wrap tab wrap-addon" id="tab-webpush-rss" style="display: none;">
+            <?php
+                $webpush_code_flag = get_option('egoi_webpush_code');
+                if(empty($webpush_code_flag) || empty($webpush_code_flag['code'])){//display warning, webpush needs to be on
+            ?>
+                <div style="display: flex;justify-content: center;width: 100%;">
+                    <div style="background-color: #04afdb; color: white; margin: 15px 10px;  padding: 1px 20px; border-radius: 3px;">
+                        <table width="100%">
+                            <tbody><tr>
+                                <td>
+                                    <p style="font-weight:  bold; font-size: 14px;">
+                                        <?= __('Do you want to make WebPush campaigns?', 'egoi-for-wp'); ?>
+                                        <br>
+                                        <?= __('Make sure you have it on!', 'egoi-for-wp'); ?>
+                                    </p>
+                                </td>
+                                <td style="min-width: 130px;" align="right">
+                                    <a href="<?=get_site_url();?>/wp-admin/admin.php?page=egoi-4-wp-webpush" style="font-weight:  bold; font-size: 14px; text-decoration: none; background-color: white; color: #04afdb; padding: 10px 20px; border-radius: 20px;"><?=__('Activate','egoi-for-wp');?></a>
+                                </td>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                </div>
+            <?php } else { ?>
+                <table border='0' class="form form-table">
+
+                    <tr valign="top">
+                        <th scope="row">
+                            <label><?php echo __('RSS Feed', 'egoi-for-wp'); ?></label>
+                        </th>
+                        <td>
+                            <select id="egoi_add_campaign_webpush" style="height: 28px !important;width: 100%;box-sizing: border-box;float: left;">
+                                <option value="0"><?php _e('Select an feed...', 'egoi-for-wp'); ?></option>
+                                <?php foreach ($options as $option){
+                                    $feed = get_option($option->option_name); ?>
+                                    <option value="<?=$option->option_name; ?>"><?=$feed['name']?></option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr valign="top" class="egoi_create_campaign_webpush_table">
+                        <th scope="row">
+                            <span><?= __('Title', 'egoi-for-wp');?> </span>
+                        </th>
+                        <td>
+                            <input class = "form-control" type="text" style="width:100%;" id="campaign_title_webpush" name="campaign_title_webpush" placeholder="<?= __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required/>
+                        </td>
+                    </tr>
+
+                    <tr valign="top" class="egoi_create_campaign_webpush_table">
+                        <th scope="row">
+                            <p>
+                                <span id="egoi_create_campaign_webpush" class='button-primary'><?php _e('Create RSS Campaign +', 'egoi-for-wp');?></span>
+                                <i class="loading" id="egoi_create_campaign_webpush_loading" style="display: none;">x</i>
+                            </p>
+                        </th>
+                        <td>
+                            <input hidden value="" id="campaign_hash_deploy_webpush" />
+                            <input hidden value="" id="campaign_list_id_deploy_webpush" />
+
+
+                            <span id="egoi_edit_campaign_webpush" class='button-primary' style="display: none;"><?php _e('Edit Campaign in E-goi', 'egoi-for-wp');?></span>
+
+                            <span id="egoi_send_campaign_webpush" class='button-primary' style="display: none;"><?php _e('Send Campaign >', 'egoi-for-wp');?></span>
+                            <i class="loading" id="egoi_send_campaign_webpush_loading" style="display: none;">x</i>
+                            <div id="success_webpush" class="alert alert-success" role="alert" style="display: none;">
+                                <i class="form-icon icon icon-check icon-valid text-success" style="margin-right: 30px;"></i>
+                                <a><?= __('Campaign sent successfully!', 'egoi-for-wp');?></a>
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </table>
+            <?php } ?>
         </div>
     </div>
 

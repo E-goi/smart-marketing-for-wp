@@ -69,6 +69,16 @@ jQuery(document).ready(function() {
 
     });
 
+    jQuery("#egoi_add_campaign_webpush").change(function() {
+        var form = jQuery(".egoi_create_campaign_webpush_table");
+        if(this.value == 0){
+            form.hide(200);
+        }else{
+            form.show(200);
+        }
+
+    });
+
     jQuery(".number-spinner button").on("click", function () {
 
         var btn = jQuery(this),
@@ -86,6 +96,53 @@ jQuery(document).ready(function() {
             }
         }
         btn.closest('.number-spinner').find('input').val(oldValue);
+    });
+
+    jQuery("#egoi_create_campaign_webpush").on("click", function () {
+        var feed    = jQuery("#egoi_add_campaign_webpush"),
+            title   = jQuery("#campaign_title_webpush"),
+            button  = jQuery("#egoi_create_campaign_webpush"),
+            loading = jQuery("#egoi_create_campaign_webpush_loading");
+
+        if(!valid([title]))
+            return;
+
+        feed.attr('disabled', true);
+        title.attr('disabled', true);
+        button.attr('disabled',true);
+        loading.show();
+
+        var campaign = {
+            security:   egoi_config_ajax_object.ajax_nonce,
+            action:     'egoi_rss_campaign_webpush',
+            feed:       feed.val(),
+            title:      title.val()
+        };
+
+        jQuery.post(egoi_config_ajax_object.ajax_url, campaign, function(response) {
+            loading.hide();
+            response = JSON.parse(response);
+            if(typeof response.ERROR != 'undefined'){
+                clearWebpushForm();
+                alert(response.ERROR);
+                return false;
+            }
+            if(typeof response.campaign_hash == 'undefined'){
+                clearWebpushForm();
+                console.log(response);
+                alert('error');
+                return false;
+            }
+            button.hide(200);
+            jQuery("#campaign_hash_deploy_webpush").val(response.campaign_hash);
+            jQuery("#campaign_list_id_deploy_webpush").val(response.list_id);
+
+            var edit    = jQuery("#egoi_edit_campaign_webpush");
+            var send    = jQuery("#egoi_send_campaign_webpush");
+            edit.show(200);
+            send.show(200);
+        });
+
     });
 
     jQuery("#egoi_create_campaign").on("click", function () {
@@ -151,6 +208,20 @@ jQuery(document).ready(function() {
         }
     });
 
+    jQuery("#egoi_edit_campaign_webpush").on("click", function () {
+        var win = window.open('https://login.egoiapp.com/login?from=%2F%3Faction%3Dui#/messages/webpush/rss/wizard/'+ jQuery("#campaign_list_id_deploy_webpush").val() +'/'+jQuery("#campaign_hash_deploy_webpush").val()+'/edit', '_blank');
+        if (win) {
+            var edit    = jQuery("#egoi_edit_campaign_webpush");
+            var send    = jQuery("#egoi_send_campaign_webpush");
+            edit.hide(200);
+            send.hide(200);
+            clearWebpushForm();
+            win.focus();
+        } else {
+            alert('Please allow popups for this website');
+        }
+    });
+
     jQuery("#egoi_send_campaign").on("click", function () {
         jQuery("#egoi_send_campaign_loading").show();
 
@@ -161,15 +232,94 @@ jQuery(document).ready(function() {
         }
 
         jQuery.post(egoi_config_ajax_object.ajax_url, campaign, function(response) {
+            response = JSON.parse(response);
+            if(typeof response.error != 'undefined'){
+                onOffForm(true);
+                clearForm();
+                alert(response.error);
+                return false;
+            }
             jQuery("#egoi_send_campaign_loading").hide();
             var edit    = jQuery("#egoi_edit_campaign");
             var send    = jQuery("#egoi_send_campaign");
             edit.hide(200);
             send.hide(200);
-            onOffForm(true);
-            clearForm();
+            jQuery("#success_email").show(300);
+            setTimeout(function () {
+                jQuery("#success_email").hide(300);
+                onOffForm(true);
+                clearForm();
+            },2000);
         });
     });
+
+    jQuery("#egoi_send_campaign_webpush").on("click", function () {
+        jQuery("#egoi_send_campaign_webpush_loading").show();
+
+        var campaign = {
+            security:       egoi_config_ajax_object.ajax_nonce,
+            action:         'egoi_deploy_rss_webpush',
+            campaing_hash:  jQuery("#campaign_hash_deploy_webpush").val()
+        }
+
+        jQuery.post(egoi_config_ajax_object.ajax_url, campaign, function(response) {
+            response = JSON.parse(response);
+            if(typeof response.error != 'undefined'){
+                clearWebpushForm();
+                alert(response.error);
+                return false;
+            }
+            jQuery("#egoi_send_campaign_webpush_loading").hide();
+            var edit    = jQuery("#egoi_edit_campaign_webpush");
+            var send    = jQuery("#egoi_send_campaign_webpush");
+            edit.hide(200);
+            send.hide(200);
+            jQuery("#success_webpush").show(300);
+            setTimeout(function () {
+                jQuery("#success_webpush").hide(300);
+                clearWebpushForm();
+            },2000);
+        });
+    });
+
+    jQuery(".nav-tab-addon").on("click", function () {
+        activeConfigTab(this);
+
+        var tab = jQuery(".nav-tab-active").attr("id");
+        var wrap = "#"+tab.substring(4);
+
+        showConfigWrap(wrap);
+    });
+
+    function clearWebpushForm(){
+        var feed    = jQuery("#egoi_add_campaign_webpush"),
+            title   = jQuery("#campaign_title_webpush"),
+            button  = jQuery("#egoi_create_campaign_webpush");
+
+        title.val('');
+        feed.val(0);
+        feed.trigger('change');
+        feed.attr('disabled', false);
+        title.attr('disabled', false);
+        button.attr('disabled',false);
+        button.show();
+
+
+    }
+
+    function activeConfigTab(tag) {
+        jQuery(".nav-tab-addon").each(function () {
+            jQuery(this).attr("class", "nav-tab nav-tab-addon");
+        });
+        jQuery(tag).attr("class", "nav-tab nav-tab-addon nav-tab-active");
+    }
+
+    function showConfigWrap(wrap) {
+        jQuery(".wrap-addon").each(function () {
+            jQuery(this).hide();
+        });
+        jQuery(wrap).show();
+    }
 
     function clearForm(){
         var feed            = jQuery("#egoi_add_campaign"),

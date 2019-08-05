@@ -2266,11 +2266,27 @@ class Egoi_For_Wp_Admin {
         return $reports;
     }
 
+    public function egoi_deploy_rss_webpush(){
+        check_ajax_referer( 'egoi_create_campaign', 'security' );
+
+        if(!isset($_POST['campaing_hash']))
+            wp_die();
+
+        $apikey = $this->get_apikey();
+        if(empty($apikey))
+            wp_die();
+
+        $api = new EgoiApiV3($apikey);
+
+        echo $api->deployWebPushRssCampaign(trim($_POST['campaing_hash']));
+        wp_die();
+    }
+
     public function egoi_deploy_rss(){
         check_ajax_referer( 'egoi_create_campaign', 'security' );
 
         if(!isset($_POST['campaing_hash']))
-            return;
+            wp_die();
 
         $apikey = $this->get_apikey();
         if(empty($apikey))
@@ -2292,6 +2308,60 @@ class Egoi_For_Wp_Admin {
         $api = new EgoiApiV3($apikey);
 
         echo $api->getSenders();
+        wp_die();
+    }
+
+    /**
+     * @param $app_hash
+     * @param EgoiApiV3 $api
+     */
+    private function scrap_sited_id($app_hash, $api){
+        $ar =  json_decode($api->getWebPushSites(), true);
+
+        if((!empty($ar['status'])) || (!empty($ar['error'])))
+            return false;
+
+        if(empty($ar) || !is_array($ar))
+            return false;
+
+        foreach ($ar as $site){
+            if($site['app_code'] == $app_hash)
+                return $site;
+        }
+
+        return false;
+
+    }
+
+    public function egoi_rss_campaign_webpush(){
+        check_ajax_referer( 'egoi_create_campaign', 'security' );
+
+        $apikey = $this->get_apikey();
+        if(empty($apikey))
+            wp_die();
+
+        $option_webpush = get_option('egoi_webpush_code');
+        if(empty($option_webpush['code'])){
+            echo json_encode(['ERROR' => __('Missing Webpush Instalation!', 'egoi-for-wp')]);
+            wp_die();
+        }
+        $api = new EgoiApiV3($apikey);
+
+        $site_id = $this->scrap_sited_id($option_webpush['code'], $api);
+        if($site_id === false){
+            echo json_encode(['ERROR' => __('Api error, try again latter.', 'egoi-for-wp')]);
+            wp_die();
+        }
+
+        echo json_encode(array_merge(['list_id' => $site_id['list_id']],json_decode($api->createWebPushRssCampaign([
+            'site_id'       => $site_id['site_id'],
+            'internal_name' => filter_var($_POST['title'], FILTER_SANITIZE_STRING),
+            'content'       => [
+                    'title'    => filter_var($_POST['title'], FILTER_SANITIZE_STRING),
+                    'feed'      => get_site_url().'/?feed='.trim($_POST['feed'])
+            ]
+        ]),true)));
+
         wp_die();
     }
 
