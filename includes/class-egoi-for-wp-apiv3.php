@@ -16,7 +16,7 @@ class EgoiApiV3
     const APIV3     = 'https://api.egoiapp.com';
     const PLUGINKEY = '908361f0368fd37ffa5cc7c483ffd941';
     const APIURLS   = [
-        'deployEmailRssCampaign'    => '/campaigns/email/rss/{campaign_hash}/actions/send',
+        'deployEmailRssCampaign'    => '/campaigns/email/rss/{campaign_hash}/actions/enable',
         'createEmailRssCampaign'    => '/campaigns/email/rss',
         'getSenders'                => '/senders/{channel}?status=active',
         'getLists'                  => '/lists?limit=10&order=desc&order_by=list_id'
@@ -34,7 +34,6 @@ class EgoiApiV3
      * @return false|string
      */
     public function createEmailRssCampaign($data){
-
         $client = new ClientHttp(
             self::APIV3.self::APIURLS[__FUNCTION__],
             'POST',
@@ -48,7 +47,7 @@ class EgoiApiV3
 
         return $client->getCode()==200
             ?$client->getResponse()
-            :$this->processErrors();
+            :$this->processErrors($client->getError());
 
     }
 
@@ -84,12 +83,12 @@ class EgoiApiV3
         );
 
         if($client->success() !== true){
-            return $this->processErrors('curl');
+            return $this->processErrors($client->getError());
         }
         $resp = json_decode($client->getResponse(),true);
         return $client->getCode()==200 && isset($resp['items'])
             ?json_encode($resp['items'])
-            :$this->processErrors();
+            :$this->processErrors($client->getResponse());
     }
 
     /**
