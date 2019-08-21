@@ -2312,6 +2312,7 @@ class Egoi_For_Wp_Admin {
             'sender_id'     => trim($_POST['sender']),
             'reply_to'      => trim($_POST['sender']),
             'content'       => [
+                'type'          => 'html',
                 'feed'          => $feed,
                 'body'          => $this->get_themes($_POST, 0, $feed, trim($_POST['items'])),
                 'snippet'       => filter_var($_POST['snippet'], FILTER_SANITIZE_STRING)
