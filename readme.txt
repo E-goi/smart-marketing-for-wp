@@ -3,8 +3,8 @@ Contributors: E-goi
 Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
-Tested up to: 5.2.0
-Stable tag: 2.8.0
+Tested up to: 5.2.2
+Stable tag: 2.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,11 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 2.8.1 =
+- Minor bug fixes
+- Bumped version tag
+- Bumped Tested up to tag
 
 = 2.8 =
 - RSS Feed Campaigns
