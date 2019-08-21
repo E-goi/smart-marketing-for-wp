@@ -249,11 +249,17 @@ jQuery(document).ready(function() {
         };
 
         jQuery.post(egoi_config_ajax_object.ajax_url, obj, function(response) {
+            jQuery("#egoi_senders_loading").hide();
             response = JSON.parse(response);
+
+            if(typeof response.error != "undefined"){
+                sender_place.append(jQuery("<option />").val(0).text(response.error));
+                return;
+            }
+
             jQuery.each(response, function () {
                 sender_place.append(jQuery("<option />").val(this.sender_id).text(this.email));
             });
-            jQuery("#egoi_senders_loading").hide();
         });
     }
 
