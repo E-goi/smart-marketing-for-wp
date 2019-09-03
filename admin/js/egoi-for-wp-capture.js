@@ -23,4 +23,6 @@ jQuery(document).ready(function($) {
         $(wrap).show();
     }
 
+    $(".nav-tab-addon")[0].show();
+
 });
