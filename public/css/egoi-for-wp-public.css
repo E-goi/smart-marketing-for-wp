@@ -1,9 +1,14 @@
 .egoi-bar{
-    text-align: -webkit-center;
-    text-align: -moz-center;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    height: 50px;
+    bottom: 0;
+    position: fixed;
+    padding: 10px;
    	box-shadow: 1px 1px 1px #666;
    	width: 100%;
-   	padding: 10px 10px !important;
     line-height: 25px;
     z-index: 999999;
 }
@@ -26,13 +31,10 @@
 
 .egoi-bar-error, .egoi-bar-success{
     color: #fff;
-    text-align: -webkit-center;
-    text-align: -moz-center;
+
     font-size: 16px;
     height: 30px;
-    line-height: 16px;
-    margin-top: 10px;
-    float: left;
+
 }
 
 .close-bar {
@@ -104,17 +106,14 @@
 }
 
 .egoi-action-error, .egoi-action-success{
-    position:absolute;
-    right:10px;
-    top:13px;
-    text-align:center;
-    height:50px;
-    width:50px;
-    border-radius:0 0 2px 2px;
-    z-index:999999;
-    cursor:pointer;
-    color:#fff;
-    transition:.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: .5s;
 }
 
 .egoi-widget-error{
@@ -212,10 +211,6 @@
 }
 
 .loader_btn_egoi{
-    display: inline-block;
-    margin-top: 5px;
-    position: absolute;
-    padding: 2px 5px !important;
 }
 
 .external_content_egoi{

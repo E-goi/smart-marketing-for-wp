@@ -20,11 +20,11 @@ else{
     <div id="egoi-tabs-bar">
         <!--	<a class="nav-tab-preview nav-tab-active" id="nav-tab-preview" onclick="tabs('preview_bar');"><?php // _e( 'Preview bar', 'egoi-for-wp' ); ?></a>
 		<span> | </span> -->
-        <a class="nav-tab-settings nav-tab-active" id="nav-tab-settings" onclick="tabs('bar', [this.id, 'nav-tab-appearance', 'nav-tab-messages', 'tab-settings', 'tab-appearance', 'tab-messages']);"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
+        <a class="nav-tab-settings nav-tab-active" id="nav-tab-settings" ><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
         <span> | </span>
-        <a class="nav-tab-appearance" id="nav-tab-appearance" onclick="tabs('bar', [this.id, 'nav-tab-settings', 'nav-tab-messages', 'tab-appearance', 'tab-settings','tab-messages']);"><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
+        <a class="nav-tab-appearance" id="nav-tab-appearance" ><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
         <span> | </span>
-        <a class="nav-tab-messages" id="nav-tab-messages" onclick="tabs('bar', [this.id, 'nav-tab-settings', 'nav-tab-appearance','tab-messages', 'tab-settings', 'tab-appearance']);"><?php _e( 'Messages', 'egoi-for-wp' ); ?></a>
+        <a class="nav-tab-messages" id="nav-tab-messages" ><?php _e( 'Messages', 'egoi-for-wp' ); ?></a>
     </div>
 
     <form method="post" name="bar_options" action="<?php echo admin_url('options.php'); ?>"><?php
