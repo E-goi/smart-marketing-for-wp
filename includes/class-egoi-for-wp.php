@@ -281,6 +281,8 @@ class Egoi_For_Wp {
 
         //Rss
         $this->loader->add_action('wp_ajax_egoi_deploy_rss', $plugin_admin, 'egoi_deploy_rss');
+        $this->loader->add_action('wp_ajax_egoi_deploy_rss_webpush', $plugin_admin, 'egoi_deploy_rss_webpush');
+        $this->loader->add_action('wp_ajax_egoi_rss_campaign_webpush', $plugin_admin, 'egoi_rss_campaign_webpush');
         $this->loader->add_action('wp_ajax_egoi_rss_campaign', $plugin_admin, 'egoi_rss_campaign');
         $this->loader->add_action('wp_ajax_egoi_get_email_senders', $plugin_admin, 'egoi_get_email_senders');
     }

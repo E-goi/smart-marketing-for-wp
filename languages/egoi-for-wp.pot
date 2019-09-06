@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing SMS and Newsletters Forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-30 15:08+0000\n"
+"POT-Creation-Date: 2019-08-01 16:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -194,7 +194,6 @@ msgstr ""
 
 #: admin/class-egoi-for-wp-admin.php:2369
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:158
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:458
 msgid "Subject"
 msgstr ""
 
@@ -993,12 +992,11 @@ msgid "Send Campaign >"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:264
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:484
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:462
 msgid "Back"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:287
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:462
 msgid "Choose a name for your new RSS Feed"
 msgstr ""
 
@@ -1080,11 +1078,7 @@ msgstr ""
 msgid "Tags to exclude"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:450
-msgid "Create RSS Campaign"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:496
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:474
 msgid "No Posts"
 msgstr ""
 

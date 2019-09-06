@@ -173,15 +173,6 @@ if(!$egoiwidget['enabled']){
 
                             </td>
                         </tr>
-
-
-                        <tr valign="top">
-                            <th scope="row"><label for="egoi_form_sync_subscribed"><?php _e( 'Successfully subscribed', 'egoi-for-wp' ); ?></label></th>
-                            <td>
-                                <input type="text" style="width:450px;" id="egoi_form_sync_subscribed" placeholder="<?php _e( 'Your request has been successfully submitted. Thank you.', 'egoi-for-wp' ); ?>" name="egoi_widget[msg_subscribed]" value="<?php echo esc_attr($egoiwidget['msg_subscribed']);?>" />
-                                <p class="help"><?php _e( 'The text that shows when an email address is successfully subscribed to the selected list.', 'egoi-for-wp' ); ?></p>
-                            </td>
-                        </tr>
                         <tr valign="top">
                             <th scope="row"><label for="egoi_form_sync_subscribed"><?php _e( 'Successfully subscribed', 'egoi-for-wp' ); ?></label></th>
                             <td>
