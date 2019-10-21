@@ -3,7 +3,7 @@
 
 $arr = [
     "pt" => '<a href="https://www.e-goi.com/pt/email-marketing-criar-e-enviar-newsletters/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;">Email Marketing by E-goi</a>',
-    "br" => '<a href="https://www.e-goi.com/br/email-marketing-criar-e-enviar-newsletters/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;">Email Marketing by E-goi</a>',
+    "br" => '<a href="https://www.e-goi.com/br/email-marketing/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;">Email Marketing by E-goi</a>',
     "es" => '<a href="https://www.e-goi.com/es/email-marketing/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;">Email Marketing by E-goi</a>',
     "en" => '<a href="https://www.e-goi.com/email-marketing/" rel="noreferrer noopener" target="_blank" style="font-size: 10px;" >Email Marketing by E-goi</a>'
 ];
@@ -109,28 +109,34 @@ function getEgoiClient(){
 
 function _getContent($url,$headers = []) {
 
-    if(ini_get('allow_url_fopen')) {
+    $egoi_info = get_transient( 'egoi_information_cache' );
 
-        $context = stream_context_create(array('http' => array('timeout' => 600,'header' => implode("\r\n",$headers))));
-        $result = file_get_contents($url, false, $context);
+    if( false === $egoi_info ) {
+        // Transient expired, refresh the data
+        if(ini_get('allow_url_fopen')) {
 
-    } else if(function_exists('curl_init')) {
+            $context = stream_context_create(array('http' => array('timeout' => 600,'header' => implode("\r\n",$headers))));
+            $egoi_info = file_get_contents($url, false, $context);
 
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 600);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        $result = curl_exec($curl);
+        } else if(function_exists('curl_init')) {
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 600);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            $egoi_info = curl_exec($curl);
 
-        curl_close($curl);
+            curl_close($curl);
 
-    } else {
-        throw new Exception("ERROR");
+        } else {
+            throw new Exception("MISSING_CURL");
+        }
+
+        set_transient( 'egoi_information_cache', $egoi_info, 60*60 );
     }
 
-    return $result;
+    return $egoi_info;
 }
 
 
