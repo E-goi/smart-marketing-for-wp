@@ -285,6 +285,18 @@ class Egoi_For_Wp {
         $this->loader->add_action('wp_ajax_egoi_rss_campaign_webpush', $plugin_admin, 'egoi_rss_campaign_webpush');
         $this->loader->add_action('wp_ajax_egoi_rss_campaign', $plugin_admin, 'egoi_rss_campaign');
         $this->loader->add_action('wp_ajax_egoi_get_email_senders', $plugin_admin, 'egoi_get_email_senders');
+
+        //E-commerce
+        $this->loader->add_action('wp_ajax_egoi_sync_catalog', $plugin_admin, 'egoi_sync_catalog');
+        $this->loader->add_action('wp_ajax_egoi_force_import_catalog', $plugin_admin, 'egoi_force_import_catalog');
+        $this->loader->add_action('wp_ajax_egoi_delete_catalog', $plugin_admin, 'egoi_delete_catalog');
+        $this->loader->add_action('wp_ajax_egoi_catalog_utilities', $plugin_admin, 'egoi_catalog_utilities');
+        $this->loader->add_action('wp_ajax_egoi_count_products', $plugin_admin, 'egoi_count_products');
+        $this->loader->add_action('transition_post_status', $plugin_admin, 'egoi_product_creation', 10, 3);
+        $this->loader->add_action('woocsv_after_import_finished', $plugin_admin, 'egoi_finish_import_csv', 10, 0);
+
+        $this->loader->add_action('woocommerce_product_import_before_import' , $plugin_admin, 'egoi_import_bypass',10 ,1);
+
     }
 
 	/**

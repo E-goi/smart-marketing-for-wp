@@ -1,6 +1,8 @@
 <?php
 require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.php');
+require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-products-bo.php');
+require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-validators.php');
 
 /**
  * The admin-specific functionality of the plugin.
@@ -176,16 +178,14 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
-		//only load CSS on smart marketing pages or in pages with smart marketing elements
-		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
-            strpos(get_current_screen()->id, 'widgets') !== false ||
-            strpos(get_current_screen()->id, 'shop-order') !== false ||
-            strpos(get_current_screen()->id, 'dashboard') !== false
+	    if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
+            strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
-
 			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style('wp-color-picker');
+            wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap-modal.min.css', array(), $this->version, 'all' );
+
+
+            wp_enqueue_style('wp-color-picker');
 		}
 	}
 
@@ -198,15 +198,14 @@ class Egoi_For_Wp_Admin {
 
 		//only load CSS on smart marketing pages or in pages with smart marketing elements
 		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
-            strpos(get_current_screen()->id, 'widgets') !== false ||
-            strpos(get_current_screen()->id, 'shop-order') !== false ||
-            strpos(get_current_screen()->id, 'dashboard') !== false ||
-            strpos(get_current_screen()->id, 'rssfeed') !== false
+            strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
 
 			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
+            wp_enqueue_script($this->plugin_name.'-bootstrapjs', plugin_dir_url(__FILE__) . 'js/bootstrap-modal.min.js', array('jquery'), $this->version, false);
 
-			wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'), true);
+
+            wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'), true);
 			wp_enqueue_script('custom-script1');
 
 			wp_register_script('custom-script2', plugin_dir_url(__FILE__) . 'js/forms.min.js', array('jquery'));
@@ -220,6 +219,27 @@ class Egoi_For_Wp_Admin {
 
 			wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
 			wp_enqueue_script('custom-script5');
+
+			if(strpos(get_current_screen()->id, 'ecommerce')){
+			    $page = $_GET['subpage'];
+                if(!empty($page)){
+                    switch ($page){
+                        case 'new_catalog':
+                            wp_enqueue_script($this->plugin_name.'ecommerce-form', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-ecommerce-form.js', array('jquery'), $this->version, false);
+                            break;
+                        default:
+                            wp_enqueue_script($this->plugin_name.'ecommerce', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-ecommerce.js', array('jquery'), $this->version, false);
+                            break;
+                    }
+                }else{
+                    wp_enqueue_script($this->plugin_name.'ecommerce', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-ecommerce.js', array('jquery'), $this->version, false);
+                }
+
+                wp_localize_script( $this->plugin_name, 'egoi_config_ajax_object_ecommerce', array(
+                    'ajax_url' => admin_url( 'admin-ajax.php' ),
+                    'ajax_nonce' => wp_create_nonce('egoi_ecommerce_actions'),
+                ) );
+            }
 
 
 			wp_enqueue_script('wp-color-picker');
@@ -277,9 +297,11 @@ class Egoi_For_Wp_Admin {
 
 			add_submenu_page($this->plugin_name, __('Sync Contacts', 'egoi-for-wp'), __('Sync Contacts', 'egoi-for-wp'), $capability, 'egoi-4-wp-subscribers', array($this, 'display_plugin_subscriber_page'));
 
-			add_submenu_page($this->plugin_name, __('Ecommerce', 'egoi-for-wp'), __('Ecommerce', 'egoi-for-wp'), $capability, 'egoi-4-wp-ecommerce', array($this, 'display_plugin_subscriber_ecommerce'));
+			add_submenu_page($this->plugin_name, __('E-commerce', 'egoi-for-wp'), __('E-commerce', 'egoi-for-wp'), $capability, 'egoi-4-wp-ecommerce', array($this, 'display_plugin_subscriber_ecommerce'));
 
-			add_submenu_page($this->plugin_name, __('Integrations', 'egoi-for-wp'), __('Integrations', 'egoi-for-wp'), $capability, 'egoi-4-wp-integrations', array($this, 'display_plugin_integrations'));
+            add_submenu_page($this->plugin_name, __('Track & Engage', 'egoi-for-wp'), __('Track & Engage', 'egoi-for-wp'), $capability, 'egoi-4-wp-trackengage', array($this, 'display_plugin_subscriber_trackengage'));
+
+            add_submenu_page($this->plugin_name, __('Integrations', 'egoi-for-wp'), __('Integrations', 'egoi-for-wp'), $capability, 'egoi-4-wp-integrations', array($this, 'display_plugin_integrations'));
 
             add_submenu_page($this->plugin_name, __('Web Push', 'egoi-for-wp'), __('Web Push', 'egoi-for-wp'), $capability, 'egoi-4-wp-webpush', array($this, 'display_plugin_webpush'));
 
@@ -367,10 +389,22 @@ class Egoi_For_Wp_Admin {
 		if (!current_user_can('manage_options')) {
 	        wp_die('You do not have sufficient permissions to access this page.');
 	    } else {
+            $ProductBO = new EgoiProductsBo();
+            $table = $ProductBO->getCatalogsTable();
 			include_once( 'partials/egoi-for-wp-admin-ecommerce.php' );
 		}
 
 	}
+
+    public function display_plugin_subscriber_trackengage() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-trackengage.php' );
+        }
+
+    }
 
 	public function display_plugin_integrations() {
 
@@ -2390,6 +2424,130 @@ class Egoi_For_Wp_Admin {
         ]);
 
         wp_die();
+    }
+
+    public function egoi_sync_catalog(){
+        check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+        update_option('egoi_catalog_sync',json_encode($_POST['data']));
+        wp_send_json_success();
+    }
+
+    public function egoi_delete_catalog(){
+        check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+        $id = EgoiValidators::validate_id($_POST['id']);
+        $bo = new EgoiProductsBo();
+
+        wp_send_json_success($bo->deleteCatalog($id));
+    }
+
+    public function egoi_force_import_catalog(){
+
+        check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+        $id = EgoiValidators::validate_id($_POST['id']);
+        $page = EgoiValidators::validate_page($_POST['page']);
+        $bo = new EgoiProductsBo();
+        $resp = $bo->importProductsCatalog($id,$page);
+        $resp = json_decode($resp,true);
+
+        if(isset($resp['error']) || (isset($resp['status']) && $resp['status'] == 'error')){
+            wp_send_json_error(empty($resp['error'])?__('Something went wrong with your request.','egoi-for-wp'):$resp['error']);
+        }
+
+        wp_send_json_success(__('Catalog synchronized successfully.','egoi-for-wp'));
+    }
+
+    public function ecommerceFormProcess($post){
+        //wp_mail("tmota@e-goi.com",__FUNCTION__,var_export($post,true));
+        $form_id = sanitize_text_field($post['form_id']);
+        check_admin_referer($form_id);
+
+        $name = $post['catalog_name'];
+        $language = $post['catalog_language'];
+        $currency = $post['catalog_currency'];
+
+        if(empty($name) || empty($currency) || empty($language)){
+            return ['error' => __('Fields can\'t be empty.','egoi-for-wp')];
+        }
+
+        $bo = new EgoiProductsBo();
+        $response = $bo->createCatalog($name,$language,$currency);
+        if( $response === true){
+            return ['success' => __('Catalog successfully created!','egoi-for-wp')];
+        }else{
+            return ['error' => __('Something went wrong creating the catalog!','egoi-for-wp')];
+        }
+    }
+
+    /*
+     * Get Countries and Currencies Utility
+     * */
+    public function egoi_catalog_utilities(){
+        $bo = new EgoiProductsBo();
+        $data = $bo->getCountriesCurrencies();
+        if($data === false)
+            wp_send_json_error(__('Something went wrong fetching countries, please try again latter.','egoi-for-wp'));
+        wp_send_json_success($data);
+    }
+
+    /**
+     * Get Countries and Currencies Utility
+     */
+    public function egoi_count_products(){
+        wp_send_json_success(EgoiProductsBo::countDbProducts());
+    }
+
+    public function egoi_import_bypass($data){
+
+        if(empty($data['id']))
+            return false;
+
+        $bypass = EgoiProductsBo::getProductsToBypass();
+
+        $bypass[] = $data['id'];
+        $bypass = array_unique($bypass);
+        update_option('egoi_import_bypass', json_encode($bypass));
+    }
+
+    /**
+     * Called with transition_post_status hook
+     * Its called in any product alteration
+     * @param $new_status
+     * @param $old_status
+     * @param $post
+     * @return bool
+     */
+    public function egoi_product_creation($new_status, $old_status, $post){
+        //wp_mail("tmota@e-goi.com",__FUNCTION__,var_export([$new_status,$old_status,$post],true));
+
+        $bypass = EgoiProductsBo::getProductsToBypass();
+
+        if(!empty($post->ID) && in_array($post->ID, $bypass)){
+            return false;
+        }
+
+        $bo = new EgoiProductsBo();
+
+        if($new_status != 'publish' && ! empty($post->ID)){//try to delete
+            $bo->deleteProduct($post->ID);
+            return true;
+        }
+
+        if($new_status != 'publish' || empty($post->post_type) || $post->post_type != 'product' || $post->post_status != 'publish')
+            return false;
+
+        $product = wc_get_product($post->ID);
+
+        if(empty($product))
+            return false;
+
+        $bo->syncProduct($product);
+
+        return true;
+        //wp_mail("tmota@e-goi.com",__FUNCTION__,var_export($re,true));
+    }
+
+    public function egoi_finish_import_csv(){
+        wp_mail("tmota@e-goi.com",__FUNCTION__,var_export('pop_finishj',true));
     }
 
     private function get_apikey(){

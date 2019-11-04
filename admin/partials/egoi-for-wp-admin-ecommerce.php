@@ -4,19 +4,32 @@ if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
 
+require_once plugin_dir_path(__FILE__) . 'egoi-for-wp-common.php';
+
+if (!empty($_POST['form_id'])) {
+    switch ($_POST['form_id']){
+        case 'form-create-catalog':
+            $result = $this->ecommerceFormProcess($_POST);
+            break;
+        default:
+            breaK;
+    }
+}
+
+
 if(isset($_POST['action'])){
 		
-	$post = $_POST;
-	update_option('egoi_sync', array_merge($this->options_list, $post['egoi_sync']));
+	//$post = $_POST;
+	//update_option('egoi_sync', array_merge($this->options_list, $post['egoi_sync']));
 
-	echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
-		_e('Ecommerce Option Updated!', 'egoi-for-wp');
-	echo '</p></div>';
+	//echo '<div class="e-goi-notice updated notice is-dismissible"><p>';
+	//	_e('Ecommerce Option Updated!', 'egoi-for-wp');
+	//echo '</p></div>';
 
-	$options = get_option('egoi_sync');
+	//$options = get_option('egoi_sync');
 	
 }else{
-	$options = $this->options_list;
+	//$options = $this->options_list;
 }
 ?>
 
@@ -28,63 +41,47 @@ if(isset($_POST['action'])){
 	</p>
 <hr/>
 
-<?php
 
-if(!$options['list']) { ?>
-	<div class="postbox" style="margin-top:20px; max-width:80%; padding:5px 20px 5px; border-left:2px solid red;">
-		<div style="padding:10px 0;">
-			<span style="color: orangered; margin-top:5px;" class="dashicons dashicons-warning"></span>
-			<span style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;">
-			<?php 
-			_e('Select your mailing list in the option "Synchronize users with this list" to activate Track & Engage.<br>You will find this option in ', 'egoi-for-wp'); 
-			?>
-			<a href="<?php echo $this->protocol . $_SERVER['SERVER_NAME'] . $this->port;?>/wp-admin/admin.php?page=egoi-4-wp-subscribers">
-				<?php _e('Sync Contacts', 'egoi-for-wp'); ?></a>
-			</span>
-		</div>
-	</div><?php
-} ?>
+<div id="egoi-success" style="<?=empty($result['success'])?'display: none;':'';?>">
+    <div class="postbox egoi-dialog-box" style="border-left: 2px solid green !important;">
+        <div style="padding:10px 0;">
+            <span style="color: green; margin-top:5px;" class="dashicons dashicons-yes-alt"></span>
+            <span id="egoi-success-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?=!empty($result['success'])?$result['success']:'';?></span>
+        </div>
+        <div class="egoi-simple-close-x"><span>X</span></div>
+    </div>
+</div>
+
+<div id="egoi-alert" style="<?=empty($result['error'])?'display: none;':'';?>">
+    <div class="postbox egoi-dialog-box">
+        <div style="padding:10px 0;">
+            <span style="color: orangered; margin-top:5px;" class="dashicons dashicons-warning"></span>
+            <span id="egoi-alert-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?=!empty($result['error'])?$result['error']:'';?></span>
+        </div>
+        <div class="egoi-simple-close-x"><span>X</span></div>
+    </div>
+</div>
+
 
 
 <div class="postbox" style="margin-top:20px; max-width:80%; padding: 5px 20px 5px;">
 	
-	<div>
-		<h1><?php _e( 'Track&Engage', 'egoi-for-wp' ); ?></h1>
+	<div class="wrapper-loader-egoi">
+        <?php if(!empty($_GET['subpage'])){ ?>
+            <h1><a class="egoi-back-button" style="text-decoration: none;display: flex;align-items: center;" href="admin.php?page=egoi-4-wp-ecommerce">&nbsp;<span class="dashicons dashicons-arrow-left-alt"></span>&nbsp;</a></h1>
+        <?php } ?>
+		<h1><?php _e( 'E-Commerce', 'egoi-for-wp' ); ?></h1>
+        <?=getLoader('egoi-loader',false)?>
 	</div>
 
-	<div>
-		<span style="padding:15px 0; font-size:16px;display: inline-block;">
-			<span style="display: inline-block; max-witdh:100px;"><?php _e('Track & Engage is an E-goi analytics feature, connected to your Wordpress Website or WooCommerce Store, perfect for remarketing actions like returning users or abandoned cart.<p><span style="font-size:16px;">Activate this option here, and confirm if Track & Engage is also active in E-goi Platform (Web -> Track & Engage).</span></p><p><span style="font-size:16px;">To know more about the feature Track & Engage, check <a target="_blank" href="https://helpdesk.e-goi.com/416945-Using-Track--Engage-to-track-subscribers-across-my-site">here</a>.</span></p>', 'egoi-for-wp'); ?>
-			</span>
-		</span>
-	</div>
+	<?php if ( !class_exists( 'WooCommerce' ) ) {
+        require_once plugin_dir_path(__FILE__) . 'ecommerce/no-woocommerce.php';
+     }else{
+	    if(isset($_GET['subpage']) && $_GET['subpage'] == 'new_catalog'){
+            require_once plugin_dir_path(__FILE__) . 'ecommerce/new-catalog-form.php';
+        }else{
+            require_once plugin_dir_path(__FILE__) . 'ecommerce/catalogs.php';
+        }
+    } ?>
 
-	<?php
-	if($options['list']) { ?>
-
-		<form method="post" action="#"><?php 
-				
-			settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
-			settings_errors(); ?>
-
-			<span style="display: inline-block; font-size:16px;">
-				<b><?php _e( 'Activate Track&Engage', 'egoi-for-wp' ); ?></b>
-			</span>
-			
-			<span style="margin-left:20px; font-size:18px;">
-
-				<input id="yes" type="radio" name="egoi_sync[track]" <?php checked( $options['track'], 1 ); ?> value="1">
-				<label for="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
-				
-				<input id="no" type="radio" name="egoi_sync[track]" <?php checked( $options['track'], 0 ); ?> value="0">
-				<label for="no"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
-			</span>
-			
-			<div style="font-size:16px; margin-top:10px;line-height:28px; margin-bottom:10px;"></div>
-
-			<button style="margin-top: 20px; margin-bottom: 20px;" class="button-primary"><?php _e( 'Save', 'egoi-for-wp' ); ?></button>
-		</form><?php
-
-	} ?>
-	
 </div>

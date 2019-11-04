@@ -2805,6 +2805,88 @@ summary.accordion-header::-webkit-details-marker {
   position: relative;
 }
 
+.egoi-warning{
+  color: indianred !important;
+}
+
+.no-border-button {
+  border: 0;
+  cursor: pointer;
+}
+
+.egoi-remove-button {
+  background: #ba0000 !important;
+  border-color: #BA0000 #c40000 #b80000 !important;
+  box-shadow: 0 1px 0 #a80000 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  text-shadow: 0 -1px 1px #c60000, 1px 0 1px #c40000, 0 1px 1px #b80000, -1px 0 1px #b80000 !important;
+}
+
+#qero-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 99;
+}
+
+.egoi-modal-header {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.egoi-back-button {
+  text-decoration: none;
+  border-radius: 100px;
+}
+
+.sun-margin > *{
+  margin: 2px !important;
+}
+
+.egoi-undertable-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+
+.egoi-simple-close-x {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.wrapper-loader-egoi {
+  display: flex;
+  justify-content: start;
+  align-content: center;
+}
+
+.loader-egoi-self {
+  display: flex;
+  align-items: center;
+}
+
+.egoi-dialog-box{
+  margin-top:20px;
+  max-width:80%;
+  padding:5px 20px 5px;
+  border-left:2px solid red;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
 .tooltip::after {
   background: rgba(69, 77, 93, .9);
   border-radius: .1rem;
@@ -3231,7 +3313,7 @@ a.text-error:visited {
   display: -ms-flexbox;
   -ms-flex-align: center;
   -ms-flex-pack: center;
-  justify-content: center;
+  justify-content: start;
 }
 
 .m-0 {
