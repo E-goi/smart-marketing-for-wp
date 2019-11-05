@@ -31,57 +31,73 @@ if(isset($_POST['action'])){
 }else{
 	//$options = $this->options_list;
 }
+
+
+$page = array(
+    'home' => !isset($_GET['subpage']),
+    'new_catalog' => $_GET['subpage'] == 'new_catalog',
+);
 ?>
 
-<h1 class="logo">Smart Marketing - <?php _e( 'Ecommerce', 'egoi-for-wp' ); ?></h1>
-	<p class="breadcrumbs">
-		<span class="prefix"><?php echo __( 'You are here: ', 'egoi-for-wp' ); ?></span>
-		<strong>Smart Marketing</a> &rsaquo;
-		<span class="current-crumb"><?php _e( 'Ecommerce', 'egoi-for-wp' ); ?></strong></span>
-	</p>
-<hr/>
 
-
-<div id="egoi-success" style="<?=empty($result['success'])?'display: none;':'';?>">
-    <div class="postbox egoi-dialog-box" style="border-left: 2px solid green !important;">
-        <div style="padding:10px 0;">
-            <span style="color: green; margin-top:5px;" class="dashicons dashicons-yes-alt"></span>
-            <span id="egoi-success-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?=!empty($result['success'])?$result['success']:'';?></span>
+<!-- Wrap -->
+<div class="smsnf">
+    <div class="smsnf-modal-bg"></div>
+    <!-- Header -->
+    <header>
+        <div class="wrapper-loader-egoi">
+            <h1>Smart Marketing > <b><?php _e( 'E-commerce', 'egoi-for-wp' ); ?></b></h1>
+            <?=getLoader('egoi-loader',false)?>
         </div>
-        <div class="egoi-simple-close-x"><span>X</span></div>
-    </div>
+        <nav>
+            <ul>
+                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><? _e('Catalogs', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['new_catalog'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce&subpage=new_catalog"><? _e('Create Catalog', 'egoi-for-wp'); ?></a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- / Header -->
+    <!-- Content -->
+    <main>
+        <!-- Content -->
+        <section class="smsnf-content">
+
+            <!-- Messages -->
+
+            <div id="egoi-success" style="<?=empty($result['success'])?'display: none;':'';?>">
+                <div class="postbox egoi-dialog-box" style="border-left: 2px solid green !important;">
+                    <div style="padding:10px 0;">
+                        <span style="color: green; margin-top:5px;" class="dashicons dashicons-yes-alt"></span>
+                        <span id="egoi-success-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?=!empty($result['success'])?$result['success']:'';?></span>
+                    </div>
+                    <div class="egoi-simple-close-x"><span>X</span></div>
+                </div>
+            </div>
+
+            <div id="egoi-alert" style="<?=empty($result['error'])?'display: none;':'';?>">
+                <div class="postbox egoi-dialog-box">
+                    <div style="padding:10px 0;">
+                        <span style="color: orangered; margin-top:5px;" class="dashicons dashicons-warning"></span>
+                        <span id="egoi-alert-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?=!empty($result['error'])?$result['error']:'';?></span>
+                    </div>
+                    <div class="egoi-simple-close-x"><span>X</span></div>
+                </div>
+            </div>
+
+            <!-- / Messages -->
+
+            <?php if ( !class_exists( 'WooCommerce' ) ) {
+                require_once plugin_dir_path(__FILE__) . 'ecommerce/no-woocommerce.php';
+            }else{
+                if(isset($_GET['subpage']) && $_GET['subpage'] == 'new_catalog'){
+                    require_once plugin_dir_path(__FILE__) . 'ecommerce/new-catalog-form.php';
+                }else{
+                    require_once plugin_dir_path(__FILE__) . 'ecommerce/catalogs.php';
+                }
+            } ?>
+        </section>
+        <!-- / Content -->
+    </main>
+    <!-- / Content -->
 </div>
-
-<div id="egoi-alert" style="<?=empty($result['error'])?'display: none;':'';?>">
-    <div class="postbox egoi-dialog-box">
-        <div style="padding:10px 0;">
-            <span style="color: orangered; margin-top:5px;" class="dashicons dashicons-warning"></span>
-            <span id="egoi-alert-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?=!empty($result['error'])?$result['error']:'';?></span>
-        </div>
-        <div class="egoi-simple-close-x"><span>X</span></div>
-    </div>
-</div>
-
-
-
-<div class="postbox" style="margin-top:20px; max-width:80%; padding: 5px 20px 5px;">
-	
-	<div class="wrapper-loader-egoi">
-        <?php if(!empty($_GET['subpage'])){ ?>
-            <h1><a class="egoi-back-button" style="text-decoration: none;display: flex;align-items: center;" href="admin.php?page=egoi-4-wp-ecommerce">&nbsp;<span class="dashicons dashicons-arrow-left-alt"></span>&nbsp;</a></h1>
-        <?php } ?>
-		<h1><?php _e( 'E-Commerce', 'egoi-for-wp' ); ?></h1>
-        <?=getLoader('egoi-loader',false)?>
-	</div>
-
-	<?php if ( !class_exists( 'WooCommerce' ) ) {
-        require_once plugin_dir_path(__FILE__) . 'ecommerce/no-woocommerce.php';
-     }else{
-	    if(isset($_GET['subpage']) && $_GET['subpage'] == 'new_catalog'){
-            require_once plugin_dir_path(__FILE__) . 'ecommerce/new-catalog-form.php';
-        }else{
-            require_once plugin_dir_path(__FILE__) . 'ecommerce/catalogs.php';
-        }
-    } ?>
-
-</div>
+<!-- / Wrap -->

@@ -6,44 +6,40 @@
     $split_country = explode( ":", $store_raw_country );
     echo $split_country[0];?>" />
     <input id="default-store-currency" type="hidden" value="<?=get_option('woocommerce_currency');?>" />
-    <table class="form form-table">
-        <tbody>
-        <tr>
-            <th>
-                <span><?=__('Name','egoi-for-wp');?></span>
-            </th>
-            <th>
-                <input name="catalog_name" id="catalog_name" class="form-control" type="text" style="width: 100%;">
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <span><?=__('Language','egoi-for-wp');?></span>
-            </th>
-            <th>
-                <select class="e-goi-option-select-admin-forms" style="width: 100%;" name="catalog_language" id="catalog_language" required>
-                    <option value="off" selected>
-                        <?php __('Disable', 'egoi-for-wp');?>
-                    </option>
-                </select>
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <span><?=__('Currency','egoi-for-wp');?></span>
-            </th>
-            <th>
-                <select class="e-goi-option-select-admin-forms" style="width: 100%;" name="catalog_currency" id="catalog_currency" required>
-                    <option value="off" selected>
-                        <?php __('Disable', 'egoi-for-wp');?>
-                    </option>
-                </select>
-            </th>
-        </tr>
-        </tbody>
-    </table>
-    <?php
-    $other_attributes = array( 'id' => 'create_catalog_button' );
-    submit_button( __( 'Create Catalog', 'egoi-fow-wp' ), 'primary', 'submit', true, $other_attributes );
-    ?>
+    <span style="display: block;margin-bottom: 20px;">* <?=__('Create a catalog base on language and currency and start the product\'s synchronization with E-goi.', 'egoi-for-wp');?></span>
+    <div class="smsnf-grid">
+        <div>
+            <div class="smsnf-input-group">
+                <label for="catalog_name"><? _e('Name', 'egoi-for-wp'); ?></label>
+                <input  id="catalog_name" type="text"
+                        name="catalog_name" size="30" spellcheck="true" autocomplete="off"
+                        placeholder="<?= __( "Write here the name of your catalog", 'egoi-for-wp' ); ?>" />
+            </div>
+
+            <div class="smsnf-input-group">
+                <label for="catalog_language"><? _e( 'Language', 'egoi-for-wp' ); ?></label>
+                <p class="subtitle"><?php _e( 'Select the language your products are setup.' ,'egoi-for-wp' ); ?></p>
+                <div class="smsnf-wrapper">
+                    <select id="catalog_language" name="catalog_language" class="form-select" >
+                        <option value="off" selected><? _e( 'Select a language..', 'egoi-for-wp' ); ?></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="smsnf-input-group">
+                <label for="catalog_currency"><? _e( 'Currency', 'egoi-for-wp' ); ?></label>
+                <p class="subtitle"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
+                <div class="smsnf-wrapper">
+                    <select id="catalog_currency" name="catalog_currency" class="form-select" >
+                        <option value="off" selected><? _e( 'Select a currency..', 'egoi-for-wp' ); ?></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="smsnf-input-group">
+        <input type="submit" id="create_catalog_button" value="<? _e('Create Catalog', 'egoi-for-wp');?>" />
+    </div>
+
 </form>

@@ -155,7 +155,10 @@ class Egoi_For_Wp_Admin {
 		// Add widget to main WP dashboard
         add_action( 'wp_dashboard_setup', array($this, 'smsnf_main_dashboard_widget') );
 
-		// hook map fields to E-goi
+        add_action( 'in_admin_header', array($this, 'show_alert_messages') );
+
+
+        // hook map fields to E-goi
 		$this->mapFieldsEgoi();
 
 		$rmdata = $_POST['rmdata'];
@@ -178,7 +181,9 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-	    if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
+        wp_enqueue_style($this->plugin_name.'popup', plugin_dir_url(__FILE__) . 'css/egoi-for-wp-pop.css', array(), $this->version, 'all' );
+
+        if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
 			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
@@ -283,6 +288,8 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
+        $bypass = EgoiProductsBo::getProductsToBypass();
+        $bypassCount = count(!is_array($bypass)?[]:$bypass);
 
 		add_menu_page( 'Smart Marketing - Main Page', 'Smart Marketing', 'Egoi_Plugin', $this->plugin_name, array($this, 'display_plugin_setup_page'), plugin_dir_url( __FILE__ ).'img/logo_small.png');
 
@@ -297,7 +304,7 @@ class Egoi_For_Wp_Admin {
 
 			add_submenu_page($this->plugin_name, __('Sync Contacts', 'egoi-for-wp'), __('Sync Contacts', 'egoi-for-wp'), $capability, 'egoi-4-wp-subscribers', array($this, 'display_plugin_subscriber_page'));
 
-			add_submenu_page($this->plugin_name, __('E-commerce', 'egoi-for-wp'), __('E-commerce', 'egoi-for-wp'), $capability, 'egoi-4-wp-ecommerce', array($this, 'display_plugin_subscriber_ecommerce'));
+			add_submenu_page($this->plugin_name, __('E-commerce', 'egoi-for-wp'), $bypassCount==0?sprintf('%s <span style="background-color: green !important;" class="awaiting-mod">%s</span>',__('E-commerce', 'egoi-for-wp'), __('New!', 'egoi-for-wp')):sprintf('%s <span class="awaiting-mod">%d</span>',__('E-commerce', 'egoi-for-wp'), $bypassCount), $capability, 'egoi-4-wp-ecommerce', array($this, 'display_plugin_subscriber_ecommerce'));
 
             add_submenu_page($this->plugin_name, __('Track & Engage', 'egoi-for-wp'), __('Track & Engage', 'egoi-for-wp'), $capability, 'egoi-4-wp-trackengage', array($this, 'display_plugin_subscriber_trackengage'));
 
@@ -2457,7 +2464,6 @@ class Egoi_For_Wp_Admin {
     }
 
     public function ecommerceFormProcess($post){
-        //wp_mail("tmota@e-goi.com",__FUNCTION__,var_export($post,true));
         $form_id = sanitize_text_field($post['form_id']);
         check_admin_referer($form_id);
 
@@ -2517,15 +2523,22 @@ class Egoi_For_Wp_Admin {
      * @return bool
      */
     public function egoi_product_creation($new_status, $old_status, $post){
-        //wp_mail("tmota@e-goi.com",__FUNCTION__,var_export([$new_status,$old_status,$post],true));
 
         $bypass = EgoiProductsBo::getProductsToBypass();
+        $bo = new EgoiProductsBo();
+
+        if(!empty($post->ID) && in_array($post->ID, $bypass) && $new_status != 'publish'){
+            if (($key = array_search($post->ID, $bypass)) !== false) {
+                unset($bypass[$key]);
+            }
+            $bo->deleteProduct($post->ID);
+            update_option('egoi_import_bypass', json_encode($bypass));
+            return true;
+        }
 
         if(!empty($post->ID) && in_array($post->ID, $bypass)){
             return false;
         }
-
-        $bo = new EgoiProductsBo();
 
         if($new_status != 'publish' && ! empty($post->ID)){//try to delete
             $bo->deleteProduct($post->ID);
@@ -2543,11 +2556,6 @@ class Egoi_For_Wp_Admin {
         $bo->syncProduct($product);
 
         return true;
-        //wp_mail("tmota@e-goi.com",__FUNCTION__,var_export($re,true));
-    }
-
-    public function egoi_finish_import_csv(){
-        wp_mail("tmota@e-goi.com",__FUNCTION__,var_export('pop_finishj',true));
     }
 
     private function get_apikey(){
@@ -2858,6 +2866,24 @@ class Egoi_For_Wp_Admin {
         }
 
         return json_encode($output);
+    }
+
+    public function show_alert_messages(){
+        $bypass = EgoiProductsBo::getProductsToBypass();
+
+        if(!empty($bypass)){//pop up
+            echo EgoiProductsBo::getNotification(count($bypass));
+            echo '<script>
+                    jQuery(document).ready(function() {
+                        (function ($) {    
+                            $(".smsnf-notification").show(200);
+                            $(".egoi-close-pop").on("click", function(){
+                                ($(this).parent()).hide(200)}
+                            );
+                        })(jQuery);
+                    });
+                </script>';
+        }
     }
 
     public function smsnf_show_account_info_ajax() {

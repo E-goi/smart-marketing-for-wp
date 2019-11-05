@@ -97,7 +97,6 @@ class EgoiApiV3
         }
 
         $resp = json_decode($client->getResponse(),true);
-        wp_mail("tmota@e-goi.com",$name,var_export([$client->__toString(),$arguments[1]],true));
         if($client->getCode() >= 200 && $client->getCode() < 300){
             if(isset($resp['items']))
                 return $resp['items'];

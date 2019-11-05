@@ -76,6 +76,7 @@ class EgoiProductsBo
      * @return mixed
      */
     public function importProductsCatalog($catalog_id, $page=0){
+        delete_option('egoi_import_bypass');
         return $this->api->importProducts(
             'POST',
             ['products' => self::getDbProducts($page)],
@@ -106,12 +107,16 @@ class EgoiProductsBo
      * @return bool
      */public function syncProduct($product){
         $breadCumbs = self::getBreadcrumb();
-
         $catalogs = self::getCatalogsToSync();//apply rules if needed here (which products to sync)
+        $products = self::transformArrayAbstractProductToApi([
+            ['ID' => $product->get_id()]
+        ],$breadCumbs);
 
         foreach ($catalogs as $catalog){
-            if(!$this->api->createProduct(self::transformProductObjectToApi($product,$breadCumbs), $catalog))
-                $this->api->patchProduct(self::transformProductObjectToApi($product,$breadCumbs), $catalog, $product->get_id());
+            foreach ($products as $single){
+                if(!$this->api->createProduct($single, $catalog))
+                    $this->api->patchProduct($single, $catalog, $single['product_identifier']);
+            }
         }
 
         return true;
@@ -137,16 +142,25 @@ class EgoiProductsBo
      */
     public static function genTableCatalog($catalog){
         $arrCatalog = self::getCatalogsToSync();
+        $bypass = self::getProductsToBypass();
         $checked = in_array($catalog['catalog_id'],$arrCatalog)?'checked':'';
+        $blinck = !empty($bypass)&&!empty($checked)?'egoi-pulsating':'';
+
+        $switch = "<div class='switch-yes-no'>
+                 <label class=\"form-switch\">
+                <input $checked type=\"checkbox\" idgoi='{$catalog['catalog_id']}' class='sync_catalog'>
+                <i class=\"form-icon\"></i>
+                </label>
+                </div>";
         return "<tr>
                 <td>{$catalog['catalog_id']}</td>
                 <td>{$catalog['title']}</td>
                 <td>{$catalog['language']}</td>
                 <td>{$catalog['currency']}</td>
-                <td><input class='sync_catalog' idgoi='{$catalog['catalog_id']}' type=\"checkbox\" ".$checked."></td>
+                <td>{$switch}</td>
                 <td class='flex-centered sun-margin'>
-                    <div class=\"button force_catalog\" idgoi=\"{$catalog['catalog_id']}\"><i class=\"fas fa-sync\"></i></div>
-                    <div class=\"button remove_catalog egoi-remove-button\" idgoi=\"{$catalog['catalog_id']}\">x</div>
+                    <div class=\"smsnf-btn ".$blinck." force_catalog\" idgoi=\"{$catalog['catalog_id']}\">".__('Import', 'egoi-for-wp')."</div>
+                    <div class=\"smsnf-btn delete-adv-form remove_catalog\" idgoi=\"{$catalog['catalog_id']}\">".__('Delete', 'egoi-for-wp')."</div>
                 </td>
                 </tr>";
     }
@@ -158,7 +172,7 @@ class EgoiProductsBo
     public static function countDbProducts(){
         global $wpdb;
         $table = $wpdb->prefix.'posts';
-        $sql="SELECT count(ID) as total FROM $table where post_type = 'product' and post_status = 'publish'";
+        $sql="SELECT count(ID) as total FROM $table where (post_type = 'product' or post_type = 'product_variation') and post_status = 'publish'";
         $rows = $wpdb->get_results($sql,ARRAY_A);
         if(!empty($rows[0]['total'])){
             return $rows[0]['total'];
@@ -191,17 +205,35 @@ class EgoiProductsBo
         global $wpdb;
         $page = $page * $limit;
         $table = $wpdb->prefix.'posts';
-        $sql="SELECT ID FROM $table where post_type = 'product' and post_status = 'publish' order by id ASC LIMIT $page,$limit ";
+        $sql="SELECT ID FROM $table where (post_type = 'product' or post_type = 'product_variation') and post_status = 'publish' order by id ASC LIMIT $page,$limit ";
         $rows = $wpdb->get_results($sql,ARRAY_A);
 
-        $breadCumbs = self::getBreadcrumb();
+        $breadCrumbs = self::getBreadcrumb();
+        return self::transformArrayAbstractProductToApi($rows, $breadCrumbs);
+    }
+
+    /**
+     * @param $arr
+     * @param $breadCrumbs
+     * @return array
+     */
+    public static function transformArrayAbstractProductToApi($arr, &$breadCrumbs){
         $mappedProducts = [];
-        foreach ($rows as $product){
-            $mappedProducts[] = self::transformProductObjectToApi(wc_get_product($product['ID']),$breadCumbs);
+        foreach ($arr as $product){
+            $prod = wc_get_product($product['ID']);
+            if($prod INSTANCEOF WC_Product_Variable ){
+                $data = self::transformProductVariableObjectToApi($prod,$breadCrumbs);
+                foreach ($data as $productVariation){
+                    $mappedProducts[] = self::transformToCleanArray($productVariation);
+                }
+            }else if($prod INSTANCEOF WC_Product && ! $prod INSTANCEOF WC_Product_Variation ){
+                $p = self::transformProductObjectToApi($prod,$breadCrumbs);
+                if(!empty($p))
+                    $mappedProducts[] = self::transformToCleanArray($p);
+            }
         }
         return $mappedProducts;
     }
-
 /*
     private static function getProductsCategoryNumbers($productNumbers=[]){
         $productNumbers = implode(',',$productNumbers);
@@ -255,11 +287,15 @@ class EgoiProductsBo
      * From WC_Product to product payload APIV3
      * @param $product
      * @param $breadCrumbs
+     * @param bool $bypass
      * @return array|null
      */
-    private function transformProductObjectToApi($product, &$breadCrumbs){
-        if(! $product INSTANCEOF WC_Product)
-            return NULL;
+    private static function transformProductObjectToApi($product, &$breadCrumbs, $bypass = false){
+
+        if(!$bypass){
+            if(! $product INSTANCEOF WC_Product || empty($product->get_regular_price()))
+                return NULL;
+        }
 
         return [
             'product_identifier'    => "{$product->get_id()}",
@@ -270,8 +306,8 @@ class EgoiProductsBo
             //'ean'                   => NULL,
             //'gtin'                  => NULL,
             //'mpn'                   => NULL,
-            'link'                  => $product->add_to_cart_url(),
-            'image_link'            => get_the_post_thumbnail_url($product->get_id()),
+            'link'                  => get_permalink($product->get_id()),
+            'image_link'            => wp_get_attachment_image_url( $product->get_image_id(), 'full' ),
             'price'                 => $product->get_regular_price(),
             'sale_price'            => $product->get_sale_price(),
             //'brand'                 => NULL,
@@ -279,6 +315,46 @@ class EgoiProductsBo
             'related_products'      => array_unique(array_merge($product->get_upsell_ids(), $product->get_cross_sell_ids()))
         ];
 
+    }
+
+    /**
+     * From WC_Product_Variable to product payload APIV3
+     * @param $product
+     * @param $breadCrumbs
+     * @return array
+     */
+    private static function transformProductVariableObjectToApi($product, &$breadCrumbs){
+        if(! $product INSTANCEOF WC_Product_Variable )
+            return [];
+
+        $base = self::transformProductObjectToApi($product,$breadCrumbs, true);
+
+        $variations = $product->get_available_variations();
+
+        if(empty($variations) || !is_array($variations))
+            return [];
+
+        $output = [];
+        foreach ($variations as $variation){
+            if($variation['variation_is_active'] === false || $variation['variation_is_visible'] === false )
+                continue;
+            $prod = wc_get_product($variation['variation_id']);
+            $prod_mapped = self::transformProductObjectToApi($prod,$breadCrumbs, true);
+
+            if(empty($prod_mapped))
+                continue;
+
+            $prod_mapped['categories']  = $base['categories'];
+            $prod_mapped['image_link']  = !empty($base['image_link'])?$base['image_link']:$prod_mapped['image_link'];
+            $prod_mapped['description'] = !empty($base['description'])?$base['description']:$prod_mapped['description'];
+
+            $output[] = $prod_mapped;
+        }
+        return $output;
+    }
+
+    private static function transformToCleanArray($array){
+        return array_filter($array, function($value) { return !empty($value); });
     }
 
     /**
@@ -312,6 +388,16 @@ class EgoiProductsBo
             $output[$item[$id]] = $item;
         }
         return $output;
+    }
+
+    public static function getNotification($onQueue){
+        return  '
+        <div class="smsnf-notification">
+            <div class="egoi-close-pop close-btn">&#10005;</div>
+            <h2><img style="margin-right: 5px;" src="'.plugin_dir_url( __FILE__ ).'../admin/img/logo_small.png'.'">' . __('Attention!','egoi-for-wp') . '</h2>
+            <p>' . sprintf(__('You have %d products behind in synchronization!','egoi-for-wp'), $onQueue) . '</p>
+        </div>
+	';
     }
 
 

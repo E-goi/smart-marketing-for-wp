@@ -11,10 +11,18 @@ jQuery(document).ready(function() {
         var default_store_country   = $('#default-store-country');
         var default_store_currency  = $('#default-store-currency');
 
+        var close                   = $(".egoi-simple-close-x");
+
         create_catalog_button.on('click', function (e) {
             if(!valid([catalog_name,catalog_language,catalog_currency])){
                 e.preventDefault();
+            }else{
+            $('#form-create-catalog').submit();
             }
+        });
+
+        close.on('click', function () {
+            $($($(this).parent()[0]).parent()[0]).hide();
         });
 
         getDtaAjax();

@@ -1,6 +1,6 @@
 <div class="container">
     <?php if(!empty($table)){ ?>
-        <table border="0" class="widefat striped">
+        <table border="0" class="smsnf-table">
             <thead>
             <tr>
                 <th><?=__('ID','egoi-for-wp');?></th>
@@ -21,7 +21,11 @@
             <h4><?=__('Create your first catalog','egoi-for-wp');?></h4>
         </div>
     <?php } ?>
-    <div class="egoi-undertable-button-wrapper" ><div class="button-primary" id="new_catalog_page"><span><?=__('New Catalog','egoi-for-wp');?></span></div></div>
+    <div class="egoi-undertable-button-wrapper" >
+        <div class="smsnf-input-group">
+            <input type="submit" id="new_catalog_page" value="<? _e('New Catalog', 'egoi-for-wp');?>" />
+        </div>
+    </div>
 </div>
 
 
@@ -32,7 +36,7 @@
                 <button type="button" class="close no-border-button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="modalLabel"><?=__('Import Catalog: ','egoi-for-wp');?> <span id="display-selected"></span></h4>
+                <h2 class="modal-title" id="modalLabel"><?=__('Import Catalog: ','egoi-for-wp');?> <span id="display-selected"></span></h2>
             </div>
             <div class="modal-body nav">
                 <input type="hidden" id="selected-import-catalog">
@@ -60,7 +64,7 @@
                 <button type="button" class="close no-border-button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="modalLabel"><?=__('Delete','egoi-for-wp');?></h4>
+                <h2 class="modal-title" id="modalLabel"><?=__('Delete','egoi-for-wp');?></h2>
             </div>
             <div class="modal-body nav">
                 <input type="hidden" id="selected-delete-catalog">

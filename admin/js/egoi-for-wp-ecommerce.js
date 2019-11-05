@@ -21,6 +21,8 @@ jQuery(document).ready(function() {
         var ajaxObj             = egoi_config_ajax_object_ecommerce;
         var scopeAjaxSync;
 
+        var table               = $('.smsnf-table >tbody');
+
         //importation
         var selected_catalog    = $('#selected-import-catalog');
         var display_selected    = $('#display-selected');
@@ -60,7 +62,10 @@ jQuery(document).ready(function() {
         });
 
         force_catalog.on('click', function () {
-            var id = $(this).attr(idgoi);
+            var thisel = $(this);
+            thisel.removeClass('egoi-pulsating');
+            $('.smsnf-notification').hide(anim);
+            var id = thisel.attr(idgoi);
             selected_catalog.val(id);
             display_selected.text(id);
             getCountAjax();
@@ -142,6 +147,8 @@ jQuery(document).ready(function() {
                 $($($(obj).parent()[0]).parent()[0]).remove();
                 setTimeout(function () {
                     sync_catalog.trigger("change");
+                    if(table.children().length === 'undefined' || table.children().length < 1)
+                        location.reload();
                 },200);
             });
         }
