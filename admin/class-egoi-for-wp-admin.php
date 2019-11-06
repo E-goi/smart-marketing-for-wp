@@ -206,7 +206,7 @@ class Egoi_For_Wp_Admin {
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
 
-			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
+			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
             wp_enqueue_script($this->plugin_name.'-bootstrapjs', plugin_dir_url(__FILE__) . 'js/bootstrap-modal.min.js', array('jquery'), $this->version, false);
 
 
@@ -225,7 +225,11 @@ class Egoi_For_Wp_Admin {
 			wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
 			wp_enqueue_script('custom-script5');
 
-			if(strpos(get_current_screen()->id, 'ecommerce')){
+            wp_enqueue_script('smsnf-capture', plugin_dir_url(__FILE__) . 'js/capture.js', array('jquery', 'custom-script5'));
+            wp_enqueue_script('jquery-color-picker', plugin_dir_url(__FILE__) . 'js/colorpicker.js', array('jquery'));
+
+
+            if(strpos(get_current_screen()->id, 'ecommerce')){
 			    $page = $_GET['subpage'];
                 if(!empty($page)){
                     switch ($page){
@@ -2491,7 +2495,7 @@ class Egoi_For_Wp_Admin {
         $bo = new EgoiProductsBo();
         $data = $bo->getCountriesCurrencies();
         if($data === false)
-            wp_send_json_error(__('Something went wrong fetching countries, please try again latter.','egoi-for-wp'));
+            wp_send_json_error(__('Something went wrong fetching countries, please try again later.','egoi-for-wp'));
         wp_send_json_success($data);
     }
 
