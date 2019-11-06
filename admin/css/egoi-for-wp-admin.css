@@ -7454,7 +7454,7 @@ a.egoi_tooltip:hover{
 .smsnf main {
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 100fr 1fr;
   margin: 12px;
 }
 

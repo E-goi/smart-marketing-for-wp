@@ -5,7 +5,7 @@ if (isset($_POST['action']) && ($_POST['action'])) {
 
     update_option($post['egoiform'], $post);
     
-    echo get_notification('Widget', 'Widget guardado com sucesso.');
+    echo get_notification('Widget', __('Widget saved successfully!','egoi-for-wp'));
 }
 
 $opt_widget = get_option('egoi_widget');

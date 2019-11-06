@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) die();
 $dir = plugin_dir_path(__FILE__) . 'capture/';
 
 include_once $dir . '/functions.php';
+require_once plugin_dir_path(__FILE__) . 'egoi-for-wp-common.php';
 
 $img = 'https://img.icons8.com/ios/50/000000/picture.png';
 
@@ -31,7 +32,6 @@ $page = array(
 $next_adv_form_id = get_next_adv_form_id();
 ?>
 
-<style>#wpcontent {padding: 0;background-color: #f4f8fa;}</style>
 
 <!-- Wrap -->
 <div class="smsnf">
@@ -100,16 +100,7 @@ $next_adv_form_id = get_next_adv_form_id();
         <!-- Pub -->
         <section class="smsnf-pub">
             <div>
-                <h2>PUB</h2>
-                <img src="<?= $img ?>" />
-            </div>
-            <div>
-                <h2>PUB</h2>
-                <img src="<?= $img ?>" />
-            </div>
-            <div>
-                <h2>PUB</h2>
-                <img src="<?= $img ?>" />
+                <?php include ('egoi-for-wp-admin-banner.php'); ?>
             </div>
         </section>
         <!-- / Pub -->

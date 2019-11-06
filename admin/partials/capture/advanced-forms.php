@@ -173,7 +173,7 @@ $is_iframe = $_GET['type'] == 'iframe';
                         <input  id="form_border_color" class="color" type="text" name="egoi_form_sync[border_color]" value="<?= $color ?>" autocomplete="off" />
                     </div>-->
                     <div class="smsnf-input-group">
-                        <label for="form_border_color">Cor do contorno</label>
+                        <label for="form_border_color"><?=__('Border Color','egoi-for-wp');?></label>
                         <div class="colorpicker-wrapper">
                             <div style="background-color:<?= $color ?>" class="view" ></div>
                             <input id="form_border_color" type="text" name="egoi_form_sync[border_color]" value="<?= $color ?>"  autocomplete="off" />
@@ -183,13 +183,13 @@ $is_iframe = $_GET['type'] == 'iframe';
                     <!-- / COR CONTORNO -->
                     <!-- LARGURA -->
                     <div class="smsnf-input-group">
-                        <label for="form_width">Largura do Formulário <small>(px)</small></label>
+                        <label for="form_width"><?=__('Form Width','egoi-for-wp');?> <small>(px)</small></label>
                         <input  id="form_width" type="number" name="egoi_form_sync[width]" value="<?= $width ?>" min="200" autocomplete="off" />
                     </div>
                     <!-- / LARGURA -->
                     <!-- ALTURA -->
                     <div class="smsnf-input-group">
-                        <label for="form_height">Altura do Formulário <small>(px)</small></label>
+                        <label for="form_height"><?=__('Form Height','egoi-for-wp');?> <small>(px)</small></label>
                         <input  id="form_height" type="number" name="egoi_form_sync[height]" value="<?= $height ?>" min="100" autocomplete="off" />
                     </div>
                     <!-- / ALTURA -->
@@ -238,16 +238,16 @@ $is_iframe = $_GET['type'] == 'iframe';
             </g>
         </svg>
     </div>
-    <p>Como integrar o formulário numa página ou artigo?</p>
+    <p><?=__('How to integrate the form in a post or page','egoi-for-wp');?></p>
     <hr />
     <ol>
-        <li>Entre na Conta E-goi e abra a tab/menu de Formulários.</li>
-        <li>Escolha o formulário desejado.</li>
-        <li>Selecione o botão de Guardar e escolha "Publicar".</li>
-        <li>Adicione outra publicação.</li>
-        <li>Obtenha o código de HTML Avançado</li>
-        <li>Transcreva código para o campo de texto dos formulários do plugin</li>
-        <li>Guarde alterações no Plugin</li>
+        <li><?=__('Go in your E-goi\'s account in the tab/menu Forms.','egoi-for-wp');?></li>
+        <li><?=__('Choose the desired form.','egoi-for-wp');?></li>
+        <li><?=__('Select the Save button and choose "Publish".','egoi-for-wp');?></li>
+        <li><?=__('Add another Post.','egoi-for-wp');?></li>
+        <li><?=__('Get the advanced HTML code.','egoi-for-wp');?></li>
+        <li><?=__('Paste the code in the plugin advanced form.','egoi-for-wp');?></li>
+        <li><?=__('Save all changes.','egoi-for-wp');?></li>
     </ol>
 </section>
 
@@ -256,16 +256,16 @@ $is_iframe = $_GET['type'] == 'iframe';
     <div class="modal-container">
         <div class="modal-header">
             <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
-            <h2 class="modal-title">Change form type</h2>
+            <h2 class="modal-title"><?=__('Change Form type.','egoi-for-wp');?></h2>
         </div>
     <div class="modal-body">
         <div class="content">
-            Attention! If you change your form you will lose the settings.
+            <?=__('Attention! If you change your form you will lose the settings.','egoi-for-wp');?>
         </div>
     </div>
         <div class="modal-footer">
-            <button id="confirm-btn" class="smsnf-btn primary">Confirm</button>
-            <a href="#close" class="smsnf-btn">Cancel</a>
+            <button id="confirm-btn" class="smsnf-btn primary"><?=__('Confirm','egoi-for-wp');?></button>
+            <a href="#close" class="smsnf-btn"><?=__('Cancel','egoi-for-wp');?></a>
         </div>
     </div>
 </div>
