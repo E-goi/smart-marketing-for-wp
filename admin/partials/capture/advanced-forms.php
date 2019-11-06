@@ -251,7 +251,7 @@ $is_iframe = $_GET['type'] == 'iframe';
     </ol>
 </section>
 
-<div id="smsnf-confirm-modal" class="modal modal-sm" id="modal-id">
+<div id="smsnf-confirm-modal" class="modal modal-sm" id="modal-id" style="width: 100% !important; ">
     <a href="#close" class="modal-overlay" aria-label="Close"></a>
     <div class="modal-container">
         <div class="modal-header">

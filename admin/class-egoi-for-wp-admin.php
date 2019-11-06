@@ -271,7 +271,9 @@ class Egoi_For_Wp_Admin {
 	            wp_enqueue_script('chartjs');
 	        }
 
-            if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard' || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form' ) {
+            if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard'
+                || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form'
+                || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-ecommerce') {
 
                 wp_enqueue_script( 'smsnf-dashboard-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-dashboard.js', array('jquery') );
                 wp_localize_script( 'smsnf-dashboard-ajax-script', 'smsnf_dashboard_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );

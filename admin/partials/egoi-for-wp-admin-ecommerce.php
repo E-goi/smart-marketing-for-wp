@@ -97,16 +97,22 @@ $page = array(
             }
             ?>
         </section>
+
+        <section class="smsnf-pub">
+            <div>
+                <?php include ('egoi-for-wp-admin-banner.php'); ?>
+            </div>
+        </section>
         <!-- / Content -->
     </main>
     <!-- / Content -->
     <?php if(empty($_GET['subpage'])){ ?>
-        <main>
+        <main style="grid-template-columns:1fr !important;">
             <!-- Content -->
             <section class="smsnf-content">
                 <div class="container">
-                    <h3><?=__('DISCLAIMER:','egoi-for-wp');?></h3>
-                    <p>
+                    <h4 style="margin: 0;"><?=__('DISCLAIMER:','egoi-for-wp');?></h4>
+                    <p style="font-size: 11px;">
                         <?=__('Any changes on categories or .csv importations will need to be manually imported by clicking the "import" button in the Catalog\'s page.','egoi-for-wp');?>
                     </p>
                 </div>

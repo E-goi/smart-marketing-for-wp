@@ -13,7 +13,7 @@ add_thickbox();
         if(!empty($alert))
             echo $alert;
     ?>
-    <iframe id="iframe" src="https://eg.e-goi.com/pluginbanners/wp-iframe.php?type=v&lang=<?php echo get_locale(); ?>" height="460px" style="max-width: 100%;" ></iframe>
+    <iframe id="iframe" src="https://eg.e-goi.com/pluginbanners/wp-iframe.php?type=v&lang=<?php echo get_locale(); ?>" height="480px" style="max-width: 100%;" ></iframe>
 </div>
 
 
