@@ -2390,7 +2390,7 @@ class Egoi_For_Wp_Admin {
 
         $site_id = $this->scrap_sited_id($option_webpush['code'], $api);
         if($site_id === false){
-            echo json_encode(['ERROR' => __('Api error, try again latter.', 'egoi-for-wp')]);
+            echo json_encode(['ERROR' => __('Api error, try again later.', 'egoi-for-wp')]);
             wp_die();
         }
 
@@ -2491,7 +2491,7 @@ class Egoi_For_Wp_Admin {
         $bo = new EgoiProductsBo();
         $data = $bo->getCountriesCurrencies();
         if($data === false)
-            wp_send_json_error(__('Something went wrong fetching countries, please try again latter.','egoi-for-wp'));
+            wp_send_json_error(__('Something went wrong fetching countries, please try again later.','egoi-for-wp'));
         wp_send_json_success($data);
     }
 

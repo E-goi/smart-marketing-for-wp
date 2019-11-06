@@ -68,7 +68,7 @@
             </div>
             <div class="modal-body nav">
                 <input type="hidden" id="selected-delete-catalog">
-                <span><?=__('All imported products will be lost if you delete this catalog!','egoi-for-wp');?></span>
+                <span><?=__('All imported products will be removed from E-goi if you delete this catalog!','egoi-for-wp');?></span>
                 <div style="display: flex;"><h4><?=__('Are you sure?','egoi-for-wp');?></h4></div>
             </div>
             <div class="modal-footer">
