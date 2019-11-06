@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class EgoiApiV3
 {
-    const APIV3     = 'https://dev-api.egoiapp.com';//'https://api.egoiapp.com'; TODO:CHNAGE THIS
+    const APIV3     = 'https://api.egoiapp.com';
     const PLUGINKEY = '908361f0368fd37ffa5cc7c483ffd941';
     const APIURLS   = [
         'deployEmailRssCampaign'    => '/campaigns/email/rss/{campaign_hash}/actions/enable',

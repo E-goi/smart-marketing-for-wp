@@ -95,7 +95,7 @@ function getLis() {
 }
 
 function getEgoiClient(){
-    $url = 'http://192.168.9.251:9090';//'https://api.egoiapp.com/my-account'; TODO:FIXXXXX this
+    $url = 'https://api.egoiapp.com/my-account';
     $api = getApikey();
     $plugin = '908361f0368fd37ffa5cc7c483ffd941';
     $out = json_decode(_getContent($url,["ApiKey: $api","PluginKey: $plugin"]),true);
