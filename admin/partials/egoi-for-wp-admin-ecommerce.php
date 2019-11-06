@@ -94,10 +94,25 @@ $page = array(
                 }else{
                     require_once plugin_dir_path(__FILE__) . 'ecommerce/catalogs.php';
                 }
-            } ?>
+            }
+            ?>
         </section>
         <!-- / Content -->
     </main>
     <!-- / Content -->
+    <?php if(empty($_GET['subpage'])){ ?>
+        <main>
+            <!-- Content -->
+            <section class="smsnf-content">
+                <div class="container">
+                    <h3><?=__('DISCLAIMER:','egoi-for-wp');?></h3>
+                    <p>
+                        <?=__('Any changes on categories or .csv importations will need to be manually imported by clicking the "import" button in the Catalog\'s page.','egoi-for-wp');?>
+                    </p>
+                </div>
+            </section>
+            <!-- / Content -->
+        </main>
+    <?php } ?>
 </div>
 <!-- / Wrap -->
