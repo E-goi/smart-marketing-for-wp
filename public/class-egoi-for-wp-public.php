@@ -504,7 +504,7 @@ class Egoi_For_Wp_Public {
 					var egoi_double_optin = simple_form.find("#egoi_double_optin").val();
 
 					var data = {
-						"action": "my_action",
+						"action": "egoi_simple_form_submit",
 						"egoi_simple_form": egoi_simple_form,
 						"egoi_name": egoi_name,
 						"egoi_email": egoi_email,
@@ -610,6 +610,60 @@ class Egoi_For_Wp_Public {
         foreach ($options as $option) {
             add_feed($option->option_name, 'egoi_rss_feeds' );
         }
+    }
+
+    public function process_simple_form_add(){
+        $api = new Egoi_For_Wp();
+
+        // double opt-in
+        $status = filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1' ? 0 : 1;
+
+        $result = $api->addSubscriberWpForm(
+            filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
+            array(
+                'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
+                'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
+                'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
+                'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
+                'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
+                'status' => $status,
+            )
+        );
+
+        if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
+
+            $form_id = filter_var($_POST['egoi_simple_form'], FILTER_SANITIZE_NUMBER_INT);
+            $api->smsnf_save_form_subscriber($form_id, 'simple-form', $result);
+
+            echo $this->check_subscriber($result).' ';
+            _e('was successfully registered!', 'egoi-for-wp');
+        } else if (isset($result->MODIFICATION_DATE)) {
+            _e('Subscriber data from', 'egoi-for-wp');
+            echo ' '.$this->check_subscriber($result).' ';
+            _e('has been updated!', 'egoi-for-wp');
+        } else if (isset($result->ERROR)) {
+            if ($result->ERROR == 'NO_DATA_TO_INSERT') {
+                _e('ERROR: no data to insert', 'egoi-for-wp');
+            } else if ($result->ERROR == 'EMAIL_ADDRESS_INVALID_MX_ERROR') {
+                _e('ERROR: e-mail address is invalid', 'egoi-for-wp');
+            } else {
+                _e('ERROR: invalid data submitted', 'egoi-for-wp');
+            }
+
+        }
+
+        wp_die(); // this is required to terminate immediately and return a proper response
+    }
+
+    public function check_subscriber($subscriber_data) {
+        $data = array('FIRST_NAME','EMAIL','CELLPHONE');
+        foreach ($data as $value) {
+            if ($subscriber_data->$value) {
+                $subscriber = $subscriber_data->$value;
+                break;
+            }
+        }
+        return $subscriber;
     }
 
     public function smsnf_save_advanced_form_subscriber() {

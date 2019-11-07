@@ -7046,6 +7046,24 @@ a.egoi_tooltip:hover{
   position: relative;
 }
 
+.smsnf-wrapper > label{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-right: 5px;
+}
+
+.smsnf-wrapper > label > input[type=radio]{
+  margin-top: 1px !important;
+  width: auto;
+  height: 16px !important;
+}
+
+.smsnf-btn-mt10{
+  margin-top: 10px;
+}
+
 .smsnf-table {
   border: 1px solid rgba(108, 132, 143, .3);
   border-collapse: collapse;
@@ -7421,6 +7439,10 @@ a.egoi_tooltip:hover{
 .smsnf header nav ul li a.-disabled {
   color: #9a9ea0;
   cursor: not-allowed !important;
+}
+
+.smsnf-pub > div > .egoi-box{
+  position: inherit !important;
 }
 
 .smsnf-pub > div {

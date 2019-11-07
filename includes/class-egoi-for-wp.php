@@ -351,6 +351,8 @@ class Egoi_For_Wp {
 		$this->loader->add_action('admin_post_form_handler', $plugin_public, 'form_handler');
 
         $this->loader->add_action('wp_ajax_smsnf_save_advanced_form_subscriber', $plugin_public, 'smsnf_save_advanced_form_subscriber');
+        $this->loader->add_action('wp_ajax_egoi_simple_form_submit', $plugin_public, 'process_simple_form_add');
+        $this->loader->add_action('wp_ajax_nopriv_egoi_simple_form_submit', $plugin_public, 'process_simple_form_add');
 		
 	}
 
