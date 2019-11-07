@@ -32,7 +32,7 @@ Então não deixe de activar o Track & Engage, um sistema para rastrear todo o c
 * Opção de validação dos contactos com Double Opt-in (RGPD)
 * Integração com o WooCommerce
 * Integração com o CF7
-* Integração com o Visual Composer
+* Integração com o WPBakery Page Builder
 * Integração com o Page Builder
 * Mapeamento de campos adicionais (incl. WooCommerce)
 * E-goi Track & Engage
@@ -72,7 +72,7 @@ So be sure to enable Track & Engage system to track all customer behavior in you
 * Integrates with Contact Form 7
 * Integrates with WooCommerce
 * Integrates with Page Builder By SiteOrigin
-* Integrates with Visual Composer
+* Integrates with WPBakery Page Builder
 * Multiple types of Custom Forms
 * Easy E-goi/WP field mapping; send anything over to E-goi!
 * Web Push Notifications
@@ -146,6 +146,8 @@ You can create and update your lists, see how many subscribers you have, but you
 
 = 3.0.0 =
 - Product Synchronization
+- New Interface
+- Minor bug fixes
 
 = 2.9.1 =
 - Performance fix
@@ -227,7 +229,7 @@ You can create and update your lists, see how many subscribers you have, but you
  - RSS Feed - Fixed compatibility with other plugins
 
 = 2.3.2 =
- - Web Push - Fixed compatibility with Elementor Page Builder and Visual Composer
+ - Web Push - Fixed compatibility with Elementor Page Builder and WPBakery Page Builder
 
 = 2.3.1 =
  - RSS Feed - Improvements
@@ -299,7 +301,7 @@ You can create and update your lists, see how many subscribers you have, but you
  - Fix the error when changing the form type in the advanced form
  - Simple Forms - creating a simple form that generates a shortcode
  - JSON Endpoint - This endpoint returns the produts info in a JSON
- - Integration with Visual Composer
+ - Integration with WPBakery Page Builder
  - Integration with Page Builder By SiteOrigin  
 
 = 1.1.1 =

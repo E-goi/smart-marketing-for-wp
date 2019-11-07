@@ -147,7 +147,7 @@ class Egoi_For_Wp_Admin {
 		add_action( 'rest_api_init', array($this, 'egoi_products_data_api_init'), 10, 3) ;
 
 
-		// Map shortcode to Visual Composer
+		// Map shortcode to WPBakery Page Builder
 		if ( function_exists( 'vc_lean_map' ) ) {
 			vc_lean_map( 'egoi_vc_shortcode', array( $this, 'egoi_vc_shortcode_map' ) );
 		}
@@ -1641,7 +1641,7 @@ class Egoi_For_Wp_Admin {
 	}
 
 
-	//Map shortcode to Visual Composer
+	//Map shortcode to WPBakery Page Builder
 	public function egoi_vc_shortcode_map() {
 
         global $wpdb;

@@ -552,7 +552,7 @@ class Egoi_For_Wp_Public {
 	}
 
 	/**
-	 * Visual Composer Shortcode output
+	 * WPBakery Page Builder Shortcode output
 	 */
 	public function egoi_vc_shortcode_output( $atts, $content = null ) {
 
