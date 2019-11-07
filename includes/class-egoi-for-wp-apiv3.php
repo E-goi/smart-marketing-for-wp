@@ -100,6 +100,8 @@ class EgoiApiV3
         if($client->getCode() >= 200 && $client->getCode() < 300){
             if(isset($resp['items']))
                 return $resp['items'];
+            else if(isset($resp['catalog_id']))
+                return $resp['catalog_id'];
             else
                 return true;
         }else{

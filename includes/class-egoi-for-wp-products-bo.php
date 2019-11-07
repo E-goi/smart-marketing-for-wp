@@ -45,21 +45,39 @@ class EgoiProductsBo
      * Gets Catalogs by page
      * */
     public function getCatalogsTable($page=0,$limit=10){
-        return $this->api->getCatalogs('GET',['page'=>$page,'limit'=>$limit]);
+        $catalogs =  $this->api->getCatalogs('GET',['page'=>$page,'limit'=>$limit]);
+
+        if(!is_array($catalogs))
+            return [];
+
+        $store_catalogs_id = self::getWordpressCatalogs();
+        foreach ($catalogs as $key => $catalog){
+            if(in_array($catalog['catalog_id'],$store_catalogs_id))
+                $catalogs[$key]['origin'] = 'wordpress';
+            else
+                $catalogs[$key]['origin'] = 'e-goi';
+        }
+
+        return $catalogs;
     }
 
     /*
      * Creates a catalog
      * */
     public function createCatalog($title, $language, $currency){
-        return $this->api->createCatalog(
+        $response =  $this->api->createCatalog(
             'POST',
             [
-                'title'     => $title,
+                'title'     => 'Wordpress '.$title,
                 'language'  => $language,
                 'currency'  => $currency
             ]
         );
+        if(!is_numeric($response))
+            return false;
+
+        self::setWordpressCatalog($response);
+        return true;
     }
 
     public function deleteCatalog($id){
@@ -122,6 +140,25 @@ class EgoiProductsBo
         return true;
     }
 
+    public static function getWordpressCatalogs(){
+         $data = get_option('egoi_store_catalogs');
+         $data = json_decode($data, true);
+         if(empty($data))
+             $data = [];
+
+         return $data;
+    }
+
+    public static function setWordpressCatalog($catalog_id){
+        $data = get_option('egoi_store_catalogs');
+        $data = json_decode($data, true);
+        if(empty($data) || !is_array($data))
+            $data = [];
+
+        $data[] = $catalog_id;
+        update_option('egoi_store_catalogs', json_encode($data));
+        return true;
+    }
     /**
      * Get catalogs to sync product
      * @return array|mixed
@@ -162,6 +199,7 @@ class EgoiProductsBo
                     <div class=\"smsnf-btn ".$blinck." force_catalog\" idgoi=\"{$catalog['catalog_id']}\">".__('Import', 'egoi-for-wp')."</div>
                     <div class=\"smsnf-btn delete-adv-form remove_catalog\" idgoi=\"{$catalog['catalog_id']}\">".__('Delete', 'egoi-for-wp')."</div>
                 </td>
+                <td>".ucfirst($catalog['origin'])."</td>
                 </tr>";
     }
 

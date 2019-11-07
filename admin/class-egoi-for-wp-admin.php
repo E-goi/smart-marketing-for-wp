@@ -697,7 +697,7 @@ class Egoi_For_Wp_Admin {
 
 			if (!is_user_logged_in()){
 				echo '<p class="form-row form-row-wide">
-				<input class="input-checkbox" type="checkbox" name="egoi_check_sync" id="egoi_check" value="1" checked>
+				<input class="input-checkbox" type="checkbox" name="egoi_check_sync" id="egoi_check" value="1">
 				<label for="egoi_check" class="checkbox">'.__('Subscribe Newsletter', 'egoi-for-wp').'</label></p>';
 			}
 
@@ -925,7 +925,7 @@ class Egoi_For_Wp_Admin {
                         $phone = $api->smsnf_get_valid_phone($phone);
 						$cellphone = $api->smsnf_get_valid_phone($cellphone);
 
-						$api->addSubscriber($this->options_list['list'], $name, $guest_email, '', 1, $cellphone, 'Guest', $phone);
+						$api->addSubscriber($this->options_list['list'], $name, $guest_email, '', 1, $cellphone, 'wp_newsletter', $phone);
 					}
 				}
 			}

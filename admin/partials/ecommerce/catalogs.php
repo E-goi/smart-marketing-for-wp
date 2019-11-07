@@ -1,5 +1,5 @@
-<div class="container">
     <?php if(!empty($table)){ ?>
+    <div class="container">
         <table border="0" class="smsnf-table">
             <thead>
             <tr>
@@ -9,6 +9,7 @@
                 <th><?=__('Currency','egoi-for-wp');?></th>
                 <th><?=__('Status','egoi-for-wp');?></th>
                 <th><?=__('Operations','egoi-for-wp');?></th>
+                <th><?=__('Created At','egoi-for-wp');?></th>
             </tr>
             </thead>
             <tbody>
@@ -16,12 +17,13 @@
             </tbody>
         </table>
     <?php }else{ ?>
+    <div class="container" style="display: flex;justify-content: center;align-items: center;flex-direction: column;min-height: 100%;">
         <div style="text-align: center;">
             <h2><?=__('There are no Catalogs!','egoi-for-wp');?></h2>
             <h4><?=__('Create your first catalog','egoi-for-wp');?></h4>
         </div>
     <?php } ?>
-    <div class="egoi-undertable-button-wrapper" >
+    <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
         <div class="smsnf-input-group">
             <input type="submit" id="new_catalog_page" value="<? _e('New Catalog', 'egoi-for-wp');?>" />
         </div>
