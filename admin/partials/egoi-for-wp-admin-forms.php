@@ -13,7 +13,7 @@ $home = '<svg class="smsnfCapture__header__menu__item__homeIcon" version="1.1" i
 // apaga formulário avançado
 if (isset($_GET['del_adv_form'])) {
     delete_option('egoi_form_sync_' . $_GET['del_adv_form']);
-    echo get_notification('Formulário Avançado', 'O formulário foi apagado com sucesso.');
+    echo get_notification(__('Advanced Form', 'egoi-for-wp'), __('Form was successfully deleted!', 'egoi-for-wp'));
 }
 
 // apaga formulário simples
