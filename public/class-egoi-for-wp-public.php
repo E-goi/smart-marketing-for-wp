@@ -612,6 +612,60 @@ class Egoi_For_Wp_Public {
         }
     }
 
+    public function egoi_add_newsletter_signup_hide(){
+        echo '<script>
+
+            jQuery(document).ready(function() {
+                (function ($) {
+                    var check = $("#egoi_newsletter_active");
+                    if(check.length > 0 && check.is(":checked")){
+                        $($($(check.parent()).parent()).parent()).hide();
+                    }
+                })(jQuery);
+            });
+
+            </script>';
+
+        $this->egoi_add_newsletter_signup();
+    }
+
+    public function egoi_add_newsletter_signup(){
+
+        $fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
+        global $current_user;
+
+        foreach ( $fields as $key => $field_args ) {
+            if ( $current_user ) {
+                $checked = get_user_meta($current_user->ID, $key, true);
+            }
+            woocommerce_form_field( $key, $field_args, empty($checked)?0:true);
+        }
+    }
+    public function egoi_save_account_fields_order( $order_id ) {
+        global $current_user;
+        if($current_user){
+            $this->egoi_save_account_fields($current_user->ID);
+        }
+    }
+
+    public function egoi_save_account_fields( $customer_id ) {
+        $fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
+        $sanitized_data = array();
+
+        foreach ( $fields as $key => $field_args ) {
+
+            $sanitize = isset( $field_args['sanitize'] ) ? $field_args['sanitize'] : 'wc_clean';
+            $value    = isset( $_POST[ $key ] ) ? call_user_func( $sanitize, $_POST[ $key ] ) : '';
+
+            update_user_meta( $customer_id, $key, $value );
+        }
+
+        if ( ! empty( $sanitized_data ) ) {
+            $sanitized_data['ID'] = $customer_id;
+            wp_update_user( $sanitized_data );
+        }
+    }
+
     public function process_simple_form_add(){
         $api = new Egoi_For_Wp();
 

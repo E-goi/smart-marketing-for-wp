@@ -58,8 +58,13 @@ class Egoi_For_Wp_Listener {
 
 		$list = $this->options_listen['list'];
 
-		$admin = new Egoi_For_Wp($this->plugin_name, $this->version);
-		
+		$admin = new Egoi_For_Wp();
+
+        $subscriber_tags=[];
+		if(!empty($user->egoi_newsletter_active) || !empty($_POST['egoi_newsletter_active'])){
+            $subscriber_tags[] = $admin->createTagVerified(Egoi_For_Wp::TAG_NEWSLETTER);
+        }
+
 		//mapping fields
 		if(get_option('egoi_mapping')){
 			
@@ -96,25 +101,11 @@ class Egoi_For_Wp_Listener {
         $fields['telephone'] = $admin->smsnf_get_valid_phone($fields['telephone']);
         $fields['cellphone'] = $admin->smsnf_get_valid_phone($fields['cellphone']);
 
-		if($role == $user->roles[0]){
-			
-			$addtags = $admin->addTag($user->roles[0]);
-			if(!$addtags->ERROR){
-				$tag_id = $addtags->ID;
-				$admin->addSubscriberTags($list, $email, array($tag_id), '', '', $role, $fields, $op);
+		if(empty($role) || $role == $user->roles[0]){
 
-			}else{
-				$get_tags = $admin->getTags(1);
-				if (!empty($get_tags)) {
-					foreach($get_tags->TAG_LIST as $key => $tag){
-						if(in_array(strtolower($user->roles[0]), (array)$tag)){
-							$admin->addSubscriberTags($list, $email, array($tag->ID), '', '', $role, $fields, $op);
-						}
-					}
-				}
-			}
-		}else{
-			$admin->addSubscriberTags($list, $email, array(''), '', '', false, $fields, $op);
+            $subscriber_tags[] = $admin->createTagVerified($user->roles[0]);
+            $admin->addSubscriberTags($list, $email, $subscriber_tags, '', '', $role, $fields, $op);
+
 		}
 			
 	}
@@ -126,10 +117,19 @@ class Egoi_For_Wp_Listener {
             $role = $user->roles[0];
             $email = $user->user_email;
             $fname = ucfirst($user->display_name);
-
+            $role_option = $this->options_listen['role'];
             $list = $this->options_listen['list'];
 
-            $admin = new Egoi_For_Wp($this->plugin_name, $this->version);
+            $admin = new Egoi_For_Wp();
+
+            if(!empty($role) && $role != $user->roles[0]){//role not to sync
+                return;
+            }
+
+            $subscriber_tags=[];
+            if(!empty($user->egoi_newsletter_active) || !empty($_POST['egoi_newsletter_active'])){
+                $subscriber_tags[] = $admin->createTagVerified(Egoi_For_Wp::TAG_NEWSLETTER);
+            }
 
             //mapping fields
             if(get_option('egoi_mapping')){
@@ -166,10 +166,10 @@ class Egoi_For_Wp_Listener {
             $fields['telephone'] = $admin->smsnf_get_valid_phone($fields['telephone']);
             $fields['cellphone'] = $admin->smsnf_get_valid_phone($fields['cellphone']);
 
-            $get_user = $admin->editSubscriber($list, $email, $role, $fname, '', $fields, $op);
+            $get_user = $admin->editSubscriber($list, $email, $role, $fname, '', $fields, $op,[],$subscriber_tags);
 
             if($get_user->ERROR == 'SUBSCRIBER_NOT_FOUND'){
-                $admin->addSubscriber($list, $user->user_login, $user->user_email, $fields);
+                $admin->addSubscriber($list, $fname, $email, '',true,!empty($fields['cellphone'])?$fields['cellphone']:'',$subscriber_tags,!empty($fields['telephone'])?$fields['telephone']:'');
             }
 
         }

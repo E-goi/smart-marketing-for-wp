@@ -104,6 +104,8 @@ class Egoi_For_Wp {
 	 * @since  1.0.0
 	 */
 	const PAGE_SLUG = 'egoi4wp-form-preview';
+    const TAG_NEWSLETTER    = 'wp_newsletter';
+    const GUEST_BUY         = 'wp_guest_client';
 
 	/**
 	 * Constructor
@@ -296,6 +298,8 @@ class Egoi_For_Wp {
 
         $this->loader->add_action('woocommerce_product_import_before_import' , $plugin_admin, 'egoi_import_bypass',10 ,1);
 
+        //Newsletter
+        $this->loader->add_action('show_user_profile', $plugin_admin, 'egoi_add_newsletter_signup_admin', 10);
     }
 
 	/**
@@ -353,8 +357,20 @@ class Egoi_For_Wp {
         $this->loader->add_action('wp_ajax_smsnf_save_advanced_form_subscriber', $plugin_public, 'smsnf_save_advanced_form_subscriber');
         $this->loader->add_action('wp_ajax_egoi_simple_form_submit', $plugin_public, 'process_simple_form_add');
         $this->loader->add_action('wp_ajax_nopriv_egoi_simple_form_submit', $plugin_public, 'process_simple_form_add');
-		
-	}
+
+        //Newsletter
+        $this->loader->add_action('woocommerce_register_form', $plugin_public, 'egoi_add_newsletter_signup', 10);
+        $this->loader->add_action('woocommerce_edit_account_form', $plugin_public, 'egoi_add_newsletter_signup', 10);
+
+        $this->loader->add_action('woocommerce_after_order_notes', $plugin_public, 'egoi_add_newsletter_signup_hide', 10);
+
+        //save Newsletter
+        $this->loader->add_action('woocommerce_created_customer', $plugin_public, 'egoi_save_account_fields', 10);
+        $this->loader->add_action('personal_options_update', $plugin_public, 'egoi_save_account_fields', 10);
+        $this->loader->add_action('woocommerce_save_account_details', $plugin_public, 'egoi_save_account_fields', 10);
+        $this->loader->add_action('woocommerce_new_order', $plugin_public, 'egoi_save_account_fields_order', 10,1);
+
+    }
 
 	/**
 	 * Register Profile Hooks
@@ -499,6 +515,38 @@ class Egoi_For_Wp {
         return $result_client->Egoi_Api->addSubscriber;
 	}
 
+
+    /**
+     * Check if a tag exists, if not creates, returns id
+     * @param string $tag
+     * @return int $tag_id
+     * @throws Exception
+     */
+    public function createTagVerified($tag){
+        $url = $this->restUrl.'getTags&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'plugin_key' => $this->plugin,
+                )
+            ),'','&');
+
+        $result_tags = json_decode($this->_getContent($url),true);
+        if(empty($result_tags['Egoi_Api']['getTags']['TAG_LIST']) || !is_array($result_tags['Egoi_Api']['getTags']['TAG_LIST']))
+            return 0;
+
+        foreach ($result_tags['Egoi_Api']['getTags']['TAG_LIST'] as $tag_resp){
+            if (strcasecmp($tag_resp['NAME'], $tag) == 0) {
+                return $tag_resp['ID'];
+            }
+        }
+
+        $tag = $this->addTag($tag);
+        if(empty($tag->ID))
+            return 0;
+
+	    return $tag->ID;
+    }
+
 	public function addSubscriber($listID, $name = '', $email, $lang = '', $status = false, $mobile = '', $tag = false, $phone = '') {
 
 		$full_name = explode(' ', $name);
@@ -509,6 +557,9 @@ class Egoi_For_Wp {
 		    $status = 1;
         }
 		if($tag){
+		    if(is_string($tag)){
+                $tag = $this->createTagVerified($tag);
+            }
 			$url = $this->restUrl.'addSubscriber&'.http_build_query(array(
 					'functionOptions' => array(
 						'apikey' => $this->_valid['api_key'], 
@@ -521,7 +572,7 @@ class Egoi_For_Wp {
 						'cellphone' => $mobile,
 						'telephone' => $phone,
 						'status' => $status,
-						'tags' => array($tag)
+						'tags' => is_array($tag)?$tag:array($tag)
 						)
 					),'','&');
 		}else{
@@ -640,7 +691,7 @@ class Egoi_For_Wp {
         return $result_client->Egoi_Api->addSubscriber;
     }
 
-    public function editSubscriber($listID, $subscriber, $role = 0, $fname = '', $lname = '', $fields = array(), $option = 0, $ref_fields = array()) {
+    public function editSubscriber($listID, $subscriber, $role = 0, $fname = '', $lname = '', $fields = array(), $option = 0, $ref_fields = array(), $tags=[]) {
 
         $apikey = $this->_valid['api_key'];
         $plugin_key = $this->plugin;
@@ -661,12 +712,13 @@ class Egoi_For_Wp {
             'birth_date',
             'fax',
             'lang',
-            $params
+            'tags'
         );
-
+        $params['tags'] = $tags;
         // role
         if($role){
-            $params['tags'] = $role;
+            $id = $this->createTagVerified($role);
+            $params['tags'][] = $id;
         }
         // first name
         if($fname){
@@ -1230,6 +1282,16 @@ class Egoi_For_Wp {
         return $wpdb->insert($table, $subscriber);
     }
 
+    public static function egoi_subscriber_signup_fields(){
+        return apply_filters( 'egoi_account_fields', array(
+            'egoi_newsletter_active' => array(
+                'type'          => 'checkbox',
+                'class'         => array('input-checkbox'),
+                'label'         => __( 'Subscribe to newsletter', 'egoi-for-wp' ),
+            ),
+        ) );
+    }
+
     /**
      * @param $phone
      * @return string
@@ -1249,5 +1311,13 @@ class Egoi_For_Wp {
         }
         return $phone;
     }
+
+    public static function get_newsletter_tag_name(){
+        return self::TAG_NEWSLETTER;
+    }
+    public static function get_guest_buy_tag_name(){
+        return self::GUEST_BUY;
+    }
+
 	
 }

@@ -134,7 +134,7 @@ class Egoi_For_Wp_Admin {
 		add_action('valid-paypal-standard-ipn-request', array($this, 'hookIpnResponse'), 10, 1);
 
 		// after billing form
-		add_action('woocommerce_after_checkout_billing_form', array($this, 'hookWoocommercePostBilling'), 10);
+		//add_action('woocommerce_after_checkout_billing_form', array($this, 'hookWoocommercePostBilling'), 10); //TODO:REMOVE
 
 		// hook contact form 7
 		add_action('wpcf7_submit', array($this, 'getContactForm'), 10, 1);
@@ -914,7 +914,7 @@ class Egoi_For_Wp_Admin {
 
 			if (!is_user_logged_in()){
 				if(!$_POST['createaccount']){
-					if($_POST['egoi_check_sync']){
+					if($_POST['egoi_newsletter_active']){
 						$first_name = $_POST['billing_first_name'];
 						$last_name = $_POST['billing_last_name'];
 						$guest_email = $_POST['billing_email'];
@@ -924,8 +924,11 @@ class Egoi_For_Wp_Admin {
 
                         $phone = $api->smsnf_get_valid_phone($phone);
 						$cellphone = $api->smsnf_get_valid_phone($cellphone);
+						$tag = [];
+						$tag[] = $api->createTagVerified(Egoi_For_Wp::get_newsletter_tag_name());
+                        $tag[] = $api->createTagVerified(Egoi_For_Wp::get_guest_buy_tag_name());
 
-						$api->addSubscriber($this->options_list['list'], $name, $guest_email, '', 1, $cellphone, 'wp_newsletter', $phone);
+						$api->addSubscriber($this->options_list['list'], $name, $guest_email, '', 1, $cellphone, $tag , $phone);
 					}
 				}
 			}
@@ -2529,6 +2532,30 @@ class Egoi_For_Wp_Admin {
         $bypass[] = $data['id'];
         $bypass = array_unique($bypass);
         update_option('egoi_import_bypass', json_encode($bypass));
+    }
+
+    public function egoi_add_newsletter_signup_admin(){
+        $fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
+
+        ?>
+    <h2><?php _e( 'Additional Information', 'egoi-for-wp' ); ?></h2>
+    <table class="form-table" id="egoi-additional-information">
+        <tbody>
+        <?php foreach ( $fields as $key => $field_args ) { ?>
+            <tr>
+                <th>
+                    <label for="<?php echo $key; ?>"><?php echo $field_args['label']; ?></label>
+                </th>
+                <td>
+                    <?php $field_args['label'] = false; ?>
+                    <?php woocommerce_form_field( $key, $field_args ); ?>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+
     }
 
     /**
