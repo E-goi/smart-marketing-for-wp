@@ -630,6 +630,7 @@ class Egoi_For_Wp_Public {
     }
 
     public function egoi_add_newsletter_signup(){
+        $options = get_option(Egoi_For_Wp_Admin::OPTION_NAME);
 
         $fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
         global $current_user;
@@ -638,7 +639,7 @@ class Egoi_For_Wp_Public {
             if ( $current_user ) {
                 $checked = get_user_meta($current_user->ID, $key, true);
             }
-            woocommerce_form_field( $key, $field_args, empty($checked)?0:true);
+            woocommerce_form_field( $key, $field_args, ((empty($checked)?0:true) || (!empty($options[$key]))) );
         }
     }
     public function egoi_save_account_fields_order( $order_id ) {

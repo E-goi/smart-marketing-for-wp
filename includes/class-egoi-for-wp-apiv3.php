@@ -21,7 +21,7 @@ class EgoiApiV3
         'getSenders'                => '/senders/{channel}?status=active',
         'getLists'                  => '/lists?limit=10&order=desc&order_by=list_id',
         'createWebPushRssCampaign'  => '/campaigns/webpush/rss',
-        'deployWebPushRssCampaign'  => '/campaigns/webpush/rss/{campaign_hash}/actions/send',
+        'deployWebPushRssCampaign'  => '/campaigns/webpush/rss/{campaign_hash}/actions/enable',
         'getWebPushSites'           => '/webpush/site',
         'getCatalogs'               => '/catalogs',
         'importProducts'            => '/catalogs/{id}/products/actions/import',

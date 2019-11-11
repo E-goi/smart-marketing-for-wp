@@ -21,7 +21,7 @@ if(isset($_POST['action'])){
 	else
         update_option($egoiform, array_replace_recursive($prev_data,$post));
 
-    echo get_notification(__('Success!', 'egoi-for-wp'), __('Integrations Settings Updated!', 'egoi-for-wp'));
+    echo get_notification(__('Success', 'egoi-for-wp'), __('Integrations Settings Updated!', 'egoi-for-wp'));
 }
 
 $lists = $Egoi4WpBuilderObject->getLists();

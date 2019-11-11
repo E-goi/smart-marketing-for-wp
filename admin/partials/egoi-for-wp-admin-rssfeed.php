@@ -3,17 +3,22 @@
 if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
-
+$dir = plugin_dir_path(__FILE__) . 'capture/';
+include_once $dir . '/functions.php';
+require_once plugin_dir_path(__FILE__) . 'egoi-for-wp-common.php';
+$page = array(
+    'home' => !isset($_GET['sub']),
+    'campaign-rss' => $_GET['sub'] == 'campaign-rss',
+    'rss-feed' => $_GET['sub'] == 'rss-feed',
+);
 if(isset($_POST['action'])){
     $edit = isset($_GET['edit']) ? true : false;
     $result = $this->createFeed($_POST, $edit);
 
     if ($result) {
-        ?>
-        <div class="e-goi-notice updated notice is-dismissible">
-            <p><?php _e('RSS Feed saved!', 'egoi-for-wp'); ?></p>
-        </div>
-        <?php
+
+        echo get_notification(__('Success', 'egoi-for-wp'), __('RSS Feed saved!', 'egoi-for-wp'));
+
     }
 }
 
@@ -22,583 +27,45 @@ if (isset($_GET['del'])) {
 }
 
 ?>
-<!-- head -->
-<h1 class="logo">Smart Marketing - <?php _e( 'RSS Feed', 'egoi-for-wp' ); ?></h1>
-<p class="breadcrumbs">
-    <span class="prefix"><?php echo __( 'You are here: ', 'egoi-for-wp' ); ?></span>
-    <strong>Smart Marketing</a> &rsaquo;
-        <span class="current-crumb"><?php _e( 'RSS Feed', 'egoi-for-wp' ); ?></strong></span>
-</p>
-<hr/>
 
-<?php if (!isset($_GET['add']) && !isset($_GET['edit']) && !isset($_GET['view'])) { ?>
 
-    <div class="wrap-content wrap-content--list">
-
-        <div class="e-goi-account-list__title">
-            <?php echo __('RSS Feed', 'egoi-for-wp'); ?>
+<div class="smsnf">
+    <div class="smsnf-modal-bg"></div>
+    <!-- Header -->
+    <header>
+        <div class="wrapper-loader-egoi">
+            <h1>Smart Marketing > <b><?php _e( 'RSS Feed', 'egoi-for-wp' ); ?></b></h1>
+            <?=getLoader('egoi-loader',false)?>
         </div>
-        <table border='0' class="widefat striped">
-            <thead>
-                <tr>
-                    <th><?php _e('Name', 'egoi-for-wp'); ?></th>
-                    <th><?php _e('Type', 'egoi-for-wp'); ?></th>
-                    <th><?php _e('URL', 'egoi-for-wp'); ?> </th>
-                    <th></th><th></th>
-                </tr>
-            </thead>
-            <tbody>
-            <spam id="copy_text" style="display: none;"><?php _e('Copy URL', 'egoi-for-wp'); ?></spam>
-            <spam id="copied_text" style="display: none;"><?php _e('Copied!', 'egoi-for-wp'); ?></spam>
+        <nav>
+            <ul>
+                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed"><?= $home ?></a></li>
+                <li><a class="<?= $page['rss-feed'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=rss-feed&add=1"><? _e('Rss Feed', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['campaign-rss'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=campaign-rss"><? _e('Campaign Rss', 'egoi-for-wp'); ?></a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- / Header -->
+    <!-- Content -->
+    <main style="grid-template-columns: 1fr !important;">
+        <!-- Content -->
+        <section class="smsnf-content">
+
             <?php
-                global $wpdb;
-                $table = $wpdb->prefix."options";
-                $options = $wpdb->get_results( " SELECT * FROM ".$table." WHERE option_name LIKE 'egoi_rssfeed_%' ORDER BY option_id DESC ");
-                foreach ($options as $option) {
-                    $feed = get_option($option->option_name);
+
+            if(isset($_GET['sub']) && $_GET['sub'] == 'rss-feed'){
+                require_once plugin_dir_path(__FILE__) . 'rssfeed/feed-rss.php';
+            }else if(isset($_GET['sub']) && $_GET['sub'] == 'campaign-rss'){
+                require_once plugin_dir_path(__FILE__) . 'rssfeed/campaign-rss.php';
+            }else{
+                require_once plugin_dir_path(__FILE__) . 'rssfeed/home.php';
+            }
+
             ?>
-
-                <!-- PopUp ALERT Delete Form -->
-                <div class="cd-popup cd-popup-del-form" data-id-form="<?=$option->option_name?>" data-type-form="rss-feed" role="alert">
-                    <div class="cd-popup-container">
-                        <p><b><?php echo __('Are you sure you want to delete this RSS Feed?', 'egoi-for-wp');?> </b></p>
-                        <ul class="cd-buttons">
-                            <li>
-                                <a href="<?php echo $this->prepareUrl('&del='.$option->option_name);?>"><?php _e('Confirm', 'egoi-for-wp'); ?></a>
-                            </li>
-                            <li>
-                                <a class="cd-popup-close-btn" href="#0"><?php _e('Cancel', 'egoi-for-wp'); ?></a>
-                            </li>
-                        </ul>
-                    </div> <!-- cd-popup-container -->
-                </div> <!-- PopUp ALERT Delete Form -->
-
-                <tr>
-                    <td style="vertical-align: middle;"><?=$feed['name']?></td>
-                    <td style="vertical-align: middle;"><?php _e(ucfirst($feed['type']), 'egoi-for-wp'); ?></td>
-                    <td style="vertical-align: middle;"><input type="text" id="url_<?=$option->option_name?>" class="copy-input" value="<?php echo get_site_url().'/?feed='.$option->option_name; ?>" readonly
-                        style="width: 100%;border: none;background-image:none;background-color:transparent;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></td>
-                    <td style="vertical-align: middle;" width="100">
-                        <button class="copy_url button button--custom" style="width: 90px;" data-rss-feed="url_<?=$option->option_name?>"><?php _e('Copy URL', 'egoi-for-wp');?></button>
-                    </td>
-                    <td style="vertical-align: middle;" align="right" width="70" nowrap>
-                        <nobr>
-                        <a class="cd-popup-trigger-del" data-id-form="<?=$option->option_name?>" data-type-form="rss-feed" href="" title="<?php _e('Delete', 'egoi-for-wp'); ?>"><i style="padding-right: 3px;" class="far fa-trash-alt"></i></a>
-                        <a title="<?php _e('Edit', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&edit='.$option->option_name);?>"><i style="padding-right: 2px;" class="far fa-edit"></i></a>
-                        <a title="<?php _e('Preview', 'egoi-for-wp'); ?>" href="<?php echo $this->prepareUrl('&view='.$option->option_name);?>"><i class="fas fa-eye"></i></a>
-                        </nobr>
-                    </td>
-                </tr>
-            <?php } ?>
-            </tbody>
-        </table>
-        <p>
-            <a href="<?php echo $this->prepareUrl('&add=1');?>" class='button-primary'><?php _e('Create RSS Feed +', 'egoi-for-wp');?></a>
-        </p>
-    </div>
-<style>
-    .egoi_create_campaign_table{
-        display: none;
-    }
-    .egoi_create_campaign_webpush_table{
-        display: none;
-    }
-</style>
-    <div class="wrap-content wrap-content--list">
-
-        <div class="e-goi-account-list__title">
-            <?php echo __('RSS Campaign Creator', 'egoi-for-wp'); ?>
-        </div>
-
-        <p class="nav-tab-wrapper">
-            <a class="nav-tab nav-tab-addon nav-tab-active" id="nav-tab-email-rss">
-                <?php _e('Email', 'egoi-for-wp'); ?>
-            </a>
-            <a class="nav-tab nav-tab-addon" id="nav-tab-webpush-rss">
-                <?php _e('WebPush', 'egoi-for-wp'); ?>
-            </a>
-        </p>
-        <div class="wrap tab wrap-addon" id="tab-email-rss">
-            <table border='0' class="form form-table">
-                <tr valign="top">
-                    <th scope="row">
-                        <label><?php echo __('RSS Feed', 'egoi-for-wp'); ?></label>
-                    </th>
-                    <td>
-                        <select id="egoi_add_campaign" style="height: 28px !important;width: 100%;box-sizing: border-box;float: left;">
-                            <option value="0"><?php _e('Select an feed...', 'egoi-for-wp'); ?></option>
-                            <?php foreach ($options as $option){
-                                $feed = get_option($option->option_name); ?>
-                                <option value="<?=$option->option_name; ?>"><?=$feed['name']?></option>
-                            <?php } ?>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr valign="top" class="egoi_create_campaign_table">
-                    <th scope="row" style="display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: space-between;padding: 15px 0px 10px 0!important;width: auto;">
-                        <div><span><?= __('List', 'egoi-for-wp');?> </span></div>
-                        <div class="text-right"><i class="loading" id="egoi_list_loading">x</i></div>
-                    </th>
-                    <td>
-                        <select id="egoi_list" style="height: 28px !important;width: 100%;box-sizing: border-box;float: left;">
-                            <option value="0"><?php _e('Select a list...', 'egoi-for-wp'); ?></option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr valign="top" class="egoi_create_campaign_table">
-                    <th scope="row" style="display: flex;flex-direction: row;flex-wrap: nowrap;justify-content: space-between;padding: 15px 0px 10px 0!important;width: auto;">
-                        <div><span><?= __('Sender', 'egoi-for-wp');?> </span></div>
-                        <div class="text-right"><i class="loading" id="egoi_senders_loading">x</i></div>
-                    </th>
-                    <td>
-                        <select id="egoi_senders" style="height: 28px !important;width: 100%;box-sizing: border-box;float: left;">
-                            <option value="0"><?php _e('Select a sender...', 'egoi-for-wp'); ?></option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr valign="top" class="egoi_create_campaign_table">
-                    <th scope="row">
-                        <span><?= __('Subject', 'egoi-for-wp');?></span>
-                    </th>
-                    <td>
-                        <input class = "form-control" type="text" style="width:100%;" id="campaign_subject" name="campaign_subject" placeholder="<?= __('Choose a subject for your campaign', 'egoi-for-wp');?>" value="" required/>
-                    </td>
-                </tr>
-
-                <tr valign="top" class="egoi_create_campaign_table">
-                    <th scope="row">
-                        <span><?= __('Snippet', 'egoi-for-wp');?> </span><a class="egoi_tooltip" id="help_snippet"><i class="qtip tip-right" data-tip=" <?= __('This is the small email\'s resume', 'egoi-for-wp'); ?>">?</i></a>
-                    </th>
-                    <td>
-                        <input class = "form-control" type="text" style="width:100%;" id="campaign_snippet" name="campaign_snippet" placeholder="<?= __('Choose a snippet for your campaign', 'egoi-for-wp');?>" value="" required/>
-                    </td>
-                </tr>
-
-                <tr valign="top" class="egoi_create_campaign_table">
-                    <th scope="row">
-                        <span><?= __('Title', 'egoi-for-wp');?> </span>
-                    </th>
-                    <td>
-                        <input class = "form-control" type="text" style="width:100%;" id="campaign_title" name="campaign_title" placeholder="<?= __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required/>
-                    </td>
-                </tr>
-
-                <tr valign="top" class="egoi_create_campaign_table">
-                    <th scope="row">
-                        <span><?= __('Items per Email', 'egoi-for-wp');?> </span>
-                    </th>
-                    <td>
-                        <div class="input-group number-spinner">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" data-dir="dwn"><span class="fas fa-minus"></span></button>
-                            </span>
-                                        <input type="text" class="form-control text-center" value="5">
-                                        <span class="input-group-btn">
-                                <button class="btn btn-default" data-dir="up"><span class="fas fa-plus"></span></button>
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr valign="top" class="egoi_create_campaign_table">
-                    <th scope="row">
-                        <p>
-                            <span id="egoi_create_campaign" class='button-primary'><?php _e('Create RSS Campaign +', 'egoi-for-wp');?></span>
-                            <i class="loading" id="egoi_create_campaign_loading" style="display: none;">x</i>
-                        </p>
-                    </th>
-                    <td>
-                        <input hidden value="" id="campaign_hash_deploy" />
-                        <input hidden value="" id="campaign_list_id_deploy" />
-
-                        <span id="egoi_edit_campaign" class='button-primary' style="display: none;"><?php _e('Edit Campaign in E-goi', 'egoi-for-wp');?></span>
-
-                        <span id="egoi_send_campaign" class='button-primary' style="display: none;"><?php _e('Send Campaign >', 'egoi-for-wp');?></span>
-                        <i class="loading" id="egoi_send_campaign_loading" style="display: none;">x</i>
-
-                        <div id="success_email" class="alert alert-success" role="alert" style="display: none;">
-                            <i class="form-icon icon icon-check icon-valid text-success" style="margin-right: 30px;"></i>
-                            <a><?= __('Campaign sent successfully!', 'egoi-for-wp');?></a>
-
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="wrap tab wrap-addon" id="tab-webpush-rss" style="display: none;">
-            <?php
-                $webpush_code_flag = get_option('egoi_webpush_code');
-                if(empty($webpush_code_flag) || empty($webpush_code_flag['code'])){//display warning, webpush needs to be on
-            ?>
-                <div style="display: flex;justify-content: center;width: 100%;">
-                    <div style="background-color: #04afdb; color: white; margin: 15px 10px;  padding: 1px 20px; border-radius: 3px;">
-                        <table width="100%">
-                            <tbody><tr>
-                                <td>
-                                    <p style="font-weight:  bold; font-size: 14px;">
-                                        <?= __('Do you want to make WebPush campaigns?', 'egoi-for-wp'); ?>
-                                        <br>
-                                        <?= __('Make sure you have it on!', 'egoi-for-wp'); ?>
-                                    </p>
-                                </td>
-                                <td style="min-width: 130px;" align="right">
-                                    <a href="<?=get_site_url();?>/wp-admin/admin.php?page=egoi-4-wp-webpush" style="font-weight:  bold; font-size: 14px; text-decoration: none; background-color: white; color: #04afdb; padding: 10px 20px; border-radius: 20px;"><?=__('Activate','egoi-for-wp');?></a>
-                                </td>
-                            </tr>
-                            </tbody></table>
-                    </div>
-                </div>
-            <?php } else { ?>
-                <table border='0' class="form form-table">
-
-                    <tr valign="top">
-                        <th scope="row">
-                            <label><?php echo __('RSS Feed', 'egoi-for-wp'); ?></label>
-                        </th>
-                        <td>
-                            <select id="egoi_add_campaign_webpush" style="height: 28px !important;width: 100%;box-sizing: border-box;float: left;">
-                                <option value="0"><?php _e('Select an feed...', 'egoi-for-wp'); ?></option>
-                                <?php foreach ($options as $option){
-                                    $feed = get_option($option->option_name); ?>
-                                    <option value="<?=$option->option_name; ?>"><?=$feed['name']?></option>
-                                <?php } ?>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr valign="top" class="egoi_create_campaign_webpush_table">
-                        <th scope="row">
-                            <span><?= __('Title', 'egoi-for-wp');?> </span>
-                        </th>
-                        <td>
-                            <input class = "form-control" type="text" style="width:100%;" id="campaign_title_webpush" name="campaign_title_webpush" placeholder="<?= __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required/>
-                        </td>
-                    </tr>
-
-                    <tr valign="top" class="egoi_create_campaign_webpush_table">
-                        <th scope="row">
-                            <p>
-                                <span id="egoi_create_campaign_webpush" class='button-primary'><?php _e('Create RSS Campaign +', 'egoi-for-wp');?></span>
-                                <i class="loading" id="egoi_create_campaign_webpush_loading" style="display: none;">x</i>
-                            </p>
-                        </th>
-                        <td>
-                            <input hidden value="" id="campaign_hash_deploy_webpush" />
-                            <input hidden value="" id="campaign_list_id_deploy_webpush" />
-
-
-                            <span id="egoi_edit_campaign_webpush" class='button-primary' style="display: none;"><?php _e('Edit Campaign in E-goi', 'egoi-for-wp');?></span>
-
-                            <span id="egoi_send_campaign_webpush" class='button-primary' style="display: none;"><?php _e('Send Campaign >', 'egoi-for-wp');?></span>
-                            <i class="loading" id="egoi_send_campaign_webpush_loading" style="display: none;">x</i>
-                            <div id="success_webpush" class="alert alert-success" role="alert" style="display: none;">
-                                <i class="form-icon icon icon-check icon-valid text-success" style="margin-right: 30px;"></i>
-                                <a><?= __('Campaign sent successfully!', 'egoi-for-wp');?></a>
-
-                            </div>
-                        </td>
-                    </tr>
-
-
-                </table>
-            <?php } ?>
-        </div>
-    </div>
-
-<?php } else if (isset($_GET['add']) || isset($_GET['edit'])) { ?>
-
-    <?php
-        $args['hide_empty'] = false;
-
-        $args['taxonomy'] = 'category';
-        $post_categories = get_terms($args);
-
-        $args['taxonomy'] = 'post_tag';
-        $post_tags = get_terms($args);
-
-        $args['taxonomy'] = 'product_cat';
-        $product_categories = get_terms($args);
-
-        $args['taxonomy'] = 'product_tag';
-        $product_tags = get_terms($args);
-
-        if (isset($_GET['edit'])) {
-            $feed = get_option($_GET['edit']);
-        }
-
-        if (!isset($_GET['edit'])) {
-            $code = wp_generate_password(16, false);
-        } else {
-            $code = substr($_GET['edit'], -16);
-        }
-    ?>
-    <div class="wrap">
-
-        <div class="main-content">
-
-            <!-- Main Content -->
-            <div class="eg-col-4" style="max-width: 900px;">
-                <form id="egoi_simple_form" method="post" action="<?php echo $this->prepareUrl('&edit=egoi_rssfeed_'.$code); ?>">
-                    <?php
-                    settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
-                    settings_errors();
-                    ?>
-                    <input name="code" type="hidden" value="<?=$code?>">
-                    <div>
-                        <p>
-                            <a href="<?php echo $this->prepareUrl();?>" class='button button--custom'>
-                                <i class="fas fa-arrow-left"></i>
-                                <?php _e('Back', 'egoi-for-wp');?>
-                            </a>
-                        </p>
-
-                        <table class="form-table" style="table-layout: fixed;">
-                            <?php if (isset($_GET['edit'])) { ?>
-                                 <tr valign="top">
-                                    <th scope="row">
-                                        <label><?php _e( 'URL', 'egoi-for-wp' ); ?></label>
-                                    </th>
-                                    <td>
-                                        <input type="text" style="width:90%; background: white; color: #32373c;" id="input_<?=$code?>" name="input_url"
-                                               value="<?php echo get_site_url().'/?feed=egoi_rssfeed_'.$code; ?>" readonly />
-                                        <button type="button" class="copy_url button button--custom" style="padding: 0 5px; height: 25px !important; line-height: 0 !important;" data-rss-feed="input_<?=$code?>"><i class="far fa-copy"></i></button>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                            <tr valign="top">
-                                <th scope="row">
-                                    <label><?php _e( 'Name', 'egoi-for-wp' ); ?></label>
-                                </th>
-                                <td>
-                                    <input type="text" style="width:90%;" id="name" name="name"
-                                           placeholder="<?php _e( 'Choose a name for your new RSS Feed', 'egoi-for-wp' ); ?>"
-                                           value="<?php echo isset($feed) ? $feed['name'] : null; ?>" required />
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">
-                                    <label><?php _e( 'Maximum of characters', 'egoi-for-wp' ); ?></label>
-                                </th>
-                                <td>
-                                    <input type="text" style="width:90%;" id="max_characters" name="max_characters" pattern="[0-9]*"
-                                           placeholder="<?php _e( 'Set the maximum characters for RSS Feed text', 'egoi-for-wp' ); ?>"
-                                           value="<?php echo isset($feed) ? $feed['max_characters'] : null; ?>" required />
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row"><label><?php _e( 'Image size', 'egoi-for-wp' ); ?></label></th>
-                                <td>
-                                    <select name="image_size" id="image_size" style="width:90%;" required>
-                                        <option value="" <?php selected($feed['image_size'], null); ?> ><?php _e( 'Select size..', 'egoi-for-wp' ); ?></option>
-                                        <option value="full" <?php selected($feed['image_size'], 'full'); ?> ><?php _e('Full', 'egoi-for-wp'); ?></option>
-                                        <option value="large" <?php selected($feed['image_size'], 'large'); ?> ><?php _e('Large', 'egoi-for-wp'); ?></option>
-                                        <option value="medium" <?php selected($feed['image_size'], 'medium'); ?> ><?php _e('Medium', 'egoi-for-wp'); ?></option>
-                                        <option value="medium_large" <?php selected($feed['image_size'], 'medium_large'); ?> ><?php _e('Medium Large', 'egoi-for-wp'); ?></option>
-                                        <option value="thumbnail" <?php selected($feed['image_size'], 'thumbnail'); ?> ><?php _e('Thumbnail', 'egoi-for-wp'); ?></option>
-                                    </select>
-                                    <p class="help"><?php _e( 'Select a default size for RSS feed images.' ,'egoi-for-wp' ); ?></p>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">
-                                    <label><?php _e( 'Type', 'egoi-for-wp' ); ?></label>
-                                </th>
-                                <td>
-                                    <label>
-                                        <input type="radio" name="type" value="posts" <?php checked( $feed['type'], 'posts' ); ?> required /> <?php _e( 'Posts', 'egoi-for-wp' ); ?>
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="type" value="products" <?php checked( $feed['type'], 'products' ); ?> /> <?php _e( 'Products', 'egoi-for-wp' ); ?>
-                                    </label>
-                                    <p class="help"><?php _e( 'Choose between Posts or Products to fill out the RSS Feed', 'egoi-for-wp' ); ?>.</p>
-                                </td>
-                            </tr>
-
-                            <tr valign="top" >
-                                <th scope="row" class="cats_tags_titles">
-                                    <label><?php _e( 'Categories', 'egoi-for-wp' ); ?></label>
-                                </th>
-                                <td class="post_cats_tags">
-                                    <select class="js-example-basic-multiple" name="post_categories_include[]" multiple="multiple" style="width:90%;">
-                                    <?php foreach ($post_categories as $category) { ?>
-                                        <option id="posts_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>"
-                                            <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
-                                            else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> >
-                                            <?=$category->name?>
-                                        </option>
-                                    <?php } ?>
-                                    </select>
-                                    <p class="help"><?php _e( 'Please select at least one Category or All will be displayed', 'egoi-for-wp' ); ?>.</p>
-                                </td>
-                                <td class="product_cats_tags">
-                                    <select class="js-example-basic-multiple" name="product_categories_include[]" multiple="multiple" style="width:90%;">
-                                        <?php foreach ($product_categories as $category) { ?>
-                                            <option id="products_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>"
-                                                <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
-                                                else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> >
-                                                <?=$category->name?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                    <p class="help"><?php _e( 'Please select at least one Category or All will be displayed', 'egoi-for-wp' ); ?>.</p>
-                                </td>
-                            </tr>
-                            <tr valign="top" >
-                                <th scope="row" class="cats_tags_titles">
-                                    <label><?php _e( 'Categories to exclude', 'egoi-for-wp' ); ?></label>
-                                </th>
-                                <td class="post_cats_tags">
-                                    <select class="js-example-basic-multiple" name="post_categories_exclude[]" multiple="multiple" style="width:90%;">
-                                        <?php foreach ($post_categories as $category) { ?>
-                                            <option id="posts_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>"
-                                                <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
-                                                else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> >
-                                                <?=$category->name?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                    <p><br></p>
-                                </td>
-                                <td class="product_cats_tags">
-                                    <select class="js-example-basic-multiple" name="product_categories_exclude[]" multiple="multiple" style="width:90%;">
-                                        <?php foreach ($product_categories as $category) { ?>
-                                            <option id="products_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>"
-                                                <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
-                                                else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> >
-                                                <?=$category->name?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                    <p><br></p>
-                                </td>
-                            </tr>
-                            <tr valign="top" >
-                                <th scope="row" class="cats_tags_titles">
-                                    <label><?php _e( 'Tags', 'egoi-for-wp' ); ?></label>
-                                </th>
-                                <td class="post_cats_tags">
-                                    <select class="js-example-basic-multiple" name="post_tags_include[]" multiple="multiple" style="width:90%;">
-                                        <?php foreach ($post_tags as $tag) { ?>
-                                            <option id="posts_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
-                                                <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
-                                                else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> >
-                                                <?=$tag->name?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                    <p class="help"><?php _e( 'Please select at least one Tag or All will be displayed', 'egoi-for-wp' ); ?>.</p>
-                                </td>
-                                <td class="product_cats_tags">
-                                    <select class="js-example-basic-multiple" name="product_tags_include[]" multiple="multiple" style="width:90%;">
-                                        <?php foreach ($product_tags as $tag) { ?>
-                                            <option id="products_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
-                                                <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
-                                                else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> >
-                                                <?=$tag->name?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                    <p class="help"><?php _e( 'Please select at least one Tag or All will be displayed', 'egoi-for-wp' ); ?>.</p>
-                                </td>
-                            </tr>
-                            <tr valign="top" >
-                                <th scope="row" class="cats_tags_titles">
-                                    <label><?php _e( 'Tags to exclude', 'egoi-for-wp' ); ?></label>
-                                </th>
-                                <td class="post_cats_tags">
-                                    <select class="js-example-basic-multiple" name="post_tags_exclude[]" multiple="multiple" style="width:90%;">
-                                        <?php foreach ($post_tags as $tag) { ?>
-                                            <option id="posts_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
-                                                <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
-                                                else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> >
-                                                <?=$tag->name?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </td>
-                                <td class="product_cats_tags">
-                                    <select class="js-example-basic-multiple" name="product_tags_exclude[]" multiple="multiple" style="width:90%;" >
-                                        <?php foreach ($product_tags as $tag) { ?>
-                                            <option id="products_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
-                                                <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
-                                                else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> >
-                                                <?=$tag->name?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <?php submit_button(); ?>
-                </form>
-            </div>
-
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <?php include ('egoi-for-wp-admin-sidebar.php'); ?>
-            </div>
-
-        </div>
-    </div>
-
-<?php } else if ($_GET['view']) { ?>
-    <a href="<?php echo $this->prepareUrl();?>" class='button button--custom'>
-        <i class="fas fa-arrow-left"></i>
-        <?php _e('Back', 'egoi-for-wp');?>
-    </a>
-    <?php
-        $feed = get_option($_GET['view']);
-        $args = $this->get_egoi_rss_feed_args($feed);
-
-        $query = new WP_Query( $args );
-    ?>
-
-    <div class="wrap-content wrap-content--list">
-        <div style="width: 600px; margin: auto;">
-            <h3><?php echo $feed['name']; ?></h3>
-            <?php if (!$query->have_posts()) { ?> <p> <?php _e('No Posts', 'egoi-for-wp'); ?> </p>
-            <?php } else {
-                    while ( $query->have_posts() ) {
-                        $query->the_post();
-
-                        $content = get_the_content_feed('rss2');
-
-                        $all_content = implode(' ', get_extended(  get_post_field( 'post_content', get_the_ID() ) )) ;
-
-                        $description = $this->egoi_rss_feed_description(get_the_excerpt(), $feed['max_characters']);
-                        ?>
-                        <p>
-                            <a href="<?php the_permalink_rss() ?>" target="_blank">
-                                <?php the_title_rss() ?>
-                            </a><br>
-                            <?php echo mysql2date('j M Y H:i', get_post_time('Y-m-d H:i:s', true), false); ?><br>
-                            <?php the_author() ?>
-                        </p>
-                        <?php if ( has_post_thumbnail() ) {
-                                echo '<p  align="center">'.get_the_post_thumbnail(get_the_ID(), $feed['image_size']).'</p>';
-                            } else if ($gallery = get_post_gallery_images( get_the_ID() )) {
-                            foreach( $gallery as $image_url ) {
-                                ?><p  align="center"><img width="600" src="<?php echo $image_url; ?>" /></p><?php
-                                break;
-                            }
-                        } else  {
-                            preg_match('~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img);
-                            if (isset($img[1])) {
-                                ?><p  align="center"><img width="600" src="<?php echo $img[1]; ?>"/></p><?php
-                            }
-                        }?>
-                        <p><?php echo $description; ?> </p>
-                <?php }
-            }?>
-        </div>
-    </div>
-
-<?php } ?>
+        </section>
+        <!-- / Content -->
+    </main>
+</div>
 
 <?php $js_dir = plugins_url().'/smart-marketing-for-wp/admin/js/egoi-for-wp-rssfeed.js'; ?>
 <script src="<?=$js_dir?>"></script>

@@ -7694,6 +7694,28 @@ a.egoi_tooltip:hover{
   background: #0080a0;
 }
 
+.smsnf-input-group > .egoi-span-button {
+  background: #00aeda;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0;
+  padding: 8px 16px;
+  width: auto;
+}
+
+.smsnf-input-group > .egoi-span-button:disabled {
+  background: rgba(0, 174, 218, .5);
+}
+
+.smsnf-input-group > .egoi-span-button:hover {
+  background: #0080a0;
+}
+.egoi-span-button{
+  margin-left: 10px !important;
+}
+
 .smsnf-input-group textarea {
   background: #fff;
   border: 1px solid rgba(151, 151, 151, .5);

@@ -485,6 +485,7 @@ class Egoi_For_Wp_Admin {
 		static $defaults = array(
 			'list' => '',
 			'enabled' => 0,
+			'egoi_newsletter_active' => 0,
 			'track' => 1,
 			'role' => 'All'
 		);
