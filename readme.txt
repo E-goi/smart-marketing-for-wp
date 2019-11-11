@@ -39,6 +39,7 @@ Então não deixe de activar o Track & Engage, um sistema para rastrear todo o c
 * Notificações Web Push
 * RSS Feed por categorias, tags ou produtos.
 * Bloco E-goi para Gutenberg
+* Sincronização produtos Woocommerce
 
 **Add-on**
 
@@ -78,6 +79,7 @@ So be sure to enable Track & Engage system to track all customer behavior in you
 * Web Push Notifications
 * RSS Feed
 * Gutenberg E-goi Block
+* Woocommerce product synchronization
 
 **Add-on**
 
@@ -147,6 +149,7 @@ You can create and update your lists, see how many subscribers you have, but you
 = 3.0.0 =
 - Product Synchronization
 - New Interface
+- RGPD Improvements
 - Minor bug fixes
 
 = 2.9.1 =

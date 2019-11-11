@@ -613,7 +613,8 @@ class Egoi_For_Wp_Public {
     }
 
     public function egoi_add_newsletter_signup_hide(){
-        echo '<script>
+        if(is_user_logged_in()){
+            echo '<script>
 
             jQuery(document).ready(function() {
                 (function ($) {
@@ -625,6 +626,8 @@ class Egoi_For_Wp_Public {
             });
 
             </script>';
+
+        }
 
         $this->egoi_add_newsletter_signup();
     }
