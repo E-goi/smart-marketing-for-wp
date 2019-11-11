@@ -3,8 +3,8 @@ Contributors: E-goi
 Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
-Tested up to: 5.2.3
-Stable tag: 2.9.1
+Tested up to: 5.2.4
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,13 +32,14 @@ Então não deixe de activar o Track & Engage, um sistema para rastrear todo o c
 * Opção de validação dos contactos com Double Opt-in (RGPD)
 * Integração com o WooCommerce
 * Integração com o CF7
-* Integração com o Visual Composer
+* Integração com o WPBakery Page Builder
 * Integração com o Page Builder
 * Mapeamento de campos adicionais (incl. WooCommerce)
 * E-goi Track & Engage
 * Notificações Web Push
 * RSS Feed por categorias, tags ou produtos.
 * Bloco E-goi para Gutenberg
+* Sincronização produtos Woocommerce
 
 **Add-on**
 
@@ -72,12 +73,13 @@ So be sure to enable Track & Engage system to track all customer behavior in you
 * Integrates with Contact Form 7
 * Integrates with WooCommerce
 * Integrates with Page Builder By SiteOrigin
-* Integrates with Visual Composer
+* Integrates with WPBakery Page Builder
 * Multiple types of Custom Forms
 * Easy E-goi/WP field mapping; send anything over to E-goi!
 * Web Push Notifications
 * RSS Feed
 * Gutenberg E-goi Block
+* Woocommerce product synchronization
 
 **Add-on**
 
@@ -144,8 +146,15 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 3.0.0 =
+- Product Synchronization
+- New Interface
+- RGPD Improvements
+- Minor bug fixes
+
 = 2.9.1 =
 - Performance fix
+- Bumped Tested up to tag
 
 = 2.9.0 =
 - RSS Feed Campaigns Web push
@@ -223,7 +232,7 @@ You can create and update your lists, see how many subscribers you have, but you
  - RSS Feed - Fixed compatibility with other plugins
 
 = 2.3.2 =
- - Web Push - Fixed compatibility with Elementor Page Builder and Visual Composer
+ - Web Push - Fixed compatibility with Elementor Page Builder and WPBakery Page Builder
 
 = 2.3.1 =
  - RSS Feed - Improvements
@@ -295,7 +304,7 @@ You can create and update your lists, see how many subscribers you have, but you
  - Fix the error when changing the form type in the advanced form
  - Simple Forms - creating a simple form that generates a shortcode
  - JSON Endpoint - This endpoint returns the produts info in a JSON
- - Integration with Visual Composer
+ - Integration with WPBakery Page Builder
  - Integration with Page Builder By SiteOrigin  
 
 = 1.1.1 =

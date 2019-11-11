@@ -504,7 +504,7 @@ class Egoi_For_Wp_Public {
 					var egoi_double_optin = simple_form.find("#egoi_double_optin").val();
 
 					var data = {
-						"action": "my_action",
+						"action": "egoi_simple_form_submit",
 						"egoi_simple_form": egoi_simple_form,
 						"egoi_name": egoi_name,
 						"egoi_email": egoi_email,
@@ -552,7 +552,7 @@ class Egoi_For_Wp_Public {
 	}
 
 	/**
-	 * Visual Composer Shortcode output
+	 * WPBakery Page Builder Shortcode output
 	 */
 	public function egoi_vc_shortcode_output( $atts, $content = null ) {
 
@@ -610,6 +610,118 @@ class Egoi_For_Wp_Public {
         foreach ($options as $option) {
             add_feed($option->option_name, 'egoi_rss_feeds' );
         }
+    }
+
+    public function egoi_add_newsletter_signup_hide(){
+        if(is_user_logged_in()){
+            echo '<script>
+
+            jQuery(document).ready(function() {
+                (function ($) {
+                    var check = $("#egoi_newsletter_active");
+                    if(check.length > 0 && check.is(":checked")){
+                        $($($(check.parent()).parent()).parent()).hide();
+                    }
+                })(jQuery);
+            });
+
+            </script>';
+
+        }
+
+        $this->egoi_add_newsletter_signup();
+    }
+
+    public function egoi_add_newsletter_signup(){
+        $options = get_option(Egoi_For_Wp_Admin::OPTION_NAME);
+
+        $fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
+        global $current_user;
+
+        foreach ( $fields as $key => $field_args ) {
+            if ( $current_user ) {
+                $checked = get_user_meta($current_user->ID, $key, true);
+            }
+            woocommerce_form_field( $key, $field_args, ((empty($checked)?0:true) || (!empty($options[$key]))) );
+        }
+    }
+    public function egoi_save_account_fields_order( $order_id ) {
+        global $current_user;
+        if($current_user){
+            $this->egoi_save_account_fields($current_user->ID);
+        }
+    }
+
+    public function egoi_save_account_fields( $customer_id ) {
+        $fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
+        $sanitized_data = array();
+
+        foreach ( $fields as $key => $field_args ) {
+
+            $sanitize = isset( $field_args['sanitize'] ) ? $field_args['sanitize'] : 'wc_clean';
+            $value    = isset( $_POST[ $key ] ) ? call_user_func( $sanitize, $_POST[ $key ] ) : '';
+
+            update_user_meta( $customer_id, $key, $value );
+        }
+
+        if ( ! empty( $sanitized_data ) ) {
+            $sanitized_data['ID'] = $customer_id;
+            wp_update_user( $sanitized_data );
+        }
+    }
+
+    public function process_simple_form_add(){
+        $api = new Egoi_For_Wp();
+
+        // double opt-in
+        $status = filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1' ? 0 : 1;
+
+        $result = $api->addSubscriberWpForm(
+            filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
+            array(
+                'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
+                'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
+                'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
+                'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
+                'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
+                'status' => $status,
+            )
+        );
+
+        if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
+
+            $form_id = filter_var($_POST['egoi_simple_form'], FILTER_SANITIZE_NUMBER_INT);
+            $api->smsnf_save_form_subscriber($form_id, 'simple-form', $result);
+
+            echo $this->check_subscriber($result).' ';
+            _e('was successfully registered!', 'egoi-for-wp');
+        } else if (isset($result->MODIFICATION_DATE)) {
+            _e('Subscriber data from', 'egoi-for-wp');
+            echo ' '.$this->check_subscriber($result).' ';
+            _e('has been updated!', 'egoi-for-wp');
+        } else if (isset($result->ERROR)) {
+            if ($result->ERROR == 'NO_DATA_TO_INSERT') {
+                _e('ERROR: no data to insert', 'egoi-for-wp');
+            } else if ($result->ERROR == 'EMAIL_ADDRESS_INVALID_MX_ERROR') {
+                _e('ERROR: e-mail address is invalid', 'egoi-for-wp');
+            } else {
+                _e('ERROR: invalid data submitted', 'egoi-for-wp');
+            }
+
+        }
+
+        wp_die(); // this is required to terminate immediately and return a proper response
+    }
+
+    public function check_subscriber($subscriber_data) {
+        $data = array('FIRST_NAME','EMAIL','CELLPHONE');
+        foreach ($data as $value) {
+            if ($subscriber_data->$value) {
+                $subscriber = $subscriber_data->$value;
+                break;
+            }
+        }
+        return $subscriber;
     }
 
     public function smsnf_save_advanced_form_subscriber() {

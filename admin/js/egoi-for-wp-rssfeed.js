@@ -264,16 +264,16 @@ jQuery(document).ready(function() {
 
         jQuery.post(egoi_config_ajax_object.ajax_url, campaign, function(response) {
             response = JSON.parse(response);
-            if(typeof response.error != 'undefined'){
-                clearWebpushForm();
-                alert(response.error);
-                return false;
-            }
             jQuery("#egoi_send_campaign_webpush_loading").hide();
             var edit    = jQuery("#egoi_edit_campaign_webpush");
             var send    = jQuery("#egoi_send_campaign_webpush");
             edit.hide(200);
             send.hide(200);
+            if(typeof response.error != 'undefined'){
+                clearWebpushForm();
+                alert(response.error);
+                return false;
+            }
             jQuery("#success_webpush").show(300);
             setTimeout(function () {
                 jQuery("#success_webpush").hide(300);

@@ -21,8 +21,16 @@ class EgoiApiV3
         'getSenders'                => '/senders/{channel}?status=active',
         'getLists'                  => '/lists?limit=10&order=desc&order_by=list_id',
         'createWebPushRssCampaign'  => '/campaigns/webpush/rss',
-        'deployWebPushRssCampaign'  => '/campaigns/webpush/rss/{campaign_hash}/actions/send',
+        'deployWebPushRssCampaign'  => '/campaigns/webpush/rss/{campaign_hash}/actions/enable',
         'getWebPushSites'           => '/webpush/site',
+        'getCatalogs'               => '/catalogs',
+        'importProducts'            => '/catalogs/{id}/products/actions/import',
+        'createCatalog'             => '/catalogs',
+        'createProduct'             => '/catalogs/{catalog_id}/products',
+        'patchProduct'              => '/catalogs/{catalog_id}/products/{product_id}',
+        'deleteCatalog'             => '/catalogs/{id}',
+        'getCountriesCurrencies'    => '/utilities/countries',
+        'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}'
     ];
     protected $apiKey;
     protected $headers;
@@ -30,6 +38,127 @@ class EgoiApiV3
     {
         $this->apiKey = $apiKey;
         $this->headers = ['ApiKey: '.$this->apiKey,'PluginKey: '.self::PLUGINKEY,'Content-Type: application/json'];
+    }
+
+    public function getCountriesCurrencies(){
+        $client = new ClientHttp(
+            self::APIV3.self::APIURLS[__FUNCTION__],
+            'GET',
+            $this->headers
+        );
+
+        if($client->success() !== true || $client->getCode() < 200 || $client->getCode() >= 300){
+            return false;
+        }
+
+        return json_decode($client->getResponse(),true);
+    }
+
+    /*
+     * 1st argument is type (POST | GET)
+     * 2nd argument is data (body | query)
+     * */
+    public function __call($name ,$arguments ){
+        $path = self::APIV3.self::APIURLS[$name];
+
+        switch ($arguments[0]){
+            case 'DELETE':
+                $client = new ClientHttp(
+                    $this->replaceUrl($path,'{id}', $arguments[1]),
+                    'DELETE',
+                    $this->headers
+                );
+                break;
+            case 'POST':
+                $client = new ClientHttp(
+                    $this->replaceUrl($path,'{id}', $arguments[2]),
+                    'POST',
+                    $this->headers,
+                    json_encode(empty($arguments[1])?[]:$arguments[1])
+                );
+                break;
+            case 'GET':
+            default:
+                if(!empty($arguments[1])){
+                    $concat = '?'.http_build_query($arguments[1]);
+                }else{
+                    $concat = '';
+                }
+                $client = new ClientHttp(
+                    $path.$concat,
+                    'GET',
+                    $this->headers
+                );
+                break;
+        }
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+        if($client->getCode() >= 200 && $client->getCode() < 300){
+            if(isset($resp['items']))
+                return $resp['items'];
+            else if(isset($resp['catalog_id']))
+                return $resp['catalog_id'];
+            else
+                return true;
+        }else{
+            if($client->getCode() == 422){
+                return $this->processErrors($resp['validation_messages']);
+            }
+            if($client->getCode() == 409){
+                return $this->processErrors($resp['errors']);
+            }
+            return $this->processErrors();
+        }
+    }
+
+    public function deleteProduct($catalog_id, $product_id){
+        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],['{catalog_id}','{product_id}'], [$catalog_id,$product_id]);
+        $client = new ClientHttp(
+            $path,
+            'DELETE',
+            $this->headers
+        );
+
+        if($client->success() !== true || ($client->getCode()>=200 && $client->getCode()<300)){
+            return false;
+        }
+        return true;
+    }
+
+    public function createProduct($data, $catalog){
+
+        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],'{catalog_id}', $catalog);
+        $client = new ClientHttp(
+            $path,
+            'POST',
+            $this->headers,
+            json_encode($data)
+        );
+
+        if($client->success() !== true || ($client->getCode()>=200 && $client->getCode()<300)){
+            return false;
+        }
+        return true;
+    }
+
+    public function patchProduct($data, $catalog, $product_id){
+
+        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],['{catalog_id}','{product_id}'], [$catalog,$product_id]);
+        $client = new ClientHttp(
+            $path,
+            'PATCH',
+            $this->headers,
+            json_encode($data)
+        );
+
+        if($client->success() !== true || ($client->getCode()>=200 && $client->getCode()<300)){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -292,6 +421,15 @@ class ClientHttp {
     }
     public function getHeaders(){
         return $this->headers;
+    }
+
+    public function __toString()
+    {
+        return json_encode([
+            'code'      => $this->getCode(),
+            'response'  => $this->getResponse(),
+            'error'     => $this->success()
+        ]);
     }
 
 }

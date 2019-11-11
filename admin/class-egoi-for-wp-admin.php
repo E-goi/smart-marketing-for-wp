@@ -1,6 +1,8 @@
 <?php
 require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.php');
+require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-products-bo.php');
+require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-validators.php');
 
 /**
  * The admin-specific functionality of the plugin.
@@ -132,7 +134,7 @@ class Egoi_For_Wp_Admin {
 		add_action('valid-paypal-standard-ipn-request', array($this, 'hookIpnResponse'), 10, 1);
 
 		// after billing form
-		add_action('woocommerce_after_checkout_billing_form', array($this, 'hookWoocommercePostBilling'), 10);
+		//add_action('woocommerce_after_checkout_billing_form', array($this, 'hookWoocommercePostBilling'), 10); //TODO:REMOVE
 
 		// hook contact form 7
 		add_action('wpcf7_submit', array($this, 'getContactForm'), 10, 1);
@@ -145,7 +147,7 @@ class Egoi_For_Wp_Admin {
 		add_action( 'rest_api_init', array($this, 'egoi_products_data_api_init'), 10, 3) ;
 
 
-		// Map shortcode to Visual Composer
+		// Map shortcode to WPBakery Page Builder
 		if ( function_exists( 'vc_lean_map' ) ) {
 			vc_lean_map( 'egoi_vc_shortcode', array( $this, 'egoi_vc_shortcode_map' ) );
 		}
@@ -153,7 +155,10 @@ class Egoi_For_Wp_Admin {
 		// Add widget to main WP dashboard
         add_action( 'wp_dashboard_setup', array($this, 'smsnf_main_dashboard_widget') );
 
-		// hook map fields to E-goi
+        add_action( 'in_admin_header', array($this, 'show_alert_messages') );
+
+
+        // hook map fields to E-goi
 		$this->mapFieldsEgoi();
 
 		$rmdata = $_POST['rmdata'];
@@ -176,16 +181,18 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
+        wp_enqueue_style($this->plugin_name.'popup', plugin_dir_url(__FILE__) . 'css/egoi-for-wp-pop.css', array(), $this->version, 'all' );
 
-		//only load CSS on smart marketing pages or in pages with smart marketing elements
-		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
-            strpos(get_current_screen()->id, 'widgets') !== false ||
-            strpos(get_current_screen()->id, 'shop-order') !== false ||
-            strpos(get_current_screen()->id, 'dashboard') !== false
+        if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
+            strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
-
 			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style('wp-color-picker');
+            wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap-modal.min.css', array(), $this->version, 'all' );
+
+            wp_enqueue_style('wp-color-picker');
+            wp_enqueue_style('css-color-picker', plugin_dir_url(__FILE__) . 'css/colorpicker.css', array(), $this->version, 'all' );
+
+            wp_enqueue_style('wp-color-picker');
 		}
 	}
 
@@ -198,15 +205,14 @@ class Egoi_For_Wp_Admin {
 
 		//only load CSS on smart marketing pages or in pages with smart marketing elements
 		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
-            strpos(get_current_screen()->id, 'widgets') !== false ||
-            strpos(get_current_screen()->id, 'shop-order') !== false ||
-            strpos(get_current_screen()->id, 'dashboard') !== false ||
-            strpos(get_current_screen()->id, 'rssfeed') !== false
+            strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
 
-			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery'), $this->version, false);
+			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
+            wp_enqueue_script($this->plugin_name.'-bootstrapjs', plugin_dir_url(__FILE__) . 'js/bootstrap-modal.min.js', array('jquery'), $this->version, false);
 
-			wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'), true);
+
+            wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'), true);
 			wp_enqueue_script('custom-script1');
 
 			wp_register_script('custom-script2', plugin_dir_url(__FILE__) . 'js/forms.min.js', array('jquery'));
@@ -220,6 +226,31 @@ class Egoi_For_Wp_Admin {
 
 			wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
 			wp_enqueue_script('custom-script5');
+
+            wp_enqueue_script('smsnf-capture', plugin_dir_url(__FILE__) . 'js/capture.js', array('jquery', 'custom-script5'));
+            wp_enqueue_script('jquery-color-picker', plugin_dir_url(__FILE__) . 'js/colorpicker.js', array('jquery'));
+
+
+            if(strpos(get_current_screen()->id, 'ecommerce')){
+			    $page = $_GET['subpage'];
+                if(!empty($page)){
+                    switch ($page){
+                        case 'new_catalog':
+                            wp_enqueue_script($this->plugin_name.'ecommerce-form', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-ecommerce-form.js', array('jquery'), $this->version, false);
+                            break;
+                        default:
+                            wp_enqueue_script($this->plugin_name.'ecommerce', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-ecommerce.js', array('jquery'), $this->version, false);
+                            break;
+                    }
+                }else{
+                    wp_enqueue_script($this->plugin_name.'ecommerce', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-ecommerce.js', array('jquery'), $this->version, false);
+                }
+
+                wp_localize_script( $this->plugin_name, 'egoi_config_ajax_object_ecommerce', array(
+                    'ajax_url' => admin_url( 'admin-ajax.php' ),
+                    'ajax_nonce' => wp_create_nonce('egoi_ecommerce_actions'),
+                ) );
+            }
 
 
 			wp_enqueue_script('wp-color-picker');
@@ -235,13 +266,18 @@ class Egoi_For_Wp_Admin {
 	        wp_enqueue_script( 'smsnf-notifications-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array('jquery') );
 	        wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
 
-	        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard' || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form') {
+	        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
 	            wp_register_script('chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js');
 	            wp_enqueue_script('chartjs');
-
-	            wp_enqueue_script( 'smsnf-dashboard-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-dashboard.js', array('jquery') );
-	            wp_localize_script( 'smsnf-dashboard-ajax-script', 'smsnf_dashboard_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
 	        }
+
+            if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard'
+                || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form'
+                || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-ecommerce') {
+
+                wp_enqueue_script( 'smsnf-dashboard-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-dashboard.js', array('jquery') );
+                wp_localize_script( 'smsnf-dashboard-ajax-script', 'smsnf_dashboard_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
+            }
     	}
 	}
 
@@ -263,6 +299,8 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
+        $bypass = EgoiProductsBo::getProductsToBypass();
+        $bypassCount = count(!is_array($bypass)?[]:$bypass);
 
 		add_menu_page( 'Smart Marketing - Main Page', 'Smart Marketing', 'Egoi_Plugin', $this->plugin_name, array($this, 'display_plugin_setup_page'), plugin_dir_url( __FILE__ ).'img/logo_small.png');
 
@@ -277,9 +315,11 @@ class Egoi_For_Wp_Admin {
 
 			add_submenu_page($this->plugin_name, __('Sync Contacts', 'egoi-for-wp'), __('Sync Contacts', 'egoi-for-wp'), $capability, 'egoi-4-wp-subscribers', array($this, 'display_plugin_subscriber_page'));
 
-			add_submenu_page($this->plugin_name, __('Ecommerce', 'egoi-for-wp'), __('Ecommerce', 'egoi-for-wp'), $capability, 'egoi-4-wp-ecommerce', array($this, 'display_plugin_subscriber_ecommerce'));
+			add_submenu_page($this->plugin_name, __('E-commerce', 'egoi-for-wp'), $bypassCount==0?sprintf('%s <span style="background-color: green !important;" class="awaiting-mod">%s</span>',__('E-commerce', 'egoi-for-wp'), __('New!', 'egoi-for-wp')):sprintf('%s <span class="awaiting-mod">%d</span>',__('E-commerce', 'egoi-for-wp'), $bypassCount), $capability, 'egoi-4-wp-ecommerce', array($this, 'display_plugin_subscriber_ecommerce'));
 
-			add_submenu_page($this->plugin_name, __('Integrations', 'egoi-for-wp'), __('Integrations', 'egoi-for-wp'), $capability, 'egoi-4-wp-integrations', array($this, 'display_plugin_integrations'));
+            add_submenu_page($this->plugin_name, __('Track & Engage', 'egoi-for-wp'), __('Track & Engage', 'egoi-for-wp'), $capability, 'egoi-4-wp-trackengage', array($this, 'display_plugin_subscriber_trackengage'));
+
+            add_submenu_page($this->plugin_name, __('Integrations', 'egoi-for-wp'), __('Integrations', 'egoi-for-wp'), $capability, 'egoi-4-wp-integrations', array($this, 'display_plugin_integrations'));
 
             add_submenu_page($this->plugin_name, __('Web Push', 'egoi-for-wp'), __('Web Push', 'egoi-for-wp'), $capability, 'egoi-4-wp-webpush', array($this, 'display_plugin_webpush'));
 
@@ -367,10 +407,22 @@ class Egoi_For_Wp_Admin {
 		if (!current_user_can('manage_options')) {
 	        wp_die('You do not have sufficient permissions to access this page.');
 	    } else {
+            $ProductBO = new EgoiProductsBo();
+            $table = $ProductBO->getCatalogsTable();
 			include_once( 'partials/egoi-for-wp-admin-ecommerce.php' );
 		}
 
 	}
+
+    public function display_plugin_subscriber_trackengage() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-trackengage.php' );
+        }
+
+    }
 
 	public function display_plugin_integrations() {
 
@@ -433,6 +485,7 @@ class Egoi_For_Wp_Admin {
 		static $defaults = array(
 			'list' => '',
 			'enabled' => 0,
+			'egoi_newsletter_active' => 0,
 			'track' => 1,
 			'role' => 'All'
 		);
@@ -645,7 +698,7 @@ class Egoi_For_Wp_Admin {
 
 			if (!is_user_logged_in()){
 				echo '<p class="form-row form-row-wide">
-				<input class="input-checkbox" type="checkbox" name="egoi_check_sync" id="egoi_check" value="1" checked>
+				<input class="input-checkbox" type="checkbox" name="egoi_check_sync" id="egoi_check" value="1">
 				<label for="egoi_check" class="checkbox">'.__('Subscribe Newsletter', 'egoi-for-wp').'</label></p>';
 			}
 
@@ -862,7 +915,7 @@ class Egoi_For_Wp_Admin {
 
 			if (!is_user_logged_in()){
 				if(!$_POST['createaccount']){
-					if($_POST['egoi_check_sync']){
+					if($_POST['egoi_newsletter_active']){
 						$first_name = $_POST['billing_first_name'];
 						$last_name = $_POST['billing_last_name'];
 						$guest_email = $_POST['billing_email'];
@@ -872,8 +925,11 @@ class Egoi_For_Wp_Admin {
 
                         $phone = $api->smsnf_get_valid_phone($phone);
 						$cellphone = $api->smsnf_get_valid_phone($cellphone);
+						$tag = [];
+						$tag[] = $api->createTagVerified(Egoi_For_Wp::get_newsletter_tag_name());
+                        $tag[] = $api->createTagVerified(Egoi_For_Wp::get_guest_buy_tag_name());
 
-						$api->addSubscriber($this->options_list['list'], $name, $guest_email, '', 1, $cellphone, 'Guest', $phone);
+						$api->addSubscriber($this->options_list['list'], $name, $guest_email, '', 1, $cellphone, $tag , $phone);
 					}
 				}
 			}
@@ -1014,164 +1070,170 @@ class Egoi_For_Wp_Admin {
 
 		try {
 
-			if(class_exists('WPCF7_ContactForm')){
+			if(!class_exists('WPCF7_ContactForm')){return false;}
 
-				$opt = get_option('egoi_int');
-				$egoi_int = $opt['egoi_int'];
+            $opt = get_option('egoi_int');
+            $egoi_int = $opt['egoi_int'];
 
-				if($egoi_int['enable_cf']) {
+            if($egoi_int['enable_cf']) {
 
-					$api = new Egoi_For_Wp();
+                $api = new Egoi_For_Wp();
 
-					$form_id = $_POST['_wpcf7'];
-					if(in_array($form_id, $opt['contact_form'])) {
+                $form_id = $_POST['_wpcf7'];
+                if(!in_array($form_id, $opt['contact_form'])) {return false;}
 
-						$key_name = 'your-name';
-						$key_email = 'your-email';
-						if(strpos($result->form, $key_name) !== false){
-							$name = $_POST[$key_name];
-						}else{
-							if($_POST['first_name']){
-								$name = $_POST['first_name'];
-							}
-						}
+                preg_match_all('/\[[a-zA-Z0-9]+\*? .+\]/', $result->form, $fields_in_form);
 
-						if($_POST['last_name']){
-							$lname = $_POST['last_name'];
-						}
+                $mapp = [];
+                foreach ($fields_in_form[0] as $field){
+                    $type = preg_split('/\**\* /', $field);
+                    $type = ltrim($type[0], '[');
+                    $key = preg_split('/\ +/', $field);
+                    $key = substr($key[1], 0, -1);
+                    if(empty($mapp[$type]))
+                        $mapp[$type] = $key;
+                }
 
-						if(strpos($result->form, $key_email) !== false){
-							$email = $_POST[$key_email];
-						}else{
-							$match = array_filter(
-								$_POST,
-									function($value) {
-										return preg_match("/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i", $value);
-									}
-								);
+                $key_name = 'your-name';
+                $key_email = 'your-email';
+                if(strpos($result->form, $key_name) !== false){
+                    $name = $_POST[$key_name];
+                }else{
+                    if($_POST['first_name']){
+                        $name = $_POST['first_name'];
+                    }
+                }
 
-							$key = array_keys($match);
-							$email = $_POST[$key[0]];
-						}
+                if($_POST['last_name']){
+                    $lname = $_POST['last_name'];
+                }
 
-						// telephone
-						$get_tel = explode('[tel ', $result->form);
-						$str_tel = explode(' ', strstr($get_tel[1], ']', true));
-						$tel = $_POST[$str_tel[0]];
+                if(strpos($result->form, $key_email) !== false){
+                    $email = $_POST[$key_email];
+                }else{
+                    $match = array_filter(
+                        $_POST,
+                            function($value) {
+                                return preg_match("/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i", $value);
+                            }
+                        );
 
-						// cellphone
-						foreach ($_POST as $key_cell => $value_cell) {
-							$cell = strpos($key_cell, 'cell');
-							if ($cell !== false) {
-								$mobile[] = $value_cell;
-							}
-						}
-						$cell = $mobile[0];
+                    $key = array_keys($match);
+                    $email = $_POST[$key[0]];
+                }
 
-						// birthdate
-						$get_bd = explode('[date ', $result->form);
-						$str_bd = explode(' ', strstr($get_bd[1], ']', true));
-						$bd = $_POST[$str_bd[0]];
+                // telephone
+                $tel = $_POST[$mapp['tel']];
 
-						// fax
-						if($_POST['egoi-fax']){
-							$fax = $_POST['egoi-fax'];
-						}
+                // cellphone
+                foreach ($_POST as $key_cell => $value_cell) {
+                    $cell = strpos($key_cell, 'cell');
+                    if ($cell !== false) {
+                        $mobile[] = $value_cell;
+                    }
+                }
+                $cell = $mobile[0];
 
-						// lang
-						if($_POST['egoi-lang']){
-							$lang = $_POST['egoi-lang'];
-						}
+                // birthdate
+                $bd = $_POST[$mapp['date']];
 
-						// extra fields
-						foreach ($_POST as $key => $value) {
-							if(is_array($value)){
-								$indval = 0;
-								foreach ($value as $option_val) {
-									$extra_fields[$key] .= $option_val.'; ';
-								}
-							}else{
-								$exra = strpos($key, 'extra_');
-								if ($exra !== false) {
-									$extra_fields[$key] = $value;
-								}
-							}
-						}
+                // fax
+                if($_POST['egoi-fax']){
+                    $fax = $_POST['egoi-fax'];
+                }
 
-						if(!empty($extra_fields)){
-							$option = 1;
-						}
+                // lang
+                if($_POST['egoi-lang']){
+                    $lang = $_POST['egoi-lang'];
+                }
 
-						$ref_fields = array('tel' => $tel, 'cell' => $cell, 'bd' => $bd, 'fax' => $fax, 'lang' => $lang);
+                // extra fields
+                foreach ($_POST as $key => $value) {
+                    if(is_array($value)){
+                        $indval = 0;
+                        foreach ($value as $option_val) {
+                            $extra_fields[$key] .= $option_val.'; ';
+                        }
+                    }else{
+                        $exra = strpos($key, 'extra_');
+                        if ($exra !== false) {
+                            $extra_fields[$key] = $value;
+                        }
+                    }
+                }
 
-						$subject = $_POST['your-subject'];
-						$status = $_POST['status-egoi'];
-						$error_msg = $result->prop('messages');
-						$error_sent = $error_msg['mail_sent_ng'];
+                if(!empty($extra_fields)){
+                    $option = 1;
+                }
 
-						// get contact form 7 name tag
-						$cf7 = $api->getContactFormInfo($form_id);
+                $ref_fields = array('tel' => $tel, 'cell' => $cell, 'bd' => $bd, 'fax' => $fax, 'lang' => $lang);
 
-						// check if subscriber exists
-						$get = $api->getSubscriber($egoi_int['list_cf'], $email);
-						if($get->subscriber->STATUS != '2'){
+                $subject = $_POST['your-subject'];
+                $status = $_POST['status-egoi'];
+                $error_msg = $result->prop('messages');
+                $error_sent = $error_msg['mail_sent_ng'];
 
-							if($get->subscriber->EMAIL == $email){
-								$update = $egoi_int['edit'];
-								if($update){
+                // get contact form 7 name tag
+                $cf7 = $api->getContactFormInfo($form_id);
 
-									if($subject){ // check if tag exists in E-goi
-										$get_tags = $api->getTag($subject);
-						                $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
-							        }
+                // check if subscriber exists
+                $get = $api->getSubscriber($egoi_int['list_cf'], $email);
+                if($get->subscriber->STATUS != '2'){
 
-						       		// check if tag cf7 exists in E-goi
-									$get_tg = $api->getTag($cf7[0]->post_title);
-				                	$cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
+                    if($get->subscriber->EMAIL == $email){
+                        $update = $egoi_int['edit'];
+                        if($update){
 
-									$api->editSubscriber(
-										$egoi_int['list_cf'],
-										$email,
-										array($cf7tag, $tag ? $tag : 0),
-										$name,
-										$lname,
-										$extra_fields,
-										$option,
-										$ref_fields
-									);
-								}
+                            if($subject){ // check if tag exists in E-goi
+                                $get_tags = $api->getTag($subject);
+                                $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
+                            }
 
-							}else{
+                            // check if tag cf7 exists in E-goi
+                            $get_tg = $api->getTag($cf7[0]->post_title);
+                            $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
 
-								if($subject){ // check if tag exists in E-goi
-									$get_tags = $api->getTag($subject);
-					                $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
-						        }
+                            $api->editSubscriber(
+                                $egoi_int['list_cf'],
+                                $email,
+                                array($cf7tag, $tag ? $tag : 0),
+                                $name,
+                                $lname,
+                                $extra_fields,
+                                $option,
+                                $ref_fields
+                            );
+                        }
 
-						        // check if tag cf7 exists in E-goi
-								$get_tg = $api->getTag($cf7[0]->post_title);
-				                $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
+                    }else{
 
-								$api->addSubscriberTags(
-									$egoi_int['list_cf'],
-									$email,
-									array($cf7tag, $tag ? $tag : 0),
-									$name,
-									$lname,
-									1,
-									$extra_fields,
-									$option,
-									$ref_fields,
-									$status
-								);
-							}
-						}else{
-							echo $error_sent;
-						}
-					}
+                        if($subject){ // check if tag exists in E-goi
+                            $get_tags = $api->getTag($subject);
+                            $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
+                        }
 
-				}
-			}
+                        // check if tag cf7 exists in E-goi
+                        $get_tg = $api->getTag($cf7[0]->post_title);
+                        $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
+
+                        $api->addSubscriberTags(
+                            $egoi_int['list_cf'],
+                            $email,
+                            array($cf7tag, $tag ? $tag : 0),
+                            $name,
+                            $lname,
+                            1,
+                            $extra_fields,
+                            $option,
+                            $ref_fields,
+                            $status
+                        );
+                    }
+                }else{
+                    echo $error_sent;
+                }
+
+            }
 
 		} catch(Exception $e) {
 		    $this->sendError('ContactForm7 ERROR', $e->getMessage());
@@ -1583,7 +1645,7 @@ class Egoi_For_Wp_Admin {
 	}
 
 
-	//Map shortcode to Visual Composer
+	//Map shortcode to WPBakery Page Builder
 	public function egoi_vc_shortcode_map() {
 
         global $wpdb;
@@ -2349,7 +2411,7 @@ class Egoi_For_Wp_Admin {
 
         $site_id = $this->scrap_sited_id($option_webpush['code'], $api);
         if($site_id === false){
-            echo json_encode(['ERROR' => __('Api error, try again latter.', 'egoi-for-wp')]);
+            echo json_encode(['ERROR' => __('Api error, try again later.', 'egoi-for-wp')]);
             wp_die();
         }
 
@@ -2390,6 +2452,155 @@ class Egoi_For_Wp_Admin {
         ]);
 
         wp_die();
+    }
+
+    public function egoi_sync_catalog(){
+        check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+        update_option('egoi_catalog_sync',json_encode($_POST['data']));
+        wp_send_json_success();
+    }
+
+    public function egoi_delete_catalog(){
+        check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+        $id = EgoiValidators::validate_id($_POST['id']);
+        $bo = new EgoiProductsBo();
+
+        wp_send_json_success($bo->deleteCatalog($id));
+    }
+
+    public function egoi_force_import_catalog(){
+
+        check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+        $id = EgoiValidators::validate_id($_POST['id']);
+        $page = EgoiValidators::validate_page($_POST['page']);
+        $bo = new EgoiProductsBo();
+        $resp = $bo->importProductsCatalog($id,$page);
+        $resp = json_decode($resp,true);
+
+        if(isset($resp['error']) || (isset($resp['status']) && $resp['status'] == 'error')){
+            wp_send_json_error(empty($resp['error'])?__('Something went wrong with your request.','egoi-for-wp'):$resp['error']);
+        }
+
+        wp_send_json_success(__('Catalog synchronized successfully.','egoi-for-wp'));
+    }
+
+    public function ecommerceFormProcess($post){
+        $form_id = sanitize_text_field($post['form_id']);
+        check_admin_referer($form_id);
+
+        $name = $post['catalog_name'];
+        $language = $post['catalog_language'];
+        $currency = $post['catalog_currency'];
+
+        if(empty($name) || empty($currency) || empty($language)){
+            return ['error' => __('Fields can\'t be empty.','egoi-for-wp')];
+        }
+
+        $bo = new EgoiProductsBo();
+        $response = $bo->createCatalog($name,$language,$currency);
+        if( $response === true){
+            return ['success' => __('Catalog successfully created!','egoi-for-wp')];
+        }else{
+            return ['error' => __('Something went wrong creating the catalog!','egoi-for-wp')];
+        }
+    }
+
+    /*
+     * Get Countries and Currencies Utility
+     * */
+    public function egoi_catalog_utilities(){
+        $bo = new EgoiProductsBo();
+        $data = $bo->getCountriesCurrencies();
+        if($data === false)
+            wp_send_json_error(__('Something went wrong fetching countries, please try again later.','egoi-for-wp'));
+        wp_send_json_success($data);
+    }
+
+    /**
+     * Get Countries and Currencies Utility
+     */
+    public function egoi_count_products(){
+        wp_send_json_success(EgoiProductsBo::countDbProducts());
+    }
+
+    public function egoi_import_bypass($data){
+
+        if(empty($data['id']))
+            return false;
+
+        $bypass = EgoiProductsBo::getProductsToBypass();
+
+        $bypass[] = $data['id'];
+        $bypass = array_unique($bypass);
+        update_option('egoi_import_bypass', json_encode($bypass));
+    }
+
+    public function egoi_add_newsletter_signup_admin(){
+        $fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
+
+        ?>
+    <h2><?php _e( 'Additional Information', 'egoi-for-wp' ); ?></h2>
+    <table class="form-table" id="egoi-additional-information">
+        <tbody>
+        <?php foreach ( $fields as $key => $field_args ) { ?>
+            <tr>
+                <th>
+                    <label for="<?php echo $key; ?>"><?php echo $field_args['label']; ?></label>
+                </th>
+                <td>
+                    <?php $field_args['label'] = false; ?>
+                    <?php woocommerce_form_field( $key, $field_args ); ?>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+
+    }
+
+    /**
+     * Called with transition_post_status hook
+     * Its called in any product alteration
+     * @param $new_status
+     * @param $old_status
+     * @param $post
+     * @return bool
+     */
+    public function egoi_product_creation($new_status, $old_status, $post){
+
+        $bypass = EgoiProductsBo::getProductsToBypass();
+        $bo = new EgoiProductsBo();
+
+        if(!empty($post->ID) && in_array($post->ID, $bypass) && $new_status != 'publish'){
+            if (($key = array_search($post->ID, $bypass)) !== false) {
+                unset($bypass[$key]);
+            }
+            $bo->deleteProduct($post->ID);
+            update_option('egoi_import_bypass', json_encode($bypass));
+            return true;
+        }
+
+        if(!empty($post->ID) && in_array($post->ID, $bypass)){
+            return false;
+        }
+
+        if($new_status != 'publish' && ! empty($post->ID)){//try to delete
+            $bo->deleteProduct($post->ID);
+            return true;
+        }
+
+        if($new_status != 'publish' || empty($post->post_type) || $post->post_type != 'product' || $post->post_status != 'publish')
+            return false;
+
+        $product = wc_get_product($post->ID);
+
+        if(empty($product))
+            return false;
+
+        $bo->syncProduct($product);
+
+        return true;
     }
 
     private function get_apikey(){
@@ -2700,6 +2911,24 @@ class Egoi_For_Wp_Admin {
         }
 
         return json_encode($output);
+    }
+
+    public function show_alert_messages(){
+        $bypass = EgoiProductsBo::getProductsToBypass();
+
+        if(!empty($bypass)){//pop up
+            echo EgoiProductsBo::getNotification(count($bypass));
+            echo '<script>
+                    jQuery(document).ready(function() {
+                        (function ($) {    
+                            $(".smsnf-notification").show(200);
+                            $(".egoi-close-pop").on("click", function(){
+                                ($(this).parent()).hide(200)}
+                            );
+                        })(jQuery);
+                    });
+                </script>';
+        }
     }
 
     public function smsnf_show_account_info_ajax() {
