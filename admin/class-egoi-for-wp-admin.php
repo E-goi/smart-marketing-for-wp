@@ -210,6 +210,7 @@ class Egoi_For_Wp_Admin {
 
 			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
             wp_enqueue_script($this->plugin_name.'-bootstrapjs', plugin_dir_url(__FILE__) . 'js/bootstrap-modal.min.js', array('jquery'), $this->version, false);
+            wp_enqueue_script($this->plugin_name.'-bootstrapjs-core', plugin_dir_url(__FILE__) . 'js/bootstrap.js', array('jquery'), $this->version, false);
 
 
             wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'), true);

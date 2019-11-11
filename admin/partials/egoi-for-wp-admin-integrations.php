@@ -57,8 +57,8 @@ $contact_forms = $Egoi4WpBuilderObject->getContactFormInfo();
         <nav>
             <ul>
                 <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations"><?= $home ?></a></li>
-                <li><a class="<?= $page['contact-form-7'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=contact-form-7"><? _e('Contact Form 7', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['post-comment'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=post-comment"><? _e('Post Comment', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['contact-form-7'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=contact-form-7"><?php _e('Contact Form 7', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['post-comment'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=post-comment"><?php _e('Post Comment', 'egoi-for-wp'); ?></a></li>
 
             </ul>
         </nav>

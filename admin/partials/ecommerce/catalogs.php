@@ -25,7 +25,7 @@
     <?php } ?>
     <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
         <div class="smsnf-input-group">
-            <input type="submit" id="new_catalog_page" value="<? _e('New Catalog', 'egoi-for-wp');?>" />
+            <input type="submit" id="new_catalog_page" value="<?php _e('New Catalog', 'egoi-for-wp');?>" />
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<?
+<?php
 //check if have a new tag in BD
 if($this->bar_post['tag'] != ""){
     $data = new Egoi_For_Wp();
@@ -23,7 +23,7 @@ else{
 </ul>
 
 <form id="smsnf-subscriber-bar" method="post" name="bar_options" action="<?= admin_url('options.php'); ?>">
-<?
+<?php
 settings_fields(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 settings_errors();
 ?>
@@ -34,7 +34,7 @@ settings_errors();
                 <p class="subtitle"><?= _e( 'A valid way to completely disable the bar.', 'egoi-for-wp' ); ?></p>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
-                        <input id="enabled_bar" name="egoi_bar_sync[enabled]" value="1" <? checked($this->bar_post['enabled'], 1); ?> type="checkbox">
+                        <input id="enabled_bar" name="egoi_bar_sync[enabled]" value="1" <?php checked($this->bar_post['enabled'], 1); ?> type="checkbox">
                         <i class="form-icon"></i><div class="yes"><?= _e( 'Yes' ); ?></div><div class="no"><?= _e( 'No' ); ?></div>
                     </label>
                 </div>
@@ -44,7 +44,7 @@ settings_errors();
                 <p class="subtitle"><?php _e( 'Show or Hide by default the bar.', 'egoi-for-wp' ); ?></p>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
-                        <input id="bar_open" name="egoi_bar_sync[open]" value="1" <? checked($this->bar_post['open'], 1); ?> type="checkbox">
+                        <input id="bar_open" name="egoi_bar_sync[open]" value="1" <?php checked($this->bar_post['open'], 1); ?> type="checkbox">
                         <i class="form-icon"></i><div class="yes"><?= _e( 'Yes' ); ?></div><div class="no"><?= _e( 'No' ); ?></div>
                     </label>
                 </div>
@@ -55,26 +55,26 @@ settings_errors();
                 <p class="subtitle"><?= _e( 'If you activate the double opt-in, a confirmation e-mail will be send to the subscribers.', 'egoi-for-wp' ); ?></p>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
-                        <? $double_optin_enable = $this->bar_post['double_optin'] == 1 || $this->bar_post['list'] == 0 ?>
-                        <input id="bar_double_optin" name="egoi_bar_sync[double_optin]" value="1" <? checked($double_optin_enable, 1); ?> type="checkbox">
+                        <?php $double_optin_enable = $this->bar_post['double_optin'] == 1 || $this->bar_post['list'] == 0 ?>
+                        <input id="bar_double_optin" name="egoi_bar_sync[double_optin]" value="1" <?php checked($double_optin_enable, 1); ?> type="checkbox">
                         <i class="form-icon"></i><div class="yes"><?= _e( 'Yes' ); ?></div><div class="no"><?= _e( 'No' ); ?></div>
                     </label>
                 </div>
             </div>
             <!-- / Double Opt-In -->
             <!-- LISTAS -->
-            <? get_list_html($this->bar_post['list'], 'egoi_bar_sync[list]') ?>
+            <?php get_list_html($this->bar_post['list'], 'egoi_bar_sync[list]') ?>
             <!-- / LISTAS -->
             <!-- lang -->
-            <? get_lang_html($this->bar_post['lang'], 'egoi_bar_sync[lang]', empty($this->bar_post['list'])) ?>
+            <?php get_lang_html($this->bar_post['lang'], 'egoi_bar_sync[lang]', empty($this->bar_post['list'])) ?>
             <!-- / lang -->
             <!-- TAGS -->
-            <? get_tag_html($tag, ''); ?>
+            <?php get_tag_html($tag, ''); ?>
             <!-- / TAGS -->
             <!-- BAR TEXT -->
             <div class="smsnf-input-group">
                 <label for="text-bar"><?= _e( 'Bar Text', 'egoi-for-wp' ); ?></label>
-                <p class="subtitle"><? _e( 'The text to appear before the email field.', 'egoi-for-wp' ); ?></p>
+                <p class="subtitle"><?php _e( 'The text to appear before the email field.', 'egoi-for-wp' ); ?></p>
                 <input id="text-bar" type="text" name="egoi_bar_sync[text_bar]" value="<?= $this->bar_post['text_bar']; ?>" autocomplete="off" />
             </div>
             <!-- / BAR TEXT -->
@@ -101,25 +101,25 @@ settings_errors();
             <div class="smsnf-input-group">
                 <label for="bar-position"><?= _e( 'Bar Position', 'egoi-for-wp' ); ?></label>
                 <select name="egoi_bar_sync[position]" class="form-select " id="bar-position">
-                    <option value="top" <?php selected( $this->bar_post['position'], 'top' ); ?>><? _e( 'Top', 'egoi-for-wp' ); ?></option>
-                    <option value="bottom" <?php selected( $this->bar_post['position'], 'bottom' ); ?>><? _e( 'Bottom', 'egoi-for-wp' ); ?></option>
+                    <option value="top" <?php selected( $this->bar_post['position'], 'top' ); ?>><?php _e( 'Top', 'egoi-for-wp' ); ?></option>
+                    <option value="bottom" <?php selected( $this->bar_post['position'], 'bottom' ); ?>><?php _e( 'Bottom', 'egoi-for-wp' ); ?></option>
                 </select>
             </div>
             <!-- / BAR POSITION -->
             <!-- FIXED BAR -->
             <div class="smsnf-input-group">
-                <label for="bar_open"><? _e( 'Bar Fixed?', 'egoi-for-wp' ); ?></label>
+                <label for="bar_open"><?php _e( 'Bar Fixed?', 'egoi-for-wp' ); ?></label>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
-                        <input id="bar_open" name="egoi_bar_sync[sticky]" value="1" <? checked($this->bar_post['sticky'], 1); ?> type="checkbox">
-                        <i class="form-icon"></i><div class="yes"><? _e( 'Yes' ); ?></div><div class="no"><? _e( 'No' ); ?></div>
+                        <input id="bar_open" name="egoi_bar_sync[sticky]" value="1" <?php checked($this->bar_post['sticky'], 1); ?> type="checkbox">
+                        <i class="form-icon"></i><div class="yes"><?php _e( 'Yes' ); ?></div><div class="no"><?php _e( 'No' ); ?></div>
                     </label>
                 </div>
             </div>
             <!-- / FIXED BAR -->
             <!-- BACKGROUND COLOR -->
             <div class="smsnf-input-group">
-                <label for="bar-background-color"><? _e( 'Background Color', 'egoi-for-wp' ); ?></label>
+                <label for="bar-background-color"><?php _e( 'Background Color', 'egoi-for-wp' ); ?></label>
                 <div class="colorpicker-wrapper">
                     <div style="background-color:<?= esc_attr( $this->bar_post['color_bar'] ) ?>" class="view" ></div>
                     <input id="bar-background-color" type="text" name="egoi_bar_sync[color_bar]" value="<?= esc_attr( $this->bar_post['color_bar'] ) ?>"  autocomplete="off" />
@@ -129,7 +129,7 @@ settings_errors();
             <!-- / BACKGROUND COLOR -->
             <!-- TEXT COLOR -->
             <div class="smsnf-input-group">
-                <label for="bar-text-color"><? _e( 'Text Color', 'egoi-for-wp' ); ?></label>
+                <label for="bar-text-color"><?php _e( 'Text Color', 'egoi-for-wp' ); ?></label>
                 <div class="colorpicker-wrapper">
                     <div style="background-color:<?= esc_attr( $this->bar_post['bar_text_color'] ) ?>" class="view" ></div>
                     <input id="bar-text-color" type="text" name="egoi_bar_sync[bar_text_color]" value="<?= esc_attr( $this->bar_post['bar_text_color'] ) ?>"  autocomplete="off" />
@@ -139,13 +139,13 @@ settings_errors();
             <!-- / TEXT COLOR -->
             <!-- BORDER SIZE -->
             <div class="smsnf-input-group">
-                <label for="bar-border-size"><? _e( 'Border Size', 'egoi-for-wp' ); ?></label>
+                <label for="bar-border-size"><?php _e( 'Border Size', 'egoi-for-wp' ); ?></label>
                 <input  id="bar-border-size" type="text" name="egoi_bar_sync[border_px]" value="<?= esc_attr( $this->bar_post['border_px'] ); ?>" autocomplete="off" />
             </div>
             <!-- / BORDER SIZE -->
             <!-- BORDER COLOR -->
             <div class="smsnf-input-group">
-                <label for="bar-text-color"><? _e( 'Border Color', 'egoi-for-wp' ); ?></label>
+                <label for="bar-text-color"><?php _e( 'Border Color', 'egoi-for-wp' ); ?></label>
                 <div class="colorpicker-wrapper">
                     <div style="background-color:<?= esc_attr( $this->bar_post['border_color'] ) ?>" class="view" ></div>
                     <input id="bar-text-color" type="text" name="egoi_bar_sync[border_color]" value="<?= esc_attr( $this->bar_post['border_color'] ) ?>"  autocomplete="off" />
@@ -155,7 +155,7 @@ settings_errors();
             <!-- / BORDER COLOR -->
             <!-- BTN COLOR -->
             <div class="smsnf-input-group">
-                <label for="bar-text-color"><? _e( 'Button Color', 'egoi-for-wp' ); ?></label>
+                <label for="bar-text-color"><?php _e( 'Button Color', 'egoi-for-wp' ); ?></label>
                 <div class="colorpicker-wrapper">
                     <div style="background-color:<?= esc_attr( $this->bar_post['color_button'] ) ?>" class="view" ></div>
                     <input id="bar-text-color" type="text" name="egoi_bar_sync[color_button]" value="<?= esc_attr( $this->bar_post['color_button'] ) ?>"  autocomplete="off" />
@@ -165,7 +165,7 @@ settings_errors();
             <!-- / BTN COLOR -->
             <!-- BTN TEXT COLOR -->
             <div class="smsnf-input-group">
-                <label for="bar-text-color"><? _e( 'Button Text Color', 'egoi-for-wp' ); ?></label>
+                <label for="bar-text-color"><?php _e( 'Button Text Color', 'egoi-for-wp' ); ?></label>
                 <div class="colorpicker-wrapper">
                     <div style="background-color:<?= esc_attr( $this->bar_post['color_button_text'] ) ?>" class="view" ></div>
                     <input id="bar-text-color" type="text" name="egoi_bar_sync[color_button_text]" value="<?= esc_attr( $this->bar_post['color_button_text'] ) ?>"  autocomplete="off" />
@@ -175,7 +175,7 @@ settings_errors();
             <!-- / BTN TEXT COLOR -->
             <!-- SUBMIT - SUCCESS -->
             <div class="smsnf-input-group">
-                <label for="bar-text-color"><? _e( 'Background Color on Success', 'egoi-for-wp' ); ?></label>
+                <label for="bar-text-color"><?php _e( 'Background Color on Success', 'egoi-for-wp' ); ?></label>
                 <div class="colorpicker-wrapper">
                     <div style="background-color:<?= esc_attr( $this->bar_post['success_bgcolor'] ) ?>" class="view" ></div>
                     <input id="bar-text-color" type="text" name="egoi_bar_sync[success_bgcolor]" value="<?= esc_attr( $this->bar_post['success_bgcolor'] ) ?>"  autocomplete="off" />
@@ -185,7 +185,7 @@ settings_errors();
             <!-- / SUBMIT - SUCCESS -->
             <!-- SUBMIT - ERROR -->
             <div class="smsnf-input-group">
-                <label for="bar-text-color"><? _e( 'Background Color on Error', 'egoi-for-wp' ); ?></label>
+                <label for="bar-text-color"><?php _e( 'Background Color on Error', 'egoi-for-wp' ); ?></label>
                 <div class="colorpicker-wrapper">
                     <div style="background-color:<?= esc_attr( $this->bar_post['error_bgcolor'] ) ?>" class="view" ></div>
                     <input id="bar-text-color" type="text" name="egoi_bar_sync[error_bgcolor]" value="<?= esc_attr( $this->bar_post['error_bgcolor'] ) ?>"  autocomplete="off" />

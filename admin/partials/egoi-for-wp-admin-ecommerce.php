@@ -51,8 +51,8 @@ $page = array(
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><? _e('Catalogs', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['new_catalog'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce&subpage=new_catalog"><? _e('Create Catalog', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><?php _e('Catalogs', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['new_catalog'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce&subpage=new_catalog"><?php _e('Create Catalog', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>

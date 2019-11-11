@@ -25,7 +25,7 @@
     <div class="smsnf-grid">
         <div>
             <div class="smsnf-input-group">
-                <label for="egoi_add_campaign"><? _e( 'RSS Feed', 'egoi-for-wp' ); ?></label>
+                <label for="egoi_add_campaign"><?php _e( 'RSS Feed', 'egoi-for-wp' ); ?></label>
                 <p class="subtitle"><?php _e( 'Select the feed which will be used in your campaign.' ,'egoi-for-wp' ); ?></p>
                 <div class="smsnf-wrapper">
                     <select id="egoi_add_campaign" class="form-select">
@@ -40,7 +40,7 @@
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
-                <label for="egoi_list"><? _e( 'List', 'egoi-for-wp' ); ?></label>
+                <label for="egoi_list"><?php _e( 'List', 'egoi-for-wp' ); ?></label>
                 <p class="subtitle"><?php _e( 'Select the list which will be linked your campaign.' ,'egoi-for-wp' ); ?></p>
                 <div class="smsnf-wrapper">
                     <select id="egoi_list" class="form-select">
@@ -51,7 +51,7 @@
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
-                <label for="egoi_senders"><? _e( 'Sender', 'egoi-for-wp' ); ?></label>
+                <label for="egoi_senders"><?php _e( 'Sender', 'egoi-for-wp' ); ?></label>
                 <p class="subtitle"><?php _e( 'Select the sender which will be linked your campaign.' ,'egoi-for-wp' ); ?></p>
                 <div class="smsnf-wrapper">
                     <select id="egoi_senders" class="form-select">
@@ -63,24 +63,24 @@
 
             <div class="smsnf-input-group egoi_create_campaign_table">
                 <label for="campaign_subject"><?= _e( 'Subject', 'egoi-for-wp' ); ?></label>
-                <p class="subtitle"><? _e( 'The text to appear as a Title', 'egoi-for-wp' ); ?></p>
+                <p class="subtitle"><?php _e( 'The text to appear as a Title', 'egoi-for-wp' ); ?></p>
                 <input id="campaign_subject" name="campaign_subject" type="text" placeholder="<?= __('Choose a subject for your campaign', 'egoi-for-wp');?>" value="" required autocomplete="off" />
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
                 <label for="campaign_snippet"><?= _e( 'Snippet', 'egoi-for-wp' ); ?></label>
-                <p class="subtitle"><? _e( 'This is the small email\'s resume', 'egoi-for-wp' ); ?></p>
+                <p class="subtitle"><?php _e( 'This is the small email\'s resume', 'egoi-for-wp' ); ?></p>
                 <input id="campaign_snippet" name="campaign_snippet" type="text" placeholder="<?= __('Choose a snippet for your campaign', 'egoi-for-wp');?>" value="" required autocomplete="off" />
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
                 <label for="campaign_title"><?= _e( 'Title', 'egoi-for-wp' ); ?></label>
-                <p class="subtitle"><? _e( 'This is the campaign title inside', 'egoi-for-wp' ); ?></p>
+                <p class="subtitle"><?php _e( 'This is the campaign title inside', 'egoi-for-wp' ); ?></p>
                 <input id="campaign_title" name="campaign_title" type="text" placeholder="<?= __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required autocomplete="off" />
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
-                <label for="items_per_email"><? _e( 'Items per Email', 'egoi-for-wp' ); ?></label>
+                <label for="items_per_email"><?php _e( 'Items per Email', 'egoi-for-wp' ); ?></label>
                 <div class="smsnf-wrapper">
                     <div class="input-group number-spinner">
                         <span class="input-group-btn" style="margin-top: 12px;">
@@ -99,7 +99,7 @@
 
     <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
         <div class="smsnf-input-group" style="display: flex;flex-direction: row;">
-            <input id="egoi_create_campaign" type="submit" value="<? _e('Create RSS Campaign +', 'egoi-for-wp');?>" />
+            <input id="egoi_create_campaign" type="submit" value="<?php _e('Create RSS Campaign +', 'egoi-for-wp');?>" />
             <?=getLoader('egoi_create_campaign_loading', false) ?>
         </div>
         <div class="smsnf-input-group" style="display: flex;flex-direction: row;">
@@ -149,7 +149,7 @@
     <div class="smsnf-grid">
         <div>
             <div class="smsnf-input-group">
-                <label for="egoi_add_campaign_webpush"><? _e( 'RSS Feed', 'egoi-for-wp' ); ?></label>
+                <label for="egoi_add_campaign_webpush"><?php _e( 'RSS Feed', 'egoi-for-wp' ); ?></label>
                 <p class="subtitle"><?php _e( 'Select the feed which will be used in your campaign.' ,'egoi-for-wp' ); ?></p>
                 <div class="smsnf-wrapper">
                     <select id="egoi_add_campaign_webpush" class="form-select">
@@ -165,7 +165,7 @@
 
             <div class="smsnf-input-group egoi_create_campaign_webpush_table">
                 <label for="campaign_title_webpush"><?= _e( 'Title', 'egoi-for-wp' ); ?></label>
-                <p class="subtitle"><? _e( 'This is the campaign title inside', 'egoi-for-wp' ); ?></p>
+                <p class="subtitle"><?php _e( 'This is the campaign title inside', 'egoi-for-wp' ); ?></p>
                 <input id="campaign_title_webpush" name="campaign_title_webpush" type="text" placeholder="<?= __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required autocomplete="off" />
             </div>
 
@@ -175,7 +175,7 @@
     <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
         <div class="smsnf-input-group" style="display: flex;flex-direction: row;">
             <?=getLoader('egoi_create_campaign_webpush_loading', false) ?>
-            <input id="egoi_create_campaign_webpush" type="submit" value="<? _e('Create RSS Campaign +', 'egoi-for-wp');?>" />
+            <input id="egoi_create_campaign_webpush" type="submit" value="<?php _e('Create RSS Campaign +', 'egoi-for-wp');?>" />
         </div>
         <div class="smsnf-input-group" style="display: flex;flex-direction: row;">
             <input hidden value="" id="campaign_hash_deploy_webpush" />

@@ -1,4 +1,4 @@
-<?
+<?php
 if ( ! defined( 'ABSPATH' ) ) die();
 
 $dir = plugin_dir_path(__FILE__) . 'capture/';
@@ -42,12 +42,12 @@ $next_adv_form_id = get_next_adv_form_id();
         <nav>
             <ul>
                 <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-form"><?= $home ?></a></li>
-                <li><a class="<?= $page['simple form'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=simple-forms"><? _e('Simple Forms', 'egoi-for-wp'); ?></a></li>
-                <? // se $next_adv_form_id == null significa que já existem 5 adv forms logo o utilizador não pode criar mais formulários ?>
+                <li><a class="<?= $page['simple form'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=simple-forms"><?php _e('Simple Forms', 'egoi-for-wp'); ?></a></li>
+                <?php // se $next_adv_form_id == null significa que já existem 5 adv forms logo o utilizador não pode criar mais formulários ?>
                 <li><a class="<?= $page['adv forms'] ?'-select':'' ?> <?= $next_adv_form_id == null ?'-disabled':'' ?>"
-                       href="<?= $next_adv_form_id == null ? "#" : "?page=egoi-4-wp-form&sub=adv-forms&form=" . $next_adv_form_id ?>"><? _e('Advanced Forms', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['subscription bar'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=subscription-bar"><? _e('Subscriber Bar', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['widget options'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=widget-options"><? _e('Widget Options', 'egoi-for-wp'); ?></a></li>
+                       href="<?= $next_adv_form_id == null ? "#" : "?page=egoi-4-wp-form&sub=adv-forms&form=" . $next_adv_form_id ?>"><?php _e('Advanced Forms', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['subscription bar'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=subscription-bar"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['widget options'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=widget-options"><?php _e('Widget Options', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -56,8 +56,8 @@ $next_adv_form_id = get_next_adv_form_id();
     <main>
         <!-- Content -->
         <section class="smsnf-content">
-            <?
-            if ($page['home']) {
+            <?php
+if ($page['home']) {
                 $file = $dir . 'home.php';
             } elseif($page['simple form']) {
                 $file = $dir . 'simple-forms.php';
@@ -71,7 +71,7 @@ $next_adv_form_id = get_next_adv_form_id();
 
             include($file);
             ?>
-            <? if ($page['simple form'] || $page['subscription bar'] || $page['widget options']) : ?>
+            <?php if ($page['simple form'] || $page['subscription bar'] || $page['widget options']) : ?>
                 <div class="modal" id="create-new-tag">
                     <a href="#close" class="modal-overlay" aria-label="Close"></a>
                     <div class="modal-container">
@@ -94,7 +94,7 @@ $next_adv_form_id = get_next_adv_form_id();
                         </div>
                     </div>
                 </div>
-            <? endif; ?>
+            <?php endif; ?>
         </section>
         <!-- / Content -->
         <!-- Pub -->

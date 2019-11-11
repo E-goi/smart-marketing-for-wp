@@ -114,7 +114,7 @@ jQuery(document).ready(function($) {
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><? _e('Configuration', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -177,7 +177,7 @@ jQuery(document).ready(function($) {
                             </div>
 
                             <div class="smsnf-input-group">
-                                <label for="list"><? _e( 'Sync users with this list', 'egoi-for-wp' ); ?></label>
+                                <label for="list"><?php _e( 'Sync users with this list', 'egoi-for-wp' ); ?></label>
                                 <p class="subtitle"><?php _e( 'Select the E-goi\'s list for your subscribers.' ,'egoi-for-wp' ); ?></p>
                                 <div class="smsnf-wrapper">
 
@@ -207,7 +207,7 @@ jQuery(document).ready(function($) {
                             </div>
 
                             <div class="smsnf-input-group">
-                                <label for="role"><? _e( 'Sync users with this role', 'egoi-for-wp' ); ?></label>
+                                <label for="role"><?php _e( 'Sync users with this role', 'egoi-for-wp' ); ?></label>
                                 <p class="subtitle"><?php _e( 'Select the role to synchronize your Subscribers with.' ,'egoi-for-wp' ); ?></p>
                                 <div class="smsnf-wrapper">
                                     <select id="role" name="egoi_sync[role]" class="form-select" >
@@ -221,7 +221,7 @@ jQuery(document).ready(function($) {
                             </div>
 
                             <div class="smsnf-input-group">
-                                <label for="role"><? _e( 'Sync existing WP Users', 'egoi-for-wp' ); ?></label>
+                                <label for="role"><?php _e( 'Sync existing WP Users', 'egoi-for-wp' ); ?></label>
                                 <div class="smsnf-wrapper">
                                     <?php
 
@@ -268,7 +268,7 @@ jQuery(document).ready(function($) {
                         </div>
                     </div>
                     <div class="smsnf-input-group">
-                        <input type="submit" id="save_sync_button" value="<? _e('Save Changes', 'egoi-for-wp');?>" />
+                        <input type="submit" id="save_sync_button" value="<?php _e('Save Changes', 'egoi-for-wp');?>" />
                     </div>
                 </form>
             </div>
