@@ -2560,6 +2560,20 @@ class Egoi_For_Wp_Admin {
 
     }
 
+    public function egoi_product_check_delete($new, $old, $post){
+        $bypass = EgoiProductsBo::getProductsToBypass();
+        $bo = new EgoiProductsBo();
+
+        if(!empty($post->ID) && $new != 'publish'){
+            if (($key = array_search($post->ID, $bypass)) !== false) {
+                unset($bypass[$key]);
+            }
+            $bo->deleteProduct($post->ID);
+            update_option('egoi_import_bypass', json_encode($bypass));
+            return true;
+        }
+    }
+
     /**
      * Called with transition_post_status hook
      * Its called in any product alteration
