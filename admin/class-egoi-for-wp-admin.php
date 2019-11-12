@@ -2568,33 +2568,28 @@ class Egoi_For_Wp_Admin {
      * @param $post
      * @return bool
      */
-    public function egoi_product_creation($new_status, $old_status, $post){
-
+    public function egoi_product_creation($product_id){
         $bypass = EgoiProductsBo::getProductsToBypass();
         $bo = new EgoiProductsBo();
+        $product = wc_get_product($product_id);
 
-        if(!empty($post->ID) && in_array($post->ID, $bypass) && $new_status != 'publish'){
-            if (($key = array_search($post->ID, $bypass)) !== false) {
+        if(!empty($product->get_id()) && in_array($product->get_id(), $bypass) && $product->get_status() != 'publish'){
+            if (($key = array_search($product->get_id(), $bypass)) !== false) {
                 unset($bypass[$key]);
             }
-            $bo->deleteProduct($post->ID);
+            $bo->deleteProduct($product->get_id());
             update_option('egoi_import_bypass', json_encode($bypass));
             return true;
         }
 
-        if(!empty($post->ID) && in_array($post->ID, $bypass)){
+        if(!empty($product->get_id()) && in_array($product->get_id(), $bypass)){
             return false;
         }
 
-        if($new_status != 'publish' && ! empty($post->ID)){//try to delete
-            $bo->deleteProduct($post->ID);
+        if($product->get_status() != 'publish' && ! empty($product->get_id())){//try to delete
+            $bo->deleteProduct($product->get_id());
             return true;
         }
-
-        if($new_status != 'publish' || empty($post->post_type) || $post->post_type != 'product' || $post->post_status != 'publish')
-            return false;
-
-        $product = wc_get_product($post->ID);
 
         if(empty($product))
             return false;

@@ -146,7 +146,6 @@ class EgoiApiV3
     }
 
     public function patchProduct($data, $catalog, $product_id){
-
         $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],['{catalog_id}','{product_id}'], [$catalog,$product_id]);
         $client = new ClientHttp(
             $path,
