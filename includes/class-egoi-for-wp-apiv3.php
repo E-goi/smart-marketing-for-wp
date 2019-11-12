@@ -139,7 +139,7 @@ class EgoiApiV3
             json_encode($data)
         );
 
-        if($client->success() !== true || ($client->getCode()>=200 && $client->getCode()<300)){
+        if($client->success() !== true || $client->getCode()<=200 || $client->getCode()>300){
             return false;
         }
         return true;
@@ -155,7 +155,7 @@ class EgoiApiV3
             json_encode($data)
         );
 
-        if($client->success() !== true || ($client->getCode()>=200 && $client->getCode()<300)){
+        if($client->success() !== true || $client->getCode() <=200 || $client->getCode()>300){
             return false;
         }
         return true;
