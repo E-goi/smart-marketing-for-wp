@@ -139,14 +139,13 @@ class EgoiApiV3
             json_encode($data)
         );
 
-        if($client->success() !== true || ($client->getCode()>=200 && $client->getCode()<300)){
+        if($client->success() !== true || $client->getCode()<=200 || $client->getCode()>300){
             return false;
         }
         return true;
     }
 
     public function patchProduct($data, $catalog, $product_id){
-
         $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],['{catalog_id}','{product_id}'], [$catalog,$product_id]);
         $client = new ClientHttp(
             $path,
@@ -155,7 +154,7 @@ class EgoiApiV3
             json_encode($data)
         );
 
-        if($client->success() !== true || ($client->getCode()>=200 && $client->getCode()<300)){
+        if($client->success() !== true || $client->getCode() <=200 || $client->getCode()>300){
             return false;
         }
         return true;

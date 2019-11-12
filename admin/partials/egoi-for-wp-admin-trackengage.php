@@ -34,7 +34,7 @@ if(isset($_POST['action'])){
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-trackengage"><? _e('Configuration', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-trackengage"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -94,7 +94,7 @@ if(isset($_POST['action'])){
 
                         <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
                             <div class="smsnf-input-group">
-                                <input type="submit" value="<? _e('Save', 'egoi-for-wp');?>" />
+                                <input type="submit" value="<?php _e('Save', 'egoi-for-wp');?>" />
                             </div>
                         </div>
 

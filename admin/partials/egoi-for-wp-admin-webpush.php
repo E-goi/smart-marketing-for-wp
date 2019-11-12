@@ -88,7 +88,7 @@ if (strpos($locale, 'pt') !== false) {
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-webpush"><? _e('Configuration', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-webpush"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>

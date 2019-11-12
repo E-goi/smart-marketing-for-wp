@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="smsnf-input-group">
-                    <label for="image_size"><? _e( 'Sender', 'egoi-for-wp' ); ?></label>
+                    <label for="image_size"><?php _e( 'Sender', 'egoi-for-wp' ); ?></label>
                     <p class="subtitle"><?php _e( 'Select a default size for RSS feed images.' ,'egoi-for-wp' ); ?></p>
                     <div class="smsnf-wrapper">
                         <select id="image_size" class="form-select">
@@ -182,7 +182,7 @@
                 </div>
                 <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
                     <div class="smsnf-input-group">
-                        <input type="submit" value="<? _e('Save', 'egoi-for-wp');?>" />
+                        <input type="submit" value="<?php _e('Save', 'egoi-for-wp');?>" />
                     </div>
                 </div>
             </form>

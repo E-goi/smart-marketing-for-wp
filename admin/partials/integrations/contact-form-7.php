@@ -24,7 +24,7 @@
                 <?php if($egoint['enable_cf']){ ?>
 
                     <div class="smsnf-input-group">
-                        <label for="egoi4wp-forms"><? _e( 'Contact Form Name', 'egoi-for-wp' ); ?></label>
+                        <label for="egoi4wp-forms"><?php _e( 'Contact Form Name', 'egoi-for-wp' ); ?></label>
                         <p class="subtitle"><?php _e( 'Select the language your products are setup.' ,'egoi-for-wp' ); ?></p>
                         <div class="smsnf-wrapper">
                             <?php if(empty($contact_forms)) { ?>
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="smsnf-input-group">
-                        <label for="list_cf"><? _e( 'List to Subscribe', 'egoi-for-wp' ); ?></label>
+                        <label for="list_cf"><?php _e( 'List to Subscribe', 'egoi-for-wp' ); ?></label>
                         <?php if(empty($lists)) { ?>
                             <td><?php printf(__('Lists not found, <a href="%s">are you connected to egoi</a>?', 'egoi-for-wp'), admin_url('admin.php?page=egoi-4-wp-account'));?></td><?php
                         }else{ ?>
@@ -83,7 +83,7 @@
 
     <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
         <div class="smsnf-input-group">
-            <input type="submit" value="<? _e('Save', 'egoi-for-wp');?>" />
+            <input type="submit" value="<?php _e('Save', 'egoi-for-wp');?>" />
         </div>
     </div>
 

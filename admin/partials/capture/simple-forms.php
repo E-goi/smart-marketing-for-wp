@@ -1,4 +1,4 @@
-<?
+<?php
 if (isset($_POST['id_simple_form'])) {
 
     function saveSimpleForm() {
@@ -141,28 +141,28 @@ if (isset($_POST['id_simple_form'])) {
             <input name="id_simple_form" type="hidden" value="<?=$id_simple_form?>" />
             <!-- Double Opt-In -->
             <div class="smsnf-input-group">
-                <label for="sf_double_optin"><? _e( 'Enable Double Opt-In?', 'egoi-for-wp' ); ?></label>
-                <p class="subtitle"><? _e( 'If you activate the double opt-in, a confirmation e-mail will be send to the subscribers.', 'egoi-for-wp' ); ?></p>
+                <label for="sf_double_optin"><?php _e( 'Enable Double Opt-In?', 'egoi-for-wp' ); ?></label>
+                <p class="subtitle"><?php _e( 'If you activate the double opt-in, a confirmation e-mail will be send to the subscribers.', 'egoi-for-wp' ); ?></p>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
-                        <? $double_optin_enable = !isset($shortcode['double_optin']) || $shortcode['double_optin'] == 1 ?>
-                        <input id="sf_double_optin" name="double_optin" value="1" <? checked($double_optin_enable, 1); ?> type="checkbox">
-                        <i class="form-icon"></i><div class="yes"><? _e( 'Yes' ); ?></div><div class="no"><? _e( 'No' ); ?></div>
+                        <?php $double_optin_enable = !isset($shortcode['double_optin']) || $shortcode['double_optin'] == 1 ?>
+                        <input id="sf_double_optin" name="double_optin" value="1" <?php checked($double_optin_enable, 1); ?> type="checkbox">
+                        <i class="form-icon"></i><div class="yes"><?php _e( 'Yes' ); ?></div><div class="no"><?php _e( 'No' ); ?></div>
                     </label>
                 </div>
             </div>
             <!-- / Double Opt-In -->
             <!-- LISTAS -->
-            <? get_list_html($shortcode['list'], 'list') ?>
+            <?php get_list_html($shortcode['list'], 'list') ?>
             <!-- / LISTAS -->
             <!-- lang -->
-            <? get_lang_html($shortcode['lang'], 'lang', empty($shortcode['list'])) ?>
+            <?php get_lang_html($shortcode['lang'], 'lang', empty($shortcode['list'])) ?>
             <!-- / lang -->
             <!-- TAGS -->
             <!-- / TAGS -->
             <!-- TÍTULO -->
             <div class="smsnf-input-group">
-                <label for="form_name"><? _e('Form title', 'egoi-for-wp'); ?></label>
+                <label for="form_name"><?php _e('Form title', 'egoi-for-wp'); ?></label>
                 <input  id="form_name" type="text"
                     name="title" size="30" spellcheck="true" autocomplete="off" pattern="\S.*\S"
                     value="<?= htmlentities(stripslashes($shortcode['title_simple_form'])) ?>"
@@ -171,24 +171,24 @@ if (isset($_POST['id_simple_form'])) {
             <!-- / TÍTULO -->
             <!-- CÓDIGO HTML -->
             <div class="smsnf-input-group">
-            <? $content = stripslashes($shortcode['html_code_simple_form']) ?>
-                <label for="sf-code"><? _e('HTML code', 'egoi-for-wp'); ?></label>
+            <?php $content = stripslashes($shortcode['html_code_simple_form']) ?>
+                <label for="sf-code"><?php _e('HTML code', 'egoi-for-wp'); ?></label>
                 <div id="sf-btns" class="smsnf-btn-group">
-                    <button id="sf-btn-name" class="smsnf-btn <?= strpos($content, '[e_name]') || strpos($content, '[/e_name]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Name', 'egoi-for-wp') ?>"><? _e('Name', 'egoi-for-wp');?></button>
-                    <button id="sf-btn-email" class="smsnf-btn <?= strpos($content, '[e_email]') || strpos($content, '[/e_email]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Email', 'egoi-for-wp') ?>"><? _e('Email', 'egoi-for-wp');?></button>
-                    <button id="sf-btn-phone" class="smsnf-btn <?= strpos($content, '[e_mobile]') || strpos($content, '[/e_mobile]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Mobile', 'egoi-for-wp') ?>"><? _e('Mobile', 'egoi-for-wp');?></button>
-                    <button id="sf-btn-submit" class="smsnf-btn <?= strpos($content, '[e_submit]') || strpos($content, '[/e_submit]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Submit Button', 'egoi-for-wp') ?>"><? _e('Submit Button', 'egoi-for-wp');?></button>
+                    <button id="sf-btn-name" class="smsnf-btn <?= strpos($content, '[e_name]') || strpos($content, '[/e_name]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Name', 'egoi-for-wp') ?>"><?php _e('Name', 'egoi-for-wp');?></button>
+                    <button id="sf-btn-email" class="smsnf-btn <?= strpos($content, '[e_email]') || strpos($content, '[/e_email]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Email', 'egoi-for-wp') ?>"><?php _e('Email', 'egoi-for-wp');?></button>
+                    <button id="sf-btn-phone" class="smsnf-btn <?= strpos($content, '[e_mobile]') || strpos($content, '[/e_mobile]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Mobile', 'egoi-for-wp') ?>"><?php _e('Mobile', 'egoi-for-wp');?></button>
+                    <button id="sf-btn-submit" class="smsnf-btn <?= strpos($content, '[e_submit]') || strpos($content, '[/e_submit]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Submit Button', 'egoi-for-wp') ?>"><?php _e('Submit Button', 'egoi-for-wp');?></button>
                 </div>
                 <textarea id="sf-code" rows="11" name="html_code" placeholder="<?= _e( 'HTML code of your form', 'egoi-for-wp' ); ?>"><?=$content?></textarea>
             </div>
             <!-- / CÓDIGO HTML -->
 
             <div class="smsnf-input-group">
-                <input type="submit" value="<? _e('Save', 'egoi-for-wp');?>" />
+                <input type="submit" value="<?php _e('Save', 'egoi-for-wp');?>" />
             </div>
         </div>
         <div>
-            <? if ($id_simple_form != 0) : ?>
+            <?php if ($id_simple_form != 0) : ?>
                 <!-- SHORTCODE -->
                 <div class="smsnf-input-group">
                         <label for="smsnf-af-shortcode">Shortcode</label>
@@ -196,14 +196,14 @@ if (isset($_POST['id_simple_form'])) {
                             class="tooltip shortcode -copy"
                             type="text"
                             data-clipboard-text="<?= esc_html('[egoi-simple-form id="' . $id_simple_form . '"]') ?>"
-                            data-before="<? _e('Click to copy', 'egoi-for-wp');?>"
-                            data-after="<? _e('Copied', 'egoi-for-wp');?>"
-                            data-tooltip="<? _e('Click to copy', 'egoi-for-wp');?>"
+                            data-before="<?php _e('Click to copy', 'egoi-for-wp');?>"
+                            data-after="<?php _e('Copied', 'egoi-for-wp');?>"
+                            data-tooltip="<?php _e('Click to copy', 'egoi-for-wp');?>"
                             ><?= esc_html('[egoi-simple-form id="' . $id_simple_form . '"]') ?></div>
-                        <p class="subtitle"><? _e('Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp');?></p>
+                        <p class="subtitle"><?php _e('Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp');?></p>
                     </div>
                     <!-- / SHORTCODE -->
-            <? endif; ?>
+            <?php endif; ?>
         </div>
     </div>
 </form>

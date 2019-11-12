@@ -1,4 +1,4 @@
-<? if ( ! defined( 'ABSPATH' ) ) die();
+<?php if ( ! defined( 'ABSPATH' ) ) die();
 
 // cria/atualiza o formulário ("action" do form)
 if (isset($_POST['action']) && ($_POST['action'])) {
@@ -22,10 +22,10 @@ $opt = get_option($FORM_OPTION);
 $is_iframe = $_GET['type'] == 'iframe';
 ?>
 
-<button id="smsnf-help-btn" class="smsnf-help-btn"><? _e('Help?', 'egoi-for-wp') ?></button>
+<button id="smsnf-help-btn" class="smsnf-help-btn"><?php _e('Help?', 'egoi-for-wp') ?></button>
 
 <div class="smsnf-adv-forms">
-    <h3><? _e('Select form type', 'egoi-for-wp') ?></h3>
+    <h3><?php _e('Select form type', 'egoi-for-wp') ?></h3>
     <form id="adv-forms-select-type" method="get" action="">
         <input type="hidden" name="page" value="egoi-4-wp-form">
         <input type="hidden" name="sub" value="adv-forms">
@@ -33,7 +33,7 @@ $is_iframe = $_GET['type'] == 'iframe';
 
         <div id="smsnf-adv-forms-types" class="smsnf-adv-forms-types">
             <label>
-                <input type="radio" name="type" value="popup" <? checked($form_type, 'popup')?> />
+                <input type="radio" name="type" value="popup" <?php checked($form_type, 'popup')?> />
                 <div class="">
                     <p>Pop-up</p>
                     <div>
@@ -42,7 +42,7 @@ $is_iframe = $_GET['type'] == 'iframe';
                 </div>
             </label>
             <label>
-                <input type="radio" name="type" value="iframe" <? checked($form_type, 'iframe');?> />
+                <input type="radio" name="type" value="iframe" <?php checked($form_type, 'iframe');?> />
                 <div>
                     <p>iframe</p>
                     <div>
@@ -51,7 +51,7 @@ $is_iframe = $_GET['type'] == 'iframe';
                 </div>
             </label>
             <label>
-                <input type="radio" name="type" value="html" <? checked($form_type, 'html');?> />
+                <input type="radio" name="type" value="html" <?php checked($form_type, 'html');?> />
                 <div>
                     <p>Advanced HTML</p>
                     <div>
@@ -62,13 +62,13 @@ $is_iframe = $_GET['type'] == 'iframe';
         </div>
     </form>
 
-    <? if (isset($form_type) && in_array($form_type, array('popup', 'iframe', 'html'))) : ?>
+    <?php if (isset($form_type) && in_array($form_type, array('popup', 'iframe', 'html'))) : ?>
         <ul class="tab">
             <li class="tab-item active">
-                <a href="#" tab-target="smsnf-adv-forms-options"><? _e('Options', 'egoi-for-wp');?></a>
+                <a href="#" tab-target="smsnf-adv-forms-options"><?php _e('Options', 'egoi-for-wp');?></a>
             </li>
             <li class="tab-item">
-                <a href="#" tab-target="smsnf-adv-forms-custom"><? _e('Customizing the form', 'egoi-for-wp');?></a>
+                <a href="#" tab-target="smsnf-adv-forms-custom"><?php _e('Customizing the form', 'egoi-for-wp');?></a>
             </li>
         </ul>
 
@@ -81,21 +81,21 @@ $is_iframe = $_GET['type'] == 'iframe';
                 <div>
                     <!-- TÍTULO E MOSTRAR TÍTULO -->
                     <div class="smsnf-input-group">
-                        <label for="form_name"><? _e('Form title', 'egoi-for-wp'); ?></label>
+                        <label for="form_name"><?php _e('Form title', 'egoi-for-wp'); ?></label>
                         <div class="form-group switch-right switch-yes-no">
                             <label class="form-switch small">
-                                <input type="checkbox" name="egoi_form_sync[show_title]" value="1" <? checked($opt['egoi_form_sync']['show_title']) ?>>
-                                <i class="form-icon"></i> <? _e( 'Show Title', 'egoi-for-wp' ); ?>
+                                <input type="checkbox" name="egoi_form_sync[show_title]" value="1" <?php checked($opt['egoi_form_sync']['show_title']) ?>>
+                                <i class="form-icon"></i> <?php _e( 'Show Title', 'egoi-for-wp' ); ?>
                             </label>
                         </div>
                         <input id="form_name" type="text" name="egoi_form_sync[form_name]" value="<?= $opt['egoi_form_sync']['form_name'];?>" placeholder="<?=__( "Write here the title of your form", 'egoi-for-wp' )?>" autocomplete="off" />
                     </div>
                     <!-- / TÍTULO E MOSTRAR TÍTULO -->
-                    <? if (!$is_iframe) : ?>
+                    <?php if (!$is_iframe) : ?>
                         <!-- CÓDIGO HTML -->
                         <div class="smsnf-input-group">
-                            <?
-                                if($_GET['type'] == 'popup') {
+                            <?php
+if($_GET['type'] == 'popup') {
                                     $placeholder = __( 'Paste here the Pop-Up window code of your E-goi form', 'egoi-for-wp' );
                                     $label = __('Código da janela Pop-up', 'egoi-for-wp');
                                 } else {
@@ -108,34 +108,34 @@ $is_iframe = $_GET['type'] == 'iframe';
                             <textarea id="form_code" rows="11" placeholder="<?= $placeholder ?>" name="egoi_form_sync[form_content]"><?=$content?></textarea>
                         </div>
                         <!-- / CÓDIGO HTML -->
-                    <? endif; ?>
-                    <? if ($is_iframe) :
+                    <?php endif; ?>
+                    <?php if ($is_iframe) :
                         $egoi_list_id = $opt['egoi_form_sync']['list'];
                         $egoi_form_id = $opt['egoi_form_sync']['form_content'];
                         ?>
                         <!-- LISTA DE SUBSCRITORES -->
-                        <? get_list_html($egoi_list_id, 'egoi_form_sync[list]'); ?>
+                        <?php get_list_html($egoi_list_id, 'egoi_form_sync[list]'); ?>
                         <!-- / LISTA DE SUBSCRITORES -->
                         <!-- FORMULÁRIO -->
-                        <? get_form_html($egoi_form_id, 'egoi_form_sync[form_content]', empty($egoi_list_id)) ?>
+                        <?php get_form_html($egoi_form_id, 'egoi_form_sync[form_content]', empty($egoi_list_id)) ?>
                         <!-- / FORMULÁRIO -->
-                    <? endif; ?>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <!-- ATIVAR FORM -->
                     <div class="smsnf-input-group">
-                        <label for="form_ative"><? _e( 'Enable Form', 'egoi-for-wp' ); ?></label>
-                        <p class="subtitle"><? _e( 'Select "yes" to enable this form.', 'egoi-for-wp' ); ?></p>
+                        <label for="form_ative"><?php _e( 'Enable Form', 'egoi-for-wp' ); ?></label>
+                        <p class="subtitle"><?php _e( 'Select "yes" to enable this form.', 'egoi-for-wp' ); ?></p>
                         <div class="form-group switch-yes-no">
                             <label class="form-switch">
-                                <input id="form_ative" type="checkbox" name="egoi_form_sync[enabled]" value="1" <? checked($opt['egoi_form_sync']['enabled']) ?>>
-                                <i class="form-icon"></i><div class="yes"><? _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><? _e( 'No', 'egoi-for-wp' ); ?></div>
+                                <input id="form_ative" type="checkbox" name="egoi_form_sync[enabled]" value="1" <?php checked($opt['egoi_form_sync']['enabled']) ?>>
+                                <i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
                             </label>
                         </div>
                     </div>
                     <!-- / ATIVAR FORM -->
 
-                    <? if (!empty($opt['egoi_form_sync']['form_id'])) : ?>
+                    <?php if (!empty($opt['egoi_form_sync']['form_id'])) : ?>
                     <!-- SHORTCODE -->
                     <div class="smsnf-input-group">
                         <label for="smsnf-af-shortcode">Shortcode</label>
@@ -143,20 +143,20 @@ $is_iframe = $_GET['type'] == 'iframe';
                             class="tooltip shortcode -copy"
                             type="text"
                             data-clipboard-text="<?= "[egoi_form_sync_$form_id]" ?>"
-                            data-before="<? _e('Click to copy', 'egoi-for-wp');?>"
-                            data-after="<? _e('Copied', 'egoi-for-wp');?>"
-                            data-tooltip="<? _e('Click to copy', 'egoi-for-wp');?>"
+                            data-before="<?php _e('Click to copy', 'egoi-for-wp');?>"
+                            data-after="<?php _e('Copied', 'egoi-for-wp');?>"
+                            data-tooltip="<?php _e('Click to copy', 'egoi-for-wp');?>"
                             ><?= "[egoi_form_sync_$form_id]" ?></div>
-                        <p class="subtitle"><? _e('Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp');?></p>
+                        <p class="subtitle"><?php _e('Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp');?></p>
                     </div>
-                    <? endif; ?>
+                    <?php endif; ?>
                     <!-- / SHORTCODE -->
                 </div>
             </div>
             <div id="smsnf-adv-forms-custom" class="smsnf-tab-content smsnf-grid">
                 <div clss="inputs">
-                    <?
-                        $border = $opt['egoi_form_sync']['border'] ? $opt['egoi_form_sync']['border'] : 0;
+                    <?php
+$border = $opt['egoi_form_sync']['border'] ? $opt['egoi_form_sync']['border'] : 0;
                         $color = $opt['egoi_form_sync']['border_color'] ? $opt['egoi_form_sync']['border_color'] : '#000000';
                         $width = isset($opt['egoi_form_sync']['width']) ? str_replace('px', '', $opt['egoi_form_sync']['width']) : '300';
                         $height = isset($opt['egoi_form_sync']['height']) ? str_replace('px', '', $opt['egoi_form_sync']['height']) : '250';
@@ -225,7 +225,7 @@ $is_iframe = $_GET['type'] == 'iframe';
                 <input type="submit" value="GUARDAR ALTERAÇÕES" />
             </div>
         </form>
-    <? endif; ?>
+    <?php endif; ?>
 </div>
 
 <section id="smsnf-help" class="help">

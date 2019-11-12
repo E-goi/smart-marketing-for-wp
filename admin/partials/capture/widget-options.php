@@ -1,4 +1,4 @@
-<?
+<?php
 // cria/atualiza widget
 if (isset($_POST['action']) && ($_POST['action'])) {
     $post = $_POST;
@@ -33,7 +33,7 @@ $FORM_OPTION = get_optionsform($form_id);
 ?>
 
 <form id="smsnf-widget-options" action="" method="post">
-    <? settings_fields($FORM_OPTION); ?>
+    <?php settings_fields($FORM_OPTION); ?>
 
     <input type="hidden" name="widget" value="1">
     <input type="hidden" name="egoiform" value="egoi_widget">
@@ -43,21 +43,21 @@ $FORM_OPTION = get_optionsform($form_id);
         <label for="enable-widget">Enable Widgets</label>
         <div class="form-group switch-yes-no">
             <label class="form-switch">
-                <input id="enable-widget" name="egoi_widget[enabled]" value="1" <? checked($egoiwidget['enabled'], 1); ?> type="checkbox">
-                <i class="form-icon"></i><div class="yes"><? _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><? _e( 'No', 'egoi-for-wp' ); ?></div>
+                <input id="enable-widget" name="egoi_widget[enabled]" value="1" <?php checked($egoiwidget['enabled'], 1); ?> type="checkbox">
+                <i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
             </label>
         </div>
     </div>
     <!-- / enable widget -->
     <!-- Double Opt-In -->
     <div class="smsnf-input-group">
-        <label for="widget_double_optin"><? _e( 'Enable Double Opt-In?', 'egoi-for-wp' ); ?></label>
+        <label for="widget_double_optin"><?php _e( 'Enable Double Opt-In?', 'egoi-for-wp' ); ?></label>
         <p class="subtitle"><?php _e( 'If you activate the double opt-in, a confirmation e-mail will be send to the subscribers.', 'egoi-for-wp' ); ?></p>
         <div class="form-group switch-yes-no">
             <label class="form-switch">
-                <? $double_optin_enable = $egoiwidget['double_optin'] == 1 || $egoiwidget['list'] == 0 ?>
-                <input id="widget_double_optin" name="egoi_widget[double_optin]" value="1" <? checked($double_optin_enable, 1); ?> type="checkbox">
-                <i class="form-icon"></i><div class="yes"><? _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><? _e( 'No', 'egoi-for-wp' ); ?></div>
+                <?php $double_optin_enable = $egoiwidget['double_optin'] == 1 || $egoiwidget['list'] == 0 ?>
+                <input id="widget_double_optin" name="egoi_widget[double_optin]" value="1" <?php checked($double_optin_enable, 1); ?> type="checkbox">
+                <i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
             </label>
         </div>
     </div>
@@ -65,10 +65,10 @@ $FORM_OPTION = get_optionsform($form_id);
     <!-- TAB -->
     <ul class="tab">
         <li class="tab-item active">
-            <a href="#" tab-target="smsnf-configuration"><? _e( 'Settings', 'egoi-for-wp' ); ?></a>
+            <a href="#" tab-target="smsnf-configuration"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
         </li>
         <li class="tab-item">
-            <a href="#" tab-target="smsnf-appearance"><? _e( 'Appearance', 'egoi-for-wp' ); ?></a>
+            <a href="#" tab-target="smsnf-appearance"><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
         </li>
     </ul>
     <!-- / TAB -->
@@ -76,13 +76,13 @@ $FORM_OPTION = get_optionsform($form_id);
     <div id="smsnf-configuration" class="smsnf-tab-content smsnf-grid active">
         <div>
             <!-- LIST -->
-            <? get_list_html( $egoiwidget['list'], 'egoi_widget[list]' ); ?>
+            <?php get_list_html( $egoiwidget['list'], 'egoi_widget[list]' ); ?>
             <!-- / LIST -->
             <!-- lang -->
-            <? get_lang_html( $egoiwidget['lang'], 'egoi_widget[lang]', empty($egoiwidget['list']) ); ?>
+            <?php get_lang_html( $egoiwidget['lang'], 'egoi_widget[lang]', empty($egoiwidget['list']) ); ?>
             <!-- / lang -->
             <!-- tag -->
-            <? get_tag_html($tag, ''); ?>
+            <?php get_tag_html($tag, ''); ?>
             <!-- / tag -->
             <!-- success msg -->
             <div class="smsnf-input-group ">
@@ -111,20 +111,20 @@ $FORM_OPTION = get_optionsform($form_id);
             <!-- / already subscribed msg -->
             <!--  -->
             <div class="smsnf-input-group">
-                <label for="widget-hide-form"><? _e( 'Hide form after successful sign-up', 'egoi-for-wp' ); ?></label>
-                <p class="subtitle"><? _e( 'Select "yes" to hide the form after successful sign-up.', 'egoi-for-wp' ); ?></p>
+                <label for="widget-hide-form"><?php _e( 'Hide form after successful sign-up', 'egoi-for-wp' ); ?></label>
+                <p class="subtitle"><?php _e( 'Select "yes" to hide the form after successful sign-up.', 'egoi-for-wp' ); ?></p>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
-                        <input id="widget-hide-form" name="egoi_widget[hide_form]" value="1" <? checked($egoiwidget['hide_form'], 1); ?> type="checkbox">
-                        <i class="form-icon"></i><div class="yes"><? _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><? _e( 'No', 'egoi-for-wp' ); ?></div>
+                        <input id="widget-hide-form" name="egoi_widget[hide_form]" value="1" <?php checked($egoiwidget['hide_form'], 1); ?> type="checkbox">
+                        <i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
                     </label>
                 </div>
             </div>
             <!-- /  -->
             <!--  -->
             <div class="smsnf-input-group ">
-                <label for="widget-redirect"><? _e( 'Redirect to URL after a successful sign-up', 'egoi-for-wp' ); ?></label>
-                <p class="subtitle"><? _e( 'Leave empty for no redirect. Otherwise, use complete (absolute) URLs.', 'egoi-for-wp' ); ?></p>
+                <label for="widget-redirect"><?php _e( 'Redirect to URL after a successful sign-up', 'egoi-for-wp' ); ?></label>
+                <p class="subtitle"><?php _e( 'Leave empty for no redirect. Otherwise, use complete (absolute) URLs.', 'egoi-for-wp' ); ?></p>
                 <input id="widget-redirect" type="text" name="egoi_widget[redirect]" value="<?= esc_attr($egoiwidget['redirect']) ?>" placeholder="<?= printf(__('Example: %s', 'egoi-for-wp'), esc_attr(site_url('/thank-you/'))) ?>" autocomplete="off" />
             </div>
             <!-- /  -->
@@ -138,7 +138,7 @@ $FORM_OPTION = get_optionsform($form_id);
             <div class="smsnf-input-group ">
                 <label for="widget-input-width"><?= _e( 'Input Width', 'egoi-for-wp' ) ?></label>
                 <input id="widget-input-width" type="text" name="egoi_widget[input_width]" value="<?= esc_attr($egoiwidget['input_width']) ?>">
-                <p class="subtitle"><? _e( 'Change the input width in px, otherwise leave empty if you want to 100%', 'egoi-for-wp' ); ?></p>
+                <p class="subtitle"><?php _e( 'Change the input width in px, otherwise leave empty if you want to 100%', 'egoi-for-wp' ); ?></p>
             </div>
             <!-- / Input Width -->
             <!-- Button Width -->
@@ -185,7 +185,7 @@ $FORM_OPTION = get_optionsform($form_id);
     <!-- / appearance -->
     <!-- SUBMIT -->
     <div class="smsnf-input-group">
-        <input type="submit" value="<? _e('Save', 'egoi-for-wp');?>">
+        <input type="submit" value="<?php _e('Save', 'egoi-for-wp');?>">
     </div>
     <!-- / SUBMIT -->
 </form>

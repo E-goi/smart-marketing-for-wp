@@ -40,8 +40,8 @@ if (isset($_GET['del'])) {
         <nav>
             <ul>
                 <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed"><?= $home ?></a></li>
-                <li><a class="<?= $page['rss-feed'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=rss-feed&add=1"><? _e('Rss Feed', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['campaign-rss'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=campaign-rss"><? _e('Campaign Rss', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['rss-feed'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=rss-feed&add=1"><?php _e('Rss Feed', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['campaign-rss'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=campaign-rss"><?php _e('Campaign Rss', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
