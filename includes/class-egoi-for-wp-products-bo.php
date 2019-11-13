@@ -412,11 +412,12 @@ class EgoiProductsBo
             if(! $product INSTANCEOF WC_Product || empty($product->get_regular_price()))
                 return NULL;
         }
-
+        $description = $product->get_description();
+        $shot_description = $product->get_short_description();
         return [
             'product_identifier'    => "{$product->get_id()}",
             'name'                  => $product->get_name(),
-            'description'           => $product->get_description(),
+            'description'           => !empty($description)?$description:$shot_description,
             'sku'                   => $product->get_sku(),
             //'upc'                   => NULL,
             //'ean'                   => NULL,
@@ -463,6 +464,9 @@ class EgoiProductsBo
             $prod_mapped['categories']  = $base['categories'];
             $prod_mapped['image_link']  = !empty($prod_mapped['image_link'])?$prod_mapped['image_link']:$base['image_link'];
             $prod_mapped['description'] = !empty($prod_mapped['description'])?$prod_mapped['description']:$base['description'];
+            if(empty($prod_mapped['description'])){
+                $prod_mapped['description'] = !empty($prod->get_short_description())?$prod->get_short_description():$product->get_short_description();
+            }
 
             $output[] = $prod_mapped;
         }
@@ -477,6 +481,9 @@ class EgoiProductsBo
         $base['price'] = $product->get_variation_price();
         if($base['price'] != $product->get_variation_sale_price()){
             $base['sale_price'] = $product->get_variation_sale_price();
+        }
+        if(empty($base['description'])){
+            $base['description'] = $product->get_short_description();
         }
         return $base;
     }

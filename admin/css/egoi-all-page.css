@@ -114,3 +114,22 @@
 .smsnf-dashboard-ads {
     height: 490px;
 }
+
+
+.button-smsnf-primary {
+    -webkit-appearance: inherit !important;
+    -moz-appearance: inherit !important;
+    background-color: #00aeda !important;
+    border-radius: 5px !important;
+    color: #fff !important;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem !important;
+    font-weight: 500;
+    padding: 10px 18px !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
+}
+
+.button-smsnf-primary:hover {
+    background-color: #00718e !important;
+}

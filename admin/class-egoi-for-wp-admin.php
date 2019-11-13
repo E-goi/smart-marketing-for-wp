@@ -2489,7 +2489,7 @@ class Egoi_For_Wp_Admin {
         }
         $resp = json_decode($resp,true);
 
-        if(isset($resp['error']) || (isset($resp['status']) && $resp['status'] == 'error')){
+        if(isset($resp['error']) || (isset($resp['status']) && $resp['status'] == 'error' && $page == 0)){
             wp_send_json_error(empty($resp['error'])?__('Something went wrong with your request.','egoi-for-wp'):$resp['error']);
         }
 
