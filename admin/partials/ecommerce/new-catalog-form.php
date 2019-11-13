@@ -35,11 +35,26 @@
                     </select>
                 </div>
             </div>
+
+            <hr class="smsnf-input-group">
+
+            <div class="smsnf-input-group">
+                <label for="variations"><?php _e( 'Synchronize variations', 'egoi-for-wp' ); ?></label>
+                <p class="subtitle"><?php _e( 'Select "yes" to sync all product variations individually.', 'egoi-for-wp' ); ?></p>
+                <div class="form-group switch-yes-no">
+                    <label class="form-switch">
+                        <input id="variations" type="checkbox" name="variations" value="1">
+                        <i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
+                    </label>
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <div class="smsnf-input-group">
-        <input type="submit" id="create_catalog_button" value="<?php _e('Create Catalog', 'egoi-for-wp');?>" />
+    <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
+        <div class="smsnf-input-group">
+            <input type="submit" id="create_catalog_button" value="<?php _e('Create Catalog', 'egoi-for-wp');?>" />
+        </div>
     </div>
 
 </form>

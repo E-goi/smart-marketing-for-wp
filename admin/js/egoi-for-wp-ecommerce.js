@@ -2,7 +2,7 @@ jQuery(document).ready(function() {
     (function ($) {
         const idgoi = 'idgoi';
 
-        const LIMIT = 1000;
+        const LIMIT = 100;
 
         var current_request = 0;
         var requests_needed = 0;
@@ -68,7 +68,7 @@ jQuery(document).ready(function() {
             var id = thisel.attr(idgoi);
             selected_catalog.val(id);
             display_selected.text(id);
-            getCountAjax();
+            getCountAjax(id);
             modal_import.modal('show');
         });
 
@@ -103,11 +103,11 @@ jQuery(document).ready(function() {
             return catalogsArr;
         }
 
-        function getCountAjax(){
+        function getCountAjax(id){
             loader_nr_prod.show();
             number_products.text('');
             left_products.text('');
-            $.get(ajaxObj.ajax_url, {action: 'egoi_count_products'}, function(response) {
+            $.get(ajaxObj.ajax_url, {action: 'egoi_count_products',catalog: id}, function(response) {
                 loader_nr_prod.hide();
                 response = parseResponse(response);
                 if(response === false)
@@ -122,7 +122,7 @@ jQuery(document).ready(function() {
 
         function leftProductsCalc(){
             var now = parseInt(left_products.text());
-            now -= 1000;
+            now -= LIMIT;
             if(now < 0){
                 now = 0;
             }

@@ -15,6 +15,7 @@ require_once(plugin_dir_path( __FILE__ ) . 'class-egoi-for-wp-apiv3.php');
 class EgoiProductsBo
 {
     protected $api;
+    const DEFAULT_CATALOG_OPTIONS = ['variations' => 0];
     public function __construct()
     {
         $this->api =  new EgoiApiV3(self::getApikey());
@@ -64,7 +65,7 @@ class EgoiProductsBo
     /*
      * Creates a catalog
      * */
-    public function createCatalog($title, $language, $currency){
+    public function createCatalog($title, $language, $currency, $options){
         $response =  $this->api->createCatalog(
             'POST',
             [
@@ -77,6 +78,8 @@ class EgoiProductsBo
             return false;
 
         self::setWordpressCatalog($response);
+        self::setCatalogOptions($response,$options);
+
         return true;
     }
 
@@ -97,7 +100,22 @@ class EgoiProductsBo
         delete_option('egoi_import_bypass');
         return $this->api->importProducts(
             'POST',
-            ['products' => self::getDbProducts($page)],
+            [
+                'mode'      => 'update',
+                'products'  => self::getDbProducts($page)
+            ],
+            $catalog_id
+        );
+    }
+
+    public function importProductsCatalogNoVariations($catalog_id, $page=0){
+        delete_option('egoi_import_bypass');
+        return $this->api->importProducts(
+            'POST',
+            [
+                'mode'      => 'update',
+                'products'  => self::getDbProductsNoVariations($page)
+            ],
             $catalog_id
         );
     }
@@ -126,11 +144,17 @@ class EgoiProductsBo
      */public function syncProduct($product){
         $breadCumbs = self::getBreadcrumb();
         $catalogs = self::getCatalogsToSync();//apply rules if needed here (which products to sync)
-        $products = self::transformArrayAbstractProductToApi([
+        $products = self::preTransformArrayAbstractProductToApiBoth([
             ['ID' => $product->get_id()]
         ],$breadCumbs);
 
         foreach ($catalogs as $catalog){
+            $option = self::getCatalogOptions($catalog);
+            if($option['variations'] == 0){
+                $products = $products['no_variations'];
+            }else{
+                $products = $products['variations'];
+            }
             foreach ($products as $single){
                 if(!$this->api->createProduct($single, $catalog))
                     $this->api->patchProduct($single, $catalog, $single['product_identifier']);
@@ -159,6 +183,26 @@ class EgoiProductsBo
         update_option('egoi_store_catalogs', json_encode($data));
         return true;
     }
+
+    public function setCatalogOptions($catalog_id, $options){
+        $data = get_option('egoi_catalogs_options');
+        $data = json_decode($data, true);
+        if(empty($data) || !is_array($data))
+            $data = [];
+        $data[$catalog_id] = $options;
+        update_option('egoi_catalogs_options', json_encode($data));
+    }
+
+    public static function getCatalogOptions($catalog_id){
+        $data = get_option('egoi_catalogs_options');
+        $data = json_decode($data, true);
+
+        if(empty($data[$catalog_id]))
+            return EgoiProductsBo::DEFAULT_CATALOG_OPTIONS;
+
+        return $data[$catalog_id];
+    }
+
     /**
      * Get catalogs to sync product
      * @return array|mixed
@@ -218,6 +262,17 @@ class EgoiProductsBo
         return 0;
     }
 
+    public static function countDbProductsNoVariations(){
+        global $wpdb;
+        $table = $wpdb->prefix.'posts';
+        $sql="SELECT count(ID) as total FROM $table where (post_type = 'product') and post_status = 'publish'";
+        $rows = $wpdb->get_results($sql,ARRAY_A);
+        if(!empty($rows[0]['total'])){
+            return $rows[0]['total'];
+        }
+        return 0;
+    }
+
     /**
      * @return array
      */
@@ -238,7 +293,7 @@ class EgoiProductsBo
      * @param int $limit
      * @return array
      */
-    private static function getDbProducts($page = 0, $limit = 1000){
+    private static function getDbProducts($page = 0, $limit = 100){
 
         global $wpdb;
         $page = $page * $limit;
@@ -250,19 +305,35 @@ class EgoiProductsBo
         return self::transformArrayAbstractProductToApi($rows, $breadCrumbs);
     }
 
+    private static function getDbProductsNoVariations($page = 0, $limit = 100){
+        global $wpdb;
+        $page = $page * $limit;
+        $table = $wpdb->prefix.'posts';
+        $sql="SELECT ID FROM $table where (post_type = 'product') and post_status = 'publish' order by id ASC LIMIT $page,$limit ";
+        $rows = $wpdb->get_results($sql,ARRAY_A);
+
+        $breadCrumbs = self::getBreadcrumb();
+        return self::transformArrayAbstractProductToApi($rows, $breadCrumbs, false);
+    }
+
     /**
      * @param $arr
      * @param $breadCrumbs
+     * @param bool $variations
      * @return array
      */
-    public static function transformArrayAbstractProductToApi($arr, &$breadCrumbs){
+    public static function transformArrayAbstractProductToApi($arr, &$breadCrumbs, $variations = true){
         $mappedProducts = [];
         foreach ($arr as $product){
             $prod = wc_get_product($product['ID']);
             if($prod INSTANCEOF WC_Product_Variable ){
-                $data = self::transformProductVariableObjectToApi($prod,$breadCrumbs);
-                foreach ($data as $productVariation){
-                    $mappedProducts[] = self::transformToCleanArray($productVariation);
+                if($variations){
+                    $data = self::transformProductVariableObjectToApi($prod,$breadCrumbs);
+                    foreach ($data as $productVariation){
+                        $mappedProducts[] = self::transformToCleanArray($productVariation);
+                    }
+                }else{
+                    $mappedProducts[] = self::transformProductVariableObjectToApiNoVariations($prod,$breadCrumbs);
                 }
             }else if($prod INSTANCEOF WC_Product && ! $prod INSTANCEOF WC_Product_Variation ){
                 $p = self::transformProductObjectToApi($prod,$breadCrumbs);
@@ -271,6 +342,13 @@ class EgoiProductsBo
             }
         }
         return $mappedProducts;
+    }
+
+    public static function preTransformArrayAbstractProductToApiBoth($arr, &$breadCrumbs){
+        return [
+            'no_variations' => self::transformArrayAbstractProductToApi($arr,$breadCrumbs,false),
+            'variations' => self::transformArrayAbstractProductToApi($arr,$breadCrumbs),
+        ];
     }
 /*
     private static function getProductsCategoryNumbers($productNumbers=[]){
@@ -389,6 +467,18 @@ class EgoiProductsBo
             $output[] = $prod_mapped;
         }
         return $output;
+    }
+
+    private static function transformProductVariableObjectToApiNoVariations($product, &$breadCrumbs){
+        if(! $product INSTANCEOF WC_Product_Variable )
+            return [];
+
+        $base = self::transformProductObjectToApi($product,$breadCrumbs, true);
+        $base['price'] = $product->get_variation_price();
+        if($base['price'] != $product->get_variation_sale_price()){
+            $base['sale_price'] = $product->get_variation_sale_price();
+        }
+        return $base;
     }
 
     private static function transformToCleanArray($array){
