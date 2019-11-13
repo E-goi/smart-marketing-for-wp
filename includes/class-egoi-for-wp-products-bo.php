@@ -461,8 +461,8 @@ class EgoiProductsBo
                 continue;
 
             $prod_mapped['categories']  = $base['categories'];
-            $prod_mapped['image_link']  = !empty($base['image_link'])?$base['image_link']:$prod_mapped['image_link'];
-            $prod_mapped['description'] = !empty($base['description'])?$base['description']:$prod_mapped['description'];
+            $prod_mapped['image_link']  = !empty($prod_mapped['image_link'])?$prod_mapped['image_link']:$base['image_link'];
+            $prod_mapped['description'] = !empty($prod_mapped['description'])?$prod_mapped['description']:$base['description'];
 
             $output[] = $prod_mapped;
         }
