@@ -1092,10 +1092,10 @@ class Egoi_For_Wp_Admin {
 
                 $mapp = [];
                 foreach ($fields_in_form[0] as $field){
-                    $type = preg_split('/\**\* /', $field);
-                    $type = ltrim($type[0], '[');
-                    $key = preg_split('/\ +/', $field);
-                    $key = substr($key[1], 0, -1);
+                    $typearr = preg_split('/\ +/', $field);
+                    $type = ltrim($typearr[0], '[');
+                    $type = str_replace('*','',$type);
+                    $key = $typearr[1];
                     if(empty($mapp[$type]))
                         $mapp[$type] = $key;
                 }
@@ -1129,7 +1129,8 @@ class Egoi_For_Wp_Admin {
                 }
 
                 // telephone
-                $tel = $_POST[$mapp['tel']];
+                $bo = new EgoiProductsBo();
+                $tel = $bo->advinhometerCellphoneCode($_POST[$mapp['tel']]);
 
                 // cellphone
                 foreach ($_POST as $key_cell => $value_cell) {
@@ -1138,7 +1139,7 @@ class Egoi_For_Wp_Admin {
                         $mobile[] = $value_cell;
                     }
                 }
-                $cell = $mobile[0];
+                $cell = $bo->advinhometerCellphoneCode($mobile[0]);
 
                 // birthdate
                 $bd = $_POST[$mapp['date']];

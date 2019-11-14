@@ -40,9 +40,10 @@ class EgoiApiV3
         $this->headers = ['ApiKey: '.$this->apiKey,'PluginKey: '.self::PLUGINKEY,'Content-Type: application/json'];
     }
 
-    public function getCountriesCurrencies(){
+    public function getCountriesCurrencies($cellphone=''){
+        $phone_add = empty($cellphone)?'':"?phone=$cellphone";
         $client = new ClientHttp(
-            self::APIV3.self::APIURLS[__FUNCTION__],
+            self::APIV3.self::APIURLS[__FUNCTION__].$phone_add,
             'GET',
             $this->headers
         );
