@@ -135,13 +135,16 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Screenshots ==
 
-1. Dashboard Page
-2. Subscriber Bar Config Page
-3. Forms Config Page
-4. Widgets Config Page
-5. Integrations Config Page
-6. Subscribers Config Page
-7. RSS Feed Page
+1 - Dashboard 
+2 - Captura de contactos
+3 - Formulários
+4 - Setup e Sync de Contactos
+5 - Ecommerce, gestão de catálogos e sync de produtos
+6 - Track & Engage
+7 - Webpush
+8 - Integração com outros plugins
+9 - RSS Feed
+10 - Campanhas RSS e Webpush
 
 
 == Changelog ==
