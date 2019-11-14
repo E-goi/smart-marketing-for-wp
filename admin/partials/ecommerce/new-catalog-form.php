@@ -44,7 +44,7 @@
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
                         <input id="variations" type="checkbox" name="variations" value="1">
-                        <i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
+                        <i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?> <span style="font-size: small;font-weight: 100;color: black;opacity: 50%">(<?php _e( 'Recommended', 'egoi-for-wp' ); ?>)</span></div>
                     </label>
                 </div>
             </div>
