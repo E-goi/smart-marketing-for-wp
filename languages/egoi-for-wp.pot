@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing SMS and Newsletters Forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-11 15:46+0000\n"
+"POT-Creation-Date: 2019-11-14 16:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,26 +15,26 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.2.2; wp-5.1.1"
 
-#: includes/class-egoi-for-wp.php:1290
+#: includes/class-egoi-for-wp.php:1291
 msgid "Subscribe to newsletter"
 msgstr ""
 
-#: includes/class-egoi-for-wp-products-bo.php:199
+#: includes/class-egoi-for-wp-products-bo.php:275
 msgid "Import"
 msgstr ""
 
-#: includes/class-egoi-for-wp-products-bo.php:200
+#: includes/class-egoi-for-wp-products-bo.php:276
 #: admin/partials/egoi-for-wp-admin-simple-forms.php:672
 #: admin/partials/capture/home.php:50 admin/partials/capture/home.php:101
 #: admin/partials/ecommerce/catalogs.php:69 admin/partials/rssfeed/home.php:54
 msgid "Delete"
 msgstr ""
 
-#: includes/class-egoi-for-wp-products-bo.php:435
+#: includes/class-egoi-for-wp-products-bo.php:564
 msgid "Attention!"
 msgstr ""
 
-#: includes/class-egoi-for-wp-products-bo.php:436
+#: includes/class-egoi-for-wp-products-bo.php:565
 #, php-format
 msgid "You have %d products behind in synchronization!"
 msgstr ""
@@ -138,14 +138,14 @@ msgstr ""
 msgid "The page %s is not valid"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:292
+#: admin/class-egoi-for-wp-admin.php:298
 #, php-format
 msgid ""
 "Please rate %sSmart Marketing SMS and Newsletters Forms%s %s on %sWordPress."
 "org%s to help us spread the word. Thank you from the E-goi team!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:312
+#: admin/class-egoi-for-wp-admin.php:318
 #: admin/partials/egoi-for-wp-admin-dashboard.php:31
 #: admin/partials/egoi-for-wp-admin-header.php:6
 #: admin/partials/egoi-for-wp-admin-header.php:15
@@ -155,41 +155,41 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:314
+#: admin/class-egoi-for-wp-admin.php:320
 #: admin/partials/egoi-for-wp-admin-forms.php:41
 msgid "Capture Contacts"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:316
+#: admin/class-egoi-for-wp-admin.php:322
 #: admin/partials/egoi-for-wp-admin-trackengage.php:58
 #: admin/partials/egoi-for-wp-admin-subscribers.php:112
 msgid "Sync Contacts"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:318
+#: admin/class-egoi-for-wp-admin.php:324
 #: admin/partials/egoi-for-wp-admin-ecommerce.php:49
 msgid "E-commerce"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:318
+#: admin/class-egoi-for-wp-admin.php:324
 msgid "New!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:320
+#: admin/class-egoi-for-wp-admin.php:326
 msgid "Track & Engage"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:322
+#: admin/class-egoi-for-wp-admin.php:328
 #: admin/partials/egoi-for-wp-admin-integrations.php:54
 msgid "Integrations"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:324
+#: admin/class-egoi-for-wp-admin.php:330
 #: admin/partials/egoi-for-wp-admin-webpush.php:86
 msgid "Web Push"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:326
+#: admin/class-egoi-for-wp-admin.php:332
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:37
 #: admin/partials/rssfeed/campaign-rss.php:28
 #: admin/partials/rssfeed/campaign-rss.php:152
@@ -197,139 +197,139 @@ msgstr ""
 msgid "RSS Feed"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:330
+#: admin/class-egoi-for-wp-admin.php:336
 #: admin/partials/egoi-for-wp-admin-display.php:146
 msgid "Account"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:702
+#: admin/class-egoi-for-wp-admin.php:708
 msgid "Subscribe Newsletter"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1293
+#: admin/class-egoi-for-wp-admin.php:1300
 msgid "I want to receive newsletter"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1476
-#: public/class-egoi-for-wp-public.php:694
+#: admin/class-egoi-for-wp-admin.php:1483
+#: public/class-egoi-for-wp-public.php:697
 msgid "was successfully registered!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1478
-#: public/class-egoi-for-wp-public.php:696
+#: admin/class-egoi-for-wp-admin.php:1485
+#: public/class-egoi-for-wp-public.php:699
 msgid "Subscriber data from"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1480
-#: public/class-egoi-for-wp-public.php:698
+#: admin/class-egoi-for-wp-admin.php:1487
+#: public/class-egoi-for-wp-public.php:701
 msgid "has been updated!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1483
-#: public/class-egoi-for-wp-public.php:701
+#: admin/class-egoi-for-wp-admin.php:1490
+#: public/class-egoi-for-wp-public.php:704
 msgid "ERROR: no data to insert"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1485
-#: public/class-egoi-for-wp-public.php:703
+#: admin/class-egoi-for-wp-admin.php:1492
+#: public/class-egoi-for-wp-public.php:706
 msgid "ERROR: e-mail address is invalid"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1487
-#: public/class-egoi-for-wp-public.php:705
+#: admin/class-egoi-for-wp-admin.php:1494
+#: public/class-egoi-for-wp-public.php:708
 msgid "ERROR: invalid data submitted"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2172
+#: admin/class-egoi-for-wp-admin.php:2179
 msgid "https://blog.e-goi.com/feed/egoi"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2407
+#: admin/class-egoi-for-wp-admin.php:2414
 msgid "Missing Webpush Instalation!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2414
+#: admin/class-egoi-for-wp-admin.php:2421
 msgid "Api error, try again later."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2481
+#: admin/class-egoi-for-wp-admin.php:2494
 msgid "Something went wrong with your request."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2484
+#: admin/class-egoi-for-wp-admin.php:2497
 msgid "Catalog synchronized successfully."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2496
+#: admin/class-egoi-for-wp-admin.php:2510
 msgid "Fields can't be empty."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2502
+#: admin/class-egoi-for-wp-admin.php:2518
 msgid "Catalog successfully created!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2504
+#: admin/class-egoi-for-wp-admin.php:2520
 msgid "Something went wrong creating the catalog!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2515
+#: admin/class-egoi-for-wp-admin.php:2531
 msgid "Something went wrong fetching countries, please try again later."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2542
+#: admin/class-egoi-for-wp-admin.php:2569
 msgid "Additional Information"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2651
+#: admin/class-egoi-for-wp-admin.php:2687
 #: admin/partials/rssfeed/campaign-rss.php:65
 msgid "Subject"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2655
+#: admin/class-egoi-for-wp-admin.php:2691
 msgid "Internal Name"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2663
-#: admin/class-egoi-for-wp-admin.php:2868
+#: admin/class-egoi-for-wp-admin.php:2699
+#: admin/class-egoi-for-wp-admin.php:2904
 msgid "Total sent"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2666
+#: admin/class-egoi-for-wp-admin.php:2702
 msgid "A aguardar resultados..."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2812
-#: admin/class-egoi-for-wp-admin.php:2813
+#: admin/class-egoi-for-wp-admin.php:2848
+#: admin/class-egoi-for-wp-admin.php:2849
 msgid "Unlimited"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2832
+#: admin/class-egoi-for-wp-admin.php:2868
 msgid "Plan"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2836
+#: admin/class-egoi-for-wp-admin.php:2872
 msgid "Current Balance"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2843
+#: admin/class-egoi-for-wp-admin.php:2879
 msgid "Expires in"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2855
+#: admin/class-egoi-for-wp-admin.php:2891
 msgid "Your current plan includes"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2897
+#: admin/class-egoi-for-wp-admin.php:2933
 msgid ""
 "Send SMS notifications to your customers and administrators for each change "
 "to the order status on your WooCommerce"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2898
+#: admin/class-egoi-for-wp-admin.php:2934
 msgid "Instalar Plugin"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2905
+#: admin/class-egoi-for-wp-admin.php:2941
 msgid "Transactional SMS"
 msgstr ""
 
@@ -387,6 +387,7 @@ msgstr ""
 #: admin/partials/capture/widget-options.php:60
 #: admin/partials/capture/widget-options.php:119
 #: admin/partials/ecommerce/catalogs.php:81
+#: admin/partials/ecommerce/new-catalog-form.php:47
 #: admin/partials/integrations/post-comment.php:11
 #: admin/partials/integrations/contact-form-7.php:19
 #: admin/partials/integrations/contact-form-7.php:71
@@ -405,6 +406,7 @@ msgstr ""
 #: admin/partials/capture/widget-options.php:47
 #: admin/partials/capture/widget-options.php:60
 #: admin/partials/capture/widget-options.php:119
+#: admin/partials/ecommerce/new-catalog-form.php:47
 #: admin/partials/integrations/post-comment.php:12
 #: admin/partials/integrations/contact-form-7.php:20
 #: admin/partials/integrations/contact-form-7.php:72
@@ -1036,7 +1038,7 @@ msgid "Catalogs"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-ecommerce.php:55
-#: admin/partials/ecommerce/new-catalog-form.php:42
+#: admin/partials/ecommerce/new-catalog-form.php:56
 msgid "Create Catalog"
 msgstr ""
 
@@ -2016,6 +2018,18 @@ msgstr ""
 
 #: admin/partials/ecommerce/new-catalog-form.php:34
 msgid "Select a currency.."
+msgstr ""
+
+#: admin/partials/ecommerce/new-catalog-form.php:42
+msgid "Synchronize variations"
+msgstr ""
+
+#: admin/partials/ecommerce/new-catalog-form.php:43
+msgid "Select \"yes\" to sync all product variations individually."
+msgstr ""
+
+#: admin/partials/ecommerce/new-catalog-form.php:47
+msgid "Recommended"
 msgstr ""
 
 #: admin/partials/integrations/post-comment.php:8

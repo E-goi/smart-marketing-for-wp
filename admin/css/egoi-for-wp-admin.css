@@ -672,15 +672,15 @@ legend {
 }
 
 .form-input:-ms-input-placeholder {
-  color: #acb3c2;
+  color: #ccd3e2;
 }
 
 .form-input::-ms-input-placeholder {
-  color: #acb3c2;
+  color: #ccd3e2;
 }
 
 .form-input::placeholder {
-  color: #acb3c2;
+  color: #ccd3e2;
 }
 
 .form-input.input-sm {
@@ -7655,6 +7655,10 @@ a.egoi_tooltip:hover{
   margin-top: 12px;
   padding: 16px;
   text-align: center;
+}
+
+.smsnf-input-group input::placeholder{
+  opacity: 50%;
 }
 
 .smsnf-input-group input {

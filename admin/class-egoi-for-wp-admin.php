@@ -182,6 +182,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function enqueue_styles() {
         wp_enqueue_style($this->plugin_name.'popup', plugin_dir_url(__FILE__) . 'css/egoi-for-wp-pop.css', array(), $this->version, 'all' );
+        wp_enqueue_style($this->plugin_name.'allpage', plugin_dir_url(__FILE__) . 'css/egoi-all-page.css', array(), $this->version, 'all' );
 
         if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
@@ -211,6 +212,10 @@ class Egoi_For_Wp_Admin {
 			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
             wp_enqueue_script($this->plugin_name.'-bootstrapjs', plugin_dir_url(__FILE__) . 'js/bootstrap-modal.min.js', array('jquery'), $this->version, false);
             wp_enqueue_script($this->plugin_name.'-bootstrapjs-core', plugin_dir_url(__FILE__) . 'js/bootstrap.js', array('jquery'), $this->version, false);
+
+            if(strpos(get_current_screen()->id, 'egoi-4-wp') !== false){
+                wp_enqueue_script($this->plugin_name.'-warning', plugin_dir_url(__FILE__) . 'js/remove-warning.js', array('jquery'), $this->version, false);
+            }
 
 
             wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'), true);
@@ -1087,10 +1092,10 @@ class Egoi_For_Wp_Admin {
 
                 $mapp = [];
                 foreach ($fields_in_form[0] as $field){
-                    $type = preg_split('/\**\* /', $field);
-                    $type = ltrim($type[0], '[');
-                    $key = preg_split('/\ +/', $field);
-                    $key = substr($key[1], 0, -1);
+                    $typearr = preg_split('/\ +/', $field);
+                    $type = ltrim($typearr[0], '[');
+                    $type = str_replace('*','',$type);
+                    $key = $typearr[1];
                     if(empty($mapp[$type]))
                         $mapp[$type] = $key;
                 }
@@ -1124,7 +1129,8 @@ class Egoi_For_Wp_Admin {
                 }
 
                 // telephone
-                $tel = $_POST[$mapp['tel']];
+                $bo = new EgoiProductsBo();
+                $tel = $bo->advinhometerCellphoneCode($_POST[$mapp['tel']]);
 
                 // cellphone
                 foreach ($_POST as $key_cell => $value_cell) {
@@ -1133,7 +1139,7 @@ class Egoi_For_Wp_Admin {
                         $mobile[] = $value_cell;
                     }
                 }
-                $cell = $mobile[0];
+                $cell = $bo->advinhometerCellphoneCode($mobile[0]);
 
                 // birthdate
                 $bd = $_POST[$mapp['date']];
@@ -2475,10 +2481,16 @@ class Egoi_For_Wp_Admin {
         $id = EgoiValidators::validate_id($_POST['id']);
         $page = EgoiValidators::validate_page($_POST['page']);
         $bo = new EgoiProductsBo();
-        $resp = $bo->importProductsCatalog($id,$page);
+
+        $options = EgoiProductsBo::getCatalogOptions($id);
+        if($options['variations'] == 0){
+            $resp = $bo->importProductsCatalogNoVariations($id,$page);
+        }else{
+            $resp = $bo->importProductsCatalog($id,$page);
+        }
         $resp = json_decode($resp,true);
 
-        if(isset($resp['error']) || (isset($resp['status']) && $resp['status'] == 'error')){
+        if(isset($resp['error']) || (isset($resp['status']) && $resp['status'] == 'error' && $page == 0)){
             wp_send_json_error(empty($resp['error'])?__('Something went wrong with your request.','egoi-for-wp'):$resp['error']);
         }
 
@@ -2492,13 +2504,16 @@ class Egoi_For_Wp_Admin {
         $name = $post['catalog_name'];
         $language = $post['catalog_language'];
         $currency = $post['catalog_currency'];
+        $variations = $post['variations'];
 
         if(empty($name) || empty($currency) || empty($language)){
             return ['error' => __('Fields can\'t be empty.','egoi-for-wp')];
         }
 
+        $options = ['variations' => !empty($variations)];
+
         $bo = new EgoiProductsBo();
-        $response = $bo->createCatalog($name,$language,$currency);
+        $response = $bo->createCatalog($name,$language,$currency,$options);
         if( $response === true){
             return ['success' => __('Catalog successfully created!','egoi-for-wp')];
         }else{
@@ -2521,7 +2536,18 @@ class Egoi_For_Wp_Admin {
      * Get Countries and Currencies Utility
      */
     public function egoi_count_products(){
-        wp_send_json_success(EgoiProductsBo::countDbProducts());
+        $catalog_id = trim($_GET['catalog']);
+        $a = EgoiProductsBo::getCatalogOptions($catalog_id);
+
+        switch ($a['variations']){
+            case 1:
+                wp_send_json_success(EgoiProductsBo::countDbProducts());
+                break;
+            case 0:
+            default:
+                wp_send_json_success(EgoiProductsBo::countDbProductsNoVariations());
+                break;
+        }
     }
 
     public function egoi_import_bypass($data){
