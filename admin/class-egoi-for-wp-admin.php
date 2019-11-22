@@ -2563,6 +2563,9 @@ class Egoi_For_Wp_Admin {
     }
 
     public function egoi_add_newsletter_signup_admin(){
+        if(!function_exists('woocommerce_form_field'))
+            return;
+        
         $fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
 
         ?>
