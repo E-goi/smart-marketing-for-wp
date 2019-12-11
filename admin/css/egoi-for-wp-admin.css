@@ -7661,6 +7661,12 @@ a.egoi_tooltip:hover{
   opacity: 50%;
 }
 
+#form_tag_wrapper > a{
+    margin-left: 10px;
+    font-weight: lighter;
+    font-size: smaller;
+}
+
 .smsnf-input-group input {
   background: #fff;
   border: 1px solid rgba(151, 151, 151, .5);

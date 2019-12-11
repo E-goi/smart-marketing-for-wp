@@ -77,19 +77,19 @@ if ($page['home']) {
                     <div class="modal-container">
                         <div class="modal-header">
                             <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
-                            <h2>Criar Nova tag</h2>
+                            <h2><?php _e('Create New Tag','egoi-for-wp'); ?></h2>
                         </div>
                         <div class="modal-body">
                             <div class="content">
-                                <form id="new_tag_form" class="new_tag_form">
-                                    <div class="smsnf-input-group">
-                                        <label for="tag_name">Nome</label>
-                                        <input id="new_tag_name" type="text" name="name" />
-                                    </div>
-                                    <div class="smsnf-input-group">
-                                        <input id="new_tag_submit" type="submit" value="Criar TAG">
-                                    </div>
-                                </form>
+
+                                <div class="smsnf-input-group">
+                                    <label for="tag_name"><?php _e('Name','egoi-for-wp') ?><div id="loading_add_tag" style="display: none;" class="loading"></div></label>
+                                    <input id="new_tag_name" type="text" name="name" />
+                                </div>
+                                <div class="smsnf-input-group">
+                                    <input id="new_tag_submit" type="submit" value="Criar TAG">
+                                </div>
+
                             </div>
                         </div>
                     </div>

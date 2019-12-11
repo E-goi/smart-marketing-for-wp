@@ -69,7 +69,7 @@ settings_errors();
             <?php get_lang_html($this->bar_post['lang'], 'egoi_bar_sync[lang]', empty($this->bar_post['list'])) ?>
             <!-- / lang -->
             <!-- TAGS -->
-            <?php get_tag_html($tag, ''); ?>
+            <?php get_tag_html($tag, 'egoi_bar_sync[tag-egoi]'); ?>
             <!-- / TAGS -->
             <!-- BAR TEXT -->
             <div class="smsnf-input-group">

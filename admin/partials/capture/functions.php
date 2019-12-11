@@ -92,12 +92,12 @@ function get_lang_html($selected_lang, $name, $hide) { ?>
 	</div>
 <?php }
 
-function get_tag_html($selected_tag, $name) { return;?>
-	<div class="smsnf-input-group">
-		<label for="form_tag"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label><a data-modal="create-new-tag">Criar nova tag +</a>
+function get_tag_html($selected_tag, $name, $hide = false) {?>
+	<div id="form_tag_wrapper" class="smsnf-input-group" style="<?= $hide ? 'display: none;' : '' ?>" >
+		<label for="form_tag"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label><a data-modal="create-new-tag"><?php _e( 'Create new tag +', 'egoi-for-wp' ); ?></a>
 		<div class="smsnf-wrapper">
-			<select name="<?= $name ?>" id="form_tag" class="form-select" data-egoi-tag="<?= $selected_tag ?>"  disabled required>
-				<option selected disabled hidden>Selecionar Tag</option>
+			<select name="<?= $name ?>" id="form_tag" class="form-select" data-egoi-tag="<?= $selected_tag ?>"  disabled>
+                <option value="" selected disabled hidden><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
 			</select>
 			<div class="loading"></div>
 		</div>
@@ -115,7 +115,7 @@ function get_form_html($selected_form, $name, $hide) { ?>
 				</select>
 				<div class="loading"></div>
 			</div>
-			<p id="empty-forms" class="error-msg">There are no forms on E-goi.</p>
+			<p id="empty-forms" class="error-msg"><?php _e( 'There are no forms on E-goi.', 'egoi-for-wp' ); ?></p>
 		</div>
 	</div>
 <?php } ?>

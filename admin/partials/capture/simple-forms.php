@@ -159,6 +159,7 @@ if (isset($_POST['id_simple_form'])) {
             <?php get_lang_html($shortcode['lang'], 'lang', empty($shortcode['list'])) ?>
             <!-- / lang -->
             <!-- TAGS -->
+            <?php get_tag_html($shortcode['tag'], 'tag-egoi', empty($shortcode['tag'])) ?>
             <!-- / TAGS -->
             <!-- TÍTULO -->
             <div class="smsnf-input-group">
