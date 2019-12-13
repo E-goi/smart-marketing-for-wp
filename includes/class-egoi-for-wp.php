@@ -301,6 +301,12 @@ class Egoi_For_Wp {
 
         //Newsletter
         $this->loader->add_action('show_user_profile', $plugin_admin, 'egoi_add_newsletter_signup_admin', 10);
+        //user information
+        $this->loader->add_filter('manage_users_columns', $plugin_admin, 'egoi_add_extra_user_info', 10);
+        $this->loader->add_filter('manage_users_custom_column', $plugin_admin, 'egoi_add_extra_user_info_row', 1, 3);
+
+        $this->loader->add_action('gform_after_submission', $plugin_admin, 'egoi_gform_add_subscriber', 10, 2);
+
     }
 
 	/**

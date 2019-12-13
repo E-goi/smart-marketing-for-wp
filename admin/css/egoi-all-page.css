@@ -133,3 +133,7 @@
 .button-smsnf-primary:hover {
     background-color: #00718e !important;
 }
+
+.column-egoi_newsletter{
+    width: 90px;
+}

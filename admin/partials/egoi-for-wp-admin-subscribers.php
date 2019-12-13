@@ -283,7 +283,7 @@ jQuery(document).ready(function($) {
     </main>
 </div>
 
-		<!-- Mapeamento dos campos -->
-		<div id="egoi-for-wp-form-map" style="display:none;width:700px;">
-			<?php include(dirname( __FILE__ ).'/custom/egoi-for-wp-form-map.php');?>
-		</div>
+<!-- Mapeamento dos campos -->
+<div id="egoi-for-wp-form-map" style="display:none;width:700px;">
+    <?php include(dirname( __FILE__ ).'/custom/egoi-for-wp-form-map.php');?>
+</div>

@@ -4,11 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     die();
 }
 ?>
-<div class="row" style="background: #0085ba;padding: 10px;">
+<div class="row" style="background: #364656;padding: 20px;">
 	<div class="egoi-map-title"><?php _e('Map Custom Fields', 'egoi-for-wp');?></div>
-	<div id="error_map" class="updated error notice" style="display:none;"><?php _e('The selected fields are already mapped!', 'egoi-for-wp');?></div><div id="error_map" class="updated error notice" style="display:none;"><?php _e('The selected fields are already mapped!', 'egoi-for-wp');?></div>
-	<div style="float:left;width: 40%;margin-top: 20px;">
-		<div class="egoi-label-fields"><?php _e('Wordpress Fields', 'egoi-for-wp');?></div>
+	<div id="error_map" class="updated error notice" style="display:none;margin: 0px !important;"><?php _e('The selected fields are already mapped!', 'egoi-for-wp');?></div><div id="error_map" class="updated error notice" style="display:none;margin: 0px !important;"><?php _e('The selected fields are already mapped!', 'egoi-for-wp');?></div>
+	<div style="float:left;width: 40%;margin-top: 40px;">
+		<div class="egoi-label-fields"><?php _e('Wordpress Fields', 'egoi-for-wp');?>
 			<table class="table">
 				<tr>
 					<td>
@@ -37,15 +37,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<td>&nbsp;</td>
-				</tr>
 			</table>
-
+        </div>
 	</div>
 
-	<div style="float:right;width: 60%;margin-top: 20px;">
-		<div class="egoi-label-fields"><?php _e('E-goi Fields', 'egoi-for-wp');?></div>
+	<div style="float:right;width: 60%;margin-top: 40px;padding-left: 30px;">
+		<div class="egoi-label-fields"><?php _e('E-goi Fields', 'egoi-for-wp');?>
 			<table class="table">
 				<tr>
 					<td>
@@ -57,22 +54,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</select>
 					</td>
 					<td>
-						&nbsp; <button class="button button-primary" type="button" id="save_map_fields" disabled><?php _e('Save', 'egoi-for-wp');?></button>
+						&nbsp; <button class="button button-primary" type="button" id="save_map_fields" style="background: #00aeda !important;" disabled><?php _e('Save', 'egoi-for-wp');?></button>
 						&nbsp; <div id="load_map" style="display:none;"></div>
 					</td>
 				</tr>
 			</table>
+        </div>
 	</div>
 </div>
 
-<div style="width:100%;margin-top:10%;">
-	<table class='table' style='width:100%;' id="all_fields_mapped">
-		<tr>
-			<th style="font-size: 16px;"><?php _e('Mapped fields', 'egoi-for-wp');?></th> 
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-		</tr><?php
+<div style="width:100%;padding: 20px;display: flex;flex-direction: column;">
+    <span class="egoi-label-fields" style="font-size: 16px;margin: 20px 0px 10px;"><?php _e('Mapped fields', 'egoi-for-wp');?></span>
+    <table class='table' style='width:100%;' id="all_fields_mapped">
+        <tbody>
+        <?php
 		foreach ($mapped_fields as $key => $row) {
 			$wc = explode('_', $row->wp); ?>
 			<tr id="egoi_fields_<?php echo $row->id;?>"><?php
@@ -82,11 +77,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<td style='border-bottom: 1px solid #ccc;font-size: 16px;'><?php echo $row->wp_name;?></td><?php
 				} ?>
 				<td style='border-bottom: 1px solid #ccc;font-size: 16px;'><?php echo $row->egoi_name;?></td>
-				<td><button type='button' id='field_<?php echo $row->id;?>' class='egoi_fields button button-secondary' data-target='<?php echo $row->id;?>'>
+				<td class="egoi-content-center" ><button type='button' id='field_<?php echo $row->id;?>' class='egoi_fields button button-secondary' data-target='<?php echo $row->id;?>'>
 				<span class="dashicons dashicons-trash"></span></button></td>
 			</tr><?php
 		}?>
+        </tbody>
 	</table>
 </div>
 
-<button type="button" class="button egoi-btn-close" id="TB_closeWindowButton"><?php _e( 'Close', 'egoi-for-wp' ); ?></button>
+<button type="button" style="margin-bottom: 10px;" class="button smsnf-btn egoi-btn-close " id="TB_closeWindowButton"><?php _e( 'Close', 'egoi-for-wp' ); ?></button>
