@@ -92,30 +92,64 @@ function get_lang_html($selected_lang, $name, $hide) { ?>
 	</div>
 <?php }
 
-function get_tag_html($selected_tag, $name) { return;?>
-	<div class="smsnf-input-group">
-		<label for="form_tag"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label><a data-modal="create-new-tag">Criar nova tag +</a>
+function get_tag_html($selected_tag, $name, $hide = false) {?>
+	<div id="form_tag_wrapper" class="smsnf-input-group" style="<?php echo  $hide ? 'display: none;' : '' ?>" >
+		<label for="form_tag"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label><a data-modal="create-new-tag"><?php _e( 'Create new tag +', 'egoi-for-wp' ); ?></a>
 		<div class="smsnf-wrapper">
-			<select name="<?= $name ?>" id="form_tag" class="form-select" data-egoi-tag="<?= $selected_tag ?>"  disabled required>
-				<option selected disabled hidden>Selecionar Tag</option>
+			<select name="<?php echo  $name ?>" id="form_tag" class="form-select" data-egoi-tag="<?php echo  $selected_tag ?>"  disabled>
+                <option value="" selected disabled hidden><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
 			</select>
 			<div class="loading"></div>
 		</div>
 	</div>
 <?php }
 
+
+function get_small_mapping_html( $name, $app, $hide = false) {?>
+    <div id="<?php echo $name ?>" style="<?php echo $hide ? 'display: none;' : '' ?>" class="smsnf-input-group">
+        <label style="display: flex"><?php echo __( "Fields Mapping", 'egoi-for-wp' ); ?><div id="egoi_add_map_loader" class="loader-egoi-self" role="status" style="display: none;"><i class="loading"><?php echo __('Loading','egoi-for-wp'); ?></i></div></label>
+        <div class="egoi-small-mapper">
+            <div class="smsnf-input-group">
+                <label for="app_field_map"><?php echo __( "$app Fields", 'egoi-for-wp' ); ?></label>
+                <select id="app_field_map" class="form-select">
+                    <option value="0" selected hidden><?php _e( 'Select a field..', 'egoi-for-wp' ); ?></option>
+                </select>
+            </div>
+            <div></div>
+            <div class="smsnf-input-group">
+                <label for="egoi_field_map"><?php echo __( 'E-goi\'s Fields', 'egoi-for-wp' ); ?></label>
+                <div class="smsnf-wrapper">
+                    <select id="egoi_field_map" class="form-select">
+                        <option value="0" selected hidden><?php _e( 'Select a field..', 'egoi-for-wp' ); ?></option>
+                    </select>
+                </div>
+            </div>
+            <div class="smsnf-input-group">
+                <label for="egoi_field_map">&ensp;</label>
+                <input id="egoi_add_map" type="button" value="<?php _e('Add', 'egoi-for-wp');?>" disabled />
+            </div>
+        </div>
+        <div class="egoi-small-mapper egoi-small-mapped-fields" id="egoi-small-mapped-fields">
+            <div class="app"></div>
+            <div class="splitter"></div>
+            <div class="egoi"></div>
+            <div class="close"></div>
+        </div>
+    </div>
+<?php }
+
 function get_form_html($selected_form, $name, $hide) { ?>
-	<div id="form_list_group" class="smsnf-input-group" <?= $hide ? 'style="display: none"' : '' ?>>
+	<div id="form_list_group" class="smsnf-input-group" <?php echo  $hide ? 'style="display: none"' : '' ?>>
 		<label for="form_list"><?php _e( 'E-goi Form to Subscribe', 'egoi-for-wp' ); ?></span></label>
 		<p class="subtitle"><?php _e( 'Need a iframe form? Simply select a form (which already exists in E-goi) and copy the shortcode to display this form on your website or blog', 'egoi-for-wp' ); ?></p>
 		<div class="form-group">
 			<div class="smsnf-wrapper">
-				<select id="form_list" class="form-select" name="<?= $name ?>" <?= 'data-egoi-form="'. $selected_form .'"' ?> disabled>
+				<select id="form_list" class="form-select" name="<?php echo  $name ?>" <?php echo  'data-egoi-form="'. $selected_form .'"' ?> disabled>
 					<option value="" selected disabled hidden><?php _e('Select your form', 'egoi-for-wp');?></option>
 				</select>
 				<div class="loading"></div>
 			</div>
-			<p id="empty-forms" class="error-msg">There are no forms on E-goi.</p>
+			<p id="empty-forms" class="error-msg"><?php _e( 'There are no forms on E-goi.', 'egoi-for-wp' ); ?></p>
 		</div>
 	</div>
 <?php } ?>

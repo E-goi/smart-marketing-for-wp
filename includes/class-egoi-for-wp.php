@@ -301,6 +301,16 @@ class Egoi_For_Wp {
 
         //Newsletter
         $this->loader->add_action('show_user_profile', $plugin_admin, 'egoi_add_newsletter_signup_admin', 10);
+        //user information
+        $this->loader->add_filter('manage_users_columns', $plugin_admin, 'egoi_add_extra_user_info', 10);
+        $this->loader->add_filter('manage_users_custom_column', $plugin_admin, 'egoi_add_extra_user_info_row', 1, 3);
+
+        $this->loader->add_action('gform_after_submission', $plugin_admin, 'egoi_gform_add_subscriber', 10, 2);
+
+        //Mapping Ajax
+        $this->loader->add_action('wp_ajax_egoi_get_mapping_n_fields', $plugin_admin, 'egoi_get_mapping_n_fields');
+
+
     }
 
 	/**
@@ -548,6 +558,31 @@ class Egoi_For_Wp {
 	    return $tag->ID;
     }
 
+    public function addSubscriberArray($listID, $array, $tag = false, $operation = 1){
+
+        if(is_string($tag)){
+            $tag = $this->createTagVerified($tag);
+        }
+
+        $url = $this->restUrl.'addSubscriberBulk&'.http_build_query(array(
+                'functionOptions' => array(
+                    'apikey' => $this->_valid['api_key'],
+                    'plugin_key' => $this->plugin,
+                    'compareField' => 'email',
+                    'listID' => $listID,
+                    'operation' => $operation,
+                    'tags' => is_array($tag)?$tag:array($tag),
+                    'status' => 1,
+                    'subscribers' => array($array)
+                )
+            ),'','&');
+
+        $result_client = json_decode($this->_getContent($url));
+        if($result_client->Egoi_Api->addSubscriber->status=='success'){
+            return $result_client->Egoi_Api->addSubscriber;
+        }
+    }
+
 	public function addSubscriber($listID, $name = '', $email, $lang = '', $status = false, $mobile = '', $tag = false, $phone = '') {
 
 		$full_name = explode(' ', $name);
@@ -567,7 +602,7 @@ class Egoi_For_Wp {
 						'plugin_key' => $this->plugin, 
 						'listID' => $listID, 
 						'lang' => $lang,
-						'first_name' => $fname, 
+						'first_name' => $fname,
 						'last_name' => $lname,
 						'email' => $email,
 						'cellphone' => $mobile,
@@ -1168,6 +1203,81 @@ class Egoi_For_Wp {
 		return $count;
 	}
 
+	public static function getGravityFormsInfo($form_id = false){
+
+        $mapping = self::getOptionGF();
+
+        if(isset($form_id) && $form_id !== false){
+            return empty($mapping[$form_id])?[]:$mapping[$form_id];
+        }else{
+            return $mapping;
+        }
+
+    }
+
+    public static function setGravityFormsInfo($form_id, $data){
+        $mapping = self::getOptionGF();
+        $mapping[$form_id] = $data;
+        if(empty($data))
+            unset($mapping[$form_id]);
+        self::updateOptionGF($mapping);
+    }
+
+    public static function getGravityFormsTag($id){
+        $mapping = self::getOptionTag();
+
+        return empty($mapping['gf_int'][$id])?'':$mapping['gf_int'][$id];
+    }
+
+    public static function setGravityFormsTag($form_id, $data){
+        $mapping = self::getOptionTag();
+        $mapping['gf_int'][$form_id] = $data;
+        if(empty($data))
+            unset($mapping['gf_int'][$form_id]);
+        self::updateOptionTag($mapping);
+    }
+
+
+    /*
+     * Returns all Gravity Froms available to sync
+     * */
+    public static function getGravityFormsInfoAll($filterID = null){
+        if(!class_exists('GFAPI')){return [];}
+        $forms = GFAPI::get_forms();
+
+        $forms = array_filter($forms, function($form) use($filterID){
+            if(isset($filterID)) {
+                return $form['is_trash'] !== '1' && $form['id'] == $filterID;
+            } else {
+                return $form['is_trash'] !== '1';
+            }
+        });
+
+        return empty($forms)?[]:array_values($forms);//reorder array
+    }
+
+    /*
+     * Receives a array and filters the field 'fields' to a simplified version
+     * */
+    public static function getSimplifiedFormFields($data){
+
+        if(empty($data['fields']) || !is_array($data['fields'])){return [];}
+
+        $simple_map = [];
+        foreach ($data['fields'] as $field){
+            $inputs = $field->get_entry_inputs();
+
+            if ( is_array( $inputs ) ) {
+                foreach ( $inputs as $input ) {
+                    $simple_map[$input['id']] = $input['label'];
+                }
+            } else {
+                $simple_map[$field->id] = $field->label;
+            }
+        }
+        return $simple_map;
+    }
+
 	public function getClientAPI(){
 
 		$key = $_POST["egoi_key"];
@@ -1320,5 +1430,59 @@ class Egoi_For_Wp {
         return self::GUEST_BUY;
     }
 
+    public static function getOptionGF(){
+        $mapping = get_option('egoi_mapping_gf');
+        if($mapping === false || ! is_string($mapping)){
+            return [];
+        }else{
+            $mapping = json_decode($mapping, true);
+        }
+        return $mapping;
+    }
+
+    public static function updateOptionGF($data){
+        update_option('egoi_mapping_gf', json_encode($data));
+    }
+
+    public static function getOptionTag(){
+        $mapping = get_option('egoi_tag_function');
+        if($mapping === false || ! is_string($mapping)){
+            return [];
+        }else{
+            $mapping = json_decode($mapping, true);
+        }
+        return $mapping;
+    }
+
+    public static function updateOptionTag($data){
+        update_option('egoi_tag_function', json_encode($data));
+    }
+
+    public static function getFullListFields(){
+
+        $options = get_option(Egoi_For_Wp_Admin::OPTION_NAME);
+
+        $Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
+        $extra = $Egoi4WpBuilderObject->getExtraFields($options->list);
+
+        $egoi_fields = array(
+            'first_name'    => __('First name','egoi-for-wp'),
+            'last_name'     => __('Last name','egoi-for-wp'),
+            'cellphone'     => __('Mobile','egoi-for-wp'),
+            'email'         => __('Email','egoi-for-wp'),
+            'telephone'     => __('Telephone','egoi-for-wp'),
+            'birth_date'    => __('Birth Date','egoi-for-wp'),
+        );
+
+        if($options->list){
+            if($extra){
+                foreach($extra as $key => $extra_field){
+                    $egoi_fields[$key] = $extra_field->NAME;
+                }
+            }
+        }
+
+        return $egoi_fields;
+    }
 	
 }

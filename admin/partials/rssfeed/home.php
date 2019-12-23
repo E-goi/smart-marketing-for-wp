@@ -44,7 +44,7 @@ if (!isset($_GET['add']) && !isset($_GET['edit']) && !isset($_GET['view'])) { ?>
                 <tr>
                     <td style="vertical-align: middle;"><?=$feed['name']?></td>
                     <td style="vertical-align: middle;"><?php _e(ucfirst($feed['type']), 'egoi-for-wp'); ?></td>
-                    <td style="vertical-align: middle;"><input type="text" id="url_<?=$option->option_name?>" class="copy-input" value="<?php echo get_site_url().'/?feed='.$option->option_name; ?>" readonly
+                    <td style="vertical-align: middle;"><input type="text" id="url_<?=$option->option_name?>" class="copy-input" value="<?php echo get_home_url().'/?feed='.$option->option_name; ?>" readonly
                                                                style="width: 100%;border: none;background-image:none;background-color:transparent;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></td>
                     <td style="vertical-align: middle;" width="130">
                         <button type="button" class="copy_url smsnf-btn" data-rss-feed="url_<?=$option->option_name?>"><?php _e('Copy URL', 'egoi-for-wp');?></button>

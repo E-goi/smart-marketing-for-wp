@@ -98,4 +98,8 @@ jQuery(document).ready(function($) {
 
 	});
 
+	$('#map-rebump').on('click', function(e){
+		$('#makeMapping').modal('show');
+	})
+
 });

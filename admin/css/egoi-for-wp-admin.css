@@ -5949,6 +5949,9 @@ a {
   font-weight: 600;
   margin: .67em 0;
   padding-left: 10px;
+  line-height: normal;
+  border-bottom: 2px solid #00aeda;
+  font-family: Montserrat;
 }
 
 /* Create a list */
@@ -5966,6 +5969,13 @@ div.eg-dropdown {
 /* forms */
 #TB_ajaxContent {
   overflow: hidden !important;
+  padding: 0 !important;
+  border-radius: 10px;
+}
+
+#TB_window{
+  border-radius: 10px;
+  width: auto !important;
 }
 
 .form-table td {
@@ -7661,6 +7671,16 @@ a.egoi_tooltip:hover{
   opacity: 50%;
 }
 
+.egoi-mapping-box{
+  border-radius: 10px;
+}
+
+#form_tag_wrapper > a{
+    margin-left: 10px;
+    font-weight: lighter;
+    font-size: smaller;
+}
+
 .smsnf-input-group input {
   background: #fff;
   border: 1px solid rgba(151, 151, 151, .5);
@@ -7694,8 +7714,18 @@ a.egoi_tooltip:hover{
   background: rgba(0, 174, 218, .5);
 }
 
-.smsnf-input-group input[type="submit"]:hover {
+.smsnf-input-group input[type="button"]:disabled {
+  background: #d8d8d8;
+}
+
+.smsnf-input-group input[type="button"]:hover:enabled {
+  background: #f2f2f2;
+  cursor: pointer;
+}
+
+.smsnf-input-group input[type="submit"]:hover:enabled {
   background: #0080a0;
+  cursor: pointer;
 }
 
 .smsnf-input-group > .egoi-span-button {
@@ -8131,3 +8161,54 @@ a.egoi_tooltip:hover{
 .tooltip::after {
   padding: 8px;
 }
+
+.egoi-content-center{
+  display: flex;
+  justify-content: center;
+}
+
+.egoi-small-mapper{
+  display: grid;
+  grid-gap: 12px;
+  grid-template-columns: 30fr 1fr 30fr 10fr;
+}
+
+.egoi-small-mapper > .smsnf-input-group > label {
+  font-size: 13px !important;
+}
+
+.egoi-small-mapped-fields{
+  background: #fafafa;
+  border-radius: 3px;
+}
+
+.egoi-small-mapped-fields > div{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.egoi-small-mapped-fields > .app {
+  margin-left: 10px;
+}
+
+
+.egoi-small-mapped-fields > .close > span{
+  color: salmon !important;
+  cursor: pointer;
+}
+
+
+.egoi-small-mapped-fields > div > span {
+  padding: 10px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 40px;
+}
+
+.smsnf-input-group > label{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

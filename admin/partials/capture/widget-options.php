@@ -82,7 +82,7 @@ $FORM_OPTION = get_optionsform($form_id);
             <?php get_lang_html( $egoiwidget['lang'], 'egoi_widget[lang]', empty($egoiwidget['list']) ); ?>
             <!-- / lang -->
             <!-- tag -->
-            <?php get_tag_html($tag, ''); ?>
+            <?php get_tag_html($tag, 'egoi_widget[tag-egoi]'); ?>
             <!-- / tag -->
             <!-- success msg -->
             <div class="smsnf-input-group ">

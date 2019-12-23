@@ -21,25 +21,25 @@
 
     /* Clipboard */
 /*
-    let code = $('#smsnf-af-shortcode');
+    var code = $('#smsnf-af-shortcode');
     new Clipboard('#smsnf-af-shortcode');
     code.click(function() {
         $(this).attr('data-tooltip', $(this).attr('msg-after'));
     });
 
     code.mouseout(function() {
-        let div = $(this);
-        let timer = setTimeout(function() {
+        var div = $(this);
+        var timer = setTimeout(function() {
             div.attr('data-tooltip', div.attr('msg-before'));
             clearTimeout(timer);
         }, 300);
     });
 */
 
-    let shortcodes = $('.shortcode.-copy');
+    var shortcodes = $('.shortcode.-copy');
 
     $.each(shortcodes, (k, v) => {
-        let el = $(v);
+        var el = $(v);
         new Clipboard(v);
 
         if ( el.is('div') ) {
@@ -48,7 +48,7 @@
             });
 
             el.mouseout(() => {
-                let timer = setTimeout(function() {
+                var timer = setTimeout(function() {
                     el.attr('data-tooltip', el.attr('data-before'));
                     clearTimeout(timer);
                 }, 500);
@@ -56,13 +56,13 @@
         }
 
         if ( el.is('button') ) {
-            let tooltip = el.closest('.tooltip');
+            var tooltip = el.closest('.tooltip');
             el.click(() => {
                 tooltip.attr('data-tooltip', tooltip.attr('data-after'));
             });
 
             el.mouseout(() => {
-                let timer = setTimeout(function() {
+                var timer = setTimeout(function() {
                     tooltip.attr('data-tooltip', tooltip.attr('data-before'));
                     clearTimeout(timer);
                 }, 500);
@@ -72,7 +72,7 @@
 
     /* Modals */
     $('a[data-modal]').click(function(e) {
-        let id = $(this).attr('data-modal');
+        var id = $(this).attr('data-modal');
         $(`#${id}`).addClass('active');
     });
 
@@ -80,7 +80,7 @@
         $(this).closest('.modal').removeClass('active');
     });
     /* Notifications */
-    let notifications = $('.smsnf-notification');
+    var notifications = $('.smsnf-notification');
 
     notifications.fadeIn();
 
@@ -99,20 +99,30 @@
     });
 
     /* ------------------------------------------------------- */
-    let select_lists = $('#list_to_subscribe');
-    let select_forms = $('#form_list');
-    let select_tags = $('#form_tag');
-    let select_lang = $('#form_lang');
-    let list_id = select_lists.attr('data-egoi-list');
-    let form_id = select_forms.attr('data-egoi-form');
-    let tag_id = select_tags.attr('data-egoi-tag');
-    let lang_id = select_lang.attr('data-egoi-lang');
+    var select_lists    = $('#list_to_subscribe');
+    var select_forms    = $('#form_list');
+    var select_tags     = $('#form_tag');
+    var select_lang     = $('#form_lang');
+    var new_tag_submit  = $('#new_tag_submit');
+
+    var list_id     = select_lists.attr('data-egoi-list');
+    var form_id     = select_forms.attr('data-egoi-form');
+    var tag_id      = select_tags.attr('data-egoi-tag');
+    var lang_id     = select_lang.attr('data-egoi-lang');
+
+    $(document).on('data-attribute-changed', function() {
+        if (select_tags.attr('data-egoi-tag') != '') {
+            select_tags.val(select_tags.attr('data-egoi-tag'));
+        }else{
+            select_tags.val(null);
+        }
+    });
     
     /* Get lists from e-goi */
     if (select_lists.length) {
         console.log('ajax - get lists');
         $.post(url_egoi_script.ajaxurl, {action: 'egoi_get_lists'}, function(response) {
-            let lists = JSON.parse(response);
+            var lists = JSON.parse(response);
 
             $.each(lists, function(key, val) {
                 if(typeof val.listnum != 'undefined') {
@@ -139,7 +149,7 @@
 
             $.post(url_egoi_script.ajaxurl, {action: 'get_form_from_list', listID: list_id})
             .done(function(response) {
-                let forms = JSON.parse(response);
+                var forms = JSON.parse(response);
                 select_forms.find("option").not(':first').remove();
 
                 if (forms.ERROR == "FORMS_NOT_FOUND") {
@@ -170,17 +180,20 @@
 
     /* Get lang from e-goi */
     if (select_lists.length && select_lang.length) {
+
         function get_list_lang_from_egoi(list_id) {
             if (list_id == '') {
                 return;
             }
 
             $('#form_lang_wrapper').slideDown();
+            $('#form_tag_wrapper').slideDown();
+
 
             console.log('ajax - get lang');
             $.post(url_egoi_script.ajaxurl, {action: 'egoi_get_lists'}, function(response) {
-                let langs = JSON.parse(response);
-                let idiomas = [];
+                var langs = JSON.parse(response);
+                var idiomas = [];
 
                 $.each(langs, function(key, val) {
                     if (val.listnum != list_id) return;
@@ -214,14 +227,35 @@
         });
     }
 
+    function get_list_tag_from_egoi() {
+
+        $.post(url_egoi_script.ajaxurl, {action: 'egoi_get_tags'}, function(response) {
+            var tags = JSON.parse(response);
+
+            $.each(tags.TAG_LIST, function(key, val) {
+                select_tags.append(`<option value="${val.ID}">${val.NAME}</option>`);
+            });
+
+            select_tags.prop('disabled', false);
+            if (tag_id != '') {
+                select_tags.val(tag_id);
+            }
+            //select_tags.val(tag_id == '' ? tag_id[0] : tag_id);
+
+        });
+    }
+    get_list_tag_from_egoi();
+    
+    
+
     /* Simple Forms */
-    let sf_btns = $('button', '#sf-btns');
-    let sf_name = $('#sf-btn-name');
-    let sf_email = $('#sf-btn-email');
-    let sf_phone = $('#sf-btn-phone');
-    let sf_submit = $('#sf-btn-submit');
-    let sf_html = $('#sf-code');
-    let sf_labels = {
+    var sf_btns = $('button', '#sf-btns');
+    var sf_name = $('#sf-btn-name');
+    var sf_email = $('#sf-btn-email');
+    var sf_phone = $('#sf-btn-phone');
+    var sf_submit = $('#sf-btn-submit');
+    var sf_html = $('#sf-code');
+    var sf_labels = {
         name : `[e_name]\n<p>\n  <label for="egoi_name">${sf_name.attr('data-lable')}: </label>\n  <input type="text" name="egoi_name" id="egoi_name" />\n</p>\n[/e_name]\n`,
         email : `[e_email]\n<p>\n  <label for="egoi_email">${sf_email.attr('data-lable')}: </label>\n  <input type="email" name="egoi_email" id="egoi_email" />\n</p>\n[/e_email]\n`,
         phone : `[e_mobile]\n<p>\n  <label for="egoi_mobile">${sf_phone.attr('data-lable')}: </label>\n  <select name="egoi_country_code" id="egoi_country_code"></select><input type="text" name="egoi_mobile" id="egoi_mobile" />\n</p>\n[/e_mobile]\n`,
@@ -265,24 +299,24 @@
     });
 
     function add_html(label) {
-        let html = sf_html.val();
+        var html = sf_html.val();
         html += label;
         sf_html.val(html);
     }
     function remove_html(tag) {
-        let html = sf_html.val();
-        let start = `[e_${tag}]`;
-        let end = `[/e_${tag}]`;
-        let first_char = html.indexOf(start);
-        let last_char = html.indexOf(end) + end.length + 1;
+        var html = sf_html.val();
+        var start = `[e_${tag}]`;
+        var end = `[/e_${tag}]`;
+        var first_char = html.indexOf(start);
+        var last_char = html.indexOf(end) + end.length + 1;
 
         sf_html.val(html.replace(html.substring(first_char, last_char), ''));
     }
 
     // validate inputs
     $('#smsnf-simple-forms-form').submit(function(e) {
-        let form = $(this);
-        let input;
+        var form = $(this);
+        var input;
 
         input = form.find('#list_to_subscribe');
         if (input.find('option:selected').val() == '') {
@@ -304,7 +338,7 @@
             input.addClass('error');
         }
 
-        let txt = input.val();
+        var txt = input.val();
 
         if (!(txt.includes('[e_submit]') && txt.includes('[/e_submit]'))) {
             sf_submit.addClass('error');
@@ -316,17 +350,17 @@
     });
 
     /* Advanced Forms */
-    let type_form = $('#adv-forms-select-type');
-    let radio_btns = $('input[name=type]', type_form);
-    let radio_btn_checked = radio_btns.filter(":checked").val();
-    let confirm_modal = $('#smsnf-confirm-modal');
-    let confirm_btn = $('#confirm-btn', confirm_modal);
-    let next_type;
+    var type_form = $('#adv-forms-select-type');
+    var radio_btns = $('input[name=type]', type_form);
+    var radio_btn_checked = radio_btns.filter(":checked").val();
+    var confirm_modal = $('#smsnf-confirm-modal');
+    var confirm_btn = $('#confirm-btn', confirm_modal);
+    var next_type;
 
     radio_btns.click(function() {
         next_type = $(this).val();
 
-        let show_modal = (
+        var show_modal = (
             radio_btn_checked == 'iframe' && (next_type == 'popup' || next_type == 'html')
             ||
             next_type == 'iframe' && (radio_btn_checked == 'popup' || radio_btn_checked == 'html')
@@ -348,8 +382,8 @@
 
     // validate inputs
     $('#smsnf-adv-forms-form').submit(function(e) {
-        let form = $(this);
-        let input;
+        var form = $(this);
+        var input;
         
         input = form.find('#form_name');
         if (input.val().trim() == '') {
@@ -380,8 +414,8 @@
     /* Subscriber Bar and Widget Options*/
     // validate inputs
     $('#smsnf-subscriber-bar, #smsnf-widget-options').submit(function(e) {
-        let form = $(this);
-        let input;
+        var form = $(this);
+        var input;
 
         input = form.find('#list_to_subscribe');
         if (input.find('option:selected').val() == '') {
@@ -394,18 +428,18 @@
     });
 
     /* Form preview */
-    let border_width = $('#form_border');
-    let border_color = $('#form_border_color');
-    let width = $('#form_width');
-    let height = $('#form_height');
-    let preview = $('#form-preview');
-    let preview_w = $('#preview .width span');
-    let preview_h = $('#preview .height span');
+    var border_width = $('#form_border');
+    var border_color = $('#form_border_color');
+    var width = $('#form_width');
+    var height = $('#form_height');
+    var preview = $('#form-preview');
+    var preview_w = $('#preview .width span');
+    var preview_h = $('#preview .height span');
 
     function update_form() {
-        let bw = border_width.val();
-        let w = width.val();
-        let h = height.val();
+        var bw = border_width.val();
+        var w = width.val();
+        var h = height.val();
 
         preview.css({
             'border-width': bw == '' ? 0 : bw,
@@ -426,10 +460,10 @@
     $('.smsnf-input-group input.color').wpColorPicker({ change: update_form });
 
     $('.colorpicker-wrapper').each(function(k, v) {
-        let wrapper = $(v);
-        let view = wrapper.find('.view');
-        let input = wrapper.find('input');
-        let select;
+        var wrapper = $(v);
+        var view = wrapper.find('.view');
+        var input = wrapper.find('input');
+        var select;
 
         if ($('#smsnf-adv-forms-custom').length) {
             select = (hsb, hex, rgb) => {
@@ -451,5 +485,48 @@
             onSubmit: select,
         });
     });
+
+    new_tag_submit.on('click', function(event){
+        event.preventDefault();
+        var input = $('#new_tag_name');
+        var load = $('#loading_add_tag');
+
+        if(!validateFields([input])){
+            return;
+        }
+
+        load.show();
+        $(this).prop('disabled', true);
+
+        var data = {
+            action: 'egoi_add_tag',
+            name:   input.val()
+        };
+        $.post(url_egoi_script.ajaxurl, data, function(response) {
+            var tag = JSON.parse(response);
+            select_tags.append(`<option value="${tag.ID}">${tag.NAME}</option>`);
+            $(this).prop('disabled', false);
+            select_tags.val(tag.ID);
+            $('#create-new-tag').hide();
+        });
+
+
+    });
+
+    function validateFields(arr){
+        var valid = true;
+        arr.forEach(function (o,i) {
+            if(o.val() == ''){
+                valid = false;
+                o.addClass('error');
+                setTimeout(function () {
+                    o.removeClass('error')
+                }, 1000);
+            }
+        });
+        return valid;
+    }
+
+
 
 })})(jQuery);

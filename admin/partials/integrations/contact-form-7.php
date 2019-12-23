@@ -1,3 +1,6 @@
+<?php
+$contact_forms = $Egoi4WpBuilderObject->getContactFormInfo();
+?>
 <form method="post" action="">
     <?php settings_fields($FORM_OPTION); ?>
     <input type="hidden" name="egoiform" value="egoi_int">
@@ -5,7 +8,7 @@
         <div>
             <?php if(!class_exists('WPCF7')){ ?>
             <div class="container" style="display: flex;justify-content: center;align-items: center;flex-direction: column;min-height: 100%;">
-                <div style="text-align: center;">
+                <div>
                     <h2><?=__('Plugin missing','egoi-for-wp');?></h2>
                     <h4><?=__('Make sure you have Contact Form 7 installed before trying to configure the integration.','egoi-for-wp');?></h4>
                 </div>

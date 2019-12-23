@@ -3,8 +3,8 @@ Contributors: E-goi
 Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
-Tested up to: 5.3.0
-Stable tag: 3.0.2
+Tested up to: 5.3.2
+Stable tag: 3.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,7 @@ Então não deixe de activar o Track & Engage, um sistema para rastrear todo o c
 * Integração com o CF7
 * Integração com o WPBakery Page Builder
 * Integração com o Page Builder
+* Integração com o Gravity Forms
 * Mapeamento de campos adicionais (incl. WooCommerce)
 * E-goi Track & Engage
 * Notificações Web Push
@@ -74,6 +75,7 @@ So be sure to enable Track & Engage system to track all customer behavior in you
 * Integrates with WooCommerce
 * Integrates with Page Builder By SiteOrigin
 * Integrates with WPBakery Page Builder
+* Integrates with Gravity Forms
 * Multiple types of Custom Forms
 * Easy E-goi/WP field mapping; send anything over to E-goi!
 * Web Push Notifications
@@ -124,6 +126,9 @@ This plugin is compatible with WooCommerce Version 2.6 and above.
 = This plugin integrates with ContactForm7, but which version this plugin is compatible? =
 This plugin is compatible with ContactForm7 Version 4.5 and above.
 
+= This plugin integrates with Gravity Forms, but which version this plugin is compatible? =
+This plugin is compatible with Gravity Forms Version 2.4 and above.
+
 = Where can I get my API key? =
 Just click on the link available at the info screen, register an account, and get your API key!
 
@@ -148,6 +153,13 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 3.1.1 =
+- Gravity Forms Integration
+- Minor bug fixes (Feed)
+
+= 3.0.3 =
+- Form's tag normalization
 
 = 3.0.2 =
 - Minor bug fixes

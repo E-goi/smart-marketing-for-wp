@@ -14,10 +14,10 @@
 
 <ul class="tab">
     <li class="tab-item active">
-        <a href="#" tab-target="smsnf-email"><?= _e( 'E-mail', 'egoi-for-wp' ); ?></a>
+        <a href="#" tab-target="smsnf-email"><?php echo  _e( 'E-mail', 'egoi-for-wp' ); ?></a>
     </li>
     <li class="tab-item">
-        <a href="#" tab-target="smsnf-webpush"><?= _e( 'Webpush', 'egoi-for-wp' ); ?></a>
+        <a href="#" tab-target="smsnf-webpush"><?php echo  _e( 'Webpush', 'egoi-for-wp' ); ?></a>
     </li>
 </ul>
 
@@ -33,7 +33,7 @@
                         <?php
                         foreach ($options as $option){
                             $feed = get_option($option->option_name); ?>
-                            <option value="<?=$option->option_name; ?>"><?=$feed['name']?></option>
+                            <option value="<?php echo $option->option_name; ?>"><?php echo $feed['name']?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -46,7 +46,7 @@
                     <select id="egoi_list" class="form-select">
                         <option value="0"><?php _e('Select an list...', 'egoi-for-wp'); ?></option>
                     </select>
-                    <?=getLoaderNew('egoi_list_loading',true); ?>
+                    <?php echo getLoaderNew('egoi_list_loading',true); ?>
                 </div>
             </div>
 
@@ -57,26 +57,26 @@
                     <select id="egoi_senders" class="form-select">
                         <option value="0"><?php _e('Select a sender...', 'egoi-for-wp'); ?></option>
                     </select>
-                    <?=getLoaderNew('egoi_senders_loading',true); ?>
+                    <?php echo getLoaderNew('egoi_senders_loading',true); ?>
                 </div>
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
-                <label for="campaign_subject"><?= _e( 'Subject', 'egoi-for-wp' ); ?></label>
+                <label for="campaign_subject"><?php echo  _e( 'Subject', 'egoi-for-wp' ); ?></label>
                 <p class="subtitle"><?php _e( 'The text to appear as a Title', 'egoi-for-wp' ); ?></p>
-                <input id="campaign_subject" name="campaign_subject" type="text" placeholder="<?= __('Choose a subject for your campaign', 'egoi-for-wp');?>" value="" required autocomplete="off" />
+                <input id="campaign_subject" name="campaign_subject" type="text" placeholder="<?php echo  __('Choose a subject for your campaign', 'egoi-for-wp');?>" value="" required autocomplete="off" />
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
-                <label for="campaign_snippet"><?= _e( 'Snippet', 'egoi-for-wp' ); ?></label>
+                <label for="campaign_snippet"><?php echo  _e( 'Snippet', 'egoi-for-wp' ); ?></label>
                 <p class="subtitle"><?php _e( 'This is the small email\'s resume', 'egoi-for-wp' ); ?></p>
-                <input id="campaign_snippet" name="campaign_snippet" type="text" placeholder="<?= __('Choose a snippet for your campaign', 'egoi-for-wp');?>" value="" required autocomplete="off" />
+                <input id="campaign_snippet" name="campaign_snippet" type="text" placeholder="<?php echo  __('Choose a snippet for your campaign', 'egoi-for-wp');?>" value="" required autocomplete="off" />
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
-                <label for="campaign_title"><?= _e( 'Title', 'egoi-for-wp' ); ?></label>
+                <label for="campaign_title"><?php echo  _e( 'Title', 'egoi-for-wp' ); ?></label>
                 <p class="subtitle"><?php _e( 'This is the campaign title inside', 'egoi-for-wp' ); ?></p>
-                <input id="campaign_title" name="campaign_title" type="text" placeholder="<?= __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required autocomplete="off" />
+                <input id="campaign_title" name="campaign_title" type="text" placeholder="<?php echo  __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required autocomplete="off" />
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_table">
@@ -100,7 +100,7 @@
     <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
         <div class="smsnf-input-group" style="display: flex;flex-direction: row;">
             <input id="egoi_create_campaign" type="submit" value="<?php _e('Create RSS Campaign +', 'egoi-for-wp');?>" />
-            <?=getLoader('egoi_create_campaign_loading', false) ?>
+            <?php echo getLoader('egoi_create_campaign_loading', false) ?>
         </div>
         <div class="smsnf-input-group" style="display: flex;flex-direction: row;">
             <input hidden value="" id="campaign_hash_deploy" />
@@ -113,7 +113,7 @@
             <span id="egoi_send_campaign" class='egoi-span-button' style="display: none;"><?php _e('Send Campaign >', 'egoi-for-wp');?></span>
             <div id="success_email" class="alert alert-success" role="alert" style="display: none;">
                 <i class="form-icon icon icon-check icon-valid text-success" style="margin-right: 30px;"></i>
-                <a><?= __('Campaign sent successfully!', 'egoi-for-wp');?></a>
+                <a><?php echo  __('Campaign sent successfully!', 'egoi-for-wp');?></a>
 
             </div>
         </div>
@@ -132,13 +132,13 @@
                     <tbody><tr>
                         <td>
                             <p style="font-weight:  bold; font-size: 14px;">
-                                <?= __('Do you want to make WebPush campaigns?', 'egoi-for-wp'); ?>
+                                <?php echo  __('Do you want to make WebPush campaigns?', 'egoi-for-wp'); ?>
                                 <br>
-                                <?= __('Make sure you have it on!', 'egoi-for-wp'); ?>
+                                <?php echo  __('Make sure you have it on!', 'egoi-for-wp'); ?>
                             </p>
                         </td>
                         <td style="min-width: 130px;" align="right">
-                            <a href="<?=get_site_url();?>/wp-admin/admin.php?page=egoi-4-wp-webpush" style="font-weight:  bold; font-size: 14px; text-decoration: none; background-color: white; color: #04afdb; padding: 10px 20px; border-radius: 20px;"><?=__('Activate','egoi-for-wp');?></a>
+                            <a href="<?php menu_page_url('egoi-4-wp-webpush');?>" style="font-weight:  bold; font-size: 14px; text-decoration: none; background-color: white; color: #04afdb; padding: 10px 20px; border-radius: 20px;"><?php echo __('Activate','egoi-for-wp');?></a>
                         </td>
                     </tr>
                     </tbody></table>
@@ -157,16 +157,16 @@
                         <?php
                         foreach ($options as $option){
                             $feed = get_option($option->option_name); ?>
-                            <option value="<?=$option->option_name; ?>"><?=$feed['name']?></option>
+                            <option value="<?php echo $option->option_name; ?>"><?php echo $feed['name']?></option>
                         <?php } ?>
                     </select>
                 </div>
             </div>
 
             <div class="smsnf-input-group egoi_create_campaign_webpush_table">
-                <label for="campaign_title_webpush"><?= _e( 'Title', 'egoi-for-wp' ); ?></label>
+                <label for="campaign_title_webpush"><?php echo  _e( 'Title', 'egoi-for-wp' ); ?></label>
                 <p class="subtitle"><?php _e( 'This is the campaign title inside', 'egoi-for-wp' ); ?></p>
-                <input id="campaign_title_webpush" name="campaign_title_webpush" type="text" placeholder="<?= __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required autocomplete="off" />
+                <input id="campaign_title_webpush" name="campaign_title_webpush" type="text" placeholder="<?php echo  __('Choose a title for your newsletter', 'egoi-for-wp');?>" value="" required autocomplete="off" />
             </div>
 
         </div>
@@ -174,7 +174,7 @@
 
     <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
         <div class="smsnf-input-group" style="display: flex;flex-direction: row;">
-            <?=getLoader('egoi_create_campaign_webpush_loading', false) ?>
+            <?php echo getLoader('egoi_create_campaign_webpush_loading', false) ?>
             <input id="egoi_create_campaign_webpush" type="submit" value="<?php _e('Create RSS Campaign +', 'egoi-for-wp');?>" />
         </div>
         <div class="smsnf-input-group" style="display: flex;flex-direction: row;">
@@ -188,7 +188,7 @@
             <span id="egoi_send_campaign_webpush" class='egoi-span-button' style="display: none;"><?php _e('Send Campaign >', 'egoi-for-wp');?></span>
             <div id="success_webpush" class="alert alert-success" role="alert" style="display: none;">
                 <i class="form-icon icon icon-check icon-valid text-success" style="margin-right: 30px;"></i>
-                <a><?= __('Campaign sent successfully!', 'egoi-for-wp');?></a>
+                <a><?php echo  __('Campaign sent successfully!', 'egoi-for-wp');?></a>
 
             </div>
         </div>

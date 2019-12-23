@@ -133,9 +133,6 @@ class Egoi_For_Wp_Admin {
 		// paypal
 		add_action('valid-paypal-standard-ipn-request', array($this, 'hookIpnResponse'), 10, 1);
 
-		// after billing form
-		//add_action('woocommerce_after_checkout_billing_form', array($this, 'hookWoocommercePostBilling'), 10); //TODO:REMOVE
-
 		// hook contact form 7
 		add_action('wpcf7_submit', array($this, 'getContactForm'), 10, 1);
 
@@ -187,7 +184,7 @@ class Egoi_For_Wp_Admin {
         if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
-			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );//TODO:CHANGE THIS TO MINIFIED
             wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap-modal.min.css', array(), $this->version, 'all' );
 
             wp_enqueue_style('wp-color-picker');
@@ -275,6 +272,10 @@ class Egoi_For_Wp_Admin {
 	        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
 	            wp_register_script('chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js');
 	            wp_enqueue_script('chartjs');
+	        }
+
+            if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-integrations') {
+                wp_enqueue_script($this->plugin_name.'small_map', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-small-mapper.js', array('jquery'), $this->version, true);
 	        }
 
             if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard'
@@ -633,51 +634,54 @@ class Egoi_For_Wp_Admin {
 
 
 		    	foreach ($users as $user) {
-			        if($current_email != $user->user_email){
-                        $user_meta = get_user_meta($user->ID);
-
-                        if (isset($user->first_name) && $user->first_name != "" && isset($user->last_name) && $user->last_name != "") {
-                            $fname = $user->first_name;
-                            $lname = $user->last_name;
-                        } else if (
-                            (isset($user_meta['first_name'][0]) && $user_meta['first_name'][0] != "")
-                            || (isset($user_meta['last_name'][0]) && $user_meta['last_name'][0] != "")
-                        ) {
-                            $fname = $user_meta['first_name'][0];
-                            $lname = $user_meta['last_name'][0];
-                        } else {
-                            $name = $user->display_name ? $user->display_name : $user->user_login;
-                            $full_name = explode(' ', $name);
-                            $fname = $full_name[0];
-                            $lname = $full_name[1];
-                        }
-
-			            $email = $user->user_email;
-			            $url = $user->user_url;
-
-			            $subscribers['status'] = 1;
-		                $subscribers['email'] = $email;
-		                $subscribers['cellphone'] = '';
-		                $subscribers['fax'] = '';
-		                $subscribers['telephone'] = '';
-		                $subscribers['first_name'] = $fname;
-		                $subscribers['last_name'] = $lname;
-		                $subscribers['birth_date'] = '';
-		                $subscribers['lang'] = '';
-
-		                foreach($woocommerce as $key => $value){
-		                    if (isset($user->$value)) {
-                                $subscribers[str_replace('key', 'extra', $key)] = $user->$value;
-                            } else if (isset($user_meta[$value][0])) {
-                                $subscribers[str_replace('key', 'extra', $key)] = $user_meta[$value][0];
-                            }
-		                }
-
-		                $subscribers['telephone'] = $api->smsnf_get_valid_phone($subscribers['telephone']);
-                        $subscribers['cellphone'] = $api->smsnf_get_valid_phone($subscribers['cellphone']);
-
-	                	$subs[] = $subscribers;
+			        if($current_email == $user->user_email){
+			            continue;
 			        }
+                    $subscribers = [];
+                    $user_meta = get_user_meta($user->ID);
+
+                    if (isset($user->first_name) && $user->first_name != "" && isset($user->last_name) && $user->last_name != "") {
+                        $fname = $user->first_name;
+                        $lname = $user->last_name;
+                    } else if (
+                        (isset($user_meta['first_name'][0]) && $user_meta['first_name'][0] != "")
+                        || (isset($user_meta['last_name'][0]) && $user_meta['last_name'][0] != "")
+                    ) {
+                        $fname = $user_meta['first_name'][0];
+                        $lname = $user_meta['last_name'][0];
+                    } else {
+                        $name = $user->display_name ? $user->display_name : $user->user_login;
+                        $full_name = explode(' ', $name);
+                        $fname = $full_name[0];
+                        $lname = $full_name[1];
+                    }
+
+                    $email = $user->user_email;
+                    $url = $user->user_url;
+
+                    $subscribers['status'] = 1;
+                    $subscribers['email'] = $email;
+                    $subscribers['cellphone'] = '';
+                    $subscribers['fax'] = '';
+                    $subscribers['telephone'] = '';
+                    $subscribers['first_name'] = $fname;
+                    $subscribers['last_name'] = $lname;
+                    $subscribers['birth_date'] = '';
+                    $subscribers['lang'] = '';
+
+                    foreach($woocommerce as $key => $value){
+                        if (isset($user->$value)) {
+                            $subscribers[str_replace('key', 'extra', $key)] = $user->$value;
+                        } else if (isset($user_meta[$value][0])) {
+                            $subscribers[str_replace('key', 'extra', $key)] = $user_meta[$value][0];
+                        }
+                    }
+
+                    $subscribers['telephone'] = $api->smsnf_get_valid_phone($subscribers['telephone']);
+                    $subscribers['cellphone'] = $api->smsnf_get_valid_phone($subscribers['cellphone']);
+
+                    $subs[] = $subscribers;
+
 			    }
 
 			    if(isset($subs) && count($subs) >= $this->limit_subs){
@@ -696,22 +700,6 @@ class Egoi_For_Wp_Admin {
 		}
 
 		wp_die();
-	}
-
-	public function hookWoocommercePostBilling(){
-
-		try {
-
-			if (!is_user_logged_in()){
-				echo '<p class="form-row form-row-wide">
-				<input class="input-checkbox" type="checkbox" name="egoi_check_sync" id="egoi_check" value="1">
-				<label for="egoi_check" class="checkbox">'.__('Subscribe Newsletter', 'egoi-for-wp').'</label></p>';
-			}
-
-		} catch(Exception $e) {
-	    	echo $e->getMessage();
-	    	return false;
-	    }
 	}
 
 	/**
@@ -1357,7 +1345,7 @@ class Egoi_For_Wp_Admin {
 							echo "<td style='border-bottom: 1px solid #ccc;font-size: 16px;'>".$post->wp_name."</td>";
 						}
 						echo "<td style='border-bottom: 1px solid #ccc;font-size: 16px;'>".$post->egoi_name."</td>
-						<td><button type='button' id='field_$post->id' class='egoi_fields button button-secondary' data-target='$post->id'>
+						<td class='egoi-content-center'><button type='button' id='field_$post->id' class='egoi_fields button button-secondary' data-target='$post->id'>
 							<span class='dashicons dashicons-trash'></span>
 							</button>
 						</td></tr>";
@@ -2427,7 +2415,7 @@ class Egoi_For_Wp_Admin {
             'internal_name' => filter_var($_POST['title'], FILTER_SANITIZE_STRING),
             'content'       => [
                     'title'    => filter_var($_POST['title'], FILTER_SANITIZE_STRING),
-                    'feed'      => get_site_url().'/?feed='.trim($_POST['feed'])
+                    'feed'      => get_home_url().'/?feed='.trim($_POST['feed'])
             ]
         ]),true)));
 
@@ -2442,7 +2430,7 @@ class Egoi_For_Wp_Admin {
             wp_die();
 
         $api = new EgoiApiV3($apikey);
-        $feed = get_site_url().'/?feed='.trim($_POST['feed']);
+        $feed = get_home_url().'/?feed='.trim($_POST['feed']);
 
         echo $api->createEmailRssCampaign([
             'list_id'       => trim($_POST['list']),
@@ -2984,6 +2972,75 @@ class Egoi_For_Wp_Admin {
                 '.$content->account.'
             </div>
         ';
+
+    }
+
+    public function egoi_add_extra_user_info($data){
+        $data['egoi_newsletter'] = __('Newsletter','qero-for-wp');
+        return $data;
+    }
+
+    public function egoi_add_extra_user_info_row($val, $column_name, $user_id){
+        if($column_name !== 'egoi_newsletter')
+            return $val;
+
+        $user_info = get_user_meta($user_id, 'egoi_newsletter_active', true);
+        return !empty($user_info)?'<i class="fas fa-check"></i>':'<i class="fas fa-times-circle"></i>';
+    }
+
+    /**
+    *
+    * Hook handler for Gravity Form Subscription
+    * @param $entry
+    * @param $form
+    */
+    public function egoi_gform_add_subscriber($entry, $form){
+        $options = get_option('egoi_sync');
+        $opt = get_option('egoi_int');
+        $egoint = $opt['egoi_int'];
+
+        $gravity_forms_map = Egoi_For_Wp::getGravityFormsInfo($entry['form_id']);
+        $gravity_forms_tag = Egoi_For_Wp::getGravityFormsTag($entry['form_id']);
+
+
+        if( empty($form['fields']) || !is_array($form['fields']) || empty($options['list']) || empty($gravity_forms_map) || empty($egoint['enable_gf']) )
+            return;
+
+        $subscriber = [];
+        foreach ($gravity_forms_map as $key => $value){
+            if(empty($entry[$key]))
+                continue;
+            $subscriber[$value] = $entry[$key];
+        }
+        $subscriber['status'] = 1;
+        $api = new Egoi_For_Wp();
+        $api->addSubscriberArray($options['list'],$subscriber,[$gravity_forms_tag],$egoint['edit_gf']==1?2:1);
+
+    }
+
+    /*
+     * Used to fetch mapped fields and mappable
+     * */
+    public function egoi_get_mapping_n_fields(){
+        check_ajax_referer( 'egoi_create_campaign', 'security' );//could: change object
+
+        if(empty($_POST['id'])){
+            wp_send_json_error(__('ID is required','egoi-for-wp'));
+        }
+        $id = $_POST['id'];
+
+        $fields = Egoi_For_Wp::getGravityFormsInfoAll($id);
+
+        if(count($fields) !== 1){
+            wp_send_json_error(__('FormID was not found','egoi-for-wp'));
+        }
+
+        wp_send_json_success([
+            'mapped'        => Egoi_For_Wp::getGravityFormsInfo($id),
+            'fields'        => Egoi_For_Wp::getSimplifiedFormFields($fields[0]),
+            'egoi_fields'   => Egoi_For_Wp::getFullListFields(),
+            'tag'           => Egoi_For_Wp::getGravityFormsTag($id),
+        ]);
 
     }
 

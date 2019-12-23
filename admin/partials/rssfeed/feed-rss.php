@@ -35,7 +35,7 @@
                     <div class="smsnf-input-group">
                         <label for="campaign_subject"><?= _e( 'URL', 'egoi-for-wp' ); ?></label>
                         <div class="smsnf-wrapper" style="display: flex;">
-                            <input id="input_<?=$code?>" name="input_url" value="<?php echo get_site_url().'/?feed=egoi_rssfeed_'.$code; ?>" readonly type="text" />
+                            <input id="input_<?=$code?>" name="input_url" value="<?php echo get_home_url().'/?feed=egoi_rssfeed_'.$code; ?>" readonly type="text" />
                             <button type="button" class="copy_url button button--custom" style="padding: 0 5px; height: 40px !important; line-height: 0 !important;margin-top: 12px;" data-rss-feed="input_<?=$code?>"><i class="far fa-copy"></i></button>
                         </div>
                     </div>
@@ -52,10 +52,10 @@
                 </div>
 
                 <div class="smsnf-input-group">
-                    <label for="image_size"><?php _e( 'Sender', 'egoi-for-wp' ); ?></label>
+                    <label for="image_size"><?php _e( 'Image Size', 'egoi-for-wp' ); ?></label>
                     <p class="subtitle"><?php _e( 'Select a default size for RSS feed images.' ,'egoi-for-wp' ); ?></p>
                     <div class="smsnf-wrapper">
-                        <select id="image_size" class="form-select">
+                        <select id="image_size" class="form-select" name="image_size">
                             <option value="" <?php selected($feed['image_size'], null); ?> ><?php _e( 'Select size..', 'egoi-for-wp' ); ?></option>
                             <option value="full" <?php selected($feed['image_size'], 'full'); ?> ><?php _e('Full', 'egoi-for-wp'); ?></option>
                             <option value="large" <?php selected($feed['image_size'], 'large'); ?> ><?php _e('Large', 'egoi-for-wp'); ?></option>
