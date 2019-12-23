@@ -7714,8 +7714,18 @@ a.egoi_tooltip:hover{
   background: rgba(0, 174, 218, .5);
 }
 
-.smsnf-input-group input[type="submit"]:hover {
+.smsnf-input-group input[type="button"]:disabled {
+  background: #d8d8d8;
+}
+
+.smsnf-input-group input[type="button"]:hover:enabled {
+  background: #f2f2f2;
+  cursor: pointer;
+}
+
+.smsnf-input-group input[type="submit"]:hover:enabled {
   background: #0080a0;
+  cursor: pointer;
 }
 
 .smsnf-input-group > .egoi-span-button {
@@ -8156,3 +8166,49 @@ a.egoi_tooltip:hover{
   display: flex;
   justify-content: center;
 }
+
+.egoi-small-mapper{
+  display: grid;
+  grid-gap: 12px;
+  grid-template-columns: 30fr 1fr 30fr 10fr;
+}
+
+.egoi-small-mapper > .smsnf-input-group > label {
+  font-size: 13px !important;
+}
+
+.egoi-small-mapped-fields{
+  background: #fafafa;
+  border-radius: 3px;
+}
+
+.egoi-small-mapped-fields > div{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.egoi-small-mapped-fields > .app {
+  margin-left: 10px;
+}
+
+
+.egoi-small-mapped-fields > .close > span{
+  color: salmon !important;
+  cursor: pointer;
+}
+
+
+.egoi-small-mapped-fields > div > span {
+  padding: 10px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 40px;
+}
+
+.smsnf-input-group > label{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

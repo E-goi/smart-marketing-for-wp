@@ -184,7 +184,7 @@ class Egoi_For_Wp_Admin {
         if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
-			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );//TODO:CHANGE THIS TO MINIFIED
             wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap-modal.min.css', array(), $this->version, 'all' );
 
             wp_enqueue_style('wp-color-picker');
@@ -272,6 +272,10 @@ class Egoi_For_Wp_Admin {
 	        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
 	            wp_register_script('chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js');
 	            wp_enqueue_script('chartjs');
+	        }
+
+            if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-integrations') {
+                wp_enqueue_script($this->plugin_name.'small_map', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-small-mapper.js', array('jquery'), $this->version, true);
 	        }
 
             if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard'
@@ -2411,7 +2415,7 @@ class Egoi_For_Wp_Admin {
             'internal_name' => filter_var($_POST['title'], FILTER_SANITIZE_STRING),
             'content'       => [
                     'title'    => filter_var($_POST['title'], FILTER_SANITIZE_STRING),
-                    'feed'      => get_site_url().'/?feed='.trim($_POST['feed'])
+                    'feed'      => get_home_url().'/?feed='.trim($_POST['feed'])
             ]
         ]),true)));
 
@@ -2426,7 +2430,7 @@ class Egoi_For_Wp_Admin {
             wp_die();
 
         $api = new EgoiApiV3($apikey);
-        $feed = get_site_url().'/?feed='.trim($_POST['feed']);
+        $feed = get_home_url().'/?feed='.trim($_POST['feed']);
 
         echo $api->createEmailRssCampaign([
             'list_id'       => trim($_POST['list']),
@@ -2984,7 +2988,59 @@ class Egoi_For_Wp_Admin {
         return !empty($user_info)?'<i class="fas fa-check"></i>':'<i class="fas fa-times-circle"></i>';
     }
 
+    /**
+    *
+    * Hook handler for Gravity Form Subscription
+    * @param $entry
+    * @param $form
+    */
     public function egoi_gform_add_subscriber($entry, $form){
+        $options = get_option('egoi_sync');
+        $opt = get_option('egoi_int');
+        $egoint = $opt['egoi_int'];
+
+        $gravity_forms_map = Egoi_For_Wp::getGravityFormsInfo($entry['form_id']);
+        $gravity_forms_tag = Egoi_For_Wp::getGravityFormsTag($entry['form_id']);
+
+
+        if( empty($form['fields']) || !is_array($form['fields']) || empty($options['list']) || empty($gravity_forms_map) || empty($egoint['enable_gf']) )
+            return;
+
+        $subscriber = [];
+        foreach ($gravity_forms_map as $key => $value){
+            if(empty($entry[$key]))
+                continue;
+            $subscriber[$value] = $entry[$key];
+        }
+        $subscriber['status'] = 1;
+        $api = new Egoi_For_Wp();
+        $api->addSubscriberArray($options['list'],$subscriber,[$gravity_forms_tag],$egoint['edit_gf']==1?2:1);
+
+    }
+
+    /*
+     * Used to fetch mapped fields and mappable
+     * */
+    public function egoi_get_mapping_n_fields(){
+        check_ajax_referer( 'egoi_create_campaign', 'security' );//could: change object
+
+        if(empty($_POST['id'])){
+            wp_send_json_error(__('ID is required','egoi-for-wp'));
+        }
+        $id = $_POST['id'];
+
+        $fields = Egoi_For_Wp::getGravityFormsInfoAll($id);
+
+        if(count($fields) !== 1){
+            wp_send_json_error(__('FormID was not found','egoi-for-wp'));
+        }
+
+        wp_send_json_success([
+            'mapped'        => Egoi_For_Wp::getGravityFormsInfo($id),
+            'fields'        => Egoi_For_Wp::getSimplifiedFormFields($fields[0]),
+            'egoi_fields'   => Egoi_For_Wp::getFullListFields(),
+            'tag'           => Egoi_For_Wp::getGravityFormsTag($id),
+        ]);
 
     }
 

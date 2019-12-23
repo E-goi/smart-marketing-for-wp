@@ -109,6 +109,14 @@
     var form_id     = select_forms.attr('data-egoi-form');
     var tag_id      = select_tags.attr('data-egoi-tag');
     var lang_id     = select_lang.attr('data-egoi-lang');
+
+    $(document).on('data-attribute-changed', function() {
+        if (select_tags.attr('data-egoi-tag') != '') {
+            select_tags.val(select_tags.attr('data-egoi-tag'));
+        }else{
+            select_tags.val(null);
+        }
+    });
     
     /* Get lists from e-goi */
     if (select_lists.length) {

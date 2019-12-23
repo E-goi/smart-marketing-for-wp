@@ -20,7 +20,6 @@ $extra = $Egoi4WpBuilderObject->getExtraFields($this->options_list['list']);
 $egoi_fields = array(
 	'first_name' => 'First name',
 	'last_name' => 'Last name',
-	'surname' => 'Surname',
 	'cellphone' => 'Mobile',
 	'telephone' => 'Telephone',
 	'birth_date' => 'Birth Date'
