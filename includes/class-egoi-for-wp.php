@@ -103,9 +103,10 @@ class Egoi_For_Wp {
 	 *
 	 * @since  1.0.0
 	 */
-	const PAGE_SLUG = 'egoi4wp-form-preview';
+	const PAGE_SLUG         = 'egoi4wp-form-preview';
     const TAG_NEWSLETTER    = 'wp_newsletter';
     const GUEST_BUY         = 'wp_guest_client';
+    const ORDER_TNG_FLAG    = 'egoi_order_tng_';
 
 	/**
 	 * Constructor
@@ -380,6 +381,12 @@ class Egoi_For_Wp {
         $this->loader->add_action('personal_options_update', $plugin_public, 'egoi_save_account_fields', 10);
         $this->loader->add_action('woocommerce_save_account_details', $plugin_public, 'egoi_save_account_fields', 10);
         $this->loader->add_action('woocommerce_new_order', $plugin_public, 'egoi_save_account_fields_order', 10,1);
+
+
+        //Tracking&Engage
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'hookEcommerce', 99999);
+        $this->loader->add_action('woocommerce_new_order', $plugin_public, 'hookEcommerceSetOrder', 99999, 1);
+        $this->loader->add_action('woocommerce_order_details_after_order_table', $plugin_public, 'hookEcommerceGetOrder', 99999, 1);
 
     }
 
@@ -863,7 +870,7 @@ class Egoi_For_Wp {
 
 	public function getExtraFields($listID) {
 
-		$url = $this->restUrl.'getExtraFields&'.http_build_query(array(
+        $url = $this->restUrl.'getExtraFields&'.http_build_query(array(
 				'functionOptions' => array(
 					'apikey' => $this->_valid['api_key'],
 					'plugin_key' => $this->plugin,
@@ -1463,7 +1470,7 @@ class Egoi_For_Wp {
         $options = get_option(Egoi_For_Wp_Admin::OPTION_NAME);
 
         $Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
-        $extra = $Egoi4WpBuilderObject->getExtraFields($options->list);
+        $extra = (array) $Egoi4WpBuilderObject->getExtraFields(empty($options['list'])?$options->list:$options['list']);
 
         $egoi_fields = array(
             'first_name'    => __('First name','egoi-for-wp'),
@@ -1474,12 +1481,13 @@ class Egoi_For_Wp {
             'birth_date'    => __('Birth Date','egoi-for-wp'),
         );
 
-        if($options->list){
-            if($extra){
-                foreach($extra as $key => $extra_field){
-                    $egoi_fields[$key] = $extra_field->NAME;
-                }
+        if( (!empty($options->list) || !empty($options['list'])) && $extra){
+
+            foreach($extra as $key => $extra_field){
+                $egoi_extra_field_key = str_replace('key_', 'extra_' , $key);
+                $egoi_fields[$egoi_extra_field_key] = $extra_field->NAME;
             }
+
         }
 
         return $egoi_fields;

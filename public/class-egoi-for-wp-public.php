@@ -777,4 +777,69 @@ class Egoi_For_Wp_Public {
         wp_die();
     }
 
+    public function hookEcommerce(){
+
+        $options = $this->load_options();
+
+        if(empty($options['list']) || empty($options['track'])){return false;} //list && tracking&engage setup check
+        $client_info = get_option('egoi_client');
+        $client_id = $client_info->CLIENTE_ID;
+
+        require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
+        $track = new TrackingEngageSDK($client_id, $options['list']);
+        $track->getStartUp();
+    }
+
+    public function hookEcommerceSetOrder($order_id = false){
+
+        $options = $this->load_options();
+
+        if(empty($options['list']) || empty($options['track'])){return false;} //list && tracking&engage setup check
+        $client_info = get_option('egoi_client');
+        $client_id = $client_info->CLIENTE_ID;
+
+        require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
+        $track = new TrackingEngageSDK($client_id, $options['list'], $order_id);
+        $track->setOrder();
+    }
+
+    public function hookEcommerceGetOrder($order = false){
+
+        $options = $this->load_options();
+
+        if(empty($options['list']) || empty($options['track'])){return false;} //list && tracking&engage setup check
+        $client_info = get_option('egoi_client');
+        $client_id = $client_info->CLIENTE_ID;
+
+        if( version_compare( get_option( 'woocommerce_version' ), '3.0.0', ">=" ) ) {
+            $order_id = $order->get_id();
+        } else {
+            $order_id = $order->id;
+        }
+
+        require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
+        $track = new TrackingEngageSDK($client_id, $options['list'], $order_id);
+        $track->getOrder();
+    }
+
+    private function load_options() {
+
+        static $defaults = array(
+            'list' => '',
+            'enabled' => 0,
+            'egoi_newsletter_active' => 0,
+            'track' => 1,
+            'role' => 'All'
+        );
+
+        if(!get_option( Egoi_For_Wp_Admin::OPTION_NAME, array() )) {
+            add_option( Egoi_For_Wp_Admin::OPTION_NAME, array($defaults) );
+        }else{
+            $options = (array) get_option( Egoi_For_Wp_Admin::OPTION_NAME, array() );
+
+            $options = array_merge($defaults, $options);
+            return (array) apply_filters( 'egoi_sync_options', $options );
+        }
+    }
+
 }
