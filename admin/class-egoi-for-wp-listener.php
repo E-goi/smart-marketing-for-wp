@@ -20,7 +20,6 @@ class Egoi_For_Wp_Listener {
 	}
 
 	public function init($user_id){
-
 		if ($this->isActive()){
 			if($user_id){
 				$this->Listen($user_id);
@@ -100,6 +99,13 @@ class Egoi_For_Wp_Listener {
         $all_fields['user_url'][0] = $user->user_url;
         $all_fields['user_login'][0] = $user->user_login;
 
+        if(is_array($_POST)){
+            foreach ($_POST as $key => $item) {
+                if(strpos($key,'billing_') === false){ continue; }
+                $all_fields[$key][0] = $item;
+            }
+        }
+
         if (!empty($_POST['billing_first_name'])) {
             $all_fields['billing_first_name'][0] = $_POST['billing_first_name'];
         }
@@ -128,7 +134,7 @@ class Egoi_For_Wp_Listener {
         }
 
         foreach($woocommerce as $key => $value){
-            if (isset($user->$value)) {
+            if (isset($user->$value) && !isset($all_fields[$value][0]) ) {
                 $fields[str_replace('key', 'extra', $key)] = $user->$value;
             } else if (isset($all_fields[$value][0])) {
                 $fields[str_replace('key', 'extra', $key)] = $all_fields[$value][0];
