@@ -646,10 +646,28 @@ class Egoi_For_Wp_Public {
         }
     }
     public function egoi_save_account_fields_order( $order_id ) {
-        global $current_user;
-        if($current_user){
-            $this->egoi_save_account_fields($current_user->ID);
+        $api = new Egoi_For_Wp();
+
+        if(is_user_logged_in()){
+            $user = wp_get_current_user();
+            $this->egoi_save_account_fields($user->ID);
+            $sub = $this->get_default_map((array)$user->data);
+
+        }else{//guest buyer
+            $options = $this->load_options();
+            $user = $_POST;
+            $sub = $this->get_default_map($user);
         }
+
+        if(get_option('egoi_mapping')){
+            $sub = $this->egoi_map_subscriber($user, $sub);
+        }
+
+        $subscriber_tags = [ $api->createTagVerified(Egoi_For_Wp::GUEST_BUY) ];
+        if(!empty($user_meta['egoi_newsletter_active']) || !empty($_POST['egoi_newsletter_active']) ){
+            $subscriber_tags[] = $api->createTagVerified(Egoi_For_Wp::TAG_NEWSLETTER);
+        }
+        $api->addSubscriberBulk($options['list'], $subscriber_tags ,[$sub]);
     }
 
     public function egoi_save_account_fields( $customer_id ) {
@@ -668,6 +686,54 @@ class Egoi_For_Wp_Public {
             $sanitized_data['ID'] = $customer_id;
             wp_update_user( $sanitized_data );
         }
+    }
+
+    private function get_default_map($subscriber){
+        $api = new Egoi_For_Wp();
+        return [//basic info
+            'status' => 1,
+            'email' => empty($subscriber['billing_email'])?$subscriber['user_email']:$subscriber['billing_email'],
+            'cellphone' => empty($subscriber['billing_phone'])?$api->smsnf_get_valid_phone($subscriber['shipping_phone']):$api->smsnf_get_valid_phone($subscriber['billing_phone']),
+            'first_name' => empty($subscriber['first_name'])?$subscriber['billing_first_name']:$subscriber['first_name'],
+            'last_name' => empty($subscriber['last_name'])?$subscriber['billing_last_name']:$subscriber['last_name']
+        ];
+    }
+
+    private function egoi_map_subscriber($subscriber, $defaultMap){
+
+        $api = new Egoi_For_Wp();
+
+        if (class_exists('WooCommerce')) {
+            $wc = new WC_Admin_Profile();
+            $woocommerce = [];
+            foreach ($wc->get_customer_meta_fields() as $key => $value_field) {
+                foreach($value_field['fields'] as $key_value => $label){
+                    $row_new_value = $api->getFieldMap(0, $key_value);
+                    if($row_new_value){
+                        $woocommerce[$row_new_value] = $key_value;
+                    }
+                }
+            }
+        }
+
+        foreach ($subscriber as $key => $value) {
+            $row = $api->getFieldMap(0, $key);
+            if($row){
+                $defaultMap[$row] = $value;
+            }
+        }
+
+        foreach($woocommerce as $key => $value){
+            if (isset($subscriber->$value)) {
+                $defaultMap[str_replace('key', 'extra', $key)] = $subscriber->$value;
+            } else if (isset($subscriber[$value]) && !is_array($subscriber[$value]) ) {
+                $defaultMap[str_replace('key', 'extra', $key)] = $subscriber[$value];
+            } else if (isset($subscriber[$value][0])) {
+                $defaultMap[str_replace('key', 'extra', $key)] = $subscriber[$value][0];
+            }
+        }
+
+        return $defaultMap;
     }
 
     public function process_simple_form_add(){

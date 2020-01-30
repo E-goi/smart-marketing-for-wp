@@ -651,7 +651,7 @@ class Egoi_For_Wp {
 			'subscribers' => $subscribers,
 			'compareField' => 'email',
 			'operation' => '2',
-			'tags' => array($tag)
+			'tags' => is_array($tag)?$tag:array($tag)
 		);
 		$result = $api->addSubscriberBulk($params);
        	return $result;
@@ -1039,7 +1039,7 @@ class Egoi_For_Wp {
             curl_close($curl);
 
         } else {
-            throw new Exception("ERROR");
+            throw new Exception("ERROR - Please install curl lib in your website");
         }
 
         return $result;
@@ -1075,7 +1075,7 @@ class Egoi_For_Wp {
 
     	$listen = new Egoi_For_Wp_Listener( $this->get_plugin_name(), $this->get_version() );
 		if($user_id){
-			$listen->Listen_update($user_id);
+			$listen->init($user_id);
 		}
 		
 	}
@@ -1428,13 +1428,6 @@ class Egoi_For_Wp {
             }
         }
         return $phone;
-    }
-
-    public static function get_newsletter_tag_name(){
-        return self::TAG_NEWSLETTER;
-    }
-    public static function get_guest_buy_tag_name(){
-        return self::GUEST_BUY;
     }
 
     public static function getOptionGF(){

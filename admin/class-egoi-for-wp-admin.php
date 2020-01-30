@@ -967,7 +967,7 @@ class Egoi_For_Wp_Admin {
 							echo "<td style='border-bottom: 1px solid #ccc;font-size: 16px;'>".$post->wp_name."</td>";
 						}
 						echo "<td style='border-bottom: 1px solid #ccc;font-size: 16px;'>".$post->egoi_name."</td>
-						<td class='egoi-content-center'><button type='button' id='field_$post->id' class='egoi_fields button button-secondary' data-target='$post->id'>
+						<td class='egoi-content-center' style='border-bottom: 1px solid #ccc;font-size: 16px;'><button type='button' id='field_$post->id' class='egoi_fields button button-secondary' data-target='$post->id'>
 							<span class='dashicons dashicons-trash'></span>
 							</button>
 						</td></tr>";

@@ -40,6 +40,7 @@ class TrackingEngageSDK
             </script>
             <?php
         }
+        if (!class_exists('WooCommerce')) {return false;}
         $this->getProductView();
         $this->getProductsInCart();
     }
