@@ -716,7 +716,12 @@ class Egoi_For_Wp_Public {
         foreach ($subscriber as $key => $value) {
             $row = $api->getFieldMap(0, $key);
             if($row){
-                $defaultMap[$row] = $value;
+                preg_match('/^key_[0-9]+/', $row, $output);
+                if(count($output) > 0){
+                    $defaultMap[str_replace('key_','extra_', $row)] = $value;
+                }else{
+                    $defaultMap[$row] = $value;
+                }
             }
         }
 

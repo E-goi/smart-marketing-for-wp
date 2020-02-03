@@ -67,7 +67,7 @@ class Egoi_For_Wp_Listener {
             $subscriber_tags[] = $admin->createTagVerified(Egoi_For_Wp::TAG_NEWSLETTER);
         }
 
-        $fields = $this->get_default_map((array) $user->data);
+        $fields = $this->get_default_map(array_merge($_POST,(array) $user->data));
 		if(get_option('egoi_mapping')){
 		    $fields = $this->mapping_extras_subscriber($user, $user_id, $fields);
 		}
@@ -144,7 +144,12 @@ class Egoi_For_Wp_Listener {
         foreach ($all_fields as $key => $value) {
             $row = $admin->getFieldMap(0, $key);
             if($row){
-                $fields[$row] = $value[0];
+                preg_match('/^key_[0-9]+/', $row, $output);
+                if(count($output) > 0){
+                    $fields[str_replace('key_','extra_', $row)] = $value[0];
+                }else{
+                    $fields[$row] = $value[0];
+                }
             }
         }
 
