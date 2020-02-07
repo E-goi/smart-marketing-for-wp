@@ -506,33 +506,9 @@ class Egoi_For_Wp {
         if($created_list->ERROR){
         	return $created_list->ERROR;
         }
-        
+
         return $created_list;
 	}
-
-	public function addSubscriberForms($listID, $name, $email, $formID = false) {
-
-		$full_name = explode(' ', $name);
-		$fname = $full_name[0];
-		$lname = $full_name[1];
-
-		$url = $this->restUrl.'addSubscriber&'.http_build_query(array(
-				'functionOptions' => array(
-					'apikey' => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin, 
-					'listID' => $listID, 
-					'first_name' => $fname, 
-					'last_name' => $lname,
-					'email' => $email,
-					'formID' => $formID, 
-					'status' => $formID ? 0 : 1
-					)
-				),'','&');
-
-       	$result_client = json_decode($this->_getContent($url));
-        return $result_client->Egoi_Api->addSubscriber;
-	}
-
 
     /**
      * Check if a tag exists, if not creates, returns id
@@ -637,12 +613,30 @@ class Egoi_For_Wp {
 
        	$result_client = json_decode($this->_getContent($url));
        	if($result_client->Egoi_Api->addSubscriber->status=='success'){
+            require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/TrackingEngageSDK.php';
+       	    TrackingEngageSDK::setUidSession($result_client->Egoi_Api->addSubscriber->UID);
         	return $result_client->Egoi_Api->addSubscriber;
         }
 	}
 
-	public function addSubscriberBulk($listID, $tag, $subscribers = array()) {
+	public function addSubscriberSoap($listID, $tag, $subscriber){
+        $api = new SoapClient($this->url);
+        $params = array_merge(array(
+            'apikey' => $this->_valid['api_key'],
+            'plugin_key' => $this->plugin,
+            'listID' => $listID,
+            'compareField' => 'email',
+            'operation' => '2',
+            'tags' => is_array($tag)?$tag:array($tag)
+        ),$subscriber);
+        $result = $api->addSubscriber($params);
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/TrackingEngageSDK.php';
+        TrackingEngageSDK::setUidSession($result);
+        return $result;
+    }
 
+	public function addSubscriberBulk($listID, $tag, $subscribers = array()) {
+        if(count($subscribers) == 1){ return $this->addSubscriberSoap($listID, $tag, array_shift(array_values($subscribers))); }
 		$api = new SoapClient($this->url);
 		$params = array(
 			'apikey' => $this->_valid['api_key'], 
@@ -731,6 +725,9 @@ class Egoi_For_Wp {
             ),'','&');
 
         $result_client = json_decode($this->_getContent($url));
+        if(!empty($result_client->Egoi_Api->addSubscriber->UID)){
+            TrackingEngageSDK::setUidSession($result_client->Egoi_Api->addSubscriber->UID);
+        }
         return $result_client->Egoi_Api->addSubscriber;
     }
 

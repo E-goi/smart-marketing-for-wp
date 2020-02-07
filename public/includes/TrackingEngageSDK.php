@@ -7,6 +7,7 @@ class TrackingEngageSDK
     protected $list_id;
     protected $order_id;
     const OPTION_FLAG = 'order_trigger_';
+    const SESSION_TAG = 'egoi_tracking_uid';
 
     public function __construct($client_id, $list_id, $order_id = false)
     {
@@ -122,6 +123,10 @@ class TrackingEngageSDK
      * @return bool | string
      */
     private function checkSubscriber(){
+        if(self::getUserMeta() !== false){
+            return self::getUserMeta();
+        }
+        if(isset($_SESSION[self::SESSION_TAG])){return $_SESSION[self::SESSION_TAG]; }
         $current_user = wp_get_current_user();
         if ( ! $current_user->exists() ){ return false; }
         return $current_user->user_email;
@@ -169,6 +174,28 @@ class TrackingEngageSDK
 
         return true;
 
+    }
+
+    public static function setUidSession($uid){
+        if( is_array($uid) && isset($uid['UID'])){
+            $_SESSION[self::SESSION_TAG] = $uid['UID'];
+            self::setUserMeta($uid['UID']);
+        }else if(  !is_array($uid) ){
+            $_SESSION[self::SESSION_TAG] = $uid;
+            self::setUserMeta($uid);
+        }
+    }
+
+    private static function setUserMeta($uid){
+        $current_user = wp_get_current_user();
+        if ( ! $current_user->exists() ){ return false; }
+        update_user_meta($current_user->ID, self::SESSION_TAG, $uid);
+    }
+
+    private static function getUserMeta(){
+        $current_user = wp_get_current_user();
+        if ( ! $current_user->exists() ){ return false; }
+        return get_user_meta($current_user->ID, self::SESSION_TAG);
     }
 
 }
