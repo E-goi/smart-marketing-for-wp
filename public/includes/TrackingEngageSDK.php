@@ -123,7 +123,7 @@ class TrackingEngageSDK
      * @return bool | string
      */
     private function checkSubscriber(){
-        if(self::getUserMeta() !== false){
+        if(!empty(self::getUserMeta())){
             return self::getUserMeta();
         }
         if(isset($_SESSION[self::SESSION_TAG])){return $_SESSION[self::SESSION_TAG]; }
