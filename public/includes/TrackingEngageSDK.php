@@ -195,7 +195,7 @@ class TrackingEngageSDK
     private static function getUserMeta(){
         $current_user = wp_get_current_user();
         if ( ! $current_user->exists() ){ return false; }
-        return get_user_meta($current_user->ID, self::SESSION_TAG);
+        return get_user_meta($current_user->ID, self::SESSION_TAG, true);
     }
 
 }
