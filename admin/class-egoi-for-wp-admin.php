@@ -651,8 +651,8 @@ class Egoi_For_Wp_Admin {
                         }
                     }
 
-                    $subscribers['telephone'] = $api->smsnf_get_valid_phone($subscribers['telephone']);
-                    $subscribers['cellphone'] = $api->smsnf_get_valid_phone($subscribers['cellphone']);
+                    $subscribers['telephone'] = Egoi_For_Wp::smsnf_get_valid_phone($subscribers['telephone'],!empty($user_meta['billing_country'][0])?$user_meta['billing_country'][0]:$user_meta['shipping_country'][0]);
+                    $subscribers['cellphone'] = Egoi_For_Wp::smsnf_get_valid_phone($subscribers['cellphone'],!empty($user_meta['billing_country'][0])?$user_meta['billing_country'][0]:$user_meta['shipping_country'][0]);
 
                     $subs[] = $subscribers;
 

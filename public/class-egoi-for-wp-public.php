@@ -684,12 +684,11 @@ class Egoi_For_Wp_Public {
     }
 
     private function get_default_map($subscriber){
-        $api = new Egoi_For_Wp();
         if(is_array($subscriber)){
             return [//basic info
                 'status' => 1,
                 'email' => empty($subscriber['user_email'])?$subscriber['billing_email']:$subscriber['user_email'],
-                'cellphone' => empty($subscriber['billing_phone'])?$api->smsnf_get_valid_phone($subscriber['shipping_phone']):$api->smsnf_get_valid_phone($subscriber['billing_phone']),
+                'cellphone' => empty($subscriber['billing_phone'])?Egoi_For_Wp::smsnf_get_valid_phone($subscriber['shipping_phone'],(empty($subscriber['billing_country'])?$subscriber['shipping_country']:$subscriber['billing_country'])):Egoi_For_Wp::smsnf_get_valid_phone($subscriber['billing_phone']),
                 'first_name' => empty($subscriber['first_name'])?$subscriber['billing_first_name']:$subscriber['first_name'],
                 'last_name' => empty($subscriber['last_name'])?$subscriber['billing_last_name']:$subscriber['last_name']
             ];
