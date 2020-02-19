@@ -253,7 +253,7 @@ if (strpos($locale, 'pt') !== false) {
                                                 <br><?php _e('Join an Unlimited Sending plan.', 'egoi-for-wp'); ?>
                                             </p>
                                         </td>
-                                        <td style="min-width: 140px;" align="right">
+                                        <td style="min-width: 153px;" align="right">
                                             <a href="<?=$link_price?>" target="_blank" style="font-weight:  bold; font-size: 14px; text-decoration: none; background-color: white; color: #04afdb; padding: 10px 20px; border-radius: 20px;"><?php _e('Join Now','egoi-for-wp'); ?></a>
                                         </td>
                                     </tr>

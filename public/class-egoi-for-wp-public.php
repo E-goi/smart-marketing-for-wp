@@ -90,7 +90,6 @@ class Egoi_For_Wp_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
 		$bar_post = get_option(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 
         wp_enqueue_script( 'ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-forms.js', array( 'jquery' ), $this->version, false );
@@ -646,10 +645,24 @@ class Egoi_For_Wp_Public {
         }
     }
     public function egoi_save_account_fields_order( $order_id ) {
-        global $current_user;
-        if($current_user){
-            $this->egoi_save_account_fields($current_user->ID);
+        $api = new Egoi_For_Wp();
+
+        if(is_user_logged_in()){
+            return;
+        }else{//guest buyer
+            $options = $this->load_options();
+            $user = $_POST;
+            $sub = $this->get_default_map($user);
+            if(get_option('egoi_mapping')){
+                $sub = $this->egoi_map_subscriber($user, $sub);
+            }
+
         }
+        $subscriber_tags = [ $api->createTagVerified(Egoi_For_Wp::GUEST_BUY) ];
+        if(!empty($user_meta['egoi_newsletter_active']) || !empty($_POST['egoi_newsletter_active']) ){
+            $subscriber_tags[] = $api->createTagVerified(Egoi_For_Wp::TAG_NEWSLETTER);
+        }
+        $api->addSubscriberBulk($options['list'], $subscriber_tags ,[$sub]);
     }
 
     public function egoi_save_account_fields( $customer_id ) {
@@ -668,6 +681,60 @@ class Egoi_For_Wp_Public {
             $sanitized_data['ID'] = $customer_id;
             wp_update_user( $sanitized_data );
         }
+    }
+
+    private function get_default_map($subscriber){
+        if(is_array($subscriber)){
+            return [//basic info
+                'status' => 1,
+                'email' => empty($subscriber['user_email'])?$subscriber['billing_email']:$subscriber['user_email'],
+                'cellphone' => empty($subscriber['billing_phone'])?Egoi_For_Wp::smsnf_get_valid_phone($subscriber['shipping_phone'],(empty($subscriber['billing_country'])?$subscriber['shipping_country']:$subscriber['billing_country'])):Egoi_For_Wp::smsnf_get_valid_phone($subscriber['billing_phone']),
+                'first_name' => empty($subscriber['first_name'])?$subscriber['billing_first_name']:$subscriber['first_name'],
+                'last_name' => empty($subscriber['last_name'])?$subscriber['billing_last_name']:$subscriber['last_name']
+            ];
+        }
+    }
+
+    private function egoi_map_subscriber($subscriber, $defaultMap){
+
+        $api = new Egoi_For_Wp();
+
+        if (class_exists('WooCommerce')) {
+            $wc = new WC_Admin_Profile();
+            $woocommerce = [];
+            foreach ($wc->get_customer_meta_fields() as $key => $value_field) {
+                foreach($value_field['fields'] as $key_value => $label){
+                    $row_new_value = $api->getFieldMap(0, $key_value);
+                    if($row_new_value){
+                        $woocommerce[$row_new_value] = $key_value;
+                    }
+                }
+            }
+        }
+
+        foreach ($subscriber as $key => $value) {
+            $row = $api->getFieldMap(0, $key);
+            if($row){
+                preg_match('/^key_[0-9]+/', $row, $output);
+                if(count($output) > 0){
+                    $defaultMap[str_replace('key_','extra_', $row)] = $value;
+                }else{
+                    $defaultMap[$row] = $value;
+                }
+            }
+        }
+
+        foreach($woocommerce as $key => $value){
+            if (isset($subscriber->$value)) {
+                $defaultMap[str_replace('key', 'extra', $key)] = $subscriber->$value;
+            } else if (isset($subscriber[$value]) && !is_array($subscriber[$value]) ) {
+                $defaultMap[str_replace('key', 'extra', $key)] = $subscriber[$value];
+            } else if (isset($subscriber[$value][0])) {
+                $defaultMap[str_replace('key', 'extra', $key)] = $subscriber[$value][0];
+            }
+        }
+
+        return $defaultMap;
     }
 
     public function process_simple_form_add(){
@@ -775,6 +842,71 @@ class Egoi_For_Wp_Public {
         }
         echo $output;
         wp_die();
+    }
+
+    public function hookEcommerce(){
+
+        $options = $this->load_options();
+
+        if(empty($options['list']) || empty($options['track'])){return false;} //list && tracking&engage setup check
+        $client_info = get_option('egoi_client');
+        $client_id = $client_info->CLIENTE_ID;
+
+        require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
+        $track = new TrackingEngageSDK($client_id, $options['list']);
+        $track->getStartUp();
+    }
+
+    public function hookEcommerceSetOrder($order_id = false){
+
+        $options = $this->load_options();
+
+        if(empty($options['list']) || empty($options['track'])){return false;} //list && tracking&engage setup check
+        $client_info = get_option('egoi_client');
+        $client_id = $client_info->CLIENTE_ID;
+
+        require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
+        $track = new TrackingEngageSDK($client_id, $options['list'], $order_id);
+        $track->setOrder();
+    }
+
+    public function hookEcommerceGetOrder($order = false){
+
+        $options = $this->load_options();
+
+        if(empty($options['list']) || empty($options['track'])){return false;} //list && tracking&engage setup check
+        $client_info = get_option('egoi_client');
+        $client_id = $client_info->CLIENTE_ID;
+
+        if( version_compare( get_option( 'woocommerce_version' ), '3.0.0', ">=" ) ) {
+            $order_id = $order->get_id();
+        } else {
+            $order_id = $order->id;
+        }
+
+        require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
+        $track = new TrackingEngageSDK($client_id, $options['list'], $order_id);
+        $track->getOrder();
+    }
+
+    private function load_options() {
+
+        static $defaults = array(
+            'list' => '',
+            'enabled' => 0,
+            'egoi_newsletter_active' => 0,
+            'track' => 1,
+            'role' => 'All'
+        );
+
+        if(!get_option( Egoi_For_Wp_Admin::OPTION_NAME, array() )) {
+            add_option( Egoi_For_Wp_Admin::OPTION_NAME, array($defaults) );
+        }else{
+            $options = (array) get_option( Egoi_For_Wp_Admin::OPTION_NAME, array() );
+
+            $options = array_merge($defaults, $options);
+            return (array) apply_filters( 'egoi_sync_options', $options );
+        }
     }
 
 }

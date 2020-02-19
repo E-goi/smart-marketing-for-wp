@@ -103,9 +103,260 @@ class Egoi_For_Wp {
 	 *
 	 * @since  1.0.0
 	 */
-	const PAGE_SLUG = 'egoi4wp-form-preview';
+	const PAGE_SLUG         = 'egoi4wp-form-preview';
     const TAG_NEWSLETTER    = 'wp_newsletter';
     const GUEST_BUY         = 'wp_guest_client';
+    const ORDER_TNG_FLAG    = 'egoi_order_tng_';
+    const COUNTRY_DIAL = array (
+        'AF' => '93',
+        'AL' => '355',
+        'DZ' => '213',
+        'AS' => '1-684',
+        'AD' => '376',
+        'AO' => '244',
+        'AI' => '1-264',
+        'AQ' => '672',
+        'AG' => '1-268',
+        'AR' => '54',
+        'AM' => '374',
+        'AW' => '297',
+        'AU' => '61',
+        'AT' => '43',
+        'AZ' => '994',
+        'BS' => '1-242',
+        'BH' => '973',
+        'BD' => '880',
+        'BB' => '1-246',
+        'BY' => '375',
+        'BE' => '32',
+        'BZ' => '501',
+        'BJ' => '229',
+        'BM' => '1-441',
+        'BT' => '975',
+        'BO' => '591',
+        'BA' => '387',
+        'BW' => '267',
+        'BV' => '47',
+        'BR' => '55',
+        'IO' => '246',
+        'VG' => '1-284',
+        'BN' => '673',
+        'BG' => '359',
+        'BF' => '226',
+        'BI' => '257',
+        'KH' => '855',
+        'CM' => '237',
+        'CA' => '1',
+        'CV' => '238',
+        'BQ' => '599',
+        'KY' => '1-345',
+        'CF' => '236',
+        'TD' => '235',
+        'CL' => '56',
+        'CN' => '86',
+        'CX' => '61',
+        'CC' => '61',
+        'CO' => '57',
+        'KM' => '269',
+        'CG' => '242',
+        'CD' => '243',
+        'CK' => '682',
+        'CR' => '506',
+        'HR' => '385',
+        'CU' => '53',
+        'CW' => '599',
+        'CY' => '357',
+        'CZ' => '420',
+        'CI' => '225',
+        'DK' => '45',
+        'DJ' => '253',
+        'DM' => '1-767',
+        'DO' => '1-809,1-829,1-849',
+        'EC' => '593',
+        'EG' => '20',
+        'SV' => '503',
+        'GQ' => '240',
+        'ER' => '291',
+        'EE' => '372',
+        'ET' => '251',
+        'FK' => '500',
+        'FO' => '298',
+        'FJ' => '679',
+        'FI' => '358',
+        'FR' => '33',
+        'GF' => '594',
+        'PF' => '689',
+        'TF' => '262',
+        'GA' => '241',
+        'GM' => '220',
+        'GE' => '995',
+        'DE' => '49',
+        'GH' => '233',
+        'GI' => '350',
+        'GR' => '30',
+        'GL' => '299',
+        'GD' => '1-473',
+        'GP' => '590',
+        'GU' => '1-671',
+        'GT' => '502',
+        'GG' => '44',
+        'GN' => '224',
+        'GW' => '245',
+        'GY' => '592',
+        'HT' => '509',
+        'HM' => '672',
+        'HN' => '504',
+        'HK' => '852',
+        'HU' => '36',
+        'IS' => '354',
+        'IN' => '91',
+        'ID' => '62',
+        'IR' => '98',
+        'IQ' => '964',
+        'IE' => '353',
+        'IM' => '44',
+        'IL' => '972',
+        'IT' => '39',
+        'JM' => '1-876',
+        'JP' => '81',
+        'JE' => '44',
+        'JO' => '962',
+        'KZ' => '7',
+        'KE' => '254',
+        'KI' => '686',
+        'KW' => '965',
+        'KG' => '996',
+        'LA' => '856',
+        'LV' => '371',
+        'LB' => '961',
+        'LS' => '266',
+        'LR' => '231',
+        'LY' => '218',
+        'LI' => '423',
+        'LT' => '370',
+        'LU' => '352',
+        'MO' => '853',
+        'MK' => '389',
+        'MG' => '261',
+        'MW' => '265',
+        'MY' => '60',
+        'MV' => '960',
+        'ML' => '223',
+        'MT' => '356',
+        'MH' => '692',
+        'MQ' => '596',
+        'MR' => '222',
+        'MU' => '230',
+        'YT' => '262',
+        'MX' => '52',
+        'FM' => '691',
+        'MD' => '373',
+        'MC' => '377',
+        'MN' => '976',
+        'ME' => '382',
+        'MS' => '1-664',
+        'MA' => '212',
+        'MZ' => '258',
+        'MM' => '95',
+        'NA' => '264',
+        'NR' => '674',
+        'NP' => '977',
+        'NL' => '31',
+        'NC' => '687',
+        'NZ' => '64',
+        'NI' => '505',
+        'NE' => '227',
+        'NG' => '234',
+        'NU' => '683',
+        'NF' => '672',
+        'KP' => '850',
+        'MP' => '1-670',
+        'NO' => '47',
+        'OM' => '968',
+        'PK' => '92',
+        'PW' => '680',
+        'PS' => '970',
+        'PA' => '507',
+        'PG' => '675',
+        'PY' => '595',
+        'PE' => '51',
+        'PH' => '63',
+        'PN' => '870',
+        'PL' => '48',
+        'PT' => '351',
+        'PR' => '1',
+        'QA' => '974',
+        'RO' => '40',
+        'RU' => '7',
+        'RW' => '250',
+        'RE' => '262',
+        'WS' => '685',
+        'SM' => '378',
+        'SA' => '966',
+        'SN' => '221',
+        'RS' => '381 p',
+        'SC' => '248',
+        'SL' => '232',
+        'SG' => '65',
+        'SX' => '1-721',
+        'SK' => '421',
+        'SI' => '386',
+        'SB' => '677',
+        'SO' => '252',
+        'ZA' => '27',
+        'GS' => '500',
+        'KR' => '82',
+        'SS' => '211',
+        'ES' => '34',
+        'LK' => '94',
+        'BL' => '590',
+        'SH' => '290 n',
+        'KN' => '1-869',
+        'LC' => '1-758',
+        'MF' => '590',
+        'PM' => '508',
+        'VC' => '1-784',
+        'SD' => '249',
+        'SR' => '597',
+        'SJ' => '47',
+        'SZ' => '268',
+        'SE' => '46',
+        'CH' => '41',
+        'SY' => '963',
+        'ST' => '239',
+        'TW' => '886',
+        'TJ' => '992',
+        'TZ' => '255',
+        'TH' => '66',
+        'TL' => '670',
+        'TG' => '228',
+        'TK' => '690',
+        'TO' => '676',
+        'TT' => '1-868',
+        'TN' => '216',
+        'TR' => '90',
+        'TM' => '993',
+        'TC' => '1-649',
+        'TV' => '688',
+        'VI' => '1-340',
+        'GB' => '44',
+        'US' => '1',
+        'UG' => '256',
+        'UA' => '380',
+        'AE' => '971',
+        'UY' => '598',
+        'UZ' => '998',
+        'VU' => '678',
+        'VA' => '39-06',
+        'VE' => '58',
+        'VN' => '84',
+        'WF' => '681',
+        'EH' => '212',
+        'YE' => '967',
+        'ZM' => '260',
+        'ZW' => '263',
+        'AX' => '358',
+    );
 
 	/**
 	 * Constructor
@@ -381,6 +632,12 @@ class Egoi_For_Wp {
         $this->loader->add_action('woocommerce_save_account_details', $plugin_public, 'egoi_save_account_fields', 10);
         $this->loader->add_action('woocommerce_new_order', $plugin_public, 'egoi_save_account_fields_order', 10,1);
 
+
+        //Tracking&Engage
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'hookEcommerce', 99999);
+        $this->loader->add_action('woocommerce_new_order', $plugin_public, 'hookEcommerceSetOrder', 99999, 1);
+        $this->loader->add_action('woocommerce_order_details_after_order_table', $plugin_public, 'hookEcommerceGetOrder', 99999, 1);
+
     }
 
 	/**
@@ -499,33 +756,9 @@ class Egoi_For_Wp {
         if($created_list->ERROR){
         	return $created_list->ERROR;
         }
-        
+
         return $created_list;
 	}
-
-	public function addSubscriberForms($listID, $name, $email, $formID = false) {
-
-		$full_name = explode(' ', $name);
-		$fname = $full_name[0];
-		$lname = $full_name[1];
-
-		$url = $this->restUrl.'addSubscriber&'.http_build_query(array(
-				'functionOptions' => array(
-					'apikey' => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin, 
-					'listID' => $listID, 
-					'first_name' => $fname, 
-					'last_name' => $lname,
-					'email' => $email,
-					'formID' => $formID, 
-					'status' => $formID ? 0 : 1
-					)
-				),'','&');
-
-       	$result_client = json_decode($this->_getContent($url));
-        return $result_client->Egoi_Api->addSubscriber;
-	}
-
 
     /**
      * Check if a tag exists, if not creates, returns id
@@ -630,12 +863,30 @@ class Egoi_For_Wp {
 
        	$result_client = json_decode($this->_getContent($url));
        	if($result_client->Egoi_Api->addSubscriber->status=='success'){
+            require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/TrackingEngageSDK.php';
+       	    TrackingEngageSDK::setUidSession($result_client->Egoi_Api->addSubscriber->UID);
         	return $result_client->Egoi_Api->addSubscriber;
         }
 	}
 
-	public function addSubscriberBulk($listID, $tag, $subscribers = array()) {
+	public function addSubscriberSoap($listID, $tag, $subscriber){
+        $api = new SoapClient($this->url);
+        $params = array_merge(array(
+            'apikey' => $this->_valid['api_key'],
+            'plugin_key' => $this->plugin,
+            'listID' => $listID,
+            'compareField' => 'email',
+            'operation' => '2',
+            'tags' => is_array($tag)?$tag:array($tag)
+        ),$subscriber);
+        $result = $api->addSubscriber($params);
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/TrackingEngageSDK.php';
+        TrackingEngageSDK::setUidSession($result);
+        return $result;
+    }
 
+	public function addSubscriberBulk($listID, $tag, $subscribers = array()) {
+        if(count($subscribers) == 1){ return $this->addSubscriberSoap($listID, $tag, array_shift(array_values($subscribers))); }
 		$api = new SoapClient($this->url);
 		$params = array(
 			'apikey' => $this->_valid['api_key'], 
@@ -644,7 +895,7 @@ class Egoi_For_Wp {
 			'subscribers' => $subscribers,
 			'compareField' => 'email',
 			'operation' => '2',
-			'tags' => array($tag)
+			'tags' => is_array($tag)?$tag:array($tag)
 		);
 		$result = $api->addSubscriberBulk($params);
        	return $result;
@@ -724,6 +975,9 @@ class Egoi_For_Wp {
             ),'','&');
 
         $result_client = json_decode($this->_getContent($url));
+        if(!empty($result_client->Egoi_Api->addSubscriber->UID)){
+            TrackingEngageSDK::setUidSession($result_client->Egoi_Api->addSubscriber->UID);
+        }
         return $result_client->Egoi_Api->addSubscriber;
     }
 
@@ -863,7 +1117,7 @@ class Egoi_For_Wp {
 
 	public function getExtraFields($listID) {
 
-		$url = $this->restUrl.'getExtraFields&'.http_build_query(array(
+        $url = $this->restUrl.'getExtraFields&'.http_build_query(array(
 				'functionOptions' => array(
 					'apikey' => $this->_valid['api_key'],
 					'plugin_key' => $this->plugin,
@@ -1032,7 +1286,7 @@ class Egoi_For_Wp {
             curl_close($curl);
 
         } else {
-            throw new Exception("ERROR");
+            throw new Exception("ERROR - Please install curl lib in your website");
         }
 
         return $result;
@@ -1068,7 +1322,7 @@ class Egoi_For_Wp {
 
     	$listen = new Egoi_For_Wp_Listener( $this->get_plugin_name(), $this->get_version() );
 		if($user_id){
-			$listen->Listen_update($user_id);
+			$listen->init($user_id);
 		}
 		
 	}
@@ -1407,7 +1661,7 @@ class Egoi_For_Wp {
      * @param $phone
      * @return string
      */
-    public function smsnf_get_valid_phone($phone) {
+    public static function smsnf_get_valid_phone($phone, $country = null) {
         // micro integration with woocommerce checkout fields brazil plugin
         if (is_plugin_active('woocommerce-extra-checkout-fields-for-brazil/woocommerce-extra-checkout-fields-for-brazil.php')) {
             preg_match('#\((.*?)\)#', $phone, $match_phone);
@@ -1419,15 +1673,29 @@ class Egoi_For_Wp {
                     return '55-'.preg_replace('/[^0-9]/', '', $phone);
                 }
             }
-        }
-        return $phone;
-    }
+        } else if(!empty($country) && !empty(self::COUNTRY_DIAL[strtoupper($country)])){
+            $phone = preg_replace('/\(|\)|\ /', '', $phone);
+            $phone_array = explode('-',$phone);
+            if(count($phone_array) == 2){
+                foreach (self::COUNTRY_DIAL as  $code => $dial){
+                    if($dial == $phone_array[0]){return $phone;}
+                }
+            }else{
+                return self::COUNTRY_DIAL[strtoupper($country)].'-'.implode('',$phone_array);
+            }
+        }else{
+            $phone = preg_replace('/\(|\)|\ /', '', $phone);
+            $phone_array = explode('-',$phone);
 
-    public static function get_newsletter_tag_name(){
-        return self::TAG_NEWSLETTER;
-    }
-    public static function get_guest_buy_tag_name(){
-        return self::GUEST_BUY;
+            if(count($phone_array) == 2) {
+                return $phone;
+            }
+
+            $country = get_option('woocommerce_default_country');
+            $country = explode( ':', $country,2)[0];
+
+            return self::COUNTRY_DIAL[strtoupper($country)].'-'.implode('',$phone_array);
+        }
     }
 
     public static function getOptionGF(){
@@ -1463,7 +1731,7 @@ class Egoi_For_Wp {
         $options = get_option(Egoi_For_Wp_Admin::OPTION_NAME);
 
         $Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
-        $extra = $Egoi4WpBuilderObject->getExtraFields($options->list);
+        $extra = (array) $Egoi4WpBuilderObject->getExtraFields(empty($options['list'])?$options->list:$options['list']);
 
         $egoi_fields = array(
             'first_name'    => __('First name','egoi-for-wp'),
@@ -1474,12 +1742,13 @@ class Egoi_For_Wp {
             'birth_date'    => __('Birth Date','egoi-for-wp'),
         );
 
-        if($options->list){
-            if($extra){
-                foreach($extra as $key => $extra_field){
-                    $egoi_fields[$key] = $extra_field->NAME;
-                }
+        if( (!empty($options->list) || !empty($options['list'])) && $extra){
+
+            foreach($extra as $key => $extra_field){
+                $egoi_extra_field_key = str_replace('key_', 'extra_' , $key);
+                $egoi_fields[$egoi_extra_field_key] = $extra_field->NAME;
             }
+
         }
 
         return $egoi_fields;

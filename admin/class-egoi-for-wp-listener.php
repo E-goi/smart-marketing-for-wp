@@ -20,7 +20,6 @@ class Egoi_For_Wp_Listener {
 	}
 
 	public function init($user_id){
-
 		if ($this->isActive()){
 			if($user_id){
 				$this->Listen($user_id);
@@ -53,8 +52,11 @@ class Egoi_For_Wp_Listener {
 	}
 
 	private function Listen($user_id){
+        $role = $this->options_listen['role'];
 
-		$user = get_userdata($user_id);
+        $user = get_userdata($user_id);
+
+        if(!empty($role) && $role != $user->roles[0]) { return $user_id; }
 
 		$list = $this->options_listen['list'];
 
@@ -65,114 +67,99 @@ class Egoi_For_Wp_Listener {
             $subscriber_tags[] = $admin->createTagVerified(Egoi_For_Wp::TAG_NEWSLETTER);
         }
 
-		//mapping fields
+        $fields = $this->get_default_map(array_merge($_POST,(array) $user->data));
 		if(get_option('egoi_mapping')){
-			
-			$op = 1;
-			$all_fields = get_user_meta($user_id);
-			$all_fields['user_email'][0] = $user->user_email;
-			$all_fields['user_url'][0] = $user->user_url;
-			$all_fields['user_login'][0] = $user->user_login;
-
-            if (!empty($_POST['billing_first_name'])) {
-                $all_fields['billing_first_name'][0] = $_POST['billing_first_name'];
-            }
-            if (!empty($_POST['billing_last_name'])) {
-                $all_fields['billing_last_name'][0] = $_POST['billing_last_name'];
-            }
-            if (!empty($_POST['billing_phone'])) {
-                $all_fields['billing_phone'][0] = $_POST['billing_phone'];
-            }
-            if (!empty($_POST['billing_cellphone'])) {
-                $all_fields['billing_cellphone'][0] = $_POST['billing_cellphone'];
-            }
-
-			foreach ($all_fields as $key => $value) {
-				$row = $admin->getFieldMap(0, $key);
-				if($row){
-					$fields[$row] = $value[0];
-				}
-			}
+		    $fields = $this->mapping_extras_subscriber($user, $user_id, $fields);
 		}
 
-		$role = $this->options_listen['role'];
-		$email = $user->user_email;
+        $fields['email'] = !empty($fields['email'])?$fields['email']:$user->user_email;
 
-        $fields['telephone'] = $admin->smsnf_get_valid_phone($fields['telephone']);
-        $fields['cellphone'] = $admin->smsnf_get_valid_phone($fields['cellphone']);
+        $subscriber_tags[] = $admin->createTagVerified($user->roles[0]);
+        $admin->addSubscriberBulk($list, $subscriber_tags ,[$fields]);
 
-		if(empty($role) || $role == $user->roles[0]){
-
-            $subscriber_tags[] = $admin->createTagVerified($user->roles[0]);
-            $admin->addSubscriberTags($list, $email, $subscriber_tags, '', '', $role, $fields, $op);
-
-		}
 			
 	}
 
-    public function Listen_update($user_id) {
+    private function get_default_map($subscriber){
+        if(!empty($subscriber['billing_country'])){
+            $country = $subscriber['billing_country'];
+        } else if ($subscriber['shipping_country']){
+            $country = $subscriber['shipping_country'];
+        }else{
+            $country = null;
+        }
+        return [//basic info
+            'status' => 1,
+            'email' => empty($subscriber['billing_email'])?$subscriber['user_email']:$subscriber['billing_email'],
+            'cellphone' => empty($subscriber['billing_phone'])?Egoi_For_Wp::smsnf_get_valid_phone($subscriber['shipping_phone'],$country):Egoi_For_Wp::smsnf_get_valid_phone($subscriber['billing_phone'],$country),
+            'first_name' => empty($subscriber['first_name'])?$subscriber['billing_first_name']:$subscriber['first_name'],
+            'last_name' => empty($subscriber['last_name'])?$subscriber['billing_last_name']:$subscriber['last_name']
+        ];
+    }
 
-        if ($this->isActive()){
-            $user = get_userdata($user_id);
-            $role = $user->roles[0];
-            $email = $user->user_email;
-            $fname = ucfirst($user->display_name);
-            $role_option = $this->options_listen['role'];
-            $list = $this->options_listen['list'];
+	private function mapping_extras_subscriber($user, $user_id, $fields = []){
+        $admin = new Egoi_For_Wp();
 
-            $admin = new Egoi_For_Wp();
+        $all_fields = get_user_meta($user_id);
+        $all_fields['user_email'][0] = $user->user_email;
+        $all_fields['user_url'][0] = $user->user_url;
+        $all_fields['user_login'][0] = $user->user_login;
 
-            if(!empty($role) && $role != $user->roles[0]){//role not to sync
-                return;
+        if(is_array($_POST)){
+            foreach ($_POST as $key => $item) {
+                if(strpos($key,'billing_') === false){ continue; }
+                $all_fields[$key][0] = $item;
             }
+        }
 
-            $subscriber_tags=[];
-            if(!empty($user->egoi_newsletter_active) || !empty($_POST['egoi_newsletter_active'])){
-                $subscriber_tags[] = $admin->createTagVerified(Egoi_For_Wp::TAG_NEWSLETTER);
-            }
+        if (!empty($_POST['billing_first_name'])) {
+            $all_fields['billing_first_name'][0] = $_POST['billing_first_name'];
+        }
+        if (!empty($_POST['billing_last_name'])) {
+            $all_fields['billing_last_name'][0] = $_POST['billing_last_name'];
+        }
+        if (!empty($_POST['billing_phone'])) {
+            $all_fields['billing_phone'][0] = $_POST['billing_phone'];
+        }
+        if (!empty($_POST['billing_cellphone'])) {
+            $all_fields['billing_cellphone'][0] = $_POST['billing_cellphone'];
+        }
 
-            //mapping fields
-            if(get_option('egoi_mapping')){
+        $woocommerce = [];
 
-                $op = 1;
-                $all_fields = get_user_meta($user_id);
-
-                $all_fields['user_email'][0] = $email;
-                $all_fields['user_url'][0] = $user->user_url;
-                $all_fields['user_login'][0] = $user->user_login;
-
-                if (!empty($_POST['billing_first_name'])) {
-                    $all_fields['billing_first_name'][0] = $_POST['billing_first_name'];
-                }
-                if (!empty($_POST['billing_last_name'])) {
-                    $all_fields['billing_last_name'][0] = $_POST['billing_last_name'];
-                }
-                if (!empty($_POST['billing_phone'])) {
-                    $all_fields['billing_phone'][0] = $_POST['billing_phone'];
-                }
-                if (!empty($_POST['billing_cellphone'])) {
-                    $all_fields['billing_cellphone'][0] = $_POST['billing_cellphone'];
-                }
-
-                foreach ($all_fields as $key => $value) {
-                    $row = $admin->getFieldMap(0, $key);
-                    if($row){
-                        $fields[$row] = $value[0];
+        if (class_exists('WooCommerce')) {
+            $wc = new WC_Admin_Profile();
+            foreach ($wc->get_customer_meta_fields() as $key => $value_field) {
+                foreach($value_field['fields'] as $key_value => $label){
+                    $row_new_value = $admin->getFieldMap(0, $key_value);
+                    if($row_new_value){
+                        $woocommerce[$row_new_value] = $key_value;
                     }
                 }
-
             }
-
-            $fields['telephone'] = $admin->smsnf_get_valid_phone($fields['telephone']);
-            $fields['cellphone'] = $admin->smsnf_get_valid_phone($fields['cellphone']);
-
-            $get_user = $admin->editSubscriber($list, $email, $role, $fname, '', $fields, $op,[],$subscriber_tags);
-
-            if($get_user->ERROR == 'SUBSCRIBER_NOT_FOUND'){
-                $admin->addSubscriber($list, $fname, $email, '',true,!empty($fields['cellphone'])?$fields['cellphone']:'',$subscriber_tags,!empty($fields['telephone'])?$fields['telephone']:'');
-            }
-
         }
+
+        foreach($woocommerce as $key => $value){
+            if (isset($user->$value) && !isset($all_fields[$value][0]) ) {
+                $fields[str_replace('key', 'extra', $key)] = $user->$value;
+            } else if (isset($all_fields[$value][0])) {
+                $fields[str_replace('key', 'extra', $key)] = $all_fields[$value][0];
+            }
+        }
+
+        foreach ($all_fields as $key => $value) {
+            $row = $admin->getFieldMap(0, $key);
+            if($row){
+                preg_match('/^key_[0-9]+/', $row, $output);
+                if(count($output) > 0){
+                    $fields[str_replace('key_','extra_', $row)] = $value[0];
+                }else{
+                    $fields[$row] = $value[0];
+                }
+            }
+        }
+
+        return $fields;
 
     }
 
