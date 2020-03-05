@@ -1651,7 +1651,7 @@ class Egoi_For_Wp {
         return apply_filters( 'egoi_account_fields', array(
             'egoi_newsletter_active' => array(
                 'type'          => 'checkbox',
-                'class'         => array('input-checkbox'),
+                'class'         => array('input-checkbox', 'egoi-custom-checkbox'),
                 'label'         => __( 'Subscribe to newsletter', 'egoi-for-wp' ),
             ),
         ) );
