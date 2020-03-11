@@ -12,13 +12,22 @@ $page = array(
 );
 if(isset($_POST['action'])){
 
-	$post = $_POST;
-	update_option('egoi_sync', array_merge($this->options_list, $post['egoi_sync']));
+    $post = $_POST;
+    $options = array_merge($this->options_list, $post['egoi_sync'], $post['egoi_sync_social']);
+    if(!empty($post['egoi_sync_social'])){
+        $api = new EgoiApiV3($apikey);
+
+        $social_track_id = $api->getEgoiSyncSocial();
+        if(!empty($social_track_id)){
+            $options = array_merge($options, ['social_track_id' => $social_track_id]);
+        }
+    }
+
+    update_option('egoi_sync', $options);
 
     echo get_notification(__('Success!', 'egoi-for-wp'), __('Ecommerce Option Updated!', 'egoi-for-wp'));
 
 	$options = get_option('egoi_sync');
-
 }else{
 	$options = $this->options_list;
 }
@@ -91,6 +100,13 @@ if(isset($_POST['action'])){
                             </div>
                         </div>
 
+                        <div class="smsnf-input-group">
+                            <label for="egoi_sync_social"><?php _e( 'Activate Social Track&Engage', 'egoi-for-wp' ); ?></label>
+                            <div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
+                                <label><input type="radio"  name="egoi_sync_social[social_track]" <?php checked( $options['social_track'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+                                <label><input type="radio" name="egoi_sync_social[social_track]" <?php checked( $options['social_track'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+                            </div>
+                        </div>
 
                         <div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
                             <div class="smsnf-input-group">

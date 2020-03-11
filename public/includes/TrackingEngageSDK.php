@@ -5,15 +5,17 @@ class TrackingEngageSDK
 {
     protected $client_id;
     protected $list_id;
+    protected $social_id;
     protected $order_id;
     const OPTION_FLAG = 'order_trigger_';
     const SESSION_TAG = 'egoi_tracking_uid';
 
-    public function __construct($client_id, $list_id, $order_id = false)
+    public function __construct($client_id, $list_id, $order_id = false, $social_id = null)
     {
         $this->list_id = $list_id;
         $this->client_id = $client_id;
         if(!empty($order_id)){ $this->order_id = $order_id; }
+        if(!empty($social_id)){ $this->social_id = $social_id; }
     }
 
     public function getStartUp(){
@@ -44,6 +46,25 @@ class TrackingEngageSDK
         if (!class_exists('WooCommerce')) {return false;}
         $this->getProductView();
         $this->getProductsInCart();
+    }
+
+    public function getStartUpSocial(){
+        var_dump($this->social_id);
+        if(!isset($_GET['wc-ajax']) && !empty($this->social_id)) {
+            ?><script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '<?php echo $this->social_id ?>');
+            fbq('track', 'PageView');
+           </script>
+           <?php
+        }
     }
 
     protected function getProductView(){

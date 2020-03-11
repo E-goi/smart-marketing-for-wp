@@ -851,10 +851,12 @@ class Egoi_For_Wp_Public {
         if(empty($options['list']) || empty($options['track'])){return false;} //list && tracking&engage setup check
         $client_info = get_option('egoi_client');
         $client_id = $client_info->CLIENTE_ID;
+		$track_social_id = !empty($options['social_track']) && !empty($options['social_track_id']) ? $options['social_track_id'] : null;
 
         require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
-        $track = new TrackingEngageSDK($client_id, $options['list']);
-        $track->getStartUp();
+        $track = new TrackingEngageSDK($client_id, $options['list'], false, $track_social_id);
+		$track->getStartUp();
+		$track->getStartUpSocial();
     }
 
     public function hookEcommerceSetOrder($order_id = false){
@@ -896,6 +898,7 @@ class Egoi_For_Wp_Public {
             'enabled' => 0,
             'egoi_newsletter_active' => 0,
             'track' => 1,
+            'social-track' => 0,
             'role' => 'All'
         );
 
