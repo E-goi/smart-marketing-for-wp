@@ -17,7 +17,7 @@ if(isset($_POST['action'])){
     if(!empty($post['egoi_sync_social'])){
         $api = new EgoiApiV3($apikey);
 
-        $social_track_id = $api->getEgoiSyncSocial();
+        $social_track_id = $api->getSocialTrackID();
         if(!empty($social_track_id)){
             $options = array_merge($options, ['social_track_id' => $social_track_id]);
         }

@@ -49,7 +49,6 @@ class TrackingEngageSDK
     }
 
     public function getStartUpSocial(){
-        var_dump($this->social_id);
         if(!isset($_GET['wc-ajax']) && !empty($this->social_id)) {
             ?><script>
             !function(f,b,e,v,n,t,s)

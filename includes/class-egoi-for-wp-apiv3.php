@@ -30,7 +30,8 @@ class EgoiApiV3
         'patchProduct'              => '/catalogs/{catalog_id}/products/{product_id}',
         'deleteCatalog'             => '/catalogs/{id}',
         'getCountriesCurrencies'    => '/utilities/countries',
-        'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}'
+        'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}',
+        'getEgoiSyncSocial'         => '?????????',
     ];
     protected $apiKey;
     protected $headers;
@@ -305,6 +306,27 @@ class EgoiApiV3
             ?json_encode($resp['items'])
             :$this->processErrors();
 
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getSocialTrackID(){
+        $client = new ClientHttp(
+            self::APIV3.self::APIURLS[__FUNCTION__],
+            'POST',
+            $this->headers,
+            json_encode(['list_id' => get_site_url()])
+        );
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+        return $client->getCode()==200 && isset($resp['social_track_id'])
+            ?json_encode($resp['social_track_id'])
+            :$this->processErrors();
     }
 
     /**
