@@ -624,7 +624,12 @@ class Egoi_For_Wp {
         $this->loader->add_action('woocommerce_register_form', $plugin_public, 'egoi_add_newsletter_signup', 10);
         $this->loader->add_action('woocommerce_edit_account_form', $plugin_public, 'egoi_add_newsletter_signup', 10);
 
-        $this->loader->add_action('woocommerce_after_order_notes', $plugin_public, 'egoi_add_newsletter_signup_hide', 10);
+        $option = Egoi_For_Wp_Admin::get_option();
+        if(!empty($option['sub_button_position'])){
+            $this->loader->add_action($option['sub_button_position'], $plugin_public, 'egoi_add_newsletter_signup_hide', 10);
+        }else{
+            $this->loader->add_action('woocommerce_after_order_notes', $plugin_public, 'egoi_add_newsletter_signup_hide', 10);
+        }
 
         //save Newsletter
         $this->loader->add_action('woocommerce_created_customer', $plugin_public, 'egoi_save_account_fields', 10);
