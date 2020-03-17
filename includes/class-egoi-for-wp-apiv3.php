@@ -31,7 +31,7 @@ class EgoiApiV3
         'deleteCatalog'             => '/catalogs/{id}',
         'getCountriesCurrencies'    => '/utilities/countries',
         'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}',
-        'getEgoiSyncSocial'         => '?????????',
+        'getMyAccount'              => '/my-account',
     ];
     protected $apiKey;
     protected $headers;
@@ -311,12 +311,13 @@ class EgoiApiV3
     /**
      * @return false|string
      */
-    public function getSocialTrackID(){
+    public function getMyAccount(){
+        $path = self::APIV3.self::APIURLS[__FUNCTION__];
+
         $client = new ClientHttp(
-            self::APIV3.self::APIURLS[__FUNCTION__],
-            'POST',
-            $this->headers,
-            json_encode(['list_id' => get_site_url()])
+            $path,
+            'GET',
+            $this->headers
         );
 
         if($client->success() !== true){
@@ -324,8 +325,35 @@ class EgoiApiV3
         }
 
         $resp = json_decode($client->getResponse(),true);
-        return $client->getCode()==200 && isset($resp['social_track_id'])
-            ?json_encode($resp['social_track_id'])
+        return $client->getCode()==200 && isset($resp['general_info']['client_id'])
+            ?json_encode($resp['general_info']['client_id'])
+            :$this->processErrors();
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getSocialTrackID(){
+
+        $data = array(
+            'account_id' => $this->getMyAccount(), 
+            'domain' => get_site_url()
+        );
+
+        $client = new ClientHttp(
+            'https://egoiapp2.com/ads/getPixel',
+            'POST',
+            ['Content-Type: application/json'],
+            json_encode($data)
+        );
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+        return $client->getCode()==200 && isset($resp)
+            ?json_encode($resp)
             :$this->processErrors();
     }
 
