@@ -467,14 +467,14 @@ class Egoi_For_Wp_Admin {
 		}
 	}
 
-	private function load_options() {
-
-		static $defaults = array(
+	static public function get_option(){
+	    static $defaults = array(
 			'list' => '',
 			'enabled' => 0,
 			'egoi_newsletter_active' => 0,
 			'track' => 1,
-			'role' => 'All'
+			'role' => 'All',
+			'sub_button_position' => 'woocommerce_after_order_notes'
 		);
 
     	if(!get_option( self::OPTION_NAME, array() )) {
@@ -485,6 +485,11 @@ class Egoi_For_Wp_Admin {
 			$options = array_merge($defaults, $options);
 			return (array) apply_filters( 'egoi_sync_options', $options );
 		}
+	}
+
+	private function load_options() {
+
+		return self::get_option();
 	}
 
 	private function load_options_bar() {

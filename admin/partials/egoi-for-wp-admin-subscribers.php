@@ -25,6 +25,17 @@ $egoi_fields = array(
 	'birth_date' => 'Birth Date'
 );
 
+$positions = [
+    'woocommerce_checkout_before_customer_details' => __('Before Customer Details', 'egoi-for-wp'),
+    'woocommerce_before_checkout_billing_form' => __('Before Billing Form', 'egoi-for-wp'),
+    'woocommerce_after_checkout_billing_form' => __('After Billing Form', 'egoi-for-wp'),
+    'woocommerce_before_checkout_shipping_form' => __('Before Shipping Form', 'egoi-for-wp'),
+    'woocommerce_after_checkout_shipping_form'  => __('After Shipping Form', 'egoi-for-wp'),
+    'woocommerce_before_order_notes' => __('Before Order Details', 'egoi-for-wp'),
+    'woocommerce_after_order_notes' => __('After Order Details', 'egoi-for-wp'),
+    'woocommerce_checkout_after_customer_details' => __('After Customer Details', 'egoi-for-wp'),
+];
+
 if($this->options_list['list']){
 	if($extra){
 		foreach($extra as $key => $extra_field){
@@ -172,6 +183,18 @@ jQuery(document).ready(function($) {
                                 <div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
                                     <label><input type="radio"  name="egoi_sync[egoi_newsletter_active]" <?php checked( $this->options_list['egoi_newsletter_active'], 1 ); ?> value="1"><?php _e( 'On', 'egoi-for-wp' ); ?></label> &nbsp;
                                     <label><input type="radio" name="egoi_sync[egoi_newsletter_active]" <?php checked( $this->options_list['egoi_newsletter_active'], 0 ); ?> value="0"><?php _e( 'Off', 'egoi-for-wp' ); ?></label>
+                                </div>
+                            </div>
+
+                            <div class="smsnf-input-group">
+                                <label for="sub_button_position"><?php _e( '"Subscribe to Newsletter" position', 'egoi-for-wp' ); ?></label>
+                                <p class="subtitle"><?php _e( 'Select the position it will be displayed in your checkout form.' ,'egoi-for-wp' ); ?></p>
+                                <div class="smsnf-wrapper">
+                                    <select id="sub_button_position" name="egoi_sync[sub_button_position]" class="form-select" >
+                                        <?php foreach($positions as $key => $value) {?>
+                                        <option value="<?php echo $key;?>" <?php selected($this->options_list['sub_button_position'], $key);?>> <?php echo $value;?> </option><?php
+                                        }?>
+                                    </select>
                                 </div>
                             </div>
 
