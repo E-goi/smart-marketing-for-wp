@@ -856,7 +856,12 @@ class Egoi_For_Wp_Public {
         require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
         $track = new TrackingEngageSDK($client_id, $options['list'], false, $track_social_id);
 		$track->getStartUp();
-		$track->getStartUpSocial();
+		if($options['social_track']){
+			$track->getStartUpSocial();
+		}
+        if(class_exists('WooCommerce') && is_product() && isset($options['social_track_json'])){
+            $track->getProductLdJSON();          
+        }
     }
 
     public function hookEcommerceSetOrder($order_id = false){

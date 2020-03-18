@@ -59,6 +59,40 @@ class TrackingEngageSDK
         }
     }
 
+    public function getProductLdJSON(){
+        $product = wc_get_product( get_the_id() );
+        $price = $product->get_price();
+        if ( '' !== $price) {
+            if ( $product->is_type( 'variable' ) ) {
+                $price = $product->get_variation_price( 'min', false );
+            }
+        }
+        ?>
+        <script type="application/ld+json" class="egoi-smart-marketing">
+            {
+            "@context":"https://schema.org",
+            "@type":"Product",
+            "productID":"<?php echo $product->get_id(); ?>",
+            "name":"<?php echo $product->get_name(); ?>",
+            "description":"<?php echo wp_strip_all_tags( do_shortcode( $product->get_short_description() ? $product->get_short_description() : $product->get_description() ) ); ?>",
+            "url":"<?php echo $product->get_permalink(); ?>",
+            "image":"<?php echo wp_get_attachment_image_url( $product->get_image_id(), 'full'); ?>",
+            "brand":"<?php echo get_bloginfo( 'name' ); ?>",
+            "offers": [
+                {
+                "@type": "Offer",
+                "price": "<?php echo $price; ?>",
+                "priceCurrency": "<?php echo get_woocommerce_currency(); ?>",
+                "itemCondition": "https://schema.org/NewCondition",
+                "availability": "<?php echo 'http://schema.org/' . ( $product->is_in_stock() ? 'InStock' : 'OutOfStock' ) ?>"
+                }
+            ]
+            }
+            </script>
+            <script>var egoi_product_id = "<?php echo $product->get_id(); ?>";</script>
+        <?php
+    }
+
     protected function getProductView(){
         if(!is_product()){ return false; }
         $product = wc_get_product( get_the_id() );

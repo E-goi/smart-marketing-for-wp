@@ -346,7 +346,7 @@ class EgoiApiV3
             ['Content-Type: application/json'],
             json_encode($data)
         );
-
+        // DEBUG return "GTM-WXZSM5R";
         if($client->success() !== true){
             return $this->processErrors($client->getError());
         }
