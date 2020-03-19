@@ -13,6 +13,7 @@ $page = array(
 if(isset($_POST['action'])){
 
     $post = $_POST;
+    $post['egoi_sync']['social_track_json'] = $post['egoi_sync']['social_track'] ? $post['egoi_sync']['social_track_json'] : 0;
     $options = array_merge($this->options_list, $post['egoi_sync']);
     if(!empty($post['egoi_sync']['social_track'])){
         $api = new EgoiApiV3($apikey);
@@ -103,15 +104,15 @@ if(isset($_POST['action'])){
                         <div class="smsnf-input-group">
                             <label for="egoi_sync[social_track]"><?php _e( 'Activate Social Track&Engage', 'egoi-for-wp' ); ?></label>
                             <div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
-                                <label><input type="radio"  name="egoi_sync[social_track]" <?php checked( $options['social_track'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
-                                <label><input type="radio" name="egoi_sync[social_track]" <?php checked( $options['social_track'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+                                <label><input type="radio" id="egoi_track_social" class="egoi_json_trigger" name="egoi_sync[social_track]" <?php checked( $options['social_track'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+                                <label><input type="radio" class="egoi_json_trigger" name="egoi_sync[social_track]" <?php checked( $options['social_track'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
                             </div>
                         </div>
 
-                        <div class="smsnf-input-group">
+                        <div id="egoi_track_json" class="smsnf-input-group" <?php if(!$options['social_track']) echo "style='display: none'" ?>>
                             <label for="egoi_sync[social_track_json]"><?php _e( 'Enable Egoi Ld+Json Schema', 'egoi-for-wp' ); ?></label>
                             <div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
-                                <label><input type="radio"  name="egoi_sync[social_track_json]" <?php checked( $options['social_track_json'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+                                <label><input type="radio" name="egoi_sync[social_track_json]" <?php checked( $options['social_track_json'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
                                 <label><input type="radio" name="egoi_sync[social_track_json]" <?php checked( $options['social_track_json'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
                             </div>
                         </div>

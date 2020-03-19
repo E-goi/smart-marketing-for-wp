@@ -118,6 +118,15 @@ jQuery(document).ready(function($) {
 		$('#e-goi-create-list').hide();
 		$('.button-primary--custom-add').show();
 	});
+
+	// Hidden options
+	$('.egoi_json_trigger' ).change( function() {
+		if ( $('#egoi_track_social').is( ':checked' ) ) {
+			$('#egoi_track_json' ).show();
+		} else {
+			$('#egoi_track_json' ).hide();
+		}
+	});
 });
 
 
