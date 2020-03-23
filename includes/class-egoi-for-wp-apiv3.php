@@ -319,14 +319,14 @@ class EgoiApiV3
             'GET',
             $this->headers
         );
-
+        
         if($client->success() !== true){
             return $this->processErrors($client->getError());
         }
 
         $resp = json_decode($client->getResponse(),true);
         return $client->getCode()==200 && isset($resp['general_info']['client_id'])
-            ?json_encode($resp['general_info']['client_id'])
+            ?$resp['general_info']['client_id']
             :$this->processErrors();
     }
 
@@ -335,26 +335,21 @@ class EgoiApiV3
      */
     public function getSocialTrackID(){
 
-        $data = array(
-            'account_id' => $this->getMyAccount(), 
-            'domain' => get_site_url()
-        );
+        $domain = preg_replace("(^https?://)", "", get_site_url());
+        $accountId = $this->getMyAccount();
 
         $client = new ClientHttp(
-            'https://egoiapp2.com/ads/getPixel',
-            'POST',
-            ['Content-Type: application/json'],
-            json_encode($data)
+            'https://egoiapp2.com/ads/getPixel?account_id='.$accountId.'&domain='.$domain,
+            'GET'
         );
-        // DEBUG return "GTM-WXZSM5R";
         if($client->success() !== true){
-            return $this->processErrors($client->getError());
+            return false;
         }
-
         $resp = json_decode($client->getResponse(),true);
-        return $client->getCode()==200 && isset($resp)
-            ?json_encode($resp)
-            :$this->processErrors();
+        
+        return $client->getCode()==200 && isset($resp['data'][0]['code'])
+            ? $resp['data'][0]['code']
+            : false;
     }
 
     /**
