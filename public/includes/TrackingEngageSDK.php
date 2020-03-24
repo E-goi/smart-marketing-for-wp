@@ -12,8 +12,8 @@ class TrackingEngageSDK
 
     public function __construct($client_id, $list_id, $order_id = false, $social_id = null)
     {
-        $this->list_id = $list_id;
-        $this->client_id = $client_id;
+        if(!empty($list_id)){$this->list_id = $list_id;}
+        if(!empty($client_id)){$this->client_id = $client_id;}
         if(!empty($order_id)){ $this->order_id = $order_id; }
         if(!empty($social_id)){ $this->social_id = $social_id; }
     }
@@ -61,7 +61,8 @@ class TrackingEngageSDK
 
     public function getProductLdJSON(){
         $product = wc_get_product( get_the_id() );
-        $price = $product->get_price();
+        
+        $price = $product->get_sale_price() ? $product->get_sale_price() : $product->get_price();
         if ( '' !== $price) {
             if ( $product->is_type( 'variable' ) ) {
                 $price = $product->get_variation_price( 'min', false );
@@ -89,7 +90,7 @@ class TrackingEngageSDK
             ]
             }
             </script>
-            <script>var egoi_product_id = "<?php echo $product->get_id(); ?>";</script>
+            <script>var egoi_product = { 'id':'<?php echo $product->get_id(); ?>','name':'<?php echo $product->get_name(); ?>','price':'<?php echo $price; ?>'};</script>
         <?php
     }
 

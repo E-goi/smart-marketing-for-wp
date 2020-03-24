@@ -339,7 +339,7 @@ class EgoiApiV3
         $accountId = $this->getMyAccount();
 
         $client = new ClientHttp(
-            'https://egoiapp2.com/ads/getPixel?account_id='.$accountId.'&domain='.$domain,
+            'https://egoiapp2.com/ads/createPixel?account_id='.$accountId.'&domain='.$domain,
             'GET'
         );
         if($client->success() !== true){
@@ -347,8 +347,8 @@ class EgoiApiV3
         }
         $resp = json_decode($client->getResponse(),true);
         
-        return $client->getCode()==200 && isset($resp['data'][0]['code'])
-            ? $resp['data'][0]['code']
+        return $client->getCode()==200 && isset($resp['data']['code'])
+            ? $resp['data']['code']
             : false;
     }
 
