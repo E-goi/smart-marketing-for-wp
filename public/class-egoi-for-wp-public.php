@@ -156,6 +156,8 @@ class Egoi_For_Wp_Public {
 			$id_tab = 'tab_egoi_footer';
 		}
 
+		$bar_post['color_bar'] = !empty($bar_post['color_bar_transparent'])?$bar_post['color_bar']:'transparent';
+
 		
 		if($bar_post['position'] == 'top'){
 

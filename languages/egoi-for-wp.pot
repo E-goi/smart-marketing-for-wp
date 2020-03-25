@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing SMS and Newsletters Forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-17 16:41+0000\n"
+"POT-Creation-Date: 2020-03-25 10:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -230,138 +230,138 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:917
+#: admin/class-egoi-for-wp-admin.php:918
 msgid "I want to receive newsletter"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1100
-#: public/class-egoi-for-wp-public.php:764
+#: admin/class-egoi-for-wp-admin.php:1101
+#: public/class-egoi-for-wp-public.php:766
 msgid "was successfully registered!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1102
-#: public/class-egoi-for-wp-public.php:766
+#: admin/class-egoi-for-wp-admin.php:1103
+#: public/class-egoi-for-wp-public.php:768
 msgid "Subscriber data from"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1104
-#: public/class-egoi-for-wp-public.php:768
+#: admin/class-egoi-for-wp-admin.php:1105
+#: public/class-egoi-for-wp-public.php:770
 msgid "has been updated!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1107
-#: public/class-egoi-for-wp-public.php:771
+#: admin/class-egoi-for-wp-admin.php:1108
+#: public/class-egoi-for-wp-public.php:773
 msgid "ERROR: no data to insert"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1109
-#: public/class-egoi-for-wp-public.php:773
+#: admin/class-egoi-for-wp-admin.php:1110
+#: public/class-egoi-for-wp-public.php:775
 msgid "ERROR: e-mail address is invalid"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1111
-#: public/class-egoi-for-wp-public.php:775
+#: admin/class-egoi-for-wp-admin.php:1112
+#: public/class-egoi-for-wp-public.php:777
 msgid "ERROR: invalid data submitted"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1796
+#: admin/class-egoi-for-wp-admin.php:1797
 msgid "https://blog.e-goi.com/feed/egoi"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2031
+#: admin/class-egoi-for-wp-admin.php:2032
 msgid "Missing Webpush Instalation!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2038
+#: admin/class-egoi-for-wp-admin.php:2039
 msgid "Api error, try again later."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2111
+#: admin/class-egoi-for-wp-admin.php:2112
 msgid "Something went wrong with your request."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2114
+#: admin/class-egoi-for-wp-admin.php:2115
 msgid "Catalog synchronized successfully."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2127
+#: admin/class-egoi-for-wp-admin.php:2128
 msgid "Fields can't be empty."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2135
+#: admin/class-egoi-for-wp-admin.php:2136
 msgid "Catalog successfully created!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2137
+#: admin/class-egoi-for-wp-admin.php:2138
 msgid "Something went wrong creating the catalog!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2148
+#: admin/class-egoi-for-wp-admin.php:2149
 msgid "Something went wrong fetching countries, please try again later."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2189
+#: admin/class-egoi-for-wp-admin.php:2190
 msgid "Additional Information"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2307
+#: admin/class-egoi-for-wp-admin.php:2308
 #: admin/partials/rssfeed/campaign-rss.php:65
 msgid "Subject"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2311
+#: admin/class-egoi-for-wp-admin.php:2312
 msgid "Internal Name"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2319
-#: admin/class-egoi-for-wp-admin.php:2524
+#: admin/class-egoi-for-wp-admin.php:2320
+#: admin/class-egoi-for-wp-admin.php:2525
 msgid "Total sent"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2322
+#: admin/class-egoi-for-wp-admin.php:2323
 msgid "A aguardar resultados..."
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2468
 #: admin/class-egoi-for-wp-admin.php:2469
+#: admin/class-egoi-for-wp-admin.php:2470
 msgid "Unlimited"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2488
+#: admin/class-egoi-for-wp-admin.php:2489
 msgid "Plan"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2492
+#: admin/class-egoi-for-wp-admin.php:2493
 msgid "Current Balance"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2499
+#: admin/class-egoi-for-wp-admin.php:2500
 msgid "Expires in"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2511
+#: admin/class-egoi-for-wp-admin.php:2512
 msgid "Your current plan includes"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2553
+#: admin/class-egoi-for-wp-admin.php:2554
 msgid ""
 "Send SMS notifications to your customers and administrators for each change "
 "to the order status on your WooCommerce"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2554
+#: admin/class-egoi-for-wp-admin.php:2555
 msgid "Instalar Plugin"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2561
+#: admin/class-egoi-for-wp-admin.php:2562
 msgid "Transactional SMS"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2657
+#: admin/class-egoi-for-wp-admin.php:2658
 msgid "ID is required"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:2664
+#: admin/class-egoi-for-wp-admin.php:2665
 msgid "FormID was not found"
 msgstr ""
 
@@ -461,7 +461,7 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-bar.php:374
 #: admin/partials/egoi-for-wp-admin-widget.php:297
 #: admin/partials/capture/simple-forms.php:188
-#: admin/partials/capture/subscription-bar.php:233
+#: admin/partials/capture/subscription-bar.php:247
 #: admin/partials/capture/widget-options.php:188
 #: admin/partials/integrations/post-comment.php:45
 #: admin/partials/integrations/gravity-forms.php:77
@@ -937,7 +937,7 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-display.php:60
 #: admin/partials/egoi-for-wp-admin-integrations.php:38
 #: admin/partials/egoi-for-wp-admin-bar.php:345
-#: admin/partials/capture/subscription-bar.php:202
+#: admin/partials/capture/subscription-bar.php:216
 msgid "Success"
 msgstr ""
 
@@ -1151,9 +1151,10 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-display.php:298
 msgid ""
-"To get your API key simply click the \"Apps\" menu in your account <span "
-"style=\"text-decoration:underline;\"><a target=\"_blank\" href=\"https:"
-"//login.egoiapp.com/#/login/?menu=sec\">E­-goi</span></a> and copy it."
+"To get your API key simply click the \"Integrations\" menu in your account "
+"<span style=\"text-decoration:underline;\"><a target=\"_blank\" href=\"https:"
+"//login.egoiapp.com/login?from=%2F%3Faction%3Dui#/integrations\">E-goi</span>"
+"</a> and copy it."
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-display.php:305
@@ -1477,41 +1478,41 @@ msgid "Bar Fixed?"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:242
-#: admin/partials/capture/subscription-bar.php:122
+#: admin/partials/capture/subscription-bar.php:123
 msgid "Background Color"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:253
-#: admin/partials/capture/subscription-bar.php:132
+#: admin/partials/capture/subscription-bar.php:146
 msgid "Text Color"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:264
-#: admin/partials/capture/subscription-bar.php:142
+#: admin/partials/capture/subscription-bar.php:156
 msgid "Border Size"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:275
 #: admin/partials/egoi-for-wp-admin-widget.php:262
-#: admin/partials/capture/subscription-bar.php:148
+#: admin/partials/capture/subscription-bar.php:162
 #: admin/partials/capture/advanced-forms.php:176
 #: admin/partials/capture/widget-options.php:153
 msgid "Border Color"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:291
-#: admin/partials/capture/subscription-bar.php:158
+#: admin/partials/capture/subscription-bar.php:172
 msgid "Button Color"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:302
-#: admin/partials/capture/subscription-bar.php:168
+#: admin/partials/capture/subscription-bar.php:182
 msgid "Button Text Color"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:313
 #: admin/partials/egoi-for-wp-admin-widget.php:274
-#: admin/partials/capture/subscription-bar.php:178
+#: admin/partials/capture/subscription-bar.php:192
 #: admin/partials/capture/widget-options.php:163
 msgid "Background Color on Success"
 msgstr ""
@@ -1522,7 +1523,7 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:325
 #: admin/partials/egoi-for-wp-admin-widget.php:286
-#: admin/partials/capture/subscription-bar.php:188
+#: admin/partials/capture/subscription-bar.php:202
 #: admin/partials/capture/widget-options.php:174
 msgid "Background Color on Error"
 msgstr ""
@@ -1532,54 +1533,54 @@ msgid "Change the color of the Error message"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:346
-#: admin/partials/capture/subscription-bar.php:203
+#: admin/partials/capture/subscription-bar.php:217
 msgid "Success Subscribed"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:349
 #: admin/partials/egoi-for-wp-admin-widget.php:184
-#: admin/partials/capture/subscription-bar.php:208
+#: admin/partials/capture/subscription-bar.php:222
 #: admin/partials/capture/widget-options.php:95
 #: admin/partials/custom/egoi-for-wp-form-messages.php:17
 msgid "Invalid email address"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:350
-#: admin/partials/capture/subscription-bar.php:209
+#: admin/partials/capture/subscription-bar.php:223
 msgid "Invalid e-mail"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:353
 #: admin/partials/egoi-for-wp-admin-widget.php:198
-#: admin/partials/capture/subscription-bar.php:214
+#: admin/partials/capture/subscription-bar.php:228
 #: admin/partials/capture/widget-options.php:107
 #: admin/partials/custom/egoi-for-wp-form-messages.php:24
 msgid "Already subscribed"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:354
-#: admin/partials/capture/subscription-bar.php:215
+#: admin/partials/capture/subscription-bar.php:229
 msgid "Subscriber already exists"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:357
-#: admin/partials/capture/subscription-bar.php:220
+#: admin/partials/capture/subscription-bar.php:234
 msgid "Other errors"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:358
-#: admin/partials/capture/subscription-bar.php:221
+#: admin/partials/capture/subscription-bar.php:235
 msgid "Eg. List Missing from E-goi"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:363
-#: admin/partials/capture/subscription-bar.php:226
+#: admin/partials/capture/subscription-bar.php:240
 #: admin/partials/custom/egoi-for-wp-form-settings.php:47
 msgid "Redirect to URL after successful sign-up"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-bar.php:368
-#: admin/partials/capture/subscription-bar.php:228
+#: admin/partials/capture/subscription-bar.php:242
 msgid ""
 "Leave empty for no redirect. Otherwise, use complete (absolute) URLs, "
 "including <code>http://</code>."
@@ -1932,13 +1933,17 @@ msgstr ""
 msgid "Use this shortcode to display this form inside of your site or blog"
 msgstr ""
 
-#: admin/partials/capture/subscription-bar.php:126
-#: admin/partials/capture/subscription-bar.php:136
-#: admin/partials/capture/subscription-bar.php:152
-#: admin/partials/capture/subscription-bar.php:162
-#: admin/partials/capture/subscription-bar.php:172
-#: admin/partials/capture/subscription-bar.php:182
-#: admin/partials/capture/subscription-bar.php:192
+#: admin/partials/capture/subscription-bar.php:132
+msgid "Set this to \"no\" for no background color."
+msgstr ""
+
+#: admin/partials/capture/subscription-bar.php:140
+#: admin/partials/capture/subscription-bar.php:150
+#: admin/partials/capture/subscription-bar.php:166
+#: admin/partials/capture/subscription-bar.php:176
+#: admin/partials/capture/subscription-bar.php:186
+#: admin/partials/capture/subscription-bar.php:196
+#: admin/partials/capture/subscription-bar.php:206
 #: admin/partials/capture/advanced-forms.php:180
 #: admin/partials/capture/widget-options.php:157
 #: admin/partials/capture/widget-options.php:167

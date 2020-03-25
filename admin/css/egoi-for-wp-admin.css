@@ -8212,3 +8212,8 @@ a.egoi_tooltip:hover{
   text-overflow: ellipsis;
 }
 
+.egoi-transparent-option{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
