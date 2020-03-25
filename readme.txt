@@ -155,7 +155,8 @@ You can create and update your lists, see how many subscribers you have, but you
 == Changelog ==
 
 = 3.2.0 =
-- Subscriber Checkbox Position Option added
+- Subscriber Bar Options
+- Facebook & Google Pixel
 
 = 3.1.5 =
 - Subscriber Checkbox Position Option added
