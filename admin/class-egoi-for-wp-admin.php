@@ -474,7 +474,9 @@ class Egoi_For_Wp_Admin {
 			'egoi_newsletter_active' => 0,
 			'track' => 1,
 			'role' => 'All',
-			'sub_button_position' => 'woocommerce_after_order_notes'
+			'sub_button_position' => 'woocommerce_after_order_notes',
+            'social_track' => 0,
+            'social_track_json' => 0
 		);
 
     	if(!get_option( self::OPTION_NAME, array() )) {

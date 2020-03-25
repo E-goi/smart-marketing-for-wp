@@ -30,7 +30,8 @@ class EgoiApiV3
         'patchProduct'              => '/catalogs/{catalog_id}/products/{product_id}',
         'deleteCatalog'             => '/catalogs/{id}',
         'getCountriesCurrencies'    => '/utilities/countries',
-        'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}'
+        'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}',
+        'getMyAccount'              => '/my-account',
     ];
     protected $apiKey;
     protected $headers;
@@ -305,6 +306,50 @@ class EgoiApiV3
             ?json_encode($resp['items'])
             :$this->processErrors();
 
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getMyAccount(){
+        $path = self::APIV3.self::APIURLS[__FUNCTION__];
+
+        $client = new ClientHttp(
+            $path,
+            'GET',
+            $this->headers
+        );
+        
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+        return $client->getCode()==200 && isset($resp['general_info']['client_id'])
+            ?$resp['general_info']['client_id']
+            :$this->processErrors();
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getSocialTrackID(){
+
+        $domain = preg_replace("(^https?://)", "", get_site_url());
+        $accountId = $this->getMyAccount();
+
+        $client = new ClientHttp(
+            'https://egoiapp2.com/ads/createPixel?account_id='.$accountId.'&domain='.$domain,
+            'GET'
+        );
+        if($client->success() !== true){
+            return false;
+        }
+        $resp = json_decode($client->getResponse(),true);
+        
+        return $client->getCode()==200 && isset($resp['data']['code'])
+            ? $resp['data']['code']
+            : false;
     }
 
     /**

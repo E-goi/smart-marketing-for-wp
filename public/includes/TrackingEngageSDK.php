@@ -5,15 +5,17 @@ class TrackingEngageSDK
 {
     protected $client_id;
     protected $list_id;
+    protected $social_id;
     protected $order_id;
     const OPTION_FLAG = 'order_trigger_';
     const SESSION_TAG = 'egoi_tracking_uid';
 
-    public function __construct($client_id, $list_id, $order_id = false)
+    public function __construct($client_id, $list_id, $order_id = false, $social_id = null)
     {
-        $this->list_id = $list_id;
-        $this->client_id = $client_id;
+        if(!empty($list_id)){$this->list_id = $list_id;}
+        if(!empty($client_id)){$this->client_id = $client_id;}
         if(!empty($order_id)){ $this->order_id = $order_id; }
+        if(!empty($social_id)){ $this->social_id = $social_id; }
     }
 
     public function getStartUp(){
@@ -44,6 +46,52 @@ class TrackingEngageSDK
         if (!class_exists('WooCommerce')) {return false;}
         $this->getProductView();
         $this->getProductsInCart();
+    }
+
+    public function getStartUpSocial(){
+        if(!isset($_GET['wc-ajax']) && !empty($this->social_id)) {
+            ?><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','<?php echo $this->social_id ?>');</script>
+           <?php
+        }
+    }
+
+    public function getProductLdJSON(){
+        $product = wc_get_product( get_the_id() );
+        
+        $price = $product->get_sale_price() ? $product->get_sale_price() : $product->get_price();
+        if ( '' !== $price) {
+            if ( $product->is_type( 'variable' ) ) {
+                $price = $product->get_variation_price( 'min', false );
+            }
+        }
+        ?>
+        <script type="application/ld+json" class="egoi-smart-marketing">
+            {
+            "@context":"https://schema.org",
+            "@type":"Product",
+            "productID":"<?php echo $product->get_id(); ?>",
+            "name":"<?php echo $product->get_name(); ?>",
+            "description":"<?php echo wp_strip_all_tags( do_shortcode( $product->get_short_description() ? $product->get_short_description() : $product->get_description() ) ); ?>",
+            "url":"<?php echo $product->get_permalink(); ?>",
+            "image":"<?php echo wp_get_attachment_image_url( $product->get_image_id(), 'full'); ?>",
+            "brand":"<?php echo get_bloginfo( 'name' ); ?>",
+            "offers": [
+                {
+                "@type": "Offer",
+                "price": "<?php echo $price; ?>",
+                "priceCurrency": "<?php echo get_woocommerce_currency(); ?>",
+                "itemCondition": "https://schema.org/NewCondition",
+                "availability": "<?php echo 'http://schema.org/' . ( $product->is_in_stock() ? 'InStock' : 'OutOfStock' ) ?>"
+                }
+            ]
+            }
+            </script>
+            <script>var egoi_product = { 'id':'<?php echo $product->get_id(); ?>','name':'<?php echo $product->get_name(); ?>','price':'<?php echo $price; ?>'};</script>
+        <?php
     }
 
     protected function getProductView(){
