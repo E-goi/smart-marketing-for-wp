@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-25 10:06+0000\n"
-"PO-Revision-Date: 2020-03-25 10:11+0000\n"
+"POT-Creation-Date: 2020-03-25 11:10+0000\n"
+"PO-Revision-Date: 2020-03-25 11:20+0000\n"
 "Last-Translator: egoidev <tmota@e-goi.com>\n"
 "Language-Team: Español\n"
 "Language: es_ES\n"
@@ -203,7 +203,7 @@ msgid "Capture Contacts"
 msgstr "Captura de Contactos"
 
 #: admin/class-egoi-for-wp-admin.php:303
-#: admin/partials/egoi-for-wp-admin-trackengage.php:58
+#: admin/partials/egoi-for-wp-admin-trackengage.php:76
 #: admin/partials/egoi-for-wp-admin-subscribers.php:122
 msgid "Sync Contacts"
 msgstr "Sincronizar contactos"
@@ -244,121 +244,121 @@ msgstr "Feed RSS"
 msgid "Account"
 msgstr "Cuenta"
 
-#: admin/class-egoi-for-wp-admin.php:918
+#: admin/class-egoi-for-wp-admin.php:920
 msgid "I want to receive newsletter"
 msgstr "Quiero recibir el boletín"
 
-#: admin/class-egoi-for-wp-admin.php:1101
+#: admin/class-egoi-for-wp-admin.php:1103
 #: public/class-egoi-for-wp-public.php:766
 msgid "was successfully registered!"
 msgstr "fue registrado exitosamente"
 
-#: admin/class-egoi-for-wp-admin.php:1103
+#: admin/class-egoi-for-wp-admin.php:1105
 #: public/class-egoi-for-wp-public.php:768
 msgid "Subscriber data from"
 msgstr "Datos del suscriptor de"
 
-#: admin/class-egoi-for-wp-admin.php:1105
+#: admin/class-egoi-for-wp-admin.php:1107
 #: public/class-egoi-for-wp-public.php:770
 msgid "has been updated!"
 msgstr "ha sido actualizado"
 
-#: admin/class-egoi-for-wp-admin.php:1108
+#: admin/class-egoi-for-wp-admin.php:1110
 #: public/class-egoi-for-wp-public.php:773
 msgid "ERROR: no data to insert"
 msgstr "ERROR: no hay datos para insertar"
 
-#: admin/class-egoi-for-wp-admin.php:1110
+#: admin/class-egoi-for-wp-admin.php:1112
 #: public/class-egoi-for-wp-public.php:775
 msgid "ERROR: e-mail address is invalid"
 msgstr "ERROR: el correo electrónico no es válido"
 
-#: admin/class-egoi-for-wp-admin.php:1112
+#: admin/class-egoi-for-wp-admin.php:1114
 #: public/class-egoi-for-wp-public.php:777
 msgid "ERROR: invalid data submitted"
 msgstr "ERROR: datos no válidos enviados"
 
-#: admin/class-egoi-for-wp-admin.php:1797
+#: admin/class-egoi-for-wp-admin.php:1799
 msgid "https://blog.e-goi.com/feed/egoi"
 msgstr "https://blog.e-goi.es/feed/egoi"
 
-#: admin/class-egoi-for-wp-admin.php:2032
+#: admin/class-egoi-for-wp-admin.php:2034
 msgid "Missing Webpush Instalation!"
 msgstr "Falta la instalación do Webpush"
 
-#: admin/class-egoi-for-wp-admin.php:2039
+#: admin/class-egoi-for-wp-admin.php:2041
 msgid "Api error, try again later."
 msgstr "Error de API, intente nuevamente más tarde."
 
-#: admin/class-egoi-for-wp-admin.php:2112
+#: admin/class-egoi-for-wp-admin.php:2114
 msgid "Something went wrong with your request."
 msgstr "Algo salió mal con tu solicitud."
 
-#: admin/class-egoi-for-wp-admin.php:2115
+#: admin/class-egoi-for-wp-admin.php:2117
 msgid "Catalog synchronized successfully."
 msgstr "Catálogo sincronizado con éxito."
 
-#: admin/class-egoi-for-wp-admin.php:2128
+#: admin/class-egoi-for-wp-admin.php:2130
 msgid "Fields can't be empty."
 msgstr "Los campos no pueden estar vacíos."
 
-#: admin/class-egoi-for-wp-admin.php:2136
+#: admin/class-egoi-for-wp-admin.php:2138
 msgid "Catalog successfully created!"
 msgstr "Catálogo creado con éxito!"
 
-#: admin/class-egoi-for-wp-admin.php:2138
+#: admin/class-egoi-for-wp-admin.php:2140
 msgid "Something went wrong creating the catalog!"
 msgstr "¡Algo salió mal al crear el catálogo!"
 
-#: admin/class-egoi-for-wp-admin.php:2149
+#: admin/class-egoi-for-wp-admin.php:2151
 msgid "Something went wrong fetching countries, please try again later."
 msgstr ""
 "Se ha producido un error al buscar países. Vuelve a intentarlo más tarde."
 
-#: admin/class-egoi-for-wp-admin.php:2190
+#: admin/class-egoi-for-wp-admin.php:2192
 msgid "Additional Information"
 msgstr "Información Adicional"
 
-#: admin/class-egoi-for-wp-admin.php:2308
+#: admin/class-egoi-for-wp-admin.php:2310
 #: admin/partials/rssfeed/campaign-rss.php:65
 msgid "Subject"
 msgstr "Asunto"
 
-#: admin/class-egoi-for-wp-admin.php:2312
+#: admin/class-egoi-for-wp-admin.php:2314
 msgid "Internal Name"
 msgstr "Nombre interno"
 
-#: admin/class-egoi-for-wp-admin.php:2320
-#: admin/class-egoi-for-wp-admin.php:2525
+#: admin/class-egoi-for-wp-admin.php:2322
+#: admin/class-egoi-for-wp-admin.php:2527
 msgid "Total sent"
 msgstr "Total de envíos"
 
-#: admin/class-egoi-for-wp-admin.php:2323
+#: admin/class-egoi-for-wp-admin.php:2325
 msgid "A aguardar resultados..."
 msgstr "En espera de resultados ..."
 
-#: admin/class-egoi-for-wp-admin.php:2469
-#: admin/class-egoi-for-wp-admin.php:2470
+#: admin/class-egoi-for-wp-admin.php:2471
+#: admin/class-egoi-for-wp-admin.php:2472
 msgid "Unlimited"
 msgstr "Ilimitado"
 
-#: admin/class-egoi-for-wp-admin.php:2489
+#: admin/class-egoi-for-wp-admin.php:2491
 msgid "Plan"
 msgstr "Plan"
 
-#: admin/class-egoi-for-wp-admin.php:2493
+#: admin/class-egoi-for-wp-admin.php:2495
 msgid "Current Balance"
 msgstr "Saldo actual"
 
-#: admin/class-egoi-for-wp-admin.php:2500
+#: admin/class-egoi-for-wp-admin.php:2502
 msgid "Expires in"
 msgstr "Expira en"
 
-#: admin/class-egoi-for-wp-admin.php:2512
+#: admin/class-egoi-for-wp-admin.php:2514
 msgid "Your current plan includes"
 msgstr "Su plan actual incluye"
 
-#: admin/class-egoi-for-wp-admin.php:2554
+#: admin/class-egoi-for-wp-admin.php:2556
 msgid ""
 "Send SMS notifications to your customers and administrators for each change "
 "to the order status on your WooCommerce"
@@ -366,44 +366,58 @@ msgstr ""
 "Envía notificaciones SMS a tus clientes y administradores por cada cambio en "
 "el estado del pedido en tu WooCommerce"
 
-#: admin/class-egoi-for-wp-admin.php:2555
+#: admin/class-egoi-for-wp-admin.php:2557
 msgid "Instalar Plugin"
 msgstr "Instalar plugin"
 
-#: admin/class-egoi-for-wp-admin.php:2562
+#: admin/class-egoi-for-wp-admin.php:2564
 msgid "Transactional SMS"
 msgstr "SMS Transaccionales"
 
-#: admin/class-egoi-for-wp-admin.php:2658
+#: admin/class-egoi-for-wp-admin.php:2660
 msgid "ID is required"
 msgstr "El campo 'ID' es obligatorio"
 
-#: admin/class-egoi-for-wp-admin.php:2665
+#: admin/class-egoi-for-wp-admin.php:2667
 msgid "FormID was not found"
 msgstr "No se encontró FormID"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:18
+#: admin/partials/egoi-for-wp-admin-trackengage.php:34
+#: admin/partials/egoi-for-wp-admin-display.php:42
+#: admin/partials/egoi-for-wp-admin-display.php:49
+msgid "Error"
+msgstr ""
+
+#: admin/partials/egoi-for-wp-admin-trackengage.php:34
+msgid ""
+"Something went wrong while retrieving remarketing configuration, please try "
+"again later."
+msgstr ""
+"Se produjo un error al recuperar la configuración de remarketing. Vuelva a "
+"intentarlo más tarde."
+
+#: admin/partials/egoi-for-wp-admin-trackengage.php:36
 #: admin/partials/egoi-for-wp-admin-webpush.php:55
 msgid "Success!"
 msgstr "Éxito"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:18
+#: admin/partials/egoi-for-wp-admin-trackengage.php:36
 #: admin/partials/egoi-for-wp-admin-webpush.php:55
 msgid "Ecommerce Option Updated!"
 msgstr "¡Opción de comercio electrónico actualizada!"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:32
-#: admin/partials/egoi-for-wp-admin-trackengage.php:68
+#: admin/partials/egoi-for-wp-admin-trackengage.php:50
+#: admin/partials/egoi-for-wp-admin-trackengage.php:86
 msgid "Track&Engage"
 msgstr "Track&Engage"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:37
+#: admin/partials/egoi-for-wp-admin-trackengage.php:55
 #: admin/partials/egoi-for-wp-admin-webpush.php:91
 #: admin/partials/egoi-for-wp-admin-subscribers.php:127
 msgid "Configuration"
 msgstr "Configuración"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:55
+#: admin/partials/egoi-for-wp-admin-trackengage.php:73
 msgid ""
 "Select your mailing list in the option \"Synchronize users with this list\" "
 "to activate Track & Engage.<br>You will find this option in "
@@ -412,7 +426,7 @@ msgstr ""
 "esta lista\" para activar el Track & Engage.<br>Encontrarás esta opción en "
 "el menú "
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:73
+#: admin/partials/egoi-for-wp-admin-trackengage.php:91
 msgid ""
 "Track & Engage is an E-goi analytics feature, connected to your Wordpress "
 "Website or WooCommerce Store, perfect for remarketing actions like returning "
@@ -433,11 +447,13 @@ msgstr ""
 "com/463984-Usar-Track--Engage-para-automatizar-campa%C3%B1as-de-re-"
 "engagement-y-abandono-del-carrito\">aquí</a>.</span></p>"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:87
+#: admin/partials/egoi-for-wp-admin-trackengage.php:105
 msgid "Activate Track&Engage"
 msgstr "Activar Track & Engage"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:89
+#: admin/partials/egoi-for-wp-admin-trackengage.php:107
+#: admin/partials/egoi-for-wp-admin-trackengage.php:116
+#: admin/partials/egoi-for-wp-admin-trackengage.php:125
 #: admin/partials/egoi-for-wp-admin-webpush.php:231
 #: admin/partials/egoi-for-wp-admin-display.php:449
 #: admin/partials/egoi-for-wp-admin-subscribers.php:175
@@ -459,7 +475,9 @@ msgstr "Activar Track & Engage"
 msgid "Yes"
 msgstr "Sí"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:90
+#: admin/partials/egoi-for-wp-admin-trackengage.php:108
+#: admin/partials/egoi-for-wp-admin-trackengage.php:117
+#: admin/partials/egoi-for-wp-admin-trackengage.php:126
 #: admin/partials/egoi-for-wp-admin-webpush.php:232
 #: admin/partials/egoi-for-wp-admin-display.php:453
 #: admin/partials/egoi-for-wp-admin-subscribers.php:176
@@ -480,7 +498,30 @@ msgstr "Sí"
 msgid "No"
 msgstr "No"
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:97
+#: admin/partials/egoi-for-wp-admin-trackengage.php:113
+msgid "Activate Remarketing"
+msgstr "Activar Remarketing"
+
+#: admin/partials/egoi-for-wp-admin-trackengage.php:114
+msgid ""
+"Enable this if you would like to target your website audience using E-goi "
+"Ads."
+msgstr ""
+"Habilítelo si desea dirigirse a la audiencia de su sitio web utilizando E-"
+"goi Ads."
+
+#: admin/partials/egoi-for-wp-admin-trackengage.php:122
+msgid "Activate Product Microdata"
+msgstr "Activar microdatos del producto"
+
+#: admin/partials/egoi-for-wp-admin-trackengage.php:123
+msgid ""
+"Enable this to improve your products SEO and create dynamic product ads."
+msgstr ""
+"Habilite esto para mejorar sus productos SEO y crear anuncios dinámicos de "
+"productos."
+
+#: admin/partials/egoi-for-wp-admin-trackengage.php:132
 #: admin/partials/egoi-for-wp-admin-lists.php:102
 #: admin/partials/egoi-for-wp-admin-webpush.php:135
 #: admin/partials/egoi-for-wp-admin-webpush.php:156
@@ -1158,11 +1199,6 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-display.php:28
 msgid "API Key updated!"
 msgstr "Clave API actualizada!"
-
-#: admin/partials/egoi-for-wp-admin-display.php:42
-#: admin/partials/egoi-for-wp-admin-display.php:49
-msgid "Error"
-msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-display.php:42
 msgid "No more lists allowed in your account!"
