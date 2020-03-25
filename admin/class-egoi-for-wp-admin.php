@@ -506,6 +506,7 @@ class Egoi_For_Wp_Admin {
 			'position' => 'top',
 			'size' => '',
 			'color_bar' => '',
+			'color_bar_transparent' => true,
 			'border_color' => '#ccc',
 			'border_px' => '1px',
 			'color_text' => '',

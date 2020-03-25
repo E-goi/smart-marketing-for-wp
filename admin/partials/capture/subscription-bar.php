@@ -119,7 +119,21 @@ settings_errors();
             <!-- / FIXED BAR -->
             <!-- BACKGROUND COLOR -->
             <div class="smsnf-input-group">
-                <label for="bar-background-color"><?php _e( 'Background Color', 'egoi-for-wp' ); ?></label>
+                <div class="egoi-transparent-option">
+                    <label for="bar-background-color"><?php _e( 'Background Color', 'egoi-for-wp' ); ?></label>
+                    <span class="e-goi-tooltip">
+                        <div class="form-group switch-yes-no">
+                        <label class="form-switch">
+                            <input id="bar_open" name="egoi_bar_sync[color_bar_transparent]" value="1" <?php checked($this->bar_post['color_bar_transparent'], 1); ?> type="checkbox">
+                            <i class="form-icon"></i><div class="yes"><?php _e( 'Yes' ); ?></div><div class="no"><?php _e( 'No' ); ?></div>
+                        </label>
+                    </div>
+ 							  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
+ 							  	 	<?php echo __('Set this to "no" for no background color.','egoi-for-wp'); ?>
+ 							 	</span>
+ 							</span>
+                </div>
+
                 <div class="colorpicker-wrapper">
                     <div style="background-color:<?= esc_attr( $this->bar_post['color_bar'] ) ?>" class="view" ></div>
                     <input id="bar-background-color" type="text" name="egoi_bar_sync[color_bar]" value="<?= esc_attr( $this->bar_post['color_bar'] ) ?>"  autocomplete="off" />
@@ -233,3 +247,9 @@ settings_errors();
         <input type="submit" value="<?= _e('Save', 'egoi-for-wp') ?>">
     </div>
 </form>
+
+<style>
+    .e-goi-tooltip .e-goi-tooltiptext{
+        margin-left: 60px !important;
+    }
+</style>

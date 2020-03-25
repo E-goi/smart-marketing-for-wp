@@ -295,7 +295,7 @@ $page = array(
 								  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--custom" style="padding: 5px 8px;!important;"><?php _e( 'Can\'t find your API Key? We help you » <a href="https://helpdesk.e-goi.com/511369-Whats-E-gois-API-and-where-do-I-find-my-API-key" target="_blank">here!</a>', 'egoi-for-wp' ); ?>
 								 	</span>
 								</span>
-                                        <span><?php echo __('To get your API key simply click the "Apps" menu in your account <span style="text-decoration:underline;"><a target="_blank" href="https://login.egoiapp.com/#/login/?menu=sec">E­-goi</span></a> and copy it.', 'egoi-for-wp');?>
+                                        <span><?php echo __('To get your API key simply click the "Integrations" menu in your account <span style="text-decoration:underline;"><a target="_blank" href="https://login.egoiapp.com/login?from=%2F%3Faction%3Dui#/integrations">E-goi</span></a> and copy it.', 'egoi-for-wp');?>
                                     </p>
                                 </form>
                             </div>
