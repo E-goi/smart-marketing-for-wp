@@ -981,6 +981,7 @@ class Egoi_For_Wp {
 
         $result_client = json_decode($this->_getContent($url));
         if(!empty($result_client->Egoi_Api->addSubscriber->UID)){
+            require_once plugin_dir_path( __FILE__ ) . '../public/includes/TrackingEngageSDK.php';
             TrackingEngageSDK::setUidSession($result_client->Egoi_Api->addSubscriber->UID);
         }
         return $result_client->Egoi_Api->addSubscriber;
