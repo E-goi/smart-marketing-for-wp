@@ -17,14 +17,16 @@ if(isset($_POST['action'])){
     $options = array_merge($this->options_list, $post['egoi_sync']);
     if(!empty($post['egoi_sync']['social_track'])){
         $apikey = $this->get_apikey();
-        $api = new EgoiApiV3($apikey);
+        if(!empty($apikey)){
+            $api = new EgoiApiV3($apikey);
 
-        $social_track_id = $api->getSocialTrackID();
-        
-        if(!empty($social_track_id)){
-            $options = array_merge($options, ['social_track_id' => $social_track_id]);
-        }else{
-            $options['social_track'] = $options['social_track_json'] = 0;                
+            $social_track_id = $api->updateSocialTrack('create');
+            
+            if(!empty($social_track_id)){
+                $options = array_merge($options, ['social_track_id' => $social_track_id]);
+            }else{
+                $options['social_track'] = $options['social_track_json'] = 0;                
+            }
         }
     }
 

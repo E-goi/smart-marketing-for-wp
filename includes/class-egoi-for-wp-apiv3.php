@@ -333,13 +333,25 @@ class EgoiApiV3
     /**
      * @return false|string
      */
-    public function getSocialTrackID(){
+    public function updateSocialTrack($method){
+        if($method == 'update'){
+            $check = get_option('egoi_sync');
+            if(!isset($check['social_track']) || $check['social_track'] == 0) return false;
+        }
 
         $domain = preg_replace("(^https?://)", "", get_site_url());
         $accountId = $this->getMyAccount();
+        $catalogs = EgoiProductsBo::getCatalogsToSync();        
+        $requestString = 'https://egoiapp2.com/ads/' . $method . 'Pixel?account_id='.$accountId.'&domain='.$domain;
 
+        for($i = 0; $i < count($catalogs); $i++)
+            $requestString .= '&catalog[' . $i . ']=' . $catalogs[$i];   
+
+        if(class_exists( 'woocommerce' ))
+            $requestString .= '&productsPath=' . wc_get_page_permalink( 'shop' );
+            
         $client = new ClientHttp(
-            'https://egoiapp2.com/ads/createPixel?account_id='.$accountId.'&domain='.$domain,
+            $requestString,
             'GET'
         );
         if($client->success() !== true){
