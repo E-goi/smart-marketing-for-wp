@@ -111,15 +111,19 @@ class EgoiProductsBo
 
         self::setWordpressCatalog($response);
         self::setCatalogOptions($response,$options);
-
+        $this->api->updateSocialTrack('update');
+        
         return true;
     }
 
     public function deleteCatalog($id){
-        return $this->api->deleteCatalog(
+        $response = $this->api->deleteCatalog(
             'DELETE',
             $id
         );
+        $this->api->updateSocialTrack('update');
+        
+        return $response;
     }
 
     /**

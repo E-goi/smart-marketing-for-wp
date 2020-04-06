@@ -2084,6 +2084,13 @@ class Egoi_For_Wp_Admin {
     public function egoi_sync_catalog(){
         check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
         update_option('egoi_catalog_sync',json_encode($_POST['data']));
+
+        $apikey = $this->get_apikey();
+        if(!empty($apikey)){
+            $api = new EgoiApiV3($apikey);
+
+            $api->updateSocialTrack('update');
+        }
         wp_send_json_success();
     }
 

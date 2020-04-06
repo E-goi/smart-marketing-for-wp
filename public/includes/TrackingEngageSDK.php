@@ -74,11 +74,11 @@ class TrackingEngageSDK
             "@context":"https://schema.org",
             "@type":"Product",
             "productID":"<?php echo $product->get_id(); ?>",
-            "name":"<?php echo $product->get_name(); ?>",
-            "description":"<?php echo wp_strip_all_tags( do_shortcode( $product->get_short_description() ? $product->get_short_description() : $product->get_description() ) ); ?>",
+            "name":"<?php echo addslashes($product->get_name()); ?>",
+            "description":"<?php echo addslashes(wp_strip_all_tags( do_shortcode( $product->get_short_description() ? $product->get_short_description() : $product->get_description() ) ) );?>",
             "url":"<?php echo $product->get_permalink(); ?>",
             "image":"<?php echo wp_get_attachment_image_url( $product->get_image_id(), 'full'); ?>",
-            "brand":"<?php echo get_bloginfo( 'name' ); ?>",
+            "brand":"<?php echo addslashes(get_bloginfo( 'name' ) ); ?>",
             "offers": [
                 {
                 "@type": "Offer",
@@ -90,7 +90,7 @@ class TrackingEngageSDK
             ]
             }
             </script>
-            <script>var egoi_product = { 'id':'<?php echo $product->get_id(); ?>','name':'<?php echo $product->get_name(); ?>','price':'<?php echo $price; ?>'};</script>
+            <script>var egoi_product = { 'id':'<?php echo $product->get_id(); ?>', 'client_id':'<?php echo $this->client_id ?>','name':'<?php echo addslashes($product->get_name()); ?>','price':'<?php echo $price; ?>'};</script>
         <?php
     }
 
