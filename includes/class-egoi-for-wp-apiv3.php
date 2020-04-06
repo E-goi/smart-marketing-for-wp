@@ -341,15 +341,22 @@ class EgoiApiV3
 
         $domain = preg_replace("(^https?://)", "", get_site_url());
         $accountId = $this->getMyAccount();
-        $catalogs = EgoiProductsBo::getCatalogsToSync();        
-        $requestString = 'https://egoiapp2.com/ads/' . $method . 'Pixel?account_id='.$accountId.'&domain='.$domain;
+        $catalogs = EgoiProductsBo::getCatalogsToSync(); 
+
+        $data = array(
+            'account_id' => $accountId,
+            'domain' => $domain,
+            'catalog' => []
+        );
 
         for($i = 0; $i < count($catalogs); $i++)
-            $requestString .= '&catalog[' . $i . ']=' . $catalogs[$i];   
+            $data['catalog'][] = $catalogs[$i];  
 
         if(class_exists( 'woocommerce' ))
-            $requestString .= '&productsPath=' . wc_get_page_permalink( 'shop' );
-            
+            $data['productsPath'] = wc_get_page_permalink( 'shop' );
+       
+        $requestString = "https://egoiapp2.com/ads/" . $method . 'Pixel?' . http_build_query($data);
+        
         $client = new ClientHttp(
             $requestString,
             'GET'
