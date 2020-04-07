@@ -15,6 +15,7 @@ class Egoi_For_Wp_Public {
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
 	private $plugin_name = 'Smart Marketing for WordPress';
+	const DISABLE_SUBSCRIBER_BAR_PERMISSION = 'egoi_disable_sub_bar';
 
 	/**
 	 * The version of this plugin.
@@ -105,7 +106,7 @@ class Egoi_For_Wp_Public {
 	*	Generate E-goi bar
 	*/
 	public function generate_bar($regenerate = null) {
-		
+		if( current_user_can(self::DISABLE_SUBSCRIBER_BAR_PERMISSION) ){return false;}
 		$bar_post = get_option(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 
 		//add new tag to E-goi
