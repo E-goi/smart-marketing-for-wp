@@ -861,7 +861,7 @@ class Egoi_For_Wp_Public {
 		if(!empty($options['list']) && !empty($options['track'])){
 			$track->getStartUp();
 		}
-		if($options['social_track']){
+		if(isset($options['social_track']) && $options['social_track']){
 			$track->getStartUpSocial();
 		}
         if(class_exists('WooCommerce') && is_product() && isset($options['social_track_json'])){
