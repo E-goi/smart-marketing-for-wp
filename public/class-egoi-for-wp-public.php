@@ -431,6 +431,7 @@ class Egoi_For_Wp_Public {
 
 		$id = $atts['id'];
         $simple_form = 'egoi_simple_form_'.$id;
+        $simple_form_result = $simple_form . "_result";
 
 		$post = '<form id="'.$simple_form.'" method="post" action="/">';
 
@@ -452,7 +453,7 @@ class Egoi_For_Wp_Public {
 		}
 
 		$post .= stripslashes($html_code->post_content);
-		$post .= '<div id="simple_form_result" style="margin:10px 0px; padding:12px; display:none;"></div>';
+		$post .= '<div id="'.$simple_form_result.'" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>';
 		$post .= '</form>';
 		
 		
@@ -492,7 +493,7 @@ class Egoi_For_Wp_Public {
 						}
 					}, 400);
 
-					simple_form.find( "#simple_form_result" ).hide();
+					jQuery( "#'.$simple_form_result.'" ).hide();
 
 					var ajaxurl = "'.admin_url('admin-ajax.php').'";
 					var egoi_simple_form = simple_form.find("#egoi_simple_form").val();
@@ -523,7 +524,7 @@ class Egoi_For_Wp_Public {
 					posting.done(function( data ) {
 						if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
 
-							simple_form.find( "#simple_form_result" ).css({
+							jQuery( "#'.$simple_form_result.'" ).css({
 								"color": "#4F8A10",
 								"background-color": "#DFF2BF"
 							});
@@ -531,13 +532,13 @@ class Egoi_For_Wp_Public {
 							jQuery( "#'.$simple_form.'" )[0].reset();
 
 						} else {
-							simple_form.find( "#simple_form_result" ).css({
+							jQuery( "#'.$simple_form_result.'" ).css({
 								"color": "#9F6000",
 								"background-color": "#FFD2D2"
 							});
 						}
 
-						simple_form.find( "#simple_form_result" ).empty().append( data ).slideDown( "slow" );
+						jQuery( "#'.$simple_form_result.'" ).empty().append( data ).slideDown( "slow" );
 						clearInterval(button_effect);
 						if (button_original_style) {
 						    button_obj.prop("disabled",false).attr("style", button_original_style).html(button_text);
