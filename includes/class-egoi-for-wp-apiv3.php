@@ -346,11 +346,11 @@ class EgoiApiV3
         $data = array(
             'account_id' => $accountId,
             'domain' => $domain,
-            'catalog' => []
+            'catalogs' => []
         );
 
         for($i = 0; $i < count($catalogs); $i++)
-            $data['catalog'][] = $catalogs[$i];  
+            $data['catalogs'][] = $catalogs[$i];  
 
         if(class_exists( 'woocommerce' ))
             $data['productsPath'] = wc_get_page_permalink( 'shop' );
