@@ -113,7 +113,7 @@ if(isset($_POST['action'])){
 
                         <div class="smsnf-input-group">
                             <label for="egoi_sync[social_track]"><?php _e( 'Activate Remarketing', 'egoi-for-wp' ); ?></label>
-                            <p class="subtitle"><?php _e( 'Enable this if you would like to target your website audience using E-goi Ads.', 'egoi-for-wp' ); ?></p>
+                            <p class="subtitle"><?php _e( 'Enable this if you would like to target your website audience using E-goi Ads. <a target="_blank" href="https://helpdesk.e-goi.com/185705-Creating-E-goi-remarketing-Ads">Learn more</a>', 'egoi-for-wp' ); ?></p>
                             <div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
                                 <label><input type="radio" id="egoi_track_social" class="egoi_json_trigger" name="egoi_sync[social_track]" <?php checked( $options['social_track'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
                                 <label><input type="radio" class="egoi_json_trigger" name="egoi_sync[social_track]" <?php checked( $options['social_track'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
