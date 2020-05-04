@@ -1082,23 +1082,32 @@ class Egoi_For_Wp_Admin {
 		// double opt-in
         $status = filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1' ? 0 : 1;
 
-		$result = $api->addSubscriberWpForm(
-            filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
-            array(
+        $form_data = [];
+
+        if(empty($_POST['elementorEgoiForm'])){//old simple forms
+            $form_data = array(
                 'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
                 'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
                 'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
                 'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
                 'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
                 'status' => $status,
-            )
+            );
+        }else{
+            $_POST['status'] = $status;
+        }
+
+		$result = $api->addSubscriberWpForm(
+            filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
+            empty($form_data)?$_POST:$form_data
         );
 
 		if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
 
 		    $form_id = filter_var($_POST['egoi_simple_form'], FILTER_SANITIZE_NUMBER_INT);
-            $api->smsnf_save_form_subscriber($form_id, 'simple-form', $result);
-
+		    if(empty($_POST['elementorEgoiForm'])){
+                $api->smsnf_save_form_subscriber($form_id, 'simple-form', $result);
+            }
 			echo $this->check_subscriber($result).' ';
 			_e('was successfully registered!', 'egoi-for-wp');
 		} else if (isset($result->MODIFICATION_DATE)) {

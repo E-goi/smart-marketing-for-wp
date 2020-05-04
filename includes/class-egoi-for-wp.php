@@ -1121,12 +1121,12 @@ class Egoi_For_Wp {
 		return $forms;
 	}
 
-	public function getExtraFields($listID) {
+	public function getExtraFields($listID, $plugin_key=null) {
 
         $url = $this->restUrl.'getExtraFields&'.http_build_query(array(
 				'functionOptions' => array(
 					'apikey' => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin,
+					'plugin_key' => empty($plugin_key)?$this->plugin:$plugin_key,
 					'listID' => $listID
 					)
 				),'','&');
@@ -1732,12 +1732,30 @@ class Egoi_For_Wp {
         update_option('egoi_tag_function', json_encode($data));
     }
 
-    public static function getFullListFields(){
+    public static function getAccountTags(){
+        $Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
+        $tag_list = json_decode(json_encode($Egoi4WpBuilderObject->getTags()), true);
+
+        if(empty($tag_list['TAG_LIST']) || !is_array($tag_list['TAG_LIST'])){
+            return [];
+        }
+
+        $tag_list = $tag_list['TAG_LIST'];
+
+        $parsed_list = [];
+        foreach ($tag_list as $tag){
+            $parsed_list[ $tag['ID']] = $tag['NAME'];
+        }
+
+        return $parsed_list;
+    }
+
+    public static function getFullListFields($plugin_key = null){
 
         $options = get_option(Egoi_For_Wp_Admin::OPTION_NAME);
 
         $Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
-        $extra = (array) $Egoi4WpBuilderObject->getExtraFields(empty($options['list'])?$options->list:$options['list']);
+        $extra = (array) $Egoi4WpBuilderObject->getExtraFields(empty($options['list'])?$options->list:$options['list'],$plugin_key);
 
         $egoi_fields = array(
             'first_name'    => __('First name','egoi-for-wp'),

@@ -11,7 +11,8 @@ error_reporting(0);
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           3.3.2
+ * Version:           3.4.0
+
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
  * License:           GPL-2.0+
@@ -25,7 +26,9 @@ if (!defined( 'WPINC' )) {
     exit;
 }
 
-define('SELF_VERSION', '3.3.2');
+
+define('SELF_VERSION', '3.4.0');
+
 
 if (!session_id()){
     session_start();
@@ -187,7 +190,18 @@ function egoi_add_webpush() {
 }
 add_action('wp_footer', 'egoi_add_webpush');
 
+add_action( 'elementor/widgets/widgets_registered', 'egoi_register_widgets_elementor' );
+function egoi_register_widgets_elementor(){
+    require_once(plugin_dir_path( __FILE__ ) . 'admin/partials/elementor/egoi-for-wp-elementor-basic-control.php');
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \EgoiElementorWidget() );
+}
 
+add_action( 'elementor/editor/before_enqueue_scripts', 'egoi_widget_scripts' );
+function egoi_widget_scripts() {
+    wp_enqueue_style('elementor-egoi-css', plugin_dir_url(__FILE__) . 'admin/css/elementor.css', array(), true, 'all' );
+    //wp_register_script('elementor-egoi-css');
+    wp_enqueue_script( 'elementor-egoi', plugins_url( '/admin/js/elementor-egoi-form.js', __FILE__ ), [ 'jquery' ], true, true );
+}
 /**
  * Hooks for RSS Feeds
  * Registers our custom feed
