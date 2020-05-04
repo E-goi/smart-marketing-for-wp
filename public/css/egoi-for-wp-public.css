@@ -217,3 +217,60 @@
     border: 1px solid #ddd;
     margin-top: 20px;
 }
+
+.egoi_elementor_form_row{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.egoi_elementor_form_column{
+    display: flex;
+    flex-direction: column;
+}
+
+.egoi_elementor_form_field_row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.egoi_elementor_form_field_row > label{
+    margin-right: 0.7em;
+}
+
+.egoi_elementor_form_field_column{
+    display: flex;
+    flex-direction: column;
+}
+
+.egoi_elementor_button_start{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.egoi_elementor_button_center{
+    display: flex;
+    justify-content: center;
+}
+
+.egoi_elementor_button_end{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.egoi_elementor_form_field{
+    flex-grow: 4;
+}
+
+.egoi_elementor_entry_wrapper, .egoi_simple_form_tof_wrapper{
+    margin: 0.7em;
+}
+
+.egoi_simple_form_tof_wrapper{
+    display: flex;
+    align-items: center;
+}
+.egoi_simple_form_tof_wrapper > input{
+    margin-right: 0.3em;
+}
