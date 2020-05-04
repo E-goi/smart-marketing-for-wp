@@ -81,9 +81,8 @@ msgstr "Web Push"
 
 #: admin/class-egoi-for-wp-admin.php:313
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:37
-#: admin/partials/rssfeed/campaign-rss.php:28
+#: admin/partials/rssfeed/home.php:7 admin/partials/rssfeed/campaign-rss.php:28
 #: admin/partials/rssfeed/campaign-rss.php:152
-#: admin/partials/rssfeed/home.php:7
 msgid "RSS Feed"
 msgstr "Feed RSS"
 
@@ -734,6 +733,7 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-webpush.php:135
 #: admin/partials/egoi-for-wp-admin-webpush.php:156
 #: admin/partials/egoi-for-wp-admin-widget.php:297
+#: admin/partials/egoi-for-wp-admin-bar.php:374
 #: admin/partials/capture/simple-forms.php:188
 #: admin/partials/capture/subscription-bar.php:247
 #: admin/partials/capture/widget-options.php:188
@@ -2387,6 +2387,10 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Você tem certeza?"
 
+#: admin/partials/ecommerce/no-woocommerce.php:1
+msgid "This plugin is only available for WooCommerce stores!"
+msgstr "Este plugin só está disponível para lojas WooCommerce! "
+
 #: admin/partials/ecommerce/new-catalog-form.php:9
 msgid ""
 "Create a catalog base on language and currency and start the product's "
@@ -2681,6 +2685,30 @@ msgid ""
 msgstr ""
 "Selecione a lista que ficará associada à sincronização/integração com o Post "
 "Comment"
+
+#: admin/partials/rssfeed/home.php:14 admin/partials/rssfeed/feed-rss.php:36
+msgid "URL"
+msgstr "URL"
+
+#: admin/partials/rssfeed/home.php:19 admin/partials/rssfeed/home.php:50
+msgid "Copy URL"
+msgstr "Copiar URL"
+
+#: admin/partials/rssfeed/home.php:20
+msgid "Copied!"
+msgstr "Copiado!"
+
+#: admin/partials/rssfeed/home.php:32
+msgid "Are you sure you want to delete this RSS Feed?"
+msgstr "Tem a certeza que pretende eliminar este RSS Feed?"
+
+#: admin/partials/rssfeed/home.php:56
+msgid "Preview"
+msgstr "Visualizar"
+
+#: admin/partials/rssfeed/home.php:66
+msgid "Create RSS Feed +"
+msgstr "Criar RSS Feed +"
 
 #: admin/partials/rssfeed/campaign-rss.php:17
 msgid "E-mail"
