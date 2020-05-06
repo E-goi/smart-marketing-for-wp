@@ -21,6 +21,7 @@ Está disponível neste plugin a instalação no seu site, de forma muito simple
 Então não deixe de activar o Track & Engage, um sistema para rastrear todo o comportamento dos clientes no seu e-commerce que pode aproveitar para realizar campanhas em tempo real! (ex: carrinho abandonado, retargeting, up selling e cross selling, etc)
 
 **Funcionalidades:**
+
 * 100% Gratuito
 * Sincronização automática de contactos
 * Formulários simples
