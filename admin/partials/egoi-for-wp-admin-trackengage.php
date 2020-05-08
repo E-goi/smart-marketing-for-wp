@@ -122,7 +122,7 @@ if(isset($_POST['action'])){
 
                         <div id="egoi_track_json" class="smsnf-input-group" <?php if(!$options['social_track']) echo "style='display: none'" ?>>
                             <label for="egoi_sync[social_track_json]"><?php _e( 'Activate Product Microdata', 'egoi-for-wp' ); ?></label>
-                            <p class="subtitle"><?php _e( 'Enable this to improve your products SEO and create dynamic product ads.', 'egoi-for-wp' ); ?></p>
+                            <p class="subtitle"><?php _e( 'Enable this to improve your products SEO and create dynamic product ads. (Insert the SKU, GTIN and Brand for correct synchronization in Products > Edit Product > Inventory)', 'egoi-for-wp' ); ?></p>
                             <div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
                                 <label><input type="radio" name="egoi_sync[social_track_json]" <?php checked( $options['social_track_json'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
                                 <label><input type="radio" name="egoi_sync[social_track_json]" <?php checked( $options['social_track_json'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>

@@ -11,7 +11,7 @@ error_reporting(0);
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           3.4.0
+ * Version:           3.4.1
 
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
@@ -27,7 +27,7 @@ if (!defined( 'WPINC' )) {
 }
 
 
-define('SELF_VERSION', '3.4.0');
+define('SELF_VERSION', '3.4.1');
 
 
 if (!session_id()){
@@ -231,6 +231,57 @@ function hook_font_awesome() {
     <?php
 }
 add_action('admin_head', 'hook_font_awesome');
+
+/** 
+ * Adding Custom GTIN Meta Field
+ * Save meta data to DB
+ */
+// add GTIN input field
+add_action('woocommerce_product_options_inventory_product_data','woocom_simple_product_gtin_field', 10, 1 );
+function woocom_simple_product_gtin_field(){
+   echo '<div id="gtin_attr" class="options_group">';
+   woocommerce_wp_text_input( 
+      array(	
+         'id' => '_egoi_gtin',
+         'label' => __( 'GTIN', 'egoi-for-wp' ),
+         'desc_tip' => 'true',
+         'description' => __( 'Enter the Global Trade Item Number (UPC,EAN,ISBN)', 'egoi-for-wp' )
+      )
+   );
+   echo '</div>';
+}
+// save simple product GTIN
+add_action('woocommerce_process_product_meta','woocom_simple_product_egoi_gtin_save');
+function woocom_simple_product_egoi_gtin_save($post_id){
+   if(isset($_POST['_egoi_gtin']) && !empty($_POST['_egoi_gtin'])) {
+      $gtin = sanitize_text_field($_POST['_egoi_gtin']);
+      update_post_meta($post_id,'_egoi_gtin', $gtin);
+   }
+}
+
+// add BRAND input field
+add_action('woocommerce_product_options_inventory_product_data','woocom_simple_product_brand_field', 10, 1 );
+function woocom_simple_product_brand_field(){
+   echo '<div id="brand_attr" class="options_group">';
+   //add BRAND field for simple product
+   woocommerce_wp_text_input( 
+      array(	
+         'id' => '_egoi_brand',
+         'label' => __( 'Brand', 'egoi-for-wp' ),
+         'desc_tip' => 'true',
+         'description' => __( 'Enter the brand of the product', 'egoi-for-wp' )
+      )
+   );
+   echo '</div>';
+}
+// save simple product BRAND
+add_action('woocommerce_process_product_meta','woocom_simple_product_egoi_brand_save');
+function woocom_simple_product_egoi_brand_save($post_id){
+   if(isset($_POST['_egoi_brand']) && !empty($_POST['_egoi_brand'])) {
+      $brand = sanitize_text_field($_POST['_egoi_brand']);
+      update_post_meta($post_id,'_egoi_brand', $brand);
+   }
+}
 
 // COUNTRY MOBILE CODES
 define( 'COUNTRY_CODES' , serialize(array (

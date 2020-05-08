@@ -78,7 +78,7 @@ class TrackingEngageSDK
             "description":"<?php echo addslashes(wp_strip_all_tags( do_shortcode( $product->get_short_description() ? $product->get_short_description() : $product->get_description() ) ) );?>",
             "url":"<?php echo $product->get_permalink(); ?>",
             "image":"<?php echo wp_get_attachment_image_url( $product->get_image_id(), 'full'); ?>",
-            "brand":"<?php echo addslashes(get_bloginfo( 'name' ) ); ?>",
+            "brand":"<?php echo $product->get_meta( '_egoi_brand' ); ?>",
             "offers": [
                 {
                 "@type": "Offer",
