@@ -457,13 +457,13 @@ class EgoiProductsBo
             'sku'                   => $product->get_sku(),
             //'upc'                   => NULL,
             //'ean'                   => NULL,
-            //'gtin'                  => NULL,
+            'gtin'                  => $product->get_meta( '_egoi_gtin' ),
             //'mpn'                   => NULL,
             'link'                  => get_permalink($product->get_id()),
             'image_link'            => wp_get_attachment_image_url( $product->get_image_id(), 'full' ),
             'price'                 => $product->get_regular_price(),
             'sale_price'            => $product->get_sale_price(),
-            //'brand'                 => NULL,
+            'brand'                 => $product->get_meta( '_egoi_brand' ),
             'categories'            => self::transformArrayIdsToArrayBreadCrumbs($product->get_category_ids(),$breadCrumbs),
             'related_products'      => array_unique(array_merge($product->get_upsell_ids(), $product->get_cross_sell_ids()))
         ];
