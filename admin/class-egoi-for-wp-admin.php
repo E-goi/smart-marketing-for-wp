@@ -1095,6 +1095,7 @@ class Egoi_For_Wp_Admin {
             );
         }else{
             $_POST['status'] = $status;
+            $_POST['tags'] = array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT));
         }
 
 		$result = $api->addSubscriberWpForm(

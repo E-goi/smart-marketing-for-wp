@@ -400,6 +400,8 @@ class EgoiElementorWidget extends Widget_Base {
         echo '</div>';
         if('yes' == $settings['term_option']){
             echo '<p class="egoi_simple_form_tof_wrapper '.$position_button.' egoi_simple_form_tof_wrapper_custom"><input type="checkbox" id="egoi_tof" name="egoi_tof" value="true"><span>'.__('I agree to','egoi-for-wp').' <a target="_blank" href="'.$settings['term_url'].'" >'.__('terms & conditions','egoi-for-wp').'</a> <span style="color: red;font-weight: bold">*</span></span></p>';
+        }else{
+            echo '<input type="hidden" id="egoi_tof" name="egoi_tof" value="true">';
         }
 
         echo '<p id="'.$message_box_id.'" class="egoi_simple_form_message_wrapper_custom egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></p>';

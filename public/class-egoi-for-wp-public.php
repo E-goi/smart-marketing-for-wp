@@ -759,6 +759,8 @@ class Egoi_For_Wp_Public {
             );
         }else{
             $_POST['status'] = $status;
+            $_POST['tags'] = array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT));
+            //$_POST['lang'] = filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL);
         }
 
         $result = $api->addSubscriberWpForm(
