@@ -235,6 +235,12 @@ class Egoi_For_Wp_Admin {
                 ) );
             }
 
+            if(strpos(get_current_screen()->id, 'form')){
+                wp_localize_script( $this->plugin_name, 'egoi_config_ajax_object_capture', array(
+                    'ajax_url' => admin_url( 'admin-ajax.php' ),
+                    'ajax_nonce' => wp_create_nonce('egoi_capture_actions'),
+                ) );
+            }
 
 			wp_enqueue_script('wp-color-picker');
 

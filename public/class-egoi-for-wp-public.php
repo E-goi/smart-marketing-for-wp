@@ -902,14 +902,36 @@ class Egoi_For_Wp_Public {
         $client_id = $client_info->CLIENTE_ID;
 
         if( version_compare( get_option( 'woocommerce_version' ), '3.0.0', ">=" ) ) {
-            $order_id = $order->get_id();
+            if(is_numeric($order)){
+                $order_id = $order;
+            }else{
+                $order_id = $order->get_id();
+            }
         } else {
-            $order_id = $order->id;
+            if(is_numeric($order)){
+                $order_id = $order;
+            }else{
+                $order_id = $order->id;
+            }
         }
-
         require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
         $track = new TrackingEngageSDK($client_id, $options['list'], $order_id);
         $track->getOrder();
+    }
+
+    public function loadPopups(){
+        if(is_user_logged_in()){ // popups show only on non loggedin accounts
+            return false;
+        }
+        require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-popup.php';
+
+        $popups = EgoiPopUp::getSavedPopUps();
+
+        foreach ($popups as $popup_id){
+            $popup = new EgoiPopUp($popup_id);
+            $popup->printPopup();
+        }
+
     }
 
     private function load_options() {

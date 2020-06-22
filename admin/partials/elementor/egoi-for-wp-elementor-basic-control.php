@@ -472,6 +472,8 @@ class EgoiElementorWidget extends Widget_Base {
                 });
 
               </script>';
+
+        echo '<style>'.$settings['custom_css'].'</style>';
     }
 
     protected function getAccountListFields(){

@@ -7978,7 +7978,7 @@ a.egoi_tooltip:hover{
 }
 
 .smsnf-tab-content {
-  margin-bottom: 32px;
+  margin-bottom: 69px;
 }
 
 .smsnf-tab-content:not(.active) {
@@ -8215,5 +8215,40 @@ a.egoi_tooltip:hover{
 .egoi-transparent-option{
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.egoi-new-tag{
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  margin: 1px 0 -1px 2px;
+  padding: 0 5px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background-color: green;
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+  z-index: 26;
+}
+
+.egoi-image-selector-preview{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(151, 151, 151, .36);
+  border-radius: 12px;
+  cursor: pointer;
+  padding: -4px;
+  background-size: contain;
+  width: 100px;
+  height: 100px;
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  margin-right: 10px;
+  justify-content: center;
   align-items: center;
 }

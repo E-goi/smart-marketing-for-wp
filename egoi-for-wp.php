@@ -283,6 +283,28 @@ function woocom_simple_product_egoi_brand_save($post_id){
    }
 }
 
+add_action( 'wp_ajax_egoi_preview_popup', 'popup_preview' );
+function popup_preview(){
+    check_ajax_referer( 'egoi_capture_actions', 'security' );
+
+    require_once(plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-popup.php');
+    if(!EgoiPopUp::isValidPreviewPost($_POST)){
+        ?>
+            <h1>Invalid Popup Configs</h1>
+        <?php
+    }
+
+    EgoiPopUp::getPreviewFromPost($_POST);
+    exit;
+}
+
+add_action( 'wp_head', 'popups_display' );
+function popups_display(){
+    require_once(plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-popup.php');
+    return;
+}
+
+
 // COUNTRY MOBILE CODES
 define( 'COUNTRY_CODES' , serialize(array (
     'AD' =>

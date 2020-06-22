@@ -5,6 +5,8 @@ $dir = plugin_dir_path(__FILE__) . 'capture/';
 
 include_once $dir . '/functions.php';
 require_once plugin_dir_path(__FILE__) . 'egoi-for-wp-common.php';
+require_once(plugin_dir_path( __FILE__ ) . '../../includes/class-egoi-for-wp-popup.php');
+
 
 $img = 'https://img.icons8.com/ios/50/000000/picture.png';
 
@@ -18,7 +20,18 @@ if (isset($_GET['del_adv_form'])) {
 
 // apaga formulário simples
 if (isset($_GET['del_simple_form'])) {
-    delete_simple_form($_GET['del_simple_form']);
+    if(!EgoiPopUp::checkFormSafeDelete($_GET['del_simple_form'])){
+        echo get_notification(__('Error', 'egoi-for-wp'), __('You have Popups using the form you are trying to delete.', 'egoi-for-wp'));
+    }else{
+        delete_simple_form($_GET['del_simple_form']);
+        echo get_notification(__('Simple Form', 'egoi-for-wp'), __('Form was successfully deleted!', 'egoi-for-wp'));
+    }
+}
+
+// apaga popups
+if (isset($_GET['del_popup'])) {
+    EgoiPopUp::deletePopup($_GET['del_popup']);
+    echo get_notification(__('Popups', 'egoi-for-wp'), __('Popup was successfully deleted!', 'egoi-for-wp'));
 }
 
 $page = array(
@@ -27,6 +40,7 @@ $page = array(
     'simple form' => $_GET['sub'] == 'simple-forms',
     'subscription bar' => $_GET['sub'] == 'subscription-bar',
     'widget options' => $_GET['sub'] == 'widget-options',
+    'popup' => $_GET['sub'] == 'popup'
 );
 
 $next_adv_form_id = get_next_adv_form_id();
@@ -48,16 +62,17 @@ $next_adv_form_id = get_next_adv_form_id();
                        href="<?= $next_adv_form_id == null ? "#" : "?page=egoi-4-wp-form&sub=adv-forms&form=" . $next_adv_form_id ?>"><?php _e('Advanced Forms', 'egoi-for-wp'); ?></a></li>
                 <li><a class="<?= $page['subscription bar'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=subscription-bar"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a></li>
                 <li><a class="<?= $page['widget options'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=widget-options"><?php _e('Widget Options', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?= $page['popup'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=popup"><?php _e('Popup', 'egoi-for-wp'); ?>&nbsp;<?php echo sprintf('<span style="background-color: green !important;" class="egoi-new-tag">%s</span>', __('New!', 'egoi-for-wp')); ?></a></li>
             </ul>
         </nav>
     </header>
     <!-- / Header -->
     <!-- Content -->
-    <main>
+    <main <?php echo !empty($page['popup'])&&!empty(get_simple_forms())?'style="grid-template-columns: 4fr 3fr !important;"':''; ?> >
         <!-- Content -->
         <section class="smsnf-content">
             <?php
-if ($page['home']) {
+            if ($page['home']) {
                 $file = $dir . 'home.php';
             } elseif($page['simple form']) {
                 $file = $dir . 'simple-forms.php';
@@ -67,6 +82,8 @@ if ($page['home']) {
                 $file = $dir . 'subscription-bar.php';
             } elseif($page['widget options']) {
                 $file = $dir . 'widget-options.php';
+            } elseif($page['popup']) {
+                $file = $dir . 'popup.php';
             }
 
             include($file);
@@ -98,11 +115,18 @@ if ($page['home']) {
         </section>
         <!-- / Content -->
         <!-- Pub -->
-        <section class="smsnf-pub">
-            <div>
-                <?php include ('egoi-for-wp-admin-banner.php'); ?>
-            </div>
-        </section>
+
+        <?php if($page['popup'] && !empty(get_simple_forms())){ ?>
+            <section class="smsnf-content">
+                <?php include ($dir.'popup-preview.php'); ?>
+            </section>
+        <?php }else{ ?>
+            <section class="smsnf-pub">
+                <div>
+                    <?php include ('egoi-for-wp-admin-banner.php'); ?>
+                </div>
+            </section>
+        <?php } ?>
         <!-- / Pub -->
     </main>
     <!-- / Content -->

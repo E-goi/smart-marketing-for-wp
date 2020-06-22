@@ -1,6 +1,8 @@
 <?php
+require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-popup.php');
 $simple_forms = get_simple_forms();
 $adv_forms = get_adv_forms();
+$popups = EgoiPopUp::getSavedPopUps();
 ?>
 
 <h3><?= _e('Your Simple Forms list', 'egoi-for-wp') ?></h3>
@@ -102,6 +104,39 @@ $edit_link = sprintf("?page=egoi-4-wp-form&sub=adv-forms&form=%d&type=%s", $form
                     </td>
                 </tr>
             <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+
+<h3><?= _e('Your Popup List', 'egoi-for-wp') ?></h3>
+
+<?php if (count($popups) == 0) : ?>
+    <p><?= _e('No Popup yet', 'egoi-for-wp') ?></p>
+<?php else : ?>
+    <table class="smsnf-table">
+        <thead>
+        <tr>
+            <th style="width:1%">ID</th>
+            <th style="width:98%"><?= _e('Type', 'egoi-for-wp') ?></th>
+            <th style="width:1%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($popups as $form) : ?>
+            <?php
+            $edit_link = sprintf("?page=egoi-4-wp-form&sub=popup&popup_id=%d", $form);
+            $delete_link = sprintf("?page=egoi-4-wp-form&del_popup=%d", $form);
+            ?>
+            <tr>
+                <td><?= $form ?></td>
+                <td><?= __('Popup','egoi-for-wp'); ?></td>
+
+                <td>
+                    <a class="smsnf-btn" href="<?= $edit_link ?>"><?php _e('Edit', 'egoi-for-wp');?></a>
+                    <a class="smsnf-btn delete-adv-form" href="<?= $delete_link ?>"><?php _e('Delete', 'egoi-for-wp');?></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
 <?php endif; ?>
