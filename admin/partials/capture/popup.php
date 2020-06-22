@@ -1,9 +1,10 @@
 <?php
 
 require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-popup.php');
+require_once(plugin_dir_path( __FILE__ ) . 'functions.php');
 if(!empty($_POST)){
     EgoiPopUp::savePostPopup($_POST);
-    get_notification(__('Popups', 'egoi-for-wp'), __('Popups', 'Your popup was created successfully'));
+    echo get_notification(__('Popups', 'egoi-for-wp'), __('Your popup was saved successfully', 'egoi-for-wp'));
 }
 
 $popup_id = empty($_GET['popup_id'])?'new':trim($_GET['popup_id']);
@@ -305,7 +306,7 @@ if(empty(get_simple_forms())){
 
         var file_frame;
         var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
-        var set_to_post_id = 10; // Set this
+        var set_to_post_id = 1; // Set this
 
         $('.egoi-image-selector-preview').live('click', function( event ){
 

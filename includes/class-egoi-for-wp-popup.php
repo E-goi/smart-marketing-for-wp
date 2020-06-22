@@ -122,7 +122,7 @@ class EgoiPopUp
     public function printPopup(){
         $config = $this->getPopupSavedData();
 
-        if($config['show_logged'] == 'no' && is_user_logged_in()){
+        if(($config['show_logged'] == 'no' && is_user_logged_in()) || ($config['show_logged'] == 'no' && !empty($_SESSION['egoi_tracking_uid']))){
             return false;
         }
 
@@ -178,6 +178,8 @@ class EgoiPopUp
             jQuery(document).ready(function($) {
 
                 var targetPopup = $("#egoi_popup_<?php echo $config['popup_id']; ?>");
+                var targetForm = $("#egoi_popup_<?php echo $config['popup_id']; ?> ").find("#egoi_simple_form_<?php echo $config['form_id']; ?>");
+
                 var closeButton = $(".popup_close_<?php echo $config['popup_id']; ?>");
 
                 closeButton.on('click', function(){
@@ -185,17 +187,121 @@ class EgoiPopUp
                 });
 
 
+                targetForm.on('submit', function(){
+                    <?php
+                    self::getFormSubmit($config);
+                    ?>
+                });
+
                 function closePopup() {
                     targetPopup.hide();
                 }
 
                 function triggerPopup(){
+                    if(localStorage.getItem('popup_trigger_<?php echo $config['popup_id']; ?>') !== null){
+                        return;
+                    }
+                    <?php
+                        self::getPageTrigger();
+                        self::getShowUntil($config);
+                    ?>
+
+                    targetPopup.css('display', 'flex');
+                    <?php self::getPopUpDisplayed($config); ?>
+                }
+
+                function startPopup(){
+                    <?php
+                        switch ($config['trigger']){
+                            case 'delay':
+                                self::getTriggerDelayJs($config['trigger_option']);
+                                break;
+                            case 'on_leave':
+                                self::getTriggerOnLeaveJs();
+                                break;
+                        }
+
+                    ?>
 
                 }
+
+                startPopup();
+
+
             });
         </script>
 
         <?php
+    }
+
+    private static function getFormSubmit($config){
+        if($config['show_until'] == 'until_submition'){?>
+
+            localStorage.setItem('popup_trigger_<?php echo $config['popup_id']; ?>', true);
+
+            <?php
+        }
+    }
+
+    private static function getPopUpDisplayed($config){
+        if($config['show_until'] == 'one_time'){?>
+
+            localStorage.setItem('popup_trigger_<?php echo $config['popup_id']; ?>', true);
+            <?php
+        }
+    }
+
+    private static function getPageTrigger(){
+        if(!empty($config['page_trigger'])){
+            switch ($config['page_trigger_rule']){
+                case'contains':
+                    ?>
+                    if(!window.location.pathname.includes("<?php echo $config['page_trigger']; ?>")){
+                        return;
+                    }
+                    <?php
+                    break;
+                case'not_contains':
+                    ?>
+                    if(window.location.pathname.includes("<?php echo $config['page_trigger']; ?>")){
+                        return;
+                    }
+                    <?php
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private static function getShowUntil($config){
+
+        ?>
+
+        <?php
+    }
+
+
+    private static function getTriggerOnLeaveJs(){
+        ?>
+
+        $("html").mouseleave(function(){
+            triggerPopup();
+        } );
+
+        <?php
+        return;
+    }
+
+    private static function getTriggerDelayJs($seconds){
+        ?>
+
+        setTimeout(function () {
+            triggerPopup();
+        },<?php echo 1000*intval($seconds) ?>)
+
+        <?php
+        return;
     }
 
     private static function getFormShortCodeById($id = 'new', $config){
@@ -247,7 +353,6 @@ class EgoiPopUp
             .egoi_modal_<?php echo $config['popup_id']; ?> {
                 position: fixed; /* Stay in place */
                 z-index: 1001; /* Sit on top */
-                padding-top: 40vh; /* Location of the box */
                 left: 0;
                 top: 0;
                 width: 100%; /* Full width */
@@ -258,7 +363,7 @@ class EgoiPopUp
                 <?php if($production){ ?>
                 display: none;
                 <?php }else{ ?>
-                display: block; /* Hidden by default */
+                display: flex; /* Hidden by default */
                 <?php } ?>
             }
 

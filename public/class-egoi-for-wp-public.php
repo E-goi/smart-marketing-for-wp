@@ -920,9 +920,7 @@ class Egoi_For_Wp_Public {
     }
 
     public function loadPopups(){
-        if(is_user_logged_in()){ // popups show only on non loggedin accounts
-            return false;
-        }
+
         require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-popup.php';
 
         $popups = EgoiPopUp::getSavedPopUps();
