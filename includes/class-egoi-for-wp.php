@@ -1242,7 +1242,7 @@ class Egoi_For_Wp {
        	$result = $result_client->Egoi_Api->getTags->TAG_LIST;
 		
 		foreach ($result as $key => $value) {
-			if($value->NAME == $name){
+			if(strcasecmp($value->NAME, $name) == 0){
 				$data['NAME'] = $value->NAME;
 				$data['ID'] = $value->ID;
 			}

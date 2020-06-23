@@ -303,7 +303,7 @@ class Egoi_For_Wp_Public {
 
             $status = !isset($bar['double_optin']) || $bar['double_optin'] == 0 ? 1 : 0;
 
-			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, $status, '', (int) $tag);
+			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, $status, '', intval($tag));
             if (!isset($add->ERROR) && !isset($add->MODIFICATION_DATE) ) {
                 $client->smsnf_save_form_subscriber(1, 'bar', $add);
             }

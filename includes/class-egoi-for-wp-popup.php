@@ -436,6 +436,11 @@ class EgoiPopUp
                 text-decoration: none;
                 cursor: pointer;
             }
+
+            <?php
+            if(!empty($config['custom_css'])){
+                echo $config['custom_css'];
+            } ?>
         </style>
         <?php
     }

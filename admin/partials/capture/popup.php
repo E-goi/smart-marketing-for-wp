@@ -184,7 +184,7 @@ if(empty(get_simple_forms())){
     <div id="smsnf-layout" class="smsnf-tab-content">
 
         <div class="smsnf-input-group">
-            <label for="popup-layout"><?=__('Display Position','egoi-for-wp');?></label>
+            <label for="popup-layout"><?=__('Popup Layout','egoi-for-wp');?></label>
             <p class="subtitle"><?php _e( 'You can choose to divide the popup with an image', 'egoi-for-wp' ); ?></p>
             <div class="smsnf-adv-forms">
                 <div id="popup-layout" class="smsnf-adv-forms-types" style="grid-template-columns: 1fr 1fr 1fr;">
