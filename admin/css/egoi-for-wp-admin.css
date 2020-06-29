@@ -8252,3 +8252,14 @@ a.egoi_tooltip:hover{
   justify-content: center;
   align-items: center;
 }
+
+.egoi-image-selector-preview--selected{
+  flex-direction: column !important;
+  justify-content: end !important;
+  align-items: flex-end !important;
+}
+
+.popup_remove_side_image{
+  color: salmon !important;
+  cursor: pointer;
+}

@@ -39,6 +39,11 @@ class EgoiPopUp
 
     public static function savePostPopup($post){
 
+        if(!self::isValidPreviewPost($post)){
+            return false;
+        }
+        $post = self::createConfigFromPost($post['data']);
+
         if($post['popup_id'] == 'new'){
             $post['popup_id'] = self::generateNextPopupId();
         }
@@ -89,16 +94,17 @@ class EgoiPopUp
             'trigger'           => 'delay',
             'trigger_option'    => '10',
             'page_trigger_rule' => 'contains',
-            'page_trigger'      => '',
+            'page_trigger'      => [],
             'form_orientation'  => 'vertical',
             'show_until'        => 'one_time',
             'background_color'  => '#ffffff',
             'font_color'        => '',
             'custom_css'        => '',
-            'max_width'         => '450px',
+            'max_width'         => '700px',
             'popup_layout'      => 'simple',
             'side_image'        => 0,
-            'show_logged'       => 'no'
+            'show_logged'       => 'no',
+            'title'             => '',
         ];
     }
 
@@ -148,14 +154,14 @@ class EgoiPopUp
         <div id="egoi_popup_<?php echo $config['popup_id']; ?>" class="egoi_modal_<?php echo $config['popup_id']; ?>">
             <!-- Modal content -->
             <div class="egoi_modal_content_<?php echo $config['popup_id']; ?>">
-                <span class="popup_close_<?php echo $config['popup_id']; ?>">X</span>
+                <span class="popup_close_<?php echo $config['popup_id']; ?> dashicons dashicons-no"></span>
                 <div style="border-radius: inherit;">
                     <?php if($config['popup_layout'] == 'left_image'){ ?>
                         <div class="egoi_popup_side_image_<?php echo $config['popup_id']; ?>" style="background-image: url(<?php echo wp_get_attachment_url( $config['side_image'] ); ?>);">
 
                         </div>
                     <?php } ?>
-                    <div style="padding: 20px;">
+                    <div style="padding: 20px;border-radius: inherit;">
                         <?php echo stripslashes($config['content']);
                         self::getFormShortCodeById($config['form_id'], $config);
                         ?>
@@ -186,12 +192,13 @@ class EgoiPopUp
                     closePopup();
                 });
 
-
-                targetForm.on('submit', function(){
-                    <?php
-                    self::getFormSubmit($config);
-                    ?>
-                });
+                var elem = document.getElementsByTagName("html");
+                elem[0].addEventListener("egoi_simple_form_<?php echo $config['form_id']; ?>", function (e) {
+                    setTimeout(function () {
+                        <?php self::getFormSubmit($config); ?>
+                        closePopup();
+                    }, 2000);
+                }, false);
 
                 function closePopup() {
                     targetPopup.hide();
@@ -202,7 +209,7 @@ class EgoiPopUp
                         return;
                     }
                     <?php
-                        self::getPageTrigger();
+                        self::getPageTrigger($config);
                         self::getShowUntil($config);
                     ?>
 
@@ -251,19 +258,32 @@ class EgoiPopUp
         }
     }
 
-    private static function getPageTrigger(){
+    private static function getPageTrigger($config){
         if(!empty($config['page_trigger'])){
+
+            ?>
+
+            var pages = [
+            <?php
+                foreach ($config['page_trigger'] as $page_id){
+                    echo "'".str_replace( home_url(), "", get_permalink($page_id) )."',";
+                }
+            ?>
+            ];
+
+            <?php
+
             switch ($config['page_trigger_rule']){
                 case'contains':
                     ?>
-                    if(!window.location.pathname.includes("<?php echo $config['page_trigger']; ?>")){
+                    if(!pages.includes(window.location.pathname)){
                         return;
                     }
                     <?php
                     break;
                 case'not_contains':
                     ?>
-                    if(window.location.pathname.includes("<?php echo $config['page_trigger']; ?>")){
+                    if(pages.includes(window.location.pathname)){
                         return;
                     }
                     <?php
@@ -285,8 +305,17 @@ class EgoiPopUp
     private static function getTriggerOnLeaveJs(){
         ?>
 
+        var input_timeout;
+
+        $("html").mouseenter(function(){
+            clearTimeout(input_timeout);
+        } );
+
         $("html").mouseleave(function(){
-            triggerPopup();
+            input_timeout = setTimeout(function () {
+                triggerPopup();
+            },500);
+
         } );
 
         <?php
@@ -332,16 +361,16 @@ class EgoiPopUp
     }
 
     private static function makeFormVertical($form_code){
-        $form_code = str_replace("<form", "<form style=\"display: flex;flex-direction: column;justify-content: center;\"", $form_code);
+        $form_code = str_replace("<form", "<form style=\"display: flex;flex-direction: column;justify-content: center;border-radius: inherit;\"", $form_code);
         $form_code = str_replace("<p>", "<p style=\"display: flex;flex-direction: column;\">", $form_code);
         return $form_code;
     }
 
 
     private static function makeFormHorizontal($form_code){
-        $form_code = str_replace("<form", "<form style=\"display: flex;flex-direction: row;justify-content: center; align-items: flex-end;\"", $form_code);
-        $form_code = preg_replace('/<p>/', '<p style="display: flex;flex-direction: column; margin-right: 10px;flex-grow: 1;">', $form_code, substr_count($form_code,'<p>') -1);
-        $form_code = str_replace("<p>", "<p style=\"display: flex;flex-direction: column; margin-right: 10px\">", $form_code);
+        $form_code = str_replace("<form", "<form style=\"display: flex;flex-direction: row;justify-content: center; align-items: flex-end;border-radius: inherit;\"", $form_code);
+        $form_code = preg_replace('/<p>/', '<p style="display: flex;flex-direction: column; margin-right: 10px;flex-grow: 1;border-radius: inherit;">', $form_code, substr_count($form_code,'<p>') -1);
+        $form_code = str_replace("<p>", "<p style=\"display: flex;flex-direction: column; margin-right: 10px;border-radius: inherit;\">", $form_code);
         return $form_code;
     }
 
@@ -375,17 +404,31 @@ class EgoiPopUp
                 max-width: <?php echo $config['max_width'] ?>;
                 display: flex;
                 flex-direction: column;
+                <?php if($production){ ?>
+
+                <?php }else{ ?>
+                    transform: scale(0.5);
+                <?php } ?>
         <?php
         if(!empty($config['border_radius'])){
             echo "border: 1px solid {$config['background_color']};";
             echo "border-radius: {$config['border_radius']}px;";
         }
-        if($config['type'] == 'rightside'){ ?>
+        if($config['type'] == 'rightside' && $production){ ?>
             position: fixed;
             bottom: 0px;
             right: 0px;
             margin: 20px;
         <?php } ?>
+            }
+
+            .egoi_modal_content_<?php echo $config['popup_id']; ?> > *,
+            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > *,
+            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > *,
+            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > *,
+            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > * > *,
+            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > * > * > * {
+                border-radius: inherit !important;
             }
 
             <?php if($config['popup_layout'] != 'simple'){ ?>
@@ -398,15 +441,13 @@ class EgoiPopUp
             .egoi_popup_side_image_<?php echo $config['popup_id']; ?>{
                 background-position: center;
                 background-repeat: no-repeat;
-                background-size: contain;
+                background-size: cover;
                 <?php if($config['popup_layout'] == 'left_image'){?>
                 border-top-left-radius: inherit;
                 border-bottom-left-radius: inherit;
-                background-position-x: left;
                 <?php }else if($config['popup_layout'] == 'right_image'){ ?>
                 border-top-right-radius: inherit;
                 border-bottom-right-radius: inherit;
-                background-position-x: right;
                 <?php } ?>
             }
 
@@ -425,7 +466,7 @@ class EgoiPopUp
                 float: right;
                 font-size: 28px;
                 /*font-weight: bold;*/
-                padding-right: 10px;
+                padding-right: 26px;
                 position: absolute;
                 align-self: flex-end;
             }

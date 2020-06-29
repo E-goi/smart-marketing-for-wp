@@ -117,7 +117,7 @@ $next_adv_form_id = get_next_adv_form_id();
         <!-- Pub -->
 
         <?php if($page['popup'] && !empty(get_simple_forms())){ ?>
-            <section class="smsnf-content">
+            <section class="smsnf-content" style="height: calc(100vh - 200px);">
                 <?php include ($dir.'popup-preview.php'); ?>
             </section>
         <?php }else{ ?>

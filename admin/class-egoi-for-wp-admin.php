@@ -264,6 +264,11 @@ class Egoi_For_Wp_Admin {
                 wp_enqueue_script($this->plugin_name.'small_map', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-small-mapper.js', array('jquery'), $this->version, true);
 	        }
 
+
+            if(get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form' && !empty($_GET['sub']) && $_GET['sub']=='popup'){
+                wp_enqueue_script(  $this->plugin_name.'egoi-for-wp-popup-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-popup.js', array('jquery') , $this->version, true);
+            }
+
             if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard'
                 || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form'
                 || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-ecommerce') {

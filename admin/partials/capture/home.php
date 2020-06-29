@@ -117,20 +117,23 @@ $edit_link = sprintf("?page=egoi-4-wp-form&sub=adv-forms&form=%d&type=%s", $form
         <thead>
         <tr>
             <th style="width:1%">ID</th>
-            <th style="width:98%"><?= _e('Type', 'egoi-for-wp') ?></th>
+            <th style="width:1%"><?= _e('Type', 'egoi-for-wp') ?></th>
+            <th style="width:98%"><?= _e('Title', 'egoi-for-wp') ?></th>
             <th style="width:1%"></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($popups as $form) : ?>
             <?php
+            $popup_data = (new EgoiPopUp($form))->getPopupSavedData();
+
             $edit_link = sprintf("?page=egoi-4-wp-form&sub=popup&popup_id=%d", $form);
             $delete_link = sprintf("?page=egoi-4-wp-form&del_popup=%d", $form);
             ?>
             <tr>
                 <td><?= $form ?></td>
                 <td><?= __('Popup','egoi-for-wp'); ?></td>
-
+                <td><?= $popup_data['title']; ?></td>
                 <td>
                     <a class="smsnf-btn" href="<?= $edit_link ?>"><?php _e('Edit', 'egoi-for-wp');?></a>
                     <a class="smsnf-btn delete-adv-form" href="<?= $delete_link ?>"><?php _e('Delete', 'egoi-for-wp');?></a>

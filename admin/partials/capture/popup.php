@@ -47,6 +47,14 @@ if(empty(get_simple_forms())){
     <div id="smsnf-configuration" class="smsnf-tab-content active">
         <div>
 
+            <div class="smsnf-input-group" style="display: flex;flex-direction: column;">
+                <label for="title"><?php _e('Form title', 'egoi-for-wp'); ?></label>
+                <input  id="title" type="text"
+                        name="title" size="30" spellcheck="true" autocomplete="off" pattern="\S.*\S"
+                        value="<?= htmlentities(stripslashes($popup_data['title'])) ?>"
+                        placeholder="<?= __( "Write here the title of your form", 'egoi-for-wp' ); ?>" />
+            </div>
+
             <!-- SIMPLE FORM -->
             <div class="smsnf-input-group">
                 <label for="form_id"><?= _e( 'Form', 'egoi-for-wp' ); ?></label>
@@ -72,12 +80,19 @@ if(empty(get_simple_forms())){
                 <label for="page_trigger"><?php _e('Target Page', 'egoi-for-wp'); ?></label>
                 <p class="subtitle"><?php _e( 'Configure rules for target page <b>URL</b>', 'egoi-for-wp' ); ?></p>
                 <select name="page_trigger_rule" class="form-select " id="page_trigger_rule">
-                    <option value="contains" <?php selected($popup_data['page_trigger_rule'], 'contains'); ?>><?php _e( 'Contains', 'egoi-for-wp' ); ?></option>
-                    <option value="not_contains" <?php selected($popup_data['page_trigger_rule'], 'not_contains'); ?> ><?php _e( 'Not Contains', 'egoi-for-wp' ); ?></option>
+                    <option value="contains" <?php selected($popup_data['page_trigger_rule'], 'contains'); ?>><?php _e( 'Include', 'egoi-for-wp' ); ?></option>
+                    <option value="not_contains" <?php selected($popup_data['page_trigger_rule'], 'not_contains'); ?> ><?php _e( 'Exclude', 'egoi-for-wp' ); ?></option>
                 </select>
-                <input style="max-width: 400px;" id="page_trigger" type="text" value="<?php echo $popup_data['page_trigger']; ?>"
-                        name="page_trigger" autocomplete="off"
-                        placeholder="<?= __( "Leave empty if triggers in every page", 'egoi-for-wp' ); ?>" />
+                <div class="page_trigger_select" >
+                    <select class="js-example-basic-multiple" name="page_trigger" id="page_trigger" multiple="multiple" style="max-width: 400px;">
+                        <?php foreach (get_pages() as $available_posts) { ?>
+                            <option id="page_<?=$available_posts->ID?>" value="<?=$available_posts->ID?>"
+                                <?php if (in_array($available_posts->ID, $popup_data['page_trigger'])) echo 'selected'; ?>>
+                                <?=$available_posts->post_title?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
             </div>
 
             <div class="smsnf-input-group">
@@ -143,8 +158,8 @@ if(empty(get_simple_forms())){
 
         <!-- BORDER RADIUS -->
         <div class="smsnf-input-group">
-            <label for="bar-position"><?= _e( 'Border Radius', 'egoi-for-wp' ); ?></label>
-            <input style="max-width: 400px;border: 0 !important;" type="range" min="0" max="100" value="<?php echo $popup_data['border_radius']; ?>" class="slider" name="border_radius" id="border_radius" >
+            <label for="bar-position"><?= _e( 'Border Radius', 'egoi-for-wp' ); ?>: <span id="border_range_label"><?php echo $popup_data['border_radius']; ?>px</span></label>
+            <input style="max-width: 400px;border: 0 !important;" type="range" min="0" max="20" value="<?php echo $popup_data['border_radius']; ?>" class="slider" name="border_radius" id="border_radius" >
         </div>
         <!-- / BORDER RADIUS -->
 
@@ -223,10 +238,12 @@ if(empty(get_simple_forms())){
             <label for="side_image"><?=__('Side Image','egoi-for-wp');?></label>
             <p class="subtitle"><?php _e( 'Pick an image from your gallery', 'egoi-for-wp' ); ?></p>
             <div>
-                <div class='image-preview-wrapper egoi-image-selector-preview' style="background-image: url(<?php echo wp_get_attachment_url( $popup_data['side_image'] ); ?>);">
+                <div class='image-preview-wrapper egoi-image-selector-preview <?php echo empty($popup_data['side_image'] )?'':'egoi-image-selector-preview--selected'; ?>' style="background-image: url(<?php echo wp_get_attachment_url( $popup_data['side_image'] ); ?>);">
                     <?php if(empty($popup_data['side_image'] )){ ?>
                         <i class="far fa-image" aria-hidden="true"></i>
                         <span><?php _e('Upload Image','egoi-for-wp'); ?></span>
+                    <?php }else{ ?>
+                        <span class="dashicons dashicons-no popup_remove_side_image"></span>
                     <?php } ?>
                 </div>
             </div>
@@ -241,7 +258,6 @@ if(empty(get_simple_forms())){
             <select name="form_orientation" class="form-select " id="form_orientation">
                 <option value="off" <?php selected($popup_data['form_orientation'], 'off'); ?> ><?php _e( 'Disabled', 'egoi-for-wp' ); ?></option>
                 <option value="vertical" <?php selected($popup_data['form_orientation'], 'vertical'); ?> ><?php _e( 'Vertical', 'egoi-for-wp' ); ?></option>
-                <option value="horizontal" <?php selected($popup_data['form_orientation'], 'horizontal'); ?> ><?php _e( 'Horizontal', 'egoi-for-wp' ); ?></option>
             </select>
         </div>
 
@@ -266,93 +282,12 @@ if(empty(get_simple_forms())){
     .CodeMirror-line {
         margin-left: 45px !important;
     }
+    .select2-selection--multiple{
+        width: 400px !important;
+        max-width: 400px !important;
+        margin-top: 12px;
+    }
+    select, input{
+        max-width: 400px !important;
+    }
 </style>
-
-<script>
-    jQuery(document).ready(function($) {
-        const TRIGGER_WITH_OPTION = ['delay'];
-
-        //form logic
-        $('#trigger').change(function(){
-            checkTriggerOption();
-        });
-
-        function checkTriggerOption() {
-            if(TRIGGER_WITH_OPTION.includes($('#trigger').val())){
-                $('#trigger_option').show();
-            }else{
-                $('#trigger_option').hide();
-            }
-        }
-
-        checkTriggerOption();
-
-        if( $('#code_editor_page_css').length ) {
-            if(wp.codeEditor == 'undefined' || wp.codeEditor == null){return;}
-            var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
-            editorSettings.codemirror = _.extend(
-                {},
-                editorSettings.codemirror,
-                {
-                    mode: 'css',
-                }
-            );
-            var editor = wp.codeEditor.initialize( $('#code_editor_page_css'), editorSettings );
-        }
-
-
-        /////image upload
-
-
-        var file_frame;
-        var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
-        var set_to_post_id = 1; // Set this
-
-        $('.egoi-image-selector-preview').live('click', function( event ){
-
-            event.preventDefault();
-
-            // If the media frame already exists, reopen it.
-            if ( file_frame ) {
-                // Set the post ID to what we want
-                file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
-                // Open frame
-                file_frame.open();
-                return;
-            } else {
-                // Set the wp.media post id so the uploader grabs the ID we want when initialised
-                wp.media.model.settings.post.id = set_to_post_id;
-            }
-
-            // Create the media frame.
-            file_frame = wp.media.frames.file_frame = wp.media({
-                title: jQuery( this ).data( 'uploader_title' ),
-                button: {
-                    text: jQuery( this ).data( 'uploader_button_text' ),
-                },
-                multiple: false  // Set to true to allow multiple files to be selected
-            });
-
-            // When an image is selected, run a callback.
-            file_frame.on( 'select', function() {
-
-                attachment = file_frame.state().get('selection').first().toJSON();
-
-                // Do something with attachment.id and/or attachment.url here
-                $( '.egoi-image-selector-preview' ).empty();
-                $( '.egoi-image-selector-preview' ).css( 'background-image', `url(${attachment.url})` );
-                $( '#side_image' ).val( attachment.id );
-
-                wp.media.model.settings.post.id = wp_media_post_id;
-            });
-
-            // Finally, open the modal
-            file_frame.open();
-
-            // Restore the main ID when the add media button is pressed
-            $('a.add_media').on('click', function() {
-                wp.media.model.settings.post.id = wp_media_post_id;
-            });
-        });
-    });
-</script>

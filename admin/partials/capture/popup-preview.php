@@ -21,6 +21,7 @@ require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-
         }
 
         const EGOI_POPUP_CONTENT = 'content';
+        const EGOI_POPUP_PAGES_TRIGGER = 'page_trigger';
 
         var scopeAjaxSync;
         var ajaxObj = egoi_config_ajax_object_capture;
@@ -34,8 +35,20 @@ require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-
             updateView();
         });
 
+        $("#smsnf-popup-form").submit(function (e) {
+            e.preventDefault();
+            $.post("", {data: getFormData()},function(data){
+                var newDoc = document.open("text/html", "replace");
+                newDoc.write(data);
+                newDoc.close();
+            });
+        })
+
         $("#smsnf-popup-form select").change(function() {
-            updateView();
+            clearTimeout(input_timeout);
+            input_timeout = setTimeout(function () {
+                updateView();
+            },500);
         });
 
         $("#smsnf-popup-form label").on('click', function() {
@@ -81,6 +94,19 @@ require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-
             updateView();
         }
 
+        function getFormData(){
+            let form_data = $("#smsnf-popup-form").serializeArray();
+            form_data.push({
+                name: EGOI_POPUP_CONTENT,
+                value: tinymce.get(EGOI_POPUP_CONTENT).getContent()
+            });
+            form_data.push({
+                name: EGOI_POPUP_PAGES_TRIGGER,
+                value: getPageTriggerContent()
+            });
+            return form_data;
+        }
+
         function updateView(){
 
             if(tinymce.get(EGOI_POPUP_CONTENT) == 'undefined'){
@@ -90,11 +116,7 @@ require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-
                 return;
             }
 
-            var form_data = $("#smsnf-popup-form").serializeArray();
-            form_data.push({
-                name: EGOI_POPUP_CONTENT,
-                value: tinymce.get(EGOI_POPUP_CONTENT).getContent()
-            });
+            let form_data = getFormData();
 
             var data = {
                 security:       ajaxObj.ajax_nonce,
@@ -119,6 +141,17 @@ require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-
                     ).replace(/[!'()*]/g, escape).replace(/\\"/g, escape));
                 return true;
             });
+        }
+
+        function getPageTriggerContent(){//collect select items
+            let ids = [];
+            $("#page_trigger").find($('option')).each(function(index){
+                if($(this).is(':disabled')){
+                    ids.push($(this).val());
+                }
+            })
+
+            return ids;
         }
 
         function parseResponse(response){

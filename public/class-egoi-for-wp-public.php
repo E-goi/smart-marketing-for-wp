@@ -523,7 +523,11 @@ class Egoi_For_Wp_Public {
 
 					posting.done(function( data ) {
 						if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
-
+                               
+                            var event = new Event("'.$simple_form.'");
+                            var elem = document.getElementsByTagName("html");
+                            elem[0].dispatchEvent(event);
+                            
 							jQuery( "#'.$simple_form_result.'" ).css({
 								"color": "#4F8A10",
 								"background-color": "#DFF2BF"
