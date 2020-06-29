@@ -186,7 +186,14 @@ if(empty(get_simple_forms())){
             <label for="form_border_color"><?=__('Custom Css','egoi-for-wp');?></label>
             <?php
             do_action( 'wp_enqueue_code_editor', array('type' => 'text/css') );
-            wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
+            wp_enqueue_code_editor(
+                    array(
+                        'type' => 'text/css',
+                        'codemirror' => array(
+                            'autoRefresh' => true
+                        )
+                    )
+            );
 
             ?>
             <fieldset>
