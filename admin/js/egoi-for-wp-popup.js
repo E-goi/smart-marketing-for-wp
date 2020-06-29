@@ -128,12 +128,7 @@ jQuery(document).ready(function($) {
 jQuery('.js-example-basic-multiple').on('select2:select', function (e) {
     var option = e.params.data.element.id;
 
-    if (option.indexOf('include') >= 0) {
-        var option_change = option.replace('include', 'exclude');
-    } else {
-        var option_change = option.replace('exclude', 'include');
-    }
-    jQuery('#'+option_change).prop('disabled', true);
+    jQuery('#'+option).prop('disabled', true);
 
     jQuery(".js-example-basic-multiple").select2("destroy");
     jQuery(".js-example-basic-multiple").select2();
@@ -142,13 +137,7 @@ jQuery('.js-example-basic-multiple').on('select2:select', function (e) {
 
 jQuery('.js-example-basic-multiple').on('select2:unselect', function (e) {
     var option = e.params.data.element.id;
-
-    if (option.indexOf('include') >= 0) {
-        var option_change = option.replace('include', 'exclude');
-    } else {
-        var option_change = option.replace('exclude', 'include');
-    }
-    jQuery('#'+option_change).prop('disabled', false);
+    jQuery('#'+option).prop('disabled', false);
 
 
     setTimeout(function () {

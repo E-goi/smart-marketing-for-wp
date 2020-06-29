@@ -119,6 +119,19 @@ class EgoiPopUp
         $output = [];
         foreach ($post as $property){
             if($first_time && empty($property['value'])){continue;}
+            if($property['name'] == 'page_trigger'){//select2 problem on already saved forms
+                if(empty($output[$property['name']])){
+                    $output[$property['name']] = [];
+                }
+                if(is_array($property['value'])){
+                    $output[$property['name']] = array_merge($output[$property['name']], $property['value']);
+                }else if(!is_null($property['value'])){
+                    $output[$property['name']][] = $property['value'];
+                }else if (empty($property['value']) && !is_null($property['value'])){
+                    $output[$property['name']] = [];
+                }
+                continue;
+            }
             $output[$property['name']] = $property['value'];
         }
 
