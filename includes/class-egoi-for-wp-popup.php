@@ -424,7 +424,7 @@ class EgoiPopUp
                 <?php } ?>
         <?php
         if(!empty($config['border_radius'])){
-            echo "border: 1px solid {$config['background_color']};";
+            echo "border: 0px solid {$config['background_color']};";
             echo "border-radius: {$config['border_radius']}px;";
         }
         if($config['type'] == 'rightside' && $production){ ?>
@@ -436,7 +436,6 @@ class EgoiPopUp
             }
 
             .egoi_modal_content_<?php echo $config['popup_id']; ?> > *,
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > *,
             .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > *,
             .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > *,
             .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > * > *,

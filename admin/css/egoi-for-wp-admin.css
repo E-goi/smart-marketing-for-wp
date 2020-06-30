@@ -8263,3 +8263,7 @@ a.egoi_tooltip:hover{
   color: salmon !important;
   cursor: pointer;
 }
+
+.colorpicker{
+  z-index: 100!important;
+}

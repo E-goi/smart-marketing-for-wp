@@ -136,7 +136,7 @@ if(empty(get_simple_forms())){
                 <div id="form-position" class="smsnf-adv-forms-types" style="grid-template-columns: 1fr 1fr;">
                     <label>
                         <input type="radio" name="type" value="center" <?php checked($popup_data['type'], 'center')?> />
-                        <div class="">
+                        <div>
                             <p><?php _e('Center','egoi-for-wp'); ?></p>
                             <div>
                                 <img src="<?= plugin_dir_url( __DIR__ ) . '../img/icon_popup.png' ?>" />
