@@ -641,7 +641,11 @@ class Egoi_For_Wp {
         //Tracking&Engage
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'hookEcommerce', 99999);
         $this->loader->add_action('woocommerce_new_order', $plugin_public, 'hookEcommerceSetOrder', 99999, 1);
-        $this->loader->add_action('woocommerce_order_details_after_order_table', $plugin_public, 'hookEcommerceGetOrder', 99999, 1);
+        $this->loader->add_action('woocommerce_thankyou', $plugin_public, 'hookEcommerceGetOrder', 99999, 1);
+
+        if(empty($_POST)){
+            $this->loader->add_action('wp_head', $plugin_public, 'loadPopups', 99999, 1);
+        }
 
     }
 
@@ -1238,7 +1242,7 @@ class Egoi_For_Wp {
        	$result = $result_client->Egoi_Api->getTags->TAG_LIST;
 		
 		foreach ($result as $key => $value) {
-			if($value->NAME == $name){
+			if(strcasecmp($value->NAME, $name) == 0){
 				$data['NAME'] = $value->NAME;
 				$data['ID'] = $value->ID;
 			}

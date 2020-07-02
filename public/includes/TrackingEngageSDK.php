@@ -25,12 +25,12 @@ class TrackingEngageSDK
             <script>
                 (function () {
                         window._egoiaq = window._egoiaq || [];
-                        var url = (("https:" == document.location.protocol) ? "https://egoimmerce.e-goi.com/" : "http://egoimmerce.e-goi.com/");
+                        var url = (("https:" == document.location.protocol) ? "https://localhost:7004/" : "http://localhost:7004/");
                         var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
                         g.type = 'text/javascript';
                         g.defer = true;
                         g.async = true;
-                        g.src = url + 'egoimmerce.js';
+                        g.src = 'https://edw.egoiapp.com/matomo/egoimmerce_plugins.js';
                         s.parentNode.insertBefore(g, s);
                         window._egoiaq.push(['setClientId', <?php echo $this->client_id ?>]);
                         window._egoiaq.push(['setListId', <?php echo $this->list_id ?>]);

@@ -164,7 +164,7 @@ class Egoi_For_Wp_Admin {
         if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
-			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.css', array(), $this->version, 'all' );//TODO:CHANGE THIS TO MINIFIED
+			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
             wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap-modal.min.css', array(), $this->version, 'all' );
 
             wp_enqueue_style('wp-color-picker');
@@ -235,6 +235,12 @@ class Egoi_For_Wp_Admin {
                 ) );
             }
 
+            if(strpos(get_current_screen()->id, 'form')){
+                wp_localize_script( $this->plugin_name, 'egoi_config_ajax_object_capture', array(
+                    'ajax_url' => admin_url( 'admin-ajax.php' ),
+                    'ajax_nonce' => wp_create_nonce('egoi_capture_actions'),
+                ) );
+            }
 
 			wp_enqueue_script('wp-color-picker');
 
@@ -257,6 +263,11 @@ class Egoi_For_Wp_Admin {
             if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-integrations') {
                 wp_enqueue_script($this->plugin_name.'small_map', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-small-mapper.js', array('jquery'), $this->version, true);
 	        }
+
+
+            if(get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form' && !empty($_GET['sub']) && $_GET['sub']=='popup'){
+                wp_enqueue_script(  $this->plugin_name.'egoi-for-wp-popup-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-popup.js', array('jquery') , $this->version, true);
+            }
 
             if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard'
                 || get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form'

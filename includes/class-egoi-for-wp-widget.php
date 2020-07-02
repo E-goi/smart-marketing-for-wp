@@ -541,7 +541,7 @@ function egoi_widget_request() {
 
             $status = !isset($_POST['widget_double_optin']) || $_POST['widget_double_optin'] == 0 ? 1 : 0;
 
-            $result = $api->addSubscriber($list, $name, $email, $lang, $status, $mobile, $tag);
+            $result = $api->addSubscriber($list, $name, $email, $lang, $status, $mobile, intval($tag));
 
             if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
                 $form_id = explode('-', $id);

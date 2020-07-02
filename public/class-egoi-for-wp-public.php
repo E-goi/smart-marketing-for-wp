@@ -303,7 +303,7 @@ class Egoi_For_Wp_Public {
 
             $status = !isset($bar['double_optin']) || $bar['double_optin'] == 0 ? 1 : 0;
 
-			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, $status, '', (int) $tag);
+			$add = $client->addSubscriber($bar['list'], $name, $email, $lang, $status, '', intval($tag));
             if (!isset($add->ERROR) && !isset($add->MODIFICATION_DATE) ) {
                 $client->smsnf_save_form_subscriber(1, 'bar', $add);
             }
@@ -523,7 +523,11 @@ class Egoi_For_Wp_Public {
 
 					posting.done(function( data ) {
 						if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
-
+                               
+                            var event = new Event("'.$simple_form.'");
+                            var elem = document.getElementsByTagName("html");
+                            elem[0].dispatchEvent(event);
+                            
 							jQuery( "#'.$simple_form_result.'" ).css({
 								"color": "#4F8A10",
 								"background-color": "#DFF2BF"
@@ -902,14 +906,34 @@ class Egoi_For_Wp_Public {
         $client_id = $client_info->CLIENTE_ID;
 
         if( version_compare( get_option( 'woocommerce_version' ), '3.0.0', ">=" ) ) {
-            $order_id = $order->get_id();
+            if(is_numeric($order)){
+                $order_id = $order;
+            }else{
+                $order_id = $order->get_id();
+            }
         } else {
-            $order_id = $order->id;
+            if(is_numeric($order)){
+                $order_id = $order;
+            }else{
+                $order_id = $order->id;
+            }
         }
-
         require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
         $track = new TrackingEngageSDK($client_id, $options['list'], $order_id);
         $track->getOrder();
+    }
+
+    public function loadPopups(){
+
+        require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-popup.php';
+
+        $popups = EgoiPopUp::getSavedPopUps();
+
+        foreach ($popups as $popup_id){
+            $popup = new EgoiPopUp($popup_id);
+            $popup->printPopup();
+        }
+
     }
 
     private function load_options() {

@@ -15,7 +15,7 @@ if (isset($_POST['id_simple_form'])) {
 
         $data->list = $_POST['list'];
         $data->lang = $_POST['lang'];
-        $data->double_optin = $_POST['double_optin'];
+        $data->double_optin = empty($_POST['double_optin'])?'0':'1';
 
         //to add tag if not exist
         if(isset($_POST['tag-egoi']) && $_POST['tag-egoi']!=''){
@@ -94,7 +94,7 @@ if (isset($_POST['id_simple_form'])) {
             'list' => $_POST['list'],
             'lang' => $_POST['lang'],
             'tag' => isset($_POST['tag-egoi']) ? $_POST['tag-egoi'] : $new->ID,
-            'double_optin' => $_POST['double_optin']
+            'double_optin' => empty($_POST['double_optin'])?'0':'1'
         ) ;
 
     }

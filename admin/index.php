@@ -61,7 +61,7 @@ function out($arr){
         $lang = json_decode(get_option('egoi_simple_form_'.$for->ID))->lang;
         $link = (array_key_exists($lang,$arr))?$arr[$lang]:$arr['en'];
     
-        if(strpos($for->post_content,$link)!== false || !isset($link))
+        if(strpos($for->post_content,$link)!== false || strpos(stripslashes($for->post_content),$link)!== false || !isset($link))
             continue;
         
         $in =[

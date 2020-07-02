@@ -11,7 +11,7 @@ error_reporting(0);
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           3.4.2
+ * Version:           3.5.2
 
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
@@ -27,7 +27,7 @@ if (!defined( 'WPINC' )) {
 }
 
 
-define('SELF_VERSION', '3.4.2');
+define('SELF_VERSION', '3.5.2');
 
 
 if (!session_id()){
@@ -73,6 +73,12 @@ add_action('wp_ajax_add_users', 'add_users');
 function add_users(){
     $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
     return $admin->users_queue();
+}
+
+add_filter( 'wp_default_editor', 'force_default_editor' );
+function force_default_editor() {
+    //allowed: tinymce, html, test
+    return 'tinymce';
 }
 
 // HOOK GET LISTS
@@ -282,6 +288,28 @@ function woocom_simple_product_egoi_brand_save($post_id){
       update_post_meta($post_id,'_egoi_brand', $brand);
    }
 }
+
+add_action( 'wp_ajax_egoi_preview_popup', 'popup_preview' );
+function popup_preview(){
+    check_ajax_referer( 'egoi_capture_actions', 'security' );
+
+    require_once(plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-popup.php');
+    if(!EgoiPopUp::isValidPreviewPost($_POST)){
+        ?>
+            <h1>Invalid Popup Configs</h1>
+        <?php
+    }
+
+    EgoiPopUp::getPreviewFromPost($_POST);
+    exit;
+}
+
+add_action( 'wp_head', 'popups_display' );
+function popups_display(){
+    require_once(plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-popup.php');
+    return;
+}
+
 
 // COUNTRY MOBILE CODES
 define( 'COUNTRY_CODES' , serialize(array (
