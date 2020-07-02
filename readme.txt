@@ -41,6 +41,9 @@ Então não deixe de activar o Track & Engage, um sistema para rastrear todo o c
 * RSS Feed por categorias, tags ou produtos.
 * Bloco E-goi para Gutenberg
 * Sincronização produtos Woocommerce
+* Integração com Elementor
+* Widget de formulários no Elementor
+* Criação de Popups - Visita e Exit Intent
 
 **Add-on**
 
@@ -82,6 +85,9 @@ So be sure to enable Track & Engage system to track all customer behavior in you
 * RSS Feed
 * Gutenberg E-goi Block
 * Woocommerce product synchronization
+* Elementor Integration
+* Elementor's Form Widget
+* Popup builder - Visit and Exit Intent
 
 **Add-on**
 
