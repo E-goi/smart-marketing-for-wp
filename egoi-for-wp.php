@@ -75,6 +75,12 @@ function add_users(){
     return $admin->users_queue();
 }
 
+add_filter( 'wp_default_editor', 'force_default_editor' );
+function force_default_editor() {
+    //allowed: tinymce, html, test
+    return 'tinymce';
+}
+
 // HOOK GET LISTS
 add_action('wp_ajax_egoi_get_lists', 'egoi_get_lists');
 function egoi_get_lists(){

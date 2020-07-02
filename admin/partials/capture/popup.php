@@ -71,12 +71,11 @@ if(empty(get_simple_forms())){
             <!-- / SIMPLE FORM -->
 
 
-            <div class="smsnf-input-group">
+            <div class="smsnf-input-group" style="margin-block-end: 0px;margin-bottom: 12px;">
                 <label for="form_border_color"><?=__('Customize','egoi-for-wp');?></label>
-                <?php wp_editor( $content, $editor_id ); ?>
             </div>
-
-            <div class="smsnf-input-group">
+            <?php wp_editor( $content, $editor_id ); ?>
+            <div class="smsnf-input-group" style="margin-top: 24px;">
                 <label for="page_trigger"><?php _e('Target Page', 'egoi-for-wp'); ?></label>
                 <p class="subtitle"><?php _e( 'Configure rules for target page <b>URL</b>', 'egoi-for-wp' ); ?></p>
                 <select name="page_trigger_rule" class="form-select " id="page_trigger_rule">
@@ -286,9 +285,6 @@ if(empty(get_simple_forms())){
 </form>
 
 <style>
-    .CodeMirror-line {
-        margin-left: 45px !important;
-    }
     .select2-selection--multiple{
         width: 400px !important;
         max-width: 400px !important;
