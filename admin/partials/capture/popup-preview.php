@@ -3,10 +3,13 @@
 require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-popup.php');
 
 ?>
-<div style="display: flex;justify-content: start;align-items: center;flex-direction: row;">
-    <h3><?php _e('Preview', 'egoi-fo-wp'); ?></h3>
-    <div style="margin-bottom: 12px;">
-        <?php echo getLoader('egoi-preview-loader',true, true); ?>
+<div style="display: flex;justify-content: space-between;align-items: center;flex-direction: row;margin-bottom: 12px;">
+    <div>
+        <h3><?php _e('Preview', 'egoi-fo-wp'); ?></h3>
+        <p class="subtitle-preview"><?php _e('The popup\'s final look might change', 'egoi-fo-wp'); ?></p>
+    </div>
+    <div>
+        <?php echo getLoader('egoi-preview-loader',true, true, 32); ?>
     </div>
 </div>
 <iframe id="popup_preview" style="height: 100%;width: 100%;" ></iframe>
@@ -35,14 +38,6 @@ require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-
             updateView();
         });
 
-        $("#smsnf-popup-form").submit(function (e) {
-            e.preventDefault();
-            $.post("", {data: getFormData()},function(data){
-                var newDoc = document.open("text/html", "replace");
-                newDoc.write(data);
-                newDoc.close();
-            });
-        })
 
         $("#smsnf-popup-form select").change(function() {
             clearTimeout(input_timeout);
@@ -100,6 +95,10 @@ require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-
                 name: EGOI_POPUP_CONTENT,
                 value: tinymce.get(EGOI_POPUP_CONTENT).getContent()
             });
+            //form_data.push({
+            //    name: EGOI_POPUP_CSS,
+            //    value: tinymce.get(EGOI_POPUP_CSS).getContent()
+            //});
             form_data.push({
                 name: EGOI_POPUP_PAGES_TRIGGER,
                 value: getPageTriggerContent()

@@ -39,10 +39,10 @@ class EgoiPopUp
 
     public static function savePostPopup($post){
 
-        if(!self::isValidPreviewPost($post)){
-            return false;
-        }
-        $post = self::createConfigFromPost($post['data']);
+        //if(!self::isValidPreviewPost($post)){
+        //    return false;
+        //}
+        //$post = self::createConfigFromPost($post['data']);
 
         if($post['popup_id'] == 'new'){
             $post['popup_id'] = self::generateNextPopupId();
@@ -50,7 +50,7 @@ class EgoiPopUp
 
         update_option("egoi_popup_{$post['popup_id']}", json_encode($post));
 
-        return true;
+        return $post['popup_id'];
     }
 
     private static function generateNextPopupId(){
@@ -210,7 +210,7 @@ class EgoiPopUp
                     setTimeout(function () {
                         <?php self::getFormSubmit($config); ?>
                         closePopup();
-                    }, 2000);
+                    }, 4000);
                 }, false);
 
                 function closePopup() {

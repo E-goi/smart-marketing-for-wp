@@ -11,6 +11,9 @@
     width: 250px;
     z-index: 2;
 }
+.smsnf-notification-error{
+    background: salmon !important;
+}
 
 .smsnf-notification .close-btn {
     color: #fff;

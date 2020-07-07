@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-02 12:20+0000\n"
-"PO-Revision-Date: 2020-07-02 14:03+0000\n"
+"PO-Revision-Date: 2020-07-07 10:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português\n"
 "Language: pt_PT\n"
@@ -2158,7 +2158,7 @@ msgstr "Selecione a cor"
 
 #: admin/partials/capture/popup.php:176
 msgid "Font Color"
-msgstr "Color do texto"
+msgstr "Cor do texto"
 
 #: admin/partials/capture/popup.php:185
 msgid "Custom Css"
