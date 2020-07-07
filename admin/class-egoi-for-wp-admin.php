@@ -164,7 +164,7 @@ class Egoi_For_Wp_Admin {
         if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
-			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css?aa=a', array(), $this->version, 'all' );
+			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
             wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap-modal.min.css', array(), $this->version, 'all' );
 
             wp_enqueue_style('wp-color-picker');
