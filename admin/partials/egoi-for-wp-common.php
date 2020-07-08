@@ -1,9 +1,10 @@
 <?php
 
-function getLoader($id ,$on = true, $spacer=false){
+function getLoader($id ,$on = true, $spacer=false, $width = false){
     $class = $on==false ?' style="display: none;" ' :' ';
     $spacer = $spacer == true?'&nbsp;&nbsp;':'';
-    return '<div id="'.$id.'" class="loader-egoi-self" role="status"'.$class.'>'.$spacer.'<i class="loading">'.__('Loading...','egoi-for-wp').'</i></div>';
+    $width = $width?"width:$width"."px;":'';
+    return '<div id="'.$id.'" class="loader-egoi-self" role="status"'.$class.'>'.$spacer.'<i class="loading" style="'.$width.'">'.__('Loading...','egoi-for-wp').'</i></div>';
 }
 
 function getLoaderNew($id ,$on = true){

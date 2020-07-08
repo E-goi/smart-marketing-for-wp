@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
         maxWidth: '400px',
         marginTop: '12px'
     });
-
+    var editor;
     const TRIGGER_WITH_OPTION = ['delay'];
 
     //form logic
@@ -39,7 +39,7 @@ jQuery(document).ready(function($) {
 
     checkTriggerOption();
 
-    if( $('#code_editor_page_css').length ) {
+    if( $('#custom_css').length ) {
         if(wp.codeEditor == 'undefined' || wp.codeEditor == null){return;}
         var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
         editorSettings.codemirror = _.extend(
@@ -49,9 +49,34 @@ jQuery(document).ready(function($) {
                 mode: 'css',
             }
         );
-        var editor = wp.codeEditor.initialize( $('#code_editor_page_css'), editorSettings );
+        editor = wp.codeEditor.initialize( $('#custom_css'), editorSettings );
     }
 
+    $("#smsnf-popup-form").submit(function (e) {
+        //e.preventDefault();
+        $('input[name="page_trigger[]"]').remove();
+
+        var ids = getPageTriggerContent();
+
+        ids.forEach((i) => {
+            $("<input />").attr("type", "hidden")
+                .attr("name", "page_trigger[]")
+                .attr("value", i)
+                .appendTo("#smsnf-popup-form");
+        })
+        return true;
+    })
+
+    function getPageTriggerContent(){//collect select items
+        let ids = [];
+        $("#page_trigger").find($('option')).each(function(index){
+            if($(this).is(':disabled')){
+                ids.push($(this).val());
+            }
+        })
+
+        return ids;
+    }
 
     /////image upload
 

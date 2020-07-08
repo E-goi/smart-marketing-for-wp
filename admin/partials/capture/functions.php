@@ -1,8 +1,9 @@
 <?php
 // cria html de uma notificação
-function get_notification($title = '', $content = '') {
+function get_notification($title = '', $content = '', $type='success') {
+    $class = $type=="error"?" smsnf-notification-error":"";
     return  '
-        <div class="smsnf-notification">
+        <div class="smsnf-notification'.$class.'">
             <div class="close-btn">&#10005;</div>
             <h2>' . $title . '</h2>
             <p>' . $content . '</p>

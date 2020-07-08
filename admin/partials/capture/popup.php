@@ -3,8 +3,16 @@
 require_once(plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-popup.php');
 require_once(plugin_dir_path( __FILE__ ) . 'functions.php');
 if(!empty($_POST)){
-    EgoiPopUp::savePostPopup($_POST);
-    echo get_notification(__('Popups', 'egoi-for-wp'), __('Your popup was saved successfully', 'egoi-for-wp'));
+    $id = EgoiPopUp::savePostPopup($_POST);
+    if($id !== false){
+        echo get_notification(__('Popups', 'egoi-for-wp'), __('Your popup was saved successfully', 'egoi-for-wp'));
+        if($_POST['popup_id'] == 'new') {
+            wp_redirect( '?page=egoi-4-wp-form&highlight='.$id );
+            exit;
+        }
+    } else {
+        echo get_notification(__('Popups', 'egoi-for-wp'), __('Your popup information is not correct', 'egoi-for-wp'), 'error');
+    }
 }
 
 $popup_id = empty($_GET['popup_id'])?'new':trim($_GET['popup_id']);
@@ -83,7 +91,7 @@ if(empty(get_simple_forms())){
                     <option value="not_contains" <?php selected($popup_data['page_trigger_rule'], 'not_contains'); ?> ><?php _e( 'Exclude', 'egoi-for-wp' ); ?></option>
                 </select>
                 <div class="page_trigger_select" >
-                    <select class="js-example-basic-multiple" name="page_trigger" id="page_trigger" multiple="multiple" style="max-width: 400px;">
+                    <select class="js-example-basic-multiple" name="page_trigger[]" id="page_trigger" multiple="multiple" style="max-width: 400px;">
                         <?php foreach (get_pages() as $available_posts) { ?>
                             <option id="page_<?=$available_posts->ID?>" value="<?=$available_posts->ID?>"
                                 <?php if (in_array($available_posts->ID, $popup_data['page_trigger'])) echo 'selected'; ?>>
@@ -184,7 +192,7 @@ if(empty(get_simple_forms())){
         <div class="smsnf-input-group">
             <label for="form_border_color"><?=__('Custom Css','egoi-for-wp');?></label>
             <?php
-            do_action( 'wp_enqueue_code_editor', array('type' => 'text/css') );
+            //do_action( 'wp_enqueue_code_editor', array('type' => 'text/css') );
             wp_enqueue_code_editor(
                     array(
                         'type' => 'text/css',
@@ -196,7 +204,7 @@ if(empty(get_simple_forms())){
 
             ?>
             <fieldset>
-                <textarea id="code_editor_page_css" rows="5" name="custom_css" class="widefat textarea"><?php echo wp_unslash( $popup_data['custom_css'] ); ?></textarea>
+                <textarea id="custom_css" rows="5" name="custom_css" class="widefat textarea"><?php echo wp_unslash( $popup_data['custom_css'] ); ?></textarea>
             </fieldset>
         </div>
 
@@ -211,7 +219,7 @@ if(empty(get_simple_forms())){
                 <div id="popup-layout" class="smsnf-adv-forms-types" style="grid-template-columns: 1fr 1fr 1fr;">
                     <label>
                         <input type="radio" name="popup_layout" value="simple" <?php checked($popup_data['popup_layout'], 'simple')?> />
-                        <div class="">
+                        <div class="egoi-checkbox-big-pannel">
                             <p><?php _e('Simple','egoi-for-wp'); ?></p>
                             <div>
                                 <img src="<?= plugin_dir_url( __DIR__ ) . '../img/icon_popup.png' ?>" />
@@ -220,7 +228,7 @@ if(empty(get_simple_forms())){
                     </label>
                     <label>
                         <input type="radio" name="popup_layout" value="left_image" <?php checked($popup_data['popup_layout'], 'left_image')?> />
-                        <div class="">
+                        <div class="egoi-checkbox-big-pannel">
                             <p><?php _e('Left Image','egoi-for-wp'); ?></p>
                             <div>
                                 <img src="<?= plugin_dir_url( __DIR__ ) . '../img/icon_left_image_popup.svg' ?>" />
@@ -229,7 +237,7 @@ if(empty(get_simple_forms())){
                     </label>
                     <label>
                         <input type="radio" name="popup_layout" value="right_image" <?php checked($popup_data['popup_layout'], 'right_image');?> />
-                        <div>
+                        <div class="egoi-checkbox-big-pannel">
                             <p><?php _e('Right Image','egoi-for-wp'); ?></p>
                             <div>
                                 <img src="<?= plugin_dir_url( __DIR__ ) . '../img/icon_right_image_popup.svg' ?>" />

@@ -8267,3 +8267,26 @@ a.egoi_tooltip:hover{
 .colorpicker{
   z-index: 100!important;
 }
+
+.egoi-checkbox-big-pannel{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.subtitle-preview{
+  color: #5e6a77;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 17px;
+  padding: 0;
+  margin: -13px 0 -7px;
+  text-align: left;
+}
+
+.pulse-highlight{
+  filter: drop-shadow(2px 4px 6px black);
+  transition: 3s;
+}

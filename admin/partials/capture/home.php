@@ -130,7 +130,7 @@ $edit_link = sprintf("?page=egoi-4-wp-form&sub=adv-forms&form=%d&type=%s", $form
             $edit_link = sprintf("?page=egoi-4-wp-form&sub=popup&popup_id=%d", $form);
             $delete_link = sprintf("?page=egoi-4-wp-form&del_popup=%d", $form);
             ?>
-            <tr>
+            <tr <?php echo $form == $_GET['highlight']?'class="pulse-highlight"':'' ?>>
                 <td><?= $form ?></td>
                 <td><?= __('Popup','egoi-for-wp'); ?></td>
                 <td><?= $popup_data['title']; ?></td>
@@ -143,3 +143,13 @@ $edit_link = sprintf("?page=egoi-4-wp-form&sub=adv-forms&form=%d&type=%s", $form
         </tbody>
     </table>
 <?php endif; ?>
+
+<script>
+
+    jQuery(document).ready(function($) {
+        $(".pulse-highlight").each(function( index ) {
+            $(this).css('filter', 'none')
+        });
+
+    });
+</script>
