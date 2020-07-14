@@ -161,7 +161,7 @@ You can create and update your lists, see how many subscribers you have, but you
 == Changelog ==
 
 = 3.5.4 =
-- Improvement Popup Configuration
+- TE Fix
 
 = 3.5.3 =
 - Improvement Popup Configuration
