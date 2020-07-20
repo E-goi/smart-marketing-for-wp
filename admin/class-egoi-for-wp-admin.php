@@ -1408,7 +1408,7 @@ class Egoi_For_Wp_Admin {
             }
             ?>
             <item>
-                <title><?php the_title_rss() ?></title>
+                <title><![CDATA[<?php wp_specialchars_decode(the_title_rss()) ?>]]></title>
                 <link><?php the_permalink_rss() ?></link>
                 <?php if ( get_comments_number() || comments_open() ) : ?>
                     <comments><?php comments_link_feed(); ?></comments>
@@ -1458,9 +1458,9 @@ class Egoi_For_Wp_Admin {
                 }?>
 
                 <?php if (get_option('rss_use_excerpt')) : ?>
-                    <description><![CDATA[<?php echo $description; ?>]]></description>
+                    <description><![CDATA[<?php echo wp_specialchars_decode($description); ?>]]></description>
                 <?php else : ?>
-                    <description><![CDATA[<?php echo $description; ?>]]></description>
+                    <description><![CDATA[<?php echo wp_specialchars_decode($description); ?>]]></description>
                     <content:encoded><![CDATA[<?php echo the_content(); ?>]]></content:encoded>
                 <?php endif; ?>
                 <?php if ( get_comments_number() || comments_open() ) : ?>
@@ -1526,15 +1526,15 @@ class Egoi_For_Wp_Admin {
     >
 
         <channel>
-        <title><?php wp_title_rss(); ?></title>
+        <title><![CDATA[<?php wp_specialchars_decode(wp_title_rss()); ?>]]></title>
         <atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml" />
         <link><?php bloginfo_rss('url') ?></link>
-        <description><?php bloginfo_rss("description") ?></description>
+        <description><![CDATA[<?php wp_specialchars_decode(bloginfo_rss("description")) ?>]]></description>
         <lastBuildDate><?php
             $date = get_lastpostmodified( 'GMT' );
             echo $date ? mysql2date( 'r', $date, false ) : date( 'r' );
             ?></lastBuildDate>
-        <language><?php bloginfo_rss( 'language' ); ?></language>
+        <language><![CDATA[<?php wp_specialchars_decode(bloginfo_rss( 'language' )); ?>]]></language>
         <sy:updatePeriod><?php
             $duration = 'hourly';
 
