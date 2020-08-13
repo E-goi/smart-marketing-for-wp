@@ -69,7 +69,7 @@ jQuery(document).ready(function($) {
 
 	});
 
-	$('.egoi_fields').live("click", function(){
+	$('.egoi_fields').on("click", function(){
 
 		var id = $(this).data('target');
 		var tr = 'egoi_fields_'+id;

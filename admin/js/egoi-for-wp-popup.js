@@ -95,7 +95,7 @@ jQuery(document).ready(function($) {
     var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
     var set_to_post_id = 1; // Set this
 
-    $('.egoi-image-selector-preview').live('click', function( event ){
+    $('.egoi-image-selector-preview').on('click', function( event ){
 
         event.preventDefault();
 
