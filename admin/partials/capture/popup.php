@@ -69,6 +69,8 @@ if(empty(get_simple_forms())){
                 <select name="form_id" class="form-select " id="form_id">
 
                     <option value="new" selected disabled hidden><?php _e( 'Select a form...', 'egoi-for-wp' ); ?></option>
+                    <option value="disabled" ><?php _e( 'No Form', 'egoi-for-wp' ); ?></option>
+
                     <?php
                     foreach (get_simple_forms() as $form){
                         echo "<option value=\"".$form->ID."\" ".selected($form->ID, $popup_data['form_id']).">".$form->post_title."</option>";
@@ -125,8 +127,18 @@ if(empty(get_simple_forms())){
                 <label for="show_logged"><?=__('Logged in Users','egoi-for-wp');?></label>
                 <p class="subtitle"><?php _e( 'Do you want this popup to show in already identified users?', 'egoi-for-wp' ); ?></p>
                 <select name="show_logged" class="form-select " id="show_logged">
-                    <option value="yes" <?php selected($popup_data['show_logged'], 'one_time'); ?> ><?php _e( 'Yes', 'egoi-for-wp' ); ?></option>
-                    <option value="no" <?php selected($popup_data['show_logged'], 'until_submition'); ?> ><?php _e( 'No', 'egoi-for-wp' ); ?></option>
+                    <option value="yes" <?php selected($popup_data['show_logged'], 'yes'); ?> ><?php _e( 'Yes', 'egoi-for-wp' ); ?></option>
+                    <option value="no" <?php selected($popup_data['show_logged'], 'no'); ?> ><?php _e( 'No', 'egoi-for-wp' ); ?></option>
+                </select>
+            </div>
+
+            <div class="smsnf-input-group">
+                <label for="show_device"><?=__('Devices','egoi-for-wp');?></label>
+                <p class="subtitle"><?php _e( 'Choose the devices you want the popup to trigger', 'egoi-for-wp' ); ?></p>
+                <select name="show_device" class="form-select " id="show_logged">
+                    <option value="all" <?php selected($popup_data['show_device'], 'all'); ?> ><?php _e( 'All', 'egoi-for-wp' ); ?></option>
+                    <option value="desktop" <?php selected($popup_data['show_device'], 'desktop'); ?> ><?php _e( 'Desktop', 'egoi-for-wp' ); ?></option>
+                    <option value="mobile" <?php selected($popup_data['show_device'], 'mobile'); ?> ><?php _e( 'Mobile', 'egoi-for-wp' ); ?></option>
                 </select>
             </div>
 

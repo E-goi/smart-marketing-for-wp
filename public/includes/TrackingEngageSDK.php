@@ -118,11 +118,18 @@ class TrackingEngageSDK
     protected function getProductsInCart(){
         if(!empty($this->order_id)){return false;}
         $cart = WC()->cart->get_cart();
+        require_once(plugin_dir_path( __FILE__ ) . '../../includes/class-egoi-for-wp-products-bo.php');
+        $options_catalogs = EgoiProductsBo::getCatalogOptions();
+        $options_catalogs = empty($options_catalogs)?[]:$options_catalogs;
+        $variation = false;
+        foreach ($options_catalogs as $options_catalog){
+            $variation = $variation || (empty($options_catalog['variations'])?false:true) ;
+        }
         foreach ( $cart as $cart_item ) {
             ?>
             <script>
                 window._egoiaq.push(['addEcommerceItem',
-                    "<?php echo $cart_item['product_id']; ?>",
+                    "<?php echo $variation?$cart_item['variation_id']:$cart_item['product_id']; ?>",
                     "<?php echo $cart_item['data']->get_title(); ?>",
                     "",
                     <?php echo (double) $cart_item['data']->get_price(); ?>,

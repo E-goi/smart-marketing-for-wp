@@ -229,9 +229,13 @@ class EgoiProductsBo
         update_option('egoi_catalogs_options', json_encode($data));
     }
 
-    public static function getCatalogOptions($catalog_id){
+    public static function getCatalogOptions($catalog_id=false){
         $data = get_option('egoi_catalogs_options');
         $data = json_decode($data, true);
+
+        if(empty($catalog_id)){
+            return $data;
+        }
 
         if(empty($data[$catalog_id]))
             return EgoiProductsBo::DEFAULT_CATALOG_OPTIONS;
