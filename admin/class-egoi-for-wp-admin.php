@@ -2350,7 +2350,7 @@ class Egoi_For_Wp_Admin {
                             <td>'.__('Total sent', 'egoi-for-wp').'</td>
                             <td class="smsnf-dashboard-last-'.$type_clean.'-campaign__totalsend">';
 
-            $output[$type] .= $campaigns[$type]['sent'] === 'NO_DATA' ? '<span class="totalsend--wait">'.__('A aguardar resultados...', 'egoi-for-wp').'</span>' : $campaigns[$type]['sent'];
+            $output[$type] .= $campaigns[$type]['sent'] === 'NO_DATA' ? '<span class="totalsend--wait">'.__('Waiting for results...', 'egoi-for-wp').'</span>' : $campaigns[$type]['sent'];
 
             $output[$type] .= '
                             </td>
