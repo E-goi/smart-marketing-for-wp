@@ -167,6 +167,9 @@ You can create and update your lists, see how many subscribers you have, but you
 - Popups improvements (Device detection and no form mandatory)
 - Minor bug fixes
 
+= 3.5.5 =
+- Fix RSS encode
+
 = 3.5.4 =
 - TE Fix
 
