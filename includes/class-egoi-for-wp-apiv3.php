@@ -22,7 +22,7 @@ class EgoiApiV3
         'getLists'                  => '/lists?limit=10&order=desc&order_by=list_id',
         'createWebPushRssCampaign'  => '/campaigns/webpush/rss',
         'deployWebPushRssCampaign'  => '/campaigns/webpush/rss/{campaign_hash}/actions/enable',
-        'getWebPushSites'           => '/webpush/site',
+        'getWebPushSites'           => '/webpush/sites',
         'getCatalogs'               => '/catalogs',
         'importProducts'            => '/catalogs/{id}/products/actions/import',
         'createCatalog'             => '/catalogs',
@@ -32,6 +32,7 @@ class EgoiApiV3
         'getCountriesCurrencies'    => '/utilities/countries',
         'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}',
         'getMyAccount'              => '/my-account',
+        'createWebPushSite'         => '/webpush/sites'
     ];
     protected $apiKey;
     protected $headers;
@@ -328,6 +329,30 @@ class EgoiApiV3
         return $client->getCode()==200 && isset($resp['general_info']['client_id'])
             ?$resp['general_info']['client_id']
             :$this->processErrors();
+    }
+
+    /**
+     * @param $data
+     *
+     * @return false|string
+     */
+    public function createWebPushSite($data){
+        $path = self::APIV3 . self::APIURLS[__FUNCTION__];
+        $client = new ClientHttp($path, 'POST', $this->headers, json_encode($data));
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+
+        if ($client->getCode() == 201 && !empty($resp['app_code'])) {
+            return $resp['app_code'];
+        } elseif (!empty($resp['errors']['name_already_exists'])) {
+            return $this->processErrors($resp['errors']['name_already_exists']);
+        }
+
+        return $this->processErrors();
     }
 
     /**
