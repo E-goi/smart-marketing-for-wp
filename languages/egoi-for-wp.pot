@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing SMS and Newsletters Forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-10 16:46+0000\n"
+"POT-Creation-Date: 2020-09-01 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -185,204 +185,28 @@ msgstr ""
 msgid "The page %s is not valid"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:290
-#, php-format
-msgid ""
-"Please rate %sSmart Marketing SMS and Newsletters Forms%s %s on %sWordPress."
-"org%s to help us spread the word. Thank you from the E-goi team!"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:310
-#: admin/partials/egoi-for-wp-admin-dashboard.php:31
-#: admin/partials/egoi-for-wp-admin-header.php:6
-#: admin/partials/egoi-for-wp-admin-header.php:15
-#: admin/partials/egoi-for-wp-admin-header.php:26
-#: admin/partials/egoi-for-wp-admin-header.php:31
-#: admin/partials/egoi-for-wp-admin-header.php:34
-msgid "Dashboard"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:312
-#: admin/partials/egoi-for-wp-admin-forms.php:55
-msgid "Capture Contacts"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:314
-#: admin/partials/egoi-for-wp-admin-trackengage.php:78
-#: admin/partials/egoi-for-wp-admin-subscribers.php:122
-msgid "Sync Contacts"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:316
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:49
-msgid "E-commerce"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:316
-#: admin/partials/egoi-for-wp-admin-forms.php:65
-msgid "New!"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:318
-msgid "Track & Engage"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:320
-#: admin/partials/egoi-for-wp-admin-integrations.php:70
-msgid "Integrations"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:322
-#: admin/partials/egoi-for-wp-admin-webpush.php:86
-msgid "Web Push"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:324
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:37
-#: admin/partials/rssfeed/campaign-rss.php:28
-#: admin/partials/rssfeed/campaign-rss.php:152
-#: admin/partials/rssfeed/home.php:7
-msgid "RSS Feed"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:328
-#: admin/partials/egoi-for-wp-admin-display.php:146
-msgid "Account"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:931
-msgid "I want to receive newsletter"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:1124
 #: public/class-egoi-for-wp-public.php:783
 msgid "was successfully registered!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1126
 #: public/class-egoi-for-wp-public.php:785
 msgid "Subscriber data from"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1128
 #: public/class-egoi-for-wp-public.php:787
 msgid "has been updated!"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1131
 #: public/class-egoi-for-wp-public.php:790
 msgid "ERROR: no data to insert"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1133
 #: public/class-egoi-for-wp-public.php:792
 msgid "ERROR: e-mail address is invalid"
 msgstr ""
 
-#: admin/class-egoi-for-wp-admin.php:1135
 #: public/class-egoi-for-wp-public.php:794
 msgid "ERROR: invalid data submitted"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:1820
-msgid "https://blog.e-goi.com/feed/egoi"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2055
-msgid "Missing Webpush Instalation!"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2062
-msgid "Api error, try again later."
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2142
-msgid "Something went wrong with your request."
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2145
-msgid "Catalog synchronized successfully."
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2158
-msgid "Fields can't be empty."
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2166
-msgid "Catalog successfully created!"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2168
-msgid "Something went wrong creating the catalog!"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2179
-msgid "Something went wrong fetching countries, please try again later."
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2220
-msgid "Additional Information"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2338
-#: admin/partials/rssfeed/campaign-rss.php:65
-msgid "Subject"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2342
-msgid "Internal Name"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2350
-#: admin/class-egoi-for-wp-admin.php:2555
-msgid "Total sent"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2353
-msgid "Waiting for results..."
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2499
-#: admin/class-egoi-for-wp-admin.php:2500
-msgid "Unlimited"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2519
-msgid "Plan"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2523
-msgid "Current Balance"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2530
-msgid "Expires in"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2542
-msgid "Your current plan includes"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2584
-msgid ""
-"Send SMS notifications to your customers and administrators for each change "
-"to the order status on your WooCommerce"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2585
-msgid "Instalar Plugin"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2592
-msgid "Transactional SMS"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2688
-msgid "ID is required"
-msgstr ""
-
-#: admin/class-egoi-for-wp-admin.php:2695
-msgid "FormID was not found"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-trackengage.php:36
@@ -399,12 +223,12 @@ msgid ""
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-trackengage.php:38
-#: admin/partials/egoi-for-wp-admin-webpush.php:55
+#: admin/partials/egoi-for-wp-admin-webpush.php:88
 msgid "Success!"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-trackengage.php:38
-#: admin/partials/egoi-for-wp-admin-webpush.php:55
+#: admin/partials/egoi-for-wp-admin-webpush.php:88
 msgid "Ecommerce Option Updated!"
 msgstr ""
 
@@ -414,7 +238,7 @@ msgid "Track&Engage"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-trackengage.php:57
-#: admin/partials/egoi-for-wp-admin-webpush.php:91
+#: admin/partials/egoi-for-wp-admin-webpush.php:130
 #: admin/partials/egoi-for-wp-admin-subscribers.php:127
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:123
 msgid "Configuration"
@@ -424,6 +248,11 @@ msgstr ""
 msgid ""
 "Select your mailing list in the option \"Synchronize users with this list\" "
 "to activate Track & Engage.<br>You will find this option in "
+msgstr ""
+
+#: admin/partials/egoi-for-wp-admin-trackengage.php:78
+#: admin/partials/egoi-for-wp-admin-subscribers.php:122
+msgid "Sync Contacts"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-trackengage.php:93
@@ -445,7 +274,6 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-trackengage.php:109
 #: admin/partials/egoi-for-wp-admin-trackengage.php:118
 #: admin/partials/egoi-for-wp-admin-trackengage.php:127
-#: admin/partials/egoi-for-wp-admin-webpush.php:231
 #: admin/partials/egoi-for-wp-admin-display.php:449
 #: admin/partials/egoi-for-wp-admin-subscribers.php:175
 #: admin/partials/egoi-for-wp-admin-widget.php:70
@@ -457,6 +285,7 @@ msgstr ""
 #: admin/partials/capture/widget-options.php:119
 #: admin/partials/ecommerce/catalogs.php:81
 #: admin/partials/ecommerce/new-catalog-form.php:47
+#: admin/partials/webpush/home.php:134
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:143
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:190
 #: admin/partials/integrations/post-comment.php:11
@@ -472,7 +301,6 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-trackengage.php:110
 #: admin/partials/egoi-for-wp-admin-trackengage.php:119
 #: admin/partials/egoi-for-wp-admin-trackengage.php:128
-#: admin/partials/egoi-for-wp-admin-webpush.php:232
 #: admin/partials/egoi-for-wp-admin-display.php:453
 #: admin/partials/egoi-for-wp-admin-subscribers.php:176
 #: admin/partials/egoi-for-wp-admin-widget.php:74
@@ -483,6 +311,7 @@ msgstr ""
 #: admin/partials/capture/widget-options.php:60
 #: admin/partials/capture/widget-options.php:119
 #: admin/partials/ecommerce/new-catalog-form.php:47
+#: admin/partials/webpush/home.php:135
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:144
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:191
 #: admin/partials/integrations/post-comment.php:12
@@ -519,8 +348,6 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-trackengage.php:134
 #: admin/partials/egoi-for-wp-admin-lists.php:102
-#: admin/partials/egoi-for-wp-admin-webpush.php:135
-#: admin/partials/egoi-for-wp-admin-webpush.php:156
 #: admin/partials/egoi-for-wp-admin-display.php:246
 #: admin/partials/egoi-for-wp-admin-display.php:288
 #: admin/partials/egoi-for-wp-admin-display.php:421
@@ -529,6 +356,7 @@ msgstr ""
 #: admin/partials/capture/simple-forms.php:188
 #: admin/partials/capture/subscription-bar.php:247
 #: admin/partials/capture/widget-options.php:188
+#: admin/partials/webpush/home.php:37 admin/partials/webpush/home.php:59
 #: admin/partials/integrations/post-comment.php:45
 #: admin/partials/integrations/gravity-forms.php:77
 #: admin/partials/integrations/contact-form-7.php:89
@@ -799,7 +627,7 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-simple-forms.php:297
 #: admin/partials/egoi-for-wp-admin-subscribers.php:293
-#: admin/partials/capture/popup.php:302
+#: admin/partials/capture/popup.php:302 admin/partials/webpush/create-wp.php:49
 msgid "Save Changes"
 msgstr ""
 
@@ -847,9 +675,9 @@ msgid "Cancel"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-simple-forms.php:676
-#: admin/partials/egoi-for-wp-admin-webpush.php:147
 #: admin/partials/capture/home.php:51 admin/partials/capture/home.php:102
-#: admin/partials/capture/home.php:138 admin/partials/rssfeed/home.php:55
+#: admin/partials/capture/home.php:138 admin/partials/webpush/home.php:49
+#: admin/partials/rssfeed/home.php:55
 msgid "Edit"
 msgstr ""
 
@@ -861,122 +689,25 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:112
-msgid "Insert the Web Push code here"
+#: admin/partials/egoi-for-wp-admin-webpush.php:52
+#: admin/partials/egoi-for-wp-admin-webpush.php:54
+msgid "Error!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:118
-msgid "Enter only highlighted code with black color"
+#: admin/partials/egoi-for-wp-admin-webpush.php:52
+msgid "Web Push name already exists!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:128
-msgid "Paste the Web Push code here"
+#: admin/partials/egoi-for-wp-admin-webpush.php:54
+msgid "Error creating Web Push site!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:151
-msgid "Paste here the Web Push code"
+#: admin/partials/egoi-for-wp-admin-webpush.php:125
+msgid "Web Push"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-webpush.php:168
-msgid "Code is valid"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:172
-msgid "Code is invalid"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:190
-msgid "How to get the Web Push Code?"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:193
-msgid " "
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:194
-msgid "LOGIN"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:195
-msgid "to your account and click on the top menu item"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:196
-msgid "APPS > PUSH APPS"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:199
-msgid "Click"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:200
-msgid "ADD APP > WEB PUSH"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:201
-msgid "button and fill in the require settings"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:204
-msgid "At the bottom of the page click the tab labeled \"Code\" and"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:205
-msgid "COPY"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:206
-msgid "the code that is between double quotes, after"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:207
-msgid "variable"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:211
-msgid "Example image"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:229
-msgid "Activate Web Push"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:252
-msgid "Want to use E-goi's Web Push without limits?"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:253
-msgid "Join an Unlimited Sending plan."
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:257
-msgid "Join Now"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:264
-msgid "Integrate"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:265
-msgid "Web Push Notification"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:266
-msgid ""
-"with your site to alert your customers or followers, with Instant Messaging, "
-"directly to your browser, even if they are browsing another site."
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:267
-msgid "Learn more"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:281
-msgid "Don't know how to create a Web Push in E-goi? Learn how to do it"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-webpush.php:282
-msgid "here"
+#: admin/partials/egoi-for-wp-admin-webpush.php:131
+msgid "Create Web Push"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-forms.php:18
@@ -1005,6 +736,10 @@ msgstr ""
 msgid "Popup was successfully deleted!"
 msgstr ""
 
+#: admin/partials/egoi-for-wp-admin-forms.php:55
+msgid "Capture Contacts"
+msgstr ""
+
 #: admin/partials/egoi-for-wp-admin-forms.php:62
 msgid "Advanced Forms"
 msgstr ""
@@ -1020,6 +755,10 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-forms.php:65
 #: admin/partials/capture/home.php:135
 msgid "Popup"
+msgstr ""
+
+#: admin/partials/egoi-for-wp-admin-forms.php:65
+msgid "New!"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-forms.php:97
@@ -1041,12 +780,28 @@ msgstr ""
 msgid "RSS Feed saved!"
 msgstr ""
 
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:37
+#: admin/partials/rssfeed/campaign-rss.php:28
+#: admin/partials/rssfeed/campaign-rss.php:152
+#: admin/partials/rssfeed/home.php:7
+msgid "RSS Feed"
+msgstr ""
+
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:43
 msgid "Rss Feed"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:44
 msgid "Campaign Rss"
+msgstr ""
+
+#: admin/partials/egoi-for-wp-admin-dashboard.php:31
+#: admin/partials/egoi-for-wp-admin-header.php:6
+#: admin/partials/egoi-for-wp-admin-header.php:15
+#: admin/partials/egoi-for-wp-admin-header.php:26
+#: admin/partials/egoi-for-wp-admin-header.php:31
+#: admin/partials/egoi-for-wp-admin-header.php:34
+msgid "Dashboard"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:36
@@ -1165,6 +920,10 @@ msgstr ""
 msgid "Latest Blog Entries"
 msgstr ""
 
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:49
+msgid "E-commerce"
+msgstr ""
+
 #: admin/partials/egoi-for-wp-admin-ecommerce.php:54
 msgid "Catalogs"
 msgstr ""
@@ -1202,6 +961,10 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-display.php:60
 msgid "Welcome to E-goi!"
+msgstr ""
+
+#: admin/partials/egoi-for-wp-admin-display.php:146
+msgid "Account"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-display.php:202
@@ -1418,6 +1181,7 @@ msgid "Select the E-goi's list for your subscribers."
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-subscribers.php:210
+#: admin/partials/webpush/create-wp.php:28
 #, php-format
 msgid ""
 "No lists found, <a href=\"%s\">are you connected to E-goi</a> and/or have "
@@ -1469,6 +1233,10 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-integrations.php:38
 msgid "Integrations Settings Updated!"
+msgstr ""
+
+#: admin/partials/egoi-for-wp-admin-integrations.php:70
+msgid "Integrations"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-integrations.php:76
@@ -2457,6 +2225,140 @@ msgstr ""
 msgid "Recommended"
 msgstr ""
 
+#: admin/partials/webpush/home.php:14
+msgid "Insert the Web Push code here"
+msgstr ""
+
+#: admin/partials/webpush/home.php:20
+msgid "Enter only highlighted code with black color"
+msgstr ""
+
+#: admin/partials/webpush/home.php:30
+msgid "Paste the Web Push code here"
+msgstr ""
+
+#: admin/partials/webpush/home.php:54
+msgid "Paste here the Web Push code"
+msgstr ""
+
+#: admin/partials/webpush/home.php:71
+msgid "Code is valid"
+msgstr ""
+
+#: admin/partials/webpush/home.php:75
+msgid "Code is invalid"
+msgstr ""
+
+#: admin/partials/webpush/home.php:93
+msgid "How to get the Web Push Code?"
+msgstr ""
+
+#: admin/partials/webpush/home.php:96
+msgid " "
+msgstr ""
+
+#: admin/partials/webpush/home.php:97
+msgid "LOGIN"
+msgstr ""
+
+#: admin/partials/webpush/home.php:98
+msgid "to your account and click on the top menu item"
+msgstr ""
+
+#: admin/partials/webpush/home.php:99
+msgid "APPS > PUSH APPS"
+msgstr ""
+
+#: admin/partials/webpush/home.php:102
+msgid "Click"
+msgstr ""
+
+#: admin/partials/webpush/home.php:103
+msgid "ADD APP > WEB PUSH"
+msgstr ""
+
+#: admin/partials/webpush/home.php:104
+msgid "button and fill in the require settings"
+msgstr ""
+
+#: admin/partials/webpush/home.php:107
+msgid "At the bottom of the page click the tab labeled \"Code\" and"
+msgstr ""
+
+#: admin/partials/webpush/home.php:108
+msgid "COPY"
+msgstr ""
+
+#: admin/partials/webpush/home.php:109
+msgid "the code that is between double quotes, after"
+msgstr ""
+
+#: admin/partials/webpush/home.php:110
+msgid "variable"
+msgstr ""
+
+#: admin/partials/webpush/home.php:114
+msgid "Example image"
+msgstr ""
+
+#: admin/partials/webpush/home.php:132
+msgid "Activate Web Push"
+msgstr ""
+
+#: admin/partials/webpush/home.php:155
+msgid "Want to use E-goi's Web Push without limits?"
+msgstr ""
+
+#: admin/partials/webpush/home.php:156
+msgid "Join an Unlimited Sending plan."
+msgstr ""
+
+#: admin/partials/webpush/home.php:160
+msgid "Join Now"
+msgstr ""
+
+#: admin/partials/webpush/home.php:167
+msgid "Integrate"
+msgstr ""
+
+#: admin/partials/webpush/home.php:168
+msgid "Web Push Notification"
+msgstr ""
+
+#: admin/partials/webpush/home.php:169
+msgid ""
+"with your site to alert your customers or followers, with Instant Messaging, "
+"directly to your browser, even if they are browsing another site."
+msgstr ""
+
+#: admin/partials/webpush/home.php:170
+msgid "Learn more"
+msgstr ""
+
+#: admin/partials/webpush/home.php:184
+msgid "Don't know how to create a Web Push in E-goi? Learn how to do it"
+msgstr ""
+
+#: admin/partials/webpush/home.php:185
+msgid "here"
+msgstr ""
+
+#: admin/partials/webpush/create-wp.php:14
+msgid "Web Push Title"
+msgstr ""
+
+#: admin/partials/webpush/create-wp.php:15
+msgid "When visitors subscribe, the URL will include..."
+msgstr ""
+
+#: admin/partials/webpush/create-wp.php:22
+msgid "Web Push List"
+msgstr ""
+
+#: admin/partials/webpush/create-wp.php:23
+msgid "Visitors opting in to your notifications will be kept in..."
+msgstr ""
+
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:19
 msgid "Egoi Form"
 msgstr ""
@@ -2836,6 +2738,10 @@ msgstr ""
 
 #: admin/partials/rssfeed/campaign-rss.php:58
 msgid "Select a sender..."
+msgstr ""
+
+#: admin/partials/rssfeed/campaign-rss.php:65
+msgid "Subject"
 msgstr ""
 
 #: admin/partials/rssfeed/campaign-rss.php:66
