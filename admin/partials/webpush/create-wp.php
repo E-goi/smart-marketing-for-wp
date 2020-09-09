@@ -1,11 +1,9 @@
 <section class="smsnf-content">
     <div>
-        <form method="post" id="create_webpush_form" action="<?php admin_url('admin.php?page=egoi-4-wp-webpush&sub=create-wp') ?>">
-
+        <form method="post" id="create-webpush-form" action="<?php admin_url('admin.php?page=egoi-4-wp-webpush&sub=create-wp') ?>">
+            <input value="create-webpush-form" name="form_id" hidden>
             <?php
-                wp_nonce_field('create_webpush_form', 'nonce');
-                settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
-                settings_errors();
+            wp_nonce_field('create-webpush-form');
             ?>
 
             <div class="smsnf-grid">

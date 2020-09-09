@@ -13,25 +13,42 @@ $lists = $Egoi4WP->getLists();
 
 function webpushValidator($cod) {
     if (preg_match("/^[A-Za-z0-9_-]*$/", $cod)) {
-        $ch = curl_init('https://egoiapp2.com/wp/files/' . filter_var($cod, FILTER_SANITIZE_STRING) );
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $url = 'https://egoiapp2.com/wp/files/' . filter_var($cod, FILTER_SANITIZE_STRING) ;
+        if(function_exists('wp_remote_request')) {
 
-        curl_exec($ch);
+            $res = wp_remote_request($url,
+                array(
+                    'method' => 'GET',
+                    'timeout' => 30,
+                )
+            );
 
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+            if ( $res['response']['code'] != 200) {
+                return false;
+            }
 
-        if ($http_code != 200) {
-            return false;
+            return true;
+        }else{
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+            curl_exec($ch);
+
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($http_code != 200) {
+                return false;
+            }
+            return true;
         }
-        return true;
     } else {
         return false;
     }
 }
 
-if (!empty($_POST) && !wp_verify_nonce($_POST['nonce'], 'create_webpush_form')) {
-    die('Failed security check!');
+if (!empty($_POST) && $_POST['form_id'] == 'create-webpush-form' ) {
+    check_admin_referer($_POST['form_id']);
 }
 
 $redir = false;
@@ -40,7 +57,7 @@ if (!empty($_GET['sub']) && $_GET['sub'] === 'create-wp' && !empty($_POST['creat
     $api = new EgoiApiV3($apikey);
 
     $data = array(
-        'site' => 'http://google.com', //get_site_url(),
+        'site' => get_site_url(),
         'list_id' => $_POST['create_wp_form']['list'],
         'name' => $_POST['create_wp_form']['label']
     );
