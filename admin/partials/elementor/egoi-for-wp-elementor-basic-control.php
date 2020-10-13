@@ -487,8 +487,8 @@ class EgoiElementorWidget extends Widget_Base {
     protected function getAccountListTags(){
 
         $tags = Egoi_For_Wp::getAccountTags();
-
-        return array_merge([ '0' => __('No Tag', 'egoi-for-wp')],$tags);
+        $tags['0'] = __('No Tag', 'egoi-for-wp');
+        return $tags;
     }
 
 
