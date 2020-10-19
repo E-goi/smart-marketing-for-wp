@@ -818,7 +818,7 @@ class Egoi_For_Wp_Admin {
             $get = $api->getSubscriber($egoi_int['list_cf'], $email);
             if($get->subscriber->STATUS != '2'){
 
-                if($get->subscriber->EMAIL == $email){
+                if ($get->subscriber->EMAIL == $email) {
                     $update = $egoi_int['edit'];
                     if($update){
 
@@ -834,7 +834,7 @@ class Egoi_For_Wp_Admin {
                         $api->editSubscriber(
                             $egoi_int['list_cf'],
                             $email,
-                            array($cf7tag, $tag ? $tag : 0),
+                            !empty($cf7tag) ? $cf7[0]->post_title : 0,
                             $name,
                             $lname,
                             $extra_fields,
@@ -843,7 +843,7 @@ class Egoi_For_Wp_Admin {
                         );
                     }
 
-                }else{
+                } else {
 
                     if($subject){ // check if tag exists in E-goi
                         $get_tags = $api->getTag($subject);
@@ -867,11 +867,9 @@ class Egoi_For_Wp_Admin {
                         $status
                     );
                 }
-            }else{
-                echo $error_sent;
+            } else {
+                //echo $error_sent;
             }
-
-
 
 		} catch(Exception $e) {
 		    $this->sendError('ContactForm7 ERROR', $e->getMessage());
