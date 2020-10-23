@@ -490,7 +490,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             html_code = toggleLabel(html_code, label, 'email');
                             break;
                         case 'egoi_mobile_button':
-                            var label = '[e_mobile]\n<p>\n  <label for="egoi_mobile"><?php _e('Mobile', 'egoi-for-wp');?>: </label>\n  <select name="egoi_country_code" id="egoi_country_code"></select><input type="text" name="egoi_mobile" id="egoi_mobile" />\n</p>\n[/e_mobile]\n';
+                            var label = '[e_mobile]\n<p>\n  <label for="egoi_mobile"><?php _e('Mobile', 'egoi-for-wp');?>: </label>\n  <select name="egoi_country_code" id="egoi_country_code" selected="351"></select><input type="text" name="egoi_mobile" id="egoi_mobile" />\n</p>\n[/e_mobile]\n';
                             html_code = toggleLabel(html_code, label, 'mobile');
                             break;
                         case 'egoi_submit_button':

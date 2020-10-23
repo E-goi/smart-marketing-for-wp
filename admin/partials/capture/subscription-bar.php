@@ -229,6 +229,15 @@ settings_errors();
             <input id="already-subscribed-msg" type="text" name="egoi_bar_sync[text_already_subscribed]" value="<?= esc_attr($this->bar_post['text_already_subscribed'] ?: __('Subscriber already exists', 'egoi-for-wp')) ?>" autocomplete="off" />
         </div>
         <!-- / Already subscribed -->
+
+        <!-- Waiting for confirmation -->
+        <div class="smsnf-input-group">
+            <label for="wating_for_confirmation-msg"><?= _e( 'Already subscribed and waiting for confirmation e-mail', 'egoi-for-wp' ); ?></label>
+            <input id="wating_for_confirmation-msg" type="text" name="egoi_bar_sync[text_waiting_for_confirmation]" value="<?= esc_attr($this->bar_post['text_waiting_for_confirmation'] ?: __('Already subscribed and waiting for confirmation e-mail', 'egoi-for-wp')) ?>" autocomplete="off" />
+        </div>
+        <!-- / Waiting for confirmation -->
+
+
         <!-- Other errors -->
         <div class="smsnf-input-group">
             <label for="bar-other-errors-msg"><?= _e( 'Other errors' ,'egoi-for-wp' ); ?></label>

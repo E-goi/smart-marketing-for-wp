@@ -19,23 +19,6 @@
         $(this).closest('li').addClass('active');
     });
 
-    /* Clipboard */
-/*
-    var code = $('#smsnf-af-shortcode');
-    new Clipboard('#smsnf-af-shortcode');
-    code.click(function() {
-        $(this).attr('data-tooltip', $(this).attr('msg-after'));
-    });
-
-    code.mouseout(function() {
-        var div = $(this);
-        var timer = setTimeout(function() {
-            div.attr('data-tooltip', div.attr('msg-before'));
-            clearTimeout(timer);
-        }, 300);
-    });
-*/
-
     var shortcodes = $('.shortcode.-copy');
 
     $.each(shortcodes, (k, v) => {
@@ -120,7 +103,6 @@
     
     /* Get lists from e-goi */
     if (select_lists.length) {
-        console.log('ajax - get lists');
         $.post(url_egoi_script.ajaxurl, {action: 'egoi_get_lists'}, function(response) {
             var lists = JSON.parse(response);
 
@@ -189,8 +171,6 @@
             $('#form_lang_wrapper').slideDown();
             $('#form_tag_wrapper').slideDown();
 
-
-            console.log('ajax - get lang');
             $.post(url_egoi_script.ajaxurl, {action: 'egoi_get_lists'}, function(response) {
                 var langs = JSON.parse(response);
                 var idiomas = [];
@@ -222,7 +202,6 @@
         select_lists.change(function() {
             select_lang.prop('disabled', true);
             lang_id = '';
-            console.log($(this).find('option:checked').val());
             get_list_lang_from_egoi($(this).find('option:checked').val());
         });
     }
@@ -245,8 +224,6 @@
         });
     }
     get_list_tag_from_egoi();
-    
-    
 
     /* Simple Forms */
     var sf_btns = $('button', '#sf-btns');
@@ -258,7 +235,7 @@
     var sf_labels = {
         name : `[e_name]\n<p>\n  <label for="egoi_name">${sf_name.attr('data-lable')}: </label>\n  <input type="text" name="egoi_name" id="egoi_name" />\n</p>\n[/e_name]\n`,
         email : `[e_email]\n<p>\n  <label for="egoi_email">${sf_email.attr('data-lable')}: </label>\n  <input type="email" name="egoi_email" id="egoi_email" />\n</p>\n[/e_email]\n`,
-        phone : `[e_mobile]\n<p>\n  <label for="egoi_mobile">${sf_phone.attr('data-lable')}: </label>\n  <select name="egoi_country_code" id="egoi_country_code"></select><input type="text" name="egoi_mobile" id="egoi_mobile" />\n</p>\n[/e_mobile]\n`,
+        phone : `[e_mobile]\n<p>\n  <label for="egoi_mobile">${sf_phone.attr('data-lable')}: </label>\n  <select name="egoi_country_code" id="egoi_country_code" data-selected=""></select><input type="text" name="egoi_mobile" id="egoi_mobile" />\n</p>\n[/e_mobile]\n`,
         submit : `[e_submit]\n<p>\n  <button type="submit" id="egoi_submit_button">${sf_submit.attr('data-lable')}</button>\n</p>\n[/e_submit]\n`,
     };
 
@@ -284,7 +261,7 @@
 
     sf_phone.click(function(e) {
         if($(this).hasClass('active')) {
-            add_html(sf_labels.phone);
+            add_html(sf_labels.phone.replace('data-selected=""', 'data-selected="'+defaultPrefix+'"'));
         } else {
             remove_html('mobile');
         }
@@ -396,7 +373,6 @@
         }
 
         input = form.find('#list_to_subscribe');
-        console.log( input.find('option:selected').val() );
         if (input.length && input.find('option:selected').val() == '') {
             input.addClass('error');
         }

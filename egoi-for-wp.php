@@ -11,7 +11,7 @@ error_reporting(0);
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           3.6.6
+ * Version:           3.6.7
 
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
@@ -27,7 +27,7 @@ if (!defined( 'WPINC' )) {
 }
 
 
-define('SELF_VERSION', '3.6.6');
+define('SELF_VERSION', '3.6.7');
 
 
 if (!session_id()){
@@ -605,7 +605,7 @@ define( 'COUNTRY_CODES' , serialize(array (
         array (
             'iso3' => 'CCK',
             'country' => 'Cocos Islands',
-            'country_pt' => 'Austrália',
+            'country_pt' => 'lhas Cocos',
             'prefix' => '61',
             'language' => 'ms-CC',
         ),
@@ -613,7 +613,7 @@ define( 'COUNTRY_CODES' , serialize(array (
         array (
             'iso3' => 'COD',
             'country' => 'Democratic Republic of the Congo',
-            'country_pt' => 'Congo-Brazzaville',
+            'country_pt' => 'República Democrática do Congo',
             'prefix' => '243',
             'language' => 'fr-CD',
         ),
@@ -725,7 +725,7 @@ define( 'COUNTRY_CODES' , serialize(array (
         array (
             'iso3' => 'CXR',
             'country' => 'Christmas Island',
-            'country_pt' => 'Austrália',
+            'country_pt' => 'Ilha do Natal',
             'prefix' => '61',
             'language' => 'en',
         ),
@@ -1733,7 +1733,7 @@ define( 'COUNTRY_CODES' , serialize(array (
         array (
             'iso3' => 'PRI',
             'country' => 'Puerto Rico',
-            'country_pt' => 'Canadá',
+            'country_pt' => 'Puerto Rico',
             'prefix' => '17871939',
             'language' => 'en-PR',
         ),
@@ -2133,7 +2133,7 @@ define( 'COUNTRY_CODES' , serialize(array (
         array (
             'iso3' => 'USA',
             'country' => 'United States',
-            'country_pt' => 'Canadá',
+            'country_pt' => 'Estados Unidos',
             'prefix' => '1',
             'language' => 'en-US',
         ),

@@ -279,6 +279,9 @@ class Egoi_For_Wp_Public {
 	    	$tag = $new['ID'];
         }
 
+
+
+
 		if($action){
 
 			$error = '';
@@ -297,9 +300,21 @@ class Egoi_For_Wp_Public {
 				$error = $bar['text_error'];
 			}
 
-			if($get->subscriber->UID){
-				$error = $bar['text_already_subscribed'];
-			}
+            if (!empty($get->subscriber->UID)) {
+                switch ($get->subscriber->STATUS) {
+                    case "3":
+                    case "0":
+                        if(empty($bar['text_waiting_for_confirmation'])){
+                            $bar['text_waiting_for_confirmation'] = 'Already subscribed and waiting for confirmation e-mail';
+                            update_option( Egoi_For_Wp_Admin::BAR_OPTION_NAME, $bar );
+                        }
+                        $error = $bar['text_waiting_for_confirmation'];
+                        break;
+                    default:
+                        $error = $bar['text_already_subscribed'];
+                        break;
+                }
+            }
 
             $status = !isset($bar['double_optin']) || $bar['double_optin'] == 0 ? 1 : 0;
 
@@ -470,6 +485,8 @@ class Egoi_For_Wp_Public {
 		$post .= '
 				});
 
+                jQuery("#egoi_country_code").val(jQuery("#egoi_country_code").data("selected"));
+
 				jQuery("#'.$simple_form.'").submit(function(event) {
 					
 					var simple_form = jQuery(this);
@@ -551,7 +568,10 @@ class Egoi_For_Wp_Public {
 						}
 					});
 
+                    
+
 				});
+				setTimeout(function(){ jQuery("#egoi_country_code").val(jQuery("#egoi_country_code").data("selected")); }, 100);
 			</script>
 		';
 
