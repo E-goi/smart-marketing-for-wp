@@ -194,7 +194,6 @@ class Egoi_For_Wp_Admin {
                 wp_enqueue_script($this->plugin_name.'-warning', plugin_dir_url(__FILE__) . 'js/remove-warning.js', array('jquery'), $this->version, false);
             }
 
-
             wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'), true);
 			wp_enqueue_script('custom-script1');
 
@@ -210,7 +209,7 @@ class Egoi_For_Wp_Admin {
 			wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
 			wp_enqueue_script('custom-script5');
 
-            wp_enqueue_script('smsnf-capture', plugin_dir_url(__FILE__) . 'js/capture.js', array('jquery', 'custom-script5'));
+            wp_enqueue_script('smsnf-capture', plugin_dir_url(__FILE__) . 'js/capture.js', array('jquery', 'custom-script5'), $this->version);
             wp_enqueue_script('jquery-color-picker', plugin_dir_url(__FILE__) . 'js/colorpicker.js', array('jquery'));
 
 
@@ -532,6 +531,7 @@ class Egoi_For_Wp_Admin {
 			'text_subscribed' => '',
 			'text_invalid_email' => '',
 			'text_already_subscribed' => '',
+			'text_waiting_for_confirmation' => '',
 			'text_error' => '',
 			'redirect' => ''
 		);

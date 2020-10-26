@@ -132,7 +132,22 @@ if (isset($_POST['id_simple_form'])) {
 } else {
     $id_simple_form = 0;
 }
+
+//default Prefix for cellphones
+$countryCodes = array_values(unserialize(COUNTRY_CODES));
+$key = array_search(str_replace('_', '-', get_locale()), array_column($countryCodes, 'language'));
+
+if (empty($key)) {
+    $key = 179;
+}
+
+$defaultPrefix = !empty($countryCodes[$key]) ? $countryCodes[$key]['prefix'] : '351';
+
 ?>
+<script>
+    var defaultPrefix = "<?=$defaultPrefix?>";
+</script>
+
 
 <form id="smsnf-simple-forms-form" method="post" action="#">
     <div class="smsnf-grid">
@@ -180,6 +195,7 @@ if (isset($_POST['id_simple_form'])) {
                     <button id="sf-btn-phone" class="smsnf-btn <?= strpos($content, '[e_mobile]') || strpos($content, '[/e_mobile]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Mobile', 'egoi-for-wp') ?>"><?php _e('Mobile', 'egoi-for-wp');?></button>
                     <button id="sf-btn-submit" class="smsnf-btn <?= strpos($content, '[e_submit]') || strpos($content, '[/e_submit]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Submit Button', 'egoi-for-wp') ?>"><?php _e('Submit Button', 'egoi-for-wp');?></button>
                 </div>
+                <p class="subtitle"><?php _e('Edit data-selected value in mobile field with the desired country code to preselect', 'egoi-for-wp');?></p>
                 <textarea id="sf-code" rows="11" name="html_code" placeholder="<?= _e( 'HTML code of your form', 'egoi-for-wp' ); ?>"><?=$content?></textarea>
             </div>
             <!-- / CÓDIGO HTML -->

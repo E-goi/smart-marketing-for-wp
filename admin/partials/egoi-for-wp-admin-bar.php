@@ -354,6 +354,10 @@ else{
                     <td><input type="text" class="widefat" name="egoi_bar_sync[text_already_subscribed]" value="<?php echo esc_attr($this->bar_post['text_already_subscribed'])  ?: __('Subscriber already exists', 'egoi-for-wp'); ?>" /></td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><label><?php _e( 'Already subscribed and waiting for confirmation e-mail', 'egoi-for-wp' ); ?></label></th>
+                    <td><input type="text" class="widefat" name="egoi_bar_sync[text_waiting_for_confirmation]" value="<?php echo esc_attr($this->bar_post['text_waiting_for_confirmation'])  ?: __('Already subscribed and waiting for confirmation e-mail', 'egoi-for-wp'); ?>" /></td>
+                </tr>
+                <tr valign="top">
                     <th scope="row"><label><?php _e( 'Other errors' ,'egoi-for-wp' ); ?></label></th>
                     <td><input type="text" class="widefat" name="egoi_bar_sync[text_error]" placeholder="<?php _e( 'Eg. List Missing from E-goi', 'egoi-for-wp' );?>"  value="<?php echo esc_attr( $this->bar_post['text_error'] ); ?>" /></td>
                 </tr>
