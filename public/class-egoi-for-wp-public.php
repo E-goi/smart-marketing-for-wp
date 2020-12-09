@@ -186,7 +186,7 @@ class Egoi_For_Wp_Public {
 				    <input type="hidden" name="double_optin" value="'. $bar_post['double_optin'] .'">
 					<label class="egoi-label">'.$bar_post['text_bar'].'</label>
 					<input type="email" name="email" placeholder="'.$bar_post['text_email_placeholder'].'" class="egoi-email" required style="display:inline-block;width:20%;">
-					<input type="button" class="egoi_sub_btn" value="'.$bar_post['text_button'].'" />
+					<input type="button" class="egoi_sub_btn" disabled value="'.$bar_post['text_button'].'" />
 					<span id="process_data_egoi" class="loader_btn_egoi" style="display:none;"></span>	
 				</div>';
 		}
@@ -205,13 +205,33 @@ class Egoi_For_Wp_Public {
 		$output = $open_comment.$top_content.$bar_content.$bottom_content.$close_comment;
 
 		$this->set_custom_css($bar_post);
+        $this->set_custom_script();
 		echo $output;
 		
 		if($regenerate){
 			exit;
 		}
 	}
+    private function set_custom_script() {
+        ?>
+        <script>
+            jQuery(document).ready(function() {
+                (function ($) {
+                    let button = $("#egoi-bar>.egoi_sub_btn")
+                    let email = $("#egoi-bar>.egoi-email");
+                    email.on('keyup', function(){
+                        if(email.val() == "" || email.val() == undefined){
+                            button.attr("disabled", true);
+                        }else{
+                            button.attr("disabled", false);
+                        }
 
+                    })
+                })(jQuery);
+            });
+        </script>
+        <?php
+    }
 	private function set_custom_css($css) {
 		
 		$position = 'absolute';
@@ -265,6 +285,18 @@ class Egoi_For_Wp_Public {
 
 		$action = $_POST['action'];	
 		$email = $_POST['email'];
+
+		if(empty($email)){
+            if($bar['position'] == 'top'){
+                $close_btn = '<span class="egoi-action-error top" id="tab_egoi_submit_close"></span>';
+            }else{
+                $close_btn = '<span class="egoi-action-error bottom" id="tab_egoi_submit_close"></span>';
+            }
+            $bar_content_error = '<div class="egoi-bar" id="egoi-bar" style="background:'.$bar['error_bgcolor'].'!important;border:none!important;"><div class="egoi-bar-error">'. __('Email can not be empty','egoi-for-wp') .'</div>'.$close_btn.'</div>';
+            echo $bar_content_error;
+            exit;
+        }
+
 		$fname = explode('@', $email);
 		$name = $fname[0];
 
@@ -843,6 +875,9 @@ class Egoi_For_Wp_Public {
         $url = strpos($_POST['url'], 'http') !== false ? $_POST['url'] : 'http:'.$_POST['url'];
         $response = wp_remote_post($url, array(
                 'method' => 'POST',
+                'headers' => [
+                    'Content-Type' => "application/x-www-form-urlencoded"
+                ],
                 'timeout' => 60,
                 'body' => $form_data,
             )
