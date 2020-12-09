@@ -1640,7 +1640,7 @@ class Egoi_For_Wp {
             'subscriber_name'   => filter_var($subscriber_data->FIRST_NAME, FILTER_SANITIZE_STRING),
             'subscriber_email'  => filter_var($subscriber_data->EMAIL, FILTER_SANITIZE_STRING),
             'list_id'           => $subscriber_data->LIST,
-            'list_title'        => $list->key_0->title,
+            'list_title'        => empty($list->key_0->title)?$subscriber_data->LIST:$list->key_0->title,
             'created_at'        => current_time('mysql'),
         );
 
