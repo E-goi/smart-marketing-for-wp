@@ -1768,6 +1768,7 @@ class Egoi_For_Wp {
             'email'         => __('Email','egoi-for-wp'),
             'telephone'     => __('Telephone','egoi-for-wp'),
             'birth_date'    => __('Birth Date','egoi-for-wp'),
+            'lang'          => __('Language','egoi-for-wp'),
         );
 
         if( (!empty($options->list) || !empty($options['list'])) && $extra){
