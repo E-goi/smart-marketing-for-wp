@@ -878,35 +878,46 @@ class Egoi_For_Wp {
         }
 	}
 
+	
 	public function addSubscriberSoap($listID, $tag, $subscriber){
-        $api = new SoapClient($this->url);
-        $params = array_merge(array(
-            'apikey' => $this->_valid['api_key'],
-            'plugin_key' => $this->plugin,
-            'listID' => $listID,
-            'compareField' => 'email',
-            'operation' => '2',
-            'tags' => is_array($tag)?$tag:array($tag)
-        ),$subscriber);
-        $result = $api->addSubscriber($params);
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/TrackingEngageSDK.php';
-        TrackingEngageSDK::setUidSession($result);
+        try{
+            $api = new SoapClient($this->url);
+            $params = array_merge(array(
+                'apikey' => $this->_valid['api_key'],
+                'plugin_key' => $this->plugin,
+                'listID' => $listID,
+                'compareField' => 'email',
+                'operation' => '2',
+                'tags' => is_array($tag)?$tag:array($tag)
+            ),$subscriber);
+            $result = $api->addSubscriber($params);
+            require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/TrackingEngageSDK.php';
+            TrackingEngageSDK::setUidSession($result);
+        }catch(Exception $e){
+            //continue
+        }
+
         return $result;
     }
 
 	public function addSubscriberBulk($listID, $tag, $subscribers = array()) {
-        if(count($subscribers) == 1){ return $this->addSubscriberSoap($listID, $tag, array_shift(array_values($subscribers))); }
-		$api = new SoapClient($this->url);
-		$params = array(
-			'apikey' => $this->_valid['api_key'], 
-			'plugin_key' => $this->plugin, 
-			'listID' => $listID, 
-			'subscribers' => $subscribers,
-			'compareField' => 'email',
-			'operation' => '2',
-			'tags' => is_array($tag)?$tag:array($tag)
-		);
-		$result = $api->addSubscriberBulk($params);
+        try{
+            if(count($subscribers) == 1){ return $this->addSubscriberSoap($listID, $tag, array_shift(array_values($subscribers))); }
+            $api = new SoapClient($this->url);
+            $params = array(
+                'apikey' => $this->_valid['api_key'], 
+                'plugin_key' => $this->plugin, 
+                'listID' => $listID, 
+                'subscribers' => $subscribers,
+                'compareField' => 'email',
+                'operation' => '2',
+                'tags' => is_array($tag)?$tag:array($tag)
+            );
+            $result = $api->addSubscriberBulk($params);
+        }catch(Exception $e){
+            //continue
+        }
+        
        	return $result;
 	}
 
