@@ -4,7 +4,7 @@ Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
 Tested up to: 5.5.1
-Stable tag: 3.6.9
+Stable tag: 3.6.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 3.6.10 =
+- Soap Client Exceptions Fix
 
 = 3.6.9 =
 - Add lang to mappable fields
