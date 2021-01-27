@@ -130,7 +130,7 @@ class TrackingEngageSDK
             ?>
             <script>
                 window._egoiaq.push(['addEcommerceItem',
-                    "<?php echo $variation?$cart_item['variation_id']:$cart_item['product_id']; ?>",
+                    "<?php echo ($variation && !empty($cart_item['variation_id'])) ?$cart_item['variation_id']:$cart_item['product_id']; ?>",
                     "<?php echo $cart_item['data']->get_title(); ?>",
                     "",
                     <?php echo (double) $cart_item['data']->get_price(); ?>,

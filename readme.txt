@@ -162,6 +162,7 @@ You can create and update your lists, see how many subscribers you have, but you
 
 = 3.6.10 =
 - Soap Client Exceptions Fix
+- Product Tracking Fix
 
 = 3.6.9 =
 - Add lang to mappable fields
