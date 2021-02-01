@@ -1219,6 +1219,8 @@ class Egoi_For_Wp {
 				$total[] = $all_subscribers;
 				$total[] = $total_users;
 
+				$this->addTrackEngage($post['list']);
+
 				echo json_encode($total);
 				exit;
 			}
@@ -1666,6 +1668,29 @@ class Egoi_For_Wp {
         }
 
         return $wpdb->insert($table, $subscriber);
+    }
+
+    public function addTrackEngage($list){
+        require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.php');
+
+        $apikey = get_option('egoi_api_key');
+        if(empty($apikey['apikey'])){
+            return;
+        }
+        try{
+            $api = new EgoiApiV3($apikey['apikey']);
+
+            $api->activateTrackingEngage(
+                'POST',
+                [
+                    'domain'      => get_site_url(),
+                    'list'        =>  $list
+                ]
+            );
+        }catch (Exception $e){
+            return;
+        }
+
     }
 
     public static function egoi_subscriber_signup_fields(){
