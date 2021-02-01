@@ -32,7 +32,8 @@ class EgoiApiV3
         'getCountriesCurrencies'    => '/utilities/countries',
         'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}',
         'getMyAccount'              => '/my-account',
-        'createWebPushSite'         => '/webpush/sites'
+        'createWebPushSite'         => '/webpush/sites',
+        'activateTrackingEngage'    => '/my-account/actions/enable-te'
     ];
     protected $apiKey;
     protected $headers;
