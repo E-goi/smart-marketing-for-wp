@@ -220,7 +220,7 @@ class TransactionalEmailHelper {
 			if ( ! empty( $plugin['class'] ) ) {
 				$detected = class_exists( $callback, false );
 			} else {
-				$detected = \function_exists( $callback );
+				$detected = function_exists( $callback );
 			}
 
 			if ( $detected ) {
