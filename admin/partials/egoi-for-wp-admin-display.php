@@ -23,7 +23,16 @@ $page = array(
 
 			update_option('egoi_api_key', $_POST['egoi_api_key']);
 
-			update_option('egoi_client', $egoi->getClient($_POST['egoi_api_key']['api_key']));
+            update_option('egoi_client', $egoi->getClient($_POST['egoi_api_key']['api_key']));
+            
+            $transactionalEmailOptions = array(
+                'from' => '', 
+                'fromId' => 0,
+                'fromname' => '', 
+                'check_transactional_email' => 0,
+                'mailer' => 'default'
+            );
+            update_option('egoi_transactional_email', $transactionalEmailOptions );
 
             echo get_notification(__('Success', 'egoi-for-wp'), __('API Key updated!', 'egoi-for-wp'));
 

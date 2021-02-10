@@ -381,7 +381,27 @@ class Egoi_For_Wp {
 		$this->getClientAPI();
 		$this->syncronizeEgoi($_POST);
 
-		$this->setClient();
+        $this->setClient();
+        
+        $this->setTransactionEmailOption();
+
+    }
+    
+    /**
+	 * Set Transactiona Email option
+	 * 
+	 */
+	public function setTransactionEmailOption() {
+		
+		$transactionalEmailOptions = array(
+            'from' => '', //Obter default from
+            'fromId' => 0,
+            'fromname' => '', //Obter default fromName
+            'check_transactional_email' => 0,
+			'mailer' => 'default'
+		);
+
+		add_option('egoi_transactional_email', $transactionalEmailOptions );
 
 	}
 
@@ -561,7 +581,16 @@ class Egoi_For_Wp {
         //Mapping Ajax
         $this->loader->add_action('wp_ajax_egoi_get_mapping_n_fields', $plugin_admin, 'egoi_get_mapping_n_fields');
 
+        //handle transactional email
+            $activate_mailer = get_option('egoi_transactional_email');
+			if($activate_mailer['check_transactional_email']){
+                $this->loader->add_filter('wp_mail_from', $plugin_admin,'egoi_mail_from');
+                $this->loader->add_filter('wp_mail_from_name', $plugin_admin, 'egoi_mail_from_name');
+                $this->loader->add_action('phpmailer_init',$plugin_admin, 'egoi_phpmailer_init' );
 
+                //Redifine PHPMailer
+                $this->loader->add_action( 'plugins_loaded',$plugin_admin,'replace_phpmailer' );
+            }
     }
 
 	/**
@@ -1793,5 +1822,4 @@ class Egoi_For_Wp {
 
         return $egoi_fields;
     }
-	
 }
