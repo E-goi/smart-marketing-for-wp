@@ -4,7 +4,7 @@ Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
 Tested up to: 5.5.1
-Stable tag: 3.6.11
+Stable tag: 3.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,9 @@ Está disponível neste plugin a instalação no seu site, de forma muito simple
 **Usa Woocommerce?**
 
 Então não deixe de activar o Track & Engage, um sistema para rastrear todo o comportamento dos clientes no seu e-commerce que pode aproveitar para realizar campanhas em tempo real! (ex: carrinho abandonado, retargeting, up selling e cross selling, etc)
+
+**Novidades**
+* E-goi Email Transacional (SMTP) -  Envio todos os emails do sei WordPress pelo E-goi
 
 **Funcionalidades:**
 * 100% Gratuito
@@ -66,6 +69,9 @@ It is available in this plugin to install on your website, very simply, a Web Pu
 So be sure to enable Track & Engage system to track all customer behavior in your e-commerce and then take the advantage of run real-time campaigns! (ex: abandoned cart, retargeting, up selling and cross selling, etc)
 
 100% adjustable forms subscription Plugin, Widget, Popup with multiple configurations, Contact Form 7, integrates with E-goi system: Newsletters, SMS and all kinds of automation for e-commerce and bloggers.
+
+**News**
+* E-goi E-mail Transactional (SMTP) -  Send all WordPress' e-mail with E-goi
 
 **What you get**
 * 100% Free
@@ -159,6 +165,10 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 3.7.1 =
+- E-goi SMTP and Transactional E-mail's
+- Track&Engage domain creation
 
 = 3.6.11 =
 - Error handle function change

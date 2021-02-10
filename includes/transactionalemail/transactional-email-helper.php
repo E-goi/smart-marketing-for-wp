@@ -185,7 +185,7 @@ class TransactionalEmailHelper {
     public function send_test_email($post){
 
         if(!filter_var($post['to'], FILTER_VALIDATE_EMAIL)) {
-            echo get_notification(__('Error!', 'egoi-for-wp'), __('Invalid email.', 'egoi-for-wp'));
+            echo get_notification(__('Error!', 'egoi-for-wp'), __('Invalid email.', 'egoi-for-wp'), 'error');
             return;
         }
 
@@ -195,7 +195,7 @@ class TransactionalEmailHelper {
         if($mailResult){
             echo get_notification(__('Success!', 'egoi-for-wp'), __('Email sent successfully', 'egoi-for-wp'));
         }else{
-            echo get_notification(__('Error!', 'egoi-for-wp'), __('Error on sending email.', 'egoi-for-wp'));
+            echo get_notification(__('Error!', 'egoi-for-wp'), __('Error on sending email.', 'egoi-for-wp'), 'error');
         }
 
     }
