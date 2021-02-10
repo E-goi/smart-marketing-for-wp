@@ -38,7 +38,7 @@ class Egoi_For_Wp_Admin {
 	const FORM_OPTION_7 = 'egoi_form_sync_7';
 	const FORM_OPTION_8 = 'egoi_form_sync_8';
 	const FORM_OPTION_9 = 'egoi_form_sync_9';
-	const FORM_OPTION_10 = 'egoi_form_sync_10';
+    const FORM_OPTION_10 = 'egoi_form_sync_10';
 
 	/**
 	 * Limit Subscribers
@@ -93,7 +93,10 @@ class Egoi_For_Wp_Admin {
 		if(isset($_GET['form'])){
 			$id = $_GET['form'];
 			$this->form_post = $this->load_options_forms($id);
-		}
+        }
+        
+        //options for transactional email
+        $this->load_transactional_email_options();
 
 		// register options
 		register_setting( Egoi_For_Wp_Admin::API_OPTION, Egoi_For_Wp_Admin::API_OPTION);
@@ -127,7 +130,7 @@ class Egoi_For_Wp_Admin {
 		// Map shortcode to WPBakery Page Builder
 		if ( function_exists( 'vc_lean_map' ) ) {
 			vc_lean_map( 'egoi_vc_shortcode', array( $this, 'egoi_vc_shortcode_map' ) );
-		}
+        }
 
 		// Add widget to main WP dashboard
         add_action( 'wp_dashboard_setup', array($this, 'smsnf_main_dashboard_widget') );
@@ -141,7 +144,15 @@ class Egoi_For_Wp_Admin {
 		$rmdata = $_POST['rmdata'];
 		if(isset($rmdata) && ($rmdata)){
 			$this->saveRMData($rmdata);
-		}
+        }
+
+        //admin notifications for transactional email errors
+        add_action( 'admin_notices', array($this, 'transactional_email_notice') );
+        add_action( 'admin_init', array($this, 'transactional_email_notice_dismissed') );
+
+        //detect conflicts with e-goi email transactional
+        $this->detect_conflicts();
+
 	}
 
 	public function smsnf_main_dashboard_widget() {
@@ -322,6 +333,8 @@ class Egoi_For_Wp_Admin {
 
             add_submenu_page($this->plugin_name, __('RSS Feed', 'egoi-for-wp'), __('RSS Feed', 'egoi-for-wp'), $capability, 'egoi-4-wp-rssfeed', array($this, 'display_plugin_rssfeed'));
 
+            add_submenu_page($this->plugin_name, __('Transactional Email', 'egoi-for-wp'), __('Transactional Email', 'egoi-for-wp'), $capability, 'egoi-4-wp-transactional-email', array($this, 'display_plugin_transactional_email'));
+
 		}
 
         add_submenu_page($this->plugin_name, __('Account', 'egoi-for-wp'), __('Account', 'egoi-for-wp'), $capability, 'egoi-4-wp-account', array($this, 'display_plugin_setup_page'));
@@ -447,6 +460,16 @@ class Egoi_For_Wp_Admin {
             wp_die('You do not have sufficient permissions to access this page.');
         } else {
             include_once( 'partials/egoi-for-wp-admin-rssfeed.php' );
+        }
+
+    }
+
+    public function display_plugin_transactional_email() {
+
+        if (!current_user_can('manage_options')) {
+            wp_die('You do not have sufficient permissions to access this page.');
+        } else {
+            include_once( 'partials/egoi-for-wp-admin-transactional-email.php' );
         }
 
     }
@@ -588,8 +611,27 @@ class Egoi_For_Wp_Admin {
 			$form_post = array_merge($form_defaults, $form_post);
 			return (array) apply_filters( 'egoi_form_sync', $form_post );
 		}
-	}
+    }
 
+    private function load_transactional_email_options(){
+
+        if(!get_option('transactional_email_option')){
+            static $option = array(
+                'sent' => 0,
+            );
+            add_option('transactional_email_option', $option);
+        }
+
+        if(!get_option('transactional_email_error_option')){
+            static $option_error = array(
+                'active' => 0,
+                'detail' => '',
+            );
+            add_option('transactional_email_error_option', $option_error);
+        }
+
+        
+    }
 	/*
 	* -- HOOKS ---
 	*/
@@ -913,7 +955,21 @@ class Egoi_For_Wp_Admin {
 			}
 
 		}
-	}
+    }
+    
+    public function detect_conflicts(){
+        $transactionalEmailOption = get_option('egoi_transactional_email');
+        
+        if($transactionalEmailOption['check_transactional_email']){
+            require_once(plugin_dir_path( __FILE__ ) . '../includes/transactionalemail/transactional-email-helper.php');
+            $conflits = new TransactionalEmailHelper();
+
+            if($conflits->is_conflict_detected()){
+                $conflits->notify_conflict();
+            }
+        }
+
+    }
 
 	/**
 	 * Check if form is available for newsletter.
@@ -2496,6 +2552,7 @@ class Egoi_For_Wp_Admin {
         $output['notifications'] = $this->smsnf_show_notifications($customer);
         $email_limit = $customer->PLAN_EMAIL_LIMIT != 0 ? $customer->PLAN_EMAIL_LIMIT : __('Unlimited', 'egoi-for-wp');
         $sms_limit = $customer->PLAN_SMS_LIMIT != 0 ? $customer->PLAN_SMS_LIMIT : __('Unlimited', 'egoi-for-wp');
+        $transactionalEmailOption = get_option('transactional_email_option');
 
         if ($destination == 'wp-dashboard') {
 			$table_class = 'table smsnf-wpdash--table';
@@ -2560,6 +2617,10 @@ class Egoi_For_Wp_Admin {
                     <tr>
                         <td>SMS</td>
                         <td><span class="">'.$customer->PLAN_SMS_SENT.'</span></td>
+                    </tr>
+                    <tr>
+                        <td>'.__('Transactional Email', 'egoi-for-wp').'</td>
+                        <td><span class="">'.$transactionalEmailOption['sent'].'</span></td>
                     </tr>
         ';
 
@@ -2701,5 +2762,109 @@ class Egoi_For_Wp_Admin {
         ]);
 
     }
+
+    ###E-GOI Transactional Email###
+
+    /**
+     * Change some mailer properties
+     */
+    function egoi_phpmailer_init( $phpmailer ) {
+    }
+
+    /**
+     * Change the email used as FROM for wordpress emails
+     */
+    public function egoi_mail_from($email){
+        $transactionalEmailOption = get_option('egoi_transactional_email');
+
+        //ADICIONAR UMA VALIDAÇÃO
+
+        return $transactionalEmailOption['from'];
+    }
+
+    /**
+     * Change the name of email sender for wordpress emails
+     */
+    public function egoi_mail_from_name($name){
+        $transactionalEmailOption = get_option('egoi_transactional_email');
+
+        //ADICIONAR UMA VALIDAÇÃO
+        
+        return $transactionalEmailOption['fromname'];
+    }
+
+    /**
+	 * Init the \PHPMailer replacement.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return MailCatcherInterface
+	 */
+	public function replace_phpmailer() {
+
+        global $phpmailer;
+        
+		return $this->replace_w_fake_phpmailer( $phpmailer );
+    }
+    
+    /**
+	 * Overwrite default PhpMailer with our MailCatcher.
+	 *
+	 *
+	 * @param null $obj PhpMailer object to override with own implementation.
+	 *
+	 * @return MailCatcherInterface
+	 */
+	protected function replace_w_fake_phpmailer( &$obj = null ) {
+
+		$obj = $this->generate_mail_catcher( true );
+
+		return $obj;
+    }
+    
+    /**
+	 * Generate the correct MailCatcher object based on the PHPMailer version
+	 *
+	 *
+	 * @param bool $exceptions True if external exceptions should be thrown.
+	 *
+	 * @return MailCatcherInterface
+	 */
+	public function generate_mail_catcher( $exceptions = null ) {
+
+            require_once(plugin_dir_path( __FILE__ ) . '../vendor/autoload.php');
+            require_once(plugin_dir_path( __FILE__ ) . '../includes/transactionalemail/mail-catcher.php');
+			$mail_catcher = new MailCatcher();
+    
+
+		return $mail_catcher;
+    }
+
+    function transactional_email_notice() {
+        $user_id = get_current_user_id();
+        $option = get_option('transactional_email_error_option');
+        if ( $option['active']){
+            ?>
+            <div class="error notice">
+                <p><?php echo sprintf( 
+				esc_html__( 'Error sending an email with E-goi Transactional Email:  %s  ', 'egoi-for-wp'),
+				$option['detail']);
+                 ?><a href="?transactional-email-dismissed">Dismiss</a></p>
+            </div>
+		<?php
+        }
+    }
+    
+    function transactional_email_notice_dismissed() {
+        $user_id = get_current_user_id();
+        $option = get_option('transactional_email_error_option');
+
+        if ( isset( $_GET['transactional-email-dismissed'] ) ){
+            $option['active'] = 0;
+            $option['detail'] = '';
+            update_option('transactional_email_error_option', $option);
+        } 
+    }
+    
 
 }
