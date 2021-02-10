@@ -218,7 +218,7 @@ class TransactionalEmailHelper {
     public function is_conflict_detected(){
         foreach ( self::$plugins as $callback => $plugin ) {
 			if ( ! empty( $plugin['class'] ) ) {
-				$detected = \class_exists( $callback, false );
+				$detected = class_exists( $callback, false );
 			} else {
 				$detected = \function_exists( $callback );
 			}
