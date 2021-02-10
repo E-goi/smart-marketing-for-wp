@@ -161,7 +161,7 @@ class TransactionalEmailHelper {
                 }
             }
 
-            $response =  'E-goi Transactional Email Configuration.';   
+            $response =  __('E-goi Transactional Email Configuration.', 'egoi-for-wp');
         }else{
             //If e-goi disable
 
