@@ -170,7 +170,7 @@ class TransactionalEmailHelper {
             $transactionalEmailOptions['mailer'] = 'default';
             $transactionalEmailOptions['check_transactional_email'] = 0;
 
-            $response =  'Default Email Configuration.'; 
+            $response =  __('Default Email Configuration.', 'egoi-for-wp');
         }
         
         update_option('egoi_transactional_email', $transactionalEmailOptions);
