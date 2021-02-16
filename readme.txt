@@ -21,7 +21,7 @@ Está disponível neste plugin a instalação no seu site, de forma muito simple
 Então não deixe de activar o Track & Engage, um sistema para rastrear todo o comportamento dos clientes no seu e-commerce que pode aproveitar para realizar campanhas em tempo real! (ex: carrinho abandonado, retargeting, up selling e cross selling, etc)
 
 **Novidades**
-* E-goi Email Transacional (SMTP) -  Envio todos os emails do sei WordPress pelo E-goi
+* E-goi Email Transacional (SMTP) -  Envio todos os emails do seu WordPress pelo E-goi
 
 **Funcionalidades:**
 * 100% Gratuito
