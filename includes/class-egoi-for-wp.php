@@ -591,6 +591,12 @@ class Egoi_For_Wp {
                 //Redifine PHPMailer
                 $this->loader->add_action( 'plugins_loaded',$plugin_admin,'replace_phpmailer' );
             }
+        //Campaign widget metaboxes
+        $this->loader->add_action('add_meta_boxes', $plugin_admin, 'email_campaign_widget_meta_box_admin');
+
+        //Campaign widget on save and on status transition
+        $this->loader->add_action('save_post', $plugin_admin, 'on_save_post_admin', 10, 3);
+        $this->loader->add_action('transition_post_status', $plugin_admin, 'on_transition_post_status_admin', 10, 3);
     }
 
 	/**

@@ -3,6 +3,7 @@ require_once(ABSPATH . '/wp-admin/includes/plugin.php');
 require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.php');
 require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-products-bo.php');
 require_once(plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-validators.php');
+require_once(plugin_dir_path( __FILE__ ) . '../includes/campaignwidget/campaign-widget.php');
 
 /**
  * The admin-specific functionality of the plugin.
@@ -69,7 +70,15 @@ class Egoi_For_Wp_Admin {
 	 *
 	 * @var string
 	 */
-	protected $port;
+    protected $port;
+    
+    /**
+	 *
+	 *
+	 * @access   protected
+	 * @var      CampaignWidget
+	 */
+	protected $campaignWidget;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -94,6 +103,9 @@ class Egoi_For_Wp_Admin {
 			$id = $_GET['form'];
 			$this->form_post = $this->load_options_forms($id);
         }
+
+        //Initialize the campaign widget.
+        $this->campaignWidget = new CampaignWidget();
         
         //options for transactional email
         $this->load_transactional_email_options();
@@ -147,8 +159,11 @@ class Egoi_For_Wp_Admin {
         }
 
         //admin notifications for transactional email errors
-        add_action( 'admin_notices', array($this, 'transactional_email_notice') );
-        add_action( 'admin_init', array($this, 'transactional_email_notice_dismissed') );
+        add_action('admin_notices', array($this, 'transactional_email_notice'));
+        add_action('admin_init', array($this, 'transactional_email_notice_dismissed'));
+
+        //admin notifications campaign widgets
+        add_action('admin_notices', array($this, 'campaign_widget_notice'));
 
         //detect conflicts with e-goi email transactional
         $this->detect_conflicts();
@@ -2854,6 +2869,24 @@ class Egoi_For_Wp_Admin {
 		<?php
         }
     }
+
+    function campaign_widget_notice(){
+        $allowed_html = [
+            'div' => [
+                'class' => [],
+            ],
+            'strong' => [],
+            'a' => [],
+            'p' => [],
+            'em' => [],
+        ];
+
+        $egoi_transient_error = get_transient('egoi_campaigns_error');
+        if (!empty($egoi_transient_error)) {
+            delete_transient('egoi_campaigns_error');
+            echo wp_kses($egoi_transient_error, $allowed_html);
+        }
+    }
     
     function transactional_email_notice_dismissed() {
         $user_id = get_current_user_id();
@@ -2865,6 +2898,27 @@ class Egoi_For_Wp_Admin {
             update_option('transactional_email_error_option', $option);
         } 
     }
-    
+
+    /**
+    * Set the widget metabox on post pages
+    */
+    public function email_campaign_widget_meta_box_admin(){
+        $this->campaignWidget->email_campaign_widget_meta_box();
+    }
+
+     /**
+     * Save the meta when the post is saved.
+     *
+     */
+    public function on_save_post_admin($post_id, $post, $updated){
+        $this->campaignWidget->on_save_post($post_id, $post, $updated);
+    }
+
+    /**
+     * When there are post status modifications. ex: when a post is updated or published.
+     */
+    public function on_transition_post_status_admin($new_status, $old_status, $post){
+        $this->campaignWidget->on_transition_post_status($new_status, $old_status, $post);
+    }
 
 }
