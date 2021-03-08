@@ -166,6 +166,10 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 3.7.2 =
+- Email and Webpush campaign with post publish
+- Tested with wordpress 5.7.0
+
 = 3.7.1 =
 - E-goi SMTP and Transactional E-mail's
 - Track&Engage domain creation
