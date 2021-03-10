@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-23 15:34+0000\n"
-"PO-Revision-Date: 2021-03-08 11:54+0000\n"
+"PO-Revision-Date: 2021-03-10 16:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es-ES\n"
@@ -22,7 +22,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: es_ES\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.5.0; wp-5.6.2\n"
+"X-Loco-Version: 2.5.1; wp-5.6.2\n"
 "X-Loco-Parser: loco_parse_po"
 
 #: admin/partials/webpush/home.php:96
@@ -36,16 +36,6 @@ msgid ""
 msgstr ""
 " (<a href=\"https://helpdesk.e-goi.com/270376-Contratar-plan-5001-gratis\" "
 "target=\"_blank\">saber más</a>)"
-
-#: includes/campaignwidget/campaign-widget.php:128 
-#: includes/campaignwidget/campaign-widget.php:208
-msgid " publish"
-msgstr "publicar"
-
-#: includes/campaignwidget/campaign-widget.php:126 
-#: includes/campaignwidget/campaign-widget.php:206
-msgid " update"
-msgstr "actualizar"
 
 #: admin/partials/egoi-for-wp-admin-subscribers.php:181
 msgid "\"Subscribe to Newsletter\" default"
@@ -69,7 +59,7 @@ msgstr "Una forma válida para desactivar por completo la barra."
 msgid "About Transactional Email"
 msgstr "Acerca del E-goi Transactional Email"
 
-#: admin/class-egoi-for-wp-admin.php:354 
+#: admin/class-egoi-for-wp-admin.php:355 
 #: admin/partials/egoi-for-wp-admin-display.php:155
 msgid "Account"
 msgstr "Cuenta"
@@ -142,7 +132,7 @@ msgstr "AÑADIR APP > WEB PUSH"
 msgid "Add new tag"
 msgstr "Crear nueva tag"
 
-#: admin/class-egoi-for-wp-admin.php:2288
+#: admin/class-egoi-for-wp-admin.php:2289
 msgid "Additional Information"
 msgstr "Información Adicional"
 
@@ -224,7 +214,7 @@ msgstr ""
 "importarse manualmente haciendo clic en el botón \"importar\" en la página "
 "del Catálogo."
 
-#: admin/class-egoi-for-wp-admin.php:2130
+#: admin/class-egoi-for-wp-admin.php:2131
 msgid "Api error, try again later."
 msgstr "Error de API. Vuelve a intentarlo más tarde."
 
@@ -356,7 +346,7 @@ msgstr "Mejor<br>día"
 msgid "Biographical Info"
 msgstr "Información Biográfica"
 
-#: includes/class-egoi-for-wp.php:1839
+#: includes/class-egoi-for-wp.php:1841
 msgid "Birth Date"
 msgstr "Fecha de nacimiento"
 
@@ -446,18 +436,18 @@ msgstr ""
 msgid "Campaign sent successfully!"
 msgstr "¡Campaña enviada con éxito!"
 
-#: includes/campaignwidget/campaign-widget.php:149 
-#: includes/campaignwidget/campaign-widget.php:228
+#: includes/campaignwidget/campaign-widget.php:148 
+#: includes/campaignwidget/campaign-widget.php:227
 msgid "Campaign Subject"
 msgstr "Asunto de la campaña"
 
-#: includes/campaignwidget/campaign-widget.php:142 
-#: includes/campaignwidget/campaign-widget.php:221 
-#: includes/campaignwidget/campaign-widget.php:224
+#: includes/campaignwidget/campaign-widget.php:141 
+#: includes/campaignwidget/campaign-widget.php:220 
+#: includes/campaignwidget/campaign-widget.php:223
 msgid "Campaign Title"
 msgstr "Título de la campaña"
 
-#: includes/campaignwidget/campaign-widget.php:145
+#: includes/campaignwidget/campaign-widget.php:144
 msgid "Campaign title"
 msgstr "Título de la campaña"
 
@@ -490,16 +480,16 @@ msgstr "No es posible localizar formularios del Contact Form 7"
 msgid "Cannot locate any forms from Gravity Forms"
 msgstr "No se puede encontrar ningún formulario de Gravity Forms."
 
-#: admin/class-egoi-for-wp-admin.php:336 
+#: admin/class-egoi-for-wp-admin.php:337 
 #: admin/partials/egoi-for-wp-admin-forms.php:55
 msgid "Capture Contacts"
 msgstr "Captura de Contactos"
 
-#: admin/class-egoi-for-wp-admin.php:2234
+#: admin/class-egoi-for-wp-admin.php:2235
 msgid "Catalog successfully created!"
 msgstr "Catálogo creado con éxito!"
 
-#: admin/class-egoi-for-wp-admin.php:2213
+#: admin/class-egoi-for-wp-admin.php:2214
 msgid "Catalog synchronized successfully."
 msgstr "Catálogo sincronizado correctamente."
 
@@ -698,7 +688,7 @@ msgstr "Integración del Contact Form 7"
 msgid "Contact Form Name"
 msgstr "Nombre del formulario de contacto"
 
-#: includes/campaignwidget/campaign-widget.php:160
+#: includes/campaignwidget/campaign-widget.php:159
 msgid "Contacts:"
 msgstr "Lista:"
 
@@ -784,7 +774,7 @@ msgstr "Crear RSS Feed +"
 msgid "Create Web Push"
 msgstr "Crear Web Push"
 
-#: includes/campaignwidget/campaign-widget.php:252
+#: includes/campaignwidget/campaign-widget.php:251
 msgid "Create Webpush here so you can send the Webpush Campaign."
 msgstr "Cree Web Push aquí para poder enviar la Campaña Web Push."
 
@@ -801,7 +791,7 @@ msgstr "Creado en"
 msgid "Currency"
 msgstr "Moneda"
 
-#: admin/class-egoi-for-wp-admin.php:2592
+#: admin/class-egoi-for-wp-admin.php:2593
 msgid "Current Balance"
 msgstr "Saldo actual"
 
@@ -817,11 +807,11 @@ msgstr "CSS personalizado"
 msgid "Customize"
 msgstr "Personalizar"
 
-#: includes/campaignwidget/campaign-widget.php:138
+#: includes/campaignwidget/campaign-widget.php:137
 msgid "Customize Email Campaign content"
 msgstr "Personalizar el contenido de la campaña de Email"
 
-#: includes/campaignwidget/campaign-widget.php:217
+#: includes/campaignwidget/campaign-widget.php:216
 msgid "Customize Webpush Campaign content"
 msgstr "Personalizar el contenido de la campaña de Web Push"
 
@@ -833,7 +823,7 @@ msgstr "Personalización del informe"
 msgid "Código da janela Pop-up"
 msgstr "Código Pop-up"
 
-#: admin/class-egoi-for-wp-admin.php:334 
+#: admin/class-egoi-for-wp-admin.php:335 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:31 
 #: admin/partials/egoi-for-wp-admin-header.php:6 
 #: admin/partials/egoi-for-wp-admin-header.php:15 
@@ -925,7 +915,7 @@ msgstr "No tiene listas en su cuenta!"
 msgid "Double-Optin"
 msgstr "Opción doble"
 
-#: admin/class-egoi-for-wp-admin.php:340 
+#: admin/class-egoi-for-wp-admin.php:341 
 #: admin/partials/egoi-for-wp-admin-ecommerce.php:49
 msgid "E-commerce"
 msgstr "E-commerce"
@@ -934,11 +924,11 @@ msgstr "E-commerce"
 msgid "E-goi"
 msgstr "E-goi"
 
-#: includes/campaignwidget/campaign-widget.php:53
+#: includes/campaignwidget/campaign-widget.php:50
 msgid "E-goi Campaign"
 msgstr "Campaña e-goi"
 
-#: includes/campaignwidget/campaign-widget.php:71
+#: includes/campaignwidget/campaign-widget.php:68
 msgid "E-goi Email Campaign"
 msgstr "Campaña de Email E-goi"
 
@@ -1058,7 +1048,7 @@ msgstr "Lista de E-goi"
 msgid "Egoi paid plan »"
 msgstr "Plan de pago de E-goi »"
 
-#: includes/class-egoi-for-wp.php:1837 
+#: includes/class-egoi-for-wp.php:1839 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:170 
 #: admin/partials/egoi-for-wp-admin-display.php:324 
 #: admin/partials/egoi-for-wp-admin-display.php:328 
@@ -1070,7 +1060,7 @@ msgstr "Plan de pago de E-goi »"
 msgid "Email"
 msgstr "Email"
 
-#: includes/campaignwidget/campaign-widget.php:117
+#: includes/campaignwidget/campaign-widget.php:116
 msgid "Email Campaign"
 msgstr "Campaña de Email"
 
@@ -1236,7 +1226,7 @@ msgstr "¡Error al crear el sitio Web Push!"
 msgid "Error on sending email."
 msgstr "Error al enviar correo electrónico."
 
-#: admin/class-egoi-for-wp-admin.php:2864
+#: admin/class-egoi-for-wp-admin.php:2865
 #, php-format
 msgid "Error sending an email with E-goi Transactional Email:  %s  "
 msgstr "Error al enviar correo electrónico: %s  "
@@ -1248,17 +1238,17 @@ msgstr "Error al enviar correo electrónico: %s  "
 msgid "Error!"
 msgstr "¡Error!"
 
-#: admin/class-egoi-for-wp-admin.php:1201 
+#: admin/class-egoi-for-wp-admin.php:1202 
 #: public/class-egoi-for-wp-public.php:844
 msgid "ERROR: e-mail address is invalid"
 msgstr "ERROR: el correo electrónico no es válido"
 
-#: admin/class-egoi-for-wp-admin.php:1203 
+#: admin/class-egoi-for-wp-admin.php:1204 
 #: public/class-egoi-for-wp-public.php:846
 msgid "ERROR: invalid data submitted"
 msgstr "ERROR: datos no válidos enviados"
 
-#: admin/class-egoi-for-wp-admin.php:1199 
+#: admin/class-egoi-for-wp-admin.php:1200 
 #: public/class-egoi-for-wp-public.php:842
 msgid "ERROR: no data to insert"
 msgstr "ERROR: no hay datos para insertar"
@@ -1278,7 +1268,7 @@ msgstr "Ejemplo: %s"
 msgid "Exclude"
 msgstr "Excluir"
 
-#: admin/class-egoi-for-wp-admin.php:2599
+#: admin/class-egoi-for-wp-admin.php:2600
 msgid "Expires in"
 msgstr "Expira en"
 
@@ -1294,7 +1284,7 @@ msgstr "Título del campo"
 msgid "Fields"
 msgstr "Campos"
 
-#: admin/class-egoi-for-wp-admin.php:2226
+#: admin/class-egoi-for-wp-admin.php:2227
 msgid "Fields can't be empty."
 msgstr "Los campos no pueden estar vacíos."
 
@@ -1307,7 +1297,7 @@ msgstr "Mapeo de campos"
 msgid "First Name"
 msgstr "Primero Nombre"
 
-#: includes/class-egoi-for-wp.php:1834
+#: includes/class-egoi-for-wp.php:1836
 msgid "First name"
 msgstr "Primer nombre"
 
@@ -1376,7 +1366,7 @@ msgstr ""
 msgid "Form Width"
 msgstr "Ancho de formulario"
 
-#: admin/class-egoi-for-wp-admin.php:2768
+#: admin/class-egoi-for-wp-admin.php:2769
 msgid "FormID was not found"
 msgstr "FormID no se encontró"
 
@@ -1429,7 +1419,7 @@ msgstr "Integración Gravity Forms"
 msgid "GTIN"
 msgstr "GTIN"
 
-#: admin/class-egoi-for-wp-admin.php:1196 
+#: admin/class-egoi-for-wp-admin.php:1197 
 #: public/class-egoi-for-wp-public.php:839
 msgid "has been updated!"
 msgstr "ha sido actualizado"
@@ -1488,7 +1478,7 @@ msgstr ""
 "\n"
 "Código HTML de tu formulario"
 
-#: admin/class-egoi-for-wp-admin.php:1888
+#: admin/class-egoi-for-wp-admin.php:1889
 msgid "https://blog.e-goi.com/feed/egoi"
 msgstr "https://blog.e-goi.com/feed/egoi"
 
@@ -1524,7 +1514,7 @@ msgstr ""
 msgid "I agree to"
 msgstr "Estoy de acuerdo con"
 
-#: admin/class-egoi-for-wp-admin.php:999
+#: admin/class-egoi-for-wp-admin.php:1000
 msgid "I want to receive newsletter"
 msgstr "Quiero recibir newsletter"
 
@@ -1532,7 +1522,7 @@ msgstr "Quiero recibir newsletter"
 msgid "ID"
 msgstr "ID"
 
-#: admin/class-egoi-for-wp-admin.php:2761
+#: admin/class-egoi-for-wp-admin.php:2762
 msgid "ID is required"
 msgstr "Se requiere identificación"
 
@@ -1602,7 +1592,7 @@ msgstr "Ancho de entrada"
 msgid "Insert the Web Push code here"
 msgstr "Introduzca aquí el código Web Push"
 
-#: admin/class-egoi-for-wp-admin.php:2658
+#: admin/class-egoi-for-wp-admin.php:2659
 msgid "Instalar Plugin"
 msgstr "Complemento instalar"
 
@@ -1610,7 +1600,7 @@ msgstr "Complemento instalar"
 msgid "Integrate"
 msgstr "Integre el"
 
-#: admin/class-egoi-for-wp-admin.php:344 
+#: admin/class-egoi-for-wp-admin.php:345 
 #: admin/partials/egoi-for-wp-admin-integrations.php:70
 msgid "Integrations"
 msgstr "Integraciones"
@@ -1619,7 +1609,7 @@ msgstr "Integraciones"
 msgid "Integrations Settings Updated!"
 msgstr "¡Ajustes actualizan de las integraciones!"
 
-#: admin/class-egoi-for-wp-admin.php:2410
+#: admin/class-egoi-for-wp-admin.php:2411
 msgid "Internal Name"
 msgstr "Nombre interno"
 
@@ -1668,7 +1658,7 @@ msgstr "Base de Conocimiento"
 msgid "Label"
 msgstr "Etiqueta"
 
-#: includes/class-egoi-for-wp.php:1840 
+#: includes/class-egoi-for-wp.php:1842 
 #: admin/partials/egoi-for-wp-admin-display.php:417 
 #: admin/partials/egoi-for-wp-admin-lists.php:25 
 #: admin/partials/egoi-for-wp-admin-lists.php:89 
@@ -1698,7 +1688,7 @@ msgstr "Grande"
 msgid "Last Name"
 msgstr "Apellido"
 
-#: includes/class-egoi-for-wp.php:1835
+#: includes/class-egoi-for-wp.php:1837
 msgid "Last name"
 msgstr "Apellido"
 
@@ -1851,12 +1841,12 @@ msgstr "Mensaje"
 msgid "Messages"
 msgstr "Mensajes"
 
-#: admin/class-egoi-for-wp-admin.php:2123
+#: admin/class-egoi-for-wp-admin.php:2124
 msgid "Missing Webpush Instalation!"
 msgstr "Falta la instalación Web Push."
 
 #: includes/class-egoi-for-wp-widget.php:407 
-#: includes/class-egoi-for-wp.php:1836 
+#: includes/class-egoi-for-wp.php:1838 
 #: admin/partials/egoi-for-wp-admin-simple-forms.php:287 
 #: admin/partials/egoi-for-wp-admin-simple-forms.php:493 
 #: admin/partials/capture/popup.php:141 
@@ -1901,7 +1891,7 @@ msgstr "Nuevo catálogo"
 msgid "New list created successfully!"
 msgstr "Nueva lista criada con éxito!"
 
-#: admin/class-egoi-for-wp-admin.php:340 
+#: admin/class-egoi-for-wp-admin.php:341 
 #: admin/partials/egoi-for-wp-admin-forms.php:65
 msgid "New!"
 msgstr "¡Nuevo!"
@@ -2097,11 +2087,11 @@ msgstr "Elige una imagen de tu galería"
 msgid "Placeholder"
 msgstr "Marcador de posición"
 
-#: admin/class-egoi-for-wp-admin.php:2588
+#: admin/class-egoi-for-wp-admin.php:2589
 msgid "Plan"
 msgstr "Plan"
 
-#: admin/class-egoi-for-wp-admin.php:314
+#: admin/class-egoi-for-wp-admin.php:315
 #, php-format
 msgid ""
 "Please rate %sSmart Marketing SMS and Newsletters Forms%s %s on %sWordPress."
@@ -2248,7 +2238,7 @@ msgstr "Lado derecho"
 msgid "Row"
 msgstr "Fila"
 
-#: admin/class-egoi-for-wp-admin.php:348 
+#: admin/class-egoi-for-wp-admin.php:349 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:37 
 #: admin/partials/rssfeed/campaign-rss.php:28 
 #: admin/partials/rssfeed/campaign-rss.php:152 
@@ -2560,11 +2550,19 @@ msgstr "Enviar campaña>"
 msgid "Send Email"
 msgstr "Enviar correo electrónico"
 
+#: includes/campaignwidget/campaign-widget.php:127
+msgid "Send Email Campaign on publish"
+msgstr "Enviar campaña de email al publicar"
+
+#: includes/campaignwidget/campaign-widget.php:125
+msgid "Send Email Campaign on update"
+msgstr "Enviar campaña por email al actualizar"
+
 #: admin/partials/egoi-for-wp-admin-transactional-email.php:30
 msgid "Send Email Test"
 msgstr "Enviar prueba de correo electrónico"
 
-#: admin/class-egoi-for-wp-admin.php:2657
+#: admin/class-egoi-for-wp-admin.php:2658
 msgid ""
 "Send SMS notifications to your customers and administrators for each change "
 "to the order status on your WooCommerce"
@@ -2576,11 +2574,19 @@ msgstr ""
 msgid "Send To"
 msgstr "Enviar a"
 
+#: includes/campaignwidget/campaign-widget.php:207
+msgid "Send Webpush Campaign on publish"
+msgstr "Enviar campaña de Web Push al publicar"
+
+#: includes/campaignwidget/campaign-widget.php:205
+msgid "Send Webpush Campaign on update"
+msgstr "Enviar campaña por Web Push al actualizar"
+
 #: admin/partials/rssfeed/campaign-rss.php:54
 msgid "Sender"
 msgstr "Remitente"
 
-#: includes/campaignwidget/campaign-widget.php:175
+#: includes/campaignwidget/campaign-widget.php:174
 msgid "Sender:"
 msgstr "Remitente:"
 
@@ -2663,11 +2669,11 @@ msgstr "Smart Marketing SMS and Newsletters Forms"
 msgid "Snippet"
 msgstr "Snippet"
 
-#: admin/class-egoi-for-wp-admin.php:2236
+#: admin/class-egoi-for-wp-admin.php:2237
 msgid "Something went wrong creating the catalog!"
 msgstr "¡Se produjo un error al crear el catálogo!"
 
-#: admin/class-egoi-for-wp-admin.php:2247
+#: admin/class-egoi-for-wp-admin.php:2248
 msgid "Something went wrong fetching countries, please try again later."
 msgstr ""
 "Se produjo un error al obtener los países. Vuelve a intentarlo más tarde."
@@ -2680,7 +2686,7 @@ msgstr ""
 "Se produjo un error al recuperar la configuración de remarketing. Vuelva a "
 "intentarlo más tarde."
 
-#: admin/class-egoi-for-wp-admin.php:2210
+#: admin/class-egoi-for-wp-admin.php:2211
 msgid "Something went wrong with your request."
 msgstr "Algo salió mal con tu solicitud."
 
@@ -2708,7 +2714,7 @@ msgstr "Estado"
 msgid "Style"
 msgstr "Estilo"
 
-#: admin/class-egoi-for-wp-admin.php:2406 
+#: admin/class-egoi-for-wp-admin.php:2407 
 #: admin/partials/rssfeed/campaign-rss.php:65 
 #: admin/partials/transactionalemail/send-email-test.php:45
 msgid "Subject"
@@ -2734,7 +2740,7 @@ msgstr "Subscribir"
 msgid "Subscribe Button"
 msgstr "Botón de Suscripción"
 
-#: includes/class-egoi-for-wp.php:1734
+#: includes/class-egoi-for-wp.php:1736
 msgid "Subscribe to newsletter"
 msgstr ""
 "Suscríbase al boletín\n"
@@ -2752,7 +2758,7 @@ msgstr "El suscriptor ya existe"
 msgid "Subscriber Bar"
 msgstr "Barra de Suscriptores"
 
-#: admin/class-egoi-for-wp-admin.php:1194 
+#: admin/class-egoi-for-wp-admin.php:1195 
 #: public/class-egoi-for-wp-public.php:837
 msgid "Subscriber data from"
 msgstr "Datos del suscriptor de"
@@ -2793,7 +2799,7 @@ msgstr "Éxito"
 msgid "Successfully subscribed"
 msgstr "Suscrito con éxito"
 
-#: admin/class-egoi-for-wp-admin.php:338 
+#: admin/class-egoi-for-wp-admin.php:339 
 #: admin/partials/egoi-for-wp-admin-subscribers.php:122 
 #: admin/partials/egoi-for-wp-admin-trackengage.php:78
 msgid "Sync Contacts"
@@ -2853,7 +2859,7 @@ msgstr "Tags para excluir"
 msgid "Target Page"
 msgstr "Página de destino"
 
-#: includes/class-egoi-for-wp.php:1838
+#: includes/class-egoi-for-wp.php:1840
 msgid "Telephone"
 msgstr "Teléfono"
 
@@ -2949,8 +2955,8 @@ msgstr ""
 "El plug-in está escuchando a los cambios en sus usuarios y mantendrá "
 "automáticamente sus usuarios WP con la lista E-goi seleccionado"
 
-#: includes/campaignwidget/campaign-widget.php:152 
-#: includes/campaignwidget/campaign-widget.php:231
+#: includes/campaignwidget/campaign-widget.php:151 
+#: includes/campaignwidget/campaign-widget.php:230
 msgid "The Post's Current Title"
 msgstr "Título actual de la publicación"
 
@@ -3104,8 +3110,8 @@ msgstr "Registros<br>Hoy"
 msgid "Top"
 msgstr "Parte superior"
 
-#: admin/class-egoi-for-wp-admin.php:2418 
-#: admin/class-egoi-for-wp-admin.php:2624
+#: admin/class-egoi-for-wp-admin.php:2419 
+#: admin/class-egoi-for-wp-admin.php:2625
 msgid "Total sent"
 msgstr "Total enviado"
 
@@ -3121,7 +3127,7 @@ msgstr ""
 msgid "Total<br>Subscribers"
 msgstr "Total<br>Suscriptores"
 
-#: admin/class-egoi-for-wp-admin.php:342
+#: admin/class-egoi-for-wp-admin.php:343
 msgid "Track & Engage"
 msgstr "Track & Engage"
 
@@ -3151,13 +3157,13 @@ msgstr ""
 msgid "Track&Engage"
 msgstr "Track&Engage"
 
-#: admin/class-egoi-for-wp-admin.php:350 
-#: admin/class-egoi-for-wp-admin.php:2636 
+#: admin/class-egoi-for-wp-admin.php:351 
+#: admin/class-egoi-for-wp-admin.php:2637 
 #: admin/partials/egoi-for-wp-admin-transactional-email.php:24
 msgid "Transactional Email"
 msgstr "Transactional Email"
 
-#: admin/class-egoi-for-wp-admin.php:2665
+#: admin/class-egoi-for-wp-admin.php:2666
 msgid "Transactional SMS"
 msgstr "SMS transaccionales"
 
@@ -3174,8 +3180,8 @@ msgstr "Tipo"
 msgid "Type your title here"
 msgstr "Escriba su título aquí"
 
-#: admin/class-egoi-for-wp-admin.php:2567 
-#: admin/class-egoi-for-wp-admin.php:2568
+#: admin/class-egoi-for-wp-admin.php:2568 
+#: admin/class-egoi-for-wp-admin.php:2569
 msgid "Unlimited"
 msgstr "Ilimitado"
 
@@ -3232,7 +3238,7 @@ msgstr "Vertical"
 msgid "Visitors opting in to your notifications will be kept in..."
 msgstr "Los visitantes que opten por sus notificaciones se mantendrán en ..."
 
-#: admin/class-egoi-for-wp-admin.php:2421
+#: admin/class-egoi-for-wp-admin.php:2422
 msgid "Waiting for results..."
 msgstr "Esperando resultados ..."
 
@@ -3240,7 +3246,7 @@ msgstr "Esperando resultados ..."
 msgid "Want to use E-goi's Web Push without limits?"
 msgstr "¿Desea utilizar Web Push de E-goi sin límites?"
 
-#: admin/class-egoi-for-wp-admin.php:1192 
+#: admin/class-egoi-for-wp-admin.php:1193 
 #: public/class-egoi-for-wp-public.php:835
 msgid "was successfully registered!"
 msgstr "fue registrado exitosamente"
@@ -3255,7 +3261,7 @@ msgid "We have some resources available to help you in the right direction."
 msgstr ""
 "Tenemos algunos recursos disponibles para ayudar en la dirección correcta."
 
-#: admin/class-egoi-for-wp-admin.php:346 
+#: admin/class-egoi-for-wp-admin.php:347 
 #: admin/partials/egoi-for-wp-admin-webpush.php:142
 msgid "Web Push"
 msgstr "Web Push"
@@ -3280,7 +3286,7 @@ msgstr "Título de Web Push"
 msgid "Webpush"
 msgstr "Webpush"
 
-#: includes/campaignwidget/campaign-widget.php:194
+#: includes/campaignwidget/campaign-widget.php:193
 msgid "WebPush Campaign"
 msgstr "Campaña Web Push"
 
@@ -3434,7 +3440,7 @@ msgstr "Su cuenta"
 msgid "Your Advanced Forms list"
 msgstr "Su lista de Formularios Avanzados"
 
-#: admin/class-egoi-for-wp-admin.php:2611
+#: admin/class-egoi-for-wp-admin.php:2612
 msgid "Your current plan includes"
 msgstr "Tu plan actual incluye"
 

@@ -122,9 +122,9 @@ class CampaignWidget {
                     } ?>></input>
 
                 <?php if ($post->post_status === 'publish') {
-                    echo esc_attr_e('Send Email Campaign on '.$post_type.' update', 'egoi-for-wp');            
+                    echo _e('Send Email Campaign on update', 'egoi-for-wp');            
                 } else {
-                    echo esc_attr_e('Send Email Campaign on '.$post_type.' publish', 'egoi-for-wp');
+                    echo _e('Send Email Campaign on publish', 'egoi-for-wp');
                 } ?>
 
                 </label>
@@ -156,7 +156,7 @@ class CampaignWidget {
 
             <div id="email_campaign_widget_configuration">
                 <div>
-                    <label><?php echo esc_attr_e('Contacts:', 'egoi-for-wp');?><br/>
+                    <label><?php echo _e('Contacts:', 'egoi-for-wp');?><br/>
                     <select id="email_campaign_widget_list_contacts" name="email_campaign_widget_list_contacts">
                     <?php
                         foreach($lists as $list) {
@@ -202,9 +202,9 @@ class CampaignWidget {
                         } ?>></input>
 
                         <?php if ($post->post_status === 'publish') {
-                        echo esc_attr_e('Send Webpush Campaign on '.$post_type.' update', 'egoi-for-wp');            
+                        echo _e('Send Webpush Campaign on update', 'egoi-for-wp');            
                         } else {
-                        echo esc_attr_e('Send Webpush Campaign on '.$post_type.' publish', 'egoi-for-wp');
+                        echo _e('Send Webpush Campaign on publish', 'egoi-for-wp');
 
                         } ?>
                     </label>
@@ -234,7 +234,7 @@ class CampaignWidget {
 
                     <div id="webpush_campaign_widget_configuration" style="padding-top:10px;">
                         <div>
-                            <label><?php echo esc_attr('Contacts: ');?>
+                            <label><?php echo _e('Contacts: ');?>
                                 <input type="text" size="16"  name="webpush_campaign_widget_contacts_info" id="webpush_campaign_widget_contacts_info" value="" placeholder="<?php echo $webpush_info['list']; ?>" readonly></input>
                             </label>
                             <label style="display:none;"><?php echo esc_attr('Website: ');?>
@@ -248,7 +248,7 @@ class CampaignWidget {
                 <div id="webpush_campaing_widget_link">
                     <p>
                         <a class="webpush_campaign_external_link" href="<?php echo admin_url('admin.php?page=egoi-4-wp-webpush')?>" target="_blank" >
-                        <?php echo esc_attr_e('Create Webpush here so you can send the Webpush Campaign.', 'egoi-for-wp');?>
+                        <?php echo _e('Create Webpush here so you can send the Webpush Campaign.', 'egoi-for-wp');?>
                         </a>
                     </p>
                 </div>
@@ -432,7 +432,7 @@ class CampaignWidget {
 
         if (!isset($campaign_hash)) {
             set_transient('egoi_campaigns_error', '<div class="error notice">
-                                    <p><strong>E-goi error creating campaign</strong><em> Error Status: ' . $response_body['status'] . '.</em></p>
+                                    <p><strong>E-goi error creating campaign</strong><em> Error Status: ' . $response['status'] . '.</em></p>
                                     </div>');
         } else {
             $this->send_email_campaign($email_campaign_widget_list_contacts, $campaign_hash);
@@ -525,7 +525,7 @@ class CampaignWidget {
 
         if (!isset($response['result'])) {
             set_transient('egoi_campaigns_error', '<div class="error notice">
-                        <p><strong>E-goi error sending campaign</strong><em> Error Status: ' . $response_body['status'] . '.</em></p>
+                        <p><strong>E-goi error sending campaign</strong><em> Error Status: ' . $response['status'] . '.</em></p>
                         </div>');
         }
 
