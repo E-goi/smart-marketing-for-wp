@@ -108,13 +108,15 @@ $logo_title = "
                         	<tr>
                             	<td align="center" valign="top">
 
-									<!-- Logo Container -->
+									  <!-- Logo Container -->
+									<?php if(!empty($blog_info['logo'])){?>
 									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="<?php echo $logo_container; ?>"> 
 										<div style="text-align:center;"> 
 											<image <?php echo $blog_info['logo'] ?> style="max-width:120px; padding: 0 0 0 2%;"> 
 											<h1 style="<?php echo $logo_title; ?>"><?php echo $blog_info['title'] ?></h1>
 										<div>
 									</table>
+									<?php } ?>
 
                                     <!-- Header -->
                                 	<table border="0" cellpadding="0" cellspacing="0" width="100%" id="template_header" style="<?php echo $template_header; ?>">
