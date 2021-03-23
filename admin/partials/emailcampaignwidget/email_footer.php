@@ -15,7 +15,8 @@ $template_footer = "
 	-webkit-border-radius:0px 0px $border_radius $border_radius;
 	-o-border-radius:0px 0px $border_radius $border_radius;
 	-moz-border-radius:0px 0px $border_radius $border_radius;
-	border-radius:0px 0px $border_radius $border_radius;
+    border-radius:0px 0px $border_radius $border_radius;
+    max-width: ". ($settings['template'] == 'boxed' ? $settings['body_size'].'px' : '100%') .";
 ";
 
 $credit = "
