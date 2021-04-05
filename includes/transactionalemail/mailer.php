@@ -95,7 +95,6 @@ class Mailer {
 		);
 		$this->set_from( $transactionalEmailOption['fromId'], $transactionalEmailOption['fromname']);
 		$this->set_subject( $this->phpmailer->Subject );
-		$this->set_reply_to($transactionalEmailOption['fromId']);
 		$this->set_content( $this->phpmailer->Body, $this->phpmailer->ContentType );
 		$this->set_attachments( $this->phpmailer->getAttachments() );
 		
@@ -211,25 +210,6 @@ class Mailer {
 			);
 		}
 	
-	}
-
-	/**
-	 * define de reply to id
-	 */
-	public function set_reply_to ( $id ) {
-
-		//verify if id not emepty
-		if ( empty($id)) {
-			return;
-		}
-
-
-		$this->set_body_param(
-			array(
-				'replyTo' => $id,
-			)
-		);
-
 	}
 
 	/**
@@ -408,7 +388,7 @@ class Mailer {
 				'body'    => $this->get_body()
 			)
 		);
-		
+	
 		$response = wp_safe_remote_post( $this->url, $params );
 
 		$this->process_response( $response );
