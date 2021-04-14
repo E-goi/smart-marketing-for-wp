@@ -166,7 +166,7 @@ class Egoi_For_Wp_Admin {
         add_action('admin_notices', array($this, 'campaign_widget_notice'));
 
         //detect conflicts with e-goi email transactional
-        $this->detect_conflicts();
+        add_action('admin_notices', array($this, 'detect_conflicts'));
 
 	}
 
