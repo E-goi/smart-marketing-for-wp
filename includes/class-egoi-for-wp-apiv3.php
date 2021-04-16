@@ -397,6 +397,227 @@ class EgoiApiV3
             : false;
     }
 
+        /**
+     * Add contact using API v3
+     */
+    public function addContact($listID, $email, $tags = array(), $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active') {
+
+        $full_name = explode(' ', $name);
+		$fname = $full_name[0];
+		if(!$lname){
+			$lname = $full_name[1];
+		}
+
+		$tel = $ref_fields['tel'];
+		$cell = $ref_fields['cell'];
+		$bd = $ref_fields['bd'];
+		$lang = $ref_fields['lang'];
+
+		$params = array(
+		    'email' => $email,
+		    'first_name' => $fname,
+		    'last_name' => $lname,
+		    'status' => $status
+		);
+
+		// telephone
+		if($tel){
+			$params['telephone'] = $tel;
+		}
+		// cellphone
+		if($cell){
+			$params['cellphone'] = $cell;
+		}
+		// birthdate
+		if($bd){
+			$params['birth_date'] = $bd;
+		}
+        // language
+		if($lang){
+			$params['language'] = $lang;
+		}
+
+        $params_extra = array();
+		if($option){
+			$all_extra_fields = $this->getExtraFields($listID);
+			if($all_extra_fields){
+
+				foreach ($extra_fields as $key => $value) {
+					$filtered_key = str_replace(array('key_', 'extra_'), '', $key);
+					if(in_array($filtered_key, $all_extra_fields)){
+						array_push($params_extra, ['field_id' => $filtered_key,
+                                        'value' => $value]);
+					}
+				}
+			}
+		}
+
+        if(empty($params_extra))
+            $body = ['base' => $params];
+        else
+            $body = ['base' => $params,
+                  'extra' => $params_extra];
+
+        $url = self::APIV3.'/lists/'.$listID.'/contacts';
+
+        $client = new ClientHttp($url, 'POST', $this->headers, $body);
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+
+        if(!empty($tags)){
+            $this->attachTag($resp['contact_id'], $tags);
+        }
+		
+		return $resp['contact_id'];
+	}
+
+    /**
+     * Attach tag to a contact using API V3
+     */
+    public function attachTag($contact_id, $tags = array()){
+        $url = self::APIV3.'/lists/'.$contact_id.'/contacts/actions/attach-tag';
+
+        foreach($tags as $tag){
+            $body = ['contacts' => [$contact_id],
+                    'tag_id' => $tag];
+
+            $client = new ClientHttp($url, 'POST', $this->headers, $body);
+
+            if($client->success() !== true){
+                return $this->processErrors($client->getError());
+            }
+
+            return true;
+        }
+    }
+
+        /**
+     * Check if a contact exists using API V3
+     */
+    public function searchContact($listID, $email){
+        $url = self::APIV3.'/contacts/search?type=email&contact='.$email;
+
+        $client = new ClientHttp($url, 'GET', $this->headers);
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $result_client = json_decode($client->getResponse(),true);
+
+        $result = '';
+        if(!empty($result_client['items'])){
+            foreach($result_client['items'] as $contact){
+                if($contact['list_id'] == $listID){
+                    $result = $contact['contact_id'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+       /**
+     * Check if a contact exists using API V3
+     */
+    public function getExtraFields($listID){
+        $url = self::APIV3.'/lists/'.$listID.'/fields';
+
+        $client = new ClientHttp($url, 'GET', $this->headers);
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $result_client = json_decode($client->getResponse(),true);
+
+        $extra_fields = array();
+        foreach($result_client as $fields){
+            if($fields['type'] == "extra"){
+                array_push($extra_fields,$fields['field_id']);
+            }
+        }
+        return $extra_fields;
+    }
+
+    public function editContact($listID, $contact_id, $role = 0, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $tags=[], $status = 'active') {
+        $params = array(
+		    'status' => $status
+		);
+        // first name
+        if($fname)
+            $params['first_name'] = $fname;
+        
+        // last name
+        if($lname)
+            $params['last_name'] = $lname;
+        
+		$tel = $ref_fields['tel'];
+		$cell = $ref_fields['cell'];
+		$bd = $ref_fields['bd'];
+		$lang = $ref_fields['lang'];
+
+		// telephone
+		if($tel){
+			$params['telephone'] = $tel;
+		}
+		// cellphone
+		if($cell){
+			$params['cellphone'] = $cell;
+		}
+		// birthdate
+		if($bd){
+			$params['birth_date'] = $bd;
+		}
+        // language
+		if($lang){
+			$params['language'] = $lang;
+		}
+
+        $params_extra = array();
+		if($option){
+			$all_extra_fields = $this->getExtraFields($listID);
+			if($all_extra_fields){
+
+				foreach ($extra_fields as $key => $value) {
+					$filtered_key = str_replace(array('key_', 'extra_'), '', $key);
+					if(in_array($filtered_key, $all_extra_fields)){
+						array_push($params_extra, ['field_id' => $filtered_key,
+                                        'value' => $value]);
+					}
+				}
+			}
+		}
+
+        if(empty($params_extra))
+            $body = ['base' => $params];
+        else
+            $body = ['base' => $params,
+                  'extra' => $params_extra];
+                  
+        $url = self::APIV3.'/lists/'.$listID.'/contacts/'.$contact_id;
+
+        $client = new ClientHttp($url, 'PATCH', $this->headers, $body);
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+
+        if(!empty($tags)){
+            $this->attachTag($resp['contact_id'], $tags);
+        }
+		
+		return $resp['contact_id'];
+
+    }
+
+
     /**
      * @param $url
      * @param $search

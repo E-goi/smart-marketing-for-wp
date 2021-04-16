@@ -91,6 +91,13 @@ class Egoi_For_Wp {
 	 */
 	protected $restUrl = 'http://api.e-goi.com/v2/rest.php?type=json&method=';
 
+    /**
+	 * Rest Client
+	 * 
+	 * @var string
+	 */
+	protected $restUrlv3 = 'https://api.egoiapp.com';
+
 	/**
 	 * Plugin Key
 	 * 
@@ -912,7 +919,6 @@ class Egoi_For_Wp {
         	return $result_client->Egoi_Api->addSubscriber;
         }
 	}
-
 	
 	public function addSubscriberSoap($listID, $tag, $subscriber){
         try{
