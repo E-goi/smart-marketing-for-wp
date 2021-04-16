@@ -18,6 +18,13 @@ $contact_forms = $Egoi4WpBuilderObject->getContactFormInfo();
                 <div class="smsnf-input-group">
                     <label for="egoi_int"><?php _e( 'Enable Contact Form 7 Integration', 'egoi-for-wp' ); ?></label>
                     <p class="subtitle"><?php _e( 'Select "yes" to enable Contact From 7 Integration.' ,'egoi-for-wp' ); ?></p>
+                    <?php if(preg_match('#^pt_#', get_locale()) === 1){ ?>
+                        <p class="subtitle"><?php _e( 'See how to configure ' ,'egoi-for-wp' ); ?><a target="_blank" rel="noopener noreferrer" href="https://helpdesk.e-goi.com/683741-Integrar-o-E-goi-com-o-Contact-Form-7"><?php _e( 'here' ,'egoi-for-wp' ); ?></a></p>
+                    <?php }else if(preg_match('#^es_#', get_locale()) === 1) {?>
+                        <p class="subtitle"><?php _e( 'See how to configure ' ,'egoi-for-wp' ); ?><a target="_blank" rel="noopener noreferrer" href="https://helpdesk.e-goi.com/880852-Integrar-E-goi-con-Contact-Form-7"><?php _e( 'here' ,'egoi-for-wp' ); ?></a></p>
+                    <?php }else {?>
+                        <p class="subtitle"><?php _e( 'See how to configure ' ,'egoi-for-wp' ); ?><a target="_blank" rel="noopener noreferrer" href="https://helpdesk.e-goi.com/514759-Integrating-E-goi-with-Contact-Form-7"><?php _e( 'here' ,'egoi-for-wp' ); ?></a></p>
+                    <?php } ?>
                     <div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
                         <label><input type="radio"  name="egoi_int[enable_cf]" <?php checked($egoint['enable_cf'], 1); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
                         <label><input type="radio" name="egoi_int[enable_cf]" <?php checked($egoint['enable_cf'], 0); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>

@@ -864,43 +864,57 @@ class Egoi_For_Wp_Admin {
             $ref_fields = array('tel' => $tel, 'cell' => $cell, 'bd' => $bd, 'fax' => $fax, 'lang' => $lang);
 
             $subject = $_POST['your-subject'];
-            $status = $_POST['status-egoi'];
+
+            if(isset($_POST['status-egoi'])){
+                if($_POST['status-egoi'] == 1 || $_POST['status-egoi'] == "1"){
+                    $status = 'active';
+                }else if($_POST['status-egoi'] == 4 || $_POST['status-egoi'] == "4"){
+                    $status = 'inactive';
+                }else if($_POST['status-egoi'] == 2 || $_POST['status-egoi'] == "2"){
+                    $status = 'removed';
+                }else if($_POST['status-egoi'] == 0 || $_POST['status-egoi'] == "0"){
+                    $status = 'unconfirmed';
+                }
+            }else{
+                $status = 'active';
+            }
+
             $error_msg = $result->prop('messages');
             $error_sent = $error_msg['mail_sent_ng'];
 
             // get contact form 7 name tag
             $cf7 = $api->getContactFormInfo($form_id);
 
+            $apikey = $this->get_apikey();
+            $apiv3 = new EgoiApiV3($apikey);
             // check if subscriber exists
-            $get = $api->getSubscriber($egoi_int['list_cf'], $email);
-            if($get->subscriber->STATUS != '2'){
+            $get = $apiv3->searchContact($egoi_int['list_cf'], $email);
 
-                if ($get->subscriber->EMAIL == $email) {
-                    $update = $egoi_int['edit'];
-                    if($update){
+            if(empty($get)){
+                if($subject){ // check if tag exists in E-goi
+                    $get_tags = $api->getTag($subject);
+                    $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
+                }
 
-                        if($subject){ // check if tag exists in E-goi
-                            $get_tags = $api->getTag($subject);
-                            $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
-                        }
+                // check if tag cf7 exists in E-goi
+                $get_tg = $api->getTag($cf7[0]->post_title);
+                $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
+    
+                $apiv3->addContact(
+                    $egoi_int['list_cf'],
+                    $email,
+                    array($cf7tag, $tag ? $tag : 0),
+                    $name,
+                    $lname,
+                    $extra_fields,
+                    $option,
+                    $ref_fields,
+                    $status
+                );
+            }else{
+                $update = $egoi_int['edit'];
 
-                        // check if tag cf7 exists in E-goi
-                        $get_tg = $api->getTag($cf7[0]->post_title);
-                        $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
-
-                        $api->editSubscriber(
-                            $egoi_int['list_cf'],
-                            $email,
-                            !empty($cf7tag) ? $cf7[0]->post_title : 0,
-                            $name,
-                            $lname,
-                            $extra_fields,
-                            $option,
-                            $ref_fields
-                        );
-                    }
-
-                } else {
+                if($update){
 
                     if($subject){ // check if tag exists in E-goi
                         $get_tags = $api->getTag($subject);
@@ -911,21 +925,20 @@ class Egoi_For_Wp_Admin {
                     $get_tg = $api->getTag($cf7[0]->post_title);
                     $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
 
-                    $api->addSubscriberTags(
+                    $apiv3->editContact(
                         $egoi_int['list_cf'],
-                        $email,
-                        array($cf7tag, $tag ? $tag : 0),
+                        $get,
+                        !empty($cf7tag) ? $cf7[0]->post_title : 0,
                         $name,
                         $lname,
-                        1,
                         $extra_fields,
                         $option,
                         $ref_fields,
+                        array($cf7tag, $tag ? $tag : 0),
                         $status
                     );
-                }
-            } else {
-                //echo $error_sent;
+                }    
+
             }
 
 		} catch(Exception $e) {
