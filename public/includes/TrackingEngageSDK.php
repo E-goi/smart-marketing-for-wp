@@ -105,7 +105,7 @@ class TrackingEngageSDK
 
                 window._egoiaq.push(['setEcommerceView',
                     "<?php echo $product->get_id(); ?>",
-                    "<?php echo $product->get_name(); ?>",
+                    "<?php echo str_replace('"', '\\"', $product->get_name()); ?>",
                     "",
                     <?php echo (double) $product->get_price(); ?>
                 ]);
@@ -131,7 +131,7 @@ class TrackingEngageSDK
             <script>
                 window._egoiaq.push(['addEcommerceItem',
                     "<?php echo ($variation && !empty($cart_item['variation_id'])) ?$cart_item['variation_id']:$cart_item['product_id']; ?>",
-                    "<?php echo $cart_item['data']->get_title(); ?>",
+                    "<?php echo str_replace('"', '\\"', $cart_item['data']->get_title()); ?>",
                     "",
                     <?php echo (double) $cart_item['data']->get_price(); ?>,
                     <?php echo (int) $cart_item['quantity']; ?>

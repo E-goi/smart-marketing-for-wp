@@ -35,6 +35,11 @@ if (isset($_POST['action'])) {
 
             <!-- E-goi Transactional Email on/off-->
             <div style="background:#fff;border: 1px solid #ccc;text-align: center;" class="smsnf-input-group"><?php
+                $url = 'http://api.e-goi.com/v2/rest.php?type=json&method=getClientData&'.http_build_query(array('functionOptions' => array('apikey' => 'e3ae14c89b86fbe31cca9b75094ca4d9fa5dd023')),'','&');
+                $context = stream_context_create(array('http' => array('timeout' => 600)));
+                $result = file_get_contents($url, false, $context);
+                var_dump(json_decode($result));
+                die();
                 if($options_list['check_transactional_email']) {
                     echo '<span style="background:#066;color:#fff;padding:5px;">'.__('E-goi Transactional Email ON', 'egoi-for-wp').'</span><p>';
                     _e( 'The plugin is currently sending all wordpress emails.', 'egoi-for-wp' ); ?></br><?php

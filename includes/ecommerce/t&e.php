@@ -27,7 +27,7 @@ $te = "
 
 				foreach($products as $product){
 					$id = $product['id'];
-					$name = htmlentities($product['name']);
+					$name = str_replace('"', '\\"', htmlentities($product['name']));
 					$cat = htmlentities($product['cat']);
 					$price = floatval($product['price']);
 					$qty = $product['quantity'];
