@@ -400,7 +400,7 @@ class EgoiApiV3
         /**
      * Add contact using API v3
      */
-    public function addContact($listID, $email, $tags = array(), $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active') {
+    public function addContact($listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active') {
 
         $full_name = explode(' ', $name);
 		$fname = $full_name[0];
@@ -495,6 +495,72 @@ class EgoiApiV3
         }
     }
 
+    /**
+     * Get Tag 
+     * If doesnt exists creates one tag
+     */
+    public function getTag($name){
+        $tags = json_decode($this->getTags());
+
+        if(isset($tags['status']) || isset($tags['error'])){
+            return -1;
+        }else{
+            foreach ($tags as $key => $value) {
+                if(strcasecmp($value->name, $name) == 0){
+                    $data = $value;
+                }
+            }
+
+            if(empty($data)){
+                $rest = $this->addTag($name);
+                if(isset($tags['status']) || isset($tags['error']))
+                    return -1;
+                else
+                    return $rest;
+            }
+    
+            return $data;
+        }
+    }
+
+    /**
+     * Get Tags
+     */
+    public function getTags(){
+        $url = self::APIV3.'/tags';
+
+            $client = new ClientHttp($url, 'GET', $this->headers);
+
+            if($client->success() !== true){
+                return $this->processErrors($client->getError());
+            }
+            $resp = json_decode($client->getResponse(),true);
+
+
+        return $client->getCode()==200 && isset($resp['items']) ? json_encode($resp['items']) : $this->processErrors();
+
+    }
+
+    /**
+     * Create new tag
+     */
+    public function addTag($name = '', $color = '#00AEDA'){
+        $url = self::APIV3.'/tags';
+
+        $body = ['name' => $name, 'color' => $color];
+
+        $client = new ClientHttp($url, 'POST', $this->headers, $body);
+
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $resp = json_decode($client->getResponse(),true);
+
+        return $resp;
+    }
+
+
         /**
      * Check if a contact exists using API V3
      */
@@ -544,7 +610,7 @@ class EgoiApiV3
         return $extra_fields;
     }
 
-    public function editContact($listID, $contact_id, $role = 0, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $tags=[], $status = 'active') {
+    public function editContact($listID, $contact_id, $role = 0, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active') {
         $params = array(
 		    'status' => $status
 		);
