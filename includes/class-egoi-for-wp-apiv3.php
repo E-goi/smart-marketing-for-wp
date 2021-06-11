@@ -400,7 +400,7 @@ class EgoiApiV3
         /**
      * Add contact using API v3
      */
-    public function addContact($listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active') {
+    public function addContact($listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = []) {
 
         $full_name = explode(' ', $name);
 		$fname = $full_name[0];
@@ -467,10 +467,11 @@ class EgoiApiV3
         }
 
         $resp = json_decode($client->getResponse(),true);
-
-        if(!empty($tags)){
-            $this->attachTag($resp['contact_id'], $tags);
+        
+        if(!empty($tags) && isset($resp['contact_id'])){
+            $this->attachTag($listID, $resp['contact_id'], $tags);
         }
+
 		
 		return $resp['contact_id'];
 	}
@@ -478,8 +479,8 @@ class EgoiApiV3
     /**
      * Attach tag to a contact using API V3
      */
-    public function attachTag($contact_id, $tags = array()){
-        $url = self::APIV3.'/lists/'.$contact_id.'/contacts/actions/attach-tag';
+    public function attachTag($list_id, $contact_id, $tags = array()){
+        $url = self::APIV3.'/lists/'.$list_id.'/contacts/actions/attach-tag';
 
         foreach($tags as $tag){
             $body = ['contacts' => [$contact_id],
@@ -490,9 +491,8 @@ class EgoiApiV3
             if($client->success() !== true){
                 return $this->processErrors($client->getError());
             }
-
-            return true;
         }
+        return true;
     }
 
     /**
@@ -503,7 +503,7 @@ class EgoiApiV3
         $tags = json_decode($this->getTags());
 
         if(isset($tags['status']) || isset($tags['error'])){
-            return -1;
+            return $tags;
         }else{
             foreach ($tags as $key => $value) {
                 if(strcasecmp($value->name, $name) == 0){
@@ -512,11 +512,7 @@ class EgoiApiV3
             }
 
             if(empty($data)){
-                $rest = $this->addTag($name);
-                if(isset($tags['status']) || isset($tags['error']))
-                    return -1;
-                else
-                    return $rest;
+                return $this->addTag($name);
             }
     
             return $data;
@@ -587,6 +583,31 @@ class EgoiApiV3
         return $result;
     }
 
+    /**
+     * Check if a contact exists in a list using API V3
+     */
+    public function searchContactFromList($listID, $email){
+        $url = self::APIV3.'/lists/'.$listID.'/contacts';
+
+        $client = new ClientHttp($url, 'GET', $this->headers);
+        if($client->success() !== true){
+            return $this->processErrors($client->getError());
+        }
+
+        $result_client = json_decode($client->getResponse(),true);
+
+        $result = '';
+        if(!empty($result_client['items'])){
+            foreach($result_client['items'] as $contact){
+                if($contact['base']['email'] == $email){
+                    $result = $contact['base']['contact_id'];
+                }
+            }
+        }
+
+        return $result;
+    }
+
        /**
      * Check if a contact exists using API V3
      */
@@ -610,7 +631,7 @@ class EgoiApiV3
         return $extra_fields;
     }
 
-    public function editContact($listID, $contact_id, $role = 0, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active') {
+    public function editContact($listID, $contact_id, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = []) {
         $params = array(
 		    'status' => $status
 		);
@@ -675,8 +696,8 @@ class EgoiApiV3
 
         $resp = json_decode($client->getResponse(),true);
 
-        if(!empty($tags)){
-            $this->attachTag($resp['contact_id'], $tags);
+        if(!empty($tags) && isset($resp['contact_id'])){
+            $this->attachTag($listID, $resp['contact_id'], $tags);
         }
 		
 		return $resp['contact_id'];

@@ -760,7 +760,7 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.1
 	 */
 	public function getContactForm($result){
-
+        
 		try {
             $opt = get_option('egoi_int');
             $egoi_int = $opt['egoi_int'];
@@ -887,55 +887,62 @@ class Egoi_For_Wp_Admin {
 
             $apikey = $this->get_apikey();
             $apiv3 = new EgoiApiV3($apikey);
-            // check if subscriber exists
-            $get = $apiv3->searchContact($egoi_int['list_cf'], $email);
 
+            // check if subscriber exists
+            $get = $apiv3->searchContactFromList($egoi_int['list_cf'], $email);
+            
             if(empty($get)){
                 if($subject){ // check if tag exists in E-goi
-                    $get_tags = $api->getTag($subject);
-                    $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
+                    $get_tags = $apiv3->getTag($subject);
+
+                    if(isset($get_tags->tag_id))
+                        $tag = $get_tags->tag_id;
                 }
 
                 // check if tag cf7 exists in E-goi
-                $get_tg = $api->getTag($cf7[0]->post_title);
-                $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
-    
+                $get_tg = $apiv3->getTag($cf7[0]->post_title);
+
+                if(isset($get_tg->tag_id))
+                    $cf7tag = $get_tg->tag_id;
+                
                 $apiv3->addContact(
                     $egoi_int['list_cf'],
                     $email,
-                    array($cf7tag, $tag ? $tag : 0),
                     $name,
                     $lname,
                     $extra_fields,
                     $option,
                     $ref_fields,
-                    $status
+                    $status,
+                    !empty($tag)? [$tag, $cf7tag] : (!empty($cf7tag) ? [$cf7tag] : [])
                 );
             }else{
                 $update = $egoi_int['edit'];
 
                 if($update){
-
                     if($subject){ // check if tag exists in E-goi
-                        $get_tags = $api->getTag($subject);
-                        $tag = isset($get_tags['ID']) ? $get_tags['ID'] : $get_tags['NEW_ID'];
+                        $get_tags = $apiv3->getTag($subject);
+    
+                        if(isset($get_tags->tag_id))
+                            $tag = $get_tags->tag_id;
                     }
-
+    
                     // check if tag cf7 exists in E-goi
-                    $get_tg = $api->getTag($cf7[0]->post_title);
-                    $cf7tag = isset($get_tg['ID']) ? $get_tg['ID'] : $get_tg['NEW_ID'];
-
+                    $get_tg = $apiv3->getTag($cf7[0]->post_title);
+    
+                    if(isset($get_tg->tag_id))
+                        $cf7tag = $get_tg->tag_id;
+                    
                     $apiv3->editContact(
                         $egoi_int['list_cf'],
                         $get,
-                        !empty($cf7tag) ? $cf7[0]->post_title : 0,
                         $name,
                         $lname,
                         $extra_fields,
                         $option,
                         $ref_fields,
-                        array($cf7tag, $tag ? $tag : 0),
-                        $status
+                        $status,
+                        !empty($tag)? [$tag, $cf7tag] : (!empty($cf7tag) ? [$cf7tag] : [])
                     );
                 }    
 
