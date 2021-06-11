@@ -169,6 +169,7 @@ You can create and update your lists, see how many subscribers you have, but you
 = 3.7.8 =
 - Added apiv3 methods
 - Fix Tag for contact form submitions
+- Fix Catalalogs status
 
 = 3.7.7 =
 - Fixed product name exception in Track&Engage

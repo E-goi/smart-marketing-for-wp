@@ -97,7 +97,7 @@ jQuery(document).ready(function() {
         function getCatalogsToSync(){
             var catalogsArr = [];
             sync_catalog.each(function () {
-                if($(this).attr('checked') == 'checked')
+                if($(this).is(":checked"))
                     catalogsArr.push($(this).attr(idgoi))
             });
             return catalogsArr;
@@ -159,7 +159,7 @@ jQuery(document).ready(function() {
                 action:         'egoi_sync_catalog',
                 data:           data
             };
-
+            
             if(typeof scopeAjaxSync != "undefined")
                 scopeAjaxSync.abort();
             loader.show();
