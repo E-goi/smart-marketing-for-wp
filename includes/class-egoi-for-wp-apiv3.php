@@ -422,10 +422,10 @@ class EgoiApiV3
 
 		// telephone
 		if($tel){
-			$params['telephone'] = $tel;
+			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if($cell){
+		if($cell && !$tel){
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
@@ -635,6 +635,7 @@ class EgoiApiV3
         $params = array(
 		    'status' => $status
 		);
+        
         // first name
         if($fname)
             $params['first_name'] = $fname;
@@ -648,12 +649,13 @@ class EgoiApiV3
 		$bd = $ref_fields['bd'];
 		$lang = $ref_fields['lang'];
 
+        wp_mail('fbobiano@e-goi.com', 'phone', json_encode($ref_fields));
 		// telephone
 		if($tel){
-			$params['telephone'] = $tel;
+			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if($cell){
+		if($cell && !$tel){
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
@@ -686,21 +688,20 @@ class EgoiApiV3
             $body = ['base' => $params,
                   'extra' => $params_extra];
                   
+        wp_mail('fbobiano@e-goi.com', 'bpdy', json_encode($body));
         $url = self::APIV3.'/lists/'.$listID.'/contacts/'.$contact_id;
 
         $client = new ClientHttp($url, 'PATCH', $this->headers, $body);
-
+        wp_mail('fbobiano@e-goi.com', 'result', json_encode($client->success()));
         if($client->success() !== true){
             return $this->processErrors($client->getError());
         }
 
-        $resp = json_decode($client->getResponse(),true);
-
-        if(!empty($tags) && isset($resp['contact_id'])){
-            $this->attachTag($listID, $resp['contact_id'], $tags);
+        if(!empty($tags) && isset($contact_id)){
+            $this->attachTag($listID, $contact_id, $tags);
         }
 		
-		return $resp['contact_id'];
+		return $contact_id;
 
     }
 
