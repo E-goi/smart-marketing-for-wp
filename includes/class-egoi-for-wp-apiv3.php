@@ -649,7 +649,6 @@ class EgoiApiV3
 		$bd = $ref_fields['bd'];
 		$lang = $ref_fields['lang'];
 
-        wp_mail('fbobiano@e-goi.com', 'phone', json_encode($ref_fields));
 		// telephone
 		if($tel){
 			$params['cellphone'] = $tel;
@@ -688,11 +687,9 @@ class EgoiApiV3
             $body = ['base' => $params,
                   'extra' => $params_extra];
                   
-        wp_mail('fbobiano@e-goi.com', 'bpdy', json_encode($body));
         $url = self::APIV3.'/lists/'.$listID.'/contacts/'.$contact_id;
 
         $client = new ClientHttp($url, 'PATCH', $this->headers, $body);
-        wp_mail('fbobiano@e-goi.com', 'result', json_encode($client->success()));
         if($client->success() !== true){
             return $this->processErrors($client->getError());
         }
