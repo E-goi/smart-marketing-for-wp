@@ -120,11 +120,44 @@ function process_egoi_form(){
 
 // HOOK E-GOI SIMPLE FORM SHORTCODE
 function process_egoi_simple_form($atts){
+    global $post;
     $public_area = new Egoi_For_Wp_Public();
-    return $public_area->subscribe_egoi_simple_form($atts);
-}
-add_shortcode( 'egoi-simple-form', 'process_egoi_simple_form' );
 
+    $qt = (int) get_option('egoi_simple_form_post_increment_'.$post->ID);
+    $size = (int) get_option('egoi_simple_form_post_'.$post->ID);
+
+
+    if(!isset($qt) && isset($size)){
+        $qt = add_option('egoi_simple_form_post_increment_'.$post->ID, 1);
+        return $public_area->subscribe_egoi_simple_form($atts, $qt);
+    }else if(isset($qt) && isset($size) && $qt <= $size){
+        if($qt == $size){
+            update_option('egoi_simple_form_post_increment_'.$post->ID, 1);
+        }else{
+            update_option('egoi_simple_form_post_increment_'.$post->ID, $qt+1);
+        }
+        return $public_area->subscribe_egoi_simple_form($atts, $qt);
+    }else {
+        return $public_area->subscribe_egoi_simple_form($atts);
+    }   
+}
+add_shortcode( 'egoi-simple-form', 'process_egoi_simple_form');
+
+add_action('save_post', 'process_content_page',10,3);
+function process_content_page($post_id, $post, $update ){
+
+    preg_match_all('/\[egoi-simple-form .*=".*"\]/', $post->post_content, $matches);
+
+    if(!empty($matches)){
+        if(get_option('egoi_simple_form_post_'.$post_id))
+            update_option('egoi_simple_form_post_'.$post_id,count($matches[0]));
+        else
+            update_option('egoi_simple_form_post_'.$post_id,count($matches[0]));
+    }
+
+    return;
+    
+}
 // HOOK E-GOI SIMPLE FORM ADD SUBSCRIBER
 add_action( 'wp_ajax_my_action', 'process_simple_form_add' );
 add_action( 'wp_ajax_nopriv_my_action', 'process_simple_form_add' );
