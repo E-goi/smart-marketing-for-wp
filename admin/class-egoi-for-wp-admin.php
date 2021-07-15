@@ -2934,6 +2934,10 @@ class Egoi_For_Wp_Admin {
         $this->campaignWidget->on_save_post($post_id, $post, $updated);
     }
 
+    public function send_campaign_admin($post_id){
+        $this->campaignWidget->send_campaign($post_id,);
+    }
+
     /**
      * When there are post status modifications. ex: when a post is updated or published.
      */

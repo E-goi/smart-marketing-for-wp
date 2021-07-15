@@ -603,6 +603,7 @@ class Egoi_For_Wp {
 
         //Campaign widget on save and on status transition
         $this->loader->add_action('save_post', $plugin_admin, 'on_save_post_admin', 10, 3);
+        $this->loader->add_action('publish_post', $plugin_admin, 'send_campaign_admin', 10, 1);
         $this->loader->add_action('transition_post_status', $plugin_admin, 'on_transition_post_status_admin', 10, 3);
     }
 

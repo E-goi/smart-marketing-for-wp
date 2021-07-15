@@ -346,7 +346,6 @@ class CampaignWidget {
      * Creates and send email campaign
      */
     public function create_email_campaign($post){
-
         /* Returns true if there is POST data */
         $was_posted = !empty($_POST);
 
@@ -435,7 +434,12 @@ class CampaignWidget {
                                     <p><strong>E-goi error creating campaign</strong><em> Error Status: ' . $response['status'] . '.</em></p>
                                     </div>');
         } else {
-            $this->send_email_campaign($email_campaign_widget_list_contacts, $campaign_hash);
+            $data = array(
+                'list' => $email_campaign_widget_list_contacts,
+                'hash' => $campaign_hash,
+            );
+
+            add_option('egoi_email_campaign_'.$post->ID, $data);
         }
 
         return;
@@ -502,8 +506,29 @@ class CampaignWidget {
                 <p><strong>E-goi error creating campaign</strong><em>'.$response['errors'].'</em></p>
                 </div>');
         } else {
-            $this->send_webpush_campaign($webpush_campaign_widget_site_info, $campaign_hash);
+            $data = array(
+                'site_id' => $webpush_campaign_widget_site_info,
+                'hash' => $campaign_hash,
+            );
+
+            add_option('egoi_webpush_campaign_'.$post->ID, $data);
         }      
+
+        return;
+    }
+
+    public function send_campaign($post_id){
+        if(get_option('egoi_email_campaign_'.$post_id)){
+            $option = get_option('egoi_email_campaign_'.$post_id);
+            $this->send_email_campaign($option['list'], $option['hash']);
+            delete_option('egoi_email_campaign_'.$post_id);
+        }
+
+        if(get_option('egoi_webpush_campaign_'.$post_id)){
+            $option = get_option('egoi_webpush_campaign_'.$post_id);
+            $this->send_webpush_campaign($option['site_id'], $option['hash']);
+            delete_option('egoi_webpush_campaign_'.$post_id);
+        }
 
         return;
     }
