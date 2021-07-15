@@ -473,16 +473,16 @@ class Egoi_For_Wp_Public {
 
 	
 	// Simple form shortcode output
-	public function subscribe_egoi_simple_form( $atts ){
+	public function subscribe_egoi_simple_form( $atts, $qt = 1 ){
 		global $wpdb;
 
 		$id = $atts['id'];
-        $simple_form = 'egoi_simple_form_'.$id;
+        $simple_form = 'egoi_simple_form_'.$id.'_'.$qt;
         $simple_form_result = $simple_form . "_result";
 
 		$post = '<form id="'.$simple_form.'" method="post" action="/">';
 
-		$options = get_option($simple_form);
+		$options = get_option('egoi_simple_form_'.$id);
 		$data = json_decode($options);
 
         $post .= '<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="'.$id.'">';
@@ -503,21 +503,19 @@ class Egoi_For_Wp_Public {
 		$post .= '<div id="'.$simple_form_result.'" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>';
 		$post .= '</form>';
 		
-		
-
 		$post .= '
 			<script type="text/javascript" >
 				jQuery(document).ready(function() {
-					jQuery("#egoi_country_code").empty();
+					jQuery("#'.$simple_form.' select[name=egoi_country_code]").empty();
 				';
 		foreach (unserialize(COUNTRY_CODES) as $key => $value) {
 		 	$string = ucwords(strtolower($value['country_pt']))." (+".$value['prefix'].")";
-		 	$post .= 'jQuery("#egoi_country_code").append("<option value='.$value['prefix'].'>'.$string.'</option>");';
+		 	$post .= 'jQuery("#'.$simple_form.' select[name=egoi_country_code]").append("<option value='.$value['prefix'].'>'.$string.'</option>");';
 		}
 		$post .= '
 				});
 
-                jQuery("#egoi_country_code").val(jQuery("#egoi_country_code").data("selected"));
+                jQuery("#'.$simple_form.' select[name=egoi_country_code]").val(jQuery("#'.$simple_form.' select[name=egoi_country_code]").data("selected"));
 
 				jQuery("#'.$simple_form.'").submit(function(event) {
 					
@@ -545,15 +543,15 @@ class Egoi_For_Wp_Public {
 					jQuery( "#'.$simple_form_result.'" ).hide();
 
 					var ajaxurl = "'.admin_url('admin-ajax.php').'";
-					var egoi_simple_form = simple_form.find("#egoi_simple_form").val();
-					var egoi_name = simple_form.find("#egoi_name").val();
-					var egoi_email = simple_form.find("#egoi_email").val();
-					var egoi_country_code	= simple_form.find("#egoi_country_code").val();
-					var egoi_mobile	= simple_form.find("#egoi_mobile").val();
-					var egoi_list = simple_form.find("#egoi_list").val();
-					var egoi_lang = simple_form.find("#egoi_lang").val();
-					var egoi_tag = simple_form.find("#egoi_tag").val();
-					var egoi_double_optin = simple_form.find("#egoi_double_optin").val();
+					var egoi_simple_form = jQuery("#'.$simple_form.' input[name=egoi_simple_form]").val();
+					var egoi_name = jQuery("#'.$simple_form.' input[name=egoi_name]").val();
+					var egoi_email = jQuery("#'.$simple_form.' input[name=egoi_email]").val();
+					var egoi_country_code	= jQuery("#'.$simple_form.' select[name=egoi_country_code]").val();
+					var egoi_mobile	= jQuery("#'.$simple_form.' input[name=egoi_mobile]").val();
+					var egoi_list = jQuery("#'.$simple_form.' input[name=egoi_list]").val();
+					var egoi_lang = jQuery("#'.$simple_form.' input[name=egoi_lang]").val(); 
+					var egoi_tag = jQuery("#'.$simple_form.' input[name=egoi_tag]").val();
+					var egoi_double_optin = jQuery("#'.$simple_form.' input[name=egoi_double_optin]").val();
 
 					var data = {
 						"action": "egoi_simple_form_submit",
@@ -567,7 +565,7 @@ class Egoi_For_Wp_Public {
 						"egoi_tag": egoi_tag,
 						"egoi_double_optin" : egoi_double_optin
 					};
-			
+
 					var posting = jQuery.post(ajaxurl, data);
 
 					posting.done(function( data ) {
@@ -603,7 +601,7 @@ class Egoi_For_Wp_Public {
                     
 
 				});
-				setTimeout(function(){ jQuery("#egoi_country_code").val(jQuery("#egoi_country_code").data("selected")); }, 100);
+				setTimeout(function(){ jQuery("#'.$simple_form.' select[name=egoi_country_code]").val(jQuery("#'.$simple_form.' select[name=egoi_country_code]").data("selected")); }, 100);
 			</script>
 		';
 

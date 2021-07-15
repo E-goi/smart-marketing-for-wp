@@ -422,10 +422,10 @@ class EgoiApiV3
 
 		// telephone
 		if($tel){
-			$params['telephone'] = $tel;
+			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if($cell){
+		if($cell && !$tel){
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
@@ -635,6 +635,7 @@ class EgoiApiV3
         $params = array(
 		    'status' => $status
 		);
+        
         // first name
         if($fname)
             $params['first_name'] = $fname;
@@ -650,10 +651,10 @@ class EgoiApiV3
 
 		// telephone
 		if($tel){
-			$params['telephone'] = $tel;
+			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if($cell){
+		if($cell && !$tel){
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
@@ -689,18 +690,15 @@ class EgoiApiV3
         $url = self::APIV3.'/lists/'.$listID.'/contacts/'.$contact_id;
 
         $client = new ClientHttp($url, 'PATCH', $this->headers, $body);
-
         if($client->success() !== true){
             return $this->processErrors($client->getError());
         }
 
-        $resp = json_decode($client->getResponse(),true);
-
-        if(!empty($tags) && isset($resp['contact_id'])){
-            $this->attachTag($listID, $resp['contact_id'], $tags);
+        if(!empty($tags) && isset($contact_id)){
+            $this->attachTag($listID, $contact_id, $tags);
         }
 		
-		return $resp['contact_id'];
+		return $contact_id;
 
     }
 
