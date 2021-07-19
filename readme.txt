@@ -168,6 +168,7 @@ You can create and update your lists, see how many subscribers you have, but you
 
 = 3.7.10 =
 - Email and Webpush campaign widget are now sent on publish or on scheduled publish
+- Fix e-goi html forms 
 
 = 3.7.9 =
 - Fix CF7 submission for existing Contacts

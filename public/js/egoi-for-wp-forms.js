@@ -22,14 +22,46 @@
                 'lname' : lname,
                 'email' : email
             };
-
+            
             $.post(ajax_object.ajax_url, data, function(response) {
-                console.log(response);
-                alert(response);
+                if(response == 200){
+                    switch($(document).find('form[id^="easyform_"]').find('input[name^="lang"]').val()){
+                        case 'en':
+                            $(document).find('form[id^="easyform_"]').append("<div id=\"easyform_result\" class=\"egoi_simple_form_success_wrapper\" style=\"margin:10px 0px; padding:12px; color: #4F8A10; background-color: #DFF2BF \"> You have been registered successfully! </div>");
+                            break;
+                        case 'es':
+                            $(document).find('form[id^="easyform_"]').append("<div id=\"easyform_result\" class=\"egoi_simple_form_success_wrapper\" style=\"margin:10px 0px; padding:12px; color: #4F8A10; background-color: #DFF2BF \"> ¡Te has registrado con éxito! </div>");
+                            break;
+                        default:
+                            $(document).find('form[id^="easyform_"]').append("<div id=\"easyform_result\" class=\"egoi_simple_form_success_wrapper\" style=\"margin:10px 0px; padding:12px; color: #4F8A10; background-color: #DFF2BF \"> Foi registado com sucesso! </div>");
+                            break;
+                    }
+                }else if(!response){
+                    switch($(document).find('form[id^="easyform_"]').find('input[name^="lang"]').val()){
+                        case 'en':
+                            $(document).find('form[id^="easyform_"]').append("<div id=\"easyform_result\" class=\"egoi_simple_form_success_wrapper\" style=\"margin:10px 0px; padding:12px; color: #9F6000; background-color: #FFD2D2 \"> Error registering!  </div>");
+                            break;
+                        case 'es':
+                            $(document).find('form[id^="easyform_"]').append("<div id=\"easyform_result\" class=\"egoi_simple_form_success_wrapper\" style=\"margin:10px 0px; padding:12px; color: #9F6000; background-color: #FFD2D2 \"> ¡Error al registrarse! </div>");
+                            break;
+                        default:
+                            $(document).find('form[id^="easyform_"]').append("<div id=\"easyform_result\" class=\"egoi_simple_form_success_wrapper\" style=\"margin:10px 0px; padding:12px; color: #9F6000; background-color: #FFD2D2 \"> Erro ao registar! </div>");
+                            break;
+                    }
+                }else{
+                    $(document).find('form[id^="easyform_"]').append("<div id=\"easyform_result\" class=\"egoi_simple_form_success_wrapper\" style=\"margin:10px 0px; padding:12px; color: #4F8A10; background-color: #DFF2BF \">"+response+"</div>");
+                }
+
+                setTimeout(function() {
+                    document.getElementById( 'easyform_result' ).style.display = "none";
+                  }, 5000);
+
+                $(document).find(':input').each(function(){
+                    $(this).val('');
+                });
             });
 
         });
-
     });
 
 })( jQuery );

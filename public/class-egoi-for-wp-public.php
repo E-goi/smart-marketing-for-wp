@@ -881,11 +881,10 @@ class Egoi_For_Wp_Public {
             )
         );
 
-        if (is_wp_error($response)) {
-            $error_message = $response->get_error_message();
-            echo json_encode($error_message);
+        if ($response['response']['code'] != 200) { 
+            echo false;
         } else {
-            $output = $response['body'];
+            $output = 200;
             foreach ($success_messages as $message) {
                 if (strpos($response['body'], $message) !== false) {
                     $output = $message;
