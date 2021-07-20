@@ -2935,7 +2935,7 @@ class Egoi_For_Wp_Admin {
     }
 
     public function send_campaign_admin($post_id){
-        $this->campaignWidget->send_campaign($post_id,);
+        $this->campaignWidget->send_campaign($post_id);
     }
 
     /**
