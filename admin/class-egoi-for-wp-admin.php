@@ -2697,18 +2697,24 @@ class Egoi_For_Wp_Admin {
     public function show_alert_messages(){
         $bypass = EgoiProductsBo::getProductsToBypass();
 
+
+        $catalogs = get_option('egoi_catalog_sync');
+        $egoi_sync = get_option('egoi_sync');
+
         if(!empty($bypass)){//pop up
-            echo EgoiProductsBo::getNotification(count($bypass));
-            echo '<script>
-                    jQuery(document).ready(function() {
-                        (function ($) {    
-                            $(".smsnf-notification").show(200);
-                            $(".egoi-close-pop").on("click", function(){
-                                ($(this).parent()).hide(200)}
-                            );
-                        })(jQuery);
-                    });
-                </script>';
+            if(!empty(json_decode($catalogs)) || $egoi_sync['enabled'] == 1){
+                echo EgoiProductsBo::getNotification(count($bypass));
+                echo '<script>
+                        jQuery(document).ready(function() {
+                            (function ($) {    
+                                $(".smsnf-notification").show(200);
+                                $(".egoi-close-pop").on("click", function(){
+                                    ($(this).parent()).hide(200)}
+                                );
+                            })(jQuery);
+                        });
+                    </script>';
+            }
         }
     }
 
