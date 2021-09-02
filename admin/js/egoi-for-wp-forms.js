@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 	
 	'use strict';
 
-	new Clipboard('#e-goi_shortcode');
+	new ClipboardJS('#e-goi_shortcode');
 
 	var session_form = $('#session_form');
 
