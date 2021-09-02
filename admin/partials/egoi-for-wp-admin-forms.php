@@ -52,17 +52,17 @@ $next_adv_form_id = get_next_adv_form_id();
     <div class="smsnf-modal-bg"></div>
     <!-- Header -->
     <header>
-        <h1>Smart Marketing > <b><?=__('Capture Contacts', 'egoi-for-wp')?></b></h1>
+        <h1>Smart Marketing > <b><?php _e('Capture Contacts', 'egoi-for-wp')?></b></h1>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-form"><?= $home ?></a></li>
-                <li><a class="<?= $page['simple form'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=simple-forms"><?php _e('Simple Forms', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-form"><?php echo  $home ?></a></li>
+                <li><a class="<?php echo  $page['simple form'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=simple-forms"><?php _e('Simple Forms', 'egoi-for-wp'); ?></a></li>
                 <?php // se $next_adv_form_id == null significa que já existem 5 adv forms logo o utilizador não pode criar mais formulários ?>
-                <li><a class="<?= $page['adv forms'] ?'-select':'' ?> <?= $next_adv_form_id == null ?'-disabled':'' ?>"
-                       href="<?= $next_adv_form_id == null ? "#" : "?page=egoi-4-wp-form&sub=adv-forms&form=" . $next_adv_form_id ?>"><?php _e('Advanced Forms', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['subscription bar'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=subscription-bar"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['widget options'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=widget-options"><?php _e('Widget Options', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['popup'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=popup"><?php _e('Popup', 'egoi-for-wp'); ?>&nbsp;<?php echo sprintf('<span style="background-color: green !important;" class="egoi-new-tag">%s</span>', __('New!', 'egoi-for-wp')); ?></a></li>
+                <li><a class="<?php echo  $page['adv forms'] ?'-select':'' ?> <?php echo  $next_adv_form_id == null ?'-disabled':'' ?>"
+                       href="<?php echo  $next_adv_form_id == null ? "#" : "?page=egoi-4-wp-form&sub=adv-forms&form=" . $next_adv_form_id ?>"><?php _e('Advanced Forms', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?php echo  $page['subscription bar'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=subscription-bar"><?php _e('Subscriber Bar', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?php echo  $page['widget options'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=widget-options"><?php _e('Widget Options', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?php echo  $page['popup'] ?'-select':'' ?>" href="?page=egoi-4-wp-form&sub=popup"><?php _e('Popup', 'egoi-for-wp'); ?>&nbsp;<?php echo sprintf('<span style="background-color: green !important;" class="egoi-new-tag">%s</span>', __('New!', 'egoi-for-wp')); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -93,8 +93,8 @@ $next_adv_form_id = get_next_adv_form_id();
                     <a href="#close" class="modal-overlay" aria-label="Close"></a>
                     <div class="modal-container">
                         <div class="modal-header">
-                            <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
                             <h2><?php _e('Create New Tag','egoi-for-wp'); ?></h2>
+                            <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
                         </div>
                         <div class="modal-body">
                             <div class="content">

@@ -13,8 +13,8 @@ $page = array(
 if(isset($_POST['action'])){
 
     $post = $_POST;
-    $post['egoi_sync']['social_track_json'] = $post['egoi_sync']['social_track'] ? $post['egoi_sync']['social_track_json'] : 0;
-    $options = array_merge($this->options_list, $post['egoi_sync']);
+    $post['egoi_sync']['social_track_json'] = $post['egoi_sync']['social_track'] ? sanitize_key($post['egoi_sync']['social_track_json']) : 0;
+    $options = array_merge($this->options_list, sanitize_key($post['egoi_sync']));
     if(!empty($post['egoi_sync']['social_track'])){
         $apikey = $this->get_apikey();
         if(!empty($apikey)){
@@ -50,11 +50,11 @@ if(isset($_POST['action'])){
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'Track&Engage', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-trackengage"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-trackengage"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>

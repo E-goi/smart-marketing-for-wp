@@ -75,7 +75,7 @@ function delete_simple_form($id) {
 		<label for="list_to_subscribe"><?php _e( 'Egoi List', 'egoi-for-wp' ); ?></label>
 		<p class="subtitle"><?php _e( 'Select the list to which visitors should be subscribed.' ,'egoi-for-wp' ); ?></p>
 		<div class="smsnf-wrapper">
-			<select id="list_to_subscribe" name="<?= $name ?>" class="form-select" <?= 'data-egoi-list="'. $selected_list .'"' ?> disabled>
+			<select id="list_to_subscribe" name="<?php echo $name ?>" class="form-select" <?php echo 'data-egoi-list="'. $selected_list .'"' ?> disabled>
                 <option value="" selected disabled hidden><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
             </select>
 			<div class="loading"></div>
@@ -84,10 +84,10 @@ function delete_simple_form($id) {
 <?php }
 
 function get_lang_html($selected_lang, $name, $hide) { ?>
-	<div id="form_lang_wrapper" class="smsnf-input-group" <?= $hide ? 'style="display: none"' : '' ?>>
+	<div id="form_lang_wrapper" class="smsnf-input-group" <?php echo $hide ? 'style="display: none"' : '' ?>>
 		<label for="form_lang"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label>
 		<div class="smsnf-wrapper">
-			<select name="egoi_widget[lang]" id="form_lang" class="form-select" data-egoi-lang="<?=$selected_lang ?>"  disabled required></select>
+			<select name="egoi_widget[lang]" id="form_lang" class="form-select" data-egoi-lang="<?php echo $selected_lang ?>"  disabled required></select>
 			<div class="loading"></div>
 		</div>
 	</div>

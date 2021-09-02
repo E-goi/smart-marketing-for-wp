@@ -14,34 +14,20 @@ $lists = $Egoi4WP->getLists();
 function webpushValidator($cod) {
     if (preg_match("/^[A-Za-z0-9_-]*$/", $cod)) {
         $url = 'https://egoiapp2.com/wp/files/' . filter_var($cod, FILTER_SANITIZE_STRING) ;
-        if(function_exists('wp_remote_request')) {
 
-            $res = wp_remote_request($url,
-                array(
-                    'method' => 'GET',
-                    'timeout' => 30,
-                )
-            );
+        $res = wp_remote_request($url,
+            array(
+                'method' => 'GET',
+                'timeout' => 30,
+            )
+        );
 
-            if ( $res['response']['code'] != 200) {
-                return false;
-            }
-
-            return true;
-        }else{
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-            curl_exec($ch);
-
-            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-
-            if ($http_code != 200) {
-                return false;
-            }
-            return true;
+        if ( is_wp_error($res) || $res['response']['code'] != 200) {
+            return false;
         }
+
+        return true;
+
     } else {
         return false;
     }
@@ -80,7 +66,7 @@ if (!empty($_GET['sub']) && $_GET['sub'] === 'create-wp' && !empty($_POST['creat
 $error = $ok = 0;
 if(isset($_POST['action'])){
     if (isset($_POST['egoi_webpush']['code'])) {  // Save web push code
-        $_POST['egoi_webpush']['code'] = filter_var($_POST['egoi_webpush']['code'], FILTER_SANITIZE_STRING);
+        $_POST['egoi_webpush']['code'] = sanitize_key($_POST['egoi_webpush']['code']);
         if (webpushValidator($_POST['egoi_webpush']['code'])) { // valid web push
             if (!$options = get_option('egoi_webpush_code')) {
                 $_POST['egoi_webpush']['track'] = 1;
@@ -97,7 +83,7 @@ if(isset($_POST['action'])){
     } else if (isset($_POST['egoi_webpush']['track'])) {  // switch on/off web push
 
         $options = get_option('egoi_webpush_code');
-        $options['track'] = $_POST['egoi_webpush']['track'];
+        $options['track'] = sanitize_key($_POST['egoi_webpush']['track']);
         update_option('egoi_webpush_code', $options);
 
     }
@@ -140,12 +126,12 @@ if ($redir) {
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'Web Push', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-webpush"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
-                <li><a class="home <?= $page['create-wp'] ?'-select':'' ?>" href="?page=egoi-4-wp-webpush&sub=create-wp"><?php _e('Create Web Push', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-webpush"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['create-wp'] ?'-select':'' ?>" href="?page=egoi-4-wp-webpush&sub=create-wp"><?php _e('Create Web Push', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -166,5 +152,4 @@ if ($redir) {
     </main>
 </div>
 
-<?php $js_dir = plugins_url().'/smart-marketing-for-wp/admin/js/egoi-for-wp-webpush.js'; ?>
-<script src="<?=$js_dir?>"></script>
+<script src="<?php echo plugins_url( '../js/egoi-for-wp-webpush.js', __FILE__ ); ?>"></script>

@@ -46,7 +46,7 @@ class Egoi_For_Wp {
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
-	protected $version = SELF_VERSION;
+	protected $version = EFWP_SELF_VERSION;
 	
 	/**
 	 * @var string
@@ -1275,7 +1275,7 @@ class Egoi_For_Wp {
 				'functionOptions' => array(
 					'apikey' => $this->_valid['api_key'],
 					'plugin_key' => $this->plugin,
-					'name' => filter_var($name, FILTER_SANITIZE_STRING)
+					'name' => sanitize_text_field($name)
 					)
 				),'','&');
 
@@ -1333,28 +1333,17 @@ class Egoi_For_Wp {
 	}
 
 	protected function _getContent($url,$headers = []) {
-        if(ini_get('allow_url_fopen')) {
 
-        	$context = stream_context_create(array('http' => array('timeout' => 600,'header' => implode("\r\n",$headers))));
-            $result = file_get_contents($url, false, $context);
+        $res = wp_remote_request( $url,
+            array(
+                'method'     => 'GET',
+                'timeout'    => 30,
+                'headers'    => $headers
+            )
+        );
 
-        } else if(function_exists('curl_init')) {
 
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 600);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-            $result = curl_exec($curl);
-
-            curl_close($curl);
-
-        } else {
-            throw new Exception("ERROR - Please install curl lib in your website");
-        }
-
-        return $result;
+        return is_wp_error($res)?'{}':$res['body'];
     }
 
     private function _postContent($url, $rows, $option = false) {
@@ -1362,16 +1351,16 @@ class Egoi_For_Wp {
 		$url = str_replace('service', 'post', $url);
 		$rows['option'] = $option;
 
-        $ch = curl_init($url);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($rows));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$server_output = curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
+        $res = wp_remote_request( $url,
+            array(
+                'method'     => 'POST',
+                'timeout'    => 30,
+                'body'       => $rows,
+                'headers'    => []
+            )
+        );
 
-        return $server_output;
+        return is_wp_error($res)?'{}':$res['body'];
     }
 
     public function get_listener($user_id) {
@@ -1691,9 +1680,9 @@ class Egoi_For_Wp {
         $subscriber = array(
             'form_id'           => $form_id,
             'form_type'         => $form_type,
-            'subscriber_id'     => filter_var($subscriber_data->UID, FILTER_SANITIZE_STRING),
-            'subscriber_name'   => filter_var($subscriber_data->FIRST_NAME, FILTER_SANITIZE_STRING),
-            'subscriber_email'  => filter_var($subscriber_data->EMAIL, FILTER_SANITIZE_STRING),
+            'subscriber_id'     => sanitize_text_field($subscriber_data->UID),
+            'subscriber_name'   => sanitize_text_field($subscriber_data->FIRST_NAME),
+            'subscriber_email'  => sanitize_email($subscriber_data->EMAIL),
             'list_id'           => $subscriber_data->LIST,
             'list_title'        => empty($list->key_0->title)?$subscriber_data->LIST:$list->key_0->title,
             'created_at'        => current_time('mysql'),

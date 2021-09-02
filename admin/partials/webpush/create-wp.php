@@ -13,7 +13,7 @@
                         <p class="subtitle"><?php _e( 'When visitors subscribe, the URL will include...', 'egoi-for-wp' ); ?></p>
                         <input style="max-width: 400px;" type="text" required
                                name="create_wp_form[label]" autocomplete="off"
-                               placeholder="<?= __('Example: ' . get_bloginfo() ); ?>" />
+                               placeholder="<?php _e('Example: ' . get_bloginfo() ); ?>" />
                     </div>
 
                     <div class="smsnf-input-group">

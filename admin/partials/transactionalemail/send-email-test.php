@@ -37,17 +37,17 @@ if (isset($_POST['action'])) {
             <form method="post" action="#">
             <?php settings_fields('egoi_transactional_email_test_email');settings_errors(); ?>
                 <div class="smsnf-input-group">
-                        <label for="to"><?= _e('Send To', 'egoi-for-wp' ); ?></label>
-                        <input id="to" name="to" type="text" placeholder="<?= __('Set the email address of the recipient', 'egoi-for-wp');?>" value="" required />
+                        <label for="to"><?php _e('Send To', 'egoi-for-wp' ); ?></label>
+                        <input id="to" name="to" type="text" placeholder="<?php _e('Set the email address of the recipient', 'egoi-for-wp');?>" value="" required />
                     </div>
 
                 <div class="smsnf-input-group">
-                    <label for="subject"><?= _e( 'Subject', 'egoi-for-wp' ); ?></label>
-                    <input id="subject" name="subject" type="text" placeholder="<?= __('Set the subject of email', 'egoi-for-wp');?>" value="" required />
+                    <label for="subject"><?php _e( 'Subject', 'egoi-for-wp' ); ?></label>
+                    <input id="subject" name="subject" type="text" placeholder="<?php _e('Set the subject of email', 'egoi-for-wp');?>" value="" required />
                 </div>
 
                 <div class="smsnf-input-group">
-                    <label for="message"><?= _e( 'Message', 'egoi-for-wp' ); ?></label>
+                    <label for="message"><?php _e( 'Message', 'egoi-for-wp' ); ?></label>
                     <textarea id="message" rows=10 name="message" value="" required></textarea>
                 </div>
 

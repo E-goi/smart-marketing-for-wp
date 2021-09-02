@@ -256,8 +256,8 @@ class CampaignWidget {
                 <?php } ?>
             </div>
 
-            <?php $js_dir = plugins_url().'/smart-marketing-for-wp/admin/js/egoi-for-wp-campaign-widget.js'; ?>
-            <script src="<?=$js_dir?>"></script>              
+
+            <script src="<?php echo plugins_url( '../../admin/js/egoi-for-wp-campaign-widget.js', __FILE__ );?>"></script>
 		<?php
     }
     
@@ -288,16 +288,16 @@ class CampaignWidget {
     public function save_email_content($post_id){
         if (array_key_exists('email_campaign_widget', $_POST)) {
             update_post_meta($post_id, 'email_campaign_widget', true);
-            update_post_meta($post_id, 'email_campaign_widget_sender', $_POST['email_campaign_widget_sender']);
-            update_post_meta($post_id, 'email_campaign_widget_list_contacts', $_POST['email_campaign_widget_list_contacts']);
+            update_post_meta($post_id, 'email_campaign_widget_sender', sanitize_key($_POST['email_campaign_widget_sender']));
+            update_post_meta($post_id, 'email_campaign_widget_list_contacts', sanitize_key($_POST['email_campaign_widget_list_contacts']));
         } else {
             update_post_meta($post_id, 'email_campaign_widget', false);
         }
 
         if (array_key_exists('email_campaign_widget_modify_content', $_POST)) {
             update_post_meta($post_id, 'email_campaign_widget_modify_content', true);
-            update_post_meta($post_id, 'email_campaign_widget_custom_heading', $_POST['email_campaign_widget_custom_heading']);
-            update_post_meta($post_id, 'email_campaign_widget_custom_content', $_POST['email_campaign_widget_custom_content']);
+            update_post_meta($post_id, 'email_campaign_widget_custom_heading', sanitize_text_field($_POST['email_campaign_widget_custom_heading']));
+            update_post_meta($post_id, 'email_campaign_widget_custom_content', sanitize_textarea_field($_POST['email_campaign_widget_custom_content']));
         } else {
             update_post_meta($post_id, 'email_campaign_widget_modify_content', false);
             update_post_meta($post_id, 'email_campaign_widget_custom_heading', null);
@@ -308,15 +308,15 @@ class CampaignWidget {
     public function save_webpush_content($post_id){
         if (array_key_exists('webpush_campaign_widget', $_POST)) {
             update_post_meta($post_id, 'webpush_campaign_widget', true);
-            update_post_meta($post_id, 'webpush_campaign_widget_site_info', $_POST['webpush_campaign_widget_site_info']);
+            update_post_meta($post_id, 'webpush_campaign_widget_site_info', sanitize_key($_POST['webpush_campaign_widget_site_info']));
         } else {
             update_post_meta($post_id, 'webpush_campaign_widget', false);
         }
 
         if (array_key_exists('webpush_campaign_widget_modify_content', $_POST)) {
             update_post_meta($post_id, 'webpush_campaign_widget_modify_content', true);
-            update_post_meta($post_id, 'webpush_campaign_widget_custom_heading', $_POST['webpush_campaign_widget_custom_heading']);
-            update_post_meta($post_id, 'webpush_campaign_widget_custom_content', $_POST['webpush_campaign_widget_custom_content']);
+            update_post_meta($post_id, 'webpush_campaign_widget_custom_heading', sanitize_text_field($_POST['webpush_campaign_widget_custom_heading']));
+            update_post_meta($post_id, 'webpush_campaign_widget_custom_content', sanitize_textarea_field($_POST['webpush_campaign_widget_custom_content']));
         } else {
             update_post_meta($post_id, 'webpush_campaign_widget_modify_content', false);
             update_post_meta($post_id, 'webpush_campaign_widget_custom_heading', null);
@@ -364,8 +364,8 @@ class CampaignWidget {
         $email_campaign_widget_modify_content = $email_campaign_widget_modify_content_checked || (get_post_meta($post->ID, 'email_campaign_widget_modify_content', true) === '1');
 
         if ($was_posted && $email_campaign_widget_modify_content) {
-            $email_campaign_widget_custom_heading = $_POST['email_campaign_widget_custom_heading'];
-            $email_campaign_widget_custom_content = $_POST['email_campaign_widget_custom_content'];
+            $email_campaign_widget_custom_heading = sanitize_text_field($_POST['email_campaign_widget_custom_heading']);
+            $email_campaign_widget_custom_content = sanitize_textarea_field($_POST['email_campaign_widget_custom_content']);
         } else {
             $email_campaign_widget_custom_heading = get_post_meta($post->ID, 'email_campaign_widget_custom_heading', true);
             $email_campaign_widget_custom_content = get_post_meta($post->ID, 'email_campaign_widget_custom_content', true);
