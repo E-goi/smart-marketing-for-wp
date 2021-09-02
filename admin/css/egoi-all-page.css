@@ -137,3 +137,8 @@
 .column-egoi_newsletter{
     width: 90px;
 }
+
+.wp-menu-image > img{
+    width: 20px;
+    height: auto;
+}
