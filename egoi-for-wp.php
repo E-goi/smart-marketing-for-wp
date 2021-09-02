@@ -11,7 +11,7 @@ error_reporting(0);
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           3.7.12
+ * Version:           3.7.13
 
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
@@ -27,7 +27,7 @@ if (!defined( 'WPINC' )) {
 }
 
 
-define('SELF_VERSION', '3.7.12');
+define('EFWP_SELF_VERSION', '3.7.13');
 
 
 if (!session_id()){
@@ -58,7 +58,7 @@ register_deactivation_hook( __FILE__, 'deactivate_egoi_for_wp');
 // HOOK FATAL
 register_shutdown_function('egoiFatalErrorShutdownHandler');
 function egoiWPErrorHandler($code, $message, $file, $line) {
-    echo $code.' - '.$message.' - '.$file.' - '.$line;
+    echo esc_html($code.' - '.$message.' - '.$file.' - '.$line);
     exit;
 }
 function egoiFatalErrorShutdownHandler(){
@@ -71,7 +71,7 @@ function egoiFatalErrorShutdownHandler(){
 // HOOK SYNC USERS
 add_action('wp_ajax_add_users', 'add_users');
 function add_users(){
-    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->users_queue();
 }
 
@@ -84,14 +84,14 @@ function add_users(){
 // HOOK GET LISTS
 add_action('wp_ajax_egoi_get_lists', 'egoi_get_lists');
 function egoi_get_lists(){
-    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->get_lists();
 }
 
 // HOOK E-GOI LIST GET FORM
 add_action('wp_ajax_get_form_from_list', 'get_form_from_list');
 function get_form_from_list(){
-    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->get_form_processed();
 }
 
@@ -162,7 +162,7 @@ function process_content_page($post_id, $post, $update ){
 add_action( 'wp_ajax_my_action', 'process_simple_form_add' );
 add_action( 'wp_ajax_nopriv_my_action', 'process_simple_form_add' );
 function process_simple_form_add(){
-    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->subscribe_egoi_simple_form_add();
 }
 
@@ -204,14 +204,14 @@ function apikey_changes(){
 // HOOK GET TAGS
 add_action('wp_ajax_egoi_get_tags', 'egoi_get_tags');
 function egoi_get_tags(){
-    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->get_tags();
 }
 
 // HOOK ADD TAG
 add_action('wp_ajax_egoi_add_tag', 'egoi_add_tag');
 function egoi_add_tag(){
-    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->add_tag($_POST['name']);
 }
 
@@ -220,11 +220,7 @@ function egoi_add_webpush() {
 
     if(!strpos($_SERVER['HTTP_REFERER'], 'wp-admin')){ //don't show web push on admin pages
         $public_area = new Egoi_For_Wp_Public();
-        $webpush = $public_area->add_webpush();
-
-        if ($webpush) {
-            echo $webpush;
-        }
+        $public_area->add_webpush();
     }
 }
 add_action('wp_footer', 'egoi_add_webpush');
@@ -258,18 +254,9 @@ add_action( 'init', 'register_egoi_rss_feeds' );
 
 
 function egoi_rss_feeds(){
-    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', SELF_VERSION);
+    $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     $admin->egoi_rss_feeds_content();
 }
-
-function hook_font_awesome() {
-    ?>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <?php
-}
-add_action('admin_head', 'hook_font_awesome');
 
 /** 
  * Adding Custom GTIN Meta Field
@@ -345,7 +332,7 @@ function popups_display(){
 
 
 // COUNTRY MOBILE CODES
-define( 'COUNTRY_CODES' , serialize(array (
+define( 'EFWP_COUNTRY_CODES' , serialize(array (
     'AD' =>
         array (
             'iso3' => 'AND',
@@ -2316,6 +2303,17 @@ define( 'COUNTRY_CODES' , serialize(array (
         ),
 )));
 
+
+add_action('in_admin_header', function () {
+
+    if(strpos(get_current_screen()->id, 'smart-marketing-for-wp') == false){
+        return false;
+    }
+
+    remove_all_actions('admin_notices');
+    remove_all_actions('all_admin_notices');
+
+}, 1000);
 
 // INITIALIZE PLUGIN
 function run_egoi_for_wp() {
