@@ -382,17 +382,20 @@ class Egoi_For_Wp_Public {
 
 	public function subscribe_egoi_form()
 	{
-		$post = $_POST;
 
-		$ch = curl_init($post['action_url']);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$server_output = curl_exec($ch);
-		curl_close($ch);
+        $res = wp_remote_request( $_POST['action_url'],
+            array(
+                'method'     => 'POST',
+                'timeout'    => 30,
+                'body'       => $_POST,
+            )
+        );
 
-		$outputs = explode('</style>', $server_output);
+        if(is_wp_error($res)){
+            $res = ['body' => ''];
+        }
+
+		$outputs = explode('</style>', $res['body']);
 		$content = strip_tags($outputs[1], '<div></div><p></p><br>');
 		echo $content;
 		exit;
@@ -508,7 +511,7 @@ class Egoi_For_Wp_Public {
 				jQuery(document).ready(function() {
 					jQuery("#'.$simple_form.' select[name=egoi_country_code]").empty();
 				';
-		foreach (unserialize(COUNTRY_CODES) as $key => $value) {
+		foreach (unserialize(EFWP_COUNTRY_CODES) as $key => $value) {
 		 	$string = ucwords(strtolower($value['country_pt']))." (+".$value['prefix'].")";
 		 	$post .= 'jQuery("#'.$simple_form.' select[name=egoi_country_code]").append("<option value='.$value['prefix'].'>'.$string.'</option>");';
 		}
@@ -639,12 +642,12 @@ class Egoi_For_Wp_Public {
         if (isset($options['track']) && $options['track'] == 1 && $_egoiFilterswebpush == true) {
 			$_egoiFilterswebpush = false;
             $cod = trim($options['code']);
-            $js = "
-                <script type=\"text/javascript\">
+            ?>
+                <script type="text/javascript">
                     var _egoiwp = _egoiwp || {};
                     (function(){
-                    var u=\"https://cdn-static.egoiapp2.com/\";
-                    _egoiwp.code = \"$cod\";
+                    var u="https://cdn-static.egoiapp2.com/";
+                    _egoiwp.code = "<?php echo esc_html($cod) ?>";
                     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
                     g.type='text/javascript';
                     g.defer=true;
@@ -653,11 +656,9 @@ class Egoi_For_Wp_Public {
                     s.parentNode.insertBefore(g,s);
                     })();
                 </script>
-                ";
-            return $js;
-        } else {
-            return false;
+            <?php
         }
+
     }
 
     public function add_egoi_rss_feeds(){
@@ -804,27 +805,27 @@ class Egoi_For_Wp_Public {
 
         if(empty($_POST['elementorEgoiForm'])){//old simple forms
             $form_data = array(
-                'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
-                'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
-                'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
-                'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
-                'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
+                'email' => sanitize_email($_POST['egoi_email']),
+                'cellphone' => sanitize_text_field($_POST['egoi_country_code']."-".$_POST['egoi_mobile']),
+                'first_name' => sanitize_text_field(stripslashes($_POST['egoi_name'])),
+                'lang' => sanitize_email($_POST['egoi_lang']),
+                'tags' => array(sanitize_key($_POST['egoi_tag'])),
                 'status' => $status,
             );
         }else{
             $_POST['status'] = $status;
-            $_POST['tags'] = array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT));
+            $_POST['tags'] = array(sanitize_key($_POST['egoi_tag']));
             //$_POST['lang'] = filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL);
         }
 
         $result = $api->addSubscriberWpForm(
-            filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
+            sanitize_key($_POST['egoi_list']),
             empty($form_data)?$_POST:$form_data
         );
 
         if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
 
-            $form_id = filter_var($_POST['egoi_simple_form'], FILTER_SANITIZE_NUMBER_INT);
+            $form_id = sanitize_key($_POST['egoi_simple_form']);
             if(empty($_POST['elementorEgoiForm'])){
                 $api->smsnf_save_form_subscriber($form_id, 'simple-form', $result);
             }
