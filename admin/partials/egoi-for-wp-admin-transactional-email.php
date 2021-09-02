@@ -22,12 +22,12 @@ $page = array(
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'Transactional Email', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-transactional-email"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['send-email-test'] ?'-select':'' ?>" href="?page=egoi-4-wp-transactional-email&sub=send-email-test"><?php _e('Send Email Test', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-transactional-email"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?php echo $page['send-email-test'] ?'-select':'' ?>" href="?page=egoi-4-wp-transactional-email&sub=send-email-test"><?php _e('Send Email Test', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>

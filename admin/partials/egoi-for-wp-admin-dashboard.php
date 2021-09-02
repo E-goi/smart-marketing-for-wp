@@ -29,11 +29,11 @@ $page = array(
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'Dashboard', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-dashboard"><?php _e('General', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-dashboard"><?php _e('General', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -95,10 +95,10 @@ $page = array(
 
                         <!-- Column Left Start -->
                         <!-- Last Subscribers table / Subscribers by List / Subscribers by Form / Last Email Campaign /  Last SMS Campaign  -->
-                        <div class="column col-8 col-md-12 col-xs-12 mt-3">
+                        <div class="column col-12 col-md-8 col-xs-8 mt-3">
                             <div class="columns">
                                 <!-- Registrations made today -->
-                                <div class="column col-4 col-md-12 col-xs-12">
+                                <div class="column col-4 col-md-4 col-xs-4">
                                     <div class="smsnf-dashboard-subs-stats">
                                         <div class="smsnf-dashboard-subs-stats__content">
                                             <h3>
@@ -115,13 +115,13 @@ $page = array(
                                 </div>
 
                                 <!-- Total Subscribers -->
-                                <div class="column col-4 col-md-12 col-xs-12">
+                                <div class="column col-4 col-md-4 col-xs-4">
                                     <div class="smsnf-dashboard-subs-stats">
                                         <div class="smsnf-dashboard-subs-stats__content">
                                             <h3>
                                                 <?php _e('Total<br>Subscribers', 'egoi-for-wp'); ?>
                                                 <?php $string = __("Total subscribers registered\ndirectly in the plugin", 'egoi-for-wp'); ?>
-                                                <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" data-tooltip="<?=$string?>">
+                                                <button class="smsnf-dashboard-subs-stats__content--result btn eg_tooltip" data-tooltip="<?php echo $string?>">
                                                         <?php echo $this->smsnf_get_form_susbcribers_total('ever')->total; ?>
                                                 </button>
                                             </h3>
@@ -134,13 +134,13 @@ $page = array(
                                 </div>
 
                                 <!-- Best day -->
-                                <div class="column col-4 col-md-12 col-xs-12">
+                                <div class="column col-4 col-md-4 col-xs-4">
                                     <div class="smsnf-dashboard-subs-stats">
                                         <div class="smsnf-dashboard-subs-stats__content">
                                             <h3>
                                                 <?php _e('Best<br>day', 'egoi-for-wp'); ?>
                                                 <?php $string = __("Best day of subscribers registered\ndirectly in the plugin", 'egoi-for-wp'); ?>
-                                                <button class="smsnf-dashboard-subs-stats__content--result btn tooltip" data-tooltip="<?=$string?>">
+                                                <button class="smsnf-dashboard-subs-stats__content--result btn eg_tooltip" data-tooltip="<?php echo $string?>">
                                                     <?php
                                                         $best_day = $this->smsnf_get_form_subscribers_best_day()->date;
                                                         echo $best_day ? date('d M Y', strtotime($best_day)) : '-';
@@ -189,7 +189,7 @@ $page = array(
                                 </table>
                             </div>
                             <div class="columns">
-                                <div class="column col-6 col-xl-12 col-xs-12">
+                                <div class="column col-12 col-xl-6 col-xs-6">
                                     <!-- Subscribers by List -->
                                     <div class="smsnf-dashboard-subscribers-by-lists mt-3">
                                         <div class="smsnf-dashboard-subscribers-by-lists__title">
@@ -206,7 +206,7 @@ $page = array(
                                                     <select id="chart_list">
                                                         <?php foreach ($lists as $list) { ?>
                                                             <option value="<?php echo implode(",", $lists_chart[$list->list_id]['totals']);?>" <?php selected($list->list_id, $options_list);?> >
-                                                                <?=$list->title?>
+                                                                <?php echo $list->title?>
                                                             </option>
                                                         <?php } ?>
                                                     </select>
@@ -236,7 +236,7 @@ $page = array(
                                         <div class="loading loading-lg" style="padding: 40px;" id="last_sms_campaign_loading"></div>
                                     </div>
                                 </div>
-                                <div class="column col-6 col-xl-12 col-xs-12">
+                                <div class="column col-12 col-xl-6 col-xs-6">
                                     <!-- Subscribers by Form -->
                                     <div class="smsnf-dashboard-last-subscribers-by-form mt-3">
                                         <div class="smsnf-dashboard-last-subscribers-by-form__title">
@@ -253,9 +253,9 @@ $page = array(
                                                     <th><?php _e('Nº Subscribers', 'egoi-for-wp'); ?></th>
                                                 <?php foreach ($forms as $form) { ?>
                                                     <tr>
-                                                        <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?=$form->form_id?></td>
-                                                        <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?=$form->title?></td>
-                                                        <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd"><?=$form->total?></td>
+                                                        <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?php echo $form->form_id?></td>
+                                                        <td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?php echo $form->title?></td>
+                                                        <td class="smsnf-dashboard-last-subscribers-by-form__table__rtd"><?php echo $form->total?></td>
                                                     </tr>
                                                 <?php } ?>
                                                 </tbody>
@@ -274,7 +274,7 @@ $page = array(
                         </div> <!-- /col-8 -->
 
                         <!-- Column Right Start -->
-                        <div class="column col-4 col-md-12 col-xs-12 mt-3">
+                        <div class="column col-12 col-md-4 col-xs-4 mt-3">
                             <!-- Account -->
                             <div class="smsnf-dashboard-account">
                                 <!-- If the sms addon is active -->

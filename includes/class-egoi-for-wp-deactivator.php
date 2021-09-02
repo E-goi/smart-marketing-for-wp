@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Egoi_For_Wp_Deactivator {
 
-	public static $version = SELF_VERSION;
+	public static $version = EFWP_SELF_VERSION;
 	
 	public static function deactivate() {
 		
@@ -63,17 +63,16 @@ class Egoi_For_Wp_Deactivator {
 
 	private static function _postContent($url, $rows) {
 
-		$url = str_replace('service', 'post', $url);
-        $ch = curl_init($url);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($rows));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$server_output = curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
+        $res = wp_remote_request( $url,
+            array(
+                'method'     => 'POST',
+                'timeout'    => 30,
+                'body'       => $rows,
+                'headers'    => []
+            )
+        );
 
-        return $server_output;
+        return $res['body'];
     }
 
     public static function smsnf_drop_table($table) {

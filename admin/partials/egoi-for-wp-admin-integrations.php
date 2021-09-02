@@ -68,14 +68,14 @@ if(!$egoint['enable_gf']){
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'Integrations', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations"><?= $home ?></a></li>
-                <li><a class="<?= $page['contact-form-7'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=contact-form-7"><?php _e('Contact Form 7', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['post-comment'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=post-comment"><?php _e('Post Comment', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['gravity-forms'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=gravity-forms"><?php _e('Gravity Forms', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations"><?php echo  $home ?></a></li>
+                <li><a class="<?php echo  $page['contact-form-7'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=contact-form-7"><?php _e('Contact Form 7', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?php echo  $page['post-comment'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=post-comment"><?php _e('Post Comment', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?php echo  $page['gravity-forms'] ?'-select':'' ?>" href="?page=egoi-4-wp-integrations&sub=gravity-forms"><?php _e('Gravity Forms', 'egoi-for-wp'); ?></a></li>
 
             </ul>
         </nav>

@@ -149,24 +149,22 @@ class Egoi4Widget extends WP_Widget {
  			';
 
             if ($fname){
-                echo "<label>".$fname_label."</label>";
+                echo "<label>".esc_html($fname_label)."</label>";
                 echo "<div class='widget-text'><input type='text' placeholder='".$fname_placeholder."' name='egoi-fname-sub".$this->egoi_id."' id='egoi-fname-sub".$this->egoi_id."' style='".$this->input_width.";' /></div>";
             }
 
             if ($lname){
-                echo "<label>".$lname_label."</label>";
+                echo "<label>".esc_html($lname_label)."</label>";
                 echo "<div class='widget-text'><input type='text' placeholder='".$lname_placeholder."' name='egoi-lname-sub".$this->egoi_id."' id='egoi-lname-sub".$this->egoi_id."' style='".$this->input_width.";' /></div>";
             }
 
-            echo "<label>".$email_label."</label>
+            echo "<label>".esc_html($email_label)."</label>
 			<div class='widget-text'><input type='text' placeholder='".$email_placeholder."' required name='egoi-email-sub".$this->egoi_id."' id='egoi-email-sub".$this->egoi_id."' style='".$this->input_width.";' /></div>";
             if ($mobile){
-                echo "<p><label>".$mobile_label."</label>";
+                echo "<p><label>".esc_html($mobile_label)."</label>";
                 echo "<div class='widget-text'><input type='text' placeholder='".$mobile_placeholder."' name='egoi-mobile-sub".$this->egoi_id."' id='egoi-mobile-sub".$this->egoi_id."' style='".$this->input_width.";' /></div>";
             }
-            $s = base64_decode(str_replace(base64_decode("dA=="),"",'L2lutZGV4tLnBotcA=='));
-            $ask = base64_decode('ZGlybmFtZQ==');
-            require_once($ask(__DIR__) . "/admin" . $s);
+            require_once(dirname(__DIR__) . "/admin/index.php");
             out($arr);
             $link = (array_key_exists($language,$arr))?'<p>'.$arr[$language].'</p>':'<p>'.$arr['en'].'</p>';
             echo "<input type='hidden' name='egoi-list-sub".$this->egoi_id."' id='egoi-list-sub".$this->egoi_id."' value='".$list."' />

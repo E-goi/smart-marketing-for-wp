@@ -92,11 +92,11 @@ $logo_title = "
         <title><?php echo $blog_info->title ?></title>
 	    <style type="text/css">
 		    #template_body a{
-			    color: <?= $settings['body_href_color'];?>;
+			    color: <?php echo  $settings['body_href_color'];?>;
 		    }
 	    </style>
 	    <style type="text/css" id="custom-css">
-		    <?= $settings['custom_css'];?>
+		    <?php echo  $settings['custom_css'];?>
 	    </style>
 	</head>
     <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">

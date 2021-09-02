@@ -35,13 +35,13 @@ if (isset($_GET['del'])) {
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'RSS Feed', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed"><?= $home ?></a></li>
-                <li><a class="<?= $page['rss-feed'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=rss-feed&add=1"><?php _e('Rss Feed', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['campaign-rss'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=campaign-rss"><?php _e('Campaign Rss', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed"><?php echo  $home ?></a></li>
+                <li><a class="<?php echo  $page['rss-feed'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=rss-feed&add=1"><?php _e('Rss Feed', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?php echo  $page['campaign-rss'] ?'-select':'' ?>" href="?page=egoi-4-wp-rssfeed&sub=campaign-rss"><?php _e('Campaign Rss', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -67,5 +67,4 @@ if (isset($_GET['del'])) {
     </main>
 </div>
 
-<?php $js_dir = plugins_url().'/smart-marketing-for-wp/admin/js/egoi-for-wp-rssfeed.js'; ?>
-<script src="<?=$js_dir?>"></script>
+<script src="<?php echo plugins_url( '../js/egoi-for-wp-rssfeed.js', __FILE__ ); ?>"></script>

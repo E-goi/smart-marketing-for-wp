@@ -108,21 +108,21 @@ class Egoi_For_Wp_Listener {
         if(is_array($_POST)){
             foreach ($_POST as $key => $item) {
                 if(strpos($key,'billing_') === false){ continue; }
-                $all_fields[$key][0] = $item;
+                $all_fields[$key][0] = sanitize_text_field($item);
             }
         }
 
         if (!empty($_POST['billing_first_name'])) {
-            $all_fields['billing_first_name'][0] = $_POST['billing_first_name'];
+            $all_fields['billing_first_name'][0] = sanitize_text_field($_POST['billing_first_name']);
         }
         if (!empty($_POST['billing_last_name'])) {
-            $all_fields['billing_last_name'][0] = $_POST['billing_last_name'];
+            $all_fields['billing_last_name'][0] = sanitize_text_field($_POST['billing_last_name']);
         }
         if (!empty($_POST['billing_phone'])) {
-            $all_fields['billing_phone'][0] = $_POST['billing_phone'];
+            $all_fields['billing_phone'][0] = sanitize_text_field($_POST['billing_phone']);
         }
         if (!empty($_POST['billing_cellphone'])) {
-            $all_fields['billing_cellphone'][0] = $_POST['billing_cellphone'];
+            $all_fields['billing_cellphone'][0] = sanitize_text_field($_POST['billing_cellphone']);
         }
 
         $woocommerce = [];

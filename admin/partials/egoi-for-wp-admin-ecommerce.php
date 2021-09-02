@@ -47,12 +47,12 @@ $page = array(
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'E-commerce', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><?php _e('Catalogs', 'egoi-for-wp'); ?></a></li>
-                <li><a class="<?= $page['new_catalog'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce&subpage=new_catalog"><?php _e('Create Catalog', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><?php _e('Catalogs', 'egoi-for-wp'); ?></a></li>
+                <li><a class="<?php echo  $page['new_catalog'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce&subpage=new_catalog"><?php _e('Create Catalog', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -64,21 +64,21 @@ $page = array(
 
             <!-- Messages -->
 
-            <div id="egoi-success" style="<?=empty($result['success'])?'display: none;':'';?>">
+            <div id="egoi-success" style="<?php echo empty($result['success'])?'display: none;':'';?>">
                 <div class="postbox egoi-dialog-box" style="border-left: 2px solid green !important;">
                     <div style="padding:10px 0;">
                         <span style="color: green; margin-top:5px;" class="dashicons dashicons-yes-alt"></span>
-                        <span id="egoi-success-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?=!empty($result['success'])?$result['success']:'';?></span>
+                        <span id="egoi-success-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?php echo !empty($result['success'])?$result['success']:'';?></span>
                     </div>
                     <div class="egoi-simple-close-x"><span>X</span></div>
                 </div>
             </div>
 
-            <div id="egoi-alert" style="<?=empty($result['error'])?'display: none;':'';?>">
+            <div id="egoi-alert" style="<?php echo empty($result['error'])?'display: none;':'';?>">
                 <div class="postbox egoi-dialog-box">
                     <div style="padding:10px 0;">
                         <span style="color: orangered; margin-top:5px;" class="dashicons dashicons-warning"></span>
-                        <span id="egoi-alert-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?=!empty($result['error'])?$result['error']:'';?></span>
+                        <span id="egoi-alert-message" style="display: inline-block; line-height: 22px; font-size: 16px; margin-left: 12px; margin-top: 3px;"><?php echo !empty($result['error'])?$result['error']:'';?></span>
                     </div>
                     <div class="egoi-simple-close-x"><span>X</span></div>
                 </div>
@@ -111,9 +111,9 @@ $page = array(
             <!-- Content -->
             <section class="smsnf-content">
                 <div class="container">
-                    <h4 style="margin: 0;"><?=__('DISCLAIMER:','egoi-for-wp');?></h4>
+                    <h4 style="margin: 0;"><?php _e('DISCLAIMER:','egoi-for-wp');?></h4>
                     <p style="font-size: 11px;">
-                        <?=__('Any changes on categories or .csv importations will need to be manually imported by clicking the "import" button in the Catalog\'s page.','egoi-for-wp');?>
+                        <?php _e('Any changes on categories or .csv importations will need to be manually imported by clicking the "import" button in the Catalog\'s page.','egoi-for-wp');?>
                     </p>
                 </div>
             </section>

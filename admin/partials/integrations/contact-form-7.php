@@ -9,8 +9,8 @@ $contact_forms = $Egoi4WpBuilderObject->getContactFormInfo();
             <?php if(!class_exists('WPCF7')){ ?>
             <div class="container" style="display: flex;justify-content: center;align-items: center;flex-direction: column;min-height: 100%;">
                 <div>
-                    <h2><?=__('Plugin missing','egoi-for-wp');?></h2>
-                    <h4><?=__('Make sure you have Contact Form 7 installed before trying to configure the integration.','egoi-for-wp');?></h4>
+                    <h2><?php _e('Plugin missing','egoi-for-wp');?></h2>
+                    <h4><?php _e('Make sure you have Contact Form 7 installed before trying to configure the integration.','egoi-for-wp');?></h4>
                 </div>
             <div>
             <?php }else{ ?>
@@ -38,7 +38,7 @@ $contact_forms = $Egoi4WpBuilderObject->getContactFormInfo();
                         <p class="subtitle"><?php _e( 'Select the language your products are setup.' ,'egoi-for-wp' ); ?></p>
                         <div class="smsnf-wrapper">
                             <?php if(empty($contact_forms)) { ?>
-                                <span><?=__('Cannot locate any forms from Contact Form 7', 'egoi-for-wp');?></span>
+                                <span><?php _e('Cannot locate any forms from Contact Form 7', 'egoi-for-wp');?></span>
                             <?php } else {?>
                                 <select id="egoi4wp-forms" name="contact_form[]" class="form-select" multiple="multiple" >
                                     <?php

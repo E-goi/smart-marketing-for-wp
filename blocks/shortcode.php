@@ -12,7 +12,7 @@
  *
  * @see https://wordpress.org/gutenberg/handbook/blocks/writing-your-first-block-type/#enqueuing-block-scripts
  */
-function shortcode_block_init() {
+function efwp_shortcode_block_init() {
 	// Skip block registration if Gutenberg is not enabled/merged.
 	if ( ! function_exists( 'register_block_type' ) ) {
 		return;
@@ -24,12 +24,12 @@ function shortcode_block_init() {
 	wp_localize_script( 'shortcode-block-editor', 'ajax_url', admin_url( 'admin-ajax.php' ) );
 	register_block_type( 'egoi-for-wp/shortcode', array('editor_script' => 'shortcode-block-editor') );
 }
-add_action( 'init', 'shortcode_block_init' );
+add_action( 'init', 'efwp_shortcode_block_init' );
 
 // Função que obtém os formulários via ajax
-add_action( 'wp_ajax_get_egoi_forms', 'get_egoi_forms' );
+add_action( 'wp_ajax_efwp_get_egoi_forms', 'efwp_get_egoi_forms' );
 
-function get_egoi_forms() {
+function efwp_get_egoi_forms() {
     global $wpdb;
     $rows = $wpdb->get_results( "SELECT * FROM ".$wpdb->prefix."posts WHERE post_type = 'egoi-simple-form'");
 

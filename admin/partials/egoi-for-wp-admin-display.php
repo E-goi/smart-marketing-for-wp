@@ -153,11 +153,11 @@ $page = array(
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'Account', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-account"><?php _e('General', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-account"><?php _e('General', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -166,27 +166,8 @@ $page = array(
     <main style="grid-template-columns: 1fr !important;">
         <section class="smsnf-content">
 
-            <!-- CONTENT -->
-            <style type="text/css">
-                .iframe-container {
-                    overflow: hidden;
-                    padding-top: 270px;
-                    position: relative;
-                }
-
-                .iframe-container iframe {
-                    border: 0;
-                    height: 100%;
-                    left: 0;
-                    position: absolute;
-                    top: 0;
-                    width: 100%;
-                }
-
-            </style>
-
-            <div class="iframe-container">
-                <iframe id="iframe" src="https://eg.e-goi.com/pluginbanners/wp-iframe.php?type=h&lang=<?php echo get_locale(); ?>" ></iframe>
+            <div class="wrap-content">
+                <?php include plugin_dir_path( __DIR__ ) . 'partials/egoi-for-wp-admin-banner-h.php'; ?>
             </div>
 
             <div class='wrap-content' id="wrap--acoount">
@@ -337,10 +318,10 @@ $page = array(
                                                 <td>
                                                     <select name="new_account_prefix" style="width:150px; float: left;" required >
                                                         <?php
-                                                        foreach (unserialize(COUNTRY_CODES) as $key => $value) {
+                                                        foreach (unserialize(EFWP_COUNTRY_CODES) as $key => $value) {
                                                             $string = ucwords(strtolower($value['country_pt']))." (+".$value['prefix'].")";
                                                             ?>
-                                                            <option value="<?=$value['prefix']?>"><?=$string?></option>
+                                                            <option value="<?php echo $value['prefix']?>"><?php echo $string?></option>
                                                             <?php
                                                         }
                                                         ?>
