@@ -1,0 +1,26 @@
+<svg width="224" height="168" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>Layer 1</title>
+  <g data-name="Camada 2" id="Camada_2">
+   <g data-name="Camada 1" id="Camada_1-2">
+    <g id="Canvas">
+     <g stroke="null" data-name="Group 2.3" id="Group_2.3">
+      <g stroke="null" id="Group">
+       <g stroke="null" data-name="path0 fill 1" id="path0_fill_1">
+        <path stroke="null" fill="#00aeda" d="m150.25874,1.68l-76.07,-1.68l-2.94,168.28l28.15,-28.74l56.19,-6.41l-5.33,-131.45z" class="cls-1" data-name="path0 fill" id="path0_fill"/>
+       </g>
+       <g stroke="null" data-name="path1 fill 1" id="path1_fill_1">
+        <path stroke="null" fill="#00aeda" d="m61.99874,1.36l4.26,134c-17.46,3.28 -54.9,-2.36 -64.87,-51.41s36.18,-75.54 60.61,-82.59z" class="cls-1" data-name="path1 fill" id="path1_fill"/>
+       </g>
+       <g stroke="null" data-name="path2 fill 1" id="path2_fill_1">
+        <path stroke="null" fill="#00aeda" d="m159.93874,25l1.44,105.82c17.43,3.3 54.31,0.32 62.15,-38.06s-39.13,-61.11 -63.59,-67.76z" class="cls-1" data-name="path2 fill" id="path2_fill"/>
+       </g>
+      </g>
+      <g stroke="null" data-name="Group" id="Group-2"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>
