@@ -29,26 +29,26 @@
         <div>
             <form id="egoi_simple_form" method="post" action="<?php echo $this->prepareUrl('&sub=rss-feed&edit=egoi_rssfeed_'.$code); ?>">
                 <?php settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );settings_errors(); ?>
-                <input name="code" type="hidden" value="<?=$code?>">
+                <input name="code" type="hidden" value="<?php echo $code?>">
 
                 <?php if (isset($_GET['edit'])) { ?>
                     <div class="smsnf-input-group">
-                        <label for="campaign_subject"><?= _e( 'URL', 'egoi-for-wp' ); ?></label>
+                        <label for="campaign_subject"><?php _e( 'URL', 'egoi-for-wp' ); ?></label>
                         <div class="smsnf-wrapper" style="display: flex;">
-                            <input id="input_<?=$code?>" name="input_url" value="<?php echo get_home_url().'/?feed=egoi_rssfeed_'.$code; ?>" readonly type="text" />
-                            <button type="button" class="copy_url button button--custom" style="padding: 0 5px; height: 40px !important; line-height: 0 !important;margin-top: 12px;" data-rss-feed="input_<?=$code?>"><i class="far fa-copy"></i></button>
+                            <input id="input_<?php echo $code?>" name="input_url" value="<?php echo get_home_url().'/?feed=egoi_rssfeed_'.$code; ?>" readonly type="text" />
+                            <button type="button" class="copy_url button button--custom" style="padding: 0 5px; height: 40px !important; line-height: 0 !important;margin-top: 12px;" data-rss-feed="input_<?php echo $code?>"><i class="far fa-copy"></i></button>
                         </div>
                     </div>
                 <?php } ?>
 
                 <div class="smsnf-input-group">
-                    <label for="name"><?= _e( 'Name', 'egoi-for-wp' ); ?></label>
-                    <input id="name" name="name" type="text" placeholder="<?= __('Choose a name for your new RSS Feed', 'egoi-for-wp');?>" value="<?php echo isset($feed) ? $feed['name'] : null; ?>" required autocomplete="off" />
+                    <label for="name"><?php _e( 'Name', 'egoi-for-wp' ); ?></label>
+                    <input id="name" name="name" type="text" placeholder="<?php _e('Choose a name for your new RSS Feed', 'egoi-for-wp');?>" value="<?php echo isset($feed) ? $feed['name'] : null; ?>" required autocomplete="off" />
                 </div>
 
                 <div class="smsnf-input-group">
-                    <label for="max_characters"><?= _e( 'Maximum of characters', 'egoi-for-wp' ); ?></label>
-                    <input id="max_characters" name="max_characters" type="text" placeholder="<?= __('Set the maximum characters for RSS Feed text', 'egoi-for-wp');?>" value="<?php echo isset($feed) ? $feed['max_characters'] : null; ?>" required autocomplete="off" />
+                    <label for="max_characters"><?php _e( 'Maximum of characters', 'egoi-for-wp' ); ?></label>
+                    <input id="max_characters" name="max_characters" type="text" placeholder="<?php _e('Set the maximum characters for RSS Feed text', 'egoi-for-wp');?>" value="<?php echo isset($feed) ? $feed['max_characters'] : null; ?>" required autocomplete="off" />
                 </div>
 
                 <div class="smsnf-input-group">
@@ -81,10 +81,10 @@
                     <div class="smsnf-wrapper post_cats_tags" >
                         <select class="js-example-basic-multiple" name="post_categories_include[]" multiple="multiple" style="width:100%;">
                             <?php foreach ($post_categories as $category) { ?>
-                                <option id="posts_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>"
+                                <option id="posts_cats_include_<?php echo $category->term_id?>" value="<?php echo $category->term_id?>"
                                     <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
                                     else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> >
-                                    <?=$category->name?>
+                                    <?php echo $category->name?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -92,10 +92,10 @@
                     <div class="smsnf-wrapper product_cats_tags" >
                         <select class="js-example-basic-multiple" name="product_categories_include[]" multiple="multiple" style="width:100%;">
                             <?php foreach ($product_categories as $category) { ?>
-                                <option id="products_cats_include_<?=$category->term_id?>" value="<?=$category->term_id?>"
+                                <option id="products_cats_include_<?php echo $category->term_id?>" value="<?php echo $category->term_id?>"
                                     <?php if (in_array($category->term_id, $feed['categories'])) echo 'selected';
                                     else if (in_array($category->term_id, $feed['categories_exclude'])) echo 'disabled'; ?> >
-                                    <?=$category->name?>
+                                    <?php echo $category->name?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -107,10 +107,10 @@
                     <div class="smsnf-wrapper post_cats_tags" >
                         <select class="js-example-basic-multiple" name="post_categories_exclude[]" multiple="multiple" style="width:100%;">
                             <?php foreach ($post_categories as $category) { ?>
-                                <option id="posts_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>"
+                                <option id="posts_cats_exclude_<?php echo $category->term_id?>" value="<?php echo $category->term_id?>"
                                     <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
                                     else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> >
-                                    <?=$category->name?>
+                                    <?php echo $category->name?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -118,10 +118,10 @@
                     <div class="smsnf-wrapper product_cats_tags" >
                         <select class="js-example-basic-multiple" name="product_categories_exclude[]" multiple="multiple" style="width:100%;">
                             <?php foreach ($product_categories as $category) { ?>
-                                <option id="products_cats_exclude_<?=$category->term_id?>" value="<?=$category->term_id?>"
+                                <option id="products_cats_exclude_<?php echo $category->term_id?>" value="<?php echo $category->term_id?>"
                                     <?php if (in_array($category->term_id, $feed['categories_exclude'])) echo 'selected';
                                     else if (in_array($category->term_id, $feed['categories'])) echo 'disabled'; ?> >
-                                    <?=$category->name?>
+                                    <?php echo $category->name?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -134,10 +134,10 @@
                     <div class="smsnf-wrapper post_cats_tags" >
                         <select class="js-example-basic-multiple" name="post_tags_include[]" multiple="multiple" style="width:100%;">
                             <?php foreach ($post_tags as $tag) { ?>
-                                <option id="posts_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
+                                <option id="posts_tags_include_<?php echo $tag->term_id?>" value="<?php echo $tag->term_id?>"
                                     <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
                                     else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> >
-                                    <?=$tag->name?>
+                                    <?php echo $tag->name?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -145,10 +145,10 @@
                     <div class="smsnf-wrapper product_cats_tags" >
                         <select class="js-example-basic-multiple" name="product_tags_include[]" multiple="multiple" style="width:100%;">
                             <?php foreach ($product_tags as $tag) { ?>
-                                <option id="products_tags_include_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
+                                <option id="products_tags_include_<?php echo $tag->term_id?>" value="<?php echo $tag->term_id?>"
                                     <?php if (in_array($tag->term_id, $feed['tags'])) echo 'selected';
                                     else if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'disabled'; ?> >
-                                    <?=$tag->name?>
+                                    <?php echo $tag->name?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -160,10 +160,10 @@
                     <div class="smsnf-wrapper post_cats_tags" >
                         <select class="js-example-basic-multiple" name="post_tags_exclude[]" multiple="multiple" style="width:100%;">
                             <?php foreach ($post_tags as $tag) { ?>
-                                <option id="posts_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
+                                <option id="posts_tags_exclude_<?php echo $tag->term_id?>" value="<?php echo $tag->term_id?>"
                                     <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
                                     else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> >
-                                    <?=$tag->name?>
+                                    <?php echo $tag->name?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -171,10 +171,10 @@
                     <div class="smsnf-wrapper product_cats_tags" >
                         <select class="js-example-basic-multiple" name="product_tags_exclude[]" multiple="multiple" style="width:100%;" >
                             <?php foreach ($product_tags as $tag) { ?>
-                                <option id="products_tags_exclude_<?=$tag->term_id?>" value="<?=$tag->term_id?>"
+                                <option id="products_tags_exclude_<?php echo $tag->term_id?>" value="<?php echo $tag->term_id?>"
                                     <?php if (in_array($tag->term_id, $feed['tags_exclude'])) echo 'selected';
                                     else if (in_array($tag->term_id, $feed['tags'])) echo 'disabled'; ?> >
-                                    <?=$tag->name?>
+                                    <?php echo $tag->name?>
                                 </option>
                             <?php } ?>
                         </select>

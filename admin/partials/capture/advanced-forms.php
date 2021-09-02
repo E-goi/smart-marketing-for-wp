@@ -29,7 +29,7 @@ $is_iframe = $_GET['type'] == 'iframe';
     <form id="adv-forms-select-type" method="get" action="">
         <input type="hidden" name="page" value="egoi-4-wp-form">
         <input type="hidden" name="sub" value="adv-forms">
-        <input type="hidden" name="form" value="<?= $form_id?>">
+        <input type="hidden" name="form" value="<?php echo $form_id?>">
 
         <div id="smsnf-adv-forms-types" class="smsnf-adv-forms-types">
             <label>
@@ -37,7 +37,7 @@ $is_iframe = $_GET['type'] == 'iframe';
                 <div class="">
                     <p>Pop-up</p>
                     <div>
-                        <img src="<?= plugin_dir_url( __DIR__ ) . '../img/icon_popup.png' ?>" />
+                        <img src="<?php echo plugin_dir_url( __DIR__ ) . '../img/icon_popup.png' ?>" />
                     </div>
                 </div>
             </label>
@@ -46,7 +46,7 @@ $is_iframe = $_GET['type'] == 'iframe';
                 <div>
                     <p>iframe</p>
                     <div>
-                        <img src="<?= plugin_dir_url( __DIR__ ) . '../img/icon_iframe.png' ?>" />
+                        <img src="<?php echo plugin_dir_url( __DIR__ ) . '../img/icon_iframe.png' ?>" />
                     </div>
                 </div>
             </label>
@@ -55,7 +55,7 @@ $is_iframe = $_GET['type'] == 'iframe';
                 <div>
                     <p>Advanced HTML</p>
                     <div>
-                        <img src="<?= plugin_dir_url( __DIR__ ) . '../img/icon_html.png' ?>" />
+                        <img src="<?php echo plugin_dir_url( __DIR__ ) . '../img/icon_html.png' ?>" />
                     </div>
                 </div>
             </label>
@@ -88,7 +88,7 @@ $is_iframe = $_GET['type'] == 'iframe';
                                 <i class="form-icon"></i> <?php _e( 'Show Title', 'egoi-for-wp' ); ?>
                             </label>
                         </div>
-                        <input id="form_name" type="text" name="egoi_form_sync[form_name]" value="<?= $opt['egoi_form_sync']['form_name'];?>" placeholder="<?=__( "Write here the title of your form", 'egoi-for-wp' )?>" autocomplete="off" />
+                        <input id="form_name" type="text" name="egoi_form_sync[form_name]" value="<?php echo $opt['egoi_form_sync']['form_name'];?>" placeholder="<?php _e( "Write here the title of your form", 'egoi-for-wp' )?>" autocomplete="off" />
                     </div>
                     <!-- / TÍTULO E MOSTRAR TÍTULO -->
                     <?php if (!$is_iframe) : ?>
@@ -104,8 +104,8 @@ if($_GET['type'] == 'popup') {
                                 }
                                 $content = stripslashes($opt['egoi_form_sync']['form_content']);
                             ?>
-                            <label for="form_code"><?= $label ?></label>
-                            <textarea id="form_code" rows="11" placeholder="<?= $placeholder ?>" name="egoi_form_sync[form_content]"><?=$content?></textarea>
+                            <label for="form_code"><?php echo $label ?></label>
+                            <textarea id="form_code" rows="11" placeholder="<?php echo $placeholder ?>" name="egoi_form_sync[form_content]"><?php echo $content?></textarea>
                         </div>
                         <!-- / CÓDIGO HTML -->
                     <?php endif; ?>
@@ -140,13 +140,13 @@ if($_GET['type'] == 'popup') {
                     <div class="smsnf-input-group">
                         <label for="smsnf-af-shortcode">Shortcode</label>
                         <div
-                            class="tooltip shortcode -copy"
+                            class="eg_tooltip shortcode -copy"
                             type="text"
-                            data-clipboard-text="<?= "[egoi_form_sync_$form_id]" ?>"
+                            data-clipboard-text="<?php echo "[egoi_form_sync_$form_id]" ?>"
                             data-before="<?php _e('Click to copy', 'egoi-for-wp');?>"
                             data-after="<?php _e('Copied', 'egoi-for-wp');?>"
                             data-tooltip="<?php _e('Click to copy', 'egoi-for-wp');?>"
-                            ><?= "[egoi_form_sync_$form_id]" ?></div>
+                            ><?php echo "[egoi_form_sync_$form_id]" ?></div>
                         <p class="subtitle"><?php _e('Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp');?></p>
                     </div>
                     <?php endif; ?>
@@ -164,33 +164,33 @@ $border = $opt['egoi_form_sync']['border'] ? $opt['egoi_form_sync']['border'] : 
                     <!-- CONTORNO -->
                     <div class="smsnf-input-group">
                         <label for="form_border">Contorno do Formulário <small>(px)</small></label>
-                        <input  id="form_border" type="number" name="egoi_form_sync[border]" value="<?= $border ?>" min="0" autocomplete="off" />
+                        <input  id="form_border" type="number" name="egoi_form_sync[border]" value="<?php echo $border ?>" min="0" autocomplete="off" />
                     </div>
                     <!-- / CONTORNO -->
                     <!-- COR CONTORNO -->
                     <!--<div class="smsnf-input-group color-picker">
                         <label for="form_border_color">Cor do contorno</label>
-                        <input  id="form_border_color" class="color" type="text" name="egoi_form_sync[border_color]" value="<?= $color ?>" autocomplete="off" />
+                        <input  id="form_border_color" class="color" type="text" name="egoi_form_sync[border_color]" value="<?php echo $color ?>" autocomplete="off" />
                     </div>-->
                     <div class="smsnf-input-group">
-                        <label for="form_border_color"><?=__('Border Color','egoi-for-wp');?></label>
+                        <label for="form_border_color"><?php _e('Border Color','egoi-for-wp');?></label>
                         <div class="colorpicker-wrapper">
-                            <div style="background-color:<?= $color ?>" class="view" ></div>
-                            <input id="form_border_color" type="text" name="egoi_form_sync[border_color]" value="<?= $color ?>"  autocomplete="off" />
-                            <p><?= _e( 'Select Color', 'egoi-for-wp' ) ?></p>
+                            <div style="background-color:<?php echo $color ?>" class="view" ></div>
+                            <input id="form_border_color" type="text" name="egoi_form_sync[border_color]" value="<?php echo $color ?>"  autocomplete="off" />
+                            <p><?php echo _e( 'Select Color', 'egoi-for-wp' ) ?></p>
                         </div>
                     </div>
                     <!-- / COR CONTORNO -->
                     <!-- LARGURA -->
                     <div class="smsnf-input-group">
-                        <label for="form_width"><?=__('Form Width','egoi-for-wp');?> <small>(px)</small></label>
-                        <input  id="form_width" type="number" name="egoi_form_sync[width]" value="<?= $width ?>" min="200" autocomplete="off" />
+                        <label for="form_width"><?php _e('Form Width','egoi-for-wp');?> <small>(px)</small></label>
+                        <input  id="form_width" type="number" name="egoi_form_sync[width]" value="<?php echo $width ?>" min="200" autocomplete="off" />
                     </div>
                     <!-- / LARGURA -->
                     <!-- ALTURA -->
                     <div class="smsnf-input-group">
-                        <label for="form_height"><?=__('Form Height','egoi-for-wp');?> <small>(px)</small></label>
-                        <input  id="form_height" type="number" name="egoi_form_sync[height]" value="<?= $height ?>" min="100" autocomplete="off" />
+                        <label for="form_height"><?php _e('Form Height','egoi-for-wp');?> <small>(px)</small></label>
+                        <input  id="form_height" type="number" name="egoi_form_sync[height]" value="<?php echo $height ?>" min="100" autocomplete="off" />
                     </div>
                     <!-- / ALTURA -->
                 </div>
@@ -238,34 +238,34 @@ $border = $opt['egoi_form_sync']['border'] ? $opt['egoi_form_sync']['border'] : 
             </g>
         </svg>
     </div>
-    <p><?=__('How to integrate the form in a post or page','egoi-for-wp');?></p>
+    <p><?php _e('How to integrate the form in a post or page','egoi-for-wp');?></p>
     <hr />
     <ol>
-        <li><?=__('Go in your E-goi\'s account in the tab/menu Forms.','egoi-for-wp');?></li>
-        <li><?=__('Choose the desired form.','egoi-for-wp');?></li>
-        <li><?=__('Select the Save button and choose "Publish".','egoi-for-wp');?></li>
-        <li><?=__('Add another Post.','egoi-for-wp');?></li>
-        <li><?=__('Get the advanced HTML code.','egoi-for-wp');?></li>
-        <li><?=__('Paste the code in the plugin advanced form.','egoi-for-wp');?></li>
-        <li><?=__('Save all changes.','egoi-for-wp');?></li>
+        <li><?php _e('Go in your E-goi\'s account in the tab/menu Forms.','egoi-for-wp');?></li>
+        <li><?php _e('Choose the desired form.','egoi-for-wp');?></li>
+        <li><?php _e('Select the Save button and choose "Publish".','egoi-for-wp');?></li>
+        <li><?php _e('Add another Post.','egoi-for-wp');?></li>
+        <li><?php _e('Get the advanced HTML code.','egoi-for-wp');?></li>
+        <li><?php _e('Paste the code in the plugin advanced form.','egoi-for-wp');?></li>
+        <li><?php _e('Save all changes.','egoi-for-wp');?></li>
     </ol>
 </section>
 
-<div id="smsnf-confirm-modal" class="modal modal-sm" id="modal-id" style="width: 100% !important; ">
+<div id="smsnf-confirm-modal" class="modal modal-sm" id="modal-id" style="width: 100% !important; max-width: 100vw;">
     <a href="#close" class="modal-overlay" aria-label="Close"></a>
     <div class="modal-container">
         <div class="modal-header">
+            <h2 class="modal-title"><?php _e('Change Form type.','egoi-for-wp');?></h2>
             <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
-            <h2 class="modal-title"><?=__('Change Form type.','egoi-for-wp');?></h2>
         </div>
     <div class="modal-body">
         <div class="content">
-            <?=__('Attention! If you change your form you will lose the settings.','egoi-for-wp');?>
+            <?php _e('Attention! If you change your form you will lose the settings.','egoi-for-wp');?>
         </div>
     </div>
         <div class="modal-footer">
-            <button id="confirm-btn" class="smsnf-btn primary"><?=__('Confirm','egoi-for-wp');?></button>
-            <a href="#close" class="smsnf-btn"><?=__('Cancel','egoi-for-wp');?></a>
+            <button id="confirm-btn" class="smsnf-btn primary"><?php _e('Confirm','egoi-for-wp');?></button>
+            <a href="#close" class="smsnf-btn"><?php _e('Cancel','egoi-for-wp');?></a>
         </div>
     </div>
 </div>

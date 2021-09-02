@@ -186,12 +186,14 @@ class Egoi_For_Wp_Admin {
 	public function enqueue_styles() {
         wp_enqueue_style($this->plugin_name.'popup', plugin_dir_url(__FILE__) . 'css/egoi-for-wp-pop.css', array(), $this->version, 'all' );
         wp_enqueue_style($this->plugin_name.'allpage', plugin_dir_url(__FILE__) . 'css/egoi-all-page.css', array(), $this->version, 'all' );
+        wp_enqueue_style($this->plugin_name.'select2css', plugin_dir_url(__FILE__) . 'js/font_awesome/select2.min.css', array(), $this->version, 'all' );
+        wp_enqueue_style($this->plugin_name.'allcss', plugin_dir_url(__FILE__) . 'js/font_awesome/all.min.css', array(), $this->version, 'all' );
 
         if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
 			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
-            wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap-modal.min.css', array(), $this->version, 'all' );
+            wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap/bootstrap.min.css', array(), $this->version, 'all' );
 
             wp_enqueue_style('wp-color-picker');
             wp_enqueue_style('css-color-picker', plugin_dir_url(__FILE__) . 'css/colorpicker.css', array(), $this->version, 'all' );
@@ -207,14 +209,19 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function enqueue_scripts() {
 
+        wp_register_script($this->plugin_name.'select2', plugin_dir_url(__FILE__) . 'js/font_awesome/select2.min.js', array('jquery'), true);
+        wp_enqueue_script($this->plugin_name.'select2');
+
 		//only load CSS on smart marketing pages or in pages with smart marketing elements
 		if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
 
+		    wp_register_script($this->plugin_name.'alljs', plugin_dir_url(__FILE__) . 'js/font_awesome/all.min.js', array('jquery'), true);
+        wp_enqueue_script($this->plugin_name.'alljs');
+
 			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/egoi-for-wp-admin.js', array('jquery', 'wp-color-picker'), $this->version, false);
-            wp_enqueue_script($this->plugin_name.'-bootstrapjs', plugin_dir_url(__FILE__) . 'js/bootstrap-modal.min.js', array('jquery'), $this->version, false);
-            wp_enqueue_script($this->plugin_name.'-bootstrapjs-core', plugin_dir_url(__FILE__) . 'js/bootstrap.js', array('jquery'), $this->version, false);
+            wp_enqueue_script($this->plugin_name.'-bootstrapjs-core', plugin_dir_url(__FILE__) . 'js/bootstrap/bootstrap.js', array('jquery'), $this->version, false);
 
             if(strpos(get_current_screen()->id, 'egoi-4-wp') !== false){
                 wp_enqueue_script($this->plugin_name.'-warning', plugin_dir_url(__FILE__) . 'js/remove-warning.js', array('jquery'), $this->version, false);
@@ -222,6 +229,9 @@ class Egoi_For_Wp_Admin {
 
             wp_register_script('custom-script1', plugin_dir_url(__FILE__) . 'js/capture.min.js', array('jquery'), true);
 			wp_enqueue_script('custom-script1');
+
+            wp_register_script('custom-script5',  'wp-includes/js/clipboard.min.js', array('jquery'));
+			wp_enqueue_script('custom-script5');
 
 			wp_register_script('custom-script2', plugin_dir_url(__FILE__) . 'js/forms.min.js', array('jquery'));
 			wp_enqueue_script('custom-script2');
@@ -232,11 +242,12 @@ class Egoi_For_Wp_Admin {
 			wp_register_script('custom-script4', plugin_dir_url(__FILE__) . 'js/egoi-for-wp-widget.js', array('jquery'));
 			wp_enqueue_script('custom-script4');
 
-			wp_register_script('custom-script5', plugin_dir_url(__FILE__) . 'js/clipboard.min.js', array('jquery'));
-			wp_enqueue_script('custom-script5');
+            wp_register_script('custom-script6', plugin_dir_url(__FILE__) . 'js/custom_colorpicker.js', array('jquery'));
+			wp_enqueue_script('custom-script6');
+
 
             wp_enqueue_script('smsnf-capture', plugin_dir_url(__FILE__) . 'js/capture.js', array('jquery', 'custom-script5'), $this->version);
-            wp_enqueue_script('jquery-color-picker', plugin_dir_url(__FILE__) . 'js/colorpicker.js', array('jquery'));
+
 
 
             if(strpos(get_current_screen()->id, 'ecommerce')){
@@ -281,8 +292,8 @@ class Egoi_For_Wp_Admin {
 	        wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
 
 	        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
-	            wp_register_script('chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js');
-	            wp_enqueue_script('chartjs');
+	            wp_register_script($this->plugin_name.'chartjs', plugin_dir_url(__FILE__) . 'js/chartjs/Chart.bundle.min.js', array('jquery'), true);
+	            wp_enqueue_script($this->plugin_name.'chartjs');
 	        }
 
             if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-integrations') {
@@ -325,7 +336,7 @@ class Egoi_For_Wp_Admin {
         $bypass = EgoiProductsBo::getProductsToBypass();
         $bypassCount = count(!is_array($bypass)?[]:$bypass);
 
-		add_menu_page( 'Smart Marketing - Main Page', 'Smart Marketing', 'Egoi_Plugin', $this->plugin_name, array($this, 'display_plugin_setup_page'), plugin_dir_url( __FILE__ ).'img/logo_small.png');
+		add_menu_page( 'Smart Marketing - Main Page', 'Smart Marketing', 'Egoi_Plugin', $this->plugin_name, array($this, 'display_plugin_setup_page'), plugin_dir_url( __FILE__ ).'img/logo-egoi.svg');
 
         $capability = 'manage_options';
 		$apikey = get_option('egoi_api_key');
@@ -806,19 +817,19 @@ class Egoi_For_Wp_Admin {
             $key_name = 'your-name';
             $key_email = 'your-email';
             if(strpos($result->form, $key_name) !== false){
-                $name = $_POST[$key_name];
+                $name = sanitize_text_field($_POST[$key_name]);
             }else{
                 if($_POST['first_name']){
-                    $name = $_POST['first_name'];
+                    $name = sanitize_text_field($_POST['first_name']);
                 }
             }
 
             if($_POST['last_name']){
-                $lname = $_POST['last_name'];
+                $lname = sanitize_text_field($_POST['last_name']);
             }
 
             if(strpos($result->form, $key_email) !== false){
-                $email = $_POST[$key_email];
+                $email = sanitize_email($_POST[$key_email]);
             }else{
                 $match = array_filter(
                     $_POST,
@@ -828,33 +839,33 @@ class Egoi_For_Wp_Admin {
                     );
 
                 $key = array_keys($match);
-                $email = $_POST[$key[0]];
+                $email = sanitize_email($_POST[$key[0]]);
             }
 
             // telephone
             $bo = new EgoiProductsBo();
-            $tel = $bo->advinhometerCellphoneCode($_POST[$mapp['tel']]);
+            $tel = $bo->advinhometerCellphoneCode(sanitize_key($_POST[$mapp['tel']]));
 
             // cellphone
             foreach ($_POST as $key_cell => $value_cell) {
                 $cell = strpos($key_cell, 'cell');
                 if ($cell !== false) {
-                    $mobile[] = $value_cell;
+                    $mobile[] = sanitize_key($value_cell);
                 }
             }
-            $cell = $bo->advinhometerCellphoneCode($mobile[0]);
+            $cell = $bo->advinhometerCellphoneCode(sanitize_key($mobile[0]));
 
             // birthdate
-            $bd = $_POST[$mapp['date']];
+            $bd = sanitize_key($_POST[$mapp['date']]);
 
             // fax
             if($_POST['egoi-fax']){
-                $fax = $_POST['egoi-fax'];
+                $fax = sanitize_key($_POST['egoi-fax']);
             }
 
             // lang
             if($_POST['egoi-lang']){
-                $lang = $_POST['egoi-lang'];
+                $lang = sanitize_text_field($_POST['egoi-lang']);
             }
 
             // extra fields
@@ -862,12 +873,12 @@ class Egoi_For_Wp_Admin {
                 if(is_array($value)){
                     $indval = 0;
                     foreach ($value as $option_val) {
-                        $extra_fields[$key] .= $option_val.'; ';
+                        $extra_fields[$key] .= sanitize_key($option_val).'; ';
                     }
                 }else{
                     $exra = strpos($key, 'extra_');
                     if ($exra !== false) {
-                        $extra_fields[$key] = $value;
+                        $extra_fields[$key] = sanitize_text_field($value);
                     }
                 }
             }
@@ -878,7 +889,7 @@ class Egoi_For_Wp_Admin {
 
             $ref_fields = array('tel' => $tel, 'cell' => $cell, 'bd' => $bd, 'fax' => $fax, 'lang' => $lang);
 
-            $subject = $_POST['your-subject'];
+            $subject = sanitize_text_field($_POST['your-subject']);
 
             if(isset($_POST['status-egoi'])){
                 if($_POST['status-egoi'] == 1 || $_POST['status-egoi'] == "1"){
@@ -1195,32 +1206,32 @@ class Egoi_For_Wp_Admin {
         $api = new Egoi_For_Wp();
 
 		// double opt-in
-        $status = filter_var(stripslashes($_POST['egoi_double_optin']), FILTER_SANITIZE_STRING) == '1' ? 0 : 1;
+        $status = sanitize_key(stripslashes($_POST['egoi_double_optin'])) == '1' ? 0 : 1;
 
         $form_data = [];
 
         if(empty($_POST['elementorEgoiForm'])){//old simple forms
             $form_data = array(
-                'email' => filter_var($_POST['egoi_email'], FILTER_SANITIZE_EMAIL),
-                'cellphone' => filter_var($_POST['egoi_country_code']."-".$_POST['egoi_mobile'], FILTER_SANITIZE_STRING),
-                'first_name' => filter_var(stripslashes($_POST['egoi_name']), FILTER_SANITIZE_STRING),
-                'lang' => filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL),
-                'tags' => array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT)),
+                'email' => sanitize_email($_POST['egoi_email']),
+                'cellphone' => sanitize_text_field($_POST['egoi_country_code']."-".$_POST['egoi_mobile']),
+                'first_name' => sanitize_text_field($_POST['egoi_name']),
+                'lang' => sanitize_text_field($_POST['egoi_lang']),
+                'tags' => array(sanitize_key($_POST['egoi_tag'])),
                 'status' => $status,
             );
         }else{
             $_POST['status'] = $status;
-            $_POST['tags'] = array(filter_var($_POST['egoi_tag'], FILTER_SANITIZE_NUMBER_INT));
+            $_POST['tags'] = array(sanitize_key($_POST['egoi_tag']));
         }
 
 		$result = $api->addSubscriberWpForm(
-            filter_var($_POST['egoi_list'], FILTER_SANITIZE_NUMBER_INT),
+            sanitize_key($_POST['egoi_list']),
             empty($form_data)?$_POST:$form_data
         );
 
 		if (!isset($result->ERROR) && !isset($result->MODIFICATION_DATE) ) {
 
-		    $form_id = filter_var($_POST['egoi_simple_form'], FILTER_SANITIZE_NUMBER_INT);
+		    $form_id = sanitize_key($_POST['egoi_simple_form']);
 		    if(empty($_POST['elementorEgoiForm'])){
                 $api->smsnf_save_form_subscriber($form_id, 'simple-form', $result);
             }
@@ -1285,7 +1296,7 @@ class Egoi_For_Wp_Admin {
 		$params = $request->get_query_params('ids');
 
 
-		$params["ids"] = filter_var($params["ids"], FILTER_SANITIZE_STRING);
+		$params["ids"] = sanitize_text_field($params["ids"]);
 		$ids = str_replace(" ","",$params["ids"]);
 		$ids = explode(",",$ids);
 		foreach ($ids as $value) {
@@ -1457,8 +1468,8 @@ class Egoi_For_Wp_Admin {
      * RSS Feed - Create new feed
      */
     public function createFeed($post, $edit) {
-        $code = filter_var($post['code'], FILTER_SANITIZE_STRING);
-        $type = filter_var($post['type'], FILTER_SANITIZE_STRING);
+        $code = sanitize_text_field($post['code']);
+        $type = sanitize_text_field($post['type']);
         $categories = $post[substr($type,0,-1)."_categories_include"];
         $categories_exclude = $post[substr($type,0,-1)."_categories_exclude"];
         $tags = $post[substr($type,0,-1)."_tags_include"];
@@ -1466,10 +1477,10 @@ class Egoi_For_Wp_Admin {
 
         $rssfeed = array(
             'code' => $code,
-            'name' => filter_var($post['name'], FILTER_SANITIZE_STRING),
-            'max_characters' => filter_var($post['max_characters'], FILTER_SANITIZE_NUMBER_INT),
-            'image_size' => filter_var($post['image_size'], FILTER_SANITIZE_STRING),
-            'type' => filter_var($post['type'], FILTER_SANITIZE_STRING),
+            'name' => sanitize_text_field($post['name']),
+            'max_characters' => sanitize_key($post['max_characters']),
+            'image_size' => sanitize_text_field($post['image_size']),
+            'type' => sanitize_text_field($post['type']),
             'categories' => $categories,
             'categories_exclude' => $categories_exclude,
             'tags' => $tags,
@@ -1486,7 +1497,7 @@ class Egoi_For_Wp_Admin {
 
     public function egoi_rss_feeds_content() {
         $maxItems = 20;
-        $feed = filter_var($_GET['feed'], FILTER_SANITIZE_STRING);
+        $feed = sanitize_key($_GET['feed']);
         $feed_configs = get_option($feed);
 
         // RSS Feed Head
@@ -1525,7 +1536,7 @@ class Egoi_For_Wp_Admin {
                     } else {
                         foreach ( $product_cats as $cat ) {
                             ?>
-                            <category><![CDATA[<?=$cat->name?>]]></category>
+                            <category><![CDATA[<?php echo $cat->name?>]]></category>
                             <?php
                         }
                     }
@@ -1782,11 +1793,11 @@ class Egoi_For_Wp_Admin {
 
         $url = 'http://dev-web-agency.e-team.biz/smaddonsms/account/create';
 
-        $email = filter_var($account['new_account_email'], FILTER_SANITIZE_EMAIL);
-        $company = filter_var($account['new_account_company'], FILTER_SANITIZE_STRING);
-        $prefix = filter_var($account['new_account_prefix'], FILTER_SANITIZE_NUMBER_INT);
-        $phone = filter_var($account['new_account_phone'], FILTER_SANITIZE_NUMBER_INT);
-        $password = filter_var($account['new_account_password'], FILTER_SANITIZE_STRING);
+        $email = sanitize_email($account['new_account_email']);
+        $company = sanitize_text_field($account['new_account_company']);
+        $prefix = sanitize_key($account['new_account_prefix']);
+        $phone = sanitize_key($account['new_account_phone']);
+        $password = sanitize_text_field($account['new_account_password']);
 
         $response = wp_remote_post($url, array(
             'timeout' => 60,
@@ -2169,10 +2180,10 @@ class Egoi_For_Wp_Admin {
 
         echo json_encode(array_merge(['list_id' => $site_id['list_id']],json_decode($api->createWebPushRssCampaign([
             'site_id'       => $site_id['site_id'],
-            'internal_name' => filter_var($_POST['title'], FILTER_SANITIZE_STRING),
+            'internal_name' => sanitize_text_field($_POST['title']),
             'content'       => [
-                    'title'    => filter_var($_POST['title'], FILTER_SANITIZE_STRING),
-                    'feed'      => get_home_url().'/?feed='.trim($_POST['feed'])
+                    'title'    => sanitize_text_field($_POST['title']),
+                    'feed'      => get_home_url().'/?feed='.sanitize_key($_POST['feed'])
             ]
         ]),true)));
 
@@ -2187,19 +2198,19 @@ class Egoi_For_Wp_Admin {
             wp_die();
 
         $api = new EgoiApiV3($apikey);
-        $feed = get_home_url().'/?feed='.trim($_POST['feed']);
+        $feed = get_home_url().'/?feed='.sanitize_key($_POST['feed']);
 
         echo $api->createEmailRssCampaign([
-            'list_id'       => trim($_POST['list']),
-            'internal_name' => filter_var($_POST['subject'], FILTER_SANITIZE_STRING),
-            'subject'       => filter_var($_POST['subject'], FILTER_SANITIZE_STRING),
-            'sender_id'     => trim($_POST['sender']),
-            'reply_to'      => trim($_POST['sender']),
+            'list_id'       => sanitize_key($_POST['list']),
+            'internal_name' => sanitize_text_field($_POST['subject']),
+            'subject'       => sanitize_text_field($_POST['subject']),
+            'sender_id'     => sanitize_key($_POST['sender']),
+            'reply_to'      => sanitize_key($_POST['sender']),
             'content'       => [
                 'type'          => 'html',
                 'feed'          => $feed,
-                'body'          => $this->get_themes($_POST, 0, $feed, trim($_POST['items'])),
-                'snippet'       => filter_var($_POST['snippet'], FILTER_SANITIZE_STRING)
+                'body'          => $this->get_themes($_POST, 0, $feed, sanitize_key($_POST['items'])),
+                'snippet'       => sanitize_text_field($_POST['snippet'])
             ]
         ]);
 
@@ -2208,7 +2219,13 @@ class Egoi_For_Wp_Admin {
 
     public function egoi_sync_catalog(){
         check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
-        update_option('egoi_catalog_sync',json_encode($_POST['data']));
+        $data = [];
+
+        if(is_array($_POST['data']) && $_POST['data'] == array_filter($_POST['data'], function($val){return $val == sanitize_key($val);})){
+            $data = $_POST['data'];
+        }
+
+        update_option('egoi_catalog_sync',json_encode($data));
 
         $apikey = $this->get_apikey();
         if(!empty($apikey)){
@@ -2230,8 +2247,8 @@ class Egoi_For_Wp_Admin {
     public function egoi_force_import_catalog(){
 
         check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
-        $id = EgoiValidators::validate_id($_POST['id']);
-        $page = EgoiValidators::validate_page($_POST['page']);
+        $id = EgoiValidators::validate_id(sanitize_key($_POST['id']));
+        $page = EgoiValidators::validate_page(sanitize_key($_POST['page']));
         $bo = new EgoiProductsBo();
 
         $options = EgoiProductsBo::getCatalogOptions($id);
@@ -2253,10 +2270,10 @@ class Egoi_For_Wp_Admin {
         $form_id = sanitize_text_field($post['form_id']);
         check_admin_referer($form_id);
 
-        $name = $post['catalog_name'];
-        $language = $post['catalog_language'];
-        $currency = $post['catalog_currency'];
-        $variations = $post['variations'];
+        $name = sanitize_text_field($post['catalog_name']);
+        $language = sanitize_text_field($post['catalog_language']);
+        $currency = sanitize_text_field($post['catalog_currency']);
+        $variations = sanitize_text_field($post['variations']);
 
         if(empty($name) || empty($currency) || empty($language)){
             return ['error' => __('Fields can\'t be empty.','egoi-for-wp')];
@@ -2288,7 +2305,7 @@ class Egoi_For_Wp_Admin {
      * Get Countries and Currencies Utility
      */
     public function egoi_count_products(){
-        $catalog_id = trim($_GET['catalog']);
+        $catalog_id = sanitize_key($_GET['catalog']);
         $a = EgoiProductsBo::getCatalogOptions($catalog_id);
 
         switch ($a['variations']){
@@ -2327,7 +2344,7 @@ class Egoi_For_Wp_Admin {
         <?php foreach ( $fields as $key => $field_args ) { ?>
             <tr>
                 <th>
-                    <label for="<?php echo $key; ?>"><?php echo $field_args['label']; ?></label>
+                    <label for="<?php echo esc_html($key); ?>"><?php echo esc_html($field_args['label']); ?></label>
                 </th>
                 <td>
                     <?php $field_args['label'] = false; ?>
@@ -2407,12 +2424,12 @@ class Egoi_For_Wp_Admin {
         ];
 
         $themes[$id] = $this->replaceTitle(
-            ! empty($data['title'])?$data['title']:'Newsletter',
+            ! empty($data['title'])?sanitize_text_field($data['title']):'Newsletter',
             $themes[$id]
         );
 
         $themes[$id] = $this->replaceTextAfter(
-            ! empty($data['text_after'])?$data['text_after']:'',
+            ! empty($data['text_after'])?sanitize_textarea_field($data['text_after']):'',
             $themes[$id]
         );
 
@@ -2608,7 +2625,7 @@ class Egoi_For_Wp_Admin {
 			$table_class = 'table smsnf-wpdash--table';
             $output['account'] = '
 			<div class="smsnf-wpdash-table--head">
-				<img src="'.plugins_url().'/smart-marketing-for-wp/admin/img/symbol.png"/>
+				<img src="'.plugins_url( '/img/symbol.png', __FILE__ ).'"/>
 				<p>E-goi - Smart Marketing</p>
 			</div>
             ';
@@ -2888,7 +2905,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function generate_mail_catcher( $exceptions = null ) {
 
-            require_once(plugin_dir_path( __FILE__ ) . '../vendor/autoload.php');
+            require_once ABSPATH . '/wp-includes/class-phpmailer.php';
             require_once(plugin_dir_path( __FILE__ ) . '../includes/transactionalemail/mail-catcher.php');
 			$mail_catcher = new MailCatcher();
     

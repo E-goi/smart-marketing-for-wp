@@ -113,25 +113,15 @@ function _getContent($url,$headers = []) {
 
     if( false === $egoi_info ) {
         // Transient expired, refresh the data
-        if(ini_get('allow_url_fopen')) {
 
-            $context = stream_context_create(array('http' => array('timeout' => 600,'header' => implode("\r\n",$headers))));
-            $egoi_info = file_get_contents($url, false, $context);
-
-        } else if(function_exists('curl_init')) {
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_HEADER, 0);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 600);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-            $egoi_info = curl_exec($curl);
-
-            curl_close($curl);
-
-        } else {
-            throw new Exception("MISSING_CURL");
-        }
+        $egoi_info = wp_remote_request( $url,
+            array(
+                'method'     => 'GET',
+                'timeout'    => 30,
+                'headers'    => $headers
+            )
+        );
+        $egoi_info = is_wp_error($egoi_info)?'{}':$egoi_info['body'];
 
         set_transient( 'egoi_information_cache', $egoi_info, 60*60 );
     }

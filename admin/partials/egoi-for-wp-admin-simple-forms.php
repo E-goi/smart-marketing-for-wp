@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     $table = $wpdb->prefix.'posts';
                     $user = wp_get_current_user();
                     $date = date('Y-m-d H:i:s');
-                    $post_name =  preg_replace('~[^0-9a-z]+~i', '-', preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities(str_replace(" ", "-", strtolower($_POST['title'])), ENT_QUOTES, 'UTF-8'))) ;
+                    $post_name =  preg_replace('~[^0-9a-z]+~i', '-', preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities(str_replace(" ", "-", strtolower(sanitize_title($_POST['title']))), ENT_QUOTES, 'UTF-8'))) ;
 
 
                     //to save simple form options: listId and language
@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             'post_date' => $date,
                             'post_date_gmt' => $date,
                             'post_content' => $_POST['html_code'],
-                            'post_title' => $_POST['title'],
+                            'post_title' => sanitize_text_field($_POST['title']),
                             'comment_status' => 'closed',
                             'ping_status' => 'closed',
                             'post_name' => $post_name,
@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         $post = array (
                             'post_author' => $user->ID,
                             'post_content' => $_POST['html_code'],
-                            'post_title' => $_POST['title'],
+                            'post_title' => sanitize_text_field($_POST['title']),
                             'post_name' => $post_name,
                             'post_modified' => $date,
                             'post_modified_gmt' => $date,
@@ -103,7 +103,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     return array(
                         'shortcode' => $shortcode,
                         'id_simple_form' => $id_simple_form,
-                        'title_simple_form' => $_POST['title'],
+                        'title_simple_form' => sanitize_text_field($_POST['title']),
                         'html_code_simple_form' => $_POST['html_code'],
                         'list' => $_POST['list'],
                         'lang' => $_POST['lang'],
@@ -156,7 +156,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="nav-tab-forms-options-mt">
                 <form id="egoi_simple_form" method="post" action="#">
                     <?php wp_nonce_field('egoi_simple_form_action'); ?>
-                    <input name="id_simple_form" type="hidden" value="<?=$id_simple_form?>" />
+                    <input name="id_simple_form" type="hidden" value="<?php echo $id_simple_form?>" />
                     <input name="action" type="hidden" value="1" />
                     <div id="simple-form-submit-error"></div>
 
@@ -270,7 +270,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                             <input class="e-goi-form-title--input" type="text" name="title" size="30" id="title" spellcheck="true" autocomplete="off"
                                    placeholder="<?php echo __( "Write here the title of your form", 'egoi-for-wp' ); ?>" required pattern="\S.*\S"
-                                   value="<?= htmlentities(stripslashes($shortcode['title_simple_form'])) ?>" />
+                                   value="<?php echo  htmlentities(stripslashes($shortcode['title_simple_form'])) ?>" />
                         </div>
                     </div>
 
@@ -291,7 +291,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </div>
 
                     <!-- textarea for Advanced HTML -->
-                    <textarea id="html_code" class="e-goi-header-textarea--html-adv" placeholder="<?php _e( 'HTML code of your form', 'egoi-for-wp' ); ?>" name="html_code"><?= stripslashes($shortcode['html_code_simple_form']); ?></textarea>
+                    <textarea id="html_code" class="e-goi-header-textarea--html-adv" placeholder="<?php _e( 'HTML code of your form', 'egoi-for-wp' ); ?>" name="html_code"><?php echo  stripslashes($shortcode['html_code_simple_form']); ?></textarea>
 
                     <div style="display: -webkit-inline-box; margin-bottom: 30px;">
                         <button style="margin-top: 12px;" type="submit" class="button button-primary"><?php _e('Save Changes', 'egoi-for-wp');?></button>
@@ -326,7 +326,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                     'use strict';
 
-                    new Clipboard('#e-goi_shortcode');
+                    new ClipboardJS('#e-goi_shortcode');
 
                     var session_form = jQuery('#session_form');
 
@@ -647,7 +647,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         ?>
 
                         <!-- PopUp ALERT Delete Form -->
-                        <div class="cd-popup cd-popup-del-form" data-id-form="<?=$id_simple_form?>" data-type-form="simple-form" role="alert">
+                        <div class="cd-popup cd-popup-del-form" data-id-form="<?php echo $id_simple_form?>" data-type-form="simple-form" role="alert">
                             <div class="cd-popup-container">
                                 <p><b><?php echo __('Are you sure you want to delete this form?</b> This action will remove only the form in your plugin (will be kept in E-goi).', 'egoi-for-wp');?> </p>
                                 <ul class="cd-buttons">
@@ -669,7 +669,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <!-- Title -->
                             <td><?php echo $title_simple_form;?></td>
                             <td>
-                                <a class="cd-popup-trigger-del" data-id-form="<?=$id_simple_form?>" data-type-form="simple-form" href="#"><?php _e('Delete', 'egoi-for-wp');?></a>
+                                <a class="cd-popup-trigger-del" data-id-form="<?php echo $id_simple_form?>" data-type-form="simple-form" href="#"><?php _e('Delete', 'egoi-for-wp');?></a>
                             </td>
                             <!-- Option -->
                             <td style="text-align:right;">

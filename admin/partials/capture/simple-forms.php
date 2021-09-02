@@ -7,19 +7,19 @@ if (isset($_POST['id_simple_form'])) {
         $table = $wpdb->prefix.'posts';
         $user = wp_get_current_user();
         $date = date('Y-m-d H:i:s');
-        $post_name =  preg_replace('~[^0-9a-z]+~i', '-', preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities(str_replace(" ", "-", strtolower($_POST['title'])), ENT_QUOTES, 'UTF-8'))) ;
+        $post_name =  preg_replace('~[^0-9a-z]+~i', '-', preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities(str_replace(" ", "-", strtolower(sanitize_title($_POST['title']))), ENT_QUOTES, 'UTF-8'))) ;
 
 
         //to save simple form options: listId and language
         $table2 = $wpdb->prefix.'options';
 
-        $data->list = $_POST['list'];
-        $data->lang = $_POST['lang'];
+        $data->list = sanitize_key($_POST['list']);
+        $data->lang = sanitize_text_field($_POST['lang']);
         $data->double_optin = empty($_POST['double_optin'])?'0':'1';
 
         //to add tag if not exist
         if(isset($_POST['tag-egoi']) && $_POST['tag-egoi']!=''){
-            $data->tag = $_POST['tag-egoi'];
+            $data->tag = sanitize_text_field($_POST['tag-egoi']);
         }
         else{
             $tag = new Egoi_For_Wp();
@@ -35,7 +35,7 @@ if (isset($_POST['id_simple_form'])) {
                 'post_date' => $date,
                 'post_date_gmt' => $date,
                 'post_content' => $_POST['html_code'],
-                'post_title' => $_POST['title'],
+                'post_title' => sanitize_text_field($_POST['title']),
                 'comment_status' => 'closed',
                 'ping_status' => 'closed',
                 'post_name' => $post_name,
@@ -63,7 +63,7 @@ if (isset($_POST['id_simple_form'])) {
             $post = array (
                 'post_author' => $user->ID,
                 'post_content' => $_POST['html_code'],
-                'post_title' => $_POST['title'],
+                'post_title' => sanitize_text_field($_POST['title']),
                 'post_name' => $post_name,
                 'post_modified' => $date,
                 'post_modified_gmt' => $date,
@@ -89,11 +89,11 @@ if (isset($_POST['id_simple_form'])) {
         return array(
             'shortcode' => $shortcode,
             'id_simple_form' => $id_simple_form,
-            'title_simple_form' => $_POST['title'],
+            'title_simple_form' => sanitize_text_field($_POST['title']),
             'html_code_simple_form' => $_POST['html_code'],
-            'list' => $_POST['list'],
-            'lang' => $_POST['lang'],
-            'tag' => isset($_POST['tag-egoi']) ? $_POST['tag-egoi'] : $new->ID,
+            'list' => sanitize_key($_POST['list']),
+            'lang' => sanitize_text_field($_POST['lang']),
+            'tag' => isset($_POST['tag-egoi']) ? sanitize_key($_POST['tag-egoi']) : $new->ID,
             'double_optin' => empty($_POST['double_optin'])?'0':'1'
         ) ;
 
@@ -126,15 +126,16 @@ if (isset($_POST['id_simple_form'])) {
         return $shortcode;
     }
 
-    $shortcode = selectSimpleForm($_GET['form']);
-    $id_simple_form = $_GET['form'];
+    $id_simple_form = sanitize_key($_GET['form']);
+    $shortcode = selectSimpleForm($id_simple_form);
+
 
 } else {
     $id_simple_form = 0;
 }
 
 //default Prefix for cellphones
-$countryCodes = array_values(unserialize(COUNTRY_CODES));
+$countryCodes = array_values(unserialize(EFWP_COUNTRY_CODES));
 $key = array_search(str_replace('_', '-', get_locale()), array_column($countryCodes, 'language'));
 
 if (empty($key)) {
@@ -145,7 +146,7 @@ $defaultPrefix = !empty($countryCodes[$key]) ? $countryCodes[$key]['prefix'] : '
 
 ?>
 <script>
-    var defaultPrefix = "<?=$defaultPrefix?>";
+    var defaultPrefix = "<?php echo $defaultPrefix?>";
 </script>
 
 
@@ -153,7 +154,7 @@ $defaultPrefix = !empty($countryCodes[$key]) ? $countryCodes[$key]['prefix'] : '
     <div class="smsnf-grid">
         <div>
             <input name="action" type="hidden" value="1" />
-            <input name="id_simple_form" type="hidden" value="<?=$id_simple_form?>" />
+            <input name="id_simple_form" type="hidden" value="<?php echo $id_simple_form?>" />
             <!-- Double Opt-In -->
             <div class="smsnf-input-group">
                 <label for="sf_double_optin"><?php _e( 'Enable Double Opt-In?', 'egoi-for-wp' ); ?></label>
@@ -181,8 +182,8 @@ $defaultPrefix = !empty($countryCodes[$key]) ? $countryCodes[$key]['prefix'] : '
                 <label for="form_name"><?php _e('Form title', 'egoi-for-wp'); ?></label>
                 <input  id="form_name" type="text"
                     name="title" size="30" spellcheck="true" autocomplete="off" pattern="\S.*\S"
-                    value="<?= htmlentities(stripslashes($shortcode['title_simple_form'])) ?>"
-                    placeholder="<?= __( "Write here the title of your form", 'egoi-for-wp' ); ?>" />
+                    value="<?php echo  htmlentities(stripslashes($shortcode['title_simple_form'])) ?>"
+                    placeholder="<?php _e( "Write here the title of your form", 'egoi-for-wp' ); ?>" />
             </div>
             <!-- / TÍTULO -->
             <!-- CÓDIGO HTML -->
@@ -190,13 +191,13 @@ $defaultPrefix = !empty($countryCodes[$key]) ? $countryCodes[$key]['prefix'] : '
             <?php $content = stripslashes($shortcode['html_code_simple_form']) ?>
                 <label for="sf-code"><?php _e('HTML code', 'egoi-for-wp'); ?></label>
                 <div id="sf-btns" class="smsnf-btn-group">
-                    <button id="sf-btn-name" class="smsnf-btn <?= strpos($content, '[e_name]') || strpos($content, '[/e_name]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Name', 'egoi-for-wp') ?>"><?php _e('Name', 'egoi-for-wp');?></button>
-                    <button id="sf-btn-email" class="smsnf-btn <?= strpos($content, '[e_email]') || strpos($content, '[/e_email]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Email', 'egoi-for-wp') ?>"><?php _e('Email', 'egoi-for-wp');?></button>
-                    <button id="sf-btn-phone" class="smsnf-btn <?= strpos($content, '[e_mobile]') || strpos($content, '[/e_mobile]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Mobile', 'egoi-for-wp') ?>"><?php _e('Mobile', 'egoi-for-wp');?></button>
-                    <button id="sf-btn-submit" class="smsnf-btn <?= strpos($content, '[e_submit]') || strpos($content, '[/e_submit]') ? 'active' : '' ?>" type="button" data-lable="<?= _e('Submit Button', 'egoi-for-wp') ?>"><?php _e('Submit Button', 'egoi-for-wp');?></button>
+                    <button id="sf-btn-name" class="smsnf-btn <?php echo  strpos($content, '[e_name]') || strpos($content, '[/e_name]') ? 'active' : '' ?>" type="button" data-lable="<?php _e('Name', 'egoi-for-wp') ?>"><?php _e('Name', 'egoi-for-wp');?></button>
+                    <button id="sf-btn-email" class="smsnf-btn <?php echo  strpos($content, '[e_email]') || strpos($content, '[/e_email]') ? 'active' : '' ?>" type="button" data-lable="<?php _e('Email', 'egoi-for-wp') ?>"><?php _e('Email', 'egoi-for-wp');?></button>
+                    <button id="sf-btn-phone" class="smsnf-btn <?php echo  strpos($content, '[e_mobile]') || strpos($content, '[/e_mobile]') ? 'active' : '' ?>" type="button" data-lable="<?php _e('Mobile', 'egoi-for-wp') ?>"><?php _e('Mobile', 'egoi-for-wp');?></button>
+                    <button id="sf-btn-submit" class="smsnf-btn <?php echo  strpos($content, '[e_submit]') || strpos($content, '[/e_submit]') ? 'active' : '' ?>" type="button" data-lable="<?php _e('Submit Button', 'egoi-for-wp') ?>"><?php _e('Submit Button', 'egoi-for-wp');?></button>
                 </div>
                 <p class="subtitle"><?php _e('Edit data-selected value in mobile field with the desired country code to preselect', 'egoi-for-wp');?></p>
-                <textarea id="sf-code" rows="11" name="html_code" placeholder="<?= _e( 'HTML code of your form', 'egoi-for-wp' ); ?>"><?=$content?></textarea>
+                <textarea id="sf-code" rows="11" name="html_code" placeholder="<?php _e( 'HTML code of your form', 'egoi-for-wp' ); ?>"><?php echo $content?></textarea>
             </div>
             <!-- / CÓDIGO HTML -->
 
@@ -210,13 +211,13 @@ $defaultPrefix = !empty($countryCodes[$key]) ? $countryCodes[$key]['prefix'] : '
                 <div class="smsnf-input-group">
                         <label for="smsnf-af-shortcode">Shortcode</label>
                         <div
-                            class="tooltip shortcode -copy"
+                            class="eg_tooltip shortcode -copy"
                             type="text"
-                            data-clipboard-text="<?= esc_html('[egoi-simple-form id="' . $id_simple_form . '"]') ?>"
+                            data-clipboard-text="<?php echo  esc_html('[egoi-simple-form id="' . $id_simple_form . '"]') ?>"
                             data-before="<?php _e('Click to copy', 'egoi-for-wp');?>"
                             data-after="<?php _e('Copied', 'egoi-for-wp');?>"
                             data-tooltip="<?php _e('Click to copy', 'egoi-for-wp');?>"
-                            ><?= esc_html('[egoi-simple-form id="' . $id_simple_form . '"]') ?></div>
+                            ><?php echo  esc_html('[egoi-simple-form id="' . $id_simple_form . '"]') ?></div>
                         <p class="subtitle"><?php _e('Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp');?></p>
                     </div>
                     <!-- / SHORTCODE -->

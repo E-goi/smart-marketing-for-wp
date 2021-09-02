@@ -120,11 +120,11 @@ jQuery(document).ready(function($) {
     <header>
         <div class="wrapper-loader-egoi">
             <h1>Smart Marketing > <b><?php _e( 'Sync Contacts', 'egoi-for-wp' ); ?></b></h1>
-            <?=getLoader('egoi-loader',false)?>
+            <?php echo getLoader('egoi-loader',false)?>
         </div>
         <nav>
             <ul>
-                <li><a class="home <?= $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
+                <li><a class="home <?php echo  $page['home'] ?'-select':'' ?>" href="?page=egoi-4-wp-ecommerce"><?php _e('Configuration', 'egoi-for-wp'); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -257,7 +257,7 @@ jQuery(document).ready(function($) {
                                     }else{ ?>
                                         <div class="smsnf-btn-mt10" style="display: flex;align-items: center;">
                                             <button type="button" class="smsnf-btn" id="update_users"><?php echo _e('Manual Sync', 'egoi-for-wp');?></button>
-                                            <?=getLoader('load', false)?>
+                                            <?php echo getLoader('load', false)?>
                                             <span id="e-goi_import_valid" class="dashicons dashicons-yes" style="display: none;"></span>
 
                                         </div>

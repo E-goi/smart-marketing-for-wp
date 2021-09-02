@@ -5,15 +5,15 @@
     $store_raw_country = get_option( 'woocommerce_default_country' );
     $split_country = explode( ":", $store_raw_country );
     echo $split_country[0];?>" />
-    <input id="default-store-currency" type="hidden" value="<?=get_option('woocommerce_currency');?>" />
-    <span style="display: block;margin-bottom: 20px;">* <?=__('Create a catalog base on language and currency and start the product\'s synchronization with E-goi.', 'egoi-for-wp');?></span>
+    <input id="default-store-currency" type="hidden" value="<?php echo get_option('woocommerce_currency');?>" />
+    <span style="display: block;margin-bottom: 20px;">* <?php _e('Create a catalog base on language and currency and start the product\'s synchronization with E-goi.', 'egoi-for-wp');?></span>
     <div class="smsnf-grid">
         <div>
             <div class="smsnf-input-group">
                 <label for="catalog_name"><?php _e('Name', 'egoi-for-wp'); ?></label>
                 <input  id="catalog_name" type="text"
                         name="catalog_name" size="30" spellcheck="true" autocomplete="off"
-                        placeholder="<?= __( "Write here the name of your catalog", 'egoi-for-wp' ); ?>" />
+                        placeholder="<?php _e( "Write here the name of your catalog", 'egoi-for-wp' ); ?>" />
             </div>
 
             <div class="smsnf-input-group">

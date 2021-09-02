@@ -753,9 +753,6 @@ class ClientHttp {
     public function __construct($url, $method = 'GET', $headers = ['Accept: application/json'], $body = '')
     {
 
-
-        if(function_exists('wp_remote_request')) {
-
             $res = wp_remote_request( $url,
                 array(
                     'method'     => $method,
@@ -765,54 +762,15 @@ class ClientHttp {
                 )
             );
 
-            $this->http_code = $res['response']['code'];
-            $this->response = $res['body'];
-            $this->headers = $res['headers'];
-
-        }else{
-
-            $curl = curl_init($url);
-            curl_setopt_array($curl, [
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_CUSTOMREQUEST => $method,
-                CURLOPT_POSTFIELDS => json_encode($body),
-                CURLOPT_HTTPHEADER => $headers,
-            ]);
-
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-            // this function is called by curl for each header received
-            curl_setopt($curl, CURLOPT_HEADERFUNCTION,
-                function($curl, $header) use (&$headers)
-                {
-                    $len = strlen($header);
-                    $header = explode(':', $header, 2);
-                    if (count($header) < 2) // ignore invalid headers
-                        return $len;
-
-                    $name = strtolower(trim($header[0]));
-                    if (!array_key_exists($name, $headers))
-                        $headers[$name] = [trim($header[1])];
-                    else
-                        $headers[$name][] = trim($header[1]);
-
-                    return $len;
-                }
-            );
-
-            $response = curl_exec($curl);
-            $this->http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-            $this->headers = $headers;
-            $this->response = $response;
-
-            if(curl_errno($curl)){
-                $this->err = curl_error($curl);
+            if(is_wp_error($res)){
+                $this->http_code = 400;
+                $this->response = '{}';
+                $this->headers = [];
+            }else{
+                $this->http_code = $res['response']['code'];
+                $this->response = $res['body'];
+                $this->headers = $res['headers'];
             }
-
-            curl_close($curl);
-        }
 
     }
 
