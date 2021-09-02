@@ -23,7 +23,7 @@
 
     $.each(shortcodes, (k, v) => {
         var el = $(v);
-        new Clipboard(v);
+        new ClipboardJS(v);
 
         if ( el.is('div') ) {
             el.click(() => {
