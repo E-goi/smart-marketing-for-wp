@@ -167,14 +167,15 @@ class EgoiPopUp
 
 
     private static function getModal($config){
+        $popup_id = esc_textarea($config['popup_id']);
         ?>
-        <div id="egoi_popup_<?php echo $config['popup_id']; ?>" class="egoi_modal_<?php echo $config['popup_id']; ?>">
+        <div id="egoi_popup_<?php echo $popup_id; ?>" class="egoi_modal_<?php echo $popup_id; ?>">
             <!-- Modal content -->
-            <div class="egoi_modal_content_<?php echo $config['popup_id']; ?>">
-                <span class="popup_close_<?php echo $config['popup_id']; ?> dashicons dashicons-no"></span>
+            <div class="egoi_modal_content_<?php echo $popup_id; ?>">
+                <span class="popup_close_<?php echo $popup_id; ?> dashicons dashicons-no"></span>
                 <div style="border-radius: inherit;">
                     <?php if($config['popup_layout'] == 'left_image'){ ?>
-                        <div class="egoi_popup_side_image_<?php echo $config['popup_id']; ?>" style="background-image: url(<?php echo wp_get_attachment_url( $config['side_image'] ); ?>);">
+                        <div class="egoi_popup_side_image_<?php echo $popup_id; ?>" style="background-image: url(<?php echo wp_get_attachment_url( $config['side_image'] ); ?>);">
 
                         </div>
                     <?php } ?>
@@ -184,7 +185,7 @@ class EgoiPopUp
                         ?>
                     </div>
                     <?php if($config['popup_layout'] == 'right_image'){ ?>
-                        <div class="egoi_popup_side_image_<?php echo $config['popup_id']; ?>" style="background-image: url(<?php echo wp_get_attachment_url( $config['side_image'] ); ?>);">
+                        <div class="egoi_popup_side_image_<?php echo $popup_id; ?>" style="background-image: url(<?php echo wp_get_attachment_url( $config['side_image'] ); ?>);">
 
                         </div>
                     <?php } ?>
@@ -195,22 +196,23 @@ class EgoiPopUp
     }
 
     private static function getScripts($config){
+        $popup_id = esc_textarea($config['popup_id']);
         ?>
 
         <script>
             jQuery(document).ready(function($) {
 
-                var targetPopup = $("#egoi_popup_<?php echo $config['popup_id']; ?>");
-                var targetForm = $("#egoi_popup_<?php echo $config['popup_id']; ?> ").find("#egoi_simple_form_<?php echo $config['form_id']; ?>");
+                var targetPopup = $("#egoi_popup_<?php echo $popup_id; ?>");
+                var targetForm = $("#egoi_popup_<?php echo $popup_id; ?> ").find("#egoi_simple_form_<?php echo $config['form_id']; ?>");
 
-                var closeButton = $(".popup_close_<?php echo $config['popup_id']; ?>");
+                var closeButton = $(".popup_close_<?php echo $popup_id; ?>");
 
                 closeButton.on('click', function(){
                     closePopup();
                 });
 
                 var elem = document.getElementsByTagName("html");
-                elem[0].addEventListener("egoi_simple_form_<?php echo $config['form_id']; ?>", function (e) {
+                elem[0].addEventListener("egoi_simple_form_<?php echo $popup_id; ?>", function (e) {
                     setTimeout(function () {
                         <?php self::getFormSubmit($config); ?>
                         closePopup();
@@ -222,7 +224,7 @@ class EgoiPopUp
                 }
 
                 function triggerPopup(){
-                    if(localStorage.getItem('popup_trigger_<?php echo $config['popup_id']; ?>') !== null){
+                    if(localStorage.getItem('popup_trigger_<?php echo $popup_id; ?>') !== null){
                         return;
                     }
                     <?php
@@ -259,18 +261,20 @@ class EgoiPopUp
     }
 
     private static function getFormSubmit($config){
+        $popup_id = esc_textarea($config['popup_id']);
         if($config['show_until'] == 'until_submition'){?>
 
-            localStorage.setItem('popup_trigger_<?php echo $config['popup_id']; ?>', true);
+            localStorage.setItem('popup_trigger_<?php echo $popup_id; ?>', true);
 
             <?php
         }
     }
 
     private static function getPopUpDisplayed($config){
+        $popup_id = esc_textarea($config['popup_id']);
         if($config['show_until'] == 'one_time'){?>
 
-            localStorage.setItem('popup_trigger_<?php echo $config['popup_id']; ?>', true);
+            localStorage.setItem('popup_trigger_<?php echo $popup_id; ?>', true);
             <?php
         }
     }
@@ -398,11 +402,12 @@ class EgoiPopUp
     }
 
     private static function getStyles($config, $production = false){
+        $popup_id = esc_textarea($config['popup_id']);
         ?>
         <style>
 
             /* The Modal (background) */
-            .egoi_modal_<?php echo $config['popup_id']; ?> {
+            .egoi_modal_<?php echo esc_textarea($config['popup_id']); ?> {
                 position: fixed; /* Stay in place */
                 z-index: 1001; /* Sit on top */
                 left: 0;
@@ -420,11 +425,11 @@ class EgoiPopUp
             }
 
             /* Modal Content */
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> {
-                background-color: <?php echo $config['background_color'] ?>;
+            .egoi_modal_content_<?php echo esc_textarea($config['popup_id']); ?> {
+                background-color: <?php echo esc_textarea($config['background_color']); ?>;
                 margin: auto;
                 width: 100%;
-                max-width: <?php echo $config['max_width'] ?>;
+                max-width: <?php echo esc_textarea($config['max_width']); ?>;
                 display: flex;
                 flex-direction: column;
                 <?php if($production){ ?>
@@ -445,22 +450,22 @@ class EgoiPopUp
         <?php } ?>
             }
 
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > *,
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > *,
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > *,
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > * > *,
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > * > * > * {
+            .egoi_modal_content_<?php echo $popup_id; ?> > *,
+            .egoi_modal_content_<?php echo $popup_id; ?> > * > * > *,
+            .egoi_modal_content_<?php echo $popup_id; ?> > * > * > * > *,
+            .egoi_modal_content_<?php echo $popup_id; ?> > * > * > * > * > *,
+            .egoi_modal_content_<?php echo $popup_id; ?> > * > * > * > * > * > * {
                 border-radius: inherit !important;
             }
 
             <?php if($config['popup_layout'] != 'simple'){ ?>
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > div{
+            .egoi_modal_content_<?php echo $popup_id; ?> > div{
                 grid-template-columns: 1fr 1fr;
                 display: grid;
             }
             <?php } ?>
 
-            .egoi_popup_side_image_<?php echo $config['popup_id']; ?>{
+            .egoi_popup_side_image_<?php echo $popup_id ?>{
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -474,16 +479,16 @@ class EgoiPopUp
             }
 
             <?php if(!empty($config['font_color'])){ ?>
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > *,
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > *,
-            .egoi_modal_content_<?php echo $config['popup_id']; ?> > * > * > * > *
+            .egoi_modal_content_<?php echo $popup_id; ?> > *,
+            .egoi_modal_content_<?php echo $popup_id; ?> > * > * > *,
+            .egoi_modal_content_<?php echo $popup_id; ?> > * > * > * > *
             {
                 color: <?php echo $config['font_color']; ?> !important;
             }
             <?php } ?>
 
             /* The Close Button */
-            .popup_close_<?php echo $config['popup_id']; ?> {
+            .popup_close_<?php echo $popup_id; ?> {
                 color: #aaaaaa;
                 float: right;
                 font-size: 28px;
@@ -493,8 +498,8 @@ class EgoiPopUp
                 align-self: flex-end;
             }
 
-            .popup_close_<?php echo $config['popup_id']; ?>:hover,
-            .popup_close_<?php echo $config['popup_id']; ?>:focus {
+            .popup_close_<?php echo $popup_id; ?>:hover,
+            .popup_close_<?php echo $popup_id; ?>:focus {
                 color: #000;
                 text-decoration: none;
                 cursor: pointer;

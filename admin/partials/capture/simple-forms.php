@@ -34,7 +34,7 @@ if (isset($_POST['id_simple_form'])) {
                 'post_author' => $user->ID,
                 'post_date' => $date,
                 'post_date_gmt' => $date,
-                'post_content' => $_POST['html_code'],
+                'post_content' => wp_kses_normalize_entities($_POST['html_code']),
                 'post_title' => sanitize_text_field($_POST['title']),
                 'comment_status' => 'closed',
                 'ping_status' => 'closed',
@@ -62,7 +62,7 @@ if (isset($_POST['id_simple_form'])) {
 
             $post = array (
                 'post_author' => $user->ID,
-                'post_content' => $_POST['html_code'],
+                'post_content' => wp_kses_normalize_entities($_POST['html_code']),
                 'post_title' => sanitize_text_field($_POST['title']),
                 'post_name' => $post_name,
                 'post_modified' => $date,
@@ -90,7 +90,7 @@ if (isset($_POST['id_simple_form'])) {
             'shortcode' => $shortcode,
             'id_simple_form' => $id_simple_form,
             'title_simple_form' => sanitize_text_field($_POST['title']),
-            'html_code_simple_form' => $_POST['html_code'],
+            'html_code_simple_form' => wp_kses_normalize_entities($_POST['html_code']),
             'list' => sanitize_key($_POST['list']),
             'lang' => sanitize_text_field($_POST['lang']),
             'tag' => isset($_POST['tag-egoi']) ? sanitize_key($_POST['tag-egoi']) : $new->ID,

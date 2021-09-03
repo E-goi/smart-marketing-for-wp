@@ -11,7 +11,7 @@ error_reporting(0);
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           3.7.13
+ * Version:           3.7.14
 
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
@@ -27,12 +27,7 @@ if (!defined( 'WPINC' )) {
 }
 
 
-define('EFWP_SELF_VERSION', '3.7.13');
-
-
-if (!session_id()){
-    session_start();
-}
+define('EFWP_SELF_VERSION', '3.7.14');
 
 function activate_egoi_for_wp() {
 
@@ -69,8 +64,8 @@ function egoiFatalErrorShutdownHandler(){
 }
 
 // HOOK SYNC USERS
-add_action('wp_ajax_add_users', 'add_users');
-function add_users(){
+add_action('wp_ajax_efwp_add_users', 'efwp_add_users');
+function efwp_add_users(){
     $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->users_queue();
 }
@@ -89,31 +84,31 @@ function egoi_get_lists(){
 }
 
 // HOOK E-GOI LIST GET FORM
-add_action('wp_ajax_get_form_from_list', 'get_form_from_list');
-function get_form_from_list(){
+add_action('wp_ajax_efwp_get_form_from_list', 'efwp_get_form_from_list');
+function efwp_get_form_from_list(){
     $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->get_form_processed();
 }
 
 // HOOK BAR GENERATION
-add_action('wp_ajax_generate_subscription_bar', 'generate_subscription_bar');
-add_action('wp_ajax_nopriv_generate_subscription_bar', 'generate_subscription_bar');
-function generate_subscription_bar(){
+add_action('wp_ajax_efwp_generate_subscription_bar', 'efwp_generate_subscription_bar');
+add_action('wp_ajax_nopriv_efwp_generate_subscription_bar', 'efwp_generate_subscription_bar');
+function efwp_generate_subscription_bar(){
     $public_area = new Egoi_For_Wp_Public();
     return $public_area->generate_bar($_POST['regenerate']);
 }
 
 // HOOK BAR SUBSCRIPTION 
-add_action('wp_ajax_process_subscription', 'process_subscription');
-add_action('wp_ajax_nopriv_process_subscription', 'process_subscription');
-function process_subscription(){
+add_action('wp_ajax_efwp_process_subscription', 'efwp_process_subscription');
+add_action('wp_ajax_nopriv_efwp_process_subscription', 'efwp_process_subscription');
+function efwp_process_subscription(){
     $public_area = new Egoi_For_Wp_Public();
     return $public_area->subscribe();
 }
 
 // HOOK E-GOI FORM SUBSCRIPTION
-add_action('wp_ajax_process_egoi_form', 'process_egoi_form');
-function process_egoi_form(){
+add_action('wp_ajax_efwp_process_egoi_form', 'efwp_process_egoi_form');
+function efwp_process_egoi_form(){
     $public_area = new Egoi_For_Wp_Public();
     return $public_area->subscribe_egoi_form();
 }
@@ -143,8 +138,8 @@ function process_egoi_simple_form($atts){
 }
 add_shortcode( 'egoi-simple-form', 'process_egoi_simple_form');
 
-add_action('save_post', 'process_content_page',10,3);
-function process_content_page($post_id, $post, $update ){
+add_action('save_post', 'efwp_process_content_page',10,3);
+function efwp_process_content_page($post_id, $post, $update ){
 
     preg_match_all('/\[egoi-simple-form .*=".*"\]/', $post->post_content, $matches);
 
@@ -159,9 +154,9 @@ function process_content_page($post_id, $post, $update ){
     
 }
 // HOOK E-GOI SIMPLE FORM ADD SUBSCRIBER
-add_action( 'wp_ajax_my_action', 'process_simple_form_add' );
-add_action( 'wp_ajax_nopriv_my_action', 'process_simple_form_add' );
-function process_simple_form_add(){
+add_action( 'wp_ajax_my_action', 'efwp_process_simple_form_add' );
+add_action( 'wp_ajax_nopriv_my_action', 'efwp_process_simple_form_add' );
+function efwp_process_simple_form_add(){
     $admin = new Egoi_For_Wp_Admin('smart-marketing-for-wp', EFWP_SELF_VERSION);
     return $admin->subscribe_egoi_simple_form_add();
 }
@@ -196,8 +191,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-widget.php';
 
 // HOOK API KEY CHANGES
-add_action('wp_ajax_apikey_changes', 'apikey_changes');
-function apikey_changes(){
+add_action('wp_ajax_efwp_apikey_changes', 'efwp_apikey_changes');
+function efwp_apikey_changes(){
     return Egoi_For_Wp::removeData(true, true);
 }
 
@@ -241,9 +236,9 @@ function egoi_widget_scripts() {
  * Hooks for RSS Feeds
  * Registers our custom feed
  */
-add_action('wp_feed_options', 'force_feed', 10, 1);
-function force_feed($feed) {
-    $feed->force_feed(true);
+add_action('wp_feed_options', 'efwp_force_feed', 10, 1);
+function efwp_force_feed($feed) {
+    $feed->efwp_force_feed(true);
 }
 
 function register_egoi_rss_feeds() {
@@ -263,8 +258,8 @@ function egoi_rss_feeds(){
  * Save meta data to DB
  */
 // add GTIN input field
-add_action('woocommerce_product_options_inventory_product_data','woocom_simple_product_gtin_field', 10, 1 );
-function woocom_simple_product_gtin_field(){
+add_action('woocommerce_product_options_inventory_product_data','efwp_woocom_simple_product_gtin_field', 10, 1 );
+function efwp_woocom_simple_product_gtin_field(){
    echo '<div id="gtin_attr" class="options_group">';
    woocommerce_wp_text_input( 
       array(	
@@ -277,8 +272,8 @@ function woocom_simple_product_gtin_field(){
    echo '</div>';
 }
 // save simple product GTIN
-add_action('woocommerce_process_product_meta','woocom_simple_product_egoi_gtin_save');
-function woocom_simple_product_egoi_gtin_save($post_id){
+add_action('woocommerce_process_product_meta','efwp_woocom_simple_product_egoi_gtin_save');
+function efwp_woocom_simple_product_egoi_gtin_save($post_id){
    if(isset($_POST['_egoi_gtin']) && !empty($_POST['_egoi_gtin'])) {
       $gtin = sanitize_text_field($_POST['_egoi_gtin']);
       update_post_meta($post_id,'_egoi_gtin', $gtin);
@@ -286,8 +281,8 @@ function woocom_simple_product_egoi_gtin_save($post_id){
 }
 
 // add BRAND input field
-add_action('woocommerce_product_options_inventory_product_data','woocom_simple_product_brand_field', 10, 1 );
-function woocom_simple_product_brand_field(){
+add_action('woocommerce_product_options_inventory_product_data','efwp_woocom_simple_product_brand_field', 10, 1 );
+function efwp_woocom_simple_product_brand_field(){
    echo '<div id="brand_attr" class="options_group">';
    //add BRAND field for simple product
    woocommerce_wp_text_input( 
@@ -301,16 +296,16 @@ function woocom_simple_product_brand_field(){
    echo '</div>';
 }
 // save simple product BRAND
-add_action('woocommerce_process_product_meta','woocom_simple_product_egoi_brand_save');
-function woocom_simple_product_egoi_brand_save($post_id){
+add_action('woocommerce_process_product_meta','efwp_woocom_simple_product_egoi_brand_save');
+function efwp_woocom_simple_product_egoi_brand_save($post_id){
    if(isset($_POST['_egoi_brand']) && !empty($_POST['_egoi_brand'])) {
       $brand = sanitize_text_field($_POST['_egoi_brand']);
       update_post_meta($post_id,'_egoi_brand', $brand);
    }
 }
 
-add_action( 'wp_ajax_egoi_preview_popup', 'popup_preview' );
-function popup_preview(){
+add_action( 'wp_ajax_egoi_preview_popup', 'efwp_popup_preview' );
+function efwp_popup_preview(){
     check_ajax_referer( 'egoi_capture_actions', 'security' );
 
     require_once(plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-popup.php');

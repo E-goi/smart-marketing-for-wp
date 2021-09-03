@@ -76,8 +76,8 @@ if (isset($_POST['action'])) {
                                 foreach ($senders as $sender) {
 
                                     if ($sender->email) { ?>
-                                        <option value="<?php echo $sender->email; ?>" <?php selected($options_list['from'], $sender->email); ?>>
-                                                <?php echo $sender->email; ?>
+                                        <option value="<?php echo esc_textarea($sender->email); ?>" <?php selected($options_list['from'], $sender->email); ?>>
+                                                <?php echo esc_textarea($sender->email); ?>
                                         </option><?php
                                     }
                                 } ?>

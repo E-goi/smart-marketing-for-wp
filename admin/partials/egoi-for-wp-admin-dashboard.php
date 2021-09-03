@@ -109,7 +109,7 @@ $page = array(
                                             </h3>
                                         </div>
                                         <div>
-                                            <img src="<?php echo plugins_url().'/smart-marketing-for-wp/admin/img/subscribers-today.png'; ?>"/>
+                                            <img src="<?php echo plugins_url('../img/subscribers-today.png', __FILE__); ?>"/>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@ $page = array(
                                         </div>
 
                                         <div>
-                                            <img src="<?php echo plugins_url().'/smart-marketing-for-wp/admin/img/total-subscribers.png'; ?>"/>
+                                            <img src="<?php echo plugins_url('../img/total-subscribers.png', __FILE__); ?>"/>
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@ $page = array(
                                             </h3>
                                         </div>
                                         <div>
-                                            <img src="<?php echo plugins_url().'/smart-marketing-for-wp/admin/img/bestday.png'; ?>"/>
+                                            <img src="<?php echo plugins_url('../img/bestday.png', __FILE__); ?>"/>
                                         </div>
                                     </div>
                                 </div>
@@ -206,7 +206,7 @@ $page = array(
                                                     <select id="chart_list">
                                                         <?php foreach ($lists as $list) { ?>
                                                             <option value="<?php echo implode(",", $lists_chart[$list->list_id]['totals']);?>" <?php selected($list->list_id, $options_list);?> >
-                                                                <?php echo $list->title?>
+                                                                <?php echo esc_textarea($list->title); ?>
                                                             </option>
                                                         <?php } ?>
                                                     </select>

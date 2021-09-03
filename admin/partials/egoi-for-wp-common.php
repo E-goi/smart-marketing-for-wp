@@ -23,7 +23,13 @@ $home = '<svg class="smsnfCapture__header__menu__item__homeIcon" version="1.1" i
         min-height: calc( 100vh - 32px);
     }
     #wpwrap{
-        height: auto;
-        min-height: 100%;
+        background-color: #f4f8fa;
+        position: initial;
+    }
+    #wpfooter{
+        position: inherit;
+    }
+    #wpbody-content > .update-nag, #wpbody-content > .notice, #wpbody-content > .notice-warning{
+        display: none;
     }
 </style>

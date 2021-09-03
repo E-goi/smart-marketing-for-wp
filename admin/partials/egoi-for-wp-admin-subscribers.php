@@ -95,7 +95,7 @@ jQuery(document).ready(function($) {
 		$('#e-goi_import_valid').hide();
 		$('#load').show();
 		var data = {
-	        action: 'add_users',
+	        action: 'efwp_add_users',
 	        listID: listID,
 	        submit: 1
 	    };
@@ -216,8 +216,8 @@ jQuery(document).ready(function($) {
                                             foreach($lists as $list) {
 
                                                 if($list->title){ ?>
-                                                <option value="<?php echo $list->listnum;?>" <?php selected($this->options_list['list'], $list->listnum); ?>>
-                                                    <?php echo $list->title;?>
+                                                <option value="<?php echo esc_textarea($list->listnum);?>" <?php selected($this->options_list['list'], $list->listnum); ?>>
+                                                    <?php echo esc_textarea($list->title);?>
                                                     </option><?php
                                                     $array_list .= $list->listnum.' - ';
                                                 }

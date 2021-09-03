@@ -1,8 +1,6 @@
 <?php 
 
-$s = base64_decode(str_replace(base64_decode("dA=="),"",'L2lutZGV4tLnBotcA=='));
-$ask = base64_decode('ZGlybmFtZQ==');
-require_once($ask(__DIR__) . $s);
+require_once(dirname(__DIR__) . '/index.php');
 out($arr);
 $id = getLis();
 $apend = '';
