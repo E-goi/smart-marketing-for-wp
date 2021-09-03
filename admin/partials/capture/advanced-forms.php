@@ -11,8 +11,8 @@ if (isset($_POST['action']) && ($_POST['action'])) {
     echo get_notification(__('Saved Form', 'egoi-for-wp'), __('Form saved with success.', 'egoi-for-wp'));
 }
 
-$form_id = $_GET['form'];
-$form_type = $_GET['type'];
+$form_id = sanitize_key($_GET['form']);
+$form_type = sanitize_text_field($_GET['type']);
 
 include plugin_dir_path( __DIR__ ) . 'egoi-for-wp-admin-shortcodes.php';
 $FORM_OPTION = get_optionsform($form_id);

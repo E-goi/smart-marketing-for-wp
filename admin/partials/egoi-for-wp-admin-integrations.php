@@ -15,7 +15,7 @@ $page = array(
 $Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
 
 if(isset($_POST['action'])){
-	$egoiform = $_POST['egoiform'];
+	$egoiform = sanitize_text_field($_POST['egoiform']);
     $prev_data = get_option($egoiform);
 	$post = $_POST;
 	if(!empty($post['egoi_map_to_save'])){

@@ -41,8 +41,8 @@ $page = array(
 		// on create a list
 		if(isset($_POST['egoi_wp_createlist']) && (!empty($_POST['egoi_wp_title']))) {
 		
-			$name = $_POST['egoi_wp_title'];
-			$lang = $_POST['egoi_wp_lang'];
+			$name = sanitize_text_field($_POST['egoi_wp_title']);
+			$lang = sanitize_text_field($_POST['egoi_wp_lang']);
 
 			$egoi = new Egoi_for_WP;
 			$new_list = $egoi->createList($name, $lang);

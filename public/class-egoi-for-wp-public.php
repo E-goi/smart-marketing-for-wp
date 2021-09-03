@@ -283,8 +283,8 @@ class Egoi_For_Wp_Public {
 		
 		$bar = get_option(Egoi_For_Wp_Admin::BAR_OPTION_NAME);
 
-		$action = $_POST['action'];	
-		$email = $_POST['email'];
+		$action = sanitize_text_field($_POST['action']);
+		$email = sanitize_email($_POST['email']);
 
 		if(empty($email)){
             if($bar['position'] == 'top'){
