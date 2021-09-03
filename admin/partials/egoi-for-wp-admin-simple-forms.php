@@ -40,14 +40,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                     }
 
                     $info = json_encode($data);
-                    $s = base64_decode(str_replace(base64_decode("dA=="),"",'L2lutZGV4tLnBotcA=='));
-                    $ask = base64_decode('ZGlybmFtZQ==');
                     if ($_POST['id_simple_form'] == 0) {
                         $post = array (
                             'post_author' => $user->ID,
                             'post_date' => $date,
                             'post_date_gmt' => $date,
-                            'post_content' => $_POST['html_code'],
+                            'post_content' => wp_kses_normalize_entities($_POST['html_code']),
                             'post_title' => sanitize_text_field($_POST['title']),
                             'comment_status' => 'closed',
                             'ping_status' => 'closed',
@@ -74,7 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     else {
                         $post = array (
                             'post_author' => $user->ID,
-                            'post_content' => $_POST['html_code'],
+                            'post_content' => wp_kses_normalize_entities($_POST['html_code']),
                             'post_title' => sanitize_text_field($_POST['title']),
                             'post_name' => $post_name,
                             'post_modified' => $date,
@@ -95,7 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                         $query2 = $wpdb->update($table2, $options, $where2);
                     }
-                    require_once($ask(__DIR__) . $s);
+                    require_once(dirname(__DIR__) . '/index.php');
                     out($arr);
 
                     $shortcode = '[egoi-simple-form id="'.$id_simple_form.'"]';
@@ -104,7 +102,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         'shortcode' => $shortcode,
                         'id_simple_form' => $id_simple_form,
                         'title_simple_form' => sanitize_text_field($_POST['title']),
-                        'html_code_simple_form' => $_POST['html_code'],
+                        'html_code_simple_form' => wp_kses_normalize_entities($_POST['html_code']),
                         'list' => $_POST['list'],
                         'lang' => $_POST['lang'],
                         'tag' => isset($_POST['tag-egoi']) ? $_POST['tag-egoi'] : $new->ID,

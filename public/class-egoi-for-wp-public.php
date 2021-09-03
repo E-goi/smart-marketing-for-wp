@@ -796,7 +796,7 @@ class Egoi_For_Wp_Public {
         return $defaultMap;
     }
 
-    public function process_simple_form_add(){
+    public function efwp_process_simple_form_add(){
         $api = new Egoi_For_Wp();
 
         // double opt-in

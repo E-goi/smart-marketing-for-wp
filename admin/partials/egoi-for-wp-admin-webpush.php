@@ -38,7 +38,7 @@ if (!empty($_POST) && $_POST['form_id'] == 'create-webpush-form' ) {
 }
 
 $redir = false;
-if (!empty($_GET['sub']) && $_GET['sub'] === 'create-wp' && !empty($_POST['create_wp_form'])) {
+if (!empty($_GET['sub']) && sanitize_key($_GET['sub']) === 'create-wp' && !empty($_POST['create_wp_form'])) {
     $apikey = $this->get_apikey();
     $api = new EgoiApiV3($apikey);
 
@@ -97,7 +97,7 @@ $locale = get_locale();
 
 $page = array(
     'home' => !isset($_GET['sub']),
-    'create-wp' => $_GET['sub'] == 'create-wp',
+    'create-wp' => sanitize_key($_GET['sub']) == 'create-wp',
 );
 
 if (strpos($locale, 'pt') !== false) {
@@ -141,7 +141,7 @@ if ($redir) {
 
         <?php
 
-        if(isset($_GET['sub']) && $_GET['sub'] === 'create-wp'){
+        if(isset($_GET['sub']) && sanitize_key($_GET['sub']) === 'create-wp'){
             require_once plugin_dir_path(__FILE__) . 'webpush/create-wp.php';
         }else{
             require_once plugin_dir_path(__FILE__) . 'webpush/home.php';

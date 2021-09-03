@@ -10,7 +10,7 @@ require_once plugin_dir_path(__FILE__) . 'egoi-for-wp-common.php';
 
 $page = array(
     'home' => !isset($_GET['sub']),
-    'send-email-test' => $_GET['sub'] == 'send-email-test',
+    'send-email-test' => sanitize_key($_GET['sub']) == 'send-email-test',
 );
 
 ?>
@@ -38,7 +38,7 @@ $page = array(
         <section class="smsnf-content">
 
             <?php
-                if(isset($_GET['sub']) && $_GET['sub'] == 'send-email-test'){
+                if(isset($_GET['sub']) && sanitize_key($_GET['sub']) == 'send-email-test'){
                     require_once plugin_dir_path(__FILE__) . 'transactionalemail/send-email-test.php';
                 }else{       
                     require_once plugin_dir_path(__FILE__) . 'transactionalemail/home.php';

@@ -97,50 +97,6 @@ $page = array(
 		}
 	}
 
-    jQuery( document ).ready(function() {
-
-        var iframe_src = jQuery("#iframe").attr('src');
-        var width = jQuery(".iframe-container").width();
-
-        if (width < 450) {
-            if (iframe_src.indexOf("type=h") >= 0) {
-                var pos = iframe_src.indexOf("type=h");
-                var new_iframe_src = iframe_src.substring(0, pos) + 'type=v' + iframe_src.substring(pos+6);
-
-                jQuery("#iframe").attr('src',new_iframe_src);
-                jQuery(".iframe-container").css( 'padding-top', 530 );
-            }
-        }
-
-        jQuery("#create_new_account").on("click", function() {
-            jQuery("#new_account_form").toggle();
-        });
-
-    });
-
-    jQuery( window ).resize( function () {
-        var width = jQuery(".iframe-container").width();
-
-        var iframe_src = jQuery("#iframe").attr('src');
-        if (width < 450) {
-            if (iframe_src.indexOf("type=h") >= 0) {
-                var pos = iframe_src.indexOf("type=h");
-                var new_iframe_src = iframe_src.substring(0, pos) + 'type=v' + iframe_src.substring(pos+6);
-
-                jQuery("#iframe").attr('src',new_iframe_src);
-                jQuery(".iframe-container").css( 'padding-top', 530 );
-            }
-        } else {
-            if (iframe_src.indexOf("type=v") >= 0) {
-                var pos = iframe_src.indexOf("type=v");
-                var new_iframe_src = iframe_src.substring(0, pos) + 'type=h' + iframe_src.substring(pos+6);
-
-                jQuery("#iframe").attr('src',new_iframe_src);
-                jQuery(".iframe-container").css( 'padding-top', 270 );
-            }
-        }
-
-    });
 </script>
 
 <!-- STYLE on this page - Position the text footer fixed to the bottom --> 

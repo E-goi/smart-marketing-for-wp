@@ -129,7 +129,7 @@
             $('#form_list_group').slideDown();
             $('#empty-forms').slideUp();
 
-            $.post(url_egoi_script.ajaxurl, {action: 'get_form_from_list', listID: list_id})
+            $.post(url_egoi_script.ajaxurl, {action: 'efwp_get_form_from_list', listID: list_id})
             .done(function(response) {
                 var forms = JSON.parse(response);
                 select_forms.find("option").not(':first').remove();
