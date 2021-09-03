@@ -144,7 +144,7 @@ class TransactionalEmailHelper {
         if($post['check_transactional_email']==1){
             //If e-goi transactional email enable
 
-            $transactionalEmailOptions['from'] = $post['from'];
+            $transactionalEmailOptions['from'] = sanitize_text_field($post['from']);
             $transactionalEmailOptions['mailer'] = 'egoi';
             $transactionalEmailOptions['check_transactional_email'] = 1;
     
@@ -156,7 +156,7 @@ class TransactionalEmailHelper {
                     if($sender->name != NULL){
                         $transactionalEmailOptions['fromname'] = $sender->name;
                     }else{
-                        $transactionalEmailOptions['fromname'] = $post['from'];
+                        $transactionalEmailOptions['fromname'] = sanitize_text_field($post['from']);
                     }
                 }
             }
