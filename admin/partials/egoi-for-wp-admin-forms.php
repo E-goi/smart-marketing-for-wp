@@ -34,13 +34,14 @@ if (isset($_GET['del_popup'])) {
     echo get_notification(__('Popups', 'egoi-for-wp'), __('Popup was successfully deleted!', 'egoi-for-wp'));
 }
 
+$sub_var = sanitize_key($_GET['sub']);
 $page = array(
     'home' => !isset($_GET['sub']),
-    'adv forms' => $_GET['sub'] == 'adv-forms',
-    'simple form' => $_GET['sub'] == 'simple-forms',
-    'subscription bar' => $_GET['sub'] == 'subscription-bar',
-    'widget options' => $_GET['sub'] == 'widget-options',
-    'popup' => $_GET['sub'] == 'popup'
+    'adv forms' => $sub_var == 'adv-forms',
+    'simple form' => $sub_var == 'simple-forms',
+    'subscription bar' => $sub_var == 'subscription-bar',
+    'widget options' => $sub_var == 'widget-options',
+    'popup' => $sub_var == 'popup'
 );
 
 $next_adv_form_id = get_next_adv_form_id();

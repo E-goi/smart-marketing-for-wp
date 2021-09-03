@@ -5,11 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 $dir = plugin_dir_path(__FILE__) . 'capture/';
 include_once $dir . '/functions.php';
 require_once plugin_dir_path(__FILE__) . 'egoi-for-wp-common.php';
+$sub_var = sanitize_key($_GET['sub']);
 $page = array(
     'home' => !isset($_GET['sub']),
-    'contact-form-7' => $_GET['sub'] == 'contact-form-7',
-    'post-comment' => $_GET['sub'] == 'post-comment',
-    'gravity-forms' => $_GET['sub'] == 'gravity-forms'
+    'contact-form-7' => $sub_var == 'contact-form-7',
+    'post-comment' => $sub_var == 'post-comment',
+    'gravity-forms' => $sub_var == 'gravity-forms'
 );
 $Egoi4WpBuilderObject = get_option('Egoi4WpBuilderObject');
 
@@ -87,12 +88,12 @@ if(!$egoint['enable_gf']){
         <section class="smsnf-content">
 
             <?php
-
-            if(isset($_GET['sub']) && $_GET['sub'] == 'contact-form-7'){
+            $sub_var = sanitize_key($_GET['sub']);
+            if(isset($_GET['sub']) && $sub_var == 'contact-form-7'){
                 require_once plugin_dir_path(__FILE__) . 'integrations/contact-form-7.php';
-            }else if(isset($_GET['sub']) && $_GET['sub'] == 'post-comment'){
+            }else if(isset($_GET['sub']) && $sub_var == 'post-comment'){
                 require_once plugin_dir_path(__FILE__) . 'integrations/post-comment.php';
-            }else if(isset($_GET['sub']) && $_GET['sub'] == 'gravity-forms'){
+            }else if(isset($_GET['sub']) && $sub_var == 'gravity-forms'){
                 require_once plugin_dir_path(__FILE__) . 'integrations/gravity-forms.php';
             }else{
                 require_once plugin_dir_path(__FILE__) . 'integrations/home.php';

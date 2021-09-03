@@ -161,8 +161,8 @@ class CampaignWidget {
                     <?php
                         foreach($lists as $list) {
                             if($list->title){ ?>
-                            <option value="<?php echo $list->listnum;?>" <?php selected($email_campaign_widget_list_contacts, $list->listnum); ?>>
-                                <?php echo $list->title;?>
+                            <option value="<?php echo esc_textarea($list->listnum);?>" <?php selected($email_campaign_widget_list_contacts, $list->listnum); ?>>
+                                <?php echo esc_textarea($list->title);?>
                             </option><?php
                             }
                         } ?>
@@ -177,8 +177,8 @@ class CampaignWidget {
                     <?php
                         foreach($senders as $sender) {
                             if($sender->email){ ?>
-                            <option value="<?php echo $sender->sender_id;?>" <?php selected($email_campaign_widget_sender, $sender->sender_id); ?>>
-                                <?php echo $sender->email;?>
+                            <option value="<?php echo esc_textarea($sender->sender_id);?>" <?php selected($email_campaign_widget_sender, $sender->sender_id); ?>>
+                                <?php echo esc_textarea($sender->email);?>
                             </option><?php
                             }
                         } ?>
@@ -462,8 +462,8 @@ class CampaignWidget {
         $webpush_campaign_widget_modify_content = $webpush_campaign_widget_modify_content_checked || (get_post_meta($post->ID, 'webpush_campaign_widget_modify_content', true) === '1');
 
         if($was_posted && $webpush_campaign_widget_modify_content) {                
-            $webpush_campaign_widget_custom_heading = $_POST['webpush_campaign_widget_custom_heading'];
-            $webpush_campaign_widget_custom_content = $_POST['webpush_campaign_widget_custom_content'];
+            $webpush_campaign_widget_custom_heading = sanitize_text_field($_POST['webpush_campaign_widget_custom_heading']);
+            $webpush_campaign_widget_custom_content = sanitize_textarea_field($_POST['webpush_campaign_widget_custom_content']);
         } else {                
             $webpush_campaign_widget_custom_heading = get_post_meta($post->ID, 'webpush_campaign_widget_custom_heading', true);
             $webpush_campaign_widget_custom_content = get_post_meta($post->ID, 'webpush_campaign_widget_custom_content', true);

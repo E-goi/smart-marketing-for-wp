@@ -135,7 +135,7 @@ jQuery(document).ready(function($) {
 			setCookie("hide_bar", "1", 20);
 
 			var data = {
-				action: 'generate_subscription_bar',
+				action: 'efwp_generate_subscription_bar',
 				regenerate: 1
 			};
 			
@@ -161,7 +161,7 @@ jQuery(document).ready(function($) {
 		 	btn.hide();
 
 			var data = {
-				action: 'process_subscription',
+				action: 'efwp_process_subscription',
 				email: $('input.egoi-email').val(),
 				egoi_action_sub: 1
 			};

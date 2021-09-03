@@ -30,8 +30,8 @@
                                     foreach($lists as $list) {
 
                                         if($list->title){ ?>
-                                        <option value="<?php echo $list->listnum;?>" <?php selected($this->options_list['list'], $list->listnum); ?>>
-                                            <?php echo $list->title;?>
+                                        <option value="<?php echo esc_textarea($list->listnum);?>" <?php selected($this->options_list['list'], $list->listnum); ?>>
+                                            <?php echo esc_textarea($list->title);?>
                                             </option><?php
                                             $array_list .= $list->listnum.' - ';
                                         }

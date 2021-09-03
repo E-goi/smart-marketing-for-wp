@@ -351,9 +351,9 @@ class Egoi4Widget extends WP_Widget {
             echo '<input class="checkbox" id="'.$this->get_field_id('fname').'" name="'.$this->get_field_name('fname').'" type="checkbox" value="First Name" data-attribute="fname_id" '.$checked_fname.' />
 				<label for="'.$this->get_field_id('fname').'">'.__('First Name', 'egoi-for-wp').'</label>';
 
-            echo '<input type="text" name="'.$this->get_field_name('fname_label').'" id="'.$this->get_field_id('fname_label').'" placeholder="'.__('Label', 'egoi-for-wp').'" value="'.$fname_label.'" data-attribute="fname_label" style="width:100%;'.$style_fname.'">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('fname_label')).'" id="'.esc_textarea($this->get_field_id('fname_label')).'" placeholder="'.__('Label', 'egoi-for-wp').'" value="'.$fname_label.'" data-attribute="fname_label" style="width:100%;'.$style_fname.'">';
 
-            echo '<input type="text" name="'.$this->get_field_name('fname_placeholder').'" id="'.$this->get_field_id('fname_placeholder').'" placeholder="Placeholder" value="'.$fname_placeholder.'" data-attribute="fname_placeholder" style="width:100%;'.$style_fname.'">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('fname_placeholder')).'" id="'.esc_textarea($this->get_field_id('fname_placeholder')).'" placeholder="Placeholder" value="'.$fname_placeholder.'" data-attribute="fname_placeholder" style="width:100%;'.$style_fname.'">';
 
             echo '
 			</p>
@@ -366,13 +366,13 @@ class Egoi4Widget extends WP_Widget {
                 $style_lname = '';
             }
 
-            echo '<input class="checkbox" id="'.$this->get_field_id('lname').'" name="'.$this->get_field_name('lname').'" type="checkbox" value="Last Name" data-attribute="lname_id" '.$checked_lname.' />';
+            echo '<input class="checkbox" id="'.esc_textarea($this->get_field_id('lname')).'" name="'.$this->get_field_name('lname').'" type="checkbox" value="Last Name" data-attribute="lname_id" '.$checked_lname.' />';
 
-            echo '<label for="'.$this->get_field_id('lname').'">'.__('Last Name', 'egoi-for-wp').'</label>';
+            echo '<label for="'.esc_textarea($this->get_field_id('lname')).'">'.__('Last Name', 'egoi-for-wp').'</label>';
 
-            echo '<input type="text" name="'.$this->get_field_name('lname_label').'" id="'.$this->get_field_id('lname_label').'" placeholder="'.__('Label', 'egoi-for-wp').'" value="'.$lname_label.'" data-attribute="lname_label" style="width:100%;'.$style_lname.'">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('lname_label')).'" id="'.esc_textarea($this->get_field_id('lname_label')).'" placeholder="'.__('Label', 'egoi-for-wp').'" value="'.$lname_label.'" data-attribute="lname_label" style="width:100%;'.$style_lname.'">';
 
-            echo '<input type="text" name="'.$this->get_field_name('lname_placeholder').'" id="'.$this->get_field_id('lname_placeholder').'" placeholder="Placeholder" value="'.$lname_placeholder.'" data-attribute="lname_placeholder" style="width:100%;'.$style_lname.'">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('lname_placeholder')).'" id="'.esc_textarea($this->get_field_id('lname_placeholder')).'" placeholder="Placeholder" value="'.$lname_placeholder.'" data-attribute="lname_placeholder" style="width:100%;'.$style_lname.'">';
 
             if(!$email)
                 $email = 'Email';
@@ -380,15 +380,15 @@ class Egoi4Widget extends WP_Widget {
             echo '
 			</p>
 			<p>
-				<input class="checkbox" id="'.$this->get_field_id('email').'" name="'.$this->get_field_id('email').'"';
+				<input class="checkbox" id="'.esc_textarea($this->get_field_id('email')).'" name="'.esc_textarea($this->get_field_id('email')).'"';
             if($email){ echo 'checked="checked"'; } echo 'type="checkbox" checked="checked" value="Email" disabled="disabled"/>
-				<label for="'.$this->get_field_id('email').'">';
+				<label for="'.esc_textarea($this->get_field_id('email')).'">';
             _e('Email:', 'egoi-for-wp');
             echo '</label>';
 
-            echo '<input type="text" name="'.$this->get_field_name('email_label').'" id="'.$this->get_field_id('email_label').'" placeholder="'.__('Label', 'egoi-for-wp').'" value="'.$email_label.'" style="width:100%;">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('email_label')).'" id="'.esc_textarea($this->get_field_id('email_label')).'" placeholder="'.__('Label', 'egoi-for-wp').'" value="'.$email_label.'" style="width:100%;">';
 
-            echo '<input type="text" name="'.$this->get_field_name('email_placeholder').'" id="'.$this->get_field_id('email_placeholder').'" placeholder="Placeholder" value="'.$email_placeholder.'" style="width:100%;">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('email_placeholder')).'" id="'.esc_textarea($this->get_field_id('email_placeholder')).'" placeholder="Placeholder" value="'.$email_placeholder.'" style="width:100%;">';
 
             echo '
 			</p>
@@ -401,13 +401,13 @@ class Egoi4Widget extends WP_Widget {
                 $style_mobile = '';
             }
 
-            echo '<input class="checkbox" id="'.$this->get_field_id('mobile').'" name="'.$this->get_field_name('mobile').'" type="checkbox" value="Mobile" data-attribute="mobile_id" '.$checked_mobile.' />
-				<label for="'.$this->get_field_id('mobile').'">'.__('Mobile', 'egoi-for-wp').
+            echo '<input class="checkbox" id="'.esc_textarea($this->get_field_id('mobile')).'" name="'.esc_textarea($this->get_field_name('mobile')).'" type="checkbox" value="Mobile" data-attribute="mobile_id" '.$checked_mobile.' />
+				<label for="'.esc_textarea($this->get_field_id('mobile')).'">'.__('Mobile', 'egoi-for-wp').
                 '</label>';
 
-            echo '<input type="text" name="'.$this->get_field_name('mobile_label').'" id="'.$this->get_field_id('mobile_label').'" placeholder="'.__('Label', 'egoi-for-wp').'" value="'.$mobile_label.'" data-attribute="mobile_label" style="width:100%;'.$style_mobile.'">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('mobile_label')).'" id="'.esc_textarea($this->get_field_id('mobile_label')).'" placeholder="'.__('Label', 'egoi-for-wp').'" value="'.$mobile_label.'" data-attribute="mobile_label" style="width:100%;'.$style_mobile.'">';
 
-            echo '<input type="text" name="'.$this->get_field_name('mobile_placeholder').'" id="'.$this->get_field_id('mobile_placeholder').'" placeholder="Placeholder" value="'.$mobile_placeholder.'" data-attribute="mobile_placeholder" style="width:100%;'.$style_mobile.'">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('mobile_placeholder')).'" id="'.esc_textarea($this->get_field_id('mobile_placeholder')).'" placeholder="Placeholder" value="'.$mobile_placeholder.'" data-attribute="mobile_placeholder" style="width:100%;'.$style_mobile.'">';
 
             if(!$button)
                 $button = __('Subscribe', 'egoi-for-wp');
@@ -428,7 +428,7 @@ class Egoi4Widget extends WP_Widget {
                 echo '<label>'.__('Tag', 'egoi-for-wp').'</label>';
             }
 
-            echo '<input type="text" name="'.$this->get_field_name('tag').'" id="'.$this->get_field_id('tag').'" placeholder="'.__('Tag Name', 'egoi-for-wp').'" value="'.$tag.'" style="width:100%;">';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('tag')).'" id="'.esc_textarea($this->get_field_id('tag')).'" placeholder="'.__('Tag Name', 'egoi-for-wp').'" value="'.$tag.'" style="width:100%;">';
 
             echo '
 			</p>
@@ -448,7 +448,7 @@ class Egoi4Widget extends WP_Widget {
                 echo '<label>'.__('Languages for list', 'egoi-for-wp').":\n".$this->listID.'</label><br>';
             }
 
-            echo '<select id="'.$this->get_field_name('widget_lang').'" name="'.$this->get_field_name('widget_lang').'" type="text" >';
+            echo '<select id="'.esc_textarea($this->get_field_name('widget_lang')).'" name="'.esc_textarea($this->get_field_name('widget_lang')).'" type="text" >';
             echo '<option value="" selected disabled>'.__('Select a language', 'egoi-for-wp').'</option>';
 
             foreach ($languages as $value) {
@@ -462,8 +462,8 @@ class Egoi4Widget extends WP_Widget {
             echo '</select>				
 			</p>
 			<p>
-				<label for="'.$this->get_field_id('button').'">'.__('Subscribe Button', 'egoi-for-wp').'</label>';
-            echo '<input type="text" name="'.$this->get_field_name('button').'" id="'.$this->get_field_id('button').'" placeholder="'.__('Subscribe', 'egoi-for-wp').'" value="'.$button.'" style="width:100%;">';
+				<label for="'.esc_textarea($this->get_field_id('button')).'">'.__('Subscribe Button', 'egoi-for-wp').'</label>';
+            echo '<input type="text" name="'.esc_textarea($this->get_field_name('button')).'" id="'.esc_textarea($this->get_field_id('button')).'" placeholder="'.__('Subscribe', 'egoi-for-wp').'" value="'.$button.'" style="width:100%;">';
 
             echo '
 			</p>';
@@ -481,13 +481,13 @@ function egoi_widget_request() {
 
     if(isset($_POST['egoi_subscribe']) && ($_POST['egoi_subscribe'] == "submited")) {
 
-        $id = $_POST['widget_id'];
+        $id = sanitize_key($_POST['widget_id']);
 
-        $fname = $_POST['widget_fname'];
-        $lname = $_POST['widget_lname'];
+        $fname = sanitize_text_field($_POST['widget_fname']);
+        $lname = sanitize_text_field($_POST['widget_lname']);
 
-        $lang = $_POST['widget_lang'];
-        $tag = $_POST['widget_tag'];
+        $lang = sanitize_text_field($_POST['widget_lang']);
+        $tag = sanitize_key($_POST['widget_tag']);
 
         $opt = get_option('egoi_widget');
         $Egoi4WP = $opt['egoi_widget'];
@@ -495,14 +495,14 @@ function egoi_widget_request() {
         $list = $Egoi4WP['list'];
 
         // new options
-        $bcolor_success = 'background: '.$Egoi4WP['bcolor_success'].'!important';
-        $bcolor_error = 'background: '.$Egoi4WP['bcolor_error'].'!important';
+        $bcolor_success = 'background: '.esc_textarea($Egoi4WP['bcolor_success']).'!important';
+        $bcolor_error = 'background: '.esc_textarea($Egoi4WP['bcolor_error']).'!important';
 
         if(isset($_POST['widget_email'])) {
 
             if($_POST['widget_email'] != '') {
 
-                $email = $_POST['widget_email'];
+                $email = sanitize_email($_POST['widget_email']);
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     echo "<div style='$bcolor_success' class='egoi-widget-error error".$id."'>".$Egoi4WP['msg_invalid']."</div>";
                     exit;
@@ -516,7 +516,7 @@ function egoi_widget_request() {
         if(isset($_POST['widget_mobile'])) {
 
             if($_POST['widget_mobile'] != ''){
-                $mobile = $_POST['widget_mobile'];
+                $mobile = sanitize_email($_POST['widget_mobile']);
             }else{
                 echo "<div class='egoi-widget-error error".$id."'>";
                 echo __('There is no number! Please insert your number', 'egoi-for-wp');

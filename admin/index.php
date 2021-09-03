@@ -85,7 +85,7 @@ function getLis() {
     if(get_option('egoi_client_type') != $tipo){
         update_option('egoi_client_type', $tipo);
     }
-    switch(strpos($tipo,base64_decode('cGFpZA==')) === false){
+    switch(strpos($tipo,'paid') === false){
         case false:
             return 1;
         case true;

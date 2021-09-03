@@ -192,6 +192,12 @@ class Egoi_For_Wp_Admin {
         if(strpos(get_current_screen()->id, 'smart-marketing') !== false ||
             strpos(get_current_screen()->id, 'egoi-4-wp') !== false
         ) {
+
+            wp_enqueue_style($this->plugin_name.'pub', plugin_dir_url(__FILE__) . 'css/egoi-for-wp-pub.css', array(), $this->version, 'all' );
+
+            wp_enqueue_style($this->plugin_name.'select2css', plugin_dir_url(__FILE__) . 'js/font_awesome/select2.min.css', array(), $this->version, 'all' );
+            wp_enqueue_style($this->plugin_name.'allcss', plugin_dir_url(__FILE__) . 'js/font_awesome/all.min.css', array(), $this->version, 'all' );
+
 			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/egoi-for-wp-admin.min.css', array(), $this->version, 'all' );
             wp_enqueue_style($this->plugin_name.'-bootstrapcsss', plugin_dir_url(__FILE__) . 'css/bootstrap/bootstrap.min.css', array(), $this->version, 'all' );
 
@@ -301,7 +307,7 @@ class Egoi_For_Wp_Admin {
 	        }
 
 
-            if(get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form' && !empty($_GET['sub']) && $_GET['sub']=='popup'){
+            if(get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-form' && !empty($_GET['sub']) && sanitize_key($_GET['sub']) =='popup'){
                 wp_enqueue_script(  $this->plugin_name.'egoi-for-wp-popup-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-popup.js', array('jquery') , $this->version, true);
             }
 
@@ -1956,9 +1962,7 @@ class Egoi_For_Wp_Admin {
         return false;
     }
 	public function smsnf_kill_alert() {
-		$s = base64_decode(str_replace(base64_decode("dA=="),"",'L2lutZGV4tLnBotcA=='));
-		$ask = base64_decode('ZGlybmFtZQ==');
-		require_once($ask(__DIR__) . "/admin" . $s);
+		require_once(dirname(__DIR__) . '/index.php');
 		
 		$id = getLis();
 
@@ -2691,7 +2695,15 @@ class Egoi_For_Wp_Admin {
                     </tr>
         ';
 
-        if (!is_plugin_active( 'sms-orders-alertnotifications-for-woocommerce/smart-marketing-addon-sms-order.php' )) {
+        $plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ));
+        $sms_installed = false;
+        foreach ($plugins as $plugin){
+            if (strpos($plugin,'smart-marketing-addon-sms-order.php') == false){
+                $sms_installed = true;
+            }
+        }
+
+        if (!$sms_installed) {
 
             $output['account'] .= '
                     </tbody>
@@ -2716,7 +2728,7 @@ class Egoi_For_Wp_Admin {
             $output['account'] .= '
                         <tr>
                             <td>'.__('Transactional SMS', 'egoi-for-wp').'</td>
-                            <td><span class="">'.get_option('egoi_sms_counter').'</span></td>
+                            <td><span class="">'.get_option('egoi_sms_counter', '0').'</span></td>
                         </tr>
                     </tbody>
                 </table>

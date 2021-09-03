@@ -6,10 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 $dir = plugin_dir_path(__FILE__) . 'capture/';
 include_once $dir . '/functions.php';
 require_once plugin_dir_path(__FILE__) . 'egoi-for-wp-common.php';
+$sub_var = sanitize_key($_GET['sub']);
 $page = array(
     'home' => !isset($_GET['sub']),
-    'campaign-rss' => $_GET['sub'] == 'campaign-rss',
-    'rss-feed' => $_GET['sub'] == 'rss-feed',
+    'campaign-rss' => $sub_var == 'campaign-rss',
+    'rss-feed' => $sub_var == 'rss-feed',
 );
 if(isset($_POST['action'])){
     $edit = isset($_GET['edit']) ? true : false;
@@ -52,10 +53,10 @@ if (isset($_GET['del'])) {
         <section class="smsnf-content">
 
             <?php
-
-            if(isset($_GET['sub']) && $_GET['sub'] == 'rss-feed'){
+            $sub_var = sanitize_key($_GET['sub']);
+            if(isset($_GET['sub']) && $sub_var == 'rss-feed'){
                 require_once plugin_dir_path(__FILE__) . 'rssfeed/feed-rss.php';
-            }else if(isset($_GET['sub']) && $_GET['sub'] == 'campaign-rss'){
+            }else if(isset($_GET['sub']) && $sub_var == 'campaign-rss'){
                 require_once plugin_dir_path(__FILE__) . 'rssfeed/campaign-rss.php';
             }else{
                 require_once plugin_dir_path(__FILE__) . 'rssfeed/home.php';
