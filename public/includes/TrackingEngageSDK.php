@@ -133,7 +133,7 @@ class TrackingEngageSDK
                     "<?php echo ($variation && !empty($cart_item['variation_id'])) ?$cart_item['variation_id']:$cart_item['product_id']; ?>",
                     "<?php echo str_replace('"', '\\"', $cart_item['data']->get_title()); ?>",
                     "",
-                    <?php echo (double) $cart_item['data']->get_price(); ?>,
+                    <?php echo number_format($cart_item['data']->get_price(),2); ?>,
                     <?php echo (int) $cart_item['quantity']; ?>
                 ]);
             </script>
@@ -146,7 +146,7 @@ class TrackingEngageSDK
 
         <script>
             window._egoiaq.push(['trackEcommerceCartUpdate',
-                <?php echo (double) WC()->cart->cart_contents_total; ?>]);
+                <?php echo number_format(WC()->cart->cart_contents_total,2); ?>]);
 
             window._egoiaq.push(['trackPageView']);
         </script>
@@ -203,7 +203,7 @@ class TrackingEngageSDK
                     "<?php echo $item->get_product_id(); ?>",
                     "<?php echo $item->get_name(); ?>",
                     "",
-                    <?php echo (double) $item->get_subtotal(); ?>,
+                    <?php echo number_format($item->get_subtotal(), 2); ?>,
                     <?php echo (int) $item->get_quantity(); ?>
                 ]);
             </script>
@@ -216,10 +216,10 @@ class TrackingEngageSDK
             <script>
                 window._egoiaq.push(['trackEcommerceOrder',
                     "<?php echo $order_id; ?>", // (required) Unique Order ID
-                    <?php echo (double) $order->get_total(); ?>, // (required) Order Revenue grand total (includes tax, shipping, and subtracted discount)
-                    <?php echo (double) $order->get_subtotal(); ?>, // (optional) Order sub total (excludes shipping)
-                    <?php echo (double) $order->get_total_tax(); ?>, // (optional) Tax amount
-                    <?php echo (double) $order->get_shipping_total(); ?>, // (optional) Shipping amount
+                    <?php echo number_format($order->get_total(), 2); ?>, // (required) Order Revenue grand total (includes tax, shipping, and subtracted discount)
+                    <?php echo number_format($order->get_subtotal(), 2); ?>, // (optional) Order sub total (excludes shipping)
+                    <?php echo number_format($order->get_total_tax(), 2); ?>, // (optional) Tax amount
+                    <?php echo number_format($order->get_shipping_total(), 2); ?>, // (optional) Shipping amount
                     <?php echo !empty($order->get_total_discount()); ?> // (optional) Discount offered (set to false for unspecified parameter)
                 ]);
 
