@@ -39,7 +39,7 @@ if (isset($_POST['action'])) {
                     echo '<span style="background:#066;color:#fff;padding:5px;">'.__('E-goi Transactional Email ON', 'egoi-for-wp').'</span><p>';
                     _e( 'The plugin is currently sending all wordpress emails.', 'egoi-for-wp' ); ?></br><?php
                     _e( 'Email sender: ', 'egoi-for-wp' );
-                    _e( $options_list['from'] , 'egoi-for-wp' );  ?><?php
+                    echo esc_textarea($options_list['from']);  ?><?php
 
                 } else {
                     echo '<span style="background:#900;color:#fff;padding:5px;">'.__('E-goi Transactional Email OFF', 'egoi-for-wp').'</span><p>';

@@ -100,7 +100,7 @@ class Egoi_For_Wp_Admin {
 		$this->options_list = $this->load_options();
 		$this->bar_post = $this->load_options_bar();
 		if(isset($_GET['form'])){
-			$id = $_GET['form'];
+			$id = sanitize_key($_GET['form']);
 			$this->form_post = $this->load_options_forms($id);
         }
 
@@ -155,7 +155,7 @@ class Egoi_For_Wp_Admin {
 
 		$rmdata = $_POST['rmdata'];
 		if(isset($rmdata) && ($rmdata)){
-			$this->saveRMData($rmdata);
+			$this->saveRMData(sanitize_text_field($rmdata));
         }
 
         //admin notifications for transactional email errors
@@ -257,7 +257,7 @@ class Egoi_For_Wp_Admin {
 
 
             if(strpos(get_current_screen()->id, 'ecommerce')){
-			    $page = $_GET['subpage'];
+			    $page = sanitize_text_field($_GET['subpage']);
                 if(!empty($page)){
                     switch ($page){
                         case 'new_catalog':
@@ -298,7 +298,7 @@ class Egoi_For_Wp_Admin {
 	        wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )) );
 
 	        if (get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard') {
-	            wp_register_script($this->plugin_name.'chartjs', plugin_dir_url(__FILE__) . 'js/chartjs/Chart.bundle.min.js', array('jquery'), true);
+	            wp_register_script($this->plugin_name.'chartjs', plugin_dir_url(__FILE__) . 'js/chartjs/chart.min.js', array('jquery'), true);
 	            wp_enqueue_script($this->plugin_name.'chartjs');
 	        }
 
@@ -673,8 +673,8 @@ class Egoi_For_Wp_Admin {
 
 		    try {
 
-                $api = new Egoi_For_Wp();
-			    $listID = $_POST['listID'];
+			    $api = new Egoi_For_Wp();
+			    $listID = sanitize_key($_POST['listID']);
 			    $count_users = count_users();
                 $users = [];
 
@@ -696,7 +696,7 @@ class Egoi_For_Wp_Admin {
 
 			    $current_user = wp_get_current_user();
 			    $current_email = $current_user->data->user_email;
-               
+
 		    	if (class_exists('WooCommerce')) {
 					$wc = new WC_Admin_Profile();
 					foreach ($wc->get_customer_meta_fields() as $key => $value_field) {
@@ -708,7 +708,7 @@ class Egoi_For_Wp_Admin {
 						}
 					}
 				}
-                
+
 		    	foreach ($users as $user) {
 			        if($current_email == $user->user_email){
 			            continue;
@@ -796,7 +796,7 @@ class Egoi_For_Wp_Admin {
 		try {
             $opt = get_option('egoi_int');
             $egoi_int = $opt['egoi_int'];
-            $form_id = $_POST['_wpcf7'];
+            $form_id = sanitize_key($_POST['_wpcf7']);
 
 			if(
                 !class_exists('WPCF7_ContactForm') ||
@@ -1003,7 +1003,7 @@ class Egoi_For_Wp_Admin {
 
 			$name = $data['comment_author'];
 			$email = $data['comment_author_email'];
-		 	$check = $_POST['check_newsletter'];
+		 	$check = sanitize_text_field($_POST['check_newsletter']);
 
 		 	if($check == 'on') {
 
@@ -1063,21 +1063,18 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function mapFieldsEgoi() {
 
-		$id = (int)$_POST["id_egoi"];
-		$token = (int)$_POST["token_egoi_api"];
-		$wp = $_POST["wp"];
-		$egoi = $_POST["egoi"];
+		$id = (int) sanitize_key($_POST["id_egoi"]);
+		$token = (int) sanitize_key($_POST["token_egoi_api"]);
+		$wp = sanitize_text_field($_POST["wp"]);
+		$egoi = sanitize_text_field($_POST["egoi"]);
 
 		if(isset($token) && ($wp) && ($egoi)){
 
 			global $wpdb;
 
 			$table = $wpdb->prefix."egoi_map_fields";
-			$wp_name = $_POST["wp_name"];
-			$egoi_name = $_POST["egoi_name"];
-
-			$wp = sanitize_text_field($wp);
-			$egoi = sanitize_text_field($egoi);
+			$wp_name = sanitize_text_field($_POST["wp_name"]);
+			$egoi_name = sanitize_text_field($_POST["egoi_name"]);
 
 			$values = array(
 				'wp' => $wp,
@@ -2519,7 +2516,7 @@ class Egoi_For_Wp_Admin {
                         <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
                     </div>
                     <script>
-                    Chart.defaults.global.legend.labels.usePointStyle = true;
+                    //Chart.defaults.global.legend.labels.usePointStyle = true;
                     var ctx = document.getElementById("smsnf-dlec__doughnutChart").getContext("2d");
                     var myChart = new Chart(ctx, {
                         type: "doughnut",
@@ -2831,7 +2828,7 @@ class Egoi_For_Wp_Admin {
         if(empty($_POST['id'])){
             wp_send_json_error(__('ID is required','egoi-for-wp'));
         }
-        $id = $_POST['id'];
+        $id = sanitize_text_field($_POST['id']);
 
         $fields = Egoi_For_Wp::getGravityFormsInfoAll($id);
 

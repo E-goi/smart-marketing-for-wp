@@ -70,9 +70,9 @@ if (isset($_POST['id_simple_form'])) {
                 'guid' => $_SERVER['HTTP_REFERER']
             );
 
-            $where = array('ID' => $_POST['id_simple_form']);
+            $where = array('ID' => sanitize_key($_POST['id_simple_form']));
             $query = $wpdb->update($table, $post, $where);
-            $id_simple_form = $_POST['id_simple_form'];
+            $id_simple_form = sanitize_key($_POST['id_simple_form']);
 
             //update simple form options
             $options = array(

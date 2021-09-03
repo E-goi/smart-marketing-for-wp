@@ -46,6 +46,10 @@ class Egoi4Widget extends WP_Widget {
             $widgetid = $args['widget_id']!='' ? $args['widget_id'] : $instance['widget_id'];
             $this->egoi_id = $widgetid;
 
+            foreach ($instance as $key => &$val){
+                $val = esc_textarea($val);
+            }
+
             $title = apply_filters('widget_title', $instance['title']);
             $list = $this->listID ? $this->listID : $instance['list'];
             $fname = $instance['fname'];
@@ -137,7 +141,7 @@ class Egoi4Widget extends WP_Widget {
 			<div class="widget egoi_widget_style" id="'.$this->egoi_id.'" style="'.$this->bcolor.'">';
 
             if ($title){
-                echo $before_title . $title . $after_title;
+                echo esc_textarea($before_title . $title . $after_title);
             }
 
             echo '

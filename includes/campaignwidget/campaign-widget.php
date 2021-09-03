@@ -353,8 +353,8 @@ class CampaignWidget {
             $email_campaign_widget_sender = get_post_meta($post->ID, 'email_campaign_widget_sender', true);
             $email_campaign_widget_list_contacts = get_post_meta($post->ID, 'email_campaign_widget_list_contacts', true);
         } else {
-            $email_campaign_widget_sender = $_POST['email_campaign_widget_sender'];
-            $email_campaign_widget_list_contacts = $_POST['email_campaign_widget_list_contacts'];
+            $email_campaign_widget_sender = sanitize_text_field($_POST['email_campaign_widget_sender']);
+            $email_campaign_widget_list_contacts = sanitize_key($_POST['email_campaign_widget_list_contacts']);
         }
 
         /* Check if the checkbox "Customize notification content" is selected */
@@ -453,7 +453,7 @@ class CampaignWidget {
         /* Returns true if there is POST data */
         $was_posted = !empty($_POST);
 
-        $webpush_campaign_widget_site_info = $_POST['webpush_campaign_widget_site_info'];
+        $webpush_campaign_widget_site_info = sanitize_text_field($_POST['webpush_campaign_widget_site_info']);
         
         /* Check if the checkbox "Customize notification content" is selected */
         $webpush_campaign_widget_modify_content_checked = $was_posted && array_key_exists('webpush_campaign_widget_modify_content', $_POST) && $_POST['email_campaign_widget_modify_content'] == 'true';

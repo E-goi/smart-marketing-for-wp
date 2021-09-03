@@ -25,13 +25,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     //to save simple form options: listId and language
                     $table2 = $wpdb->prefix.'options';
 
-                    $data->list = $_POST['list'];
-                    $data->lang = $_POST['lang'];
-                    $data->double_optin = $_POST['double_optin'];
+                    $data->list = sanitize_key($_POST['list']);
+                    $data->lang = sanitize_text_field($_POST['lang']);
+                    $data->double_optin = sanitize_text_field($_POST['double_optin']);
 
                     //to add tag if not exist
                     if(isset($_POST['tag-egoi']) && $_POST['tag-egoi']!=''){
-                        $data->tag = $_POST['tag-egoi'];
+                        $data->tag = sanitize_key($_POST['tag-egoi']);
                     }
                     else{
                         $tag = new Egoi_For_Wp();
@@ -80,9 +80,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                             'guid' => $_SERVER['HTTP_REFERER']
                         );
 
-                        $where = array('ID' => $_POST['id_simple_form']);
+                        $where = array('ID' => sanitize_key($_POST['id_simple_form']));
                         $query = $wpdb->update($table, $post, $where);
-                        $id_simple_form = $_POST['id_simple_form'];
+                        $id_simple_form = sanitize_key($_POST['id_simple_form']);
 
                         //update simple form options
                         $options = array(
@@ -103,10 +103,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                         'id_simple_form' => $id_simple_form,
                         'title_simple_form' => sanitize_text_field($_POST['title']),
                         'html_code_simple_form' => wp_kses_normalize_entities($_POST['html_code']),
-                        'list' => $_POST['list'],
-                        'lang' => $_POST['lang'],
-                        'tag' => isset($_POST['tag-egoi']) ? $_POST['tag-egoi'] : $new->ID,
-                        'double_optin' => $_POST['double_optin']
+                        'list' => sanitize_key($_POST['list']),
+                        'lang' => sanitize_text_field($_POST['lang']),
+                        'tag' => isset($_POST['tag-egoi']) ? sanitize_key($_POST['tag-egoi']) : $new->ID,
+                        'double_optin' => sanitize_key($_POST['double_optin'])
                     ) ;
 
                 }
@@ -140,9 +140,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                     return $shortcode;
                 }
 
-                $shortcode = selectSimpleForm($_GET['simple_form']);
+                $shortcode = selectSimpleForm(sanitize_key($_GET['simple_form']));
 
-                $id_simple_form = $_GET['simple_form'];
+                $id_simple_form = sanitize_key($_GET['simple_form']);
 
                 echo "<div id='shortcode_div' style='width:100%;background:#00aeda;text-align:center;color:#fff'  onclick='select_all(this)'>".$shortcode['shortcode']."</div>";
 

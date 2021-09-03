@@ -1590,7 +1590,7 @@ class Egoi_For_Wp {
 
 		$key = $_POST["egoi_key"];
 		if(isset($key)){
-
+            $key = sanitize_key($_POST["egoi_key"]);
 			$url = $this->restUrl.'getClientData&'.http_build_query(array('functionOptions' => array('apikey' => $key)),'','&');
 		    $result_client = json_decode($this->_getContent($url));
 
