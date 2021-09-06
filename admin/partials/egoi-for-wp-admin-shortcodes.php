@@ -1,10 +1,10 @@
 <?php
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
-    die();
+	die();
 }
-function get_optionsform($form_id){
-	switch($form_id){
+function get_optionsform( $form_id ) {
+	switch ( $form_id ) {
 		case 1:
 			$FORM_OPTION = Egoi_For_Wp_Admin::FORM_OPTION_1;
 			break;
@@ -23,4 +23,4 @@ function get_optionsform($form_id){
 	}
 	return $FORM_OPTION;
 }
-	 
+
