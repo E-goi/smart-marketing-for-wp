@@ -1,7 +1,7 @@
 <?php
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
-    die();
+	die();
 }
 /**
  * Define the internationalization functionality.
@@ -24,7 +24,7 @@ class Egoi_For_Wp_i18n {
 	 */
 	public function load_plugin_textdomain() {
 
-		load_plugin_textdomain('egoi-for-wp', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/');
+		load_plugin_textdomain( 'egoi-for-wp', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
 
 	}
 

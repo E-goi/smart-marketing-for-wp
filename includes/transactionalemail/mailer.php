@@ -6,20 +6,21 @@ use MailCatcherInterface;
 
 /**
  * Class Mailer.
- *
  */
 class Mailer {
 
-    /**
+	/**
 	 *
 	 * phpmailer reference
+	 *
 	 * @var MailCatcherInterface
 	 */
 	protected $phpmailer;
-	
+
 	/**
-	 * 
+	 *
 	 * Response after api request
+	 *
 	 * @var mixed
 	 */
 	protected $response = array();
@@ -27,19 +28,18 @@ class Mailer {
 	/**
 	 * The error message recorded when email sending failed
 	 *
-	 *
 	 * @var string
 	 */
 	protected $error_message = '';
-    
-    /**
+
+	/**
 	 * Request body
 	 *
 	 * @var array
 	 */
-    protected $body = array();
+	protected $body = array();
 
-    /**
+	/**
 	 * Set the mailer (default or egoi)
 	 *
 	 * @var string
@@ -48,7 +48,6 @@ class Mailer {
 
 	/**
 	 * Successful response code
-	 *
 	 *
 	 * @var int
 	 */
@@ -65,53 +64,49 @@ class Mailer {
 	/**
 	 * Mailer constructor.
 	 *
-	 *
 	 * @param MailCatcherInterface $phpmailer The MailCatcher object.
 	 */
 	public function __construct( MailCatcherInterface $phpmailer ) {
 
-        $this->process_phpmailer( $phpmailer );
-    }
-    
+		$this->process_phpmailer( $phpmailer );
+	}
+
 
 	/**
 	 * Re-use the MailCatcher class methods and properties.
 	 * Construct the request body
 	 *
-	 *
 	 * @param MailCatcherInterface $phpmailer The MailCatcher object.
 	 */
 	public function process_phpmailer( $phpmailer ) {
 
-		$this->phpmailer = $phpmailer;
-		$transactionalEmailOption = get_option('egoi_transactional_email');
+		$this->phpmailer          = $phpmailer;
+		$transactionalEmailOption = get_option( 'egoi_transactional_email' );
 
 		$this->set_recipients(
 			array(
-				'to' => $this->phpmailer->getToAddresses(),
+				'to'  => $this->phpmailer->getToAddresses(),
 				'cc'  => $this->phpmailer->getCcAddresses(),
 				'bcc' => $this->phpmailer->getBccAddresses(),
 			)
 		);
-		$this->set_from( $transactionalEmailOption['fromId'], $transactionalEmailOption['fromname']);
+		$this->set_from( $transactionalEmailOption['fromId'], $transactionalEmailOption['fromname'] );
 		$this->set_subject( $this->phpmailer->Subject );
 		$this->set_content( $this->phpmailer->Body, $this->phpmailer->ContentType );
 		$this->set_attachments( $this->phpmailer->getAttachments() );
-		
+
 	}
 
 	/**
 	 * Redefine the way email body is returned.
 	 * By default we are sending an array of data.
 	 * E-goi requires a JSON, so we encode the body.
-	 *
 	 */
 	public function get_body() {
 
 		$body = apply_filters( 'egoi_transactional_email_mailer_get_body', $this->body, $this->mailer );
 
-
-		return wp_json_encode( array($body));
+		return wp_json_encode( array( $body ) );
 	}
 
 	/**
@@ -119,8 +114,8 @@ class Mailer {
 	 */
 	public function set_from( $id, $name = '' ) {
 
-		//verify if id not emepty
-		if ( empty($id)) {
+		// verify if id not emepty
+		if ( empty( $id ) ) {
 			return;
 		}
 
@@ -128,12 +123,12 @@ class Mailer {
 
 			$this->set_body_param(
 				array(
-					'senderId' => $id,
+					'senderId'   => $id,
 					'senderName' => $name,
 				)
 			);
 
-		}else{
+		} else {
 			$this->set_body_param(
 				array(
 					'senderId' => $id,
@@ -152,7 +147,7 @@ class Mailer {
 		}
 
 		// Allow for now only these recipient types.
-		$default = array('to', 'cc', 'bcc' );
+		$default = array( 'to', 'cc', 'bcc' );
 		$data    = array();
 
 		foreach ( $recipients as $type => $emails ) {
@@ -169,7 +164,7 @@ class Mailer {
 			// Iterate over all emails for each type.
 			// There might be multiple cc/to/bcc emails.
 			foreach ( $emails as $email ) {
-				$addr   = isset( $email[0] ) ? $email[0] : false;
+				$addr = isset( $email[0] ) ? $email[0] : false;
 
 				if ( ! filter_var( $addr, FILTER_VALIDATE_EMAIL ) ) {
 					continue;
@@ -202,14 +197,14 @@ class Mailer {
 					'textBody' => $content,
 				)
 			);
-		}else{
+		} else {
 			$this->set_body_param(
 				array(
 					'htmlBody' => $content,
 				)
 			);
 		}
-	
+
 	}
 
 	/**
@@ -232,8 +227,7 @@ class Mailer {
 				if ( is_file( $attachment[0] ) && is_readable( $attachment[0] ) ) {
 					$file = file_get_contents( $attachment[0] ); // phpcs:ignore
 				}
-			}
-			catch ( \Exception $e ) {
+			} catch ( \Exception $e ) {
 				$file = false;
 			}
 
@@ -242,14 +236,14 @@ class Mailer {
 			}
 
 			$data[] = array(
-				'filename' => $attachment[2],
-				'data' => base64_encode( $file ),
-				'mimeType' => $attachment[4],
+				'filename'    => $attachment[2],
+				'data'        => base64_encode( $file ),
+				'mimeType'    => $attachment[4],
 				'disposition' => 'attachment',
 			);
-			
+
 		}
-		
+
 		if ( ! empty( $data ) ) {
 			$this->set_body_param(
 				array(
@@ -269,8 +263,6 @@ class Mailer {
 
 	/**
 	 * Get an E-goi response with a helpful error.
-	 *
-	 *
 	 */
 	public function get_response(){ // phpcs:ignore
 
@@ -279,7 +271,6 @@ class Mailer {
 
 	/**
 	 * Set the request params, that goes to the body of the HTTP request.
-	 *
 	 *
 	 * @param array $param Key=>value of what should be sent to a 3rd party API.
 	 *
@@ -293,7 +284,6 @@ class Mailer {
 	/**
 	 * Merge recursively, including a proper substitution of values in sub-arrays when keys are the same.
 	 * It's more like array_merge() and array_merge_recursive() combined.
-	 *
 	 *
 	 * @return array
 	 */
@@ -342,7 +332,6 @@ class Mailer {
 	 * Sanitize the value, similar to `sanitize_text_field()`, but a bit differently.
 	 * It preserves `<` and `>` for non-HTML tags.
 	 *
-	 *
 	 * @param string $value String we want to sanitize.
 	 *
 	 * @return string
@@ -381,14 +370,14 @@ class Mailer {
 		$params = $this->array_merge_recursive(
 			$this->get_default_params(),
 			array(
-				'headers' => [				
-					'Content-Type'  => 'application/json',				
-					'ApiKey' => get_option('egoi_api_key')['api_key']			
-				],
-				'body'    => $this->get_body()
+				'headers' => array(
+					'Content-Type' => 'application/json',
+					'ApiKey'       => get_option( 'egoi_api_key' )['api_key'],
+				),
+				'body'    => $this->get_body(),
 			)
 		);
-	
+
 		$response = wp_safe_remote_post( $this->url, $params );
 
 		$this->process_response( $response );
@@ -397,7 +386,6 @@ class Mailer {
 	/**
 	 * We might need to do something after the email was sent to the API.
 	 * In this method we preprocess the response from the API.
-	 *
 	 *
 	 * @param mixed $response
 	 */
@@ -413,7 +401,7 @@ class Mailer {
 			return;
 		}
 
-		if ( isset( $response['body']) ) {
+		if ( isset( $response['body'] ) ) {
 			$response['body'] = \json_decode( $response['body'] );
 		}
 
@@ -421,11 +409,10 @@ class Mailer {
 	}
 
 		/**
-	 * Get the default params, required for wp_safe_remote_post().
-	 *
-	 *
-	 * @return array
-	 */
+		 * Get the default params, required for wp_safe_remote_post().
+		 *
+		 * @return array
+		 */
 	protected function get_default_params() {
 
 		return apply_filters(

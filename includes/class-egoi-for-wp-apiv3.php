@@ -8,800 +8,833 @@
 
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
-    die();
+	die();
 }
 
-class EgoiApiV3
-{
-    const APIV3     = 'https://api.egoiapp.com';
-    const PLUGINKEY = '908361f0368fd37ffa5cc7c483ffd941';
-    const APIURLS   = [
-        'deployEmailRssCampaign'    => '/campaigns/email/rss/{campaign_hash}/actions/enable',
-        'createEmailRssCampaign'    => '/campaigns/email/rss',
-        'getSenders'                => '/senders/{channel}?status=active',
-        'getLists'                  => '/lists?limit=10&order=desc&order_by=list_id',
-        'createWebPushRssCampaign'  => '/campaigns/webpush/rss',
-        'deployWebPushRssCampaign'  => '/campaigns/webpush/rss/{campaign_hash}/actions/enable',
-        'getWebPushSites'           => '/webpush/sites',
-        'getCatalogs'               => '/catalogs',
-        'importProducts'            => '/catalogs/{id}/products/actions/import',
-        'createCatalog'             => '/catalogs',
-        'createProduct'             => '/catalogs/{catalog_id}/products',
-        'patchProduct'              => '/catalogs/{catalog_id}/products/{product_id}',
-        'deleteCatalog'             => '/catalogs/{id}',
-        'getCountriesCurrencies'    => '/utilities/countries',
-        'deleteProduct'             => '/catalogs/{catalog_id}/products/{product_id}',
-        'getMyAccount'              => '/my-account',
-        'createWebPushSite'         => '/webpush/sites',
-        'activateTrackingEngage'    => '/my-account/actions/enable-te'
-    ];
-    protected $apiKey;
-    protected $headers;
-    public function __construct($apiKey)
-    {
-        $this->apiKey = $apiKey;
-        $this->headers = ['ApiKey: '.$this->apiKey,'PluginKey: '.self::PLUGINKEY,'Content-Type: application/json'];
-    }
+class EgoiApiV3 {
 
-    public function getCountriesCurrencies($cellphone=''){
-        $phone_add = empty($cellphone)?'':"?phone=$cellphone";
-        $client = new ClientHttp(
-            self::APIV3.self::APIURLS[__FUNCTION__].$phone_add,
-            'GET',
-            $this->headers
-        );
+	const APIV3     = 'https://api.egoiapp.com';
+	const PLUGINKEY = '908361f0368fd37ffa5cc7c483ffd941';
+	const APIURLS   = array(
+		'deployEmailRssCampaign'   => '/campaigns/email/rss/{campaign_hash}/actions/enable',
+		'createEmailRssCampaign'   => '/campaigns/email/rss',
+		'getSenders'               => '/senders/{channel}?status=active',
+		'getLists'                 => '/lists?limit=10&order=desc&order_by=list_id',
+		'createWebPushRssCampaign' => '/campaigns/webpush/rss',
+		'deployWebPushRssCampaign' => '/campaigns/webpush/rss/{campaign_hash}/actions/enable',
+		'getWebPushSites'          => '/webpush/sites',
+		'getCatalogs'              => '/catalogs',
+		'importProducts'           => '/catalogs/{id}/products/actions/import',
+		'createCatalog'            => '/catalogs',
+		'createProduct'            => '/catalogs/{catalog_id}/products',
+		'patchProduct'             => '/catalogs/{catalog_id}/products/{product_id}',
+		'deleteCatalog'            => '/catalogs/{id}',
+		'getCountriesCurrencies'   => '/utilities/countries',
+		'deleteProduct'            => '/catalogs/{catalog_id}/products/{product_id}',
+		'getMyAccount'             => '/my-account',
+		'createWebPushSite'        => '/webpush/sites',
+		'activateTrackingEngage'   => '/my-account/actions/enable-te',
+	);
+	protected $apiKey;
+	protected $headers;
+	public function __construct( $apiKey ) {
+		$this->apiKey  = $apiKey;
+		$this->headers = array( 'ApiKey: ' . $this->apiKey, 'PluginKey: ' . self::PLUGINKEY, 'Content-Type: application/json' );
+	}
 
-        if($client->success() !== true || $client->getCode() < 200 || $client->getCode() >= 300){
-            return false;
-        }
+	public function getCountriesCurrencies( $cellphone = '' ) {
+		$phone_add = empty( $cellphone ) ? '' : "?phone=$cellphone";
+		$client    = new ClientHttp(
+			self::APIV3 . self::APIURLS[ __FUNCTION__ ] . $phone_add,
+			'GET',
+			$this->headers
+		);
 
-        return json_decode($client->getResponse(),true);
-    }
+		if ( $client->success() !== true || $client->getCode() < 200 || $client->getCode() >= 300 ) {
+			return false;
+		}
 
-    /*
-     * 1st argument is type (POST | GET)
-     * 2nd argument is data (body | query)
-     * */
-    public function __call($name ,$arguments ){
-        $path = self::APIV3.self::APIURLS[$name];
+		return json_decode( $client->getResponse(), true );
+	}
 
-        switch ($arguments[0]){
-            case 'DELETE':
-                $client = new ClientHttp(
-                    $this->replaceUrl($path,'{id}', $arguments[1]),
-                    'DELETE',
-                    $this->headers
-                );
-                break;
-            case 'POST':
-                $client = new ClientHttp(
-                    $this->replaceUrl($path,'{id}', $arguments[2]),
-                    'POST',
-                    $this->headers,
-                    empty($arguments[1])?[]:$arguments[1]
-                );
-                break;
-            case 'GET':
-            default:
-                if(!empty($arguments[1])){
-                    $concat = '?'.http_build_query($arguments[1]);
-                }else{
-                    $concat = '';
-                }
-                $client = new ClientHttp(
-                    $path.$concat,
-                    'GET',
-                    $this->headers
-                );
-                break;
-        }
+	/*
+	 * 1st argument is type (POST | GET)
+	 * 2nd argument is data (body | query)
+	 * */
+	public function __call( $name, $arguments ) {
+		$path = self::APIV3 . self::APIURLS[ $name ];
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+		switch ( $arguments[0] ) {
+			case 'DELETE':
+				$client = new ClientHttp(
+					$this->replaceUrl( $path, '{id}', $arguments[1] ),
+					'DELETE',
+					$this->headers
+				);
+				break;
+			case 'POST':
+				$client = new ClientHttp(
+					$this->replaceUrl( $path, '{id}', $arguments[2] ),
+					'POST',
+					$this->headers,
+					empty( $arguments[1] ) ? array() : $arguments[1]
+				);
+				break;
+			case 'GET':
+			default:
+				if ( ! empty( $arguments[1] ) ) {
+					$concat = '?' . http_build_query( $arguments[1] );
+				} else {
+					$concat = '';
+				}
+				$client = new ClientHttp(
+					$path . $concat,
+					'GET',
+					$this->headers
+				);
+				break;
+		}
 
-        $resp = json_decode($client->getResponse(),true);
-        if($client->getCode() >= 200 && $client->getCode() < 300){
-            if(isset($resp['items']))
-                return $resp['items'];
-            else if(isset($resp['catalog_id']))
-                return $resp['catalog_id'];
-            else
-                return true;
-        }else{
-            if($client->getCode() == 422){
-                return $this->processErrors($resp['validation_messages']);
-            }
-            if($client->getCode() == 409){
-                return $this->processErrors($resp['errors']);
-            }
-            return $this->processErrors();
-        }
-    }
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-    public function deleteProduct($catalog_id, $product_id){
-        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],['{catalog_id}','{product_id}'], [$catalog_id,$product_id]);
-        $client = new ClientHttp(
-            $path,
-            'DELETE',
-            $this->headers
-        );
+		$resp = json_decode( $client->getResponse(), true );
+		if ( $client->getCode() >= 200 && $client->getCode() < 300 ) {
+			if ( isset( $resp['items'] ) ) {
+				return $resp['items'];
+			} elseif ( isset( $resp['catalog_id'] ) ) {
+				return $resp['catalog_id'];
+			} else {
+				return true;
+			}
+		} else {
+			if ( $client->getCode() == 422 ) {
+				return $this->processErrors( $resp['validation_messages'] );
+			}
+			if ( $client->getCode() == 409 ) {
+				return $this->processErrors( $resp['errors'] );
+			}
+			return $this->processErrors();
+		}
+	}
 
-        if($client->success() !== true || ($client->getCode()>=200 && $client->getCode()<300)){
-            return false;
-        }
-        return true;
-    }
+	public function deleteProduct( $catalog_id, $product_id ) {
+		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], array( '{catalog_id}', '{product_id}' ), array( $catalog_id, $product_id ) );
+		$client = new ClientHttp(
+			$path,
+			'DELETE',
+			$this->headers
+		);
 
-    public function createProduct($data, $catalog){
+		if ( $client->success() !== true || ( $client->getCode() >= 200 && $client->getCode() < 300 ) ) {
+			return false;
+		}
+		return true;
+	}
 
-        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],'{catalog_id}', $catalog);
-        $client = new ClientHttp(
-            $path,
-            'POST',
-            $this->headers,
-            $data
-        );
+	public function createProduct( $data, $catalog ) {
 
-        if($client->success() !== true || $client->getCode()<=200 || $client->getCode()>300){
-            return false;
-        }
-        return true;
-    }
+		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{catalog_id}', $catalog );
+		$client = new ClientHttp(
+			$path,
+			'POST',
+			$this->headers,
+			$data
+		);
 
-    public function patchProduct($data, $catalog, $product_id){
-        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],['{catalog_id}','{product_id}'], [$catalog,$product_id]);
-        $client = new ClientHttp(
-            $path,
-            'PATCH',
-            $this->headers,
-            $data
-        );
+		if ( $client->success() !== true || $client->getCode() <= 200 || $client->getCode() > 300 ) {
+			return false;
+		}
+		return true;
+	}
 
-        if($client->success() !== true || $client->getCode() <=200 || $client->getCode()>300){
-            return false;
-        }
-        return true;
-    }
+	public function patchProduct( $data, $catalog, $product_id ) {
+		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], array( '{catalog_id}', '{product_id}' ), array( $catalog, $product_id ) );
+		$client = new ClientHttp(
+			$path,
+			'PATCH',
+			$this->headers,
+			$data
+		);
 
-    /**
-     * @param $data
-     * @return false|string
-     */
-    public function createWebPushRssCampaign($data){
+		if ( $client->success() !== true || $client->getCode() <= 200 || $client->getCode() > 300 ) {
+			return false;
+		}
+		return true;
+	}
 
-        $client = new ClientHttp(
-            self::APIV3.self::APIURLS[__FUNCTION__],
-            'POST',
-            $this->headers,
-            $data
-        );
+	/**
+	 * @param $data
+	 * @return false|string
+	 */
+	public function createWebPushRssCampaign( $data ) {
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+		$client = new ClientHttp(
+			self::APIV3 . self::APIURLS[ __FUNCTION__ ],
+			'POST',
+			$this->headers,
+			$data
+		);
 
-        return $client->getCode()==200
-            ?$client->getResponse()
-            :$this->processErrors($client->getResponse());
-    }
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-    /**
-     * @param $id
-     * @return false|string
-     */
-    public function deployWebPushRssCampaign($id){
-        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],'{campaign_hash}', $id);
-        $client = new ClientHttp($path,'POST',
-            $this->headers,
-            []
-        );
+		return $client->getCode() == 200
+			? $client->getResponse()
+			: $this->processErrors( $client->getResponse() );
+	}
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+	/**
+	 * @param $id
+	 * @return false|string
+	 */
+	public function deployWebPushRssCampaign( $id ) {
+		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{campaign_hash}', $id );
+		$client = new ClientHttp(
+			$path,
+			'POST',
+			$this->headers,
+			array()
+		);
 
-        return $client->getCode()==200
-            ?$client->getResponse()
-            :$this->processErrors($client->getResponse());
-    }
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-    public function getWebPushSites(){
-        $path = self::APIV3.self::APIURLS[__FUNCTION__];
+		return $client->getCode() == 200
+			? $client->getResponse()
+			: $this->processErrors( $client->getResponse() );
+	}
 
-        $client = new ClientHttp(
-            $path,
-            'GET',
-            $this->headers
-        );
+	public function getWebPushSites() {
+		$path = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+		$client = new ClientHttp(
+			$path,
+			'GET',
+			$this->headers
+		);
 
-        $resp = json_decode($client->getResponse(),true);
-        return $client->getCode()==200 && isset($resp['items'])
-            ?json_encode($resp['items'])
-            :$this->processErrors();
-    }
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-    /**
-     * @param $data
-     * @return false|string
-     */
-    public function createEmailRssCampaign($data){
-        $client = new ClientHttp(
-            self::APIV3.self::APIURLS[__FUNCTION__],
-            'POST',
-            $this->headers,
-            $data
-        );
+		$resp = json_decode( $client->getResponse(), true );
+		return $client->getCode() == 200 && isset( $resp['items'] )
+			? json_encode( $resp['items'] )
+			: $this->processErrors();
+	}
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+	/**
+	 * @param $data
+	 * @return false|string
+	 */
+	public function createEmailRssCampaign( $data ) {
+		$client = new ClientHttp(
+			self::APIV3 . self::APIURLS[ __FUNCTION__ ],
+			'POST',
+			$this->headers,
+			$data
+		);
 
-        return $client->getCode()==200
-            ?$client->getResponse()
-            :$this->processErrors($client->getError());
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-    }
+		return $client->getCode() == 200
+			? $client->getResponse()
+			: $this->processErrors( $client->getError() );
 
-    /**
-     * @param $id
-     * @return false|string
-     */
-    public function deployEmailRssCampaign($id){
-        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],'{campaign_hash}', $id);
-        $client = new ClientHttp($path,'POST',
-            $this->headers,
-            []
-        );
+	}
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+	/**
+	 * @param $id
+	 * @return false|string
+	 */
+	public function deployEmailRssCampaign( $id ) {
+		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{campaign_hash}', $id );
+		$client = new ClientHttp(
+			$path,
+			'POST',
+			$this->headers,
+			array()
+		);
 
-        return $client->getCode()==200
-            ?$client->getResponse()
-            :$this->processErrors();
-    }
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-    /**
-     * @param string $channel
-     * @return false|string
-     */
-    public function getSenders($channel = 'email'){
-        $path = self::APIV3.$this->replaceUrl(self::APIURLS[__FUNCTION__],'{channel}', $channel);
-        $client = new ClientHttp(
-            $path,
-            'GET',
-            $this->headers
-        );
+		return $client->getCode() == 200
+			? $client->getResponse()
+			: $this->processErrors();
+	}
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
-        $resp = json_decode($client->getResponse(),true);
-        return $client->getCode()==200 && isset($resp['items'])
-            ?json_encode($resp['items'])
-            :$this->processErrors($client->getResponse());
-    }
+	/**
+	 * @param string $channel
+	 * @return false|string
+	 */
+	public function getSenders( $channel = 'email' ) {
+		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{channel}', $channel );
+		$client = new ClientHttp(
+			$path,
+			'GET',
+			$this->headers
+		);
 
-    /**
-     * @return false|string
-     */
-    public function getLists(){
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+		$resp = json_decode( $client->getResponse(), true );
+		return $client->getCode() == 200 && isset( $resp['items'] )
+			? json_encode( $resp['items'] )
+			: $this->processErrors( $client->getResponse() );
+	}
 
-        $client = new ClientHttp(
-            self::APIV3.self::APIURLS[__FUNCTION__],
-            'GET',
-            $this->headers
-        );
+	/**
+	 * @return false|string
+	 */
+	public function getLists() {
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+		$client = new ClientHttp(
+			self::APIV3 . self::APIURLS[ __FUNCTION__ ],
+			'GET',
+			$this->headers
+		);
 
-        $resp = json_decode($client->getResponse(),true);
-        return $client->getCode()==200 && isset($resp['items'])
-            ?json_encode($resp['items'])
-            :$this->processErrors();
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-    }
+		$resp = json_decode( $client->getResponse(), true );
+		return $client->getCode() == 200 && isset( $resp['items'] )
+			? json_encode( $resp['items'] )
+			: $this->processErrors();
 
-    /**
-     * @return false|string
-     */
-    public function getMyAccount(){
-        $path = self::APIV3.self::APIURLS[__FUNCTION__];
+	}
 
-        $client = new ClientHttp(
-            $path,
-            'GET',
-            $this->headers
-        );
-        
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+	/**
+	 * @return false|string
+	 */
+	public function getMyAccount() {
+		$path = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
 
-        $resp = json_decode($client->getResponse(),true);
-        return $client->getCode()==200 && isset($resp['general_info']['client_id'])
-            ?$resp['general_info']['client_id']
-            :$this->processErrors();
-    }
+		$client = new ClientHttp(
+			$path,
+			'GET',
+			$this->headers
+		);
 
-    /**
-     * @param $data
-     *
-     * @return false|string
-     */
-    public function createWebPushSite($data){
-        $path = self::APIV3 . self::APIURLS[__FUNCTION__];
-        $client = new ClientHttp($path, 'POST', $this->headers, $data);
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+		$resp = json_decode( $client->getResponse(), true );
+		return $client->getCode() == 200 && isset( $resp['general_info']['client_id'] )
+			? $resp['general_info']['client_id']
+			: $this->processErrors();
+	}
 
-        $resp = json_decode($client->getResponse(),true);
+	/**
+	 * @param $data
+	 *
+	 * @return false|string
+	 */
+	public function createWebPushSite( $data ) {
+		$path   = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+		$client = new ClientHttp( $path, 'POST', $this->headers, $data );
 
-        if ($client->getCode() == 201 && !empty($resp['app_code'])) {
-            return $resp['app_code'];
-        } elseif (!empty($resp['errors']['name_already_exists'])) {
-            return $this->processErrors($resp['errors']['name_already_exists']);
-        }
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-        return $this->processErrors();
-    }
+		$resp = json_decode( $client->getResponse(), true );
 
-    /**
-     * @return false|string
-     */
-    public function updateSocialTrack($method){
-        if($method == 'update'){
-            $check = get_option('egoi_sync');
-            if(!isset($check['social_track']) || $check['social_track'] == 0) return false;
-        }
+		if ( $client->getCode() == 201 && ! empty( $resp['app_code'] ) ) {
+			return $resp['app_code'];
+		} elseif ( ! empty( $resp['errors']['name_already_exists'] ) ) {
+			return $this->processErrors( $resp['errors']['name_already_exists'] );
+		}
 
-        $domain = preg_replace("(^https?://)", "", get_site_url());
-        $accountId = $this->getMyAccount();
-        $catalogs = EgoiProductsBo::getCatalogsToSync(); 
+		return $this->processErrors();
+	}
 
-        $data = array(
-            'account_id' => $accountId,
-            'domain' => $domain,
-            'catalogs' => []
-        );
+	/**
+	 * @return false|string
+	 */
+	public function updateSocialTrack( $method ) {
+		if ( $method == 'update' ) {
+			$check = get_option( 'egoi_sync' );
+			if ( ! isset( $check['social_track'] ) || $check['social_track'] == 0 ) {
+				return false;
+			}
+		}
 
-        for($i = 0; $i < count($catalogs); $i++)
-            $data['catalogs'][] = $catalogs[$i];  
+		$domain    = preg_replace( '(^https?://)', '', get_site_url() );
+		$accountId = $this->getMyAccount();
+		$catalogs  = EgoiProductsBo::getCatalogsToSync();
 
-        if(class_exists( 'woocommerce' ))
-            $data['productsPath'] = wc_get_page_permalink( 'shop' );
-       
-        $requestString = "https://egoiapp2.com/ads/" . $method . 'Pixel?' . http_build_query($data);
-        
-        $client = new ClientHttp(
-            $requestString,
-            'GET'
-        );
-        if($client->success() !== true){
-            return false;
-        }
-        $resp = json_decode($client->getResponse(),true);
-        
-        return $client->getCode()==200 && isset($resp['data']['code'])
-            ? $resp['data']['code']
-            : false;
-    }
+		$data = array(
+			'account_id' => $accountId,
+			'domain'     => $domain,
+			'catalogs'   => array(),
+		);
 
-        /**
-     * Add contact using API v3
-     */
-    public function addContact($listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = []) {
+		for ( $i = 0; $i < count( $catalogs ); $i++ ) {
+			$data['catalogs'][] = $catalogs[ $i ];
+		}
 
-        $full_name = explode(' ', $name);
-		$fname = $full_name[0];
-		if(!$lname){
+		if ( class_exists( 'woocommerce' ) ) {
+			$data['productsPath'] = wc_get_page_permalink( 'shop' );
+		}
+
+		$requestString = 'https://egoiapp2.com/ads/' . $method . 'Pixel?' . http_build_query( $data );
+
+		$client = new ClientHttp(
+			$requestString,
+			'GET'
+		);
+		if ( $client->success() !== true ) {
+			return false;
+		}
+		$resp = json_decode( $client->getResponse(), true );
+
+		return $client->getCode() == 200 && isset( $resp['data']['code'] )
+			? $resp['data']['code']
+			: false;
+	}
+
+		/**
+		 * Add contact using API v3
+		 */
+	public function addContact( $listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
+
+		$full_name = explode( ' ', $name );
+		$fname     = $full_name[0];
+		if ( ! $lname ) {
 			$lname = $full_name[1];
 		}
 
-		$tel = $ref_fields['tel'];
+		$tel  = $ref_fields['tel'];
 		$cell = $ref_fields['cell'];
-		$bd = $ref_fields['bd'];
+		$bd   = $ref_fields['bd'];
 		$lang = $ref_fields['lang'];
 
 		$params = array(
-		    'email' => $email,
-		    'first_name' => $fname,
-		    'last_name' => $lname,
-		    'status' => $status
+			'email'      => $email,
+			'first_name' => $fname,
+			'last_name'  => $lname,
+			'status'     => $status,
 		);
 
 		// telephone
-		if($tel){
+		if ( $tel ) {
 			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if($cell && !$tel){
+		if ( $cell && ! $tel ) {
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
-		if($bd){
+		if ( $bd ) {
 			$params['birth_date'] = $bd;
 		}
-        // language
-		if($lang){
+		// language
+		if ( $lang ) {
 			$params['language'] = $lang;
 		}
 
-        $params_extra = array();
-		if($option){
-			$all_extra_fields = $this->getExtraFields($listID);
-			if($all_extra_fields){
+		$params_extra = array();
+		if ( $option ) {
+			$all_extra_fields = $this->getExtraFields( $listID );
+			if ( $all_extra_fields ) {
 
-				foreach ($extra_fields as $key => $value) {
-					$filtered_key = str_replace(array('key_', 'extra_'), '', $key);
-					if(in_array($filtered_key, $all_extra_fields)){
-						array_push($params_extra, ['field_id' => $filtered_key,
-                                        'value' => $value]);
+				foreach ( $extra_fields as $key => $value ) {
+					$filtered_key = str_replace( array( 'key_', 'extra_' ), '', $key );
+					if ( in_array( $filtered_key, $all_extra_fields ) ) {
+						array_push(
+							$params_extra,
+							array(
+								'field_id' => $filtered_key,
+								'value'    => $value,
+							)
+						);
 					}
 				}
 			}
 		}
 
-        if(empty($params_extra))
-            $body = ['base' => $params];
-        else
-            $body = ['base' => $params,
-                  'extra' => $params_extra];
+		if ( empty( $params_extra ) ) {
+			$body = array( 'base' => $params );
+		} else {
+			$body = array(
+				'base'  => $params,
+				'extra' => $params_extra,
+			);
+		}
 
-        $url = self::APIV3.'/lists/'.$listID.'/contacts';
+		$url = self::APIV3 . '/lists/' . $listID . '/contacts';
 
-        $client = new ClientHttp($url, 'POST', $this->headers, $body);
+		$client = new ClientHttp( $url, 'POST', $this->headers, $body );
 
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
 
-        $resp = json_decode($client->getResponse(),true);
-        
-        if(!empty($tags) && isset($resp['contact_id'])){
-            $this->attachTag($listID, $resp['contact_id'], $tags);
-        }
+		$resp = json_decode( $client->getResponse(), true );
 
-		
+		if ( ! empty( $tags ) && isset( $resp['contact_id'] ) ) {
+			$this->attachTag( $listID, $resp['contact_id'], $tags );
+		}
+
 		return $resp['contact_id'];
 	}
 
-    /**
-     * Attach tag to a contact using API V3
-     */
-    public function attachTag($list_id, $contact_id, $tags = array()){
-        $url = self::APIV3.'/lists/'.$list_id.'/contacts/actions/attach-tag';
+	/**
+	 * Attach tag to a contact using API V3
+	 */
+	public function attachTag( $list_id, $contact_id, $tags = array() ) {
+		$url = self::APIV3 . '/lists/' . $list_id . '/contacts/actions/attach-tag';
 
-        foreach($tags as $tag){
-            $body = ['contacts' => [$contact_id],
-                    'tag_id' => $tag];
+		foreach ( $tags as $tag ) {
+			$body = array(
+				'contacts' => array( $contact_id ),
+				'tag_id'   => $tag,
+			);
 
-            $client = new ClientHttp($url, 'POST', $this->headers, $body);
+			$client = new ClientHttp( $url, 'POST', $this->headers, $body );
 
-            if($client->success() !== true){
-                return $this->processErrors($client->getError());
-            }
-        }
-        return true;
-    }
+			if ( $client->success() !== true ) {
+				return $this->processErrors( $client->getError() );
+			}
+		}
+		return true;
+	}
 
-    /**
-     * Get Tag 
-     * If doesnt exists creates one tag
-     */
-    public function getTag($name){
-        $tags = json_decode($this->getTags());
+	/**
+	 * Get Tag
+	 * If doesnt exists creates one tag
+	 */
+	public function getTag( $name ) {
+		$tags = json_decode( $this->getTags() );
 
-        if(isset($tags['status']) || isset($tags['error'])){
-            return $tags;
-        }else{
-            foreach ($tags as $key => $value) {
-                if(strcasecmp($value->name, $name) == 0){
-                    $data = $value;
-                }
-            }
+		if ( isset( $tags['status'] ) || isset( $tags['error'] ) ) {
+			return $tags;
+		} else {
+			foreach ( $tags as $key => $value ) {
+				if ( strcasecmp( $value->name, $name ) == 0 ) {
+					$data = $value;
+				}
+			}
 
-            if(empty($data)){
-                return $this->addTag($name);
-            }
-    
-            return $data;
-        }
-    }
+			if ( empty( $data ) ) {
+				return $this->addTag( $name );
+			}
 
-    /**
-     * Get Tags
-     */
-    public function getTags(){
-        $url = self::APIV3.'/tags';
+			return $data;
+		}
+	}
 
-            $client = new ClientHttp($url, 'GET', $this->headers);
+	/**
+	 * Get Tags
+	 */
+	public function getTags() {
+		$url = self::APIV3 . '/tags';
 
-            if($client->success() !== true){
-                return $this->processErrors($client->getError());
-            }
-            $resp = json_decode($client->getResponse(),true);
+			$client = new ClientHttp( $url, 'GET', $this->headers );
 
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+			$resp = json_decode( $client->getResponse(), true );
 
-        return $client->getCode()==200 && isset($resp['items']) ? json_encode($resp['items']) : $this->processErrors();
+		return $client->getCode() == 200 && isset( $resp['items'] ) ? json_encode( $resp['items'] ) : $this->processErrors();
 
-    }
+	}
 
-    /**
-     * Create new tag
-     */
-    public function addTag($name = '', $color = '#00AEDA'){
-        $url = self::APIV3.'/tags';
+	/**
+	 * Create new tag
+	 */
+	public function addTag( $name = '', $color = '#00AEDA' ) {
+		$url = self::APIV3 . '/tags';
 
-        $body = ['name' => $name, 'color' => $color];
-
-        $client = new ClientHttp($url, 'POST', $this->headers, $body);
-
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
-
-        $resp = json_decode($client->getResponse(),true);
-
-        return $resp;
-    }
-
-
-        /**
-     * Check if a contact exists using API V3
-     */
-    public function searchContact($listID, $email){
-        $url = self::APIV3.'/contacts/search?type=email&contact='.$email;
-
-        $client = new ClientHttp($url, 'GET', $this->headers);
-
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
-
-        $result_client = json_decode($client->getResponse(),true);
-
-        $result = '';
-        if(!empty($result_client['items'])){
-            foreach($result_client['items'] as $contact){
-                if($contact['list_id'] == $listID){
-                    $result = $contact['contact_id'];
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Check if a contact exists in a list using API V3
-     */
-    public function searchContactFromList($listID, $email){
-        $url = self::APIV3.'/lists/'.$listID.'/contacts';
-
-        $client = new ClientHttp($url, 'GET', $this->headers);
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
-
-        $result_client = json_decode($client->getResponse(),true);
-
-        $result = '';
-        if(!empty($result_client['items'])){
-            foreach($result_client['items'] as $contact){
-                if($contact['base']['email'] == $email){
-                    $result = $contact['base']['contact_id'];
-                }
-            }
-        }
-
-        return $result;
-    }
-
-       /**
-     * Check if a contact exists using API V3
-     */
-    public function getExtraFields($listID){
-        $url = self::APIV3.'/lists/'.$listID.'/fields';
-
-        $client = new ClientHttp($url, 'GET', $this->headers);
-
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
-
-        $result_client = json_decode($client->getResponse(),true);
-
-        $extra_fields = array();
-        foreach($result_client as $fields){
-            if($fields['type'] == "extra"){
-                array_push($extra_fields,$fields['field_id']);
-            }
-        }
-        return $extra_fields;
-    }
-
-    public function editContact($listID, $contact_id, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = []) {
-        $params = array(
-		    'status' => $status
+		$body = array(
+			'name'  => $name,
+			'color' => $color,
 		);
-        
-        // first name
-        if($fname)
-            $params['first_name'] = $fname;
-        
-        // last name
-        if($lname)
-            $params['last_name'] = $lname;
-        
-		$tel = $ref_fields['tel'];
+
+		$client = new ClientHttp( $url, 'POST', $this->headers, $body );
+
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+
+		$resp = json_decode( $client->getResponse(), true );
+
+		return $resp;
+	}
+
+
+		/**
+		 * Check if a contact exists using API V3
+		 */
+	public function searchContact( $listID, $email ) {
+		$url = self::APIV3 . '/contacts/search?type=email&contact=' . $email;
+
+		$client = new ClientHttp( $url, 'GET', $this->headers );
+
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+
+		$result_client = json_decode( $client->getResponse(), true );
+
+		$result = '';
+		if ( ! empty( $result_client['items'] ) ) {
+			foreach ( $result_client['items'] as $contact ) {
+				if ( $contact['list_id'] == $listID ) {
+					$result = $contact['contact_id'];
+				}
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Check if a contact exists in a list using API V3
+	 */
+	public function searchContactFromList( $listID, $email ) {
+		$url = self::APIV3 . '/lists/' . $listID . '/contacts';
+
+		$client = new ClientHttp( $url, 'GET', $this->headers );
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+
+		$result_client = json_decode( $client->getResponse(), true );
+
+		$result = '';
+		if ( ! empty( $result_client['items'] ) ) {
+			foreach ( $result_client['items'] as $contact ) {
+				if ( $contact['base']['email'] == $email ) {
+					$result = $contact['base']['contact_id'];
+				}
+			}
+		}
+
+		return $result;
+	}
+
+	   /**
+		* Check if a contact exists using API V3
+		*/
+	public function getExtraFields( $listID ) {
+		$url = self::APIV3 . '/lists/' . $listID . '/fields';
+
+		$client = new ClientHttp( $url, 'GET', $this->headers );
+
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+
+		$result_client = json_decode( $client->getResponse(), true );
+
+		$extra_fields = array();
+		foreach ( $result_client as $fields ) {
+			if ( $fields['type'] == 'extra' ) {
+				array_push( $extra_fields, $fields['field_id'] );
+			}
+		}
+		return $extra_fields;
+	}
+
+	public function editContact( $listID, $contact_id, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
+		$params = array(
+			'status' => $status,
+		);
+
+		// first name
+		if ( $fname ) {
+			$params['first_name'] = $fname;
+		}
+
+		// last name
+		if ( $lname ) {
+			$params['last_name'] = $lname;
+		}
+
+		$tel  = $ref_fields['tel'];
 		$cell = $ref_fields['cell'];
-		$bd = $ref_fields['bd'];
+		$bd   = $ref_fields['bd'];
 		$lang = $ref_fields['lang'];
 
 		// telephone
-		if($tel){
+		if ( $tel ) {
 			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if($cell && !$tel){
+		if ( $cell && ! $tel ) {
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
-		if($bd){
+		if ( $bd ) {
 			$params['birth_date'] = $bd;
 		}
-        // language
-		if($lang){
+		// language
+		if ( $lang ) {
 			$params['language'] = $lang;
 		}
 
-        $params_extra = array();
-		if($option){
-			$all_extra_fields = $this->getExtraFields($listID);
-			if($all_extra_fields){
+		$params_extra = array();
+		if ( $option ) {
+			$all_extra_fields = $this->getExtraFields( $listID );
+			if ( $all_extra_fields ) {
 
-				foreach ($extra_fields as $key => $value) {
-					$filtered_key = str_replace(array('key_', 'extra_'), '', $key);
-					if(in_array($filtered_key, $all_extra_fields)){
-						array_push($params_extra, ['field_id' => $filtered_key,
-                                        'value' => $value]);
+				foreach ( $extra_fields as $key => $value ) {
+					$filtered_key = str_replace( array( 'key_', 'extra_' ), '', $key );
+					if ( in_array( $filtered_key, $all_extra_fields ) ) {
+						array_push(
+							$params_extra,
+							array(
+								'field_id' => $filtered_key,
+								'value'    => $value,
+							)
+						);
 					}
 				}
 			}
 		}
 
-        if(empty($params_extra))
-            $body = ['base' => $params];
-        else
-            $body = ['base' => $params,
-                  'extra' => $params_extra];
-                  
-        $url = self::APIV3.'/lists/'.$listID.'/contacts/'.$contact_id;
+		if ( empty( $params_extra ) ) {
+			$body = array( 'base' => $params );
+		} else {
+			$body = array(
+				'base'  => $params,
+				'extra' => $params_extra,
+			);
+		}
 
-        $client = new ClientHttp($url, 'PATCH', $this->headers, $body);
-        if($client->success() !== true){
-            return $this->processErrors($client->getError());
-        }
+		$url = self::APIV3 . '/lists/' . $listID . '/contacts/' . $contact_id;
 
-        if(!empty($tags) && isset($contact_id)){
-            $this->attachTag($listID, $contact_id, $tags);
-        }
-		
+		$client = new ClientHttp( $url, 'PATCH', $this->headers, $body );
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+
+		if ( ! empty( $tags ) && isset( $contact_id ) ) {
+			$this->attachTag( $listID, $contact_id, $tags );
+		}
+
 		return $contact_id;
 
-    }
+	}
 
 
-    /**
-     * @param $url
-     * @param $search
-     * @param $replace
-     * @return null|string|string[]
-     */
-    protected function replaceUrl($url, $search, $replace){
-        if(is_array($replace)){
-            foreach ($replace as $key => $value){
-                $url = $this->privReplaceUrl($url, $search[$key], $replace[$key]);
-            }
-            return $url;
-        }else{
-            return $this->privReplaceUrl($url, $search, $replace);
-        }
-    }
+	/**
+	 * @param $url
+	 * @param $search
+	 * @param $replace
+	 * @return null|string|string[]
+	 */
+	protected function replaceUrl( $url, $search, $replace ) {
+		if ( is_array( $replace ) ) {
+			foreach ( $replace as $key => $value ) {
+				$url = $this->privReplaceUrl( $url, $search[ $key ], $replace[ $key ] );
+			}
+			return $url;
+		} else {
+			return $this->privReplaceUrl( $url, $search, $replace );
+		}
+	}
 
-    /**
-     * @param bool $error
-     * @return false|string
-     */
-    private function processErrors($error=false){
-        if($error == false)
-            return json_encode(['status' => 'error']);
-        else return json_encode(['error' => $error]);
-    }
+	/**
+	 * @param bool $error
+	 * @return false|string
+	 */
+	private function processErrors( $error = false ) {
+		if ( $error == false ) {
+			return json_encode( array( 'status' => 'error' ) );
+		} else {
+			return json_encode( array( 'error' => $error ) );
+		}
+	}
 
-    /**
-     * @param $url
-     * @param $search
-     * @param $replace
-     * @return null|string|string[]
-     */
-    private function privReplaceUrl($url, $search, $replace){
-        return preg_replace("/$search/", "$replace", $url );
-    }
+	/**
+	 * @param $url
+	 * @param $search
+	 * @param $replace
+	 * @return null|string|string[]
+	 */
+	private function privReplaceUrl( $url, $search, $replace ) {
+		return preg_replace( "/$search/", "$replace", $url );
+	}
 
 }
 
 class ClientHttp {
 
-    protected $headers;
-    protected $response;
-    protected $err;
-    protected $http_code;
+	protected $headers;
+	protected $response;
+	protected $err;
+	protected $http_code;
 
 
-    public function __construct($url, $method = 'GET', $headers = ['Accept: application/json'], $body = '')
-    {
+	public function __construct( $url, $method = 'GET', $headers = array( 'Accept: application/json' ), $body = '' ) {
 
-            $res = wp_remote_request( $url,
-                array(
-                    'method'     => $method,
-                    'timeout'    => 30,
-                    'body'       => $body,
-                    'headers'    => $headers
-                )
-            );
+			$res = wp_remote_request(
+				$url,
+				array(
+					'method'  => $method,
+					'timeout' => 30,
+					'body'    => $body,
+					'headers' => $headers,
+				)
+			);
 
-            if(is_wp_error($res)){
-                $this->http_code = 400;
-                $this->response = '{}';
-                $this->headers = [];
-            }else{
-                $this->http_code = $res['response']['code'];
-                $this->response = $res['body'];
-                $this->headers = $res['headers'];
-            }
+		if ( is_wp_error( $res ) ) {
+			$this->http_code = 400;
+			$this->response  = '{}';
+			$this->headers   = array();
+		} else {
+			$this->http_code = $res['response']['code'];
+			$this->response  = $res['body'];
+			$this->headers   = $res['headers'];
+		}
 
-    }
+	}
 
-    public function success(){
-        if(empty($this->err))
-            return true;
-        return $this->err;
-    }
+	public function success() {
+		if ( empty( $this->err ) ) {
+			return true;
+		}
+		return $this->err;
+	}
 
-    public function getError(){
-        return $this->err;
-    }
+	public function getError() {
+		return $this->err;
+	}
 
-    public function getCode(){
-        return $this->http_code;
-    }
+	public function getCode() {
+		return $this->http_code;
+	}
 
-    public function getResponse(){
-        return $this->response;
-    }
-    public function getHeaders(){
-        return $this->headers;
-    }
+	public function getResponse() {
+		return $this->response;
+	}
+	public function getHeaders() {
+		return $this->headers;
+	}
 
-    public function __toString()
-    {
-        return json_encode([
-            'code'      => $this->getCode(),
-            'response'  => $this->getResponse(),
-            'error'     => $this->success()
-        ]);
-    }
+	public function __toString() {
+		return json_encode(
+			array(
+				'code'     => $this->getCode(),
+				'response' => $this->getResponse(),
+				'error'    => $this->success(),
+			)
+		);
+	}
 
 }
