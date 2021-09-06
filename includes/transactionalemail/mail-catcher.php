@@ -1,15 +1,13 @@
 <?php
 
-require_once(plugin_dir_path( __FILE__ ) . 'mail-catcher-interface.php');
-require_once(plugin_dir_path( __FILE__ ) . 'mailer.php');
-require_once(plugin_dir_path( __FILE__ ) . 'transactional-email-helper.php');
+require_once plugin_dir_path( __FILE__ ) . 'mail-catcher-interface.php';
+require_once plugin_dir_path( __FILE__ ) . 'mailer.php';
+require_once plugin_dir_path( __FILE__ ) . 'transactional-email-helper.php';
 
 /**
- * Class MailCatcher replaces the \PHPMailer\PHPMailer\PHPMailer and modifies the email sending logic. 
- *
- *
+ * Class MailCatcher replaces the \PHPMailer\PHPMailer\PHPMailer and modifies the email sending logic.
  */
-class MailCatcher extends \PHPMailer\PHPMailer\PHPMailer implements MailCatcherInterface{
+class MailCatcher extends \PHPMailer\PHPMailer\PHPMailer implements MailCatcherInterface {
 
 	/**
 	 * Modify the default send() behaviour.
@@ -20,19 +18,18 @@ class MailCatcher extends \PHPMailer\PHPMailer\PHPMailer implements MailCatcherI
 	 */
 	public function send() { // phpcs:ignore
 
-		$mail_mailer = get_option('egoi_transactional_email');
+		$mail_mailer = get_option( 'egoi_transactional_email' );
 
 		// We need this so that the PHPMailer class will correctly prepare all the headers.
 		$this->Mailer = 'mail'; // phpcs:ignore
 
-		
 		// Prepare everything (including the message) for sending.
 		if ( ! $this->preSend() ) {
 			return false;
 		}
 
-		//Use the E-goi Mailer instead of default PHPMailer
-		$mailer = new Mailer($this);
+		// Use the E-goi Mailer instead of default PHPMailer
+		$mailer = new Mailer( $this );
 
 		if ( ! $mailer ) {
 			return false;
@@ -46,17 +43,17 @@ class MailCatcher extends \PHPMailer\PHPMailer\PHPMailer implements MailCatcherI
 
 		$res = $mailer->get_response();
 
-		if ( wp_remote_retrieve_response_code($res) === 200) {
+		if ( wp_remote_retrieve_response_code( $res ) === 200 ) {
 			$is_sent = true;
 
-			$option = get_option('transactional_email_option');
+			$option = get_option( 'transactional_email_option' );
 
-			$option['sent'] = $option['sent']+1;
-			update_option('transactional_email_option', $option);
-			
+			$option['sent'] = $option['sent'] + 1;
+			update_option( 'transactional_email_option', $option );
+
 		} else {
 			$helper = new TransactionalEmailHelper();
-			$helper->handle_error($res);
+			$helper->handle_error( $res );
 			$is_sent = false;
 		}
 
@@ -69,7 +66,6 @@ class MailCatcher extends \PHPMailer\PHPMailer\PHPMailer implements MailCatcherI
 	/**
 	 * Get the PHPMailer line ending.
 	 *
-	 *
 	 * @return string
 	 */
 	public function get_line_ending() {
@@ -79,7 +75,6 @@ class MailCatcher extends \PHPMailer\PHPMailer\PHPMailer implements MailCatcherI
 
 	/**
 	 * Create a unique ID to use for multipart email boundaries.
-	 *
 	 *
 	 * @return string
 	 */

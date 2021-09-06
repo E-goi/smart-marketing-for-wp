@@ -1,6 +1,4 @@
 <?php /*
-
-
 $listID = $opt['egoi_form_sync']['list'];
 $forms = $Egoi4WpBuilderObject->getForms($listID, 1);
 
@@ -8,13 +6,13 @@ if(is_null($opt['egoi_form_sync']['show_title'])){
 	$opt['egoi_form_sync']['show_title'] = 0;
 }
 ?>
-	
+
 	<a href="#TB_inline?width=700&height=450&inlineId=egoi_form_inter&modal=true" id="form_egoint" class="thickbox button-secondary" style="display:none;"></a>
 
 	<table class="" style="table-layout: fixed;">
 
 		<?php
-		
+
 		if (($_GET['type'] == 'popup') || ($_GET['type'] == 'html')){
 
 			$content = stripslashes($opt['egoi_form_sync']['form_content']);
@@ -25,9 +23,9 @@ if(is_null($opt['egoi_form_sync']['show_title'])){
 				<?php
 
 			}else{ ?>
-				<textarea style="padding:10px; font-size:14px; font-family: Lucida Console, Monaco, monospace;" 
-				placeholder="<?php _e( 'Cole aqui o código HTML Avançado do Formulário E-goi', 'egoi-for-wp' ); ?>" 
-				name="egoi_form_sync[form_content]" rows="20" cols="90"></textarea><?php 
+				<textarea style="padding:10px; font-size:14px; font-family: Lucida Console, Monaco, monospace;"
+				placeholder="<?php _e( 'Cole aqui o código HTML Avançado do Formulário E-goi', 'egoi-for-wp' ); ?>"
+				name="egoi_form_sync[form_content]" rows="20" cols="90"></textarea><?php
 			}
 
 		}else{ ?>
@@ -55,7 +53,7 @@ if(is_null($opt['egoi_form_sync']['show_title'])){
 						<!-- <p class="help">
 							<?php // _e( 'Select the list to which people who submit this form should be subscribed.' ,'egoi-for-wp' ); ?>
 						</p> -->
-					</td><?php 
+					</td><?php
 				} ?>
 
 			</tr>
@@ -86,12 +84,12 @@ if(is_null($opt['egoi_form_sync']['show_title'])){
 				$url = explode(' - ', $opt['egoi_form_sync']['form_content']); ?>
 				<div id="egoi_form_inter" style="display:none;">
 					<a id="TB_closeWindowButton">X</a>
-		    		<iframe src="http://<?php echo $url[1];?>" width="700" height="600" style="border: 0 none;" onload="window.parent.parent.scrollTo(0,0);"></iframe>
-		    	</div><?php
-		    }else{ ?>
-				<div id="egoi_form_inter" style="display:none;"></div><?php 
-			} 
+					<iframe src="http://<?php echo $url[1];?>" width="700" height="600" style="border: 0 none;" onload="window.parent.parent.scrollTo(0,0);"></iframe>
+				</div><?php
+			}else{ ?>
+				<div id="egoi_form_inter" style="display:none;"></div><?php
+			}
 		} ?>
 
 	</table>
-	*/ ?>
+	*/
