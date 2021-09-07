@@ -365,11 +365,12 @@ class Egoi_For_Wp {
 		'AX' => '358',
 	);
 
-	/**
-	 * Constructor
-	 *
-	 * @since 1.0.0
-	 */
+    /**
+     * Constructor
+     *
+     * @param bool $debug
+     * @since 1.0.0
+     */
 	public function __construct( $debug = false ) {
 
 		$this->plugin_name = 'egoi-for-wp';
@@ -425,12 +426,15 @@ class Egoi_For_Wp {
 		}
 	}
 
-	/**
-	 * Remove all data from this plugin
-	 *
-	 * @since    1.1.0
-	 * @access   public
-	 */
+    /**
+     * Remove all data from this plugin
+     *
+     * @param bool $rmOnlyMappedFields
+     * @param bool $returnContent
+     * @return bool
+     * @since    1.1.0
+     * @access   public
+     */
 	public static function removeData( $rmOnlyMappedFields = false, $returnContent = false ) {
 
 		try {
@@ -1670,9 +1674,7 @@ class Egoi_For_Wp {
 	}
 
 	public function getClientAPI() {
-
-		$key = $_POST['egoi_key'];
-		if ( isset( $key ) ) {
+		if ( isset( $_POST['egoi_key'] ) ) {
 			$key           = sanitize_key( $_POST['egoi_key'] );
 			$url           = $this->restUrl . 'getClientData&' . http_build_query( array( 'functionOptions' => array( 'apikey' => $key ) ), '', '&' );
 			$result_client = json_decode( $this->_getContent( $url ) );
