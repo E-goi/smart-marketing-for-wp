@@ -67,4 +67,4 @@ if ( isset( $_POST['action'] ) ) {
 				</div>
 			</form>
 	</div>
-</div <?php php; ?>
+</div>
