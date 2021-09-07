@@ -178,9 +178,18 @@ add_action( 'siteorigin_widgets_widget_folders', 'add_egoi_pb_widget_folders' );
 
 add_action( 'widgets_init', 'egoi_widget_init' );
 function egoi_widget_init() {
-	wp_enqueue_script( 'canvas-loader', plugin_dir_url( __FILE__ ) . 'admin/js/egoi-for-wp-canvas.js' );
+	wp_enqueue_script( 'canvas-loader', plugin_dir_url( __FILE__ ) . 'admin/js/egoi-for-wp-canvas.js' , [] ,EFWP_SELF_VERSION);
 	register_widget( 'Egoi4Widget' );
 	add_action( 'init', 'egoi_widget_request' );
+
+    wp_localize_script(
+        'canvas-loader',
+        'egoi_config_ajax_object_core',
+        array(
+            'ajax_url'   => admin_url( 'admin-ajax.php' ),
+            'ajax_nonce' => wp_create_nonce( 'egoi_core_actions' ),
+        )
+    );
 }
 
 /**
@@ -207,7 +216,7 @@ function egoi_get_tags() {
 add_action( 'wp_ajax_egoi_add_tag', 'egoi_add_tag' );
 function egoi_add_tag() {
 	$admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
-	return $admin->add_tag( sanitize_text_field( $_POST['name'] ) );
+	$admin->add_tag( isset($_POST['name']) ? sanitize_text_field( $_POST['name'] ) : '' );
 }
 
 // HOOK WEB PUSH
@@ -229,7 +238,6 @@ function egoi_register_widgets_elementor() {
 add_action( 'elementor/editor/before_enqueue_scripts', 'egoi_widget_scripts' );
 function egoi_widget_scripts() {
 	wp_enqueue_style( 'elementor-egoi-css', plugin_dir_url( __FILE__ ) . 'admin/css/elementor.css', array(), true, 'all' );
-	// wp_register_script('elementor-egoi-css');
 	wp_enqueue_script( 'elementor-egoi', plugins_url( '/admin/js/elementor-egoi-form.js', __FILE__ ), array( 'jquery' ), true, true );
 }
 /**
