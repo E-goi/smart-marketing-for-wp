@@ -530,13 +530,13 @@ class EgoiElementorWidget extends Widget_Base {
 				<input class="egoi_elementor_form_field" type="text" name="egoi_{{ item.field_name }}" id="egoi_{{ item.field_name }}" placeholder="{{ item.field_placeholder }}" />
 			</p>
 			<# }); #>
-			<p class="egoi_elementor_entry_wrapper {{ settings.position_button }}" ><button style="background-color: {{ settings.button_color }};color: {{ settings.button_text_color }}" type="submit" id="<?php phpecho $egoi_elm_submit_button; ?>">{{ settings.button_title }}</button></p>
+			<p class="egoi_elementor_entry_wrapper {{ settings.position_button }}" ><button style="background-color: {{ settings.button_color }};color: {{ settings.button_text_color }}" type="submit" id="<?php echo $egoi_elm_submit_button; ?>">{{ settings.button_title }}</button></p>
 			</div>
 			<# if ( 'yes' === settings.term_option ) { #>
 				<p class="egoi_simple_form_tof_wrapper {{ settings.position_button }} egoi_simple_form_tof_wrapper_custom"><input type="checkbox" id="egoi_tof" name="egoi_tof" value="true"><span><?php echo __( 'I agree to', 'egoi-for-wp' ); ?> <a target="_blank" href="{{ settings.term_url }}" ><?php echo __( 'terms & conditions', 'egoi-for-wp' ); ?></a><span style="color: red;font-weight: bold">*</span></span></p>
 			<# } #>
 
-			<p id="<?php phpecho $message_box_id; ?>" class="egoi_simple_form_message_wrapper_custom egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></p>
+			<p id="<?php echo $message_box_id; ?>" class="egoi_simple_form_message_wrapper_custom egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></p>
 		</form>
 
 		<style>
