@@ -15,13 +15,13 @@
 	$product_tags     = get_terms( $args );
 
 	if ( isset( $_GET['edit'] ) ) {
-		$feed = get_option( $_GET['edit'] );
+		$feed = get_option( sanitize_text_field($_GET['edit']) );
 	}
 
 	if ( ! isset( $_GET['edit'] ) ) {
 		$code = wp_generate_password( 16, false );
 	} else {
-		$code = substr( $_GET['edit'], -16 );
+		$code = substr( sanitize_text_field($_GET['edit']), -16 );
 	}
 	?>
 
@@ -242,13 +242,13 @@
 
 <?php } elseif ( $_GET['view'] ) { ?>
 	<?php
-	$feed = get_option( $_GET['view'] );
+	$feed = get_option( sanitize_text_field( $_GET['view'] ) );
 	$args = $this->get_egoi_rss_feed_args( $feed );
 
 	$query = new WP_Query( $args );
 	?>
 		<div style="width: 600px; margin: auto;">
-			<h3><?php echo $feed['name']; ?></h3>
+			<h3><?php echo esc_textarea( $feed['name'] ); ?></h3>
 			<?php
 			if ( ! $query->have_posts() ) {
 				?>
@@ -277,7 +277,7 @@
 					} elseif ( $gallery = get_post_gallery_images( get_the_ID() ) ) {
 						foreach ( $gallery as $image_url ) {
 							?>
-							<p  align="center"><img width="600" src="<?php echo $image_url; ?>" /></p>
+							<p  align="center"><img width="600" src="<?php echo esc_url( $image_url ); ?>" /></p>
 							<?php
 							break;
 						}
@@ -285,12 +285,12 @@
 						preg_match( '~<img.*?src=["\']+(.*?)["\']+~', $all_content, $img );
 						if ( isset( $img[1] ) ) {
 							?>
-							<p  align="center"><img width="600" src="<?php echo $img[1]; ?>"/></p>
+							<p  align="center"><img width="600" src="<?php echo esc_url( $img[1] ); ?>"/></p>
 							<?php
 						}
 					}
 					?>
-					<p><?php echo $description; ?> </p>
+					<p><?php echo esc_textarea( $description ); ?> </p>
 					<?php
 				}
 			}
