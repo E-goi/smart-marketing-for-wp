@@ -43,31 +43,26 @@ class Egoi4Widget extends WP_Widget {
 			wp_enqueue_style( 'egoi-style', plugin_dir_url( __FILE__ ) . '../public/css/egoi-for-wp-public.css' );
 
 			extract( $args );
-			$widgetid      = $args['widget_id'] != '' ? $args['widget_id'] : $instance['widget_id'];
-			$this->egoi_id = $widgetid;
-
-			foreach ( $instance as $key => &$val ) {
-				$val = esc_textarea( $val );
-			}
+			$this->egoi_id = !empty($args['widget_id']) ? sanitize_key($args['widget_id']) : sanitize_key($instance['widget_id']);
 
 			$title              = apply_filters( 'widget_title', $instance['title'] );
-			$list               = $this->listID ? $this->listID : $instance['list'];
-			$fname              = $instance['fname'];
-			$fname_label        = $instance['fname_label'];
-			$fname_placeholder  = $instance['fname_placeholder'];
-			$lname              = $instance['lname'];
-			$lname_label        = $instance['lname_label'];
-			$lname_placeholder  = $instance['lname_placeholder'];
-			$email              = $instance['email'];
-			$email_label        = $instance['email_label'];
-			$email_placeholder  = $instance['email_placeholder'];
-			$mobile             = $instance['mobile'];
-			$mobile_label       = $instance['mobile_label'];
-			$mobile_placeholder = $instance['mobile_placeholder'];
-			$button             = $instance['button'];
-			$widget_tag         = $instance['tag'];
-			$default_tag        = $instance['tag-egoi'];
-			$language           = $instance['lang'];
+			$list               = $this->listID ? sanitize_key($this->listID) : sanitize_key($instance['list']);
+			$fname              = sanitize_text_field($instance['fname']);
+			$fname_label        = sanitize_text_field($instance['fname_label']);
+			$fname_placeholder  = sanitize_text_field($instance['fname_placeholder']);
+			$lname              = sanitize_text_field($instance['lname']);
+			$lname_label        = sanitize_text_field($instance['lname_label']);
+			$lname_placeholder  = sanitize_text_field($instance['lname_placeholder']);
+			$email              = sanitize_email($instance['email']);
+			$email_label        = sanitize_text_field($instance['email_label']);
+			$email_placeholder  = sanitize_text_field($instance['email_placeholder']);
+			$mobile             = sanitize_text_field($instance['mobile']);
+			$mobile_label       = sanitize_text_field($instance['mobile_label']);
+			$mobile_placeholder = sanitize_text_field($instance['mobile_placeholder']);
+			$button             = sanitize_text_field($instance['button']);
+			$widget_tag         = sanitize_text_field($instance['tag']);
+			$default_tag        = sanitize_text_field($instance['tag-egoi']);
+			$language           = sanitize_text_field($instance['lang']);
 
 			$the_widget_list = $instance['list'];
 			$list_id         = $the_widget_list ?: $list;
@@ -145,38 +140,38 @@ class Egoi4Widget extends WP_Widget {
 			}
 
 			echo '
-			<form name="egoi_contact" id="egoi-widget-form-' . $this->egoi_id . '" action="" method="post">
-				<input type="hidden" id="egoi-list" name="egoi-list" value="' . $list_id . '">
-				<input type="hidden" id="egoi-lang" name="egoi-lang" value="' . $language . '">
-				<input type="hidden" id="egoi-tag" name="egoi-tag" value="' . $tag . '">
-				<input type="hidden" id="egoi-double-optin" name="egoi-double-optin" value="' . $this->double_optin . '">
+			<form name="egoi_contact" id="egoi-widget-form-' . esc_attr($this->egoi_id) . '" action="" method="post">
+				<input type="hidden" id="egoi-list" name="egoi-list" value="' . esc_attr($list_id) . '">
+				<input type="hidden" id="egoi-lang" name="egoi-lang" value="' . esc_attr($language) . '">
+				<input type="hidden" id="egoi-tag" name="egoi-tag" value="' . esc_attr($tag) . '">
+				<input type="hidden" id="egoi-double-optin" name="egoi-double-optin" value="' . esc_attr($this->double_optin) . '">
  			';
 
 			if ( $fname ) {
-				echo '<label>' . esc_html( $fname_label ) . '</label>';
-				echo "<div class='widget-text'><input type='text' placeholder='" . $fname_placeholder . "' name='egoi-fname-sub" . $this->egoi_id . "' id='egoi-fname-sub" . $this->egoi_id . "' style='" . $this->input_width . ";' /></div>";
+				echo '<label>' . esc_attr( $fname_label ) . '</label>';
+				echo "<div class='widget-text'><input type='text' placeholder='" . esc_attr($fname_placeholder) . "' name='egoi-fname-sub" . esc_attr($this->egoi_id) . "' id='egoi-fname-sub" . esc_attr($this->egoi_id) . "' style='" . esc_attr($this->input_width) . ";' /></div>";
 			}
 
 			if ( $lname ) {
-				echo '<label>' . esc_html( $lname_label ) . '</label>';
-				echo "<div class='widget-text'><input type='text' placeholder='" . $lname_placeholder . "' name='egoi-lname-sub" . $this->egoi_id . "' id='egoi-lname-sub" . $this->egoi_id . "' style='" . $this->input_width . ";' /></div>";
+				echo '<label>' . esc_attr( $lname_label ) . '</label>';
+				echo "<div class='widget-text'><input type='text' placeholder='" . esc_attr($lname_placeholder) . "' name='egoi-lname-sub" . esc_attr($this->egoi_id) . "' id='egoi-lname-sub" . esc_attr($this->egoi_id) . "' style='" . esc_attr($this->input_width) . ";' /></div>";
 			}
 
-			echo '<label>' . esc_html( $email_label ) . "</label>
-			<div class='widget-text'><input type='text' placeholder='" . $email_placeholder . "' required name='egoi-email-sub" . $this->egoi_id . "' id='egoi-email-sub" . $this->egoi_id . "' style='" . $this->input_width . ";' /></div>";
+			echo '<label>' . esc_attr( $email_label ) . "</label>
+			<div class='widget-text'><input type='text' placeholder='" . esc_attr($email_placeholder) . "' required name='egoi-email-sub" . esc_attr($this->egoi_id) . "' id='egoi-email-sub" . esc_attr($this->egoi_id) . "' style='" . esc_attr($this->input_width) . ";' /></div>";
 			if ( $mobile ) {
-				echo '<p><label>' . esc_html( $mobile_label ) . '</label>';
-				echo "<div class='widget-text'><input type='text' placeholder='" . $mobile_placeholder . "' name='egoi-mobile-sub" . $this->egoi_id . "' id='egoi-mobile-sub" . $this->egoi_id . "' style='" . $this->input_width . ";' /></div>";
+				echo '<p><label>' . esc_attr( $mobile_label ) . '</label>';
+				echo "<div class='widget-text'><input type='text' placeholder='" . esc_attr($mobile_placeholder) . "' name='egoi-mobile-sub" . esc_attr($this->egoi_id) . "' id='egoi-mobile-sub" . esc_attr($this->egoi_id) . "' style='" . esc_attr($this->input_width) . ";' /></div>";
 			}
 			require_once dirname( __DIR__ ) . '/admin/index.php';
 			out( $arr );
 			$link = ( array_key_exists( $language, $arr ) ) ? '<p>' . $arr[ $language ] . '</p>' : '<p>' . $arr['en'] . '</p>';
-			echo "<input type='hidden' name='egoi-list-sub" . $this->egoi_id . "' id='egoi-list-sub" . $this->egoi_id . "' value='" . $list . "' />
-			<input type='hidden' name='egoi-id-sub" . $this->egoi_id . "' id='egoi-id-sub" . $this->egoi_id . "' value='" . $this->egoi_id . "' />
-			<input type='submit' class='submit_button' name='egoi-submit-sub" . $this->egoi_id . "' id='egoi-submit-sub" . $this->egoi_id . "' value='" . $button . "' style='" . $this->btn_width . "' />
+			echo "<input type='hidden' name='egoi-list-sub" . $this->egoi_id . "' id='egoi-list-sub" . esc_attr($this->egoi_id) . "' value='" . esc_attr($list) . "' />
+			<input type='hidden' name='egoi-id-sub" . $this->egoi_id . "' id='egoi-id-sub" . esc_attr($this->egoi_id) . "' value='" . esc_attr($this->egoi_id) . "' />
+			<input type='submit' class='submit_button' name='egoi-submit-sub" . esc_attr($this->egoi_id) . "' id='egoi-submit-sub" . esc_attr($this->egoi_id) . "' value='" . esc_attr($button) . "' style='" . esc_attr($this->btn_width) . "' />
             " . $link . "
             </form>
-			<div id='Loading_" . $this->egoi_id . "' class='loader' style='display:none;'>
+			<div id='Loading_" . esc_attr($this->egoi_id) . "' class='loader' style='display:none;'>
 			</div>
 			</div>";
 		}
@@ -186,25 +181,25 @@ class Egoi4Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 
 		$instance                       = $old_instance;
-		$instance['widgetid']           = strip_tags( $new_instance['widgetid'] );
-		$instance['list']               = strip_tags( $new_instance['list'] );
-		$instance['title']              = strip_tags( $new_instance['title'] );
-		$instance['fname']              = strip_tags( $new_instance['fname'] );
-		$instance['fname_label']        = strip_tags( $new_instance['fname_label'] );
-		$instance['fname_placeholder']  = strip_tags( $new_instance['fname_placeholder'] );
-		$instance['lname']              = strip_tags( $new_instance['lname'] );
-		$instance['lname_label']        = strip_tags( $new_instance['lname_label'] );
-		$instance['lname_placeholder']  = strip_tags( $new_instance['lname_placeholder'] );
-		$instance['email']              = strip_tags( $new_instance['email'] );
-		$instance['email_label']        = strip_tags( $new_instance['email_label'] );
-		$instance['email_placeholder']  = strip_tags( $new_instance['email_placeholder'] );
-		$instance['mobile']             = strip_tags( $new_instance['mobile'] );
-		$instance['mobile_label']       = strip_tags( $new_instance['mobile_label'] );
-		$instance['mobile_placeholder'] = strip_tags( $new_instance['mobile_placeholder'] );
-		$instance['button']             = strip_tags( $new_instance['button'] );
-		$instance['tag']                = strip_tags( $new_instance['tag'] );
-		$instance['tag_name']           = strip_tags( $new_instance['tag_name'] );
-		$instance['tag-egoi']           = $this->tag_egoi;
+		$instance['widgetid']           = sanitize_text_field( $new_instance['widgetid'] );
+		$instance['list']               = sanitize_text_field( $new_instance['list'] );
+		$instance['title']              = sanitize_text_field( $new_instance['title'] );
+		$instance['fname']              = sanitize_text_field( $new_instance['fname'] );
+		$instance['fname_label']        = sanitize_text_field( $new_instance['fname_label'] );
+		$instance['fname_placeholder']  = sanitize_text_field( $new_instance['fname_placeholder'] );
+		$instance['lname']              = sanitize_text_field( $new_instance['lname'] );
+		$instance['lname_label']        = sanitize_text_field( $new_instance['lname_label'] );
+		$instance['lname_placeholder']  = sanitize_text_field( $new_instance['lname_placeholder'] );
+		$instance['email']              = sanitize_text_field( $new_instance['email'] );
+		$instance['email_label']        = sanitize_text_field( $new_instance['email_label'] );
+		$instance['email_placeholder']  = sanitize_text_field( $new_instance['email_placeholder'] );
+		$instance['mobile']             = sanitize_text_field( $new_instance['mobile'] );
+		$instance['mobile_label']       = sanitize_text_field( $new_instance['mobile_label'] );
+		$instance['mobile_placeholder'] = sanitize_text_field( $new_instance['mobile_placeholder'] );
+		$instance['button']             = sanitize_text_field( $new_instance['button'] );
+		$instance['tag']                = sanitize_text_field( $new_instance['tag'] );
+		$instance['tag_name']           = sanitize_text_field( $new_instance['tag_name'] );
+		$instance['tag-egoi']           = sanitize_text_field($this->tag_egoi);
 
 		if ( $new_instance['tag'] ) {
 			$api  = new Egoi_For_Wp();
@@ -256,28 +251,28 @@ class Egoi4Widget extends WP_Widget {
 				)
 			);
 
-			$widgetid          = esc_attr( $instance['widgetid'] );
+			$widgetid          = sanitize_text_field( $instance['widgetid'] );
 			$list_id           = $this->listID;
-			$title             = esc_attr( $instance['title'] );
-			$fname             = esc_attr( $instance['fname'] );
-			$fname_label       = esc_attr( $instance['fname_label'] );
-			$fname_placeholder = esc_attr( $instance['fname_placeholder'] );
+			$title             = sanitize_text_field( $instance['title'] );
+			$fname             = sanitize_text_field( $instance['fname'] );
+			$fname_label       = sanitize_text_field( $instance['fname_label'] );
+			$fname_placeholder = sanitize_text_field( $instance['fname_placeholder'] );
 
-			$lname             = esc_attr( $instance['lname'] );
-			$lname_label       = esc_attr( $instance['lname_label'] );
-			$lname_placeholder = esc_attr( $instance['lname_placeholder'] );
+			$lname             = sanitize_text_field( $instance['lname'] );
+			$lname_label       = sanitize_text_field( $instance['lname_label'] );
+			$lname_placeholder = sanitize_text_field( $instance['lname_placeholder'] );
 
-			$email             = esc_attr( $instance['email'] );
-			$email_label       = esc_attr( $instance['email_label'] );
-			$email_placeholder = esc_attr( $instance['email_placeholder'] );
+			$email             = sanitize_text_field( $instance['email'] );
+			$email_label       = sanitize_text_field( $instance['email_label'] );
+			$email_placeholder = sanitize_text_field( $instance['email_placeholder'] );
 
-			$mobile             = esc_attr( $instance['mobile'] );
-			$mobile_label       = esc_attr( $instance['mobile_label'] );
-			$mobile_placeholder = esc_attr( $instance['mobile_placeholder'] );
-			$button             = esc_attr( $instance['button'] );
+			$mobile             = sanitize_text_field( $instance['mobile'] );
+			$mobile_label       = sanitize_text_field( $instance['mobile_label'] );
+			$mobile_placeholder = sanitize_text_field( $instance['mobile_placeholder'] );
+			$button             = sanitize_text_field( $instance['button'] );
 
-			$tag         = esc_attr( $instance['tag_name'] );
-			$lang_widget = esc_attr( $instance['lang'] );
+			$tag         = sanitize_text_field( $instance['tag_name'] );
+			$lang_widget = sanitize_text_field( $instance['lang'] );
 
 			$default_tag = '';
 
@@ -338,8 +333,8 @@ class Egoi4Widget extends WP_Widget {
 			});
 			</script>
 			<p>
-				<label for="' . $this->get_field_id( 'title' ) . '">' . __( 'Widget Title', 'egoi-for-wp' ) . '</label>
-				<input class="widefat" id="' . $this->get_field_id( 'title' ) . '" name="' . $this->get_field_name( 'title' ) . '" type="text" value="' . $title . '" />
+				<label for="' . esc_attr($this->get_field_id( 'title' )) . '">' . __( 'Widget Title', 'egoi-for-wp' ) . '</label>
+				<input class="widefat" id="' . esc_attr($this->get_field_id( 'title' )) . '" name="' . esc_attr($this->get_field_name( 'title' )) . '" type="text" value="' . esc_attr($title) . '" />
 			</p>
 			
 			<p>';
@@ -353,9 +348,9 @@ class Egoi4Widget extends WP_Widget {
 			echo '<input class="checkbox" id="' . $this->get_field_id( 'fname' ) . '" name="' . $this->get_field_name( 'fname' ) . '" type="checkbox" value="First Name" data-attribute="fname_id" ' . $checked_fname . ' />
 				<label for="' . $this->get_field_id( 'fname' ) . '">' . __( 'First Name', 'egoi-for-wp' ) . '</label>';
 
-			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'fname_label' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'fname_label' ) ) . '" placeholder="' . __( 'Label', 'egoi-for-wp' ) . '" value="' . $fname_label . '" data-attribute="fname_label" style="width:100%;' . $style_fname . '">';
+			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'fname_label' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'fname_label' ) ) . '" placeholder="' . __( 'Label', 'egoi-for-wp' ) . '" value="' . esc_attr($fname_label) . '" data-attribute="fname_label" style="width:100%;' . esc_attr($style_fname) . '">';
 
-			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'fname_placeholder' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'fname_placeholder' ) ) . '" placeholder="Placeholder" value="' . $fname_placeholder . '" data-attribute="fname_placeholder" style="width:100%;' . $style_fname . '">';
+			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'fname_placeholder' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'fname_placeholder' ) ) . '" placeholder="Placeholder" value="' . esc_attr($fname_placeholder) . '" data-attribute="fname_placeholder" style="width:100%;' . esc_attr($style_fname) . '">';
 
 			echo '
 			</p>
@@ -372,9 +367,9 @@ class Egoi4Widget extends WP_Widget {
 
 			echo '<label for="' . esc_textarea( $this->get_field_id( 'lname' ) ) . '">' . __( 'Last Name', 'egoi-for-wp' ) . '</label>';
 
-			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'lname_label' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'lname_label' ) ) . '" placeholder="' . __( 'Label', 'egoi-for-wp' ) . '" value="' . $lname_label . '" data-attribute="lname_label" style="width:100%;' . $style_lname . '">';
+			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'lname_label' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'lname_label' ) ) . '" placeholder="' . __( 'Label', 'egoi-for-wp' ) . '" value="' . esc_attr($lname_label) . '" data-attribute="lname_label" style="width:100%;' . esc_attr($style_lname) . '">';
 
-			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'lname_placeholder' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'lname_placeholder' ) ) . '" placeholder="Placeholder" value="' . $lname_placeholder . '" data-attribute="lname_placeholder" style="width:100%;' . $style_lname . '">';
+			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'lname_placeholder' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'lname_placeholder' ) ) . '" placeholder="Placeholder" value="' . esc_attr($lname_placeholder) . '" data-attribute="lname_placeholder" style="width:100%;' . esc_attr($style_lname) . '">';
 
 			if ( ! $email ) {
 				$email = 'Email';
@@ -432,7 +427,7 @@ class Egoi4Widget extends WP_Widget {
 				echo '<label>' . __( 'Tag', 'egoi-for-wp' ) . '</label>';
 			}
 
-			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'tag' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'tag' ) ) . '" placeholder="' . __( 'Tag Name', 'egoi-for-wp' ) . '" value="' . $tag . '" style="width:100%;">';
+			echo '<input type="text" name="' . esc_attr( $this->get_field_name( 'tag' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'tag' ) ) . '" placeholder="' . __( 'Tag Name', 'egoi-for-wp' ) . '" value="' . $tag . '" style="width:100%;">';
 
 			echo '
 			</p>
@@ -442,13 +437,13 @@ class Egoi4Widget extends WP_Widget {
 				echo '<label>' . __( 'Languages', 'egoi-for-wp' ) . '</label><span class="e-goi-tooltip">
 						 <span class="dashicons dashicons-info"></span>
 					  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-					  	 	' . __( 'List', 'egoi-for-wp' ) . ":\n" . $this->listID . '<br>
-					  	 	' . __( 'Language set by default', 'egoi-for-wp' ) . ":\n" . $this->lang . '
+					  	 	' . __( 'List', 'egoi-for-wp' ) . ":\n" . esc_attr($this->listID) . '<br>
+					  	 	' . __( 'Language set by default', 'egoi-for-wp' ) . ":\n" . esc_attr($this->lang) . '
 					 	</span>
 					</span>
 				</label><br>';
 			} else {
-				echo '<label>' . __( 'Languages for list', 'egoi-for-wp' ) . ":\n" . $this->listID . '</label><br>';
+				echo '<label>' . __( 'Languages for list', 'egoi-for-wp' ) . ":\n" . esc_attr($this->listID) . '</label><br>';
 			}
 
 			echo '<select id="' . esc_textarea( $this->get_field_name( 'widget_lang' ) ) . '" name="' . esc_textarea( $this->get_field_name( 'widget_lang' ) ) . '" type="text" >';
@@ -456,16 +451,16 @@ class Egoi4Widget extends WP_Widget {
 
 			foreach ( $languages as $value ) {
 				if ( $value == $lang_widget ) {
-					echo '<option selected value="' . $value . '">' . $value . '</option>';
+					echo '<option selected value="' . esc_attr($value) . '">' . esc_html($value) . '</option>';
 				} else {
-					echo '<option value="' . $value . '">' . $value . '</option>';
+					echo '<option value="' . esc_attr($value) . '">' . esc_html($value) . '</option>';
 				}
 			}
 			echo '</select>				
 			</p>
 			<p>
 				<label for="' . esc_textarea( $this->get_field_id( 'button' ) ) . '">' . __( 'Subscribe Button', 'egoi-for-wp' ) . '</label>';
-			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'button' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'button' ) ) . '" placeholder="' . __( 'Subscribe', 'egoi-for-wp' ) . '" value="' . $button . '" style="width:100%;">';
+			echo '<input type="text" name="' . esc_textarea( $this->get_field_name( 'button' ) ) . '" id="' . esc_textarea( $this->get_field_id( 'button' ) ) . '" placeholder="' . __( 'Subscribe', 'egoi-for-wp' ) . '" value="' . esc_attr($button) . '" style="width:100%;">';
 
 			echo '
 			</p>';
@@ -506,11 +501,11 @@ function egoi_widget_request() {
 
 				$email = sanitize_email( $_POST['widget_email'] );
 				if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-					echo "<div style='$bcolor_success' class='egoi-widget-error error" . $id . "'>" . $Egoi4WP['msg_invalid'] . '</div>';
+					echo "<div style='$bcolor_success' class='egoi-widget-error error" . esc_attr($id) . "'>" . esc_html($Egoi4WP['msg_invalid']) . '</div>';
 					exit;
 				}
 			} else {
-				echo "<div style='$bcolor_error' class='egoi-widget-error error" . $id . "'>" . $Egoi4WP['msg_empty'] . '</div>';
+				echo "<div style='$bcolor_error' class='egoi-widget-error error" . esc_attr($id) . "'>" . esc_html($Egoi4WP['msg_empty']) . '</div>';
 				exit;
 			}
 		}
@@ -534,7 +529,7 @@ function egoi_widget_request() {
 
 		if ( ( ! $get->subscriber->REMOVE_METHOD ) && ( $get->subscriber->UID ) ) {
 
-			echo "<div style='$bcolor_error' class='egoi-widget-error error " . $id . "'>" . $Egoi4WP['msg_exists_subscribed'] . '</div>';
+			echo "<div style='$bcolor_error' class='egoi-widget-error error " . esc_attr($id) . "'>" . esc_html($Egoi4WP['msg_exists_subscribed']) . '</div>';
 			exit;
 
 		} else {
@@ -559,12 +554,12 @@ function egoi_widget_request() {
 					if ( $hide_form ) {
 						echo 'hide';
 					} else {
-						echo "<div style='$bcolor_success' class='egoi-widget-success " . $id . "'>" . $Egoi4WP['msg_subscribed'] . '</div>';
+						echo "<div style='$bcolor_success' class='egoi-widget-success " . esc_attr($id) . "'>" . esc_html($Egoi4WP['msg_subscribed']) . '</div>';
 					}
 				}
 				exit;
 			} else {
-				echo "<div style='$bcolor_error' class='egoi-widget-error error " . $id . "'>" . $Egoi4WP['msg_error'] . '</div>';
+				echo "<div style='$bcolor_error' class='egoi-widget-error error " . esc_attr($id) . "'>" . esc_html($Egoi4WP['msg_error']) . '</div>';
 				exit;
 			}
 		}
