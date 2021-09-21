@@ -223,7 +223,7 @@ class EgoiApiV3 {
 
 		$resp = json_decode( $client->getResponse(), true );
 		return $client->getCode() == 200 && isset( $resp['items'] )
-			? json_encode( $resp['items'] )
+			? wp_json_encode( $resp['items'] )
 			: $this->processErrors();
 	}
 
@@ -288,7 +288,7 @@ class EgoiApiV3 {
 		}
 		$resp = json_decode( $client->getResponse(), true );
 		return $client->getCode() == 200 && isset( $resp['items'] )
-			? json_encode( $resp['items'] )
+			? wp_json_encode( $resp['items'] )
 			: $this->processErrors( $client->getResponse() );
 	}
 
@@ -309,7 +309,7 @@ class EgoiApiV3 {
 
 		$resp = json_decode( $client->getResponse(), true );
 		return $client->getCode() == 200 && isset( $resp['items'] )
-			? json_encode( $resp['items'] )
+			? wp_json_encode( $resp['items'] )
 			: $this->processErrors();
 
 	}
@@ -549,7 +549,7 @@ class EgoiApiV3 {
 		}
 			$resp = json_decode( $client->getResponse(), true );
 
-		return $client->getCode() == 200 && isset( $resp['items'] ) ? json_encode( $resp['items'] ) : $this->processErrors();
+		return $client->getCode() == 200 && isset( $resp['items'] ) ? wp_json_encode( $resp['items'] ) : $this->processErrors();
 
 	}
 
@@ -755,9 +755,9 @@ class EgoiApiV3 {
 	 */
 	private function processErrors( $error = false ) {
 		if ( $error == false ) {
-			return json_encode( array( 'status' => 'error' ) );
+			return wp_json_encode( array( 'status' => 'error' ) );
 		} else {
-			return json_encode( array( 'error' => $error ) );
+			return wp_json_encode( array( 'error' => $error ) );
 		}
 	}
 
@@ -828,7 +828,7 @@ class ClientHttp {
 	}
 
 	public function __toString() {
-		return json_encode(
+		return wp_json_encode(
 			array(
 				'code'     => $this->getCode(),
 				'response' => $this->getResponse(),

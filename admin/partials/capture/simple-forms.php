@@ -25,7 +25,7 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 			$data->tag = $new->ID;
 		}
 
-		$info = json_encode( $data );
+		$info = wp_json_encode( $data );
 
 		if ( $_POST['id_simple_form'] == 0 ) {
 			$post = array(
