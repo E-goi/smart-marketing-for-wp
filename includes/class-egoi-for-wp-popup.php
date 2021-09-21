@@ -47,7 +47,7 @@ class EgoiPopUp {
 			$post['popup_id'] = self::generateNextPopupId();
 		}
 
-		update_option( "egoi_popup_{$post['popup_id']}", json_encode( $post ) );
+		update_option( "egoi_popup_{$post['popup_id']}", wp_json_encode( $post ) );
 
 		return $post['popup_id'];
 	}
@@ -55,20 +55,20 @@ class EgoiPopUp {
 	private static function generateNextPopupId() {
 		$popups = self::getSavedPopUps();
 		if ( empty( $popups ) ) {
-			update_option( self::OPTION_NAME, json_encode( array( 1 ) ) );
+			update_option( self::OPTION_NAME, wp_json_encode( array( 1 ) ) );
 			return 1;
 		}
 
 		$id       = max( $popups ) + 1;
 		$popups[] = $id;
-		update_option( self::OPTION_NAME, json_encode( $popups ) );
+		update_option( self::OPTION_NAME, wp_json_encode( $popups ) );
 		return $id;
 	}
 
 	public static function deletePopup( $popup_id ) {
 		$popups = self::getSavedPopUps();
 		delete_option( "egoi_popup_$popup_id" );
-		update_option( self::OPTION_NAME, json_encode( array_diff( $popups, array( $popup_id ) ) ) );
+		update_option( self::OPTION_NAME, wp_json_encode( array_diff( $popups, array( $popup_id ) ) ) );
 	}
 
 	public static function checkFormSafeDelete( $form_id ) {

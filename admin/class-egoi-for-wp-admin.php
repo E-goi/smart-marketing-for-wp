@@ -1161,7 +1161,7 @@ class Egoi_For_Wp_Admin {
 
 		if ( ! empty( $_POST ) ) {
 			$api = new Egoi_For_Wp();
-			echo json_encode( $api->getForms( $_POST['listID'] ) );
+			echo wp_json_encode( $api->getForms( $_POST['listID'] ) );
 		}
 		wp_die();
 	}
@@ -1171,10 +1171,10 @@ class Egoi_For_Wp_Admin {
 		if ( ! empty( $_POST ) ) {
 			$api = new Egoi_For_Wp();
 			if ( ! empty( $options['list'] ) ) {
-				$a = json_encode( $api->getLists( $_POST['listID'] ) );
-				echo json_encode( array_merge( json_decode( $a, true ), array( 'default' => $options['list'] ) ) );
+				$a = wp_json_encode( $api->getLists( $_POST['listID'] ) );
+				echo wp_json_encode( array_merge( json_decode( $a, true ), array( 'default' => $options['list'] ) ) );
 			} else {
-				echo json_encode( $api->getLists( $_POST['listID'] ) );
+				echo wp_json_encode( $api->getLists( $_POST['listID'] ) );
 			}
 		}
 		wp_die();
@@ -1184,7 +1184,7 @@ class Egoi_For_Wp_Admin {
 
 		if ( ! empty( $_POST ) ) {
 			$api = new Egoi_For_Wp();
-			echo json_encode( $api->getTags() );
+			echo wp_json_encode( $api->getTags() );
 		}
 		wp_die();
 	}
@@ -1193,7 +1193,7 @@ class Egoi_For_Wp_Admin {
 
 		if ( ! empty( $_POST ) ) {
 			$api = new Egoi_For_Wp();
-			echo json_encode( $api->addTag( $name ) );
+			echo wp_json_encode( $api->addTag( $name ) );
 		}
 		wp_die();
 	}
@@ -1446,7 +1446,7 @@ class Egoi_For_Wp_Admin {
 		// exit;
 		if ( ! empty( $_GET ) ) {
 			$api = new Egoi_For_Wp();
-			echo json_encode( $api->getLists( $_['listID'] ) );
+			echo wp_json_encode( $api->getLists( $_['listID'] ) );
 		}
 		wp_die();
 	}
@@ -2195,18 +2195,18 @@ class Egoi_For_Wp_Admin {
 
 		$option_webpush = get_option( 'egoi_webpush_code' );
 		if ( empty( $option_webpush['code'] ) ) {
-			echo json_encode( array( 'ERROR' => __( 'Missing Webpush Instalation!', 'egoi-for-wp' ) ) );
+			echo wp_json_encode( array( 'ERROR' => __( 'Missing Webpush Instalation!', 'egoi-for-wp' ) ) );
 			wp_die();
 		}
 		$api = new EgoiApiV3( $apikey );
 
 		$site_id = $this->scrap_sited_id( $option_webpush['code'], $api );
 		if ( $site_id === false ) {
-			echo json_encode( array( 'ERROR' => __( 'Api error, try again later.', 'egoi-for-wp' ) ) );
+			echo wp_json_encode( array( 'ERROR' => __( 'Api error, try again later.', 'egoi-for-wp' ) ) );
 			wp_die();
 		}
 
-		echo json_encode(
+		echo wp_json_encode(
 			array_merge(
 				array( 'list_id' => $site_id['list_id'] ),
 				json_decode(
@@ -2270,7 +2270,7 @@ class Egoi_For_Wp_Admin {
 			$data = $_POST['data'];
 		}
 
-		update_option( 'egoi_catalog_sync', json_encode( $data ) );
+		update_option( 'egoi_catalog_sync', wp_json_encode( $data ) );
 
 		$apikey = $this->get_apikey();
 		if ( ! empty( $apikey ) ) {
@@ -2375,7 +2375,7 @@ class Egoi_For_Wp_Admin {
 
 		$bypass[] = $data['id'];
 		$bypass   = array_unique( $bypass );
-		update_option( 'egoi_import_bypass', json_encode( $bypass ) );
+		update_option( 'egoi_import_bypass', wp_json_encode( $bypass ) );
 	}
 
 	public function egoi_add_newsletter_signup_admin() {
@@ -2415,7 +2415,7 @@ class Egoi_For_Wp_Admin {
 				unset( $bypass[ $key ] );
 			}
 			$bo->deleteProduct( $post->ID );
-			update_option( 'egoi_import_bypass', json_encode( $bypass ) );
+			update_option( 'egoi_import_bypass', wp_json_encode( $bypass ) );
 			return true;
 		}
 	}
@@ -2439,7 +2439,7 @@ class Egoi_For_Wp_Admin {
 				unset( $bypass[ $key ] );
 			}
 			$bo->deleteProduct( $product->get_id() );
-			update_option( 'egoi_import_bypass', json_encode( $bypass ) );
+			update_option( 'egoi_import_bypass', wp_json_encode( $bypass ) );
 			return true;
 		}
 
@@ -2606,7 +2606,7 @@ class Egoi_For_Wp_Admin {
 			}
 		}
 
-		echo json_encode( $output );
+		echo wp_json_encode( $output );
 		wp_die();
 	}
 
@@ -2784,7 +2784,7 @@ class Egoi_For_Wp_Admin {
             ';
 		}
 
-		return json_encode( $output );
+		return wp_json_encode( $output );
 	}
 
 	public function show_alert_messages() {

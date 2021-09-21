@@ -375,7 +375,7 @@ class Egoi_For_Wp {
 
 		$this->plugin_name = 'egoi-for-wp';
 		$this->debug       = $debug;
-		$this->host        = isset( $_SERVER['SERVER_NAME'] ) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+		$this->host        = isset( $_SERVER['SERVER_NAME'] ) ? esc_url_raw($_SERVER['SERVER_NAME']) : esc_url_raw($_SERVER['HTTP_HOST']);
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -471,7 +471,7 @@ class Egoi_For_Wp {
 			}
 
 			if ( $returnContent ) {
-				echo json_encode( array( 'result' => 'ok' ) );
+				echo wp_json_encode( array( 'result' => 'ok' ) );
 				exit;
 			}
 
@@ -1331,7 +1331,7 @@ class Egoi_For_Wp {
 
 				$this->addTrackEngage( $post['list'] );
 
-				echo json_encode( $total );
+				echo wp_json_encode( $total );
 				exit;
 			}
 		}
@@ -1887,7 +1887,7 @@ class Egoi_For_Wp {
 	}
 
 	public static function updateOptionGF( $data ) {
-		update_option( 'egoi_mapping_gf', json_encode( $data ) );
+		update_option( 'egoi_mapping_gf', wp_json_encode( $data ) );
 	}
 
 	public static function getOptionTag() {
@@ -1901,12 +1901,12 @@ class Egoi_For_Wp {
 	}
 
 	public static function updateOptionTag( $data ) {
-		update_option( 'egoi_tag_function', json_encode( $data ) );
+		update_option( 'egoi_tag_function', wp_json_encode( $data ) );
 	}
 
 	public static function getAccountTags() {
 		$Egoi4WpBuilderObject = get_option( 'Egoi4WpBuilderObject' );
-		$tag_list             = json_decode( json_encode( $Egoi4WpBuilderObject->getTags() ), true );
+		$tag_list             = json_decode( wp_json_encode( $Egoi4WpBuilderObject->getTags() ), true );
 
 		if ( empty( $tag_list['TAG_LIST'] ) || ! is_array( $tag_list['TAG_LIST'] ) ) {
 			return array();

@@ -468,7 +468,7 @@ public static function setWordpressCatalog( $catalog_id ) {
 	}
 
 	$data[] = $catalog_id;
-	update_option( 'egoi_store_catalogs', json_encode( $data ) );
+	update_option( 'egoi_store_catalogs', wp_json_encode( $data ) );
 	return true;
 }
 
@@ -479,7 +479,7 @@ public function setCatalogOptions( $catalog_id, $options ) {
 		$data = array();
 	}
 	$data[ $catalog_id ] = $options;
-	update_option( 'egoi_catalogs_options', json_encode( $data ) );
+	update_option( 'egoi_catalogs_options', wp_json_encode( $data ) );
 }
 
 public static function getCatalogOptions( $catalog_id = false ) {

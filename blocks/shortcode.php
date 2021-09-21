@@ -56,7 +56,7 @@ function efwp_get_egoi_forms() {
 		);
 	}
 
-	echo json_encode( $forms );
+	echo wp_json_encode( $forms );
 
 	die();
 }
