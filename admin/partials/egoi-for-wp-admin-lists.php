@@ -40,19 +40,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 					?>
 					<tr>
 						<td>
-							<?php echo $value_list->listnum; ?>
+							<?php echo !empty($value_list->listnum)?esc_html($value_list->listnum):0; ?>
 						</td>
 						<td>
-							<?php echo $value_list->title; ?>
+							<?php echo !empty($value_list->title)?esc_html($value_list->title):''; ?>
 						</td>
 						<td>
-							<?php echo $value_list->title_ref; ?>
+							<?php echo !empty($value_list->title_ref)?esc_html($value_list->title_ref):''; ?>
 						</td>
 						<td>
-							<?php echo $value_list->subs_activos; ?>
+							<?php echo !empty($value_list->subs_activos)?esc_html($value_list->subs_activos):0; ?>
 						</td>
 						<td>
-							<?php echo $value_list->subs_total; ?>
+							<?php echo !empty($value_list->subs_total)?esc_html($value_list->subs_total):0; ?>
 						</td>
 						<td>
 						<?php
@@ -86,7 +86,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				
 			<div style="position:relative">
 
-				<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI']; ?>'>
+				<form name='egoi_wp_createlist_form' method='post' action='<?php echo esc_url($_SERVER['REQUEST_URI']); ?>'>
 					
 					<div id="e-goi-create-list" style="display: none;">
 						<div class="e-goi-account-lists--create-name e-goi-fcenter">

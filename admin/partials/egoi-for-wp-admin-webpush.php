@@ -151,5 +151,3 @@ if ( $redir ) {
 
 	</main>
 </div>
-
-<script src="<?php echo plugins_url( '../js/egoi-for-wp-webpush.js', __FILE__ ); ?>"></script>

@@ -68,4 +68,3 @@ if ( isset( $_GET['del'] ) ) {
 	</main>
 </div>
 
-<script src="<?php echo plugins_url( '../js/egoi-for-wp-rssfeed.js', __FILE__ ); ?>"></script>

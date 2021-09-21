@@ -215,6 +215,22 @@ class Egoi_For_Wp_Admin {
 		wp_register_script( $this->plugin_name . 'select2', plugin_dir_url( __FILE__ ) . 'js/font_awesome/select2.min.js', array( 'jquery' ), true );
 		wp_enqueue_script( $this->plugin_name . 'select2' );
 
+
+		if ( strpos( get_current_screen()->id, 'egoi-4-wp-rssfeed' ) !== false ) {
+		    wp_register_script( $this->plugin_name . 'custom-script-rss', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-rssfeed.js', array( 'jquery' ) );
+			wp_enqueue_script( $this->plugin_name . 'custom-script-rss' );
+		}
+		if ( strpos( get_current_screen()->id, 'egoi-4-wp-webpush' ) !== false ) {
+		    wp_register_script( $this->plugin_name . 'custom-script-webpush', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-webpush.js', array( 'jquery' ) );
+			wp_enqueue_script( $this->plugin_name . 'custom-script-webpush' );
+		}
+		if ( strpos( get_current_screen()->id, 'post' ) !== false ||
+			strpos( get_current_screen()->id, 'post-new' ) !== false
+		) {
+            wp_register_script( $this->plugin_name . 'custom-script-capaign', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-campaign-widget.js', array( 'jquery' ) );
+			wp_enqueue_script( $this->plugin_name . 'custom-script-capaign' );
+		}
+
 		// only load CSS on smart marketing pages or in pages with smart marketing elements
 		if ( strpos( get_current_screen()->id, 'smart-marketing' ) !== false ||
 			strpos( get_current_screen()->id, 'egoi-4-wp' ) !== false
