@@ -659,31 +659,24 @@ class Egoi_For_Wp_Admin {
                 $api = new Egoi_For_Wp();
 			    $listID = $_POST['listID'];
 			    $count_users = count_users();
+                $users = [];
+
+                if( $count_users['total_users'] > $this->limit_subs ){
+                    global $wpdb;
+                    $sql = "SELECT * FROM ".$wpdb->prefix."users LIMIT 100000";
+                    $users = array_merge( $users, $wpdb->get_results($sql) );
+                }else{
+                    $users = array_merge( $users, get_users($args) );
+                }
 
                 if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && version_compare( WC_VERSION, '4.0', '>=' ) ) {
                     $data_store = \WC_Data_Store::load( 'report-customers' );
 
-                    if(empty($data_store) ){
-                        global $wpdb;
-                        $sql = "SELECT * FROM ".$wpdb->prefix."wc_customer_lookup LIMIT ".$this->limit_subs;
-                        $users = $wpdb->get_results($sql);
-                        wp_mail('fbobiano@e-goi.com', 'userss', json_encode($users));
-                    }else{
-                        $data = $data_store->get_data( $args );
-                        $users = $data->data;
-                    }
-                    $data = $data_store->get_data( $args );
-                    $users = $data->data;
-                }else{
-                    if($count_users['total_users'] > $this->limit_subs){
-                        global $wpdb;
-                        $sql = "SELECT * FROM ".$wpdb->prefix."users LIMIT 100000";
-                        $users = $wpdb->get_results($sql);
-                    }else{
-                        $users = get_users($args);
-                    }
+                    $data  = $data_store->get_data( $args );
+                    $users = array_merge( $users, $data->data );
+
                 }
-                
+
 			    $current_user = wp_get_current_user();
 			    $current_email = $current_user->data->user_email;
                
@@ -725,14 +718,10 @@ class Egoi_For_Wp_Admin {
 
                         $email = $user->user_email;
                         $url = $user->user_url;
-                    }else if(isset($user['id'])){
+                    }else{
                         $full_name = explode(' ', $user['name']);
                         $fname = $full_name[0];
                         $lname = $full_name[1];
-                        $email = $user['email'];
-                    }else{
-                        $fname = $user['first_name'];
-                        $lname = $user['last_name'];
                         $email = $user['email'];
                     }
 
@@ -760,7 +749,6 @@ class Egoi_For_Wp_Admin {
                     $subs[] = $subscribers;
 
 			    }
-                wp_mail('fbobiano@e-goi.com', 'subs', json_encode($subs));
 
 			    if(isset($subs) && count($subs) >= $this->limit_subs){
 				    $subs = array_chunk($subs, $this->limit_subs, true);
