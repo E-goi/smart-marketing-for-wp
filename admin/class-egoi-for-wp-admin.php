@@ -215,19 +215,18 @@ class Egoi_For_Wp_Admin {
 		wp_register_script( $this->plugin_name . 'select2', plugin_dir_url( __FILE__ ) . 'js/font_awesome/select2.min.js', array( 'jquery' ), true );
 		wp_enqueue_script( $this->plugin_name . 'select2' );
 
-
 		if ( strpos( get_current_screen()->id, 'egoi-4-wp-rssfeed' ) !== false ) {
-		    wp_register_script( $this->plugin_name . 'custom-script-rss', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-rssfeed.js', array( 'jquery' ) );
+			wp_register_script( $this->plugin_name . 'custom-script-rss', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-rssfeed.js', array( 'jquery' ) );
 			wp_enqueue_script( $this->plugin_name . 'custom-script-rss' );
 		}
 		if ( strpos( get_current_screen()->id, 'egoi-4-wp-webpush' ) !== false ) {
-		    wp_register_script( $this->plugin_name . 'custom-script-webpush', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-webpush.js', array( 'jquery' ) );
+			wp_register_script( $this->plugin_name . 'custom-script-webpush', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-webpush.js', array( 'jquery' ) );
 			wp_enqueue_script( $this->plugin_name . 'custom-script-webpush' );
 		}
 		if ( strpos( get_current_screen()->id, 'post' ) !== false ||
 			strpos( get_current_screen()->id, 'post-new' ) !== false
 		) {
-            wp_register_script( $this->plugin_name . 'custom-script-capaign', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-campaign-widget.js', array( 'jquery' ) );
+			wp_register_script( $this->plugin_name . 'custom-script-capaign', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-campaign-widget.js', array( 'jquery' ) );
 			wp_enqueue_script( $this->plugin_name . 'custom-script-capaign' );
 		}
 
@@ -694,26 +693,26 @@ class Egoi_For_Wp_Admin {
 
 			try {
 
-			    $api = new Egoi_For_Wp();
-			    $listID = sanitize_key($_POST['listID']);
-			    $count_users = count_users();
-                $users = [];
+				$api         = new Egoi_For_Wp();
+				$listID      = $_POST['listID'];
+				$count_users = count_users();
+				$users       = array();
 
-                if( $count_users['total_users'] > $this->limit_subs ){
-                    global $wpdb;
-                    $sql = "SELECT * FROM ".$wpdb->prefix."users LIMIT 100000";
-                    $users = array_merge( $users, $wpdb->get_results($sql) );
-                }else{
-                    $users = array_merge( $users, get_users($args) );
-                }
+				if ( $count_users['total_users'] > $this->limit_subs ) {
+					global $wpdb;
+					$sql   = 'SELECT * FROM ' . $wpdb->prefix . 'users LIMIT 100000';
+					$users = array_merge( $users, $wpdb->get_results( $sql ) );
+				} else {
+					$users = array_merge( $users, get_users( $args ) );
+				}
 
-                if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && version_compare( WC_VERSION, '4.0', '>=' ) ) {
-                    $data_store = \WC_Data_Store::load( 'report-customers' );
+				if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && version_compare( WC_VERSION, '4.0', '>=' ) ) {
+					$data_store = \WC_Data_Store::load( 'report-customers' );
 
-                    $data  = $data_store->get_data( $args );
-                    $users = array_merge( $users, $data->data );
+					$data  = $data_store->get_data( $args );
+					$users = array_merge( $users, $data->data );
 
-                }
+				}
 
 				$current_user  = wp_get_current_user();
 				$current_email = $current_user->data->user_email;
@@ -737,31 +736,31 @@ class Egoi_For_Wp_Admin {
 					$subscribers = array();
 					$user_meta   = get_user_meta( $user->ID );
 
-                    if(isset($user->ID)){
-                        if (isset($user->first_name) && $user->first_name != "" && isset($user->last_name) && $user->last_name != "") {
-                            $fname = $user->first_name;
-                            $lname = $user->last_name;
-                        } else if (
-                            (isset($user_meta['first_name'][0]) && $user_meta['first_name'][0] != "")
-                            || (isset($user_meta['last_name'][0]) && $user_meta['last_name'][0] != "")
-                        ) {
-                            $fname = $user_meta['first_name'][0];
-                            $lname = $user_meta['last_name'][0];
-                        } else {
-                            $name = $user->display_name ? $user->display_name : $user->user_login;
-                            $full_name = explode(' ', $name);
-                            $fname = $full_name[0];
-                            $lname = $full_name[1];
-                        }
+					if ( isset( $user->ID ) ) {
+						if ( isset( $user->first_name ) && $user->first_name != '' && isset( $user->last_name ) && $user->last_name != '' ) {
+							$fname = $user->first_name;
+							$lname = $user->last_name;
+						} elseif (
+							( isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] != '' )
+							|| ( isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] != '' )
+						) {
+							$fname = $user_meta['first_name'][0];
+							$lname = $user_meta['last_name'][0];
+						} else {
+							$name      = $user->display_name ? $user->display_name : $user->user_login;
+							$full_name = explode( ' ', $name );
+							$fname     = $full_name[0];
+							$lname     = $full_name[1];
+						}
 
-                        $email = $user->user_email;
-                        $url = $user->user_url;
-                    }else{
-                        $full_name = explode(' ', $user['name']);
-                        $fname = $full_name[0];
-                        $lname = $full_name[1];
-                        $email = $user['email'];
-                    }
+						$email = $user->user_email;
+						$url   = $user->user_url;
+					} else {
+						$full_name = explode( ' ', $user['name'] );
+						$fname     = $full_name[0];
+						$lname     = $full_name[1];
+						$email     = $user['email'];
+					}
 
 					$subscribers['status']     = 1;
 					$subscribers['email']      = $email;
@@ -796,10 +795,9 @@ class Egoi_For_Wp_Admin {
 				} else {
 					$api->addSubscriberBulk( $listID, $tags, $subs );
 				}
-		    } catch(Exception $e) {
-		    	$this->sendError('Bulk Subscription ERROR', $e->getMessage());
-		    }
-
+			} catch ( Exception $e ) {
+				$this->sendError( 'Bulk Subscription ERROR', $e->getMessage() );
+			}
 		}
 
 		wp_die();

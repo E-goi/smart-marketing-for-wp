@@ -52,7 +52,7 @@ class Egoi_PB_Widget extends SiteOrigin_Widget {
 		return 'egoi-pb-templates';
 	}
 
-    public function get_template_dir( $instance ) {
+	public function get_template_dir( $instance ) {
 		return 'egoi-pb-templates';
 	}
 }
