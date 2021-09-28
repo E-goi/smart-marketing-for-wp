@@ -2801,7 +2801,7 @@ summary.accordion-header::-webkit-details-marker {
   margin: 4px -2px 4px 4px;
 }
 
-.tooltip {
+.eg_tooltip {
   position: relative;
 }
 
@@ -2890,7 +2890,7 @@ summary.accordion-header::-webkit-details-marker {
   flex-direction: row;
 }
 
-.tooltip::after {
+.eg_tooltip::after {
   background: rgba(69, 77, 93, .9);
   border-radius: .1rem;
   bottom: 100%;
@@ -2912,48 +2912,48 @@ summary.accordion-header::-webkit-details-marker {
   z-index: 300;
 }
 
-.tooltip:focus::after,
-.tooltip:hover::after {
+.eg_tooltip:focus::after,
+.eg_tooltip:hover::after {
   opacity: 1;
   transform: translate(-50%, -.2rem);
 }
 
-.tooltip[disabled],
-.tooltip.disabled {
+.eg_tooltip[disabled],
+.eg_tooltip.disabled {
   pointer-events: auto;
 }
 
-.tooltip.tooltip-right::after {
+.eg_tooltip.tooltip-right::after {
   bottom: 50%;
   left: 100%;
   transform: translate(-.2rem, 50%);
 }
 
-.tooltip.tooltip-right:focus::after,
-.tooltip.tooltip-right:hover::after {
+.eg_tooltip.tooltip-right:focus::after,
+.eg_tooltip.tooltip-right:hover::after {
   transform: translate(.2rem, 50%);
 }
 
-.tooltip.tooltip-bottom::after {
+.eg_tooltip.tooltip-bottom::after {
   bottom: auto;
   top: 100%;
   transform: translate(-50%, -.4rem);
 }
 
-.tooltip.tooltip-bottom:focus::after,
-.tooltip.tooltip-bottom:hover::after {
+.eg_tooltip.tooltip-bottom:focus::after,
+.eg_tooltip.tooltip-bottom:hover::after {
   transform: translate(-50%, .2rem);
 }
 
-.tooltip.tooltip-left::after {
+.eg_tooltip.tooltip-left::after {
   bottom: 50%;
   left: auto;
   right: 100%;
   transform: translate(.4rem, 50%);
 }
 
-.tooltip.tooltip-left:focus::after,
-.tooltip.tooltip-left:hover::after {
+.eg_tooltip.tooltip-left:focus::after,
+.eg_tooltip.tooltip-left:hover::after {
   transform: translate(-.2rem, 50%);
 }
 
@@ -4474,7 +4474,7 @@ a.text-error:visited {
   outline: none;
 }
 
-.slider.tooltip:not([data-tooltip])::after {
+.slider.eg_tooltip:not([data-tooltip])::after {
   content: attr(value);
 }
 
@@ -5453,9 +5453,7 @@ a.text-error:visited {
   border-radius: 6px;
   color: darkseagreen;
   content: "\f147";
-  font-family: dashicons; 
-  font-size: 24px;
-  height: 20px;
+  font-family: dashicons;
   padding: 0;
   position: absolute;
   right: 6px;
@@ -6686,6 +6684,10 @@ div.eg-dropdown {
   text-align: right;
 }
 
+.smsnf-dashboard-account__content__table--cash{
+  white-space: nowrap;
+}
+
 .smsnf-dashboard-account__content__table .smsnf-dashboard-account__content__table--cash {
   border: 1px solid #93bd4d;
   border-radius: 2px;
@@ -6917,7 +6919,7 @@ div.eg-dropdown {
   padding: .6rem 0rem;
 }
 
-.tooltip::after {
+.eg_tooltip::after {
   background-color: #22272d;
 }
 
@@ -7040,7 +7042,7 @@ a.egoi_tooltip:hover{
   }
 }
 
-.tooltip::after {
+.eg_tooltip::after {
   background-color: #22272d;
 }
 
@@ -8158,7 +8160,7 @@ a.egoi_tooltip:hover{
   font-family: "Open Sans";
 }
 
-.tooltip::after {
+.eg_tooltip::after {
   padding: 8px;
 }
 
@@ -8251,6 +8253,10 @@ a.egoi_tooltip:hover{
   margin-right: 10px;
   justify-content: center;
   align-items: center;
+}
+
+.egoi-image-selector-preview > span{
+  text-align: center !important;
 }
 
 .egoi-image-selector-preview--selected{

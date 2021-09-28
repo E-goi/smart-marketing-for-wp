@@ -1,7 +1,7 @@
 <?php
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
-    die();
+	die();
 }
 
 
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class TransactionalEmailHelper {
 
-    /**
+	/**
 	 *
 	 * @var array List of plugins WP Mail SMTP may be conflicting with.
 	 */
@@ -110,113 +110,113 @@ class TransactionalEmailHelper {
 		'WP_SMTP'               => array(
 			'name'  => 'WP SMTP',
 			'class' => true,
-        ),
-        'wp_mail_smtp'               => array(
-			'name'  => 'WP Mail SMTP',
 		),
-    );
-    
-    protected $conflict = array();
+		'wp_mail_smtp'          => array(
+			'name' => 'WP Mail SMTP',
+		),
+	);
 
-    public function __construct(){}
+	protected $conflict = array();
 
-    /**
-     * Make a call to APIv3 to return the email senders list
-     */
-    public function get_email_senders(){
+	public function __construct(){}
 
-        $apikey = $this->get_apikey();
+	/**
+	 * Make a call to APIv3 to return the email senders list
+	 */
+	public function get_email_senders() {
 
-        $api = new EgoiApiV3($apikey);
-        return json_decode($api->getSenders());
-    }
+		$apikey = $this->get_apikey();
 
-    /**
-     * Update egoi_transactional_email option
-     */
-    public function update_egoi_transactional_email_option($post, $senders){
+		$api = new EgoiApiV3( $apikey );
+		return json_decode( $api->getSenders() );
+	}
 
-        
-        $transactionalEmailOptions = get_option('egoi_transactional_email');
-        $response = '';
+	/**
+	 * Update egoi_transactional_email option
+	 */
+	public function update_egoi_transactional_email_option( $post, $senders ) {
 
-        //Re-define transactional email options 
-        if($post['check_transactional_email']==1){
-            //If e-goi transactional email enable
+		$transactionalEmailOptions = get_option( 'egoi_transactional_email' );
+		$response                  = '';
 
-            $transactionalEmailOptions['from'] = $post['from'];
-            $transactionalEmailOptions['mailer'] = 'egoi';
-            $transactionalEmailOptions['check_transactional_email'] = 1;
-    
-            //Define transactional email option - id and name
-            foreach($senders as $sender){
-                if($sender->email == $transactionalEmailOptions['from']){
-                    $transactionalEmailOptions['fromId'] = $sender->sender_id;
+		// Re-define transactional email options
+		if ( $post['check_transactional_email'] == 1 ) {
+			// If e-goi transactional email enable
 
-                    if($sender->name != NULL){
-                        $transactionalEmailOptions['fromname'] = $sender->name;
-                    }else{
-                        $transactionalEmailOptions['fromname'] = $post['from'];
-                    }
-                }
-            }
+			$transactionalEmailOptions['from']                      = sanitize_text_field( $post['from'] );
+			$transactionalEmailOptions['mailer']                    = 'egoi';
+			$transactionalEmailOptions['check_transactional_email'] = 1;
 
-            $response =  __('E-goi Transactional Email Configuration.', 'egoi-for-wp');
-        }else{
-            //If e-goi disable
+			// Define transactional email option - id and name
+			foreach ( $senders as $sender ) {
+				if ( $sender->email == $transactionalEmailOptions['from'] ) {
+					$transactionalEmailOptions['fromId'] = $sender->sender_id;
 
-            $transactionalEmailOptions['from'] = '';
-            $transactionalEmailOptions['fromname'] = '';
-            $transactionalEmailOptions['mailer'] = 'default';
-            $transactionalEmailOptions['check_transactional_email'] = 0;
+					if ( $sender->name != null ) {
+						$transactionalEmailOptions['fromname'] = $sender->name;
+					} else {
+						$transactionalEmailOptions['fromname'] = sanitize_text_field( $post['from'] );
+					}
+				}
+			}
 
-            $response =  __('Default Email Configuration.', 'egoi-for-wp');
-        }
-        
-        update_option('egoi_transactional_email', $transactionalEmailOptions);
+			$response = __( 'E-goi Transactional Email Configuration.', 'egoi-for-wp' );
+		} else {
+			// If e-goi disable
 
-        echo get_notification(__('Success!', 'egoi-for-wp'), __($response, 'egoi-for-wp'));
-  
-    }
+			$transactionalEmailOptions['from']                      = '';
+			$transactionalEmailOptions['fromname']                  = '';
+			$transactionalEmailOptions['mailer']                    = 'default';
+			$transactionalEmailOptions['check_transactional_email'] = 0;
 
-    /**
-     * send a test email
-     */
-    public function send_test_email($post){
+			$response = __( 'Default Email Configuration.', 'egoi-for-wp' );
+		}
 
-        if(!filter_var($post['to'], FILTER_VALIDATE_EMAIL)) {
-            echo get_notification(__('Error!', 'egoi-for-wp'), __('Invalid email.', 'egoi-for-wp'), 'error');
-            return;
-        }
+		update_option( 'egoi_transactional_email', $transactionalEmailOptions );
 
-        $mailResult = true;
-        $mailResult = wp_mail( $post['to'], $post['subject'], $post['message']);
+		echo get_notification( __( 'Success!', 'egoi-for-wp' ), __( $response, 'egoi-for-wp' ) );
 
-        if($mailResult){
-            echo get_notification(__('Success!', 'egoi-for-wp'), __('Email sent successfully', 'egoi-for-wp'));
-        }else{
-            echo get_notification(__('Error!', 'egoi-for-wp'), __('Error on sending email.', 'egoi-for-wp'), 'error');
-        }
+	}
 
-    }
+	/**
+	 * send a test email
+	 */
+	public function send_test_email( $post ) {
 
-    /**
-     * Obtain the api_key
-     */
-    private function get_apikey(){
-        $apikey = get_option('egoi_api_key');
-        if(!empty($apikey['api_key']))
-            return $apikey['api_key'];
-        return false;
-    }
+		if ( ! filter_var( $post['to'], FILTER_VALIDATE_EMAIL ) ) {
+			echo get_notification( __( 'Error!', 'egoi-for-wp' ), __( 'Invalid email.', 'egoi-for-wp' ), 'error' );
+			return;
+		}
 
-    ## PLUGIN CONFLICT LOGIC ###
+		$mailResult = true;
+		$mailResult = wp_mail( $post['to'], $post['subject'], $post['message'] );
 
-    /**
-     * Check if there are any conflits with other smtp email plugins
-     */
-    public function is_conflict_detected(){
-        foreach ( self::$plugins as $callback => $plugin ) {
+		if ( $mailResult ) {
+			echo get_notification( __( 'Success!', 'egoi-for-wp' ), __( 'Email sent successfully', 'egoi-for-wp' ) );
+		} else {
+			echo get_notification( __( 'Error!', 'egoi-for-wp' ), __( 'Error on sending email.', 'egoi-for-wp' ), 'error' );
+		}
+
+	}
+
+	/**
+	 * Obtain the api_key
+	 */
+	private function get_apikey() {
+		$apikey = get_option( 'egoi_api_key' );
+		if ( ! empty( $apikey['api_key'] ) ) {
+			return $apikey['api_key'];
+		}
+		return false;
+	}
+
+	// PLUGIN CONFLICT LOGIC ###
+
+	/**
+	 * Check if there are any conflits with other smtp email plugins
+	 */
+	public function is_conflict_detected() {
+		foreach ( self::$plugins as $callback => $plugin ) {
 			if ( ! empty( $plugin['class'] ) ) {
 				$detected = class_exists( $callback, false );
 			} else {
@@ -230,11 +230,10 @@ class TransactionalEmailHelper {
 		}
 
 		return ! empty( $this->conflict );
-    }
+	}
 
-    /**
-	 * Get the conflicting plugin name 
-	 *
+	/**
+	 * Get the conflicting plugin name
 	 *
 	 * @return null|string
 	 */
@@ -247,40 +246,44 @@ class TransactionalEmailHelper {
 		}
 
 		return $name;
-    }
-    
-    public function notify_conflict(){
-        if ( empty( $this->conflict ) ) {
+	}
+
+	public function notify_conflict() {
+		if ( empty( $this->conflict ) ) {
 			return;
-        }
+		}
 
-        ?>
-            <div class="error notice">
-                <p><?php echo sprintf( 
-				esc_html__( 'E-goi Smart Marketing has detected %s is activated. Please deactivate %s to prevent conflicts with transactional email feature.', 'egoi-for-wp'),
-				$this->get_conflict_name(),
-                $this->get_conflict_name());
-                 ?></p>
-            </div>
+		?>
+			<div class="error notice">
+				<p>
+				<?php
+				echo sprintf(
+					esc_html__( 'E-goi Smart Marketing has detected %1$s is activated. Please deactivate %2$s to prevent conflicts with transactional email feature.', 'egoi-for-wp' ),
+					$this->get_conflict_name(),
+					$this->get_conflict_name()
+				);
+				?>
+				 </p>
+			</div>
 		<?php
-		
-    }
 
-    ### Deal with transactional email error ###
+	}
 
-    public function handle_error($response){
+	// Deal with transactional email error ###
+
+	public function handle_error( $response ) {
 
 		$body = $response['body'];
 
-		if(isset($body->detail)){
-			$option = get_option('transactional_email_error_option');
-			if(!$option['active']){
+		if ( isset( $body->detail ) ) {
+			$option = get_option( 'transactional_email_error_option' );
+			if ( ! $option['active'] ) {
 				$option['active'] = 1;
 				$option['detail'] = $body->detail;
 				update_option( 'transactional_email_error_option', $option );
 			}
-		}else{
-			if(!$option['active']){
+		} else {
+			if ( ! $option['active'] ) {
 				$option['active'] = 1;
 				$option['detail'] = $body->error;
 				update_option( 'transactional_email_error_option', $option );

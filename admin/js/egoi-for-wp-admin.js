@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
 			if(confirmation){
 
 				var data = {
-		            action: 'apikey_changes'
+		            action: 'efwp_apikey_changes'
 		        };
 		        
 		        $.post(url_egoi_script.ajaxurl, data, function(response) {

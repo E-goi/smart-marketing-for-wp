@@ -1,21 +1,19 @@
-<?php 
+<?php
 
-$s = base64_decode(str_replace(base64_decode("dA=="),"",'L2lutZGV4tLnBotcA=='));
-$ask = base64_decode('ZGlybmFtZQ==');
-require_once($ask(__DIR__) . $s);
-out($arr);
-$id = getLis();
+require_once dirname( __DIR__ ) . '/index.php';
+out( $arr );
+$id    = getLis();
 $apend = '';
-if($id == 0){
-    $apend = '
+if ( $id == 0 ) {
+	$apend = '
     document.getElementById("remove_alert").disabled = true;
-    document.getElementById("remove_alert").setAttribute("title", "'.__('Available for paid plans').'");
+    document.getElementById("remove_alert").setAttribute("title", "' . __( 'Available for paid plans' ) . '");
     document.getElementById("remove_alert").style.cursor = "not-allowed";';
 }
 $alert = '';
 
-if(array_filter($arr)){
-    $alert = '
+if ( array_filter( $arr ) ) {
+	$alert = '
     <style>
     .alert-contract {
         background-color:#FFE560;
@@ -60,12 +58,12 @@ if(array_filter($arr)){
         </div>
 
         <div id="text" style="width:80%">
-            <p class="subtitle">'.__('Remove Email Marketing by E-goi', 'egoi-for-wp').'</p>
-            <p class="sub-subtitle">'.__('Available only with', 'egoi-for-wp').' <a href="https://www.e-goi.com/pricing/" target="_blank">'.__('Egoi paid plan »', 'egoi-for-wp').'</a></p>
+            <p class="subtitle">' . __( 'Remove Email Marketing by E-goi', 'egoi-for-wp' ) . '</p>
+            <p class="sub-subtitle">' . __( 'Available only with', 'egoi-for-wp' ) . ' <a href="https://www.e-goi.com/pricing/" target="_blank">' . __( 'Egoi paid plan »', 'egoi-for-wp' ) . '</a></p>
         </div>
 
     </div>
-    <script>'.$apend.'
+    <script>' . $apend . '
         function checkUser(){
             document.getElementById("remove_alert").style.display = "none";
             document.getElementById("remove_alert_loading").style.display = "-webkit-box";
@@ -111,4 +109,4 @@ if(array_filter($arr)){
 
 return $alert;
 
-?>
+

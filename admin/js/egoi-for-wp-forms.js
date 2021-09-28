@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 	
 	'use strict';
 
-	new Clipboard('#e-goi_shortcode');
+	new ClipboardJS('#e-goi_shortcode');
 
 	var session_form = $('#session_form');
 
@@ -191,7 +191,7 @@ jQuery(document).ready(function($) {
         var listID = $(this).val();
         var block = $('#formid_egoi');
         var data = {
-            action: 'get_form_from_list',
+            action: 'efwp_get_form_from_list',
             listID: listID
         };
 

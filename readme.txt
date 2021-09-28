@@ -3,8 +3,8 @@ Contributors: E-goi
 Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
-Tested up to: 5.7.2
-Stable tag: 3.7.11
+Tested up to: 5.8
+Stable tag: 3.7.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -165,6 +165,27 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 3.7.17 =
+- Escape output variables
+
+= 3.7.16 =
+- Code Format
+- Security improvements
+
+= 3.7.15 =
+- Update libraries
+- Security improvements
+
+= 3.7.14 =
+- Improve code readability
+- Security improvements
+
+= 3.7.13 =
+- Code refactor for Wordpress development guidelines
+
+= 3.7.12 =
+- TM and Code Review
 
 = 3.7.11 =
 - Fix sync catalogs alert bug
