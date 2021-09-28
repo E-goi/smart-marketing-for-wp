@@ -15,13 +15,13 @@
 	$product_tags     = get_terms( $args );
 
 	if ( isset( $_GET['edit'] ) ) {
-		$feed = get_option( sanitize_text_field($_GET['edit']) );
+		$feed = get_option( sanitize_text_field( $_GET['edit'] ) );
 	}
 
 	if ( ! isset( $_GET['edit'] ) ) {
 		$code = wp_generate_password( 16, false );
 	} else {
-		$code = substr( sanitize_text_field($_GET['edit']), -16 );
+		$code = substr( sanitize_text_field( $_GET['edit'] ), -16 );
 	}
 	?>
 

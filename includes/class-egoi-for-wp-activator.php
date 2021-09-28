@@ -72,7 +72,7 @@ class Egoi_For_Wp_Activator {
 			$params = array(
 				'email'    => $data['email'],
 				'smegoi_v' => 'Wordpress_' . self::$version,
-				'smegoi_h' => isset( $_SERVER['SERVER_NAME'] ) ? esc_url_raw($_SERVER['SERVER_NAME']) : esc_url_raw($_SERVER['HTTP_HOST']),
+				'smegoi_h' => isset( $_SERVER['SERVER_NAME'] ) ? esc_url_raw( $_SERVER['SERVER_NAME'] ) : esc_url_raw( $_SERVER['HTTP_HOST'] ),
 				'smegoi_e' => get_locale(),
 				'smegoi_u' => ( function_exists( 'posix_uname' ) && ( is_array( posix_uname() ) ) ) ? posix_uname() : '',
 			);

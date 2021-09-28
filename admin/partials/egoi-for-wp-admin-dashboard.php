@@ -144,7 +144,7 @@ $page  = array(
 												<button class="smsnf-dashboard-subs-stats__content--result btn eg_tooltip" data-tooltip="<?php echo $string; ?>">
 													<?php
 														$best_day = $this->smsnf_get_form_subscribers_best_day()->date;
-														echo $best_day ? esc_html(date( 'd M Y', strtotime( $best_day ) )) : '-';
+														echo $best_day ? esc_html( date( 'd M Y', strtotime( $best_day ) ) ) : '-';
 													?>
 												</button>
 											</h3>
@@ -178,12 +178,12 @@ $page  = array(
 									<tbody>
 									<?php foreach ( $last_subscribers as $subscriber ) { ?>
 										<tr>
-											<td><?php echo !empty($subscriber->subscriber_name)?esc_html($subscriber->subscriber_name):''; ?></td>
-											<td class="hide-xs"><?php echo !empty($subscriber->subscriber_email)?esc_html($subscriber->subscriber_email):''; ?></td>
-											<td class="hide-xs"><?php echo !empty($subscriber->form_id)?esc_html($subscriber->form_id):''; ?></td>
-											<td class="hide-xs"><?php echo !empty($subscriber->form_title)?esc_html($subscriber->form_title):''; ?></td>
-											<td class="hide-xs"><?php echo !empty($subscriber->created_at)?esc_html(date( 'Y/m/d H\hm', strtotime( $subscriber->created_at ) )):''; ?></td>
-											<td><?php echo !empty($subscriber->list_title)?esc_html($subscriber->list_title):''; ?></td>
+											<td><?php echo ! empty( $subscriber->subscriber_name ) ? esc_html( $subscriber->subscriber_name ) : ''; ?></td>
+											<td class="hide-xs"><?php echo ! empty( $subscriber->subscriber_email ) ? esc_html( $subscriber->subscriber_email ) : ''; ?></td>
+											<td class="hide-xs"><?php echo ! empty( $subscriber->form_id ) ? esc_html( $subscriber->form_id ) : ''; ?></td>
+											<td class="hide-xs"><?php echo ! empty( $subscriber->form_title ) ? esc_html( $subscriber->form_title ) : ''; ?></td>
+											<td class="hide-xs"><?php echo ! empty( $subscriber->created_at ) ? esc_html( date( 'Y/m/d H\hm', strtotime( $subscriber->created_at ) ) ) : ''; ?></td>
+											<td><?php echo ! empty( $subscriber->list_title ) ? esc_html( $subscriber->list_title ) : ''; ?></td>
 										</tr>
 									<?php } ?>
 									</tbody>
@@ -206,7 +206,7 @@ $page  = array(
 													<!-- <p style="font-size: 11px; margin: 0;">Seleccione a Lista</p> -->
 													<select id="chart_list">
 														<?php foreach ( $lists as $list ) { ?>
-															<option value="<?php echo esc_attr(implode( ',', $lists_chart[ $list->list_id ]['totals'] )); ?>" <?php selected( $list->list_id, $options_list ); ?> >
+															<option value="<?php echo esc_attr( implode( ',', $lists_chart[ $list->list_id ]['totals'] ) ); ?>" <?php selected( $list->list_id, $options_list ); ?> >
 																<?php echo esc_html( $list->title ); ?>
 															</option>
 														<?php } ?>
@@ -220,7 +220,7 @@ $page  = array(
 														foreach ( $lists as $list ) {
 															$total = $list->list_id == $options_list ? $list->total : null;
 														}
-														echo $total == 0 ? esc_html($lists[0]->total) : esc_html($total);
+														echo $total == 0 ? esc_html( $lists[0]->total ) : esc_html( $total );
 														?>
 													</span>
 												</div>
@@ -254,9 +254,9 @@ $page  = array(
 													<th><?php _e( 'Nº Subscribers', 'egoi-for-wp' ); ?></th>
 												<?php foreach ( $forms as $form ) { ?>
 													<tr>
-														<td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?php echo esc_html($form->form_id); ?></td>
-														<td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?php echo esc_html($form->title); ?></td>
-														<td class="smsnf-dashboard-last-subscribers-by-form__table__rtd"><?php echo esc_html($form->total); ?></td>
+														<td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?php echo esc_html( $form->form_id ); ?></td>
+														<td class="smsnf-dashboard-last-subscribers-by-form__table__ltd"><?php echo esc_html( $form->title ); ?></td>
+														<td class="smsnf-dashboard-last-subscribers-by-form__table__rtd"><?php echo esc_html( $form->total ); ?></td>
 													</tr>
 												<?php } ?>
 												</tbody>

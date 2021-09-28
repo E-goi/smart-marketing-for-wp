@@ -21,9 +21,9 @@ if ( ! empty( $_POST ) ) {
 	// on change Apikey
 	if ( isset( $_POST['apikey_frm'] ) && ( $_POST['apikey_frm'] ) ) {
 
-		update_option( 'egoi_api_key', sanitize_key($_POST['egoi_api_key']) );
+		update_option( 'egoi_api_key', sanitize_key( $_POST['egoi_api_key'] ) );
 
-		update_option( 'egoi_client', $egoi->getClient( sanitize_key($_POST['egoi_api_key']['api_key']) ) );
+		update_option( 'egoi_client', $egoi->getClient( sanitize_key( $_POST['egoi_api_key']['api_key'] ) ) );
 
 		$transactionalEmailOptions = array(
 			'from'                      => '',

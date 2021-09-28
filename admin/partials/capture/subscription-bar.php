@@ -74,21 +74,21 @@ settings_errors();
 			<div class="smsnf-input-group">
 				<label for="text-bar"><?php _e( 'Bar Text', 'egoi-for-wp' ); ?></label>
 				<p class="subtitle"><?php _e( 'The text to appear before the email field.', 'egoi-for-wp' ); ?></p>
-				<input id="text-bar" type="text" name="egoi_bar_sync[text_bar]" value="<?php echo !empty($this->bar_post['text_bar']) ? esc_attr($this->bar_post['text_bar']) : ''; ?>" autocomplete="off" />
+				<input id="text-bar" type="text" name="egoi_bar_sync[text_bar]" value="<?php echo ! empty( $this->bar_post['text_bar'] ) ? esc_attr( $this->bar_post['text_bar'] ) : ''; ?>" autocomplete="off" />
 			</div>
 			<!-- / BAR TEXT -->
 			<!-- BTN TEXT -->
 			<div class="smsnf-input-group">
 				<label for="text-btn"><?php echo _e( 'Button Text', 'egoi-for-wp' ); ?></label>
 				<p class="subtitle"><?php _e( 'The text on the submit button.', 'egoi-for-wp' ); ?></p>
-				<input id="text-btn" type="text" name="egoi_bar_sync[text_button]" value="<?php echo !empty($this->bar_post['text_button']) ? esc_attr($this->bar_post['text_button']) : ''; ?>" autocomplete="off" />
+				<input id="text-btn" type="text" name="egoi_bar_sync[text_button]" value="<?php echo ! empty( $this->bar_post['text_button'] ) ? esc_attr( $this->bar_post['text_button'] ) : ''; ?>" autocomplete="off" />
 			</div>
 			<!-- / BTN TEXT -->
 			<!-- PLACEHOLDER EMAIL -->
 			<div class="smsnf-input-group">
 				<label for="email-placeholde"><?php echo _e( 'Email Placeholder Text', 'egoi-for-wp' ); ?></label>
 				<p class="subtitle"><?php _e( 'The initial placeholder text to appear in the email field.', 'egoi-for-wp' ); ?></p>
-				<input id="email-placeholde" type="text" name="egoi_bar_sync[text_email_placeholder]" value="<?php echo !empty($this->bar_post['text_email_placeholder']) ? esc_attr($this->bar_post['text_email_placeholder']): ''; ?>" autocomplete="off" />
+				<input id="email-placeholde" type="text" name="egoi_bar_sync[text_email_placeholder]" value="<?php echo ! empty( $this->bar_post['text_email_placeholder'] ) ? esc_attr( $this->bar_post['text_email_placeholder'] ) : ''; ?>" autocomplete="off" />
 			</div>
 			<!-- / PLACEHOLDER EMAIL -->
 		</div>
@@ -135,7 +135,7 @@ settings_errors();
 
 				<div class="colorpicker-wrapper">
 					<div style="background-color:<?php echo esc_attr( $this->bar_post['color_bar'] ); ?>" class="view" ></div>
-					<input id="bar-background-color" type="text" name="egoi_bar_sync[color_bar]" value="<?php echo !empty($this->bar_post['color_bar']) ? esc_attr( $this->bar_post['color_bar'] ): ''; ?>"  autocomplete="off" />
+					<input id="bar-background-color" type="text" name="egoi_bar_sync[color_bar]" value="<?php echo ! empty( $this->bar_post['color_bar'] ) ? esc_attr( $this->bar_post['color_bar'] ) : ''; ?>"  autocomplete="off" />
 					<p><?php _e( 'Select Color', 'egoi-for-wp' ); ?></p>
 				</div>
 			</div>
@@ -145,7 +145,7 @@ settings_errors();
 				<label for="bar-text-color"><?php _e( 'Text Color', 'egoi-for-wp' ); ?></label>
 				<div class="colorpicker-wrapper">
 					<div style="background-color:<?php echo esc_attr( $this->bar_post['bar_text_color'] ); ?>" class="view" ></div>
-					<input id="bar-text-color" type="text" name="egoi_bar_sync[bar_text_color]" value="<?php echo !empty($this->bar_post['bar_text_color']) ? esc_attr( $this->bar_post['bar_text_color'] ) : ''; ?>"  autocomplete="off" />
+					<input id="bar-text-color" type="text" name="egoi_bar_sync[bar_text_color]" value="<?php echo ! empty( $this->bar_post['bar_text_color'] ) ? esc_attr( $this->bar_post['bar_text_color'] ) : ''; ?>"  autocomplete="off" />
 					<p><?php _e( 'Select Color', 'egoi-for-wp' ); ?></p>
 				</div>
 			</div>
@@ -153,7 +153,7 @@ settings_errors();
 			<!-- BORDER SIZE -->
 			<div class="smsnf-input-group">
 				<label for="bar-border-size"><?php _e( 'Border Size', 'egoi-for-wp' ); ?></label>
-				<input  id="bar-border-size" type="text" name="egoi_bar_sync[border_px]" value="<?php echo !empty($this->bar_post['border_px']) ? esc_attr( $this->bar_post['border_px'] ) : ''; ?>" autocomplete="off" />
+				<input  id="bar-border-size" type="text" name="egoi_bar_sync[border_px]" value="<?php echo ! empty( $this->bar_post['border_px'] ) ? esc_attr( $this->bar_post['border_px'] ) : ''; ?>" autocomplete="off" />
 			</div>
 			<!-- / BORDER SIZE -->
 			<!-- BORDER COLOR -->
@@ -161,7 +161,7 @@ settings_errors();
 				<label for="bar-text-color"><?php _e( 'Border Color', 'egoi-for-wp' ); ?></label>
 				<div class="colorpicker-wrapper">
 					<div style="background-color:<?php echo esc_attr( $this->bar_post['border_color'] ); ?>" class="view" ></div>
-					<input id="bar-text-color" type="text" name="egoi_bar_sync[border_color]" value="<?php echo !empty( $this->bar_post['border_color'] ) ? esc_attr( $this->bar_post['border_color'] ) : ''; ?>"  autocomplete="off" />
+					<input id="bar-text-color" type="text" name="egoi_bar_sync[border_color]" value="<?php echo ! empty( $this->bar_post['border_color'] ) ? esc_attr( $this->bar_post['border_color'] ) : ''; ?>"  autocomplete="off" />
 					<p><?php _e( 'Select Color', 'egoi-for-wp' ); ?></p>
 				</div>
 			</div>
@@ -171,7 +171,7 @@ settings_errors();
 				<label for="bar-text-color"><?php _e( 'Button Color', 'egoi-for-wp' ); ?></label>
 				<div class="colorpicker-wrapper">
 					<div style="background-color:<?php echo esc_attr( $this->bar_post['color_button'] ); ?>" class="view" ></div>
-					<input id="bar-text-color" type="text" name="egoi_bar_sync[color_button]" value="<?php echo !empty($this->bar_post['color_button']) ? esc_attr( $this->bar_post['color_button'] ) : ''; ?>"  autocomplete="off" />
+					<input id="bar-text-color" type="text" name="egoi_bar_sync[color_button]" value="<?php echo ! empty( $this->bar_post['color_button'] ) ? esc_attr( $this->bar_post['color_button'] ) : ''; ?>"  autocomplete="off" />
 					<p><?php _e( 'Select Color', 'egoi-for-wp' ); ?></p>
 				</div>
 			</div>
@@ -181,7 +181,7 @@ settings_errors();
 				<label for="bar-text-color"><?php _e( 'Button Text Color', 'egoi-for-wp' ); ?></label>
 				<div class="colorpicker-wrapper">
 					<div style="background-color:<?php echo esc_attr( $this->bar_post['color_button_text'] ); ?>" class="view" ></div>
-					<input id="bar-text-color" type="text" name="egoi_bar_sync[color_button_text]" value="<?php echo !empty($this->bar_post['color_button_text'] ) ? esc_attr( $this->bar_post['color_button_text'] ) : ''; ?>"  autocomplete="off" />
+					<input id="bar-text-color" type="text" name="egoi_bar_sync[color_button_text]" value="<?php echo ! empty( $this->bar_post['color_button_text'] ) ? esc_attr( $this->bar_post['color_button_text'] ) : ''; ?>"  autocomplete="off" />
 					<p><?php _e( 'Select Color', 'egoi-for-wp' ); ?></p>
 				</div>
 			</div>
@@ -191,7 +191,7 @@ settings_errors();
 				<label for="bar-text-color"><?php _e( 'Background Color on Success', 'egoi-for-wp' ); ?></label>
 				<div class="colorpicker-wrapper">
 					<div style="background-color:<?php echo esc_attr( $this->bar_post['success_bgcolor'] ); ?>" class="view" ></div>
-					<input id="bar-text-color" type="text" name="egoi_bar_sync[success_bgcolor]" value="<?php echo !empty($this->bar_post['success_bgcolor']) ? esc_attr( $this->bar_post['success_bgcolor'] ) : ''; ?>"  autocomplete="off" />
+					<input id="bar-text-color" type="text" name="egoi_bar_sync[success_bgcolor]" value="<?php echo ! empty( $this->bar_post['success_bgcolor'] ) ? esc_attr( $this->bar_post['success_bgcolor'] ) : ''; ?>"  autocomplete="off" />
 					<p><?php _e( 'Select Color', 'egoi-for-wp' ); ?></p>
 				</div>
 			</div>
@@ -201,7 +201,7 @@ settings_errors();
 				<label for="bar-text-color"><?php _e( 'Background Color on Error', 'egoi-for-wp' ); ?></label>
 				<div class="colorpicker-wrapper">
 					<div style="background-color:<?php echo esc_attr( $this->bar_post['error_bgcolor'] ); ?>" class="view" ></div>
-					<input id="bar-text-color" type="text" name="egoi_bar_sync[error_bgcolor]" value="<?php echo !empty($this->bar_post['error_bgcolor']) ? esc_attr( $this->bar_post['error_bgcolor'] ) : ''; ?>"  autocomplete="off" />
+					<input id="bar-text-color" type="text" name="egoi_bar_sync[error_bgcolor]" value="<?php echo ! empty( $this->bar_post['error_bgcolor'] ) ? esc_attr( $this->bar_post['error_bgcolor'] ) : ''; ?>"  autocomplete="off" />
 					<p><?php _e( 'Select Color', 'egoi-for-wp' ); ?></p>
 				</div>
 			</div>
@@ -213,26 +213,26 @@ settings_errors();
 		<!-- SUCCESS -->
 		<div class="smsnf-input-group">
 			<label for="subscribed-msg"><?php _e( 'Success', 'egoi-for-wp' ); ?></label>
-			<input id="subscribed-msg" type="text" name="egoi_bar_sync[text_subscribed]" value="<?php echo !empty($this->bar_post['text_subscribed']) ? esc_attr( $this->bar_post['text_subscribed']) : __( 'Success Subscribed', 'egoi-for-wp' ) ; ?>" autocomplete="off" />
+			<input id="subscribed-msg" type="text" name="egoi_bar_sync[text_subscribed]" value="<?php echo ! empty( $this->bar_post['text_subscribed'] ) ? esc_attr( $this->bar_post['text_subscribed'] ) : __( 'Success Subscribed', 'egoi-for-wp' ); ?>" autocomplete="off" />
 		</div>
 		<!-- / SUCCESS -->
 		<!-- INVALID EMAIL -->
 		<div class="smsnf-input-group">
 			<label for="invalid-email-msg"><?php _e( 'Invalid email address', 'egoi-for-wp' ); ?></label>
-			<input id="invalid-email-msg" type="text" name="egoi_bar_sync[text_invalid_email]" value="<?php echo !empty($this->bar_post['text_invalid_email'] ) ? esc_attr( $this->bar_post['text_invalid_email']) : __( 'Invalid e-mail', 'egoi-for-wp' ); ?>" autocomplete="off" />
+			<input id="invalid-email-msg" type="text" name="egoi_bar_sync[text_invalid_email]" value="<?php echo ! empty( $this->bar_post['text_invalid_email'] ) ? esc_attr( $this->bar_post['text_invalid_email'] ) : __( 'Invalid e-mail', 'egoi-for-wp' ); ?>" autocomplete="off" />
 		</div>
 		<!-- / INVALID EMAIL -->
 		<!-- Already subscribed -->
 		<div class="smsnf-input-group">
 			<label for="already-subscribed-msg"><?php _e( 'Already subscribed', 'egoi-for-wp' ); ?></label>
-			<input id="already-subscribed-msg" type="text" name="egoi_bar_sync[text_already_subscribed]" value="<?php echo !empty($this->bar_post['text_already_subscribed']) ? esc_attr( $this->bar_post['text_already_subscribed']) : __( 'Subscriber already exists', 'egoi-for-wp' ); ?>" autocomplete="off" />
+			<input id="already-subscribed-msg" type="text" name="egoi_bar_sync[text_already_subscribed]" value="<?php echo ! empty( $this->bar_post['text_already_subscribed'] ) ? esc_attr( $this->bar_post['text_already_subscribed'] ) : __( 'Subscriber already exists', 'egoi-for-wp' ); ?>" autocomplete="off" />
 		</div>
 		<!-- / Already subscribed -->
 
 		<!-- Waiting for confirmation -->
 		<div class="smsnf-input-group">
 			<label for="wating_for_confirmation-msg"><?php _e( 'Already subscribed and waiting for confirmation e-mail', 'egoi-for-wp' ); ?></label>
-			<input id="wating_for_confirmation-msg" type="text" name="egoi_bar_sync[text_waiting_for_confirmation]" value="<?php echo !empty($this->bar_post['text_waiting_for_confirmation']) ? esc_attr( $this->bar_post['text_waiting_for_confirmation'] ) : __( 'Already subscribed and waiting for confirmation e-mail', 'egoi-for-wp' ); ?>" autocomplete="off" />
+			<input id="wating_for_confirmation-msg" type="text" name="egoi_bar_sync[text_waiting_for_confirmation]" value="<?php echo ! empty( $this->bar_post['text_waiting_for_confirmation'] ) ? esc_attr( $this->bar_post['text_waiting_for_confirmation'] ) : __( 'Already subscribed and waiting for confirmation e-mail', 'egoi-for-wp' ); ?>" autocomplete="off" />
 		</div>
 		<!-- / Waiting for confirmation -->
 
@@ -240,13 +240,13 @@ settings_errors();
 		<!-- Other errors -->
 		<div class="smsnf-input-group">
 			<label for="bar-other-errors-msg"><?php _e( 'Other errors', 'egoi-for-wp' ); ?></label>
-			<input id="bar-other-errors-msg" type="text" name="egoi_bar_sync[text_error]" placeholder="<?php _e( 'Eg. List Missing from E-goi', 'egoi-for-wp' ); ?>" value="<?php echo !empty($this->bar_post['text_error']) ? esc_attr( $this->bar_post['text_error'] ) : ''; ?>" autocomplete="off" />
+			<input id="bar-other-errors-msg" type="text" name="egoi_bar_sync[text_error]" placeholder="<?php _e( 'Eg. List Missing from E-goi', 'egoi-for-wp' ); ?>" value="<?php echo ! empty( $this->bar_post['text_error'] ) ? esc_attr( $this->bar_post['text_error'] ) : ''; ?>" autocomplete="off" />
 		</div>
 		<!-- / Other errors -->
 		<!-- Redirect URL -->
 		<div class="smsnf-input-group">
 			<label for="bar-redirect-url"><?php _e( 'Redirect to URL after successful sign-up', 'egoi-for-wp' ); ?></label>
-			<input id="bar-redirect-url" type="text" name="egoi_bar_sync[redirect]" value="<?php echo esc_url( $this->bar_post['redirect'] ); ?>" placeholder="<?php echo !empty($this->bar_post['redirect']) ? esc_url( $this->bar_post['redirect'] ) : ''; ?>" autocomplete="off" />
+			<input id="bar-redirect-url" type="text" name="egoi_bar_sync[redirect]" value="<?php echo esc_url( $this->bar_post['redirect'] ); ?>" placeholder="<?php echo ! empty( $this->bar_post['redirect'] ) ? esc_url( $this->bar_post['redirect'] ) : ''; ?>" autocomplete="off" />
 			<p class="subtitle"><?php _e( 'Leave empty for no redirect. Otherwise, use complete (absolute) URLs, including <code>http://</code>.', 'egoi-for-wp' ); ?></p>
 		</div>
 		<!-- / Redirect URL -->

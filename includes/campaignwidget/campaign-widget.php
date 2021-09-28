@@ -126,9 +126,9 @@ class CampaignWidget {
 
 				<?php
 				if ( $post->post_status === 'publish' ) {
-				    _e( 'Send Email Campaign on update', 'egoi-for-wp' );
+					_e( 'Send Email Campaign on update', 'egoi-for-wp' );
 				} else {
-				    _e( 'Send Email Campaign on publish', 'egoi-for-wp' );
+					_e( 'Send Email Campaign on publish', 'egoi-for-wp' );
 				}
 				?>
 

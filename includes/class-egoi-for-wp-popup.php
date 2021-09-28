@@ -48,7 +48,7 @@ class EgoiPopUp {
 		}
 
 		$popup_id = esc_attr( $post['popup_id'] );
-        update_option( "egoi_popup_{$popup_id}", wp_json_encode( $post ) );
+		update_option( "egoi_popup_{$popup_id}", wp_json_encode( $post ) );
 
 		return $post['popup_id'];
 	}
@@ -169,17 +169,17 @@ class EgoiPopUp {
 
 	private static function getModal( $config ) {
 		$popup_id = $config['popup_id'];
-		if(empty($popup_id)){
-		    return;
-        }
+		if ( empty( $popup_id ) ) {
+			return;
+		}
 		?>
-		<div id="egoi_popup_<?php echo esc_attr($popup_id); ?>" class="egoi_modal_<?php echo esc_attr($popup_id); ?>">
+		<div id="egoi_popup_<?php echo esc_attr( $popup_id ); ?>" class="egoi_modal_<?php echo esc_attr( $popup_id ); ?>">
 			<!-- Modal content -->
-			<div class="egoi_modal_content_<?php echo esc_attr($popup_id); ?>">
-				<span class="popup_close_<?php echo esc_attr($popup_id); ?> dashicons dashicons-no"></span>
+			<div class="egoi_modal_content_<?php echo esc_attr( $popup_id ); ?>">
+				<span class="popup_close_<?php echo esc_attr( $popup_id ); ?> dashicons dashicons-no"></span>
 				<div style="border-radius: inherit;">
 					<?php if ( $config['popup_layout'] == 'left_image' ) { ?>
-						<div class="egoi_popup_side_image_<?php echo esc_attr($popup_id); ?>" style="background-image: url(<?php echo wp_get_attachment_url( $config['side_image'] ); ?>);">
+						<div class="egoi_popup_side_image_<?php echo esc_attr( $popup_id ); ?>" style="background-image: url(<?php echo wp_get_attachment_url( $config['side_image'] ); ?>);">
 
 						</div>
 					<?php } ?>
@@ -368,7 +368,7 @@ class EgoiPopUp {
 			return;
 		}
 
-		$form_code = do_shortcode( '[egoi-simple-form id="' . esc_attr($id) . '"]' );
+		$form_code = do_shortcode( '[egoi-simple-form id="' . esc_attr( $id ) . '"]' );
 
 		switch ( $config['form_orientation'] ) {
 			case 'vertical':
@@ -492,7 +492,7 @@ class EgoiPopUp {
 			.egoi_modal_content_<?php echo esc_attr( $popup_id ); ?> > * > * > *,
 			.egoi_modal_content_<?php echo esc_attr( $popup_id ); ?> > * > * > * > *
 			{
-				color: <?php echo !empty($config['font_color'])?esc_attr($config['font_color']):''; ?> !important;
+				color: <?php echo ! empty( $config['font_color'] ) ? esc_attr( $config['font_color'] ) : ''; ?> !important;
 			}
 			<?php } ?>
 
@@ -516,7 +516,7 @@ class EgoiPopUp {
 
 			<?php
 			if ( ! empty( $config['custom_css'] ) ) {
-				echo esc_textarea($config['custom_css']);
+				echo esc_textarea( $config['custom_css'] );
 			}
 			?>
 		</style>
