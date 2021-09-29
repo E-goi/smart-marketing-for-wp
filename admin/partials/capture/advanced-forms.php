@@ -30,7 +30,7 @@ $is_iframe = $_GET['type'] == 'iframe';
 	<form id="adv-forms-select-type" method="get" action="">
 		<input type="hidden" name="page" value="egoi-4-wp-form">
 		<input type="hidden" name="sub" value="adv-forms">
-		<input type="hidden" name="form" value="<?php echo $form_id; ?>">
+		<input type="hidden" name="form" value="<?php echo esc_attr( $form_id ); ?>">
 
 		<div id="smsnf-adv-forms-types" class="smsnf-adv-forms-types">
 			<label>
@@ -75,9 +75,9 @@ $is_iframe = $_GET['type'] == 'iframe';
 
 		<form id="smsnf-adv-forms-form" method="post" action="">
 			<input type="hidden" name="action" value="update">
-			<input type="hidden" name="egoi_form_sync[form_id]" value="<?php echo $form_id; ?>">
-			<input type="hidden" name="egoiform" value="<?php echo 'egoi_form_sync_' . $form_id; ?>">
-			<input type="hidden" name="egoi_form_sync[egoi]" value="<?php echo $_GET['type']; ?>">
+			<input type="hidden" name="egoi_form_sync[form_id]" value="<?php echo esc_attr( $form_id ); ?>">
+			<input type="hidden" name="egoiform" value="<?php echo 'egoi_form_sync_' . esc_attr( $form_id ); ?>">
+			<input type="hidden" name="egoi_form_sync[egoi]" value="<?php echo empty( $_GET['type'] ) ? '' : esc_attr( $_GET['type'] ); ?>">
 			<div id="smsnf-adv-forms-options" class="smsnf-tab-content smsnf-grid active">
 				<div>
 					<!-- TÍTULO E MOSTRAR TÍTULO -->
@@ -89,7 +89,7 @@ $is_iframe = $_GET['type'] == 'iframe';
 								<i class="form-icon"></i> <?php _e( 'Show Title', 'egoi-for-wp' ); ?>
 							</label>
 						</div>
-						<input id="form_name" type="text" name="egoi_form_sync[form_name]" value="<?php echo $opt['egoi_form_sync']['form_name']; ?>" placeholder="<?php _e( 'Write here the title of your form', 'egoi-for-wp' ); ?>" autocomplete="off" />
+						<input id="form_name" type="text" name="egoi_form_sync[form_name]" value="<?php echo esc_attr( $opt['egoi_form_sync']['form_name'] ); ?>" placeholder="<?php _e( 'Write here the title of your form', 'egoi-for-wp' ); ?>" autocomplete="off" />
 					</div>
 					<!-- / TÍTULO E MOSTRAR TÍTULO -->
 					<?php if ( ! $is_iframe ) : ?>
@@ -105,8 +105,8 @@ $is_iframe = $_GET['type'] == 'iframe';
 							}
 								$content = stripslashes( $opt['egoi_form_sync']['form_content'] );
 							?>
-							<label for="form_code"><?php echo $label; ?></label>
-							<textarea id="form_code" rows="11" placeholder="<?php echo $placeholder; ?>" name="egoi_form_sync[form_content]"><?php echo $content; ?></textarea>
+							<label for="form_code"><?php echo esc_attr( $label ); ?></label>
+							<textarea id="form_code" rows="11" placeholder="<?php echo esc_attr( $placeholder ); ?>" name="egoi_form_sync[form_content]"><?php echo $content; ?></textarea>
 						</div>
 						<!-- / CÓDIGO HTML -->
 					<?php endif; ?>

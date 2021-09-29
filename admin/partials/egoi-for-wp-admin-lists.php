@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						?>
 						</td>
 						<td>
-							<a href="https://login.egoiapp.com/#/login/?action=login&menu=sec&from=%2F%3Faction%3Dlista_definicoes_principal%26list%3D<?php echo $value_list->listnum; ?>%26menu%3Dsec" class='smsnf-btn' style="min-width:125px;" target="_blank" />
+							<a href="https://login.egoiapp.com/#/login/?action=login&menu=sec&from=%2F%3Faction%3Dlista_definicoes_principal%26list%3D<?php echo esc_attr( $value_list->listnum ); ?>%26menu%3Dsec" class='smsnf-btn' style="min-width:125px;" target="_blank" />
 							<?php _e( 'Change in E-goi', 'egoi-for-wp' ); ?>
 						</a>
 						</td>

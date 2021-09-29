@@ -33,7 +33,7 @@ $popups       = EgoiPopUp::getSavedPopUps();
 					<td style="width:1%">
 						<div class="shortcode">
 							<div class="shortcode"
-								data-clipboard-text="<?php echo esc_html( $shortcode ); ?>"><?php echo $shortcode; ?></div>
+								data-clipboard-text="<?php echo esc_html( $shortcode ); ?>"><?php echo esc_html( $shortcode ); ?></div>
 							<div class="eg_tooltip tooltip-right shortcode -copy"
 									data-tooltip="<?php _e( 'Copy', 'egoi-for-wp' ); ?>"
 									data-before="<?php _e( 'Copy', 'egoi-for-wp' ); ?>"
@@ -44,12 +44,12 @@ $popups       = EgoiPopUp::getSavedPopUps();
 							</div>
 						</div>
 					</td>
-					<td style="width:1%"><?php echo $id; ?></td>
-					<td><?php echo $title; ?></td>
+					<td style="width:1%"><?php echo esc_html( $id ); ?></td>
+					<td><?php echo esc_html( $title ); ?></td>
 					<!--<td class="<?php echo $enable ? '-enable' : '-disable'; ?>"><?php echo $enable ? 'Ativo' : 'Inativo'; ?></td>-->
 					<td style="width:1%">
 						<a class="smsnf-btn" href="<?php echo $edit_link; ?>"><?php _e( 'Edit', 'egoi-for-wp' ); ?></a>
-						<a class="smsnf-btn delete-adv-form" href="<?php echo $delete_link; ?>"><?php _e( 'Delete', 'egoi-for-wp' ); ?></a>
+						<a class="smsnf-btn delete-adv-form" href="<?php echo esc_attr( $delete_link ); ?>"><?php _e( 'Delete', 'egoi-for-wp' ); ?></a>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -83,24 +83,24 @@ $popups       = EgoiPopUp::getSavedPopUps();
 					<td>
 						<div class="shortcode">
 							<div class="shortcode"
-								data-clipboard-text="<?php echo $form['shortcode']; ?>"><?php echo $form['shortcode']; ?></div>
+								data-clipboard-text="<?php echo esc_html( $form['shortcode'] ); ?>"><?php echo esc_html( $form['shortcode'] ); ?></div>
 							<div class="eg_tooltip tooltip-right shortcode -copy"
 									data-tooltip="<?php _e( 'Copy', 'egoi-for-wp' ); ?>"
 									data-before="<?php _e( 'Copy', 'egoi-for-wp' ); ?>"
 									data-after="<?php _e( 'Copied', 'egoi-for-wp' ); ?>"
-									data-clipboard-text="<?php echo $form['shortcode']; ?>"
+									data-clipboard-text="<?php echo esc_html( $form['shortcode'] ); ?>"
 								>
 								<?php _e( 'Copy', 'egoi-for-wp' ); ?>
 							</div>
 						</div>
 					</td>
-					<td><?php echo $form['id']; ?></td>
-					<td><?php echo $form['type']; ?></td>
-					<td><?php echo $form['title']; ?></td>
+					<td><?php echo esc_html( $form['id'] ); ?></td>
+					<td><?php echo esc_html( $form['type'] ); ?></td>
+					<td><?php echo esc_html( $form['title'] ); ?></td>
 					<td class="<?php echo $form['state'] ? '-enable' : '-disable'; ?>"><?php echo $form['state'] ? 'Ativo' : 'Inativo'; ?></td>
 					<td>
-						<a class="smsnf-btn" href="<?php echo $edit_link; ?>"><?php _e( 'Edit', 'egoi-for-wp' ); ?></a>
-						<a class="smsnf-btn delete-adv-form" href="<?php echo $delete_link; ?>"><?php _e( 'Delete', 'egoi-for-wp' ); ?></a>
+						<a class="smsnf-btn" href="<?php echo esc_attr( $edit_link ); ?>"><?php _e( 'Edit', 'egoi-for-wp' ); ?></a>
+						<a class="smsnf-btn delete-adv-form" href="<?php echo esc_attr( $delete_link ); ?>"><?php _e( 'Delete', 'egoi-for-wp' ); ?></a>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -135,8 +135,8 @@ $popups       = EgoiPopUp::getSavedPopUps();
 				<td><?php _e( 'Popup', 'egoi-for-wp' ); ?></td>
 				<td><?php echo $popup_data['title']; ?></td>
 				<td>
-					<a class="smsnf-btn" href="<?php echo $edit_link; ?>"><?php _e( 'Edit', 'egoi-for-wp' ); ?></a>
-					<a class="smsnf-btn delete-adv-form" href="<?php echo $delete_link; ?>"><?php _e( 'Delete', 'egoi-for-wp' ); ?></a>
+					<a class="smsnf-btn" href="<?php echo esc_attr( $edit_link ); ?>"><?php _e( 'Edit', 'egoi-for-wp' ); ?></a>
+					<a class="smsnf-btn delete-adv-form" href="<?php echo esc_attr( $delete_link ); ?>"><?php _e( 'Delete', 'egoi-for-wp' ); ?></a>
 				</td>
 			</tr>
 		<?php endforeach; ?>
