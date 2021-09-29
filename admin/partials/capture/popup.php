@@ -15,7 +15,7 @@ if ( ! empty( $_POST ) ) {
 	}
 }
 
-$popup_id = empty( $_GET['popup_id'] ) ? 'new' : trim( $_GET['popup_id'] );
+$popup_id = empty( $_GET['popup_id'] ) ? 'new' : sanitize_key( trim( $_GET['popup_id'] ) );
 
 $popup      = new EgoiPopUp( $popup_id );
 $popup_data = $popup->getPopupSavedData();
@@ -181,8 +181,8 @@ if ( empty( get_simple_forms() ) ) {
 
 		<!-- BORDER RADIUS -->
 		<div class="smsnf-input-group">
-			<label for="bar-position"><?php _e( 'Border Radius', 'egoi-for-wp' ); ?>: <span id="border_range_label"><?php echo $popup_data['border_radius']; ?>px</span></label>
-			<input style="max-width: 400px;border: 0 !important;" type="range" min="0" max="20" value="<?php echo $popup_data['border_radius']; ?>" class="slider" name="border_radius" id="border_radius" >
+			<label for="bar-position"><?php _e( 'Border Radius', 'egoi-for-wp' ); ?>: <span id="border_range_label"><?php echo empty( $popup_data['border_radius'] ) ? '0' : esc_textarea( $popup_data['border_radius'] ); ?>px</span></label>
+			<input style="max-width: 400px;border: 0 !important;" type="range" min="0" max="20" value="<?php echo esc_attr( $popup_data['border_radius'] ); ?>" class="slider" name="border_radius" id="border_radius" >
 		</div>
 		<!-- / BORDER RADIUS -->
 
@@ -278,7 +278,7 @@ if ( empty( get_simple_forms() ) ) {
 				</div>
 			</div>
 
-			<input type='hidden' name='side_image' id='side_image' value='<?php echo $popup_data['side_image']; ?>'>
+			<input type='hidden' name='side_image' id='side_image' value='<?php echo esc_attr( $popup_data['side_image'] ); ?>'>
 		</div>
 
 
@@ -295,7 +295,7 @@ if ( empty( get_simple_forms() ) ) {
 			<label for="max_width"><?php _e( 'Popup Max Width', 'egoi-for-wp' ); ?></label>
 			<p class="subtitle"><?php _e( 'Configure rules for target page', 'egoi-for-wp' ); ?></p>
 			<input style="max-width: 400px;" id="max_width" type="text"
-				   value="<?php echo $popup_data['max_width']; ?>"
+				   value="<?php echo esc_attr( $popup_data['max_width'] ); ?>"
 				   name="max_width" autocomplete="off"
 				   placeholder="<?php _e( 'write in px, vh or %', 'egoi-for-wp' ); ?>" />
 		</div>

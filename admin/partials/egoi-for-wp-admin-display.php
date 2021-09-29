@@ -347,7 +347,7 @@ if ( ! empty( $_POST ) ) {
 							</a>
 
 							<div class="e-goi-account-lists--create-list">
-								<form name='egoi_wp_createlist_form' method='post' action='<?php echo $_SERVER['REQUEST_URI']; ?>'>
+								<form name='egoi_wp_createlist_form' method='post' action='<?php echo esc_attr( $_SERVER['REQUEST_URI'] ); ?>'>
 
 									<div id="e-goi-create-list" style="display: none;">
 										<div class="e-goi-account-lists--create-name e-goi-fcenter">

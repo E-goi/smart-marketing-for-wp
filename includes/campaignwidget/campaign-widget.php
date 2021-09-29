@@ -194,7 +194,7 @@ class CampaignWidget {
 					foreach ( $senders as $sender ) {
 						if ( $sender->email ) {
 							?>
-							<option value="<?php echo esc_textarea( $sender->sender_id ); ?>" <?php selected( $email_campaign_widget_sender, $sender->sender_id ); ?>>
+							<option value="<?php echo esc_attr( $sender->sender_id ); ?>" <?php selected( $email_campaign_widget_sender, $sender->sender_id ); ?>>
 								<?php echo esc_textarea( $sender->email ); ?>
 							</option>
 							<?php
@@ -267,11 +267,11 @@ class CampaignWidget {
 
 					<div id="webpush_campaign_widget_configuration" style="padding-top:10px;">
 						<div>
-							<label><?php echo _e( 'Contacts: ' ); ?>
-								<input type="text" size="16"  name="webpush_campaign_widget_contacts_info" id="webpush_campaign_widget_contacts_info" value="" placeholder="<?php echo $webpush_info['list']; ?>" readonly></input>
+							<label><?php _e( 'Contacts: ', 'egoi-for-wp' ); ?>
+								<input type="text" size="16"  name="webpush_campaign_widget_contacts_info" id="webpush_campaign_widget_contacts_info" value="" placeholder="<?php echo esc_attr( $webpush_info['list'] ); ?>" readonly></input>
 							</label>
-							<label style="display:none;"><?php echo esc_attr( 'Website: ' ); ?>
-								<input type="text" size="16"  name="webpush_campaign_widget_site_info" id="webpush_campaign_widget_site_info" value="<?php echo $webpush_info['site_id']; ?>" placeholder="<?php echo $webpush_info['site']; ?>" style="display:none;" readonly></input>
+							<label style="display:none;"><?php _e( 'Website: ', 'egoi-for-wp' ); ?>
+								<input type="text" size="16"  name="webpush_campaign_widget_site_info" id="webpush_campaign_widget_site_info" value="<?php echo esc_attr( $webpush_info['site_id'] ); ?>" placeholder="<?php echo esc_attr( $webpush_info['site'] ); ?>" style="display:none;" readonly></input>
 							</label>
 						</div>
 					</div>
@@ -281,7 +281,7 @@ class CampaignWidget {
 				<div id="webpush_campaing_widget_link">
 					<p>
 						<a class="webpush_campaign_external_link" href="<?php echo admin_url( 'admin.php?page=egoi-4-wp-webpush' ); ?>" target="_blank" >
-						<?php echo _e( 'Create Webpush here so you can send the Webpush Campaign.', 'egoi-for-wp' ); ?>
+						<?php _e( 'Create Webpush here so you can send the Webpush Campaign.', 'egoi-for-wp' ); ?>
 						</a>
 					</p>
 				</div>

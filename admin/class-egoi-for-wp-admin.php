@@ -1572,7 +1572,7 @@ class Egoi_For_Wp_Admin {
 				} else {
 					foreach ( $product_cats as $cat ) {
 						?>
-							<category><![CDATA[<?php echo $cat->name; ?>]]></category>
+							<category><![CDATA[<?php echo esc_attr( $cat->name ); ?>]]></category>
 							<?php
 					}
 				}
@@ -1588,7 +1588,7 @@ class Egoi_For_Wp_Admin {
 					}
 
 					?>
-					<enclosure url="<?php echo $img_url; ?>" type="image/jpg" />
+					<enclosure url="<?php echo esc_url( $img_url ); ?>" type="image/jpg" />
 					<?php
 				} elseif ( $gallery = get_post_gallery_images( get_the_ID() ) ) {
 					foreach ( $gallery as $img_url ) {
@@ -1597,7 +1597,7 @@ class Egoi_For_Wp_Admin {
 							$img_url = substr( $img_url, 0, $pos );
 						}
 						?>
-						<enclosure url="<?php echo $img_url; ?>" type="image/jpg" />
+						<enclosure url="<?php echo esc_url( $img_url ); ?>" type="image/jpg" />
 						<?php
 						break;
 					}
@@ -1609,7 +1609,7 @@ class Egoi_For_Wp_Admin {
 							$img_url = substr( $img[1], 0, $pos );
 						}
 						?>
-						<enclosure url="<?php echo $img_url; ?>" type="image/jpg" />
+						<enclosure url="<?php echo esc_url( $img_url ); ?>" type="image/jpg" />
 						<?php
 					}
 				}
@@ -1691,7 +1691,7 @@ class Egoi_For_Wp_Admin {
 		<lastBuildDate>
 		<?php
 			$date = get_lastpostmodified( 'GMT' );
-			echo $date ? mysql2date( 'r', $date, false ) : date( 'r' );
+			echo $date ? esc_attr( mysql2date( 'r', $date, false ) ) : esc_attr( date( 'r' ) );
 		?>
 			</lastBuildDate>
 		<language><![CDATA[<?php wp_specialchars_decode( bloginfo_rss( 'language' ) ); ?>]]></language>
@@ -1870,7 +1870,7 @@ class Egoi_For_Wp_Admin {
 
 		foreach ( $_COOKIE as $key => $value ) {
 			if ( strpos( $key, 'wp_woocommerce_session_' ) !== false ) {
-				$wc_session = explode( '||', $_COOKIE[ $key ] );
+				$wc_session = explode( '||', sanitize_text_field( $_COOKIE[ $key ] ) );
 				return $wc_session[0];
 			}
 		}
@@ -2155,7 +2155,7 @@ class Egoi_For_Wp_Admin {
 
 		$api = new EgoiApiV3( $apikey );
 
-		echo $api->deployWebPushRssCampaign( trim( $_POST['campaing_hash'] ) );
+		echo $api->deployWebPushRssCampaign( sanitize_key( trim( $_POST['campaing_hash'] ) ) );
 		wp_die();
 	}
 
@@ -2173,7 +2173,7 @@ class Egoi_For_Wp_Admin {
 
 		$api = new EgoiApiV3( $apikey );
 
-		echo $api->deployEmailRssCampaign( trim( $_POST['campaing_hash'] ) );
+		echo $api->deployEmailRssCampaign( sanitize_key( trim( $_POST['campaing_hash'] ) ) );
 		wp_die();
 	}
 
@@ -2293,12 +2293,12 @@ class Egoi_For_Wp_Admin {
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$data = array();
 
-		if ( is_array( $_POST['data'] ) && $_POST['data'] == array_filter(
-			$_POST['data'],
-			function( $val ) {
-				return $val == sanitize_key( $val );}
-		) ) {
-			$data = $_POST['data'];
+		if ( empty( $_POST['data'] ) || ! is_array( $_POST['data'] ) ) {
+			wp_send_json_error( __( 'Invalid data type.', 'egoi-for-wp' ) );
+		}
+
+		foreach ( $_POST['data'] as $key => $val ) {
+			$data[ sanitize_key( $key ) ] = sanitize_text_field( $val );
 		}
 
 		update_option( 'egoi_catalog_sync', wp_json_encode( $data ) );
@@ -2314,7 +2314,7 @@ class Egoi_For_Wp_Admin {
 
 	public function egoi_delete_catalog() {
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
-		$id = EgoiValidators::validate_id( $_POST['id'] );
+		$id = EgoiValidators::validate_id( sanitize_key( $_POST['id'] ) );
 		$bo = new EgoiProductsBo();
 
 		wp_send_json_success( $bo->deleteCatalog( $id ) );

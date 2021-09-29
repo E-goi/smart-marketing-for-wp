@@ -45,8 +45,8 @@ if ( ! empty( $_GET['sub'] ) && sanitize_key( $_GET['sub'] ) === 'create-wp' && 
 
 	$data = array(
 		'site'    => get_site_url(),
-		'list_id' => $_POST['create_wp_form']['list'],
-		'name'    => $_POST['create_wp_form']['label'],
+		'list_id' => sanitize_key( $_POST['create_wp_form']['list'] ),
+		'name'    => sanitize_text_field( $_POST['create_wp_form']['label'] ),
 	);
 
 	$_POST['egoi_webpush']['code'] = $api->createWebPushSite( $data );

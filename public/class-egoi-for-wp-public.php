@@ -379,7 +379,7 @@ class Egoi_For_Wp_Public {
 
 	public function subscribe_egoi_form() {
 		$res = wp_remote_request(
-			$_POST['action_url'],
+			esc_url_raw( $_POST['action_url'] ),
 			array(
 				'method'  => 'POST',
 				'timeout' => 30,
@@ -393,7 +393,7 @@ class Egoi_For_Wp_Public {
 
 		$outputs = explode( '</style>', $res['body'] );
 		$content = strip_tags( $outputs[1], '<div></div><p></p><br>' );
-		echo $content;
+		echo wp_kses_post( $content );
 		exit;
 	}
 
@@ -477,7 +477,11 @@ class Egoi_For_Wp_Public {
 	public function subscribe_egoi_simple_form( $atts, $qt = 1 ) {
 		global $wpdb;
 
-		$id                 = $atts['id'];
+		if ( empty( $atts['id'] ) ) {
+			return;
+		}
+
+		$id                 = sanitize_key( $atts['id'] );
 		$simple_form        = 'egoi_simple_form_' . $id . '_' . $qt;
 		$simple_form_result = $simple_form . '_result';
 
@@ -486,11 +490,11 @@ class Egoi_For_Wp_Public {
 		$options = get_option( 'egoi_simple_form_' . $id );
 		$data    = json_decode( $options );
 
-		$post .= '<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="' . $id . '">';
-		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="' . $data->list . '">';
-		$post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="' . $data->lang . '">';
-		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="' . $data->tag . '">';
-		$post .= '<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="' . $data->double_optin . '">';
+		$post .= '<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="' . esc_attr( $id ) . '">';
+		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="' . esc_attr( $data->list ) . '">';
+		$post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="' . esc_attr( $data->lang ) . '">';
+		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="' . esc_attr( $data->tag ) . '">';
+		$post .= '<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="' . esc_attr( $data->double_optin ) . '">';
 
 		$table     = $wpdb->prefix . 'posts';
 		$html_code = $wpdb->get_row( " SELECT post_content, post_title FROM $table WHERE ID = '$id' " );
@@ -501,7 +505,7 @@ class Egoi_For_Wp_Public {
 		}
 
 		$post .= stripslashes( $html_code->post_content );
-		$post .= '<div id="' . $simple_form_result . '" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>';
+		$post .= '<div id="' . esc_attr( $simple_form_result ) . '" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>';
 		$post .= '</form>';
 
 		$post .= '
@@ -867,7 +871,7 @@ class Egoi_For_Wp_Public {
 		$form_data = array();
 		parse_str( $_POST['form_data'], $form_data );
 
-		$url      = strpos( $_POST['url'], 'http' ) !== false ? $_POST['url'] : 'http:' . $_POST['url'];
+		$url      = esc_url_raw( strpos( $_POST['url'], 'http' ) !== false ? $_POST['url'] : 'http:' . $_POST['url'] );
 		$response = wp_remote_post(
 			$url,
 			array(
@@ -890,16 +894,16 @@ class Egoi_For_Wp_Public {
 
 					$subscriber = (object) array(
 						'UID'        => null,
-						'FIRST_NAME' => $_POST['fname'] . ' ' . $_POST['lname'],
-						'EMAIL'      => $_POST['email'],
-						'LIST'       => $form_data['lista'],
+						'FIRST_NAME' => sanitize_text_field( $_POST['fname'] . ' ' . $_POST['lname'] ),
+						'EMAIL'      => sanitize_email( $_POST['email'] ),
+						'LIST'       => sanitize_key( $form_data['lista'] ),
 					);
 
 					for ( $i = 1; $i <= 10; $i++ ) {
 						$form = get_option( 'egoi_form_sync_' . $i );
 						if ( $form && strpos( $form['egoi_form_sync']['form_content'], $_POST['form_id'] ) !== false ) {
-							$form_id    = $form['egoi_form_sync']['form_id'];
-							$form_title = $form['egoi_form_sync']['form_name'];
+							$form_id    = sanitize_text_field( $form['egoi_form_sync']['form_id'] );
+							$form_title = sanitize_text_field( $form['egoi_form_sync']['form_name'] );
 							break;
 						}
 					}
