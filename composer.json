@@ -1,4 +1,6 @@
 {
+  "name": "egoi/smart-marketing-for-wp",
+  "type": "wordpress-plugin",
   "require": {
     "phpmailer/phpmailer": "^6.2"
   }
