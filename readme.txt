@@ -50,7 +50,7 @@ Então não deixe de activar o Track & Engage, um sistema para rastrear todo o c
 
 **Add-on**
 
-Plugin [WooCommerce SMS – Notificações Estados Encomendas](https://pt.wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/ "SMS Orders Alert/Notifications for WooCommerce")
+Plugin [WooCommerce SMS – Notificações Estados Encomendas](https://github.com/E-goi/sms-orders-alertnotifications-for-woocommerce/releases/download/1.5.4/sms-orders-alertnotifications-for-woocommerce-1.5.4.zip "SMS Orders Alert/Notifications for WooCommerce")
 
 **Requisitos**
 
@@ -97,7 +97,7 @@ So be sure to enable Track & Engage system to track all customer behavior in you
 
 **Add-on**
 
-[SMS Orders Alert/Notifications for WooCommerce plugin.](https://pt.wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/ "SMS Orders Alert/Notifications for WooCommerce")
+[SMS Orders Alert/Notifications for WooCommerce plugin.](https://github.com/E-goi/sms-orders-alertnotifications-for-woocommerce/releases/download/1.5.4/sms-orders-alertnotifications-for-woocommerce-1.5.4.zip "SMS Orders Alert/Notifications for WooCommerce")
 
 **Requirements**
 
