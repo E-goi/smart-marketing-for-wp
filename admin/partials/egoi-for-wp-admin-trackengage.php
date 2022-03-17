@@ -122,7 +122,13 @@ $options = $this->options_list;
 						<div class="egoi-sub-form-ident">
 							<?php
 							foreach ( $domainData['features'] as $name => $feat ) {
-								if ( empty( $feat['items'] ) ) {
+								if( !empty($feat['enabled']) && empty($feat['items'])){
+                                    ?>
+                                    <h6><?php echo ucwords( str_replace( '_', ' ', esc_html( $name ) ) ); ?> <span class="egoi-resolved-indicator"></span></h6>
+                                    <div class="egoi-sub-form-ident"><p style="padding-bottom: 1em;"><?php _e( 'This feature is active.', 'egoi-for-wp' ); ?></p></div>
+                                    <?php
+                                    continue;
+                                }elseif ( empty( $feat['items'] ) ) {
 									?>
 										<h6><?php echo ucwords( str_replace( '_', ' ', esc_html( $name ) ) ); ?></h6>
 										<div class="egoi-sub-form-ident"><p style="padding-bottom: 1em;opacity: 0.5;"><?php _e( 'Nothing here yet.', 'egoi-for-wp' ); ?></p></div>
