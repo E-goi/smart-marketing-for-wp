@@ -7,6 +7,7 @@ class TrackingEngageSDK {
 	protected $list_id;
 	protected $social_id;
 	protected $order_id;
+	protected $options;
 	const OPTION_FLAG = 'order_trigger_';
 	const SESSION_TAG = 'egoi_tracking_uid';
 
@@ -19,6 +20,8 @@ class TrackingEngageSDK {
 			$this->order_id = $order_id; }
 		if ( ! empty( $social_id ) ) {
 			$this->social_id = $social_id; }
+
+		$this->options = get_option( 'egoi_sync' );
 	}
 
 	public function getStartUp() {
@@ -36,12 +39,12 @@ class TrackingEngageSDK {
 						g.async = true;
 						g.src = url_cdn + 'egoimmerce.js';
 						s.parentNode.insertBefore(g, s);
-						window._egoiaq.push(['setClientId', <?php echo $this->client_id; ?>]);
-						window._egoiaq.push(['setListId', <?php echo $this->list_id; ?>]);
+						window._egoiaq.push(['setClientId', <?php echo esc_attr($this->client_id); ?>]);
+						window._egoiaq.push(['setListId', <?php echo esc_attr($this->list_id); ?>]);
 						<?php
-						if ( $this->checkSubscriber() !== false ) {
-							?>
-							window._egoiaq.push(['setSubscriber', "<?php echo $this->checkSubscriber(); ?>"]);<?php } ?>
+						if ( $this->checkSubscriber() !== false ) { ?>
+							window._egoiaq.push(['setSubscriber', "<?php echo esc_attr($this->checkSubscriber()); ?>"]);
+                        <?php } ?>
 
 						window._egoiaq.push(['setTrackerUrl', url + 'collect']);
 						window._egoiaq.push(['trackPageView']);
@@ -56,6 +59,41 @@ class TrackingEngageSDK {
 		$this->getProductsInCart();
 	}
 
+	public function getStartUpCS( $domain ) {
+		if ( isset( $_GET['wc-ajax'] ) ) {
+			return false;
+		}
+		?>
+
+		<script>
+			(function () {
+					window._egoiaq = window._egoiaq || [];
+					window._egoiaq.push(['setListId', <?php echo esc_attr($this->list_id); ?>]);
+					<?php
+					if ( $this->checkSubscriber() !== false ) {
+						?>
+						window._egoiaq.push(['setSubscriber', "<?php echo esc_attr($this->checkSubscriber()); ?>"]);
+						<?php
+					}
+					?>
+
+					var _mtm = window._mtm = window._mtm || [];
+					_mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+					var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+					g.type='text/javascript'; g.async=true; g.src='https://egoi.site/<?php echo esc_attr( $this->client_id ); ?>_<?php echo esc_attr( $domain ); ?>.js';
+					s.parentNode.insertBefore(g,s);
+				}
+			)();
+		</script>
+
+		<?php
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return false;
+		}
+		$this->getProductView();
+		$this->getProductsInCart();
+	}
+
 	public function getStartUpSocial() {
 		if ( ! isset( $_GET['wc-ajax'] ) && ! empty( $this->social_id ) ) {
 			?>
@@ -63,7 +101,7 @@ class TrackingEngageSDK {
 				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 				j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-				})(window,document,'script','dataLayer','<?php echo $this->social_id; ?>');</script>
+				})(window,document,'script','dataLayer','<?php echo esc_attr($this->social_id); ?>');</script>
 			<?php
 		}
 	}
@@ -82,24 +120,24 @@ class TrackingEngageSDK {
 			{
 			"@context":"https://schema.org",
 			"@type":"Product",
-			"productID":"<?php echo $product->get_id(); ?>",
-			"name":"<?php echo addslashes( $product->get_name() ); ?>",
-			"description":"<?php echo addslashes( wp_strip_all_tags( do_shortcode( $product->get_short_description() ? $product->get_short_description() : $product->get_description() ) ) ); ?>",
-			"url":"<?php echo $product->get_permalink(); ?>",
-			"image":"<?php echo wp_get_attachment_image_url( $product->get_image_id(), 'full' ); ?>",
-			"brand":"<?php echo $product->get_meta( '_egoi_brand' ); ?>",
+			"productID":"<?php echo esc_attr($product->get_id()); ?>",
+			"name":"<?php echo esc_attr(addslashes( $product->get_name() )); ?>",
+			"description":"<?php echo esc_attr(addslashes( wp_strip_all_tags( do_shortcode( $product->get_short_description() ? $product->get_short_description() : $product->get_description() ) ) )); ?>",
+			"url":"<?php echo esc_url($product->get_permalink()); ?>",
+			"image":"<?php echo esc_url(wp_get_attachment_image_url( $product->get_image_id(), 'full' )); ?>",
+			"brand":"<?php echo esc_attr($product->get_meta( '_egoi_brand' )); ?>",
 			"offers": [
 				{
 				"@type": "Offer",
-				"price": "<?php echo $price; ?>",
-				"priceCurrency": "<?php echo get_woocommerce_currency(); ?>",
+				"price": "<?php echo esc_attr($price); ?>",
+				"priceCurrency": "<?php echo esc_attr(get_woocommerce_currency()); ?>",
 				"itemCondition": "https://schema.org/NewCondition",
-				"availability": "<?php echo 'http://schema.org/' . ( $product->is_in_stock() ? 'InStock' : 'OutOfStock' ); ?>"
+				"availability": "<?php echo esc_url('http://schema.org/' . ( $product->is_in_stock() ? 'InStock' : 'OutOfStock' )); ?>"
 				}
 			]
 			}
 			</script>
-			<script>var egoi_product = { 'id':'<?php echo $product->get_id(); ?>', 'client_id':'<?php echo $this->client_id; ?>','name':'<?php echo addslashes( $product->get_name() ); ?>','price':'<?php echo $price; ?>'};</script>
+			<script>var egoi_product = { 'id':'<?php echo esc_attr($product->get_id()); ?>', 'client_id':'<?php echo esc_attr($this->client_id); ?>','name':'<?php echo esc_attr(addslashes( $product->get_name() )); ?>','price':'<?php echo esc_attr($price); ?>'};</script>
 		<?php
 	}
 
@@ -113,10 +151,10 @@ class TrackingEngageSDK {
 			<script>
 
 				window._egoiaq.push(['setEcommerceView',
-					"<?php echo $product->get_id(); ?>",
-					"<?php echo str_replace( '"', '\\"', $product->get_name() ); ?>",
+					"<?php echo esc_attr($product->get_id()); ?>",
+					"<?php echo esc_attr(str_replace( '"', '\\"', $product->get_name() )); ?>",
 					"",
-					<?php echo (float) $product->get_price(); ?>
+					<?php echo esc_attr((float) $product->get_price()); ?>
 				]);
 				window._egoiaq.push(['trackPageView']);
 
@@ -126,7 +164,7 @@ class TrackingEngageSDK {
 	}
 
 	protected function getProductsInCart() {
-		if ( ! empty( $this->order_id ) ) {
+		if ( ! empty( $this->order_id ) || ! empty( $this->options['backend_order'] ) ) {
 			return false;}
 		$cart = WC()->cart->get_cart();
 		require_once plugin_dir_path( __FILE__ ) . '../../includes/class-egoi-for-wp-products-bo.php';
@@ -140,11 +178,11 @@ class TrackingEngageSDK {
 			?>
 			<script>
 				window._egoiaq.push(['addEcommerceItem',
-					"<?php echo ( $variation && ! empty( $cart_item['variation_id'] ) ) ? $cart_item['variation_id'] : $cart_item['product_id']; ?>",
-					"<?php echo str_replace( '"', '\\"', $cart_item['data']->get_title() ); ?>",
+					"<?php echo esc_attr( ( $variation && ! empty( $cart_item['variation_id'] ) ) ? $cart_item['variation_id'] : $cart_item['product_id'] ); ?>",
+					"<?php echo esc_attr(str_replace( '"', '\\"', $cart_item['data']->get_title() )); ?>",
 					"",
-					<?php echo number_format( $cart_item['data']->get_price(), 2 ); ?>,
-					<?php echo (int) $cart_item['quantity']; ?>
+					<?php echo esc_attr(number_format( $cart_item['data']->get_price(), 2 )); ?>,
+					<?php echo esc_attr((int) $cart_item['quantity']); ?>
 				]);
 			</script>
 			<?php
@@ -157,7 +195,7 @@ class TrackingEngageSDK {
 
 		<script>
 			window._egoiaq.push(['trackEcommerceCartUpdate',
-				<?php echo number_format( WC()->cart->cart_contents_total, 2 ); ?>]);
+				<?php echo esc_attr(number_format( WC()->cart->cart_contents_total, 2 )); ?>]);
 
 			window._egoiaq.push(['trackPageView']);
 		</script>
@@ -167,27 +205,62 @@ class TrackingEngageSDK {
 	}
 
 	public function getOrder() {
-		if ( empty( $this->order_id ) ) {
-			return false;}
+		if ( empty( $this->order_id ) || ! empty( $this->options['backend_order'] ) ) {
+			return false;
+		}
 
-		$order = get_option( self::OPTION_FLAG . $this->order_id );
+		$order = self::getOrderObjectFromSaved( $this->order_id );
 		if ( empty( $order ) ) {
-			return false; }
+			return false;
+		}
 
 		$this->printOrder( $order );
-
-		delete_option( self::OPTION_FLAG . $this->order_id );
 
 		return true;
 	}
 
+	public static function getOrderObjectFromSaved( $order_id ) {
+		$order = get_option( self::OPTION_FLAG . $order_id );
+		if ( empty( $order ) ) {
+			return false;
+		}
+		delete_option( self::OPTION_FLAG . $order_id );
+		return $order;
+	}
+
 	public function setOrder() {
-		if ( empty( $this->order_id ) ) {
+		if ( empty( $this->order_id ) || ! empty( $this->options['backend_order'] ) ) {
 			return false;
 		}
 		$order = wc_get_order( $this->order_id );
 		update_option( self::OPTION_FLAG . $this->order_id, $order );
 		return true;
+	}
+
+	public static function getSubInfo() {
+		if ( ! empty( self::getUserMeta() ) ) {
+			return array( 'contact_id' => self::getUserMeta() );
+		}
+		if ( isset( $_SESSION[ self::SESSION_TAG ] ) ) {
+			return array( 'contact_id' => $_SESSION[ self::SESSION_TAG ] );
+		}
+		foreach ( $_COOKIE as $key => $value ) {
+			preg_match( '/_pk_Subscriber[\.|_][0-9]+[\.|_][a-zA-Z0-9]{4}/', $key, $matches );
+			if ( empty( $matches ) || count( $matches ) != 1 ) {
+				continue;
+			}
+			return array( 'contact_id' => $value );
+		}
+
+		if ( $_GET['eg_sub'] && strlen( $_GET['eg_sub'] ) == 10 ) {
+			return array( 'contact_id' => sanitize_key( $_GET['eg_sub'] ) );
+		}
+
+		$current_user = wp_get_current_user();
+		if ( ! $current_user->exists() ) {
+			return array();
+		}
+		return array( 'email' => $current_user->user_email );
 	}
 
 	/**
@@ -218,11 +291,11 @@ class TrackingEngageSDK {
 
 			<script>
 				window._egoiaq.push(['addEcommerceItem',
-					"<?php echo $item->get_product_id(); ?>",
-					"<?php echo $item->get_name(); ?>",
+					"<?php echo esc_attr($item->get_product_id()); ?>",
+					"<?php echo esc_attr($item->get_name()); ?>",
 					"",
-					<?php echo number_format( $item->get_subtotal(), 2 ); ?>,
-					<?php echo (int) $item->get_quantity(); ?>
+					<?php echo esc_attr(number_format( $item->get_subtotal(), 2 )); ?>,
+					<?php echo esc_attr((int) $item->get_quantity()); ?>
 				]);
 			</script>
 
@@ -233,12 +306,12 @@ class TrackingEngageSDK {
 			?>
 			<script>
 				window._egoiaq.push(['trackEcommerceOrder',
-					"<?php echo $order_id; ?>", // (required) Unique Order ID
-					<?php echo number_format( $order->get_total(), 2 ); ?>, // (required) Order Revenue grand total (includes tax, shipping, and subtracted discount)
-					<?php echo number_format( $order->get_subtotal(), 2 ); ?>, // (optional) Order sub total (excludes shipping)
-					<?php echo number_format( $order->get_total_tax(), 2 ); ?>, // (optional) Tax amount
-					<?php echo number_format( $order->get_shipping_total(), 2 ); ?>, // (optional) Shipping amount
-					<?php echo ! empty( $order->get_total_discount() ); ?> // (optional) Discount offered (set to false for unspecified parameter)
+					"<?php echo esc_attr($order_id); ?>", // (required) Unique Order ID
+					<?php echo esc_attr(number_format( $order->get_total(), 2 )); ?>, // (required) Order Revenue grand total (includes tax, shipping, and subtracted discount)
+					<?php echo esc_attr(number_format( $order->get_subtotal(), 2 )); ?>, // (optional) Order sub total (excludes shipping)
+					<?php echo esc_attr(number_format( $order->get_total_tax(), 2 )); ?>, // (optional) Tax amount
+					<?php echo esc_attr(number_format( $order->get_shipping_total(), 2 )); ?>, // (optional) Shipping amount
+					<?php echo  esc_attr(! empty( $order->get_total_discount() ) ? number_format($order->get_total_discount(), 2):0); ?> // (optional) Discount offered (set to false for unspecified parameter)
 				]);
 
 				window._egoiaq.push(['trackPageView']);

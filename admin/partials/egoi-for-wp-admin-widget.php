@@ -8,8 +8,7 @@ $opt_widget = get_option( 'egoi_widget' );
 $egoiwidget = $opt_widget['egoi_widget'];
 
 if ( $egoiwidget['tag'] != '' ) {
-	$data = new Egoi_For_Wp();
-	$info = $data->getTag( $egoiwidget['tag'] );
+	$info = $this->egoiWpApi->getTag( $egoiwidget['tag'] );
 	$tag  = $info['ID'];
 } else {
 	$tag = $egoiwidget['tag-egoi'];

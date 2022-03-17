@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php
 			foreach ( $lists as $key_list => $value_list ) {
 
-				if ( $value_list->listnum ) {
+				if ( isset( $value_list->listnum ) ) {
 					?>
 					<tr>
 						<td>

@@ -18,7 +18,7 @@ add_thickbox();
 <?php if ( rand( 1, 2 ) % 2 == 0 ) { ?>
 	<embed>
 		<div class="pub-body">
-			<div class="pub-wrap-rate pub-clearfix" style="width: 250px; padding: 10px">
+			<div class="pub-wrap-rate pub-clearfix" style="min-width: 250px; padding: 10px">
 				<div class="pub-left" style="width: 100%;">
 					<img alt="E-goi" src="<?php echo plugin_dir_url( __FILE__ ) . '../img/pub'; ?>/e-goi.png">
 					<h2><?php _e( 'Want a discount?', 'egoi-for-wp' ); ?></h2>
@@ -39,7 +39,7 @@ add_thickbox();
 
 	<embed>
 		<div class="pub-body">
-			<div class="pub-wrap-rate pub-clearfix" style="width: 250px; padding: 10px">
+			<div class="pub-wrap-rate pub-clearfix" style="min-width: 250px; padding: 10px">
 				<div class="pub-left" style="width: 100%;">
 					<img alt="E-goi" src="<?php echo plugin_dir_url( __FILE__ ) . '../img/pub'; ?>/e-goi.png">
 					<h2><?php _e( 'WooCommerce SMS', 'egoi-for-wp' ); ?></h2>

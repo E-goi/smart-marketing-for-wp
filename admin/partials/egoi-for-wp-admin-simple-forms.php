@@ -34,8 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					if ( isset( $_POST['tag-egoi'] ) && $_POST['tag-egoi'] != '' ) {
 						$data->tag = sanitize_key( $_POST['tag-egoi'] );
 					} else {
-						$tag       = new Egoi_For_Wp();
-						$new       = $tag->addTag( $_POST['tag'] );
+						$new       = $this->egoiWpApi->addTag( $_POST['tag'] );
 						$data->tag = $new->ID;
 					}
 

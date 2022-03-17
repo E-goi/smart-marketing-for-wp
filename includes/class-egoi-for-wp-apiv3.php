@@ -13,9 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class EgoiApiV3 {
 
-	const APIV3     = 'https://api.egoiapp.com';
-	const PLUGINKEY = '908361f0368fd37ffa5cc7c483ffd941';
-	const APIURLS   = array(
+	const LAZY_METHODS = array( 'createProduct', 'patchProduct', 'convertOrder', 'convertCart' );
+	const APIV3        = 'https://api.egoiapp.com';
+	const PLUGINKEY    = '908361f0368fd37ffa5cc7c483ffd941';
+	const APIURLS      = array(
 		'deployEmailRssCampaign'   => '/campaigns/email/rss/{campaign_hash}/actions/enable',
 		'createEmailRssCampaign'   => '/campaigns/email/rss',
 		'getSenders'               => '/senders/{channel}?status=active',
@@ -34,6 +35,11 @@ class EgoiApiV3 {
 		'getMyAccount'             => '/my-account',
 		'createWebPushSite'        => '/webpush/sites',
 		'activateTrackingEngage'   => '/my-account/actions/enable-te',
+		'getConnectedSites'        => '/connectedsites',
+		'createConnectedSites'     => '/connectedsites',
+		'getConnectedSite'         => '/connectedsites/{domain}',
+		'convertOrder'             => '/{domain}/orders',
+		'convertCart'              => '/{domain}/carts',
 	);
 	protected $apiKey;
 	protected $headers;
@@ -731,6 +737,107 @@ class EgoiApiV3 {
 
 	}
 
+	public function getConnectedSite( $domain ) {
+		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], array( '{domain}' ), array( $domain ) );
+		$client = new ClientHttp(
+			$path,
+			'GET',
+			$this->headers
+		);
+
+		if ( $client->success() !== true || $client->getCode() != 200 ) {
+			return false;
+		}
+		return json_decode( $client->getResponse(), true );
+	}
+
+	private static function getProductsFromOrder( $order ) {
+		$output = array();
+		$items  = $order->get_items();
+		if ( empty( $items ) || ! is_array( $items ) ) {
+			$items = array();
+		}
+		foreach ( $items as $item ) {
+			$output[] = array(
+				'product_identifier' => $item->get_product_id(),
+				'name'               => $item->get_name(),
+				'price'              => number_format( $item->get_subtotal(), 2 ),
+			);
+		}
+		return $output;
+	}
+
+	public function convertOrder( $order, $contact, $domain ) {
+		$path = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{domain}', $domain );
+
+		$products = self::getProductsFromOrder( $order );
+
+		$payload = array(
+			'order_total' => number_format( $order->get_total(), 2 ),
+			'order_id'    => $order->get_id(),
+			'cart_id'     => '',
+			'contact'     => $contact,
+			'products'    => $products,
+		);
+
+		$client = new ClientHttp(
+			$path,
+			'POST',
+			$this->headers,
+			$payload
+		);
+
+		if ( $client->success() !== true || $client->getCode() != 202 ) {
+			return false;
+		}
+		return json_decode( $client->getResponse(), true );
+	}
+
+	private static function getProductsFromCart( $cartObj, $variations = false ) {
+		$cart = array(
+			'total'    => 0,
+			'products' => array(),
+		);
+		foreach ( $cartObj as $cart_item ) {
+			$cart['products'][] = array(
+				'product_identifier' => ( $variations && ! empty( $cart_item['variation_id'] ) ) ? $cart_item['variation_id'] : $cart_item['product_id'],
+				'name'               => str_replace( '"', '\\"', $cart_item['data']->get_title() ),
+				'price'              => number_format( $cart_item['data']->get_price(), 2 ),
+			);
+
+			$cart['total'] += ( number_format( $cart_item['data']->get_price(), 2 ) * (int) $cart_item['quantity'] );
+		}
+
+		return $cart;
+	}
+
+	public function convertCart( $cart, $contact, $domain, $variations = false ) {
+		$path = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{domain}', $domain );
+		if ( empty( $contact ) || empty( $contact['base'] ) ) {
+			return false;
+		}
+		$cartData = self::getProductsFromCart( $cart, $variations );
+		$payload  = array(
+			'cart_total' => $cartData['total'],
+			'cart_id'    => '',
+			'contact'    => $contact,
+			'products'   => $cartData['products'],
+		);
+
+		$client = new ClientHttp(
+			$path,
+			'POST',
+			$this->headers,
+			$payload
+		);
+
+		if ( $client->success() !== true || $client->getCode() != 202 ) {
+			return false;
+		}
+		return json_decode( $client->getResponse(), true );
+	}
+
+
 
 	/**
 	 * @param $url
@@ -772,7 +879,7 @@ class EgoiApiV3 {
 	}
 
 }
-
+require_once plugin_dir_path( __FILE__ ) . 'class-egoi-for-wp-lazy.php';
 class ClientHttp {
 
 	protected $headers;
@@ -782,16 +889,23 @@ class ClientHttp {
 
 
 	public function __construct( $url, $method = 'GET', $headers = array( 'Accept: application/json' ), $body = '' ) {
-
-			$res = wp_remote_request(
-				$url,
-				array(
-					'method'  => $method,
-					'timeout' => 30,
-					'body'    => $body,
-					'headers' => $headers,
-				)
-			);
+		if ( EgoiLazyConverter::methodIsLazyApiv3( $url ) ) {
+			$lazy = new EgoiLazyConverter();
+			$lazy->saveRequest( EgoiLazyConverter::createRequest( $url, $method, $body, $headers ) );
+			$this->http_code = 101;
+			$this->response  = '{}';
+			$this->headers   = array();
+			return;
+		}
+		$res = wp_remote_request(
+			$url,
+			array(
+				'method'  => $method,
+				'timeout' => 30,
+				'body'    => $body,
+				'headers' => $headers,
+			)
+		);
 
 		if ( is_wp_error( $res ) ) {
 			$this->http_code = 400;

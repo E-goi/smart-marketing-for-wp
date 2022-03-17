@@ -5,14 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 $dir = plugin_dir_path( __FILE__ ) . 'capture/';
 require_once $dir . '/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'egoi-for-wp-common.php';
-$sub_var              = sanitize_key( $_GET['sub'] );
-$page                 = array(
+$sub_var = sanitize_key( $_GET['sub'] );
+$page    = array(
 	'home'           => ! isset( $_GET['sub'] ),
 	'contact-form-7' => $sub_var == 'contact-form-7',
 	'post-comment'   => $sub_var == 'post-comment',
 	'gravity-forms'  => $sub_var == 'gravity-forms',
 );
-$Egoi4WpBuilderObject = get_option( 'Egoi4WpBuilderObject' );
 
 if ( isset( $_POST['action'] ) ) {
 	$egoiform  = sanitize_text_field( $_POST['egoiform'] );
@@ -40,7 +39,7 @@ if ( isset( $_POST['action'] ) ) {
 	echo get_notification( __( 'Success', 'egoi-for-wp' ), __( 'Integrations Settings Updated!', 'egoi-for-wp' ) );
 }
 
-$lists = $Egoi4WpBuilderObject->getLists();
+$lists = $this->egoiWpApi->getLists();
 
 $opt    = get_option( 'egoi_int' );
 $egoint = $opt['egoi_int'];

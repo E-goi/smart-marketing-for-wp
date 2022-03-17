@@ -1,6 +1,17 @@
 <section class="smsnf-content">
 	<div id="wrap--acoount">
 		<div class="main-content">
+			<?php
+				$options = get_option( 'egoi_webpush_code' );
+			if ( ! empty( $this->options_list['domain'] ) && ( ! empty( $options ) && ( ! empty( $options['track'] ) || ! empty( $options['code'] ) ) ) ) {
+				?>
+					<div style="background:#fff;border: 1px solid #ccc;text-align: center;" class="smsnf-input-group">
+						<span style="background:#900;color:#fff;padding:5px;"><?php _e( 'Connected Sites Conflict', 'egoi-for-wp' ); ?></span>
+						<p style="margin: 1em;text-align: justify;"><?php _e( 'You have connected sites enable in your website, it can create a conflict if you use this feature joint with connected sites Webpush, if you already have Webpush active in your Connected Site make sure to turn this feature off.', 'egoi-for-wp' ); ?></p>
+					</div>
+				<?php
+			}
+			?>
 			<div>
 				<form id='form_webpush_code' method='post' action="">
 					<?php

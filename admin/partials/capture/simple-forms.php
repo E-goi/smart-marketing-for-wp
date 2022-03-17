@@ -12,17 +12,18 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 		// to save simple form options: listId and language
 		$table2 = $wpdb->prefix . 'options';
 
-		$data->list         = sanitize_key( $_POST['list'] );
-		$data->lang         = sanitize_text_field( $_POST['lang'] );
-		$data->double_optin = empty( $_POST['double_optin'] ) ? '0' : '1';
+		$data = array(
+			'list'         => sanitize_key( $_POST['list'] ),
+			'lang'         => sanitize_text_field( $_POST['lang'] ),
+			'double_optin' => empty( $_POST['double_optin'] ) ? '0' : '1',
+		);
 
 		// to add tag if not exist
 		if ( isset( $_POST['tag-egoi'] ) && $_POST['tag-egoi'] != '' ) {
-			$data->tag = sanitize_text_field( $_POST['tag-egoi'] );
+			$data['tag'] = sanitize_text_field( $_POST['tag-egoi'] );
 		} else {
-			$tag       = new Egoi_For_Wp();
-			$new       = $tag->addTag( $_POST['tag'] );
-			$data->tag = $new->ID;
+			$new         = $this->egoiWpApi->addTag( $_POST['tag'] );
+			$data['tag'] = $new->ID;
 		}
 
 		$info = wp_json_encode( $data );

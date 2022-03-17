@@ -283,8 +283,7 @@ class Egoi4Widget extends WP_Widget {
 				$default_tag = $api->getTagByID( $this->tag_egoi );
 			}
 
-			$Egoi4WP = get_option( 'Egoi4WpBuilderObject' );
-			$lists   = $Egoi4WP->getLists();
+			$lists = $api->getLists();
 
 			$languages = array();
 			foreach ( $lists as $key => $value ) {
@@ -419,7 +418,7 @@ class Egoi4Widget extends WP_Widget {
 				echo '<label>' . __( 'Tag', 'egoi-for-wp' ) . '<span class="e-goi-tooltip">
 						 <span class="dashicons dashicons-info"></span>
 					  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-					  	 	' . __( 'Tag set by default', 'egoi-for-wp' ) . ":\n" . $default_tag['NAME'] . '
+					  	 	' . __( 'Tag set by default', 'egoi-for-wp' ) . ":\n" . esc_textarea( $default_tag['NAME'] ) . '
 					 	</span>
 					</span>
 				</label>';

@@ -8,8 +8,7 @@ $dir = plugin_dir_path( __FILE__ ) . 'capture/';
 require_once $dir . '/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'egoi-for-wp-common.php';
 
-$Egoi4WP = get_option( 'Egoi4WpBuilderObject' );
-$lists   = $Egoi4WP->getLists();
+$lists = $this->egoiWpApi->getLists();
 
 function webpushValidator( $cod ) {
 	if ( preg_match( '/^[A-Za-z0-9_-]*$/', $cod ) ) {

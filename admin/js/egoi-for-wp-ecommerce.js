@@ -15,7 +15,10 @@ jQuery(document).ready(function() {
         var modal_delete    = $('#confirmDeleteModal');
 
         var sync_catalog        = $('.sync_catalog');
+        var variations_catalog  = $('.variations_catalog');
         var force_catalog       = $('.force_catalog');
+        var force_catalog_glob  = $('#force_catalog_glob');
+        var catalog_glob_status = $('#catalog_glob_status');
         var remove_catalog      = $('.remove_catalog');
         var new_catalog_page    = $('#new_catalog_page');
         var ajaxObj             = egoi_config_ajax_object_ecommerce;
@@ -51,6 +54,22 @@ jQuery(document).ready(function() {
             syncCatalog(getCatalogsToSync());
         });
 
+        variations_catalog.change( (e) => {
+            e = $(e.target)
+            console.log(e[0].checked)
+
+            let data = {
+                security:       ajaxObj.ajax_nonce,
+                action:         'egoi_variations_catalog',
+                catalog_id:     e.attr('idgoi'),
+                status:         e[0].checked
+            };
+
+            $.post(ajaxObj.ajax_url, data, function(response) {
+                console.log(('saved'))
+            });
+        })
+
         verified_delete.on('click', function(){
             deleteCatalog(s_delete_catalog.val(),to_delete);
         });
@@ -60,6 +79,17 @@ jQuery(document).ready(function() {
             resetProgressBar();
             import_loader_div.hide();
         });
+
+        force_catalog_glob.on('click', (e) => {
+            let id = $(e.target).attr(idgoi);
+            if(!id){
+                return
+            }
+            selected_catalog.val(id);
+            display_selected.text(id);
+            getCountAjax(id);
+            modal_import.modal('show');
+        })
 
         force_catalog.on('click', function () {
             var thisel = $(this);
@@ -178,6 +208,8 @@ jQuery(document).ready(function() {
             if(current_request >= requests_needed){//finish
                 //DONE!
                 setTimeout(function () {
+                    catalog_glob_status.val(1)
+                    catalog_glob_status.trigger('change')
                     import_loader_div.hide(anim);
                     resetProgressBar();
                     modal_import.modal('toggle');
@@ -249,7 +281,6 @@ jQuery(document).ready(function() {
         }
 
         function resetProgressBar(){
-            console.log('reset');
             progressbar_import.css('width','0%');
         }
 

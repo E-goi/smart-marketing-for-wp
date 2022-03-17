@@ -41,7 +41,7 @@ function check( &$arr ) {
 			$query = $wpdb->update( $table, $in, $where );
 
 		}
-		$arr = array_map( create_function( '$n', 'return null;' ), $arr );
+		$arr = array();
 
 	}
 }

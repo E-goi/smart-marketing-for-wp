@@ -65,9 +65,10 @@
     /* Notifications */
     var notifications = $('.smsnf-notification');
 
-    notifications.fadeIn();
-
-    setTimeout(() => {notifications.fadeOut();}, 5000);
+    if(!notifications.attr('lazy')){
+        notifications.fadeIn();
+        setTimeout(() => {notifications.fadeOut();}, 5000);
+    }
 
     notifications.find('.close-btn').click(function() {
         notifications.fadeOut();

@@ -105,16 +105,18 @@ class Egoi_For_Wp {
 	 */
 	protected $plugin = '908361f0368fd37ffa5cc7c483ffd941';
 
+
+	protected $option_list;
 	/**
 	 * Define the preview in specific area of the plugin.
 	 *
 	 * @since  1.0.0
 	 */
-	const PAGE_SLUG      = 'egoi4wp-form-preview';
-	const TAG_NEWSLETTER = 'wp_newsletter';
-	const GUEST_BUY      = 'wp_guest_client';
-	const ORDER_TNG_FLAG = 'egoi_order_tng_';
-	const COUNTRY_DIAL   = array(
+	const PAGE_SLUG         = 'egoi4wp-form-preview';
+	const TAG_NEWSLETTER    = 'wp_newsletter';
+	const GUEST_BUY         = 'wp_guest_client';
+	const ORDER_TNG_FLAG    = 'egoi_order_tng_';
+	const COUNTRY_DIAL      = array(
 		'AF' => '93',
 		'AL' => '355',
 		'DZ' => '213',
@@ -364,7 +366,8 @@ class Egoi_For_Wp {
 		'ZW' => '263',
 		'AX' => '358',
 	);
-
+	const CACHED_CALLS      = array( 'getLists', 'getTags' );
+	const PURGE_CACHE_CALLS = array( 'createList', 'addTag' );
 	/**
 	 * Constructor
 	 *
@@ -376,7 +379,7 @@ class Egoi_For_Wp {
 		$this->plugin_name = 'egoi-for-wp';
 		$this->debug       = $debug;
 		$this->host        = isset( $_SERVER['SERVER_NAME'] ) ? esc_url_raw( $_SERVER['SERVER_NAME'] ) : esc_url_raw( $_SERVER['HTTP_HOST'] );
-
+        $this->define_apikey();
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -386,13 +389,10 @@ class Egoi_For_Wp {
 		// Contact Form 7
 		$this->getContactFormInfo();
 
-		$this->getClientAPI();
-		$this->syncronizeEgoi( $_POST );
-
 		$this->setClient();
 
 		$this->setTransactionEmailOption();
-
+		$this->option_list = Egoi_For_Wp_Admin::get_option();
 	}
 
 	/**
@@ -542,19 +542,31 @@ class Egoi_For_Wp {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Egoi_For_Wp_Admin( $this->get_plugin_name(), $this->get_version(), $this->debug );
+		$plugin_admin = new Egoi_For_Wp_Admin( $this->get_plugin_name(), $this->get_version(), $this, $this->debug );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
-		$this->define_apikey();
+		//$this->define_apikey();
 
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'del_action_link' );
 
 		$this->loader->add_action( 'wp_ajax_smsnf_hide_notification', $plugin_admin, 'smsnf_hide_notification' );
+
+		// ajax apikey
+		$this->loader->add_action( 'wp_ajax_egoi_change_api_key', $plugin_admin, 'egoi_change_api_key' );
+        $this->loader->add_action( 'wp_ajax_efwp_apikey_save', $plugin_admin, 'efwp_apikey_save' );
+
+		if ( empty( $this->_valid['api_key'] ) ) {
+			return;
+		}
+
+		$this->loader->add_action( 'wp_ajax_egoi_synchronize_subs', $plugin_admin, 'egoi_synchronize_subs' );
+		$this->loader->add_action( 'wp_ajax_egoi_count_subs', $plugin_admin, 'egoi_count_subs' );
+		$this->loader->add_action( 'wp_ajax_egoi_list_map', $plugin_admin, 'egoi_list_map' );
 
 		// Dashboard
 		$this->loader->add_action( 'wp_ajax_smsnf_show_blog_posts', $plugin_admin, 'smsnf_show_blog_posts' );
@@ -571,12 +583,19 @@ class Egoi_For_Wp {
 
 		// E-commerce
 		$this->loader->add_action( 'wp_ajax_egoi_sync_catalog', $plugin_admin, 'egoi_sync_catalog' );
+		$this->loader->add_action( 'wp_ajax_egoi_variations_catalog', $plugin_admin, 'egoi_variations_catalog' );
 		$this->loader->add_action( 'wp_ajax_egoi_force_import_catalog', $plugin_admin, 'egoi_force_import_catalog' );
+		$this->loader->add_action( 'wp_ajax_egoi_create_catalog', $plugin_admin, 'egoi_create_catalog' );
 		$this->loader->add_action( 'wp_ajax_egoi_delete_catalog', $plugin_admin, 'egoi_delete_catalog' );
 		$this->loader->add_action( 'wp_ajax_egoi_catalog_utilities', $plugin_admin, 'egoi_catalog_utilities' );
 		$this->loader->add_action( 'wp_ajax_egoi_count_products', $plugin_admin, 'egoi_count_products' );
+		$this->loader->add_action( 'wp_ajax_egoi_wizard_step', $plugin_admin, 'egoi_wizard_step' );
+        $this->loader->add_action( 'wp_ajax_egoi_map_fields_egoi', $plugin_admin, 'egoi_map_fields_egoi' );
 		$this->loader->add_action( 'transition_post_status', $plugin_admin, 'egoi_product_check_delete', 10, 3 );
 		$this->loader->add_action( 'woocommerce_update_product', $plugin_admin, 'egoi_product_creation', 10 );
+
+		$this->loader->add_action( 'woocommerce_order_status_changed', $plugin_admin, 'hookEcommerceOrderBackend', 99999, 1 );
+		$this->loader->add_action( 'woocommerce_new_order', $plugin_admin, 'hookEcommerceOrderBackend', 99999, 1 );
 
 		$this->loader->add_action( 'woocommerce_product_import_before_import', $plugin_admin, 'egoi_import_bypass', 10, 1 );
 
@@ -649,20 +668,8 @@ class Egoi_For_Wp {
 			$this->loader->add_action( 'admin_post_bar_handler', $plugin_public, 'bar_handler' );
 		}
 
-		// handle form
-		if ( isset( $_GET['form_id'] ) ) {
-			$this->loader->add_filter( 'the_content', $plugin_public, 'get_html' );
-		}
-
-		add_shortcode( 'egoi_form_sync_1', array( $plugin_public, 'shortcode_default' ) );
-		add_shortcode( 'egoi_form_sync_2', array( $plugin_public, 'shortcode_second' ) );
-		add_shortcode( 'egoi_form_sync_3', array( $plugin_public, 'shortcode_last1' ) );
-		add_shortcode( 'egoi_form_sync_4', array( $plugin_public, 'shortcode_last2' ) );
-		add_shortcode( 'egoi_form_sync_5', array( $plugin_public, 'shortcode_last3' ) );
-
 		$this->loader->add_action( 'admin_post_form_handler', $plugin_public, 'form_handler' );
 
-		$this->loader->add_action( 'wp_ajax_smsnf_save_advanced_form_subscriber', $plugin_public, 'smsnf_save_advanced_form_subscriber' );
 		$this->loader->add_action( 'wp_ajax_egoi_simple_form_submit', $plugin_public, 'efwp_process_simple_form_add' );
 		$this->loader->add_action( 'wp_ajax_nopriv_egoi_simple_form_submit', $plugin_public, 'efwp_process_simple_form_add' );
 
@@ -687,6 +694,7 @@ class Egoi_For_Wp {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'hookEcommerce', 99999 );
 		$this->loader->add_action( 'woocommerce_new_order', $plugin_public, 'hookEcommerceSetOrder', 99999, 1 );
 		$this->loader->add_action( 'woocommerce_thankyou', $plugin_public, 'hookEcommerceGetOrder', 99999, 1 );
+		$this->loader->add_action( 'woocommerce_after_cart_item_quantity_update', $plugin_public, 'hookCartBackend', 99999, 1 );
 
 		if ( empty( $_POST ) ) {
 			$this->loader->add_action( 'wp_head', $plugin_public, 'loadPopups', 99999, 1 );
@@ -746,19 +754,6 @@ class Egoi_For_Wp {
 	 */
 	public function get_version() {
 		return $this->version;
-	}
-
-	/**
-	 * Initialize E-goi form.
-	 *
-	 * @since     1.0.0
-	 */
-	private function init_form() {
-
-		$form_id    = (int) $_GET['form_id'];
-		$is_preview = isset( $_GET['preview'] );
-
-		$instance = new self( $form_id, $is_preview );
 	}
 
 	/**
@@ -1008,6 +1003,7 @@ class Egoi_For_Wp {
 				),
 				$subscriber
 			);
+
 			$result = $api->addSubscriber( $params );
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/TrackingEngageSDK.php';
 			TrackingEngageSDK::setUidSession( $result );
@@ -1027,7 +1023,9 @@ class Egoi_For_Wp {
 	public function addSubscriberBulk( $listID, $tag, $subscribers = array() ) {
 		try {
 			if ( count( $subscribers ) == 1 ) {
-				return $this->addSubscriberSoap( $listID, $tag, array_shift( array_values( $subscribers ) ) ); }
+				$array = array_values( $subscribers );
+				return $this->addSubscriberSoap( $listID, $tag, array_shift( $array ) );
+			}
 			$api    = new SoapClient( $this->url );
 			$params = array(
 				'apikey'       => $this->_valid['api_key'],
@@ -1349,7 +1347,7 @@ class Egoi_For_Wp {
 	 * @param null   $plugin_key
 	 * @return string
 	 */
-	public function getExtraFields( $listID, $plugin_key = null ) {
+	public function getExtraFields( $listID, $plugin_key = '908361f0368fd37ffa5cc7c483ffd941' ) {
 
 		$url = $this->restUrl . 'getExtraFields&' . http_build_query(
 			array(
@@ -1409,7 +1407,7 @@ class Egoi_For_Wp {
 	 * @param $listID
 	 * @return int
 	 */
-	private function getEgoiSubscribers( $listID ) {
+	public function getEgoiSubscribers( $listID ) {
 
 		$count  = 0;
 		$result = $this->getLists();
@@ -1420,43 +1418,6 @@ class Egoi_For_Wp {
 		}
 
 		return $count;
-	}
-
-	/**
-	 * @param array $post
-	 */
-	public function syncronizeEgoi( $post = array() ) {
-
-		if ( ! empty( $post ) ) {
-			if ( isset( $post['action'] ) && ( $post['action'] == 'synchronize' ) ) {
-				$all_subscribers = $this->getEgoiSubscribers( $post['list'] );
-
-				$users       = count_users();
-				$total_users = '';
-				foreach ( $users['avail_roles'] as $role => $count ) {
-					if ( $role == $post['role'] ) {
-						$total_users .= $count;
-					}
-				}
-
-				if ( $post['role'] == '' ) {
-					global $wpdb;
-					$table       = $wpdb->prefix . 'users';
-					$sql         = "SELECT COUNT(*) AS COUNT FROM $table";
-					$row         = $wpdb->get_row( $sql );
-					$total_users = $row->COUNT;
-				}
-
-				$total_users = ( $total_users - 1 );
-				$total[]     = $all_subscribers;
-				$total[]     = $total_users;
-
-				$this->addTrackEngage( $post['list'] );
-
-				echo wp_json_encode( $total );
-				exit;
-			}
-		}
 	}
 
 	/**
@@ -1551,12 +1512,79 @@ class Egoi_For_Wp {
 		return $this->checkUser( $data, $apikey, $option );
 	}
 
+	private static function _methodIsCachable( $method ) {
+		return in_array( $method, self::CACHED_CALLS );
+	}
+
+	private static function _methodIsPurgeble( $method ) {
+		return in_array( $method, self::PURGE_CACHE_CALLS );
+	}
+
+	private function _cacheCreatorHandler( $url, $body ) {
+		$params = array();
+		parse_str( $url, $params );
+		if ( empty( $params['method'] ) ) {
+			return;
+		}
+		if ( self::_methodIsCachable( $params['method'] ) ) {
+			$this->_saveCache( $url, $body );
+		}
+		if ( self::_methodIsPurgeble( $params['method'] ) ) {
+			$this->_purgeCache( $url );
+		}
+	}
+
+	private function _cachedResponse( $url ) {
+		$params = array();
+		parse_str( $url, $params );
+		if ( empty( $params['method'] ) || ! self::_methodIsCachable( $params['method'] ) ) {
+			return false;
+		}
+		$cached = get_option( self::generateCacheKey( $url ) );
+		return empty( $cached['data'] ) ? array() : $cached['data'];
+	}
+
+	private function _hasCachedResponse( $url ) {
+		$params = array();
+		parse_str( $url, $params );
+		if ( empty( $params['method'] ) || ! self::_methodIsCachable( $params['method'] ) ) {
+			return false;
+		}
+		$cached = get_option( self::generateCacheKey( $url ) );
+		return ! empty( $cached ) && $cached['ttl'] > time();
+	}
+
+	private function _saveCache( $url, $resp, $ttl = 3600 ) {
+		$key = self::generateCacheKey( $url );
+		update_option(
+			$key,
+			array(
+				'data' => $resp,
+				'ttl'  => time() + $ttl,
+			)
+		);
+	}
+
+	private function _purgeCache( $url ) {
+		delete_option(
+			self::generateCacheKey( $url )
+		);
+	}
+
+	private static function generateCacheKey( $url ) {
+		return 'egoi:cache:' . hash( 'sha256', $url );
+	}
+
 	/**
 	 * @param $url
 	 * @param array $headers
 	 * @return string
 	 */
 	protected function _getContent( $url, $headers = array() ) {
+
+		if ( $this->_hasCachedResponse( $url ) ) {
+			return $this->_cachedResponse( $url );
+		}
 
 		$res = wp_remote_request(
 			$url,
@@ -1567,31 +1595,12 @@ class Egoi_For_Wp {
 			)
 		);
 
-		return is_wp_error( $res ) ? '{}' : $res['body'];
-	}
+		if ( is_wp_error( $res ) ) {
+			return '{}';
+		}
 
-	/**
-	 * @param $url
-	 * @param $rows
-	 * @param bool $option
-	 * @return string
-	 */
-	private function _postContent( $url, $rows, $option = false ) {
-
-		$url            = str_replace( 'service', 'post', $url );
-		$rows['option'] = $option;
-
-		$res = wp_remote_request(
-			$url,
-			array(
-				'method'  => 'POST',
-				'timeout' => 30,
-				'body'    => $rows,
-				'headers' => array(),
-			)
-		);
-
-		return is_wp_error( $res ) ? '{}' : $res['body'];
+		$this->_cacheCreatorHandler( $url, $res['body'] );
+		return $res['body'];
 	}
 
 	public function get_listener( $user_id ) {
@@ -1631,19 +1640,6 @@ class Egoi_For_Wp {
 	 * @param $option_name
 	 * @return string
 	 */
-	protected function name_post( $option_name ) {
-
-		if ( substr( $option_name, -1 ) !== ']' ) {
-			return Egoi_For_Wp_Admin::OPTION_NAME . '[' . $option_name . ']';
-		}
-
-		return Egoi_For_Wp_Admin::OPTION_NAME . $option_name;
-	}
-
-	/**
-	 * @param $option_name
-	 * @return string
-	 */
 	protected function bar_post( $option_name ) {
 
 		if ( substr( $option_name, -1 ) !== ']' ) {
@@ -1652,112 +1648,6 @@ class Egoi_For_Wp {
 
 		return Egoi_For_Wp_Admin::BAR_OPTION_NAME . $option_name;
 	}
-
-	/**
-	 * @param $option_name
-	 * @return string
-	 */
-	protected function form_post( $option_name ) {
-
-		if ( substr( $option_name, -1 ) !== ']' ) {
-			return Egoi_For_Wp_Admin::FORM_OPTION . '[' . $option_name . ']';
-		}
-
-		return Egoi_For_Wp_Admin::FORM_OPTION . $option_name;
-	}
-
-
-	/**
-	 * @param $id
-	 * @return mixed
-	 */
-	public function get_preview_page( $id ) {
-
-		$page = get_page_by_path( self::PAGE_SLUG );
-
-		if ( $page instanceof WP_Post && in_array( $page->post_status, array( 'draft', 'publish' ) ) ) {
-			$page_id = $page->ID;
-
-		} else {
-			$page_id = wp_insert_post(
-				array(
-					'post_name'    => self::PAGE_SLUG,
-					'post_type'    => 'page',
-					'post_status'  => 'draft',
-					'post_title'   => 'E-goi for WordPress: Form Preview',
-					'post_content' => '[egoi_form_sync_' . $id . ']',
-				)
-			);
-		}
-
-		return $page_id;
-	}
-
-	/**
-	 * @param $element
-	 * @param $id
-	 * @return mixed
-	 */
-	public function redirect_public( $element, $id ) {
-
-		$content = $element;
-		switch ( $id ) {
-			case '1':
-				$FORM_OPTION = Egoi_For_Wp_Admin::FORM_OPTION_1;
-			case '2':
-				$FORM_OPTION = Egoi_For_Wp_Admin::FORM_OPTION_2;
-			case '3':
-				$FORM_OPTION = Egoi_For_Wp_Admin::FORM_OPTION_3;
-		}
-		$form_post_array = get_option( $FORM_OPTION, array() );
-
-		$base_url    = get_permalink( $this->get_preview_page( $id ) );
-		$args        = array(
-			'form_id' => $form_post_array['form_id'],
-		);
-		$preview_url = add_query_arg( $args, $base_url );
-
-		return $preview_url;
-	}
-
-	/**
-	 * @param $data_params
-	 * @param $apikey
-	 * @param bool        $option
-	 * @return string
-	 */
-	private function checkUser( $data_params, $apikey, $option = false ) {
-
-		try {
-
-			require_once ABSPATH . '/wp-includes/pluggable.php';
-			$email      = wp_get_current_user();
-			$user_email = $email->data->user_email;
-
-			$params = array(
-				'apikey'   => $apikey,
-				'email'    => $user_email,
-				'smegoi_c' => $data_params->CLIENTE_ID,
-				'smegoi_i' => '',
-				'smegoi_v' => 'Wordpress_' . $this->version,
-				'smegoi_h' => $this->host,
-				'smegoi_e' => get_locale(),
-			);
-
-			require 'service/post_wsdl.php';
-			if ( class_exists( 'SoapClient' ) ) {
-				$response = new SoapClient( null, $options );
-				$response->call( $params, $option );
-			} else {
-				$response = $this->_postContent( $options['location'], $params, $option );
-			}
-		} catch ( Exception $e ) {
-			// continue
-		}
-
-		return '';
-	}
-
 
 	/**
 	 * @param bool $form_id
@@ -1878,26 +1768,6 @@ class Egoi_For_Wp {
 			}
 		}
 		return $simple_map;
-	}
-
-	/**
-	 *
-	 */
-	public function getClientAPI() {
-		if ( isset( $_POST['egoi_key'] ) ) {
-			$key           = sanitize_key( $_POST['egoi_key'] );
-			$url           = $this->restUrl . 'getClientData&' . http_build_query( array( 'functionOptions' => array( 'apikey' => $key ) ), '', '&' );
-			$result_client = json_decode( $this->_getContent( $url ) );
-
-			if ( ! isset( $result_client->Egoi_Api->getClientData->CLIENTE_ID ) ) {
-				header( 'HTTP/1.1 404 Not Found' );
-				exit;
-			} else {
-				$this->callClient( $result_client->Egoi_Api->getClientData, $key, 1 );
-				echo 'SUCCESS';
-				exit;
-			}
-		}
 	}
 
 	/**
@@ -2023,32 +1893,6 @@ class Egoi_For_Wp {
 	}
 
 	/**
-	 * @param $list
-	 */
-	public function addTrackEngage( $list ) {
-		require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.php';
-
-		$apikey = get_option( 'egoi_api_key' );
-		if ( empty( $apikey['apikey'] ) ) {
-			return;
-		}
-		try {
-			$api = new EgoiApiV3( $apikey['apikey'] );
-
-			$api->activateTrackingEngage(
-				'POST',
-				array(
-					'domain' => get_site_url(),
-					'list'   => $list,
-				)
-			);
-		} catch ( Exception $e ) {
-			return;
-		}
-
-	}
-
-	/**
 	 * @return mixed
 	 */
 	public static function egoi_subscriber_signup_fields() {
@@ -2150,7 +1994,7 @@ class Egoi_For_Wp {
 	 * @return array
 	 */
 	public static function getAccountTags() {
-		$Egoi4WpBuilderObject = get_option( 'Egoi4WpBuilderObject' );
+		$Egoi4WpBuilderObject = new Egoi_For_Wp();
 		$tag_list             = json_decode( wp_json_encode( $Egoi4WpBuilderObject->getTags() ), true );
 
 		if ( empty( $tag_list['TAG_LIST'] ) || ! is_array( $tag_list['TAG_LIST'] ) ) {
@@ -2175,7 +2019,7 @@ class Egoi_For_Wp {
 
 		$options = get_option( Egoi_For_Wp_Admin::OPTION_NAME );
 
-		$Egoi4WpBuilderObject = get_option( 'Egoi4WpBuilderObject' );
+		$Egoi4WpBuilderObject = new Egoi_For_Wp();
 		$extra                = (array) $Egoi4WpBuilderObject->getExtraFields( empty( $options['list'] ) ? $options->list : $options['list'], $plugin_key );
 
 		$egoi_fields = array(

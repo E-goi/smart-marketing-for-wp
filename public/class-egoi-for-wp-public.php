@@ -45,31 +45,6 @@ class Egoi_For_Wp_Public {
 		return $this;
 	}
 
-	public function shortcode_default() {
-
-		return $this->generate_html( $submit, '1' );
-	}
-
-	public function shortcode_second() {
-
-		return $this->generate_html( $submit, '2' );
-	}
-
-	public function shortcode_last1() {
-
-		return $this->generate_html( $submit, '3' );
-	}
-
-	public function shortcode_last2() {
-
-		return $this->generate_html( $submit, '4' );
-	}
-
-	public function shortcode_last3() {
-
-		return $this->generate_html( $submit, '5' );
-	}
-
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
@@ -92,9 +67,6 @@ class Egoi_For_Wp_Public {
 	 */
 	public function enqueue_scripts() {
 		$bar_post = get_option( Egoi_For_Wp_Admin::BAR_OPTION_NAME );
-
-		wp_enqueue_script( 'ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-forms.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( 'ajax-script', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
 		if ( isset( $bar_post['enabled'] ) && ( $bar_post['enabled'] ) ) {
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/e-goi.min.js', array( 'jquery' ), $this->version, false );
@@ -143,13 +115,6 @@ class Egoi_For_Wp_Public {
 			}
 		}
 
-		$pos = $bar_post['position'];
-		if ( $pos == 'top' ) {
-			$pos = '1';
-		} else {
-			$pos = '0';
-		}
-
 		if ( $bar_post['sticky'] ) {
 			$style_pos = 'style="position: fixed;"';
 			$id_tab    = 'tab_egoi_footer_fixed';
@@ -159,58 +124,65 @@ class Egoi_For_Wp_Public {
 
 		$bar_post['color_bar'] = ! empty( $bar_post['color_bar_transparent'] ) ? $bar_post['color_bar'] : 'transparent';
 
-		if ( $bar_post['position'] == 'top' ) {
+        ?>
+        <!-- Smart Marketing Bar -->
+        <?php
 
-			$bar_content = '<span style="display:none;" id="e-goi-bar-session">' . $enable . '</span>
-			<div class="egoi-bar" id="egoi-bar" style="' . $hidden . '">
-				<input type="hidden" name="list" value="' . $bar_post['list'] . '">
-				<input type="hidden" name="lang" value="' . $bar_post['lang'] . '">
-				<input type="hidden" name="tag" value="' . $tag . '">
-				<input type="hidden" name="double_optin" value="' . $bar_post['double_optin'] . '">
-				<label class="egoi-label" style="display:inline-block;">' . $bar_post['text_bar'] . '</label>
-				<input type="email" name="email" placeholder="' . $bar_post['text_email_placeholder'] . '" class="egoi-email" required>
-				<input type="button" class="egoi_sub_btn" value="' . $bar_post['text_button'] . '" />
+        if($regenerate){
+            ?>
+            <div id="smart-marketing-egoi">
+            <?php
+        }
+
+		if ( $bar_post['position'] == 'top' ) {
+            ?>
+			<span style="display:none;" id="e-goi-bar-session"><?php echo esc_attr($enable) ?></span>
+			<div class="egoi-bar" id="egoi-bar" style="<?php echo esc_attr($hidden) ?>">
+				<input type="hidden" name="list" value="<?php echo esc_attr($bar_post['list']) ?>">
+				<input type="hidden" name="lang" value="<?php echo esc_attr($bar_post['lang']) ?>">
+				<input type="hidden" name="tag" value="<?php echo esc_attr($tag) ?>">
+				<input type="hidden" name="double_optin" value="<?php echo esc_attr($bar_post['double_optin']) ?>">
+				<label class="egoi-label" style="display:inline-block;"><?php echo esc_attr($bar_post['text_bar']) ?></label>
+				<input type="email" name="email" placeholder="<?php echo esc_attr($bar_post['text_email_placeholder']) ?>" class="egoi-email" required>
+				<input type="button" class="egoi_sub_btn" value="<?php echo esc_attr($bar_post['text_button']) ?>" />
 				<span id="process_data_egoi" class="loader_btn_egoi" style="display:none;"></span>
 			</div>
-			<span class="egoi-action" id="tab_egoi" style="background:' . $bar_post['color_bar'] . ';"></span>';
-
+			<span class="egoi-action" id="tab_egoi" style="background:<?php echo esc_attr($bar_post['color_bar']) ?>;"></span>
+        <?php
 		} else {
-
-			$bar_content = '<span style="display:none;" id="e-goi-bar-session">' . $enable . '</span>
-				<span class="egoi-bottom-action" id="' . $id_tab . '" style="background:' . $bar_post['color_bar'] . ';"></span>
-				<div class="egoi-bar" id="egoi-bar" style="' . $hidden . '">
-					<input type="hidden" name="list" value="' . $bar_post['list'] . '">
-					<input type="hidden" name="lang" value="' . $bar_post['lang'] . '">
-					<input type="hidden" name="tag" value="' . $tag . '">
-				    <input type="hidden" name="double_optin" value="' . $bar_post['double_optin'] . '">
-					<label class="egoi-label">' . $bar_post['text_bar'] . '</label>
-					<input type="email" name="email" placeholder="' . $bar_post['text_email_placeholder'] . '" class="egoi-email" required style="display:inline-block;width:20%;">
-					<input type="button" class="egoi_sub_btn" disabled value="' . $bar_post['text_button'] . '" />
-					<span id="process_data_egoi" class="loader_btn_egoi" style="display:none;"></span>	
-				</div>';
+        ?>
+			<span style="display:none;" id="e-goi-bar-session"><?php echo esc_attr($enable) ?></span>
+				<span class="egoi-bottom-action" id="<?php echo esc_attr($id_tab) ?>" style="background:<?php echo esc_attr($bar_post['color_bar']) ?>;"></span>
+				<div class="egoi-bar" id="egoi-bar" style="<?php echo esc_attr($hidden) ?>">
+					<input type="hidden" name="list" value="<?php echo esc_attr($bar_post['list']) ?>">
+					<input type="hidden" name="lang" value="<?php echo esc_attr($bar_post['lang']) ?>">
+					<input type="hidden" name="tag" value="<?php echo esc_attr($tag) ?>">
+				    <input type="hidden" name="double_optin" value="<?php echo esc_attr($bar_post['double_optin']) ?>">
+					<label class="egoi-label"><?php echo esc_attr($bar_post['text_bar']) ?></label>
+					<input type="email" name="email" placeholder="<?php echo esc_attr($bar_post['text_email_placeholder']) ?>" class="egoi-email" required style="display:inline-block;width:20%;">
+					<input type="button" class="egoi_sub_btn" disabled value="<?php echo esc_attr($bar_post['text_button']) ?>" />
+					<span id="process_data_egoi" class="loader_btn_egoi" style="display:none;"></span>
+				</div>
+        <?php
 		}
 
 		if ( $regenerate ) {
-			$top_content    = '';
-			$bottom_content = '';
-		} else {
-			$top_content    = '<div id="smart-marketing-egoi">';
-			$bottom_content = '</div>';
-		}
-
-		$open_comment  = '<!-- Smart Marketing Bar -->';
-		$close_comment = '<!-- / Smart Marketing Bar -->';
-
-		$output = $open_comment . $top_content . $bar_content . $bottom_content . $close_comment;
+            ?>
+			</div>
+		    <?php
+        }
+        ?>
+        <!-- / Smart Marketing Bar -->
+        <?php
 
 		$this->set_custom_css( $bar_post );
 		$this->set_custom_script();
-		echo $output;
 
 		if ( $regenerate ) {
 			exit;
 		}
 	}
+
 	private function set_custom_script() {
 		?>
 		<script>
@@ -250,19 +222,37 @@ class Egoi_For_Wp_Public {
 				$tab_bar  = 'position:fixed !important; bottom:50px;';
 			}
 		}
+        ?>
+		<style type="text/css">
 
-		echo '<style type="text/css">' . PHP_EOL;
+			.egoi-bar {
+                height: auto;
+                left: 0px;
+                background:<?php echo esc_attr($css['color_bar'])?> !important;
+                <?php echo esc_attr($border)?>:<?php echo esc_attr($css['border_px'])?> solid <?php echo esc_attr($css['border_color'])?> !important;
+                <?php echo esc_attr($top)?>
+                position:<?php echo esc_attr($position)?>;
+            }
+			.egoi-label {
+                color: <?php echo esc_attr($css['bar_text_color']) ?> !important;
+            }
 
-			echo '.egoi-bar { height: auto; left: 0px; background:' . $css['color_bar'] . ' !important; ' . $border . ':' . $css['border_px'] . ' solid ' . $css['border_color'] . ' !important; ' . $top . ' position:' . $position . '; }' . PHP_EOL;
-			echo '.egoi-label { color: ' . $css['bar_text_color'] . ' !important; }' . PHP_EOL;
+			.egoi-close {
+                <?php echo esc_attr($tab_bar); ?>
+                background-color:<?php echo esc_attr($css['color_bar']); ?>;
+                border-left:<?php echo esc_attr($css['border_px']); ?> solid <?php echo esc_attr($css['border_color']); ?> !important;
+            }
 
-			echo '.egoi-close { ' . $tab_bar . ' background-color:' . $css['color_bar'] . ';border-left:' . $css['border_px'] . ' solid ' . $css['border_color'] . ' !important; }' . PHP_EOL;
+			.egoi_sub_btn {
+                color: <?php echo esc_attr($css['color_button_text']); ?> !important;
+                background-color: <?php echo esc_attr($css['color_button']); ?> !important;
+                padding: 2px 5px !important;
+                height: 30px !important;
+            }
 
-			$background = $css['color_button'];
-			echo '.egoi_sub_btn { color: ' . $css['color_button_text'] . ' !important; background-color: ' . $background . ' !important; padding: 2px 5px !important; height: 30px !important; }' . PHP_EOL;
-
-		echo '</style>';
-	}
+        </style>
+	    <?php
+    }
 
 	public function get_bar( $element_id = 'egoi_bar_sync', $submitted = '' ) {
 		global $_egoiFiltersbar;
@@ -275,9 +265,8 @@ class Egoi_For_Wp_Public {
 		$html = '';
 		if ( $_egoiFiltersbar == true ) {
 			$_egoiFiltersbar = false;
-			$html            = $this->generate_bar( $submitted );
+			$this->generate_bar( $submitted );
 		}
-		return $html;
 	}
 
 	public function subscribe() {
@@ -288,13 +277,11 @@ class Egoi_For_Wp_Public {
 		$email  = sanitize_email( $_POST['email'] );
 
 		if ( empty( $email ) ) {
-			if ( $bar['position'] == 'top' ) {
-				$close_btn = '<span class="egoi-action-error top" id="tab_egoi_submit_close"></span>';
-			} else {
-				$close_btn = '<span class="egoi-action-error bottom" id="tab_egoi_submit_close"></span>';
-			}
-			$bar_content_error = '<div class="egoi-bar" id="egoi-bar" style="background:' . $bar['error_bgcolor'] . '!important;border:none!important;"><div class="egoi-bar-error">' . __( 'Email can not be empty', 'egoi-for-wp' ) . '</div>' . $close_btn . '</div>';
-			echo $bar_content_error;
+            ?>
+			<div class="egoi-bar" id="egoi-bar" style="background:<?php echo esc_attr($bar['error_bgcolor']) ?> !important;border:none!important;"><div class="egoi-bar-error"><?php _e( 'Email can not be empty', 'egoi-for-wp' ) ?></div>
+                <span class="egoi-action-error <?php echo $bar['position'] == 'top' ?'top':'bottom' ?>" id="tab_egoi_submit_close"></span>
+            </div>
+			<?php
 			exit;
 		}
 
@@ -355,123 +342,25 @@ class Egoi_For_Wp_Public {
 			$success = $bar['text_subscribed'];
 
 			if ( $error ) {
-				if ( $bar['position'] == 'top' ) {
-					$close_btn = '<span class="egoi-action-error top" id="tab_egoi_submit_close"></span>';
-				} else {
-					$close_btn = '<span class="egoi-action-error bottom" id="tab_egoi_submit_close"></span>';
-				}
-				$bar_content_error = '<div class="egoi-bar" id="egoi-bar" style="background:' . $bar['error_bgcolor'] . '!important;border:none!important;"><div class="egoi-bar-error">' . $error . '</div>' . $close_btn . '</div>';
-				echo $bar_content_error;
-
+                ?>
+				<div class="egoi-bar" id="egoi-bar" style="background:<?php echo esc_attr($bar['error_bgcolor']); ?> !important;border:none!important;"><div class="egoi-bar-error"><?php echo esc_textarea($error); ?></div>
+                    <span class="egoi-action-error <?php echo $bar['position'] == 'top' ?'top':'bottom' ?>" id="tab_egoi_submit_close"></span>
+                </div>
+				<?php
 			} else {
 				if ( $bar['redirect'] ) {
 					wp_redirect( $bar['redirect'] );
-
 				} else {
-					$success_btn         = '<span class="egoi-action-success" id="tab_egoi_submit_close"></span>';
-					$bar_content_success = '<div class="egoi-bar" id="egoi-bar" style="background:' . $bar['success_bgcolor'] . '!important;border:none!important;"><div class="egoi-bar-success">' . $success . '</div>' . $success_btn . '</div>';
-					echo $bar_content_success;
+                    ?>
+					<div class="egoi-bar" id="egoi-bar" style="background:<?php echo esc_attr($bar['success_bgcolor']); ?> !important;border:none!important;"><div class="egoi-bar-success"><?php echo esc_textarea($success); ?></div>
+                        <span class="egoi-action-success" id="tab_egoi_submit_close"></span>
+                    </div>
+					<?php
 				}
 			}
 		}
 		exit;
 	}
-
-	public function subscribe_egoi_form() {
-		$res = wp_remote_request(
-			esc_url_raw( $_POST['action_url'] ),
-			array(
-				'method'  => 'POST',
-				'timeout' => 30,
-				'body'    => $_POST,
-			)
-		);
-
-		if ( is_wp_error( $res ) ) {
-			$res = array( 'body' => '' );
-		}
-
-		$outputs = explode( '</style>', $res['body'] );
-		$content = strip_tags( $outputs[1], '<div></div><p></p><br>' );
-		echo wp_kses_post( $content );
-		exit;
-	}
-
-
-	/*
-	*	Generate a E-goi Form
-	*/
-	public function generate_html( $submit = '', $id ) {
-
-		$form       = get_option( 'egoi_form_sync_' . $id );
-		$show_title = $form['egoi_form_sync']['show_title'];
-
-		$form_enabled = $form['egoi_form_sync']['enabled'];
-		if ( $form_enabled ) {
-
-			$form_post = get_option( 'egoi_form_sync_' . $id );
-			$type      = $form_post['egoi_form_sync']['egoi'];
-			$title     = $form_post['egoi_form_sync']['form_name'];
-			$px        = $form_post['egoi_form_sync']['border'];
-			$color     = ' solid ' . $form_post['egoi_form_sync']['border_color'];
-			if ( ! $px ) {
-				$px = '0';
-			}
-
-			if ( ! $color ) {
-				$color = 'none';
-			}
-
-			$width  = $form_post['egoi_form_sync']['width'];
-			$height = $form_post['egoi_form_sync']['height'];
-
-			if ( $type == 'iframe' ) {
-				$content = explode( ' - ', $form_post['egoi_form_sync']['form_content'] );
-				$iframe  = '<iframe src="//' . $content[1] . '" width="' . $width . '" height="' . $height . '" style="border:' . $px . $color . ';" onload="window.parent.parent.scrollTo(0,0);">
-				</iframe>';
-				$fields  = $iframe;
-
-			} else {
-				$content = stripslashes( html_entity_decode( $form_post['egoi_form_sync']['form_content'] ) );
-				// $fields = str_ireplace('type="submit"', 'type="button" data-egoi_form_submit="1"', $content);
-				$fields = $content;
-			}
-
-			if ( $show_title ) {
-				$html = '<h1>' . $title . '</h1>';
-			}
-			$html .= '<div class="egoi4wp-form-fields" id="form-fields">' . $fields . $this->hidden_fields() . '</div><span id="egoi_form_loader"></span>';
-
-			if ( $submit ) {
-				$output = $html . $error_div;
-			} else {
-				$output = $html;
-			}
-
-			return $output;
-		}
-	}
-
-	public function hidden_fields() {
-
-		$hidden  = '<input type="hidden" name="form_action" value="form_handler">';
-		$hidden .= '<input type="hidden" name="url" value="' . $_SERVER['REQUEST_URI'] . '">';
-		return $hidden;
-	}
-
-	public function get_html( $element_id = 'egoi_form_sync', $submitted = '' ) {
-
-		$html = $this->generate_html( $submitted );
-		return $html;
-	}
-
-	public function get_errors( $submitted, $error_div, $form_post ) {
-
-		$html = (string) apply_filters( 'egoi_form_response_html', $error_div, $form_post );
-		$html = $this->generate_html( $submitted, $error_div );
-		return $html;
-	}
-
 
 	// Simple form shortcode output
 	public function subscribe_egoi_simple_form( $atts, $qt = 1 ) {
@@ -484,17 +373,8 @@ class Egoi_For_Wp_Public {
 		$id                 = sanitize_key( $atts['id'] );
 		$simple_form        = 'egoi_simple_form_' . $id . '_' . $qt;
 		$simple_form_result = $simple_form . '_result';
-
-		$post = '<form id="' . $simple_form . '" method="post" action="/">';
-
-		$options = get_option( 'egoi_simple_form_' . $id );
-		$data    = json_decode( $options );
-
-		$post .= '<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="' . esc_attr( $id ) . '">';
-		$post .= '<input type="hidden" name="egoi_list" id="egoi_list" value="' . esc_attr( $data->list ) . '">';
-		$post .= '<input type="hidden" name="egoi_lang" id="egoi_lang" value="' . esc_attr( $data->lang ) . '">';
-		$post .= '<input type="hidden" name="egoi_tag" id="egoi_tag" value="' . esc_attr( $data->tag ) . '">';
-		$post .= '<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="' . esc_attr( $data->double_optin ) . '">';
+		$options            = get_option( 'egoi_simple_form_' . $id );
+		$data               = json_decode( $options );
 
 		$table     = $wpdb->prefix . 'posts';
 		$html_code = $wpdb->get_row( " SELECT post_content, post_title FROM $table WHERE ID = '$id' " );
@@ -503,114 +383,126 @@ class Egoi_For_Wp_Public {
 			$html_code->post_content = str_replace( '[e_' . $tag . ']', '', $html_code->post_content );
 			$html_code->post_content = str_replace( '[/e_' . $tag . ']', '', $html_code->post_content );
 		}
+		?>
+		<form id="<?php echo esc_attr( $simple_form ); ?>" method="post" action="/">
+			<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="<?php echo esc_attr( $id ); ?>">
+			<input type="hidden" name="egoi_list" id="egoi_list" value="<?php echo esc_attr( $data->list ); ?>">
+			<input type="hidden" name="egoi_lang" id="egoi_lang" value="<?php echo esc_attr( $data->lang ); ?>">
+			<input type="hidden" name="egoi_tag" id="egoi_tag" value="<?php echo esc_attr( $data->tag ); ?>">
+			<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="<?php echo esc_attr( $data->double_optin ); ?>">
 
-		$post .= stripslashes( $html_code->post_content );
-		$post .= '<div id="' . esc_attr( $simple_form_result ) . '" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>';
-		$post .= '</form>';
 
-		$post .= '
-			<script type="text/javascript" >
-				jQuery(document).ready(function() {
-					jQuery("#' . $simple_form . ' select[name=egoi_country_code]").empty();
-				';
-		foreach ( unserialize( EFWP_COUNTRY_CODES ) as $key => $value ) {
-			$string = ucwords( strtolower( $value['country_pt'] ) ) . ' (+' . $value['prefix'] . ')';
-			$post  .= 'jQuery("#' . $simple_form . ' select[name=egoi_country_code]").append("<option value=' . $value['prefix'] . '>' . $string . '</option>");';
-		}
-		$post .= '
+			<?php echo stripslashes( $html_code->post_content ); ?>
+			<div id="<?php echo esc_attr( $simple_form_result ); ?>" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>
+		</form>
+
+		<script type="text/javascript" >
+			jQuery(document).ready(function() {
+				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").empty();
+			<?php
+
+			$countryStore = wc_get_base_location()['country'];
+			foreach ( unserialize( EFWP_COUNTRY_CODES ) as $key => $value ) {
+				$string = ucwords( strtolower( $value['country_pt'] ) ) . ' (+' . $value['prefix'] . ')';
+				if ( $countryStore == $key ) {// selects store country code by default
+					?>
+				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").append("<option selected value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
+					<?php
+				} else {
+					?>
+				 jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").append("<option value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
+					<?php
+				}
+			}
+			?>
+
+			});
+			jQuery("#<?php echo esc_attr( $simple_form ); ?>").submit(function(event) {
+
+				var simple_form = jQuery(this);
+				event.preventDefault(); // Stop form from submitting normally
+
+				var button_obj = jQuery("button[type=submit]", "#<?php echo esc_attr( $simple_form ); ?>");
+				var button_original_style = button_obj.attr("style");
+				var button_style = button_obj.css(["width", "height"]);
+				var button_text = button_obj.text();
+
+				var max = 3;
+				var i = 2;
+				button_obj.text(".").prop("disabled",true).css(button_style);
+				var button_effect = setInterval(function () {
+					if (i <= max) {
+						button_obj.text(".".repeat(i)).prop("disabled",true).css(button_style);
+						i++;
+					} else {
+						button_obj.text(".").prop("disabled",true).css(button_style);
+						i=2;
+					}
+				}, 400);
+
+				jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).hide();
+
+				var ajaxurl = "<?php echo admin_url( 'admin-ajax.php' ); ?>";
+				var egoi_simple_form = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_simple_form]").val();
+				var egoi_name = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_name]").val();
+				var egoi_email = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_email]").val();
+				var egoi_country_code	= jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").val();
+				var egoi_mobile	= jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_mobile]").val();
+				var egoi_list = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_list]").val();
+				var egoi_lang = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_lang]").val();
+				var egoi_tag = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_tag]").val();
+				var egoi_double_optin = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_double_optin]").val();
+
+				var data = {
+					"action": "egoi_simple_form_submit",
+					"egoi_simple_form": egoi_simple_form,
+					"egoi_name": egoi_name,
+					"egoi_email": egoi_email,
+					"egoi_country_code": egoi_country_code,
+					"egoi_mobile": egoi_mobile,
+					"egoi_list": egoi_list,
+					"egoi_lang": egoi_lang,
+					"egoi_tag": egoi_tag,
+					"egoi_double_optin" : egoi_double_optin
+				};
+
+				var posting = jQuery.post(ajaxurl, data);
+
+				posting.done(function( data ) {
+					if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
+
+						var event = new Event("<?php echo esc_attr( $simple_form ); ?>");
+						var elem = document.getElementsByTagName("html");
+						elem[0].dispatchEvent(event);
+
+						jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).css({
+							"color": "#4F8A10",
+							"background-color": "#DFF2BF"
+						});
+
+						jQuery( "#<?php echo esc_attr( $simple_form ); ?>" )[0].reset();
+
+					} else {
+						jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).css({
+							"color": "#9F6000",
+							"background-color": "#FFD2D2"
+						});
+					}
+
+					jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).empty().append( data ).slideDown( "slow" );
+					clearInterval(button_effect);
+					if (button_original_style) {
+						button_obj.prop("disabled",false).attr("style", button_original_style).html(button_text);
+					} else {
+						button_obj.prop("disabled",false).removeAttr("style").html(button_text);
+					}
 				});
 
-                jQuery("#' . $simple_form . ' select[name=egoi_country_code]").val(jQuery("#' . $simple_form . ' select[name=egoi_country_code]").data("selected"));
 
-				jQuery("#' . $simple_form . '").submit(function(event) {
-					
-					var simple_form = jQuery(this);
-					event.preventDefault(); // Stop form from submitting normally
-                    
-					var button_obj = jQuery("button[type=submit]", "#' . $simple_form . '");
-					var button_original_style = button_obj.attr("style");
-					var button_style = button_obj.css(["width", "height"]);
-					var button_text = button_obj.text();
 
-					var max = 3;
-					var i = 2;
-					button_obj.text(".").prop("disabled",true).css(button_style);
-					var button_effect = setInterval(function () {
-						if (i <= max) {
-							button_obj.text(".".repeat(i)).prop("disabled",true).css(button_style);
-							i++;
-						} else {
-							button_obj.text(".").prop("disabled",true).css(button_style);
-							i=2;
-						}
-					}, 400);
-
-					jQuery( "#' . $simple_form_result . '" ).hide();
-
-					var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";
-					var egoi_simple_form = jQuery("#' . $simple_form . ' input[name=egoi_simple_form]").val();
-					var egoi_name = jQuery("#' . $simple_form . ' input[name=egoi_name]").val();
-					var egoi_email = jQuery("#' . $simple_form . ' input[name=egoi_email]").val();
-					var egoi_country_code	= jQuery("#' . $simple_form . ' select[name=egoi_country_code]").val();
-					var egoi_mobile	= jQuery("#' . $simple_form . ' input[name=egoi_mobile]").val();
-					var egoi_list = jQuery("#' . $simple_form . ' input[name=egoi_list]").val();
-					var egoi_lang = jQuery("#' . $simple_form . ' input[name=egoi_lang]").val(); 
-					var egoi_tag = jQuery("#' . $simple_form . ' input[name=egoi_tag]").val();
-					var egoi_double_optin = jQuery("#' . $simple_form . ' input[name=egoi_double_optin]").val();
-
-					var data = {
-						"action": "egoi_simple_form_submit",
-						"egoi_simple_form": egoi_simple_form,
-						"egoi_name": egoi_name,
-						"egoi_email": egoi_email,
-						"egoi_country_code": egoi_country_code,
-						"egoi_mobile": egoi_mobile,
-						"egoi_list": egoi_list,
-						"egoi_lang": egoi_lang,
-						"egoi_tag": egoi_tag,
-						"egoi_double_optin" : egoi_double_optin
-					};
-
-					var posting = jQuery.post(ajaxurl, data);
-
-					posting.done(function( data ) {
-						if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
-                               
-                            var event = new Event("' . $simple_form . '");
-                            var elem = document.getElementsByTagName("html");
-                            elem[0].dispatchEvent(event);
-                            
-							jQuery( "#' . $simple_form_result . '" ).css({
-								"color": "#4F8A10",
-								"background-color": "#DFF2BF"
-							});
-
-							jQuery( "#' . $simple_form . '" )[0].reset();
-
-						} else {
-							jQuery( "#' . $simple_form_result . '" ).css({
-								"color": "#9F6000",
-								"background-color": "#FFD2D2"
-							});
-						}
-
-						jQuery( "#' . $simple_form_result . '" ).empty().append( data ).slideDown( "slow" );
-						clearInterval(button_effect);
-						if (button_original_style) {
-						    button_obj.prop("disabled",false).attr("style", button_original_style).html(button_text);
-						} else {
-						    button_obj.prop("disabled",false).removeAttr("style").html(button_text);
-						}
-					});
-
-                    
-
-				});
-				setTimeout(function(){ jQuery("#' . $simple_form . ' select[name=egoi_country_code]").val(jQuery("#' . $simple_form . ' select[name=egoi_country_code]").data("selected")); }, 100);
-			</script>
-		';
-
-		return $post;
+			});
+		</script>
+		<?php
 	}
 
 	/**
@@ -634,7 +526,12 @@ class Egoi_For_Wp_Public {
 	 * Web Push Output
 	 */
 	public function add_webpush() {
-		$options = get_option( 'egoi_webpush_code' );
+		$options       = get_option( 'egoi_webpush_code' );
+		$optionsGlobal = $this->load_options();
+
+		if ( ! empty( $optionsGlobal['domain'] ) && ( empty( $options ) || empty( $options['track'] ) || empty( $options['code'] ) ) ) {
+			return false;
+		}
 		global $_egoiFilterswebpush;
 
 		if ( ! isset( $_egoiFilterswebpush ) ) {
@@ -861,63 +758,6 @@ class Egoi_For_Wp_Public {
 		return $subscriber;
 	}
 
-	public function smsnf_save_advanced_form_subscriber() {
-		$success_messages = array(
-			'Está quase! Só falta confirmar o seu email.',
-			'You\'re almost there! We just need to confirm your email address.',
-			'Solamente necesitamos confirmar su correo electrónico.',
-		);
-
-		$form_data = array();
-		parse_str( $_POST['form_data'], $form_data );
-
-		$url      = esc_url_raw( strpos( $_POST['url'], 'http' ) !== false ? $_POST['url'] : 'http:' . $_POST['url'] );
-		$response = wp_remote_post(
-			$url,
-			array(
-				'method'  => 'POST',
-				'headers' => array(
-					'Content-Type' => 'application/x-www-form-urlencoded',
-				),
-				'timeout' => 60,
-				'body'    => $form_data,
-			)
-		);
-
-		if ( $response['response']['code'] != 200 ) {
-			echo false;
-		} else {
-			$output = 200;
-			foreach ( $success_messages as $message ) {
-				if ( strpos( $response['body'], $message ) !== false ) {
-					$output = $message;
-
-					$subscriber = (object) array(
-						'UID'        => null,
-						'FIRST_NAME' => sanitize_text_field( $_POST['fname'] . ' ' . $_POST['lname'] ),
-						'EMAIL'      => sanitize_email( $_POST['email'] ),
-						'LIST'       => sanitize_key( $form_data['lista'] ),
-					);
-
-					for ( $i = 1; $i <= 10; $i++ ) {
-						$form = get_option( 'egoi_form_sync_' . $i );
-						if ( $form && strpos( $form['egoi_form_sync']['form_content'], $_POST['form_id'] ) !== false ) {
-							$form_id    = sanitize_text_field( $form['egoi_form_sync']['form_id'] );
-							$form_title = sanitize_text_field( $form['egoi_form_sync']['form_name'] );
-							break;
-						}
-					}
-
-					$api = new Egoi_For_Wp();
-					$api->smsnf_save_form_subscriber( $form_id, 'advanced-form', $subscriber, $form_title );
-					break;
-				}
-			}
-		}
-		echo $output;
-		wp_die();
-	}
-
 	public function hookEcommerce() {
 
 		$options = $this->load_options();
@@ -928,8 +768,11 @@ class Egoi_For_Wp_Public {
 
 		require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
 		$track = new TrackingEngageSDK( $client_id, $options['list'], false, $track_social_id );
-		if ( ! empty( $options['list'] ) && ! empty( $options['track'] ) ) {
+		if ( ! empty( $options['list'] ) && ! empty( $options['track'] ) && empty( $options['domain'] ) ) {
 			$track->getStartUp();
+		}
+		if ( ! empty( $options['list'] ) && ! empty( $options['track'] ) && ! empty( $options['domain'] ) ) {
+			$track->getStartUpCS( $options['domain'] );
 		}
 		if ( isset( $options['social_track'] ) && $options['social_track'] ) {
 			$track->getStartUpSocial();
@@ -953,14 +796,29 @@ class Egoi_For_Wp_Public {
 		$track->setOrder();
 	}
 
+	public function hookCartBackend() {
+		$variations = $this->catalogsIsVariations();
+		$options    = $this->load_options();
+		require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-convert.php';
+		$converter = new EgoiConverter( $options );
+		$converter->convertCart( $variations );
+		return true;
+	}
+
+
+	private function catalogsIsVariations() {
+		require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-products-bo.php';
+		$options_catalogs = EgoiProductsBo::getCatalogOptions();
+		$options_catalogs = empty( $options_catalogs ) ? array() : $options_catalogs;
+		$variation        = false;
+		foreach ( $options_catalogs as $options_catalog ) {
+			$variation = $variation || ( empty( $options_catalog['variations'] ) ? false : true );
+		}
+		return $variation;
+	}
+
 	public function hookEcommerceGetOrder( $order = false ) {
-
 		$options = $this->load_options();
-
-		if ( empty( $options['list'] ) || empty( $options['track'] ) ) {
-			return false;} //list && tracking&engage setup check
-		$client_info = get_option( 'egoi_client' );
-		$client_id   = $client_info->CLIENTE_ID;
 
 		if ( version_compare( get_option( 'woocommerce_version' ), '3.0.0', '>=' ) ) {
 			if ( is_numeric( $order ) ) {
@@ -975,6 +833,13 @@ class Egoi_For_Wp_Public {
 				$order_id = $order->id;
 			}
 		}
+
+		if ( empty( $options['list'] ) || empty( $options['track'] ) ) {
+			return false;
+		} //list && tracking&engage setup check
+
+		$client_info = get_option( 'egoi_client' );
+		$client_id   = $client_info->CLIENTE_ID;
 		require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
 		$track = new TrackingEngageSDK( $client_id, $options['list'], $order_id );
 		$track->getOrder();
