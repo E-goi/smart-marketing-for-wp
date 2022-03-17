@@ -378,6 +378,9 @@ class Egoi_For_Wp_Public {
 
 		$table     = $wpdb->prefix . 'posts';
 		$html_code = $wpdb->get_row( " SELECT post_content, post_title FROM $table WHERE ID = '$id' " );
+        if(empty($html_code)){
+            return;
+        }
 		$tags      = array( 'name', 'email', 'mobile', 'submit' );
 		foreach ( $tags as $tag ) {
 			$html_code->post_content = str_replace( '[e_' . $tag . ']', '', $html_code->post_content );

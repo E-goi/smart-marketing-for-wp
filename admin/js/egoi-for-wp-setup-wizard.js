@@ -281,6 +281,10 @@
 								if (catalog_glob_status.val()) {
 									return;// trigger
 								}
+								if( $("#force_catalog_glob").length == 0 ){
+									valid = true;
+									return;
+								}
 								break;
 						}
 
