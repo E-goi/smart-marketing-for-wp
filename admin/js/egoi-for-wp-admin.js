@@ -102,7 +102,7 @@ jQuery( document ).ready(
 			var data = {
 				security:   egoi_config_ajax_object_core.ajax_nonce,
 				action: 'efwp_apikey_save',
-				apikey: jQuery("#apikey").val()
+				apikey: jQuery("#apikey").val()?jQuery("#apikey").val():jQuery("#egoi_api_key_input").val()
 			};
 
 			jQuery.post(egoi_config_ajax_object_core.ajax_url, data, function(response) {
