@@ -8,6 +8,7 @@
 				<th><?php _e( 'Language', 'egoi-for-wp' ); ?></th>
 				<th><?php _e( 'Currency', 'egoi-for-wp' ); ?></th>
 				<th><?php _e( 'Status', 'egoi-for-wp' ); ?></th>
+				<th><?php _e( 'Variations', 'egoi-for-wp' ); ?></th>
 				<th><?php _e( 'Operations', 'egoi-for-wp' ); ?></th>
 				<th><?php _e( 'Created At', 'egoi-for-wp' ); ?></th>
 			</tr>
@@ -34,33 +35,9 @@
 </div>
 
 
-<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="egoi-modal-header modal-header">
-				<button type="button" class="close no-border-button" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h2 class="modal-title" id="modalLabel"><?php _e( 'Import Catalog: ', 'egoi-for-wp' ); ?> <span id="display-selected"></span></h2>
-			</div>
-			<div class="modal-body nav">
-				<input type="hidden" id="selected-import-catalog">
-				<span><?php _e( 'This will import all your store\'s products!', 'egoi-for-wp' ); ?></span>
-				<span><?php _e( 'After this all new products will be synchronized to the selected catalog.', 'egoi-for-wp' ); ?></span>
-				<div style="display: flex;"><h4><?php _e( 'Products to import: ', 'egoi-for-wp' ); ?> <span id="display-number-products"></span></h4><?php echo getLoader( 'egoi-loader-products', false ); ?></div>
-				<div id="loading-import" style="display: none;">
-					<span>Products left: <span id="egoi-left-products"></span></span>
-					<div class="progress">
-						<div id="progressbar-import" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button id="start-import-catalog" type="button" class="button-primary" disabled><?php _e( 'Start', 'egoi-for-wp' ); ?></button>
-			</div>
-		</div>
-	</div>
-</div>
+<?php
+	getProductImportModal();
+?>
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">

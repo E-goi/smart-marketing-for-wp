@@ -23,15 +23,6 @@ $popup_data = $popup->getPopupSavedData();
 $content   = stripslashes( $popup_data['content'] );
 $editor_id = 'content';
 
-
-if ( empty( get_simple_forms() ) ) {
-	?>
-		<h2><?php _e( 'One step before starting...', 'egoi-for-wp' ); ?></h2>
-		<p><?php _e( 'Your popup must be linked to a simple form and for that you need to create your first one before!', 'egoi-for-wp' ); ?></p>
-	<?php
-	return;
-}
-
 ?>
 
 

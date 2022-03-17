@@ -81,7 +81,7 @@ class CampaignWidget {
 	 */
 	public function email_campaign_widget_display_meta_box( $post ) {
 
-		$Egoi4WpBuilderObject = get_option( 'Egoi4WpBuilderObject' );
+		$Egoi4WpBuilderObject = new Egoi_For_Wp();
 
 		// get contacts list
 		$lists = $Egoi4WpBuilderObject->getLists();

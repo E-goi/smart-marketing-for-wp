@@ -1,9 +1,10 @@
 <?php
 // cria html de uma notificação
-function get_notification( $title = '', $content = '', $type = 'success' ) {
-	$class = $type == 'error' ? ' smsnf-notification-error' : '';
+function get_notification( $title = '', $content = '', $type = 'success', $lazy = false ) {
+	$class   = $type == 'error' ? ' smsnf-notification-error' : '';
+	$display = $lazy ? 'lazy="true"' : '';
 	return '
-        <div class="smsnf-notification' . $class . '">
+        <div class="smsnf-notification' . $class . '" ' . $display . '>
             <div class="close-btn">&#10005;</div>
             <h2>' . esc_html( $title ) . '</h2>
             <p>' . esc_html( $content ) . '</p>
@@ -89,7 +90,7 @@ function get_lang_html( $selected_lang, $name, $hide ) {
 	<div id="form_lang_wrapper" class="smsnf-input-group" <?php echo ! empty( $hide ) ? 'style="display: none"' : ''; ?>>
 		<label for="form_lang"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label>
 		<div class="smsnf-wrapper">
-			<select name="egoi_widget[lang]" id="form_lang" class="form-select" data-egoi-lang="<?php echo ! empty( $selected_lang ) ? esc_attr( $selected_lang ) : ''; ?>"  disabled required></select>
+			<select name="<?php echo ! empty( $name ) ? esc_attr( $name ) : ''; ?>" id="form_lang" class="form-select" data-egoi-lang="<?php echo ! empty( $selected_lang ) ? esc_attr( $selected_lang ) : ''; ?>"  disabled required></select>
 			<div class="loading"></div>
 		</div>
 	</div>
@@ -101,7 +102,7 @@ function get_tag_html( $selected_tag, $name, $hide = false ) {
 	<div id="form_tag_wrapper" class="smsnf-input-group" style="<?php echo $hide ? 'display: none;' : ''; ?>" >
 		<label for="form_tag"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label><a data-modal="create-new-tag"><?php _e( 'Create new tag +', 'egoi-for-wp' ); ?></a>
 		<div class="smsnf-wrapper">
-			<select name="<?php echo empty( $name ) ? esc_attr( $name ) : ''; ?>" id="form_tag" class="form-select" data-egoi-tag="<?php echo ! empty( $selected_tag ) ? esc_attr( $selected_tag ) : ''; ?>"  disabled>
+			<select name="<?php echo ! empty( $name ) ? esc_attr( $name ) : ''; ?>" id="form_tag" class="form-select" data-egoi-tag="<?php echo ! empty( $selected_tag ) ? esc_attr( $selected_tag ) : ''; ?>"  disabled>
 				<option value="" selected disabled hidden><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
 			</select>
 			<div class="loading"></div>

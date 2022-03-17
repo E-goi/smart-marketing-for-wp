@@ -40,17 +40,6 @@ class Egoi_For_Wp_Listener {
 
 	}
 
-	private function getMapping( $user_id ) {
-
-		global $wpdb;
-
-		$table = $wpdb->prefix . 'egoi_map_fields';
-		$sql   = "SELECT * FROM $table order by id DESC";
-		$rows  = $wpdb->get_results( $sql );
-
-		return $rows;
-	}
-
 	private function Listen( $user_id ) {
 		$role = $this->options_listen['role'];
 

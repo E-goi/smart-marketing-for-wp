@@ -1,5 +1,5 @@
 <?php
-$contact_forms = $Egoi4WpBuilderObject->getContactFormInfo();
+$contact_forms = $this->egoiWpApi->getContactFormInfo();
 ?>
 <form method="post" action="">
 	<?php settings_fields( $FORM_OPTION ); ?>

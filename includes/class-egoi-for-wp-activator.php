@@ -48,10 +48,16 @@ class Egoi_For_Wp_Activator {
             PRIMARY KEY (id)'
 		);
 
-		$email = wp_get_current_user();
-		$email = $email->data->user_email;
-
-		self::serviceActivate( array( 'email' => $email ) );
+		self::smsnf_create_table(
+			'egoi_lazy_request',
+			'
+	        id INT(11) NOT NULL AUTO_INCREMENT, 
+            url TEXT NOT NULL, 
+            type VARCHAR(12) NOT NULL, 
+            body LONGTEXT NOT NULL, 
+            headers TEXT NOT NULL, 
+            PRIMARY KEY (id)'
+		);
 	}
 
 	public static function smsnf_create_table( $table, $fields ) {
@@ -63,46 +69,6 @@ class Egoi_For_Wp_Activator {
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 
-	}
-
-	public static function serviceActivate( $data = array() ) {
-
-		try {
-
-			$params = array(
-				'email'    => $data['email'],
-				'smegoi_v' => 'Wordpress_' . self::$version,
-				'smegoi_h' => isset( $_SERVER['SERVER_NAME'] ) ? esc_url_raw( $_SERVER['SERVER_NAME'] ) : esc_url_raw( $_SERVER['HTTP_HOST'] ),
-				'smegoi_e' => get_locale(),
-				'smegoi_u' => ( function_exists( 'posix_uname' ) && ( is_array( posix_uname() ) ) ) ? posix_uname() : '',
-			);
-
-			require 'service/post_wsdl.php';
-			if ( class_exists( 'SoapClient' ) ) {
-				$response = new SoapClient( null, $options );
-				$response->call( $params );
-			} else {
-				$response = self::_postContent( $options['location'], $params );
-			}
-		} catch ( Exception $e ) {
-			// continue
-		}
-
-		return true;
-	}
-
-	private static function _postContent( $url, $rows ) {
-
-		$res = wp_remote_request(
-			$url,
-			array(
-				'method'  => 'POST',
-				'timeout' => 30,
-				'body'    => $rows,
-			)
-		);
-
-		return is_wp_error( $res ) ? '{}' : $res['body'];
 	}
 
 }

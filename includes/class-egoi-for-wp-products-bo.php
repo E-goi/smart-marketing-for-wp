@@ -336,9 +336,11 @@ class EgoiProductsBo {
 		$store_catalogs_id = self::getWordpressCatalogs();
 		foreach ( $catalogs as $key => $catalog ) {
 			if ( in_array( $catalog['catalog_id'], $store_catalogs_id ) ) {
-				$catalogs[ $key ]['origin'] = 'WordPress';
+				$catalogs[ $key ]['origin']  = 'WordPress';
+				$catalogs[ $key ]['options'] = self::getCatalogOptions( $catalog['catalog_id'] );
 			} else {
-				$catalogs[ $key ]['origin'] = 'e-goi';
+				$catalogs[ $key ]['origin']  = 'e-goi';
+				$catalogs[ $key ]['options'] = self::getCatalogOptions( $catalog['catalog_id'] );
 			}
 		}
 
@@ -371,7 +373,7 @@ class EgoiProductsBo {
 		self::setCatalogOptions( $response, $options );
 		$this->api->updateSocialTrack( 'update' );
 
-		return true;
+		return $response;
 	}
 
     /**
@@ -540,10 +542,11 @@ public static function getCatalogsToSync() {
 	 * @return string
 	 */
 public static function genTableCatalog( $catalog ) {
-	$arrCatalog = self::getCatalogsToSync();
-	$bypass     = self::getProductsToBypass();
-	$checked    = in_array( $catalog['catalog_id'], $arrCatalog ) ? 'checked' : '';
-	$blinck     = ! empty( $bypass ) && ! empty( $checked ) ? 'egoi-pulsating' : '';
+	$arrCatalog       = self::getCatalogsToSync();
+	$bypass           = self::getProductsToBypass();
+	$checked          = in_array( $catalog['catalog_id'], $arrCatalog ) ? 'checked' : '';
+	$checkedVariation = ! empty( $catalog['options']['variations'] ) ? 'checked' : '';
+	$blinck           = ! empty( $bypass ) && ! empty( $checked ) ? 'egoi-pulsating' : '';
 
 	$switch = "<div class='switch-yes-no'>
                  <label class=\"form-switch\">
@@ -551,12 +554,21 @@ public static function genTableCatalog( $catalog ) {
                 <i class=\"form-icon\"></i>
                 </label>
                 </div>";
+
+	$switchVariations = "<div class='switch-yes-no'>
+                 <label class=\"form-switch\">
+                <input $checkedVariation type=\"checkbox\" idgoi='{$catalog['catalog_id']}' class='variations_catalog'>
+                <i class=\"form-icon\"></i>
+                </label>
+                </div>";
+
 	return "<tr>
                 <td>{$catalog['catalog_id']}</td>
                 <td>{$catalog['title']}</td>
                 <td>{$catalog['language']}</td>
                 <td>{$catalog['currency']}</td>
                 <td>{$switch}</td>
+                <td>{$switchVariations}</td>
                 <td class='flex-centered sun-margin'>
                     <div class=\"smsnf-btn " . $blinck . " force_catalog\" idgoi=\"{$catalog['catalog_id']}\">" . __( 'Import', 'egoi-for-wp' ) . "</div>
                     <div class=\"smsnf-btn delete-adv-form remove_catalog\" idgoi=\"{$catalog['catalog_id']}\">" . __( 'Delete', 'egoi-for-wp' ) . '</div>

@@ -6,8 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // check if have a new tag in BD
 if ( $this->bar_post['tag'] != '' ) {
-	$data = new Egoi_For_Wp();
-	$info = $data->getTag( $this->bar_post['tag'] );
+	$info = $this->getTag( $this->bar_post['tag'] );
 	$tag  = $info['ID'];
 } else {
 	$tag = $this->bar_post['tag-egoi'];

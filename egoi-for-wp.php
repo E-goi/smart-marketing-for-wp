@@ -11,7 +11,7 @@ error_reporting( 0 );
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           3.7.18
+ * Version:           4.0.0
 
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 
-define( 'EFWP_SELF_VERSION', '3.7.18' );
+define( 'EFWP_SELF_VERSION', '4.0.0' );
 
 function activate_egoi_for_wp() {
 
@@ -76,6 +76,59 @@ function efwp_add_users() {
 // return 'tinymce';
 // }
 
+// HOOK CRON JOB
+add_filter( 'cron_schedules', 'egoi_add_cron_interval' );
+function egoi_add_cron_interval( $schedules ) {
+	$schedules['sixty_seconds'] = array(
+		'interval' => 60,
+		'display'  => esc_html__( 'Every Sixty Seconds' ),
+	);
+	return $schedules;
+}
+
+add_action( 'egoi_cron_hook', 'egoi_cron_exec' );
+function egoi_cron_exec() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-lazy.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-apiv3.php';
+
+	$converter = new \EgoiLazyConverter();
+	$requests  = $converter->getRequests();
+	$apikey    = get_option( 'egoi_api_key' );
+
+	if ( empty( $requests ) || ! isset( $apikey['api_key'] ) ) {
+		// nothing to do
+		return false;
+	}
+
+	foreach ( $requests as $request ) {
+		switch ( $request['type'] ) {
+			case 'SOAP':
+				$api    = new SoapClient( $request['url'] );
+				$result = $api->$request['headers']( $request['body'] );
+				break;
+			case 'GET':
+			case 'POST':
+			case 'PUT':
+			case 'PATCH':
+			case 'DELETE':
+			default:
+				$client = new ClientHttp(
+					$request['url'],
+					$request['type'],
+					json_decode( $request['headers'], true ),
+					json_decode( $request['body'], true )
+				);
+				// log success
+				break;
+		}
+		$converter->cleanRequestByID( $request['id'] );
+	}
+}
+
+if ( ! wp_next_scheduled( 'egoi_cron_hook' ) ) {// check next time hook will run
+	wp_schedule_event( time(), 'sixty_seconds', 'egoi_cron_hook' );
+}
+
 // HOOK GET LISTS
 add_action( 'wp_ajax_egoi_get_lists', 'egoi_get_lists' );
 function egoi_get_lists() {
@@ -104,13 +157,6 @@ add_action( 'wp_ajax_nopriv_efwp_process_subscription', 'efwp_process_subscripti
 function efwp_process_subscription() {
 	$public_area = new Egoi_For_Wp_Public();
 	return $public_area->subscribe();
-}
-
-// HOOK E-GOI FORM SUBSCRIPTION
-add_action( 'wp_ajax_efwp_process_egoi_form', 'efwp_process_egoi_form' );
-function efwp_process_egoi_form() {
-	$public_area = new Egoi_For_Wp_Public();
-	return $public_area->subscribe_egoi_form();
 }
 
 // HOOK E-GOI SIMPLE FORM SHORTCODE
@@ -152,13 +198,6 @@ function efwp_process_content_page( $post_id, $post, $update ) {
 
 	return;
 
-}
-// HOOK E-GOI SIMPLE FORM ADD SUBSCRIBER
-add_action( 'wp_ajax_my_action', 'efwp_process_simple_form_add' );
-add_action( 'wp_ajax_nopriv_my_action', 'efwp_process_simple_form_add' );
-function efwp_process_simple_form_add() {
-	$admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
-	return $admin->subscribe_egoi_simple_form_add();
 }
 
 // HOOK E-GOI VISUAL COMPOSER SHORTCODE
@@ -2311,6 +2350,11 @@ define(
 	)
 );
 
+define('COUNTRY_CODES', EFWP_COUNTRY_CODES);//retro-compatibility
+
+if(!defined('ALTERNATE_WP_CRON') ){
+    define('ALTERNATE_WP_CRON', true);
+}
 
 add_action(
 	'in_admin_header',

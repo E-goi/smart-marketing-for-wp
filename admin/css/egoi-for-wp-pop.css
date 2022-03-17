@@ -1,35 +1,35 @@
 .smsnf-notification {
-    background: #00aeda;
-    border-radius: 5px;
-    color: #fff;
-    display: none;
-    margin: 12px;
-    padding: 16px;
-    position: fixed;
-    right: 0;
-    top: 32px;
-    width: 250px;
-    z-index: 2;
+	background: #00aeda;
+	border-radius: 5px;
+	color: #fff;
+	display: none;
+	margin: 12px;
+	padding: 16px;
+	position: fixed;
+	right: 0;
+	top: 32px;
+	width: 250px;
+	z-index: 2;
 }
 .smsnf-notification-error{
-    background: salmon !important;
+	background: salmon !important;
 }
 
 .smsnf-notification .close-btn {
-    color: #fff;
-    cursor: pointer;
-    float: right;
-    width: 12px;
+	color: #fff;
+	cursor: pointer;
+	float: right;
+	width: 12px;
 }
 
 .smsnf-notification h2 {
-    color: #fff;
-    margin: 0;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
+	color: #fff;
+	margin: 0;
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
 }
 
 .smsnf-notification p {
-    margin: 0;
+	margin: 0;
 }

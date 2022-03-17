@@ -1,133 +1,219 @@
-jQuery(document).ready(function($) {
-	'use strict';
+jQuery( document ).ready(
+	function($) {
+		'use strict';
 
-	var $context = $(document.getElementById('egoi4wp-admin'));
-	$context.find('.color').wpColorPicker();
+		var $context = $( document.getElementById( 'egoi4wp-admin' ) );
+		$context.find( '.color' ).wpColorPicker();
 
+		var codeCopy = $( ".egoi-copy-code" );
 
-	$("#egoi_api_key_input").on('input', function() {
+		codeCopy.on(
+			'click',
+			(e) => {
+            e.preventDefault()
+				copyStringToClipboard( $( e.target ).parent().children( "code" ).text() )
+			}
+		)
 
-		var btn_submit = $("#egoi_4_wp_login");
-		btn_submit.prop('disabled', true);
+		function copyStringToClipboard (str) {
+			// Create new element
+			var el = document.createElement( 'textarea' );
+			// Set value (string to be copied)
+			el.value = str;
+			// Set non-editable to avoid focus and move outside of view
+			el.setAttribute( 'readonly', '' );
+			el.style = {position: 'absolute', left: '-9999px'};
+			document.body.appendChild( el );
+			// Select text inside element
+			el.select();
+			// Copy text to clipboard
+			document.execCommand( 'copy' );
+			// Remove temporary element
+			document.body.removeChild( el );
+		}
 
-		var key = $(this).val();
-		if(key.length == 40){
+		$( "#egoi_api_key_input" ).on(
+			'input',
+			function() {
 
-			$(".icon-load").show();
-            $(".icon-valid").hide();
-            $(".icon-error").hide();
+				var btn_submit = $( "#egoi_4_wp_login" );
+				btn_submit.prop( 'disabled', true );
 
-			$.ajax({
-			    type: 'POST',
-			    data:({
-			        egoi_key: key
-			    }),
-			    success:function(data, status) {
-			        if(status == '404'){
-			        	$(".icon-error").show();
-			        	$(".icon-valid").hide();
-			        	$(".icon-load").hide();
-			        }else{
-			        	$(".icon-valid").show();
-			        	$(".icon-error").hide();
-			        	$(".icon-load").hide();
-			        	btn_submit.prop('disabled', false);
-			        }
-			    },
-			    error:function(status){
-			    	if(status){
-				    	$(".icon-valid").hide();
-				    	$(".icon-error").show();
-				    	$(".icon-load").hide();
-				    	$("#api-save-text").show();
-				    }
-			    }
+				var key = $( this ).val();
+				if (key.length == 40) {
+
+					$( ".icon-load" ).show();
+					$( ".icon-valid" ).hide();
+					$( ".icon-error" ).hide();
+
+					$.ajax(
+						{
+							url: egoi_config_ajax_object.ajax_url,
+							type: 'POST',
+							data:({
+								security:   egoi_config_ajax_object.ajax_nonce,
+								action:     'egoi_change_api_key',
+								egoi_key: key
+							}),
+						success:function(data, status) {
+							console.log( [data,status] )
+							if (status == '404' || (data.data && data.data.ERROR) ) {
+								$( ".icon-error" ).show();
+								$( ".icon-valid" ).hide();
+								$( ".icon-load" ).hide();
+							} else {
+								$( ".icon-valid" ).show();
+								$( ".icon-error" ).hide();
+								$( ".icon-load" ).hide();
+								btn_submit.prop( 'disabled', false );
+							}
+						},
+							error:function(status){
+								if (status) {
+									$( ".icon-valid" ).hide();
+									$( ".icon-error" ).show();
+									$( ".icon-load" ).hide();
+									$( "#api-save-text" ).show();
+								}
+							}
+						}
+					);
+
+				} else {
+					$( "#egoi_4_wp_login" ).prop( 'disabled', true );
+					$( "#valid" ).hide();
+				}
+
+			}
+		);
+
+		$( '#egoi_4_wp_login' ).on(
+			'click',
+			function(e){
+				e.preventDefault();
+				$( this ).prop( 'disabled', true );
+				$( 'form[name="egoi_apikey_form"]' ).submit();
+			}
+		);
+
+		$('form[name="egoi_apikey_form"]').submit( (e) => {
+			e.preventDefault();
+
+			var data = {
+				security:   egoi_config_ajax_object_core.ajax_nonce,
+				action: 'efwp_apikey_save',
+				apikey: jQuery("#apikey").val()
+			};
+
+			jQuery.post(egoi_config_ajax_object_core.ajax_url, data, function(response) {
+				if(!response.success){
+					//show error here
+					alert(response.data)
+					return;
+				}
+
+				if(response.data.redirect){
+					window.location = response.data.redirect
+				}else{
+					window.location.reload()
+				}
+
+				//window.location.reload();
 			});
 
-		}else{
-			$("#egoi_4_wp_login").prop('disabled', true);
-			$("#valid").hide();
-		}
+		})
 
-	});
+		$( '#save_apikey' ).on(
+			'click',
+			function(e){
+				e.preventDefault();
 
-	$('#egoi_4_wp_login').on('click', function(e){
-		e.preventDefault();
-		$(this).prop('disabled', true);
-		$('form[name="egoi_apikey_form"]').submit();
-	});
+				if ($( '#apikey' ).val() != $( '#old_apikey' ).val()) {
+					var confirmation = confirm( $( '#confirm_text' ).text() );
+					if (confirmation) {
 
-	$('#save_apikey').on('click', function(e){
-		e.preventDefault();
-		
-		if($('#apikey').val() != $('#old_apikey').val()){
-			var confirmation = confirm($('#confirm_text').text());
-			if(confirmation){
+						var data = {
+							action: 'efwp_apikey_changes'
+						};
 
-				var data = {
-		            action: 'efwp_apikey_changes'
-		        };
-		        
-		        $.post(url_egoi_script.ajaxurl, data, function(response) {
-		        	response = JSON.parse(response);
-		        	if(response.result == 'ok'){
-		            	$('form[name="egoi_apikey_form"]').submit();
-		            }
-		        });
-				
-			}else{
-				return false;
+						$.post(
+							url_egoi_script.ajaxurl,
+							data,
+							function(response) {
+								response = JSON.parse( response );
+								if (response.result == 'ok' && $( '#apikey' ).val() != '') {
+									$( 'form[name="egoi_apikey_form"]' ).submit();
+								}else{
+									window.location.reload()
+								}
+							}
+						);
+
+					} else {
+						return false;
+					}
+				} else {
+					$( 'form[name="egoi_apikey_form"]' ).submit();
+				}
 			}
-		}else{
-			$('form[name="egoi_apikey_form"]').submit();
-		}
-	})
+		)
 
-	// remove data from WP
-	$('#egoi_remove_data').on('click', function() {
+		// remove data from WP
+		$( '#egoi_remove_data' ).on(
+			'click',
+			function() {
 
-		var rmdata = $('input[name="egoi_data[remove]"]:checked').val();
-		$('#load_data').show();
+				var rmdata = $( 'input[name="egoi_data[remove]"]:checked' ).val();
+				$( '#load_data' ).show();
 
-		$.ajax({
-		    type: 'POST',
-		    data:({
-		        rmdata: rmdata
-		    }),
-		    success:function(data, status) {
-		        $("#remove_valid").show();
-		        $("#load_data").hide();
-		        $(".icon-error").hide();
-		    },
-		    error:function(status){
-		    	if(status){
-			    	$("#remove_valid").hide();
-			    	$(".icon-error").show();
-			    }
-		    }
-		});
-	});
-  
-	// Dropdown toggle
-	$('.button-primary--custom-add').on('click', function(){
-	  	$('#e-goi-create-list').show();
-		$(this).hide();
-	});
+				$.ajax(
+					{
+						type: 'POST',
+						data:({
+							rmdata: rmdata
+						}),
+					success:function(data, status) {
+						$( "#remove_valid" ).show();
+						$( "#load_data" ).hide();
+						$( ".icon-error" ).hide();
+					},
+						error:function(status){
+							if (status) {
+								$( "#remove_valid" ).hide();
+								$( ".icon-error" ).show();
+							}
+						}
+					}
+				);
+			}
+		);
 
-	$('.cancel-toggle').on('click', function(){
-		$('#e-goi-create-list').hide();
-		$('.button-primary--custom-add').show();
-	});
+		// Dropdown toggle
+		$( '.button-primary--custom-add' ).on(
+			'click',
+			function(){
+				$( '#e-goi-create-list' ).show();
+				$( this ).hide();
+			}
+		);
 
-	// Hidden options
-	$('.egoi_json_trigger' ).change( function() {
-		if ( $('#egoi_track_social').is( ':checked' ) ) {
-			$('#egoi_track_json' ).show();
-		} else {
-			$('#egoi_track_json' ).hide();
-		}
-	});
-});
+		$( '.cancel-toggle' ).on(
+			'click',
+			function(){
+				$( '#e-goi-create-list' ).hide();
+				$( '.button-primary--custom-add' ).show();
+			}
+		);
 
-
-
+		// Hidden options
+		$( '.egoi_json_trigger' ).change(
+			function() {
+				if ( $( '#egoi_track_social' ).is( ':checked' ) ) {
+					  $( '#egoi_track_json' ).show();
+				} else {
+					$( '#egoi_track_json' ).hide();
+				}
+			}
+		);
+	}
+);

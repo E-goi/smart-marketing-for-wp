@@ -71,9 +71,9 @@ $next_adv_form_id = get_next_adv_form_id();
 	</header>
 	<!-- / Header -->
 	<!-- Content -->
-	<main <?php echo ! empty( $page['popup'] ) && ! empty( get_simple_forms() ) ? 'style="grid-template-columns: 4fr 3fr !important;"' : ''; ?> >
+	<main <?php echo ! empty( $page['popup'] ) ? 'style="grid-template-columns: 4fr 3fr !important;"' : ''; ?> >
 		<!-- Content -->
-		<section class="smsnf-content">
+		<section class="smsnf-content" style="<?php echo $page['adv forms'] ? 'padding-bottom: 0;' : ''; ?>">
 			<?php
 			if ( $page['home'] ) {
 				$file = $dir . 'home.php';
@@ -119,8 +119,8 @@ $next_adv_form_id = get_next_adv_form_id();
 		<!-- / Content -->
 		<!-- Pub -->
 
-		<?php if ( $page['popup'] && ! empty( get_simple_forms() ) ) { ?>
-			<section class="smsnf-content" style="height: calc(100vh - 200px);">
+		<?php if ( $page['popup'] ) { ?>
+			<section class="smsnf-content" style="height: calc(100vh - 200px); position: fixed; width: calc( 3/7 * 100vw - 100px); right: 20px;">
 				<?php include $dir . 'popup-preview.php'; ?>
 			</section>
 		<?php } else { ?>

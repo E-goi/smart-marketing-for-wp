@@ -12,7 +12,7 @@ require_once plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-
 		<?php echo getLoader( 'egoi-preview-loader', true, true, 32 ); ?>
 	</div>
 </div>
-<iframe id="popup_preview" style="height: 100%;width: 100%;" ></iframe>
+<iframe id="popup_preview" style="height: calc(100% - 40px);width: 100%;" ></iframe>
 <script>
 	jQuery(document).ready(function($) {
 
