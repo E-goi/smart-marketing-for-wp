@@ -404,7 +404,10 @@ class Egoi_For_Wp_Public {
 				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").empty();
 			<?php
 
-			$countryStore = wc_get_base_location()['country'];
+            $countryStore = '';
+            if ( class_exists( 'woocommerce' ) ) {
+                $countryStore = wc_get_base_location()['country'];
+            }
 			foreach ( unserialize( EFWP_COUNTRY_CODES ) as $key => $value ) {
 				$string = ucwords( strtolower( $value['country_pt'] ) ) . ' (+' . $value['prefix'] . ')';
 				if ( $countryStore == $key ) {// selects store country code by default
