@@ -527,13 +527,13 @@ function egoi_widget_request() {
 				$email = sanitize_email( $_POST['widget_email'] );
 				if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
                     ?>
-					<div style='<?php esc_attr($bcolor_success) ?>' class='egoi-widget-error error<?php echo esc_attr( $id ) ?>'><?php echo esc_html( $Egoi4WP['msg_invalid'] ) ?></div>
+					<div style='<?php echo esc_attr($bcolor_success) ?>' class='egoi-widget-error error<?php echo esc_attr( $id ) ?>'><?php echo esc_html( $Egoi4WP['msg_invalid'] ) ?></div>
 					<?php
                     exit;
 				}
 			} else {
                 ?>
-				<div style='<?php esc_attr($bcolor_error) ?>' class='egoi-widget-error error<?php echo esc_attr( $id ) ?>'><?php echo esc_html( $Egoi4WP['msg_empty'] ) ?></div>
+				<div style='<?php echo esc_attr($bcolor_error) ?>' class='egoi-widget-error error<?php echo esc_attr( $id ) ?>'><?php echo esc_html( $Egoi4WP['msg_empty'] ) ?></div>
 				<?php
                 exit;
 			}
