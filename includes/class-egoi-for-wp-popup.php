@@ -368,33 +368,67 @@ class EgoiPopUp {
 			return;
 		}
 
-		$form_code = do_shortcode( '[egoi-simple-form id="' . esc_attr( $id ) . '"]' );
+        ?>
+        <div class="egoi_popup_wrapper_<?php echo esc_attr($id) ?>">
+        <?php
+		do_shortcode( '[egoi-simple-form id="' . esc_attr( $id ) . '"]' );
+        ?>
+        </div>
+        <?php
 
 		switch ( $config['form_orientation'] ) {
 			case 'vertical':
-				echo self::makeFormVertical( $form_code );
+				self::makeFormVertical($id);
 				break;
 			case 'horizontal':
-				echo self::makeFormHorizontal( $form_code );
+				self::makeFormHorizontal($id);
 				break;
 			default:
-				echo $form_code;
 				break;
 		}
 	}
 
-	private static function makeFormVertical( $form_code ) {
-		$form_code = str_replace( '<form', '<form style="display: flex;flex-direction: column;justify-content: center;border-radius: inherit;"', $form_code );
-		$form_code = str_replace( '<p>', '<p style="display: flex;flex-direction: column;">', $form_code );
-		return $form_code;
+	private static function makeFormVertical($id) {
+		?>
+            <style>
+                .egoi_popup_wrapper_<?php echo esc_attr($id) ?> > .egoi_simple_form > p{
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .egoi_popup_wrapper_<?php echo esc_attr($id) ?> > .egoi_simple_form{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    border-radius: inherit;
+                }
+
+            </style>
+        <?php
 	}
 
 
-	private static function makeFormHorizontal( $form_code ) {
-		$form_code = str_replace( '<form', '<form style="display: flex;flex-direction: row;justify-content: center; align-items: flex-end;border-radius: inherit;"', $form_code );
-		$form_code = preg_replace( '/<p>/', '<p style="display: flex;flex-direction: column; margin-right: 10px;flex-grow: 1;border-radius: inherit;">', $form_code, substr_count( $form_code, '<p>' ) - 1 );
-		$form_code = str_replace( '<p>', '<p style="display: flex;flex-direction: column; margin-right: 10px;border-radius: inherit;">', $form_code );
-		return $form_code;
+	private static function makeFormHorizontal($id) {
+        ?>
+            <style>
+                .egoi_popup_wrapper_<?php echo esc_attr($id) ?> > .egoi_simple_form > p{
+                    display: flex;
+                    flex-direction: column;
+                    margin-right: 10px;
+                    flex-grow: 1;
+                    border-radius: inherit;
+                }
+
+                .egoi_popup_wrapper_<?php echo esc_attr($id) ?> > .egoi_simple_form{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: flex-end;
+                    border-radius: inherit;
+                }
+
+            </style>
+        <?php
 	}
 
 	/*
@@ -434,10 +468,10 @@ class EgoiPopUp {
 
 			/* Modal Content */
 			.egoi_modal_content_<?php echo esc_attr( $popup_id ); ?> {
-				background-color: <?php echo esc_textarea( $config['background_color'] ); ?>;
+				background-color: <?php echo esc_attr( $config['background_color'] ); ?>;
 				margin: auto;
 				width: 100%;
-				max-width: <?php echo esc_textarea( $config['max_width'] ); ?>;
+				max-width: <?php echo esc_attr( $config['max_width'] ); ?>;
 				display: flex;
 				flex-direction: column;
 				<?php if ( $production ) { ?>
