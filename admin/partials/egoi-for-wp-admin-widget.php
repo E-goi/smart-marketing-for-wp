@@ -122,7 +122,7 @@ if ( ! $egoiwidget['enabled'] ) {
 								<?php printf( __( 'No lists found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp' ), admin_url( 'admin.php?page=egoi-for-wp' ) ); ?>
 							</span>
 
-								<span id="e-goi-lists_ct_widget" style="display: none;"><?php echo $egoiwidget['list']; ?></span>
+								<span id="e-goi-lists_ct_widget" style="display: none;"><?php echo esc_textarea($egoiwidget['list']); ?></span>
 
 								<span class="loading loading_lists-widget" style="margin-left: 10px; display: none;"></span>
 								<select name="egoi_widget[list]" class="lists" id="e-goi-list-widget" style="display: none;" required>
@@ -135,7 +135,7 @@ if ( ! $egoiwidget['enabled'] ) {
 						<tr valign="top">
 							<th scope="row"><label for="egoi-lang-w"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label></th>
 							<td>
-								<span id="lang_widget" style="display: none;"><?php echo $egoiwidget['lang']; ?></span>
+								<span id="lang_widget" style="display: none;"><?php echo esc_textarea($egoiwidget['lang']); ?></span>
 
 								<span class="loading loading_lang-widget" style="margin-left: 10px; display: none;"></span>
 								<select name="egoi_widget[lang]"  id="e-goi-lang-widget" style="display: none;">
@@ -164,7 +164,7 @@ if ( ! $egoiwidget['enabled'] ) {
 									<?php printf( __( 'No tags found, <a href="%s">are you connected to Egoi</a>?', 'egoi-for-wp' ), admin_url( 'admin.php?page=egoi-for-wp' ) ); ?>
 								</span>
 
-									<span id="e-goi-tags_ct_widget" style="display: none;"><?php echo $tag; ?></span>
+									<span id="e-goi-tags_ct_widget" style="display: none;"><?php echo esc_textarea($tag); ?></span>
 
 									<span class="loading loading_tags-widget" style="margin-left: 10px; display: none;"></span>
 									<select name="egoi_widget[tag-egoi]" class="tags" id="e-goi-tags-widget" style="display: none;">
