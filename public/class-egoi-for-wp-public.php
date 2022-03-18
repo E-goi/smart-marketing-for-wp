@@ -387,7 +387,7 @@ class Egoi_For_Wp_Public {
 			$html_code->post_content = str_replace( '[/e_' . $tag . ']', '', $html_code->post_content );
 		}
 		?>
-		<form id="<?php echo esc_attr( $simple_form ); ?>" method="post" action="/">
+		<form id="<?php echo esc_attr( $simple_form ); ?>" class="egoi_simple_form" method="post" action="/">
 			<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="<?php echo esc_attr( $id ); ?>">
 			<input type="hidden" name="egoi_list" id="egoi_list" value="<?php echo esc_attr( $data->list ); ?>">
 			<input type="hidden" name="egoi_lang" id="egoi_lang" value="<?php echo esc_attr( $data->lang ); ?>">

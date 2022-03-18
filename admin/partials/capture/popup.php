@@ -279,6 +279,7 @@ $editor_id = 'content';
 			<select name="form_orientation" class="form-select " id="form_orientation">
 				<option value="off" <?php selected( $popup_data['form_orientation'], 'off' ); ?> ><?php _e( 'Disabled', 'egoi-for-wp' ); ?></option>
 				<option value="vertical" <?php selected( $popup_data['form_orientation'], 'vertical' ); ?> ><?php _e( 'Vertical', 'egoi-for-wp' ); ?></option>
+                <option value="horizontal" <?php selected( $popup_data['form_orientation'], 'horizontal' ); ?> ><?php _e( 'Horizontal', 'egoi-for-wp' ); ?></option>
 			</select>
 		</div>
 
