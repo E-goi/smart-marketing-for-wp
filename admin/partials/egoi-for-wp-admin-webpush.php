@@ -66,14 +66,12 @@ if ( ! empty( $_GET['sub'] ) && sanitize_key( $_GET['sub'] ) === 'create-wp' && 
 $error = $ok = 0;
 if ( isset( $_POST['action'] ) ) {
 	if ( isset( $_POST['egoi_webpush']['code'] ) ) {  // Save web push code
-		$_POST['egoi_webpush']['code'] = sanitize_key( $_POST['egoi_webpush']['code'] );
-		if ( webpushValidator( $_POST['egoi_webpush']['code'] ) ) { // valid web push
+		$code = sanitize_key( $_POST['egoi_webpush']['code'] );
+		if ( webpushValidator( $code ) ) { // valid web push
 			if ( ! $options = get_option( 'egoi_webpush_code' ) ) {
-				$_POST['egoi_webpush']['track'] = 1;
-				add_option( 'egoi_webpush_code', $_POST['egoi_webpush'] );
+				add_option( 'egoi_webpush_code', ['track' => 1, 'code' => $code ] );
 			} else {
-				$_POST['egoi_webpush']['track'] = $options['track'];
-				update_option( 'egoi_webpush_code', $_POST['egoi_webpush'] );
+				update_option( 'egoi_webpush_code',[ 'track' => 1, 'domain' =>  $code] );
 			}
 			$ok = 1;
 		} else { // invalid web push
