@@ -327,8 +327,10 @@ class EgoiElementorWidget extends Widget_Base {
 	}
 
 	private function displayError( $error ) {
-		echo '<h2 style="color: red;text-align: center;margin-top: 0.4em;">' . $error . '</h2>';
-	}
+        ?>
+		<h2 style="color: red;text-align: center;margin-top: 0.4em;"><?php echo esc_textarea($error) ?></h2>
+        <?php
+    }
 
 	private function getAvailablePages() {
 		$args   = array(
@@ -372,87 +374,101 @@ class EgoiElementorWidget extends Widget_Base {
 		$classes_fields  = $settings['direction_field'];
 		$classes_form    = $settings['direction_form'];
 		$position_button = $settings['position_button'];
+        ?>
+		<form id="elementor-egoi-form" method="post" action="/">
+		<div class="egoi_elementor_form_wrapper_custom <?php echo esc_attr($classes_form) ?>" >
+		<input type="hidden" id="egoi_tag" name="egoi_tag" value="<?php echo esc_attr($settings['tag_name']) ?>">
+		<input type="hidden" id="elementorEgoiForm" name="elementorEgoiForm" value="<?php echo esc_attr($widget_id) ?>">
+		<input type="hidden" id="egoi_list" name="egoi_list" value="<?php echo esc_attr($options['list']) ?>">
+		<input type="hidden" id="egoi_double_optin" name="egoi_double_optin" value="<?php echo esc_attr($settings['double_optin']) ?>">
 
-		echo '<form id="elementor-egoi-form" method="post" action="/">';
-		echo '<div class="egoi_elementor_form_wrapper_custom ' . $classes_form . '" >';
-		echo '<input type="hidden" id="egoi_tag" name="egoi_tag" value="' . $settings['tag_name'] . '">';
-		echo '<input type="hidden" id="elementorEgoiForm" name="elementorEgoiForm" value="' . $widget_id . '">';
-		echo '<input type="hidden" id="egoi_list" name="egoi_list" value="' . $options['list'] . '">';
-		echo '<input type="hidden" id="egoi_double_optin" name="egoi_double_optin" value="' . $settings['double_optin'] . '">';
-
+        <?php
 		if ( 'yes' == $settings['redirect_option'] ) {
-			echo '<input type="hidden" id="egoi_redirect" name="egoi_redirect" value="' . $settings['redirect_url'] . '">';
-		}
+        ?>
+			<input type="hidden" id="egoi_redirect" name="egoi_redirect" value="<?php echo esc_url($settings['redirect_url']) ?>">
+        <?php
+        }
 
 		if ( $settings['fields'] ) {
 
 			foreach ( $settings['fields'] as $item ) {
-				echo '<p class="egoi_elementor_entry_wrapper_custom egoi_elementor_entry_wrapper egoi_elementor_form_field ' . $classes_fields . '">';
-				echo '<label for="egoiElementor_' . $item['field_name'] . '">' . $item['field_title'] . '</label>';
-				echo '<input type="text" class="egoi_elementor_form_field" name="' . $item['field_name'] . '" id="egoiElementor_' . $item['field_name'] . '" placeholder="' . $item['field_placeholder'] . '" />';
-				echo '</p>';
+        ?>
+				<p class="egoi_elementor_entry_wrapper_custom egoi_elementor_entry_wrapper egoi_elementor_form_field <?php echo esc_attr($classes_fields) ?>">
+				<label for="egoiElementor_<?php echo esc_attr($item['field_name']) ?>"><?php echo esc_textarea($item['field_title']) ?></label>
+				<input type="text" class="egoi_elementor_form_field" name="<?php echo esc_attr($item['field_name']) ?>" id="egoiElementor_<?php echo esc_attr($item['field_name']) ?>" placeholder="<?php echo esc_attr($item['field_placeholder']) ?>" />
+				</p>
+            <?php
 			}
 		}
 		$message_box_id         = 'message_' . $widget_id;
 		$egoi_elm_submit_button = 'egoi_elm_submit_button_' . $widget_id;
-		echo '<p class="egoi_elementor_entry_wrapper ' . $position_button . '"><button style="background-color: ' . $settings['button_color'] . ';color: ' . $settings['button_text_color'] . '" type="submit" id="' . $egoi_elm_submit_button . '" >' . $settings['button_title'] . '</button></p>';
-		echo '</div>';
+		?>
+        <p class="egoi_elementor_entry_wrapper ' . $position_button . '"><button style="background-color: <?php echo esc_attr($settings['button_color']); ?>;color: <?php echo esc_attr($settings['button_text_color']); ?>" type="submit" id="<?php echo esc_attr($egoi_elm_submit_button) ?>" ><?php echo esc_textarea($settings['button_title']) ?></button></p>
+		</div>
+
+        <?php
 		if ( 'yes' == $settings['term_option'] ) {
-			echo '<p class="egoi_simple_form_tof_wrapper ' . $position_button . ' egoi_simple_form_tof_wrapper_custom"><input type="checkbox" id="egoi_tof" name="egoi_tof" value="true"><span>' . __( 'I agree to', 'egoi-for-wp' ) . ' <a target="_blank" href="' . $settings['term_url'] . '" >' . __( 'terms & conditions', 'egoi-for-wp' ) . '</a> <span style="color: red;font-weight: bold">*</span></span></p>';
-		} else {
-			echo '<input type="hidden" id="egoi_tof" name="egoi_tof" value="true">';
-		}
+            ?>
+			<p class="egoi_simple_form_tof_wrapper <?php echo esc_attr($position_button) ?> egoi_simple_form_tof_wrapper_custom"><input type="checkbox" id="egoi_tof" name="egoi_tof" value="true"><span><?php _e( 'I agree to', 'egoi-for-wp' )  ?> <a target="_blank" href="<?php echo esc_url($settings['term_url']) ?>" ><?php _e( 'terms & conditions', 'egoi-for-wp' ) ?></a> <span style="color: red;font-weight: bold">*</span></span></p>
+		<?php
+        } else {
+        ?>
+            <input type="hidden" id="egoi_tof" name="egoi_tof" value="true">
+        <?php
+        }
+        ?>
 
-		echo '<p id="' . $message_box_id . '" class="egoi_simple_form_message_wrapper_custom egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></p>';
-		echo '</form>';
+		<p id="<?php echo esc_attr($message_box_id) ?>" class="egoi_simple_form_message_wrapper_custom egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></p>
+		</form>
 
-		echo '<script>
+		<script>
                 jQuery(document).ready(function($) {
-                    var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";
-                    var submitButton = $("#' . $egoi_elm_submit_button . '");
+                    var ajaxurl = "<?php echo esc_url(admin_url( 'admin-ajax.php' )) ?>";
+                    var submitButton = $("#<?php echo esc_attr($egoi_elm_submit_button) ?>");
                     function getFormData($form){
                         var unindexed_array = $form.serializeArray();
                         var indexed_array = {};             
                         $.map(unindexed_array, function(n, i){
-                            indexed_array[n[\'name\']] = n[\'value\'];
+                            indexed_array[n['name']] = n['value'];
                         });
                         return indexed_array;
                     }
                     
                     function displayMessage(message, type = "error"){
                             if(type == "error"){
-                                jQuery( "#' . $message_box_id . '" ).css({
+                                jQuery( "#<?php echo esc_attr($message_box_id) ?>" ).css({
                                     "color": "#9F6000",
                                     "background-color": "#FFD2D2"
                                 });
                             }else{
-                                 jQuery( "#' . $message_box_id . '" ).css({
+                                 jQuery( "#<?php echo esc_attr($message_box_id) ?>" ).css({
                                     "color": "#4F8A10",
                                     "background-color": "#DFF2BF"
                                 });
 
                             }
-                            jQuery( "#' . $message_box_id . '" ).empty().append( message ).slideDown( "slow" );
+                            jQuery( "#<?php echo esc_attr($message_box_id) ?>" ).empty().append( message ).slideDown( "slow" );
                             setTimeout(function(){
-                                jQuery( "#' . $message_box_id . '" ).slideUp( "slow" );
+                                jQuery( "#<?php echo esc_attr($message_box_id) ?>" ).slideUp( "slow" );
                              }, 5000);
                     }
                     
                     var form = $("#elementor-egoi-form");
                     form.submit(function(e){
                         e.preventDefault();
-                        jQuery( "#' . $message_box_id . '" ).slideUp( "slow" );
+                        jQuery( "#<?php echo esc_attr($message_box_id) ?>" ).slideUp( "slow" );
                         var inputData = getFormData($(this));
                         inputData["action"] = "egoi_simple_form_submit";
                         if(inputData.egoi_tof === undefined){
-                            displayMessage("' . __( 'You must agree with terms & conditions.', 'egoi-for-wp' ) . '")
+                            displayMessage("<?php _e( 'You must agree with terms & conditions.', 'egoi-for-wp' ) ?>")
                             return false;
                         }
                         submitButton.prop("disabled", true);
                         var posting = jQuery.post(ajaxurl, inputData);
     
                         posting.done(function( data ) {
-                            if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
+                            console.log(data)
+                            if (data.substring(0, 5) != "ERROR") {
                                 displayMessage(data, "success")
                                 if(inputData.egoi_redirect !== undefined){
                                     setTimeout(function(){
@@ -470,9 +486,11 @@ class EgoiElementorWidget extends Widget_Base {
                     });
                 });
 
-              </script>';
+        </script>
 
-		echo '<style>' . $settings['custom_css'] . '</style>';
+		<style><?php echo esc_textarea($settings['custom_css']) ?></style>
+
+        <?php
 	}
 
 	protected function getAccountListFields() {
