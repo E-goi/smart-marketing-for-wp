@@ -133,11 +133,12 @@ jQuery( document ).ready(
 					if (confirmation) {
 
 						var data = {
+							security:   egoi_config_ajax_object_core.ajax_nonce,
 							action: 'efwp_apikey_changes'
 						};
 
 						$.post(
-							url_egoi_script.ajaxurl,
+							egoi_config_ajax_object_core.ajax_url,
 							data,
 							function(response) {
 								response = JSON.parse( response );
@@ -170,13 +171,16 @@ jQuery( document ).ready(
 					{
 						type: 'POST',
 						data:({
+							security:   egoi_config_ajax_object_core.ajax_nonce,
+							action: 'efwp_remove_data',
 							rmdata: rmdata
 						}),
-					success:function(data, status) {
-						$( "#remove_valid" ).show();
-						$( "#load_data" ).hide();
-						$( ".icon-error" ).hide();
-					},
+						url: egoi_config_ajax_object_core.ajax_url,
+						success:function(data, status) {
+							$( "#remove_valid" ).show();
+							$( "#load_data" ).hide();
+							$( ".icon-error" ).hide();
+						},
 						error:function(status){
 							if (status) {
 								$( "#remove_valid" ).hide();

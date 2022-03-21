@@ -47,7 +47,7 @@ $options = $this->options_list;
 						<?php
 						_e( 'Select your mailing list in the option "Synchronize users with this list" to activate Connected Sites.<br>You will find this option in ', 'egoi-for-wp' );
 						?>
-						<a href="<?php echo esc_url( $this->protocol . $_SERVER['SERVER_NAME'] . $this->port . '/wp-admin/admin.php?page=egoi-4-wp-subscribers' ); ?>">
+						<a href="admin.php?page=egoi-4-wp-subscribers">
 							<?php _e( 'Sync Contacts', 'egoi-for-wp' ); ?></a>
 						</span>
 					</div>

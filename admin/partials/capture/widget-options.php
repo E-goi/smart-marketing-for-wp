@@ -1,9 +1,26 @@
 <?php
 // cria/atualiza widget
-if ( isset( $_POST['action'] ) && ( $_POST['action'] ) ) {
-	$post = $_POST;
+if ( isset( $_POST['action'] ) && isset( $_POST['egoi_widget'] )  ) {
 
-	update_option( $post['egoiform'], $post );
+	update_option( sanitize_key($_POST['egoiform']), [
+            'egoi_widget' => [
+                'enabled' => sanitize_key($_POST['egoi_widget']['enabled']),
+                'double_optin' => sanitize_key($_POST['egoi_widget']['double_optin']),
+                'list' =>  sanitize_key($_POST['egoi_widget']['list']),
+                'lang' => sanitize_text_field($_POST['egoi_widget']['lang']),
+                'tag-egoi' => sanitize_key($_POST['egoi_widget']['tag-egoi']),
+                'msg_subscribed' => sanitize_text_field($_POST['egoi_widget']['msg_subscribed']),
+                'msg_invalid' => sanitize_text_field($_POST['egoi_widget']['msg_invalid']),
+                'msg_empty' => sanitize_text_field($_POST['egoi_widget']['msg_empty']),
+                'msg_exists_subscribed' => sanitize_text_field($_POST['egoi_widget']['msg_exists_subscribed']),
+                'redirect' => esc_url($_POST['egoi_widget']['redirect']),
+                'input_width' => sanitize_text_field($_POST['egoi_widget']['input_width']),
+                'btn_width' => sanitize_text_field($_POST['egoi_widget']['btn_width']),
+                'bcolor' => sanitize_text_field($_POST['egoi_widget']['bcolor']),
+                'bcolor_success' => sanitize_text_field($_POST['egoi_widget']['bcolor_success']),
+                'bcolor_error' => sanitize_text_field($_POST['egoi_widget']['bcolor_error']),
+            ]
+    ] );
 
 	echo get_notification( 'Widget', __( 'Widget saved successfully!', 'egoi-for-wp' ) );
 }

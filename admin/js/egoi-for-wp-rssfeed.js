@@ -314,7 +314,6 @@ jQuery( document ).ready(
 					egoi_config_ajax_object.ajax_url,
 					campaign,
 					function(response) {
-						response = JSON.parse( response );
 						jQuery( "#egoi_send_campaign_webpush_loading" ).hide();
 						var edit = jQuery( "#egoi_edit_campaign_webpush" );
 						var send = jQuery( "#egoi_send_campaign_webpush" );

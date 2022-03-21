@@ -10,7 +10,7 @@
 					'action': 'smsnf_show_account_info_ajax'
 				},
 				function(response) {
-					var output = jQuery.parseJSON( response );
+					var output = jQuery.parseJSON( response.data );
 					if (output.notifications.upgrade) {
 						$( '#notification_upgrade_account' ).removeClass( 'd-none' );
 					}

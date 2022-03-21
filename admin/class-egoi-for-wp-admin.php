@@ -55,13 +55,6 @@ class Egoi_For_Wp_Admin {
 	private $version;
 
 	/**
-	 * Server Protocol
-	 *
-	 * @var string
-	 */
-	protected $protocol;
-
-	/**
 	 * Server Port if is in use
 	 *
 	 * @var string
@@ -96,9 +89,6 @@ class Egoi_For_Wp_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-		$this->server_url  = $_SERVER['REQUEST_URI'];
-		$this->protocol    = $_SERVER['HTTPS'] ?: 'http://';
-		$this->port        = ':' . $_SERVER['SERVER_PORT'];
 		$this->egoiWpApi   = $egoiWpApi;
 		// settings pages
 		$this->load_api     = $this->load_api();
@@ -123,11 +113,6 @@ class Egoi_For_Wp_Admin {
 		register_setting( self::FORM_OPTION_4, self::FORM_OPTION_4 );
 		register_setting( self::FORM_OPTION_5, self::FORM_OPTION_5 );
 
-		if ( strpos( $this->server_url, 'egoi' ) !== false ) {
-			// HOOK TO CHANGE DEFAULT FOOTER TEXT
-			add_filter( 'admin_footer_text', array( $this, 'remove_footer_admin' ), 1, 2 );
-		}
-
 		// hook contact form 7
 		// add_action('wpcf7_submit', array($this, 'getContactForm'), 10, 1);
 		add_action( 'wpcf7_before_send_mail', array( $this, 'getContactForm' ), 10, 1 );
@@ -149,11 +134,6 @@ class Egoi_For_Wp_Admin {
 
 		add_action( 'in_admin_header', array( $this, 'show_alert_messages' ) );
 
-
-		$rmdata = $_POST['rmdata'];
-		if ( isset( $rmdata ) && ( $rmdata ) ) {
-			$this->saveRMData( sanitize_text_field( $rmdata ) );
-		}
 
 		// admin notifications for transactional email errors
 		add_action( 'admin_notices', array( $this, 'transactional_email_notice' ) );
@@ -368,7 +348,7 @@ class Egoi_For_Wp_Admin {
 	public function remove_footer_admin() {
 
 		$url  = 'https://wordpress.org/support/plugin/smart-marketing-for-wp/reviews/?filter=5';
-		$text = sprintf( esc_html__( 'Please rate %1$sSmart Marketing SMS and Newsletters Forms%2$s %3$s on %4$sWordPress.org%5$s to help us spread the word. Thank you from the E-goi team!', 'egoi-for-wp' ), '<strong>', '</strong>', '<a class="" href="' . $url . '" target="_blank" rel="noopener noreferrer">&#9733;&#9733;&#9733;&#9733;&#9733;</a>', '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">', '</a>' );
+		$text = sprintf( esc_html__( 'Please rate %1$sSmart Marketing SMS and Newsletters Forms%2$s %3$s on %4$sWordPress.org%5$s to help us spread the word. Thank you from the E-goi team!', 'egoi-for-wp' ), '<strong>', '</strong>', '<a class="" href="' . esc_url($url) . '" target="_blank" rel="noopener noreferrer">&#9733;&#9733;&#9733;&#9733;&#9733;</a>', '<a href="' . esc_url($url) . '" target="_blank" rel="noopener noreferrer">', '</a>' );
 		return $text;
 	}
 
@@ -1168,12 +1148,7 @@ class Egoi_For_Wp_Admin {
 	}
 
 	private function saveRMData( $post = false ) {
-
-		if ( ! get_option( 'egoi_data' ) ) {
-			add_option( 'egoi_data', $post );
-		}
-
-		update_option( 'egoi_data', $post );
+		update_option( 'egoi_data', sanitize_text_field($post) );
         $this->cleanCachedKeys();
 		exit;
 	}
@@ -1957,7 +1932,7 @@ class Egoi_For_Wp_Admin {
 
 	public function smsnf_get_blog_posts( $num_items = 2 ) {
 		$url  = __( 'https://blog.e-goi.com/feed/egoi', 'egoi-for-wp' );
-		$blog = fetch_feed( $url );
+		$blog = fetch_feed( esc_url($url) );
 
 		if ( ! is_wp_error( $blog ) ) {
 			$posts     = array();
@@ -1990,28 +1965,34 @@ class Egoi_For_Wp_Admin {
 
 		check( $arr );
 		out( $arr );
-		echo $id;
-		wp_die();
+        wp_send_json_success($id);
 	}
 	public function smsnf_show_blog_posts() {
-		$output = '';
 		$posts  = $this->smsnf_get_blog_posts();
 		foreach ( $posts as $key => $post ) {
-			$output .= '
-                <div class="smsnf-dashboard-blog-last-post__content">
-                    <div>
-                        <div>' . $post['date'] . '</div>
-                    </div>
-                    <a href="' . $post['link'] . '" target="_blank">
-                        <h4 class="smsnf-dashboard-blog-last-post__content__title">' . $post['title'] . '</h4>
-                    </a>
-                    <a href="' . $post['link'] . '" target="_blank">
-                        <p class="smsnf-dashboard-blog-last-post__content__description">' . $post['excerpt'] . '</p>
-                    </a>
-            ';
-			$output .= count( $posts ) - 1 > $key ? '<hr></div>' : '</div>';
+            ?>
+            <div class="smsnf-dashboard-blog-last-post__content">
+                <div>
+                    <div><?php echo esc_textarea($post['date']) ?></div>
+                </div>
+                <a href="<?php echo esc_url($post['link']) ?>" target="_blank">
+                    <h4 class="smsnf-dashboard-blog-last-post__content__title"><?php echo esc_textarea($post['title']) ?></h4>
+                </a>
+                <a href="<?php echo esc_url($post['link']) ?>" target="_blank">
+                    <p class="smsnf-dashboard-blog-last-post__content__description"><?php echo esc_html($post['excerpt']) ?></p>
+                </a>
+            <?php
+
+            if( count( $posts ) - 1 > $key){
+                ?>
+                <hr>
+                <?php
+            }
+            ?>
+            </div>
+            <?php
+
 		}
-		echo $output;
 		wp_die();
 	}
 
@@ -2116,36 +2097,34 @@ class Egoi_For_Wp_Admin {
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
 		if ( ! isset( $_POST['campaing_hash'] ) ) {
-			wp_die();
+            wp_send_json_error( __( 'The campaing_hash can\'t be empty!', 'egoi-for-wp' ) );
 		}
 
 		$apikey = $this->get_apikey();
 		if ( empty( $apikey ) ) {
-			wp_die();
+			wp_send_json_error( __( 'The apikey must be configured!', 'egoi-for-wp' ) );
 		}
 
 		$api = new EgoiApiV3( $apikey );
 
-		echo $api->deployWebPushRssCampaign( sanitize_key( trim( $_POST['campaing_hash'] ) ) );
-		wp_die();
+		wp_send_json_success(json_decode($api->deployWebPushRssCampaign( sanitize_key( trim( $_POST['campaing_hash'] ) ) ), true ));
 	}
 
 	public function egoi_deploy_rss() {
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
 		if ( ! isset( $_POST['campaing_hash'] ) ) {
-			wp_die();
+			wp_send_json_error( __( 'The campaing_hash can\'t be empty!', 'egoi-for-wp' ) );
 		}
 
 		$apikey = $this->get_apikey();
 		if ( empty( $apikey ) ) {
-			wp_die();
+			wp_send_json_error( __( 'The apikey must be configured!', 'egoi-for-wp' ) );
 		}
 
 		$api = new EgoiApiV3( $apikey );
 
-		echo $api->deployEmailRssCampaign( sanitize_key( trim( $_POST['campaing_hash'] ) ) );
-		wp_die();
+		wp_send_json_success(json_decode($api->deployEmailRssCampaign( sanitize_key( trim( $_POST['campaing_hash'] ) ) ), true));
 	}
 
 	public function egoi_get_email_senders() {
@@ -2153,13 +2132,12 @@ class Egoi_For_Wp_Admin {
 
 		$apikey = $this->get_apikey();
 		if ( empty( $apikey ) ) {
-			wp_die();
+			wp_send_json_error( __( 'The apikey must be configured!', 'egoi-for-wp' ) );
 		}
 
 		$api = new EgoiApiV3( $apikey );
 
-		echo $api->getSenders();
-		wp_die();
+		wp_send_json_success(json_decode($api->getSenders(), true));
 	}
 
 	/**
@@ -2241,7 +2219,7 @@ class Egoi_For_Wp_Admin {
 		$api  = new EgoiApiV3( $apikey );
 		$feed = get_home_url() . '/?feed=' . sanitize_key( $_POST['feed'] );
 
-		echo $api->createEmailRssCampaign(
+		wp_send_json_success(json_decode($api->createEmailRssCampaign(
 			array(
 				'list_id'       => sanitize_key( $_POST['list'] ),
 				'internal_name' => sanitize_text_field( $_POST['subject'] ),
@@ -2255,7 +2233,9 @@ class Egoi_For_Wp_Admin {
 					'snippet' => sanitize_text_field( $_POST['snippet'] ),
 				),
 			)
-		);
+		),
+		true
+		));
 
 		wp_die();
 	}
@@ -2604,19 +2584,19 @@ class Egoi_For_Wp_Admin {
                     <tbody>
                         <tr>
                             <td>' . __( 'Subject', 'egoi-for-wp' ) . '</td>
-                            <td>' . $campaigns[ $type ]['name'] . '</td>
+                            <td>' . esc_textarea($campaigns[ $type ]['name']) . '</td>
                         </tr>
                         <tr>
                             <td>' . __( 'Internal Name', 'egoi-for-wp' ) . '</td>
-                            <td>' . $campaigns[ $type ]['internal_name'] . '</td>
+                            <td>' . esc_textarea($campaigns[ $type ]['internal_name']) . '</td>
                         </tr>
                         <tr>
                             <td>ID</td>
-                            <td>' . $campaigns[ $type ]['id'] . '</td>
+                            <td>' . esc_textarea($campaigns[ $type ]['id']) . '</td>
                         </tr>
                         <tr>
                             <td>' . __( 'Total sent', 'egoi-for-wp' ) . '</td>
-                            <td class="smsnf-dashboard-last-' . $type_clean . '-campaign__totalsend">';
+                            <td class="smsnf-dashboard-last-' . esc_attr($type_clean) . '-campaign__totalsend">';
 
 			$output[ $type ] .= $campaigns[ $type ]['sent'] === 'NO_DATA' ? '<span class="totalsend--wait">' . __( 'Waiting for results...', 'egoi-for-wp' ) . '</span>' : $campaigns[ $type ]['sent'];
 
@@ -2630,35 +2610,29 @@ class Egoi_For_Wp_Admin {
 			if ( $campaigns[ $type ]['sent'] > 0 ) {
 
 				if ( $type == 'email' ) {
-					$labels           = '"Aberturas", "Cliques", "Bounces", "Remoções", "Queixas"';
-					$background_color = '
+					$labels           = ['Aberturas', 'Cliques', 'Bounces', 'Remoções', 'Queixas'];
+					$background_color = [
                         "rgba(0, 174, 218, 0.4)",
                         "rgba(147, 189, 77, 0.3)",
                         "rgba(246, 116, 73, 0.3)",
                         "rgba(250, 70, 19, 0.4)",
                         "rgba(237, 60, 47, 0.6)"
-                    ';
-					$border_color     = '
+                    ];
+					$border_color     = [
                         "rgba(0, 174, 218, 0.5)",
                         "rgba(147, 189, 77, 0.4)",
                         "rgba(246, 116, 73, 0.4)",
                         "rgba(242, 91, 41, 0.5)",
                         "rgba(237, 60, 47, 0.7)"
-                    ';
+                    ];
 				} elseif ( $type == 'sms_premium' ) {
-					$labels           = '"Entregues", "Não Entregues"';
-					$background_color = '
-                        "rgba(147, 189, 77, 0.3)",
-                        "rgba(250, 70, 19, 0.4",
-                    ';
-					$border_color     = '
-                        "rgba(147, 189, 77, 0.4)",
-                        "rgba(250, 70, 19, 0.5)"
-                    ';
+					$labels           = ['Entregues', 'Não Entregues'];
+					$background_color = ['rgba(147, 189, 77, 0.3)', 'rgba(250, 70, 19, 0.4'];
+					$border_color     = ['rgba(147, 189, 77, 0.4)', 'rgba(250, 70, 19, 0.5)'];
 				}
 
 				$output[ $type ] .= '
-                    <div class="smsnf-dashboard-last-' . $type_clean . '-campaign__chart">
+                    <div class="smsnf-dashboard-last-' . esc_attr($type_clean) . '-campaign__chart">
                         <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
                     </div>
                     <script>
@@ -2667,12 +2641,12 @@ class Egoi_For_Wp_Admin {
                     var myChart = new Chart(ctx, {
                         type: "doughnut",
                         data: {
-                            labels: [' . $labels . '],
+                            labels: [' . self::smsnf_print_array_js($labels) . '],
                             datasets: [{
                                 label: "# of Votes",
-                                data: [' . $campaign_chart . '],
-                                backgroundColor: [' . $background_color . '],
-                                borderColor: [' . $border_color . '],
+                                data: [' . esc_textarea($campaign_chart) . '],
+                                backgroundColor: [' . self::smsnf_print_array_js($background_color) . '],
+                                borderColor: [' . self::smsnf_print_array_js($border_color) . '],
                                 borderWidth: 1
                             }]
                         },
@@ -2702,6 +2676,17 @@ class Egoi_For_Wp_Admin {
 		echo wp_json_encode( $output );
 		wp_die();
 	}
+
+    private static function smsnf_print_array_js($values){
+        if(!is_array($values)){
+            return;
+        }
+        $output = '';
+        foreach ($values as $value){
+            $output .= '"'. esc_js($value) .'",';
+        }
+        return $output;
+    }
 
 
 	public function smsnf_hide_notification() {
@@ -2803,6 +2788,7 @@ class Egoi_For_Wp_Admin {
 
 		require_once dirname( __DIR__ ) . '/admin/partials/egoi-for-wp-admin-alert.php';
 
+
 		$output['account'] .= '
                 </tbody>
 			</table>' . $alert . '
@@ -2854,9 +2840,9 @@ class Egoi_For_Wp_Admin {
 
 			$locale = get_locale();
 			if ( $locale == 'pt_PT' ) {
-				$output['account'] .= '<img class="smsnf-dashboard-plugin-sms__img" src="' . plugins_url() . '/smart-marketing-for-wp/admin/img/sm-sms-pt.png">';
+				$output['account'] .= '<img class="smsnf-dashboard-plugin-sms__img" src="' . plugins_url('img/sm-sms-pt.png',__FILE__) . '">';
 			} else {
-				$output['account'] .= '<img class="smsnf-dashboard-plugin-sms__img" src="' . plugins_url() . '/smart-marketing-for-wp/admin/img/sm-sms-lang.png">';
+				$output['account'] .= '<img class="smsnf-dashboard-plugin-sms__img" src="' . plugins_url('img/sm-sms-lang.png',__FILE__) . '">';
 			}
 
             $output['account'] .= '
@@ -2869,7 +2855,7 @@ class Egoi_For_Wp_Admin {
 			$output['account'] .= '
                         <tr>
                             <td>' . __( 'Transactional SMS', 'egoi-for-wp' ) . '</td>
-                            <td><span class="">' . get_option( 'egoi_sms_counter', '0' ) . '</span></td>
+                            <td><span class="">' . esc_textarea(get_option( 'egoi_sms_counter', '0' )) . '</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -2904,8 +2890,7 @@ class Egoi_For_Wp_Admin {
 
 	public function smsnf_show_account_info_ajax() {
 		$output = $this->smsnf_show_account_info( 'smart-marketing-dashboard' );
-		echo $output;
-		wp_die();
+		wp_send_json_success($output);
 	}
 
 	public function smsnf_main_dashboard_widget_content() {
@@ -3044,6 +3029,25 @@ class Egoi_For_Wp_Admin {
 
 		wp_send_json_success( array( 'wp' => $total_users ) );
 	}
+
+    public function efwp_remove_data(){
+        check_ajax_referer( 'egoi_core_actions', 'security' );
+
+        $rmdata = sanitize_text_field($_POST['rmdata']);
+		if ( isset( $rmdata ) ) {
+			$this->saveRMData( $rmdata );
+            wp_send_json_success();
+		}
+        wp_send_json_error( __( 'Invalid data type.', 'egoi-for-wp' ) );
+    }
+
+    public function efwp_apikey_changes() {
+        check_ajax_referer( 'egoi_core_actions', 'security' );
+        if(Egoi_For_Wp::removeData( true, true )){
+            wp_send_json_success();
+        }
+        wp_send_json_error( __( 'Invalid data type.', 'egoi-for-wp' ) );
+    }
 
     public function efwp_apikey_save(){
         check_ajax_referer( 'egoi_core_actions', 'security' );

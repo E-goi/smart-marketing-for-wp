@@ -1,26 +1,7 @@
 <?php if ( ! defined( 'ABSPATH' ) ) {
-	die();}
-
-// cria/atualiza o formulário ("action" do form)
-if ( isset( $_POST['action'] ) && ( $_POST['action'] ) ) {
-	$post                                   = $_POST;
-	$post['egoi_form_sync']['form_content'] = htmlentities( $_POST['egoi_form_sync']['form_content'] );
-	$egoiform                               = $post['egoiform'];
-
-	update_option( $egoiform, $post );
-
-	echo get_notification( __( 'Saved Form', 'egoi-for-wp' ), __( 'Form saved with success.', 'egoi-for-wp' ) );
+	die();
 }
 
-$form_id   = sanitize_key( $_GET['form'] );
-$form_type = sanitize_text_field( $_GET['type'] );
-
-require plugin_dir_path( __DIR__ ) . 'egoi-for-wp-admin-shortcodes.php';
-$FORM_OPTION = get_optionsform( $form_id );
-
-$opt = get_option( $FORM_OPTION );
-
-$is_iframe = $_GET['type'] == 'iframe';
 ?>
 
 <button id="smsnf-help-btn" class="smsnf-help-btn"><?php _e( 'Help?', 'egoi-for-wp' ); ?></button>

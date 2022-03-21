@@ -94,7 +94,7 @@ $locale = get_locale();
 
 $page = array(
 	'home'      => ! isset( $_GET['sub'] ),
-	'create-wp' => sanitize_key( $_GET['sub'] ) == 'create-wp',
+	'create-wp' => isset( $_GET['sub'] ) && sanitize_key( $_GET['sub'] ) == 'create-wp',
 );
 
 if ( strpos( $locale, 'pt' ) !== false ) {

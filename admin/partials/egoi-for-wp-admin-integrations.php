@@ -44,15 +44,15 @@ $lists = $this->egoiWpApi->getLists();
 $opt    = get_option( 'egoi_int' );
 $egoint = $opt['egoi_int'];
 
-if ( ! $egoint['enable_pc'] ) {
+if ( !isset($egoint['enable_pc']) || ! $egoint['enable_pc'] ) {
 	$egoint['enable_pc'] = 0;
 }
 
-if ( ! $egoint['enable_cf'] ) {
+if ( !isset($egoint['enable_cf']) || ! $egoint['enable_cf'] ) {
 	$egoint['enable_cf'] = 0;
 }
 
-if ( ! $egoint['enable_gf'] ) {
+if ( !isset($egoint['enable_gf']) || ! $egoint['enable_gf'] ) {
 	$egoint['enable_gf'] = 0;
 }
 
@@ -73,7 +73,7 @@ if ( ! $egoint['enable_gf'] ) {
 		</div>
 		<nav>
 			<ul>
-				<li><a class="home <?php echo $page['home'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-integrations"><?php echo $home; ?></a></li>
+				<li><a class="home <?php echo $page['home'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-integrations"><?php getHomeSvg(); ?></a></li>
 				<li><a class="<?php echo $page['contact-form-7'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-integrations&sub=contact-form-7"><?php _e( 'Contact Form 7', 'egoi-for-wp' ); ?></a></li>
 				<li><a class="<?php echo $page['post-comment'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-integrations&sub=post-comment"><?php _e( 'Post Comment', 'egoi-for-wp' ); ?></a></li>
 				<li><a class="<?php echo $page['gravity-forms'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-integrations&sub=gravity-forms"><?php _e( 'Gravity Forms', 'egoi-for-wp' ); ?></a></li>
@@ -88,12 +88,12 @@ if ( ! $egoint['enable_gf'] ) {
 		<section class="smsnf-content">
 
 			<?php
-			$sub_var = sanitize_key( $_GET['sub'] );
-			if ( isset( $_GET['sub'] ) && $sub_var == 'contact-form-7' ) {
+			$sub_var = sanitize_key( isset($_GET['sub'])?$_GET['sub']:'' );
+			if ( $sub_var == 'contact-form-7' ) {
 				require_once plugin_dir_path( __FILE__ ) . 'integrations/contact-form-7.php';
-			} elseif ( isset( $_GET['sub'] ) && $sub_var == 'post-comment' ) {
+			} elseif ( $sub_var == 'post-comment' ) {
 				require_once plugin_dir_path( __FILE__ ) . 'integrations/post-comment.php';
-			} elseif ( isset( $_GET['sub'] ) && $sub_var == 'gravity-forms' ) {
+			} elseif ( $sub_var == 'gravity-forms' ) {
 				require_once plugin_dir_path( __FILE__ ) . 'integrations/gravity-forms.php';
 			} else {
 				require_once plugin_dir_path( __FILE__ ) . 'integrations/home.php';

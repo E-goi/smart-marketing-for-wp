@@ -75,7 +75,7 @@ if ( array_filter( $arr ) ) {
                     action: "smsnf_kill_alert"
                 },
                 function(response) {
-                    if(response == "1"){
+                    if(response.data == "1"){
                         document.getElementById("remove_alert").checked = true;
                         setTimeout(function(){ hide(document.getElementById("remove_alert_div")); },1000);
                     }

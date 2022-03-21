@@ -366,7 +366,7 @@ class Egoi_For_Wp_Public {
 	public function subscribe_egoi_simple_form( $atts, $qt = 1 ) {
 		global $wpdb;
 
-		if ( empty( $atts['id'] ) ) {
+		if ( empty( $atts['id'] ) || wp_is_json_request()) {
 			return;
 		}
 
@@ -386,6 +386,7 @@ class Egoi_For_Wp_Public {
 			$html_code->post_content = str_replace( '[e_' . $tag . ']', '', $html_code->post_content );
 			$html_code->post_content = str_replace( '[/e_' . $tag . ']', '', $html_code->post_content );
 		}
+
 		?>
 		<form id="<?php echo esc_attr( $simple_form ); ?>" class="egoi_simple_form" method="post" action="/">
 			<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="<?php echo esc_attr( $id ); ?>">
@@ -395,7 +396,14 @@ class Egoi_For_Wp_Public {
 			<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="<?php echo esc_attr( $data->double_optin ); ?>">
 
 
-			<?php echo stripslashes( $html_code->post_content ); ?>
+			<?php echo wp_kses($html_code->post_content,
+                [
+                    'p'         => [],
+                    'button'    => [ 'type' => [], 'style'=>[], 'class' => [], 'id' => [] ],
+                    'label'     => [ 'for' => [],'style'=>[] ],
+                    'input'     => [ 'style'=>[] ,'type' => [], 'name' => [],'id' => [],'class' => [] ]
+                ]);
+            ?>
 			<div id="<?php echo esc_attr( $simple_form_result ); ?>" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>
 		</form>
 
@@ -704,7 +712,7 @@ class Egoi_For_Wp_Public {
 		$api = new Egoi_For_Wp();
 
 		// double opt-in
-		$status    = filter_var( stripslashes( $_POST['egoi_double_optin'] ), FILTER_SANITIZE_STRING ) == '1' ? 0 : 1;
+		$status    = sanitize_text_field($_POST['egoi_double_optin']);
 		$form_data = array();
 
 		if ( empty( $_POST['elementorEgoiForm'] ) ) {// old simple forms
@@ -734,11 +742,11 @@ class Egoi_For_Wp_Public {
 				$api->smsnf_save_form_subscriber( $form_id, 'simple-form', $result );
 			}
 
-			echo $this->check_subscriber( $result ) . ' ';
+			echo esc_textarea($this->check_subscriber( $result )) . ' ';
 			_e( 'was successfully registered!', 'egoi-for-wp' );
 		} elseif ( isset( $result->MODIFICATION_DATE ) ) {
 			_e( 'Subscriber data from', 'egoi-for-wp' );
-			echo ' ' . $this->check_subscriber( $result ) . ' ';
+			echo ' ' . esc_textarea($this->check_subscriber( $result )) . ' ';
 			_e( 'has been updated!', 'egoi-for-wp' );
 		} elseif ( isset( $result->ERROR ) ) {
 			if ( $result->ERROR == 'NO_DATA_TO_INSERT' ) {
@@ -755,6 +763,7 @@ class Egoi_For_Wp_Public {
 
 	public function check_subscriber( $subscriber_data ) {
 		$data = array( 'FIRST_NAME', 'EMAIL', 'CELLPHONE' );
+        $subscriber = '';
 		foreach ( $data as $value ) {
 			if ( $subscriber_data->$value ) {
 				$subscriber = $subscriber_data->$value;
