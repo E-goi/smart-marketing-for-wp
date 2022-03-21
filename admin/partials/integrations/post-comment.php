@@ -1,5 +1,10 @@
 <form method="post" action="">
-	<?php settings_fields( $FORM_OPTION ); ?>
+	<?php
+    require plugin_dir_path( __DIR__ ) . 'egoi-for-wp-admin-shortcodes.php';
+    $FORM_OPTION = get_optionsform( 2 );
+    settings_fields( $FORM_OPTION );
+
+    ?>
 	<input type="hidden" name="egoiform" value="egoi_int">
 	<div class="smsnf-grid">
 		<div>

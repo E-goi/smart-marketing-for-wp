@@ -123,8 +123,7 @@
 					</ol>
 
 					<div style="margin-top: 30px;"><?php _e( 'Example image', 'egoi-for-wp' ); ?></div>
-					<?php $img = plugins_url() . '/smart-marketing-for-wp/admin/img/webpushcode.png'; ?>
-					<img src="<?php echo $img; ?>" style="max-width: 480px; display: inline-block; padding: 10px; background-color: white; border: 1px solid #e5e5e5; margin: 4px 0 20px 0;">
+					<img src="<?php echo esc_url(plugins_url('../../../admin/img/webpushcode.png',__FILE__)); ?>" style="max-width: 480px; display: inline-block; padding: 10px; background-color: white; border: 1px solid #e5e5e5; margin: 4px 0 20px 0;">
 
 				</div>
 			</div>
@@ -163,12 +162,12 @@
 						<table width="100%">
 							<tr>
 								<td>
-									<p style="font-weight:  bold; font-size: 14px;"><?php _e( 'Want to use E-goi\'s Web Push without limits?', 'egoi-for-wp' ); ?>
+									<p style="font-weight:  bold; font-size: 14px;color: white;margin: 15px 10px;"><?php _e( 'Want to use E-goi\'s Web Push without limits?', 'egoi-for-wp' ); ?>
 										<br><?php _e( 'Join an Unlimited Sending plan.', 'egoi-for-wp' ); ?>
 									</p>
 								</td>
 								<td style="min-width: 153px;" align="right">
-									<a href="<?php echo $link_price; ?>" target="_blank" style="font-weight:  bold; font-size: 14px; text-decoration: none; background-color: white; color: #04afdb; padding: 10px 20px; border-radius: 20px;"><?php _e( 'Join Now', 'egoi-for-wp' ); ?></a>
+									<a href="<?php echo esc_url($link_price); ?>" target="_blank" style="font-weight:  bold; font-size: 14px; text-decoration: none; background-color: white; color: #04afdb; padding: 10px 20px; border-radius: 20px;"><?php _e( 'Join Now', 'egoi-for-wp' ); ?></a>
 								</td>
 							</tr>
 						</table>
@@ -178,12 +177,11 @@
 							<?php _e( 'Integrate', 'egoi-for-wp' ); ?>
 							<b><?php _e( 'Web Push Notification', 'egoi-for-wp' ); ?></b>
 							<?php _e( 'with your site to alert your customers or followers, with Instant Messaging, directly to your browser, even if they are browsing another site.', 'egoi-for-wp' ); ?>
-							<a href="<?php echo $link_learn; ?>" target="_blank"><?php _e( 'Learn more', 'egoi-for-wp' ); ?></a>
+							<a href="<?php echo esc_url($link_learn); ?>" target="_blank"><?php _e( 'Learn more', 'egoi-for-wp' ); ?></a>
 						</p>
 
-						<?php $img = plugins_url() . '/smart-marketing-for-wp/admin/img/webpushpage.jpg'; ?>
 						<div style="padding: 0 12px 20px 0;">
-							<img src="<?php echo $img; ?>" style="width: 100%; height: auto;">
+							<img src="<?php echo esc_url(plugins_url('../../../admin/img/webpushpage.jpg',__FILE__)); ?>" style="width: 100%; height: auto;">
 						</div>
 					</div>
 
@@ -193,6 +191,6 @@
 	</div>
 	<span>
 			<?php _e( 'Don\'t know how to create a Web Push in E-goi? Learn how to do it', 'egoi-for-wp' ); ?>
-		<a href="<?php echo $link_help; ?>" target="_blank"><?php _e( 'here', 'egoi-for-wp' ); ?></a>
+		<a href="<?php echo esc_url($link_help); ?>" target="_blank"><?php _e( 'here', 'egoi-for-wp' ); ?></a>
 			</span>
 </section>

@@ -48,7 +48,7 @@ $popups = EgoiPopUp::getSavedPopUps();
 					<td><?php echo esc_html( $title ); ?></td>
 					<!--<td class="<?php echo $enable ? '-enable' : '-disable'; ?>"><?php echo $enable ? 'Ativo' : 'Inativo'; ?></td>-->
 					<td style="width:1%">
-						<a class="smsnf-btn" href="<?php echo $edit_link; ?>"><?php _e( 'Edit', 'egoi-for-wp' ); ?></a>
+						<a class="smsnf-btn" href="<?php echo esc_url($edit_link); ?>"><?php _e( 'Edit', 'egoi-for-wp' ); ?></a>
 						<a class="smsnf-btn delete-adv-form" href="<?php echo esc_attr( $delete_link ); ?>"><?php _e( 'Delete', 'egoi-for-wp' ); ?></a>
 					</td>
 				</tr>
@@ -74,15 +74,15 @@ $popups = EgoiPopUp::getSavedPopUps();
 		<tbody>
 		<?php foreach ( $popups as $form ) : ?>
 			<?php
-			$popup_data = ( new EgoiPopUp( $form ) )->getPopupSavedData();
+			$popup_data = ( new EgoiPopUp( sanitize_key($form) ) )->getPopupSavedData();
 
-			$edit_link   = sprintf( '?page=egoi-4-wp-form&sub=popup&popup_id=%d', $form );
-			$delete_link = sprintf( '?page=egoi-4-wp-form&del_popup=%d', $form );
+			$edit_link   = sprintf( '?page=egoi-4-wp-form&sub=popup&popup_id=%d', sanitize_key($form) );
+			$delete_link = sprintf( '?page=egoi-4-wp-form&del_popup=%d', sanitize_key($form) );
 			?>
 			<tr <?php echo $form == $_GET['highlight'] ? 'class="pulse-highlight"' : ''; ?>>
-				<td><?php echo $form; ?></td>
+				<td><?php echo esc_textarea($form); ?></td>
 				<td><?php _e( 'Popup', 'egoi-for-wp' ); ?></td>
-				<td><?php echo $popup_data['title']; ?></td>
+				<td><?php echo esc_textarea($popup_data['title']); ?></td>
 				<td>
 					<a class="smsnf-btn" href="<?php echo esc_attr( $edit_link ); ?>"><?php _e( 'Edit', 'egoi-for-wp' ); ?></a>
 					<a class="smsnf-btn delete-adv-form" href="<?php echo esc_attr( $delete_link ); ?>"><?php _e( 'Delete', 'egoi-for-wp' ); ?></a>

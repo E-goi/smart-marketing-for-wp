@@ -378,7 +378,6 @@ class Egoi_For_Wp {
 
 		$this->plugin_name = 'egoi-for-wp';
 		$this->debug       = $debug;
-		$this->host        = isset( $_SERVER['SERVER_NAME'] ) ? esc_url_raw( $_SERVER['SERVER_NAME'] ) : esc_url_raw( $_SERVER['HTTP_HOST'] );
         $this->define_apikey();
 		$this->load_dependencies();
 		$this->set_locale();
@@ -559,8 +558,14 @@ class Egoi_For_Wp {
 		// ajax apikey
 		$this->loader->add_action( 'wp_ajax_egoi_change_api_key', $plugin_admin, 'egoi_change_api_key' );
         $this->loader->add_action( 'wp_ajax_efwp_apikey_save', $plugin_admin, 'efwp_apikey_save' );
+        $this->loader->add_action( 'wp_ajax_efwp_remove_data', $plugin_admin, 'efwp_remove_data' );
+        $this->loader->add_action( 'wp_ajax_efwp_apikey_changes', $plugin_admin, 'efwp_apikey_changes' );
 
-		if ( empty( $this->_valid['api_key'] ) ) {
+        if ( isset($_GET['page']) && strpos( sanitize_text_field($_GET['page']), 'egoi-4-wp' ) !== false) {
+            $this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'remove_footer_admin', 1, 2 );
+        }
+
+        if ( empty( $this->_valid['api_key'] ) ) {
 			return;
 		}
 
@@ -922,7 +927,7 @@ class Egoi_For_Wp {
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public function addSubscriber( $listID, $name = '', $email, $lang = '', $status = false, $mobile = '', $tag = false, $phone = '' ) {
+	public function addSubscriber( $listID, $name = '', $email='', $lang = '', $status = false, $mobile = '', $tag = false, $phone = '' ) {
 
 		$full_name = explode( ' ', $name );
 		$fname     = $full_name[0];

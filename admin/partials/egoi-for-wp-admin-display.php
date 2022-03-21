@@ -1,5 +1,4 @@
 <?php
-error_reporting( ~E_NOTICE );
 
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) {

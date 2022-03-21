@@ -1,5 +1,4 @@
 <?php
-error_reporting( 0 );
 
 /**
  *
@@ -238,11 +237,6 @@ function egoi_widget_init() {
 require plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-widget.php';
 
-// HOOK API KEY CHANGES
-add_action( 'wp_ajax_efwp_apikey_changes', 'efwp_apikey_changes' );
-function efwp_apikey_changes() {
-	return Egoi_For_Wp::removeData( true, true );
-}
 
 // HOOK GET TAGS
 add_action( 'wp_ajax_egoi_get_tags', 'egoi_get_tags' );
