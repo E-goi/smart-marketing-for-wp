@@ -2633,11 +2633,11 @@ class Egoi_For_Wp_Admin {
 
 				$output[ $type ] .= '
                     <div class="smsnf-dashboard-last-' . esc_attr($type_clean) . '-campaign__chart">
-                        <canvas id="smsnf-dlec__doughnutChart" height="120"></canvas>
+                        <canvas id="smsnf-dlec__doughnutChart_'. esc_attr($type) .'" height="120"></canvas>
                     </div>
                     <script>
                     //Chart.defaults.global.legend.labels.usePointStyle = true;
-                    var ctx = document.getElementById("smsnf-dlec__doughnutChart").getContext("2d");
+                    var ctx = document.getElementById("smsnf-dlec__doughnutChart_'. esc_attr($type) .'").getContext("2d");
                     var myChart = new Chart(ctx, {
                         type: "doughnut",
                         data: {
