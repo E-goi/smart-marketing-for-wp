@@ -49,6 +49,9 @@ check( $arr );
 
 
 function out( $arr ) {
+    if(empty($arr)){
+        return;
+    }
 	global $wpdb;
 
 	$table = $wpdb->prefix . 'posts';

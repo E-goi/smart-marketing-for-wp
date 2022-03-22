@@ -17,7 +17,7 @@ function get_next_adv_form_id() {
 	for ( $i = 1; $i <= 5; $i++ ) {
 		$form = get_option( 'egoi_form_sync_' . $i );
 
-		if ( ! $form['egoi_form_sync']['form_id'] ) {
+		if ( empty($form) || empty($form['egoi_form_sync']) || ! $form['egoi_form_sync']['form_id'] ) {
 			return $i;
 		}
 	}

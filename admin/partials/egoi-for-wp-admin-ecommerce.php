@@ -35,7 +35,7 @@ if ( isset( $_POST['action'] ) ) {
 
 $page = array(
 	'home'        => ! isset( $_GET['subpage'] ),
-	'new_catalog' => $_GET['subpage'] == 'new_catalog',
+	'new_catalog' => isset( $_GET['subpage'] ) && $_GET['subpage'] == 'new_catalog',
 );
 ?>
 

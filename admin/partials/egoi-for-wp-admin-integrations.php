@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $dir = plugin_dir_path( __FILE__ ) . 'capture/';
 require_once $dir . '/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'egoi-for-wp-common.php';
-$sub_var = sanitize_key( $_GET['sub'] );
+$sub_var = sanitize_key( isset( $_GET['sub'] )?$_GET['sub']:'' );
 $page    = array(
 	'home'           => ! isset( $_GET['sub'] ),
 	'contact-form-7' => $sub_var == 'contact-form-7',

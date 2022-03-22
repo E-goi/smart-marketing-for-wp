@@ -247,7 +247,7 @@ class Egoi_For_Wp_Admin {
 
 
 			if ( strpos( get_current_screen()->id, 'ecommerce' ) ) {
-				$page = sanitize_text_field( $_GET['subpage'] );
+				$page = sanitize_text_field( isset($_GET['subpage'])?$_GET['subpage']:'' );
 				if ( ! empty( $page ) ) {
 					switch ( $page ) {
 						case 'new_catalog':
@@ -994,7 +994,7 @@ class Egoi_For_Wp_Admin {
 	 * @param    $data
 	 * @since    1.0.0
 	 */
-	public function insertCommentHook( $id, $approved = false, $data ) {
+	public function insertCommentHook( $id, $approved = false, $data = [] ) {
 
 		$opt      = get_option( 'egoi_int' );
 		$egoi_int = $opt['egoi_int'];
