@@ -10,7 +10,7 @@ require_once plugin_dir_path( __FILE__ ) . 'egoi-for-wp-common.php';
 
 $page = array(
 	'home'            => ! isset( $_GET['sub'] ),
-	'send-email-test' => sanitize_key( $_GET['sub'] ) == 'send-email-test',
+	'send-email-test' => isset( $_GET['sub'] ) && sanitize_key( $_GET['sub'] ) == 'send-email-test',
 );
 
 ?>

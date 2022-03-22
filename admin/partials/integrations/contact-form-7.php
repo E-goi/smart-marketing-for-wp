@@ -2,7 +2,7 @@
 $contact_forms = $this->egoiWpApi->getContactFormInfo();
 ?>
 <form method="post" action="">
-	<?php settings_fields( $FORM_OPTION ); ?>
+	<?php settings_fields( 3 ); ?>
 	<input type="hidden" name="egoiform" value="egoi_int">
 	<div class="smsnf-grid">
 		<div>

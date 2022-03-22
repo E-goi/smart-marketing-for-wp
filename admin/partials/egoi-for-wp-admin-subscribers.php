@@ -8,7 +8,7 @@ require_once plugin_dir_path( __FILE__ ) . 'capture/functions.php';
 
 $page = array(
 	'home'     => ! isset( $_GET['subpage'] ),
-	'advanced' => $_GET['subpage'] == 'advanced',
+	'advanced' => isset( $_GET['subpage'] ) && $_GET['subpage'] == 'advanced',
 );
 
 add_thickbox();

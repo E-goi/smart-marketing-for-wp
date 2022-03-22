@@ -40,7 +40,7 @@ if ( isset( $_GET['del_popup'] ) ) {
 	echo get_notification( __( 'Popups', 'egoi-for-wp' ), __( 'Popup was successfully deleted!', 'egoi-for-wp' ) );
 }
 
-$sub_var = sanitize_key( $_GET['sub'] );
+$sub_var = isset($_GET['sub'])?sanitize_key( $_GET['sub'] ):'';
 $page    = array(
 	'home'             => ! isset( $_GET['sub'] ),
 	'adv forms'        => $sub_var == 'adv-forms',

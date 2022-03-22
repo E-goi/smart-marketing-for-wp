@@ -29,8 +29,8 @@ jQuery( document ).ready(
 			jQuery( ".cats_tags_titles" ).show();
 		}
 
-		jQuery( 'input[type=radio][name=type]' ).change(
-			function() {
+		jQuery( 'input[type=radio][name=type]' ).on('change',
+			function(e) {
 				jQuery( ".cats_tags_titles" ).show();
 				if (this.value == 'posts') {
 					jQuery( ".post_cats_tags" ).show();

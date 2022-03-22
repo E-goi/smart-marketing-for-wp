@@ -24,7 +24,7 @@
 
 				<table class="form-table" style="background:#fff;">
 					<tr valign="top">
-						<td scope="row" id="valid_sync">
+						<td scope="row" style="text-align: center;" id="valid_sync">
 							<span id="load_sync"></span>
 							<p id="egoi_sinc_users_wp"><div class="egoi_sinc_users"><?php _e( 'Loading Subscribers Information...', 'egoi-for-wp' ); ?></div></p>
 						</td>

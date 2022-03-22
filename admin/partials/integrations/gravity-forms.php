@@ -3,7 +3,7 @@ $contact_forms = Egoi_For_Wp::getGravityFormsInfoAll();
 $mapped        = Egoi_For_Wp::getGravityFormsInfo();
 ?>
 <form method="post" action="" id="egoi_form_mappable">
-	<?php settings_fields( $FORM_OPTION ); ?>
+	<?php settings_fields( 4 ); ?>
 	<input type="hidden" name="egoiform" value="egoi_int">
 	<input type="hidden" id="egoi_map_to_save" name="egoi_map_to_save" value="">
 	<div class="smsnf-grid">
