@@ -1471,14 +1471,15 @@ class Egoi_For_Wp_Admin {
 	 * RSS Feed - handler for links
 	 */
 	public function prepareUrl( $complement = '' ) {
-		if ( strpos( $_SERVER['REQUEST_URI'], '&del=' ) ) {
-			$url = substr( $_SERVER['REQUEST_URI'], 0, -34 );
-		} elseif ( strpos( $_SERVER['REQUEST_URI'], '&add=' ) ) {
-			$url = substr( $_SERVER['REQUEST_URI'], 0, -6 );
-		} elseif ( strpos( $_SERVER['REQUEST_URI'], '&edit=' ) || strpos( $_SERVER['REQUEST_URI'], '&view=' ) ) {
-			$url = substr( $_SERVER['REQUEST_URI'], 0, -35 );
+        $requestUri = sanitize_text_field($_SERVER['REQUEST_URI']);
+		if ( strpos( $requestUri, '&del=' ) ) {
+			$url = substr( $requestUri, 0, -34 );
+		} elseif ( strpos( $requestUri, '&add=' ) ) {
+			$url = substr( $requestUri, 0, -6 );
+		} elseif ( strpos( $requestUri, '&edit=' ) || strpos( $requestUri, '&view=' ) ) {
+			$url = substr( $requestUri, 0, -35 );
 		} else {
-			$url = $_SERVER['REQUEST_URI'];
+			$url = $requestUri;
 		}
 		return $url . $complement;
 	}

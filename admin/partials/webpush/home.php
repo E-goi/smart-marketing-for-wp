@@ -39,8 +39,8 @@
 								<div class="smsnf-input-group" style="display: flex;align-items: center;min-width: 100%;">
 									<input type="text" class="e-goi-account-apikey--grp--form__input" name="egoi_webpush[code]" size="55"
 										   autocomplete="off" placeholder="<?php echo __( 'Paste the Web Push code here', 'egoi-for-wp' ); ?>"
-										   required pattern="[a-zA-Z0-9]+" value="<?php echo $_POST['egoi_webpush']['code']; ?>" spellcheck="false" autofocus
-										   maxlength="32" <?php echo $error ? 'style="border-color: #ed000e;"' : null; ?>
+										   required pattern="[a-zA-Z0-9]+" value="<?php echo esc_attr($_POST['egoi_webpush']['code']); ?>" spellcheck="false" autofocus
+										   maxlength="32" <?php echo !empty($error) ? 'style="border-color: #ed000e;"' : null; ?>
 									/>
 
 
@@ -52,8 +52,8 @@
 
 							<?php } else { ?>
 
-								<span class="e-goi-account-apikey--grp--form" id="webpush_span" style="width: 457px; <?php echo $ok ? 'border-color: green;' : null; ?>" >
-											<?php echo $options['code']; ?>
+								<span class="e-goi-account-apikey--grp--form" id="webpush_span" style="width: 457px; <?php echo !empty($ok) ? 'border-color: green;' : ''; ?>" >
+											<?php echo esc_html($options['code']); ?>
 										</span>
 
 								<a type="button" id="edit_webpush" class="button button--custom">
@@ -63,7 +63,7 @@
 								<div class="smsnf-input-group" style="display: flex;align-items: center;min-width: 100%;">
 									<input type="text" class="e-goi-account-apikey--grp--form__input" name="egoi_webpush[code]" size="55" id="egoi_webpush_cod"
 										   autocomplete="off" placeholder="<?php echo __( 'Paste here the Web Push code', 'egoi-for-wp' ); ?>"
-										   required pattern="[a-zA-Z0-9]+" value="<?php echo $options['code']; ?>" spellcheck="false" autofocus
+										   required pattern="[a-zA-Z0-9]+" value="<?php echo esc_attr($options['code']); ?>" spellcheck="false" autofocus
 										   maxlength="32" style="display: none;"
 									/>
 									<span id="save_webpush" class="button-primary button-primary--custom" style="display: none;margin-top: 10px;">

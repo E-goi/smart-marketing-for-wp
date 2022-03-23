@@ -27,7 +27,7 @@
 
 	<div class="smsnf-grid">
 		<div>
-			<form id="egoi_simple_form" method="post" action="<?php echo $this->prepareUrl( '&sub=rss-feed&edit=egoi_rssfeed_' . $code ); ?>">
+			<form id="egoi_simple_form" method="post" action="<?php echo esc_url($this->prepareUrl( '&sub=rss-feed&edit=egoi_rssfeed_' . $code )); ?>">
 				<?php
 				settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
 				settings_errors();
