@@ -403,7 +403,7 @@ class EgoiElementorWidget extends Widget_Base {
 		$message_box_id         = 'message_' . $widget_id;
 		$egoi_elm_submit_button = 'egoi_elm_submit_button_' . $widget_id;
 		?>
-        <p class="egoi_elementor_entry_wrapper ' . $position_button . '"><button style="background-color: <?php echo esc_attr($settings['button_color']); ?>;color: <?php echo esc_attr($settings['button_text_color']); ?>" type="submit" id="<?php echo esc_attr($egoi_elm_submit_button) ?>" ><?php echo esc_textarea($settings['button_title']) ?></button></p>
+        <p class="egoi_elementor_entry_wrapper <?php echo esc_attr($position_button) ?>"><button style="background-color: <?php echo esc_attr($settings['button_color']); ?>;color: <?php echo esc_attr($settings['button_text_color']); ?>" type="submit" id="<?php echo esc_attr($egoi_elm_submit_button) ?>" ><?php echo esc_textarea($settings['button_title']) ?></button></p>
 		</div>
 
         <?php

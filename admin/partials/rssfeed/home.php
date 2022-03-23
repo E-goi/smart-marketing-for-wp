@@ -32,7 +32,7 @@ if ( ! isset( $_GET['add'] ) && ! isset( $_GET['edit'] ) && ! isset( $_GET['view
 						<p><b><?php echo __( 'Are you sure you want to delete this RSS Feed?', 'egoi-for-wp' ); ?> </b></p>
 						<ul class="cd-buttons">
 							<li>
-								<a href="<?php echo $this->prepareUrl( '&del=' . $option->option_name ); ?>"><?php _e( 'Confirm', 'egoi-for-wp' ); ?></a>
+								<a href="<?php echo esc_url($this->prepareUrl( '&del=' . $option->option_name )); ?>"><?php _e( 'Confirm', 'egoi-for-wp' ); ?></a>
 							</li>
 							<li>
 								<a class="cd-popup-close-btn" href="#0"><?php _e( 'Cancel', 'egoi-for-wp' ); ?></a>
@@ -51,9 +51,9 @@ if ( ! isset( $_GET['add'] ) && ! isset( $_GET['edit'] ) && ! isset( $_GET['view
 					</td>
 					<td style="vertical-align: middle;" align="right" width="70" nowrap>
 						<nobr>
-							<a class="cd-popup-trigger-del" data-id-form="<?php echo $option->option_name; ?>" data-type-form="rss-feed" href="" title="<?php _e( 'Delete', 'egoi-for-wp' ); ?>"><i style="padding-right: 3px;" class="far fa-trash-alt"></i></a>
-							<a title="<?php _e( 'Edit', 'egoi-for-wp' ); ?>" href="<?php echo $this->prepareUrl( '&sub=rss-feed&edit=' . $option->option_name ); ?>"><i style="padding-right: 2px;" class="far fa-edit"></i></a>
-							<a title="<?php _e( 'Preview', 'egoi-for-wp' ); ?>" href="<?php echo $this->prepareUrl( '&sub=rss-feed&view=' . $option->option_name ); ?>"><i class="fas fa-eye"></i></a>
+							<a class="cd-popup-trigger-del" data-id-form="<?php echo esc_attr($option->option_name); ?>" data-type-form="rss-feed" href="" title="<?php _e( 'Delete', 'egoi-for-wp' ); ?>"><i style="padding-right: 3px;" class="far fa-trash-alt"></i></a>
+							<a title="<?php _e( 'Edit', 'egoi-for-wp' ); ?>" href="<?php echo esc_url($this->prepareUrl( '&sub=rss-feed&edit=' . $option->option_name )); ?>"><i style="padding-right: 2px;" class="far fa-edit"></i></a>
+							<a title="<?php _e( 'Preview', 'egoi-for-wp' ); ?>" href="<?php echo esc_url($this->prepareUrl( '&sub=rss-feed&view=' . $option->option_name )); ?>"><i class="fas fa-eye"></i></a>
 						</nobr>
 					</td>
 				</tr>
@@ -63,7 +63,7 @@ if ( ! isset( $_GET['add'] ) && ! isset( $_GET['edit'] ) && ! isset( $_GET['view
 		<br>
 		<div class="egoi-undertable-button-wrapper">
 			<div class="smsnf-input-group" style="margin-block-end: 0 !important;">
-				<input type="submit" onclick="window.location='<?php echo $this->prepareUrl( '&add=1&sub=rss-feed' ); ?>';" value="<?php _e( 'Create RSS Feed +', 'egoi-for-wp' ); ?>">
+				<input type="submit" onclick="window.location='<?php echo esc_url($this->prepareUrl( '&add=1&sub=rss-feed' )); ?>';" value="<?php _e( 'Create RSS Feed +', 'egoi-for-wp' ); ?>">
 			</div>
 		</div>
 

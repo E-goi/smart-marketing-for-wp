@@ -28,7 +28,7 @@ $editor_id = 'content';
 
 <form id="smsnf-popup-form" method="post" action="#">
 
-	<input type="hidden" id="popup_id" name="popup_id" value="<?php echo $popup_id; ?>">
+	<input type="hidden" id="popup_id" name="popup_id" value="<?php echo esc_attr($popup_id); ?>">
 
 
 	<ul class="tab">
@@ -64,7 +64,7 @@ $editor_id = 'content';
 
 					<?php
 					foreach ( get_simple_forms() as $form ) {
-						echo '<option value="' . $form->ID . '" ' . selected( $form->ID, $popup_data['form_id'] ) . '>' . $form->post_title . '</option>';
+						echo '<option value="' . esc_attr($form->ID) . '" ' . selected( $form->ID, $popup_data['form_id'] ) . '>' . esc_textarea($form->post_title) . '</option>';
 					}
 					?>
 				</select>
@@ -86,13 +86,13 @@ $editor_id = 'content';
 				<div class="page_trigger_select" >
 					<select class="js-example-basic-multiple" name="page_trigger[]" id="page_trigger" multiple="multiple" style="max-width: 400px;">
 						<?php foreach ( get_pages() as $available_posts ) { ?>
-							<option id="page_<?php echo $available_posts->ID; ?>" value="<?php echo $available_posts->ID; ?>"
+							<option id="page_<?php echo esc_attr($available_posts->ID); ?>" value="<?php echo esc_attr($available_posts->ID); ?>"
 								<?php
 								if ( in_array( $available_posts->ID, $popup_data['page_trigger'] ) ) {
 									echo 'selected';}
 								?>
 								>
-								<?php echo $available_posts->post_title; ?>
+								<?php echo esc_textarea($available_posts->post_title); ?>
 							</option>
 						<?php } ?>
 					</select>
@@ -106,7 +106,7 @@ $editor_id = 'content';
 					<option value="delay" <?php selected( $popup_data['trigger'], 'delay' ); ?>><?php _e( 'Delay', 'egoi-for-wp' ); ?></option>
 					<option value="on_leave"  <?php selected( $popup_data['trigger'], 'on_leave' ); ?>><?php _e( 'On Leave', 'egoi-for-wp' ); ?></option>
 				</select>
-				<input name="trigger_option" id="trigger_option" value="<?php echo $popup_data['trigger_option']; ?>" placeholder="<?php _e( 'Time in seconds here', 'egoi-for-wp' ); ?>" style="display: none;max-width: 400px;">
+				<input name="trigger_option" id="trigger_option" value="<?php echo esc_attr($popup_data['trigger_option']); ?>" placeholder="<?php _e( 'Time in seconds here', 'egoi-for-wp' ); ?>" style="display: none;max-width: 400px;">
 			</div>
 
 			<div class="smsnf-input-group">
