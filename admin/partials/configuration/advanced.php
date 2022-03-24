@@ -33,8 +33,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 				</div>
 
 				<div class="smsnf-input-group">
-					<label for="backend_order_state">· <?php _e( 'Sync products with this catalog', 'egoi-for-wp' ); ?></label>
-					<p class="subtitle"><?php _e( 'Select the E-goi\'s catalog for your store.', 'egoi-for-wp' ); ?></p>
+					<label for="backend_order_state">· <?php _e( 'Order status to be converted', 'egoi-for-wp' ); ?></label>
+					<p class="subtitle"><?php _e( 'Select order status.', 'egoi-for-wp' ); ?></p>
 					<div class="smsnf-wrapper">
 						<select id="backend_order_state" name="backend_order_state" class="form-select" >
 							<option disabled value="" selected>
