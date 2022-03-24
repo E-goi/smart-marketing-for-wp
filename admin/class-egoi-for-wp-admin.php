@@ -2166,6 +2166,18 @@ class Egoi_For_Wp_Admin {
 
 	}
 
+    public function getWebpushSiteIdFromCS(&$api){
+        $domainData = $api->getConnectedSite( $this->options_list['domain'] );
+
+        if(!empty($domainData) && !empty($domainData['features']) && !empty($domainData['features']['web_push']) && !empty($domainData['features']['web_push']['enabled'])){
+            return [
+                    'list_id' => $this->options_list['list'],
+                    'site_id' => $domainData['features']['web_push']['items'][0]['site_id']
+            ];
+        }
+        return false;
+    }
+
 	public function egoi_rss_campaign_webpush() {
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
@@ -2175,13 +2187,18 @@ class Egoi_For_Wp_Admin {
 		}
 
 		$option_webpush = get_option( 'egoi_webpush_code' );
-		if ( empty( $option_webpush['code'] ) ) {
+		if ( empty( $option_webpush['code'] ) && empty($this->options_list['domain'])) {
 			echo wp_json_encode( array( 'ERROR' => __( 'Missing Webpush Instalation!', 'egoi-for-wp' ) ) );
 			wp_die();
 		}
 		$api = new EgoiApiV3( $apikey );
 
-		$site_id = $this->scrap_sited_id( $option_webpush['code'], $api );
+        if(!empty($option_webpush['code'])){
+		    $site_id = $this->scrap_sited_id( $option_webpush['code'], $api );
+        }else{
+            $site_id = $this->getWebpushSiteIdFromCS($api);
+        }
+
 		if ( $site_id === false ) {
 			echo wp_json_encode( array( 'ERROR' => __( 'Api error, try again later.', 'egoi-for-wp' ) ) );
 			wp_die();

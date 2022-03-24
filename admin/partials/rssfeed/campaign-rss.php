@@ -125,7 +125,7 @@
 <div id="smsnf-webpush" class="smsnf-tab-content">
 	<?php
 	$webpush_code_flag = get_option( 'egoi_webpush_code' );
-	if ( empty( $webpush_code_flag ) || empty( $webpush_code_flag['code'] ) ) {// display warning, webpush needs to be on
+	if ( (empty( $webpush_code_flag ) || empty( $webpush_code_flag['code'] )) && empty($this->options_list['domain']) ) {// display warning, webpush needs to be on
 		?>
 		<div style="display: flex;justify-content: center;width: 100%;">
 			<div style="background-color: #04afdb; color: white; margin: 15px 10px;  padding: 1px 20px; border-radius: 3px;">

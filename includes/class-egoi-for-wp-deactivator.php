@@ -20,7 +20,7 @@ class Egoi_For_Wp_Deactivator {
 
 	public static function deactivate() {
 		$opt = get_option( 'egoi_data' );
-		if ( $opt ) {
+		if ( !empty($opt) ) {
 			Egoi_For_Wp::removeData();
 		}
 	}
