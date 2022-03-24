@@ -128,11 +128,9 @@ class Egoi_For_Wp_Public {
         <!-- Smart Marketing Bar -->
         <?php
 
-        if($regenerate){
-            ?>
-            <div id="smart-marketing-egoi">
-            <?php
-        }
+        ?>
+        <div id="smart-marketing-egoi">
+        <?php
 
 		if ( $bar_post['position'] == 'top' ) {
             ?>
@@ -165,13 +163,8 @@ class Egoi_For_Wp_Public {
 				</div>
         <?php
 		}
-
-		if ( $regenerate ) {
-            ?>
-			</div>
-		    <?php
-        }
         ?>
+        </div>
         <!-- / Smart Marketing Bar -->
         <?php
 
@@ -226,7 +219,6 @@ class Egoi_For_Wp_Public {
 		<style type="text/css">
 
 			.egoi-bar {
-                height: auto;
                 left: 0px;
                 background:<?php echo esc_attr($css['color_bar'])?> !important;
                 <?php echo esc_attr($border)?>:<?php echo esc_attr($css['border_px'])?> solid <?php echo esc_attr($css['border_color'])?> !important;
