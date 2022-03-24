@@ -15,28 +15,6 @@ add_thickbox();
 	}
 	?>
 
-<?php if ( rand( 1, 2 ) % 2 == 0 ) { ?>
-	<embed>
-		<div class="pub-body">
-			<div class="pub-wrap-rate pub-clearfix" style="min-width: 250px; padding: 10px">
-				<div class="pub-left" style="width: 100%;">
-					<img alt="E-goi" src="<?php echo plugin_dir_url( __FILE__ ) . '../img/pub'; ?>/e-goi.png">
-					<h2><?php _e( 'Want a discount?', 'egoi-for-wp' ); ?></h2>
-					<p><?php _e( 'Write a review of our plugin and send a screenshot of your comment to the email:', 'egoi-for-wp' ); ?>
-						<a href="mailto:wordpress@e-goi.com">wordpress@e-goi.com</a>
-					</p>
-					<div style="margin: 40px 0 10px 0;">
-						<a class="button-custom-egoi" href="https://wordpress.org/support/plugin/smart-marketing-for-wp/reviews/?filter=5" target="blank">START HERE »</a>
-					</div>
-				</div>
-				<div class="pub-right">
-					<img alt="Rating" src="<?php echo plugin_dir_url( __FILE__ ) . '../img/pub'; ?>/rate.png" width="200px">
-				</div>
-			</div>
-		</div>
-	</embed>
-	<?php } else { ?>
-
 	<embed>
 		<div class="pub-body">
 			<div class="pub-wrap-rate pub-clearfix" style="min-width: 250px; padding: 10px">
@@ -54,8 +32,6 @@ add_thickbox();
 			</div>
 		</div>
 	</embed>
-
-	<?php } ?>
 </div>
 
 
