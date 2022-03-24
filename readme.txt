@@ -26,8 +26,9 @@ Então não deixe de activar o Track & Engage, um sistema para rastrear todo o c
 **Funcionalidades:**
 * 100% Gratuito
 * Sincronização automática de contactos
+* Connected Sites
+* Conversão de encomenda por estado
 * Formulários simples
-* Formulários Avançados Html
 * Barra de subscrição
 * Formulários Pop-up
 * Formulários Widgets
@@ -76,6 +77,8 @@ So be sure to enable Track & Engage system to track all customer behavior in you
 **What you get**
 * 100% Free
 * WP/E-goi contact sync-up
+* Connected Sites
+* Order sync by status
 * Quick sign-up bar
 * Full sign-up bar customisation
 * Comments sign-up option
