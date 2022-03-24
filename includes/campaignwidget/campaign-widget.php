@@ -104,10 +104,18 @@ class CampaignWidget {
 		$webpush_campaign_widget_custom_heading          = get_post_meta( $post->ID, 'webpush_campaign_widget_custom_heading', true );
 
 		$webpushsite  = get_option( 'egoi_webpush_code' );
+        $options = get_option( 'egoi_sync' );
 		$webpush_info = array();
 		if ( isset( $webpushsite ) ) {
 			$webpush_info = $this->get_webpush_info( $webpushsite, $lists );
 		}
+        if(!empty($options['domain'])){
+
+            $webpush_info = $this->get_webpush_info_from_cs( $options['domain'], $options['list'] );
+            if(empty($webpush_info)){
+                unset($webpush_info);
+            }
+        }
 
 		?>
 			<!-- Email Campaign -->  
@@ -708,6 +716,11 @@ class CampaignWidget {
 
 		return wp_remote_retrieve_body( $response );
 	}
+    public function get_webpush_info_from_cs($domain, $list){
+        $apikey  = $this->get_apikey();
+        $api     = new EgoiApiV3( $apikey );
+        return $api->getWebpushSiteIdFromCS($domain, $list);
+    }
 
 	public function get_webpush_info( $webpushsite, $lists ) {
 		$webpush_info = array();

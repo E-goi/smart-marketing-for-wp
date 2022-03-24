@@ -371,7 +371,7 @@ class EgoiPopUp {
         ?>
         <div class="egoi_popup_wrapper_<?php echo esc_attr($id) ?>">
         <?php
-		do_shortcode( '[egoi-simple-form id="' . esc_attr( $id ) . '"]' );
+		echo wp_kses(do_shortcode( '[egoi-simple-form id="' . esc_attr( $id ) . '"]' ), Egoi_For_Wp_Public::WP_KSES_OPTION_SIMPLE_FORM);
         ?>
         </div>
         <?php

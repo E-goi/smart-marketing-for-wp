@@ -837,6 +837,19 @@ class EgoiApiV3 {
 		return json_decode( $client->getResponse(), true );
 	}
 
+    public function getWebpushSiteIdFromCS($domain, $list){
+        $domainData = $this->getConnectedSite( $domain );
+
+        if(!empty($domainData) && !empty($domainData['features']) && !empty($domainData['features']['web_push']) && !empty($domainData['features']['web_push']['enabled'])){
+            return [
+                'list_id' => $list,
+                'site_id' => $domainData['features']['web_push']['items'][0]['site_id'],
+                'site' => $domain
+            ];
+        }
+        return false;
+    }
+
 
 
 	/**

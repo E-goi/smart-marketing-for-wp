@@ -16,7 +16,15 @@ class Egoi_For_Wp_Public {
 	 */
 	private $plugin_name                    = 'Smart Marketing for WordPress';
 	const DISABLE_SUBSCRIBER_BAR_PERMISSION = 'egoi_disable_sub_bar';
-
+    const WP_KSES_OPTION_SIMPLE_FORM = [
+        'form'      => [ 'id' => [], 'class'=>[], 'method' => [], 'action' => [] ],
+        'div'       => [ 'id'=> [], 'class'=>[], 'style'=> [] ],
+        'script'    => [ 'type' => [] ],
+        'p'         => [],
+        'button'    => [ 'type' => [], 'style'=>[], 'class' => [], 'id' => [] ],
+        'label'     => [ 'for' => [],'style'=>[] ],
+        'input'     => [ 'style' => [] ,'type' => [], 'name' => [],'id' => [], 'class' => [], 'value'=>[] ]
+    ];
 	/**
 	 * The version of this plugin.
 	 *
@@ -379,26 +387,16 @@ class Egoi_For_Wp_Public {
 			$html_code->post_content = str_replace( '[/e_' . $tag . ']', '', $html_code->post_content );
 		}
 
-		?>
-		<form id="<?php echo esc_attr( $simple_form ); ?>" class="egoi_simple_form" method="post" action="/">
-			<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="<?php echo esc_attr( $id ); ?>">
-			<input type="hidden" name="egoi_list" id="egoi_list" value="<?php echo esc_attr( $data->list ); ?>">
-			<input type="hidden" name="egoi_lang" id="egoi_lang" value="<?php echo esc_attr( $data->lang ); ?>">
-			<input type="hidden" name="egoi_tag" id="egoi_tag" value="<?php echo esc_attr( $data->tag ); ?>">
-			<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="<?php echo esc_attr( $data->double_optin ); ?>">
-
-
-			<?php echo wp_kses($html_code->post_content,
-                [
-                    'p'         => [],
-                    'button'    => [ 'type' => [], 'style'=>[], 'class' => [], 'id' => [] ],
-                    'label'     => [ 'for' => [],'style'=>[] ],
-                    'input'     => [ 'style'=>[] ,'type' => [], 'name' => [],'id' => [],'class' => [] ]
-                ]);
-            ?>
-			<div id="<?php echo esc_attr( $simple_form_result ); ?>" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>
-		</form>
-
+        $content = '<form id="'.esc_attr( $simple_form ).'" class="egoi_simple_form" method="post" action="/">
+			<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="' . esc_attr( $id ) . '">
+			<input type="hidden" name="egoi_list" id="egoi_list" value="'.esc_attr( $data->list ).'">
+			<input type="hidden" name="egoi_lang" id="egoi_lang" value="'.esc_attr( $data->lang ).'">
+			<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.esc_attr( $data->tag ).'">
+			<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="'.esc_attr( $data->double_optin ).'">
+			'. wp_kses($html_code->post_content, self::WP_KSES_OPTION_SIMPLE_FORM) . '
+			<div id="'.esc_attr( $simple_form_result ).'" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>
+		</form>';
+?>
 		<script type="text/javascript" >
 			jQuery(document).ready(function() {
 				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").empty();
@@ -422,7 +420,6 @@ class Egoi_For_Wp_Public {
 			}
 			?>
 
-			});
 			jQuery("#<?php echo esc_attr( $simple_form ); ?>").submit(function(event) {
 
 				var simple_form = jQuery(this);
@@ -507,8 +504,10 @@ class Egoi_For_Wp_Public {
 
 
 			});
+        });
 		</script>
 		<?php
+        return $content;
 	}
 
 	/**
@@ -520,7 +519,7 @@ class Egoi_For_Wp_Public {
 			// Extract shortcode attributes (based on the vc_lean_map function - see next function)
 			extract( vc_map_get_attributes( 'egoi_vc_shortcode', $atts ) );
 
-			return $this->subscribe_egoi_simple_form( array( 'id' => $shortcode_id ) );
+			echo wp_kses($this->subscribe_egoi_simple_form( array( 'id' => $shortcode_id ) ), self::WP_KSES_OPTION_SIMPLE_FORM);
 		} else {
 			return false;
 		}
