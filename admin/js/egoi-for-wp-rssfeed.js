@@ -468,7 +468,6 @@ jQuery( document ).ready(
 				obj,
 				function(response) {
 					jQuery( "#egoi_senders_loading" ).hide();
-					response = JSON.parse( response );
 
 					if (typeof response.error != "undefined") {
 						sender_place.append( jQuery( "<option />" ).val( 0 ).text( response.error ) );
@@ -476,7 +475,7 @@ jQuery( document ).ready(
 					}
 
 					jQuery.each(
-						response,
+						response.data,
 						function () {
 							sender_place.append( jQuery( "<option />" ).val( this.sender_id ).text( this.email ) );
 						}
