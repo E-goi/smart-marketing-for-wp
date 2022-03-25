@@ -221,8 +221,8 @@ class EgoiElementorWidget extends Widget_Base {
 				'label'     => __( 'Button Color', 'egoi-for-wp' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'scheme'    => array(
-					'type'  => \Elementor\Scheme_Color::get_type(),
-					'value' => \Elementor\Scheme_Color::COLOR_1,
+					'type'  => class_exists('Elementor\\Scheme_Color')?\Elementor\Scheme_Color::get_type():\Elementor\Core\Schemes\Color::get_type(),
+					'value' => class_exists('Elementor\\Scheme_Color')?\Elementor\Scheme_Color::COLOR_1:\Elementor\Core\Schemes\Color::COLOR_1,
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .button_title' => 'color: {{VALUE}}',
@@ -236,8 +236,8 @@ class EgoiElementorWidget extends Widget_Base {
 				'label'     => __( 'Button Text Color', 'egoi-for-wp' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'scheme'    => array(
-					'type'  => \Elementor\Scheme_Color::get_type(),
-					'value' => \Elementor\Scheme_Color::COLOR_1,
+					'type'  => class_exists('Elementor\\Scheme_Color')?\Elementor\Scheme_Color::get_type():\Elementor\Core\Schemes\Color::get_type(),
+					'value' => class_exists('Elementor\\Scheme_Color')?\Elementor\Scheme_Color::COLOR_1:\Elementor\Core\Schemes\Color::COLOR_1,
 				),
 				'selectors' => array(
 					'{{WRAPPER}} .button_title' => 'color: {{VALUE}}',
