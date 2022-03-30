@@ -1216,58 +1216,6 @@ class Egoi_For_Wp_Admin {
 		wp_die();
 	}
 
-	// ADD A SIMPLE FORM SUBSCRIBER
-	public function subscribe_egoi_simple_form_add() {
-		// double opt-in
-		$status = sanitize_key( stripslashes( $_POST['egoi_double_optin'] ) ) == '1' ? 0 : 1;
-
-		$form_data = array();
-
-		if ( empty( $_POST['elementorEgoiForm'] ) ) {// old simple forms
-			$form_data = array(
-				'email'      => sanitize_email( $_POST['egoi_email'] ),
-				'cellphone'  => sanitize_text_field( $_POST['egoi_country_code'] . '-' . $_POST['egoi_mobile'] ),
-				'first_name' => sanitize_text_field( $_POST['egoi_name'] ),
-				'lang'       => sanitize_text_field( $_POST['egoi_lang'] ),
-				'tags'       => array( sanitize_key( $_POST['egoi_tag'] ) ),
-				'status'     => $status,
-			);
-		} else {
-			$_POST['status'] = $status;
-			$_POST['tags']   = array( sanitize_key( $_POST['egoi_tag'] ) );
-		}
-
-		$result = $this->egoiWpApi->addSubscriberWpForm(
-			sanitize_key( $_POST['egoi_list'] ),
-			empty( $form_data ) ? $_POST : $form_data
-		);
-
-		if ( ! isset( $result->ERROR ) && ! isset( $result->MODIFICATION_DATE ) ) {
-
-			$form_id = sanitize_key( $_POST['egoi_simple_form'] );
-			if ( empty( $_POST['elementorEgoiForm'] ) ) {
-				$this->egoiWpApi->smsnf_save_form_subscriber( $form_id, 'simple-form', $result );
-			}
-			echo $this->check_subscriber( $result ) . ' ';
-			_e( 'was successfully registered!', 'egoi-for-wp' );
-		} elseif ( isset( $result->MODIFICATION_DATE ) ) {
-			_e( 'Subscriber data from', 'egoi-for-wp' );
-			echo ' ' . $this->check_subscriber( $result ) . ' ';
-			_e( 'has been updated!', 'egoi-for-wp' );
-		} elseif ( isset( $result->ERROR ) ) {
-			if ( $result->ERROR == 'NO_DATA_TO_INSERT' ) {
-				_e( 'ERROR: no data to insert', 'egoi-for-wp' );
-			} elseif ( $result->ERROR == 'EMAIL_ADDRESS_INVALID_MX_ERROR' ) {
-				_e( 'ERROR: e-mail address is invalid', 'egoi-for-wp' );
-			} else {
-				_e( 'ERROR: invalid data submitted', 'egoi-for-wp' );
-			}
-		}
-
-		wp_die(); // this is required to terminate immediately and return a proper response
-
-	}
-
 	public function check_subscriber( $subscriber_data ) {
 		$data = array( 'FIRST_NAME', 'EMAIL', 'CELLPHONE' );
 		foreach ( $data as $value ) {
