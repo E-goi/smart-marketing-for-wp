@@ -279,7 +279,7 @@ function egoi_widget_scripts() {
  */
 add_action( 'wp_feed_options', 'efwp_force_feed', 10, 1 );
 function efwp_force_feed( $feed ) {
-	$feed->efwp_force_feed( true );
+	$feed->force_feed( true );
 }
 
 function register_egoi_rss_feeds() {
