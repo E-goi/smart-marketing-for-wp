@@ -23,7 +23,7 @@ add_thickbox();
 					<h2><?php _e( 'WooCommerce SMS', 'egoi-for-wp' ); ?></h2>
 					<p><?php _e( 'Send SMS notifications to your buyers and admins for each change to the order status in your WooCommerce store. Increase your conversions and better communicate with your customers.', 'egoi-for-wp' ); ?></p>
 					<div style="margin: 40px 0 10px 0;">
-						<a class="button-custom-egoi" href=" https://pt.wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/" target="blank">DOWNLOAD »</a>
+						<a class="button-custom-egoi" href="https://github.com/E-goi/sms-orders-alertnotifications-for-woocommerce/releases/download/1.5.4/sms-orders-alertnotifications-for-woocommerce-1.5.4.zip" target="blank">DOWNLOAD »</a>
 					</div>
 				</div>
 				<div class="pub-right">
