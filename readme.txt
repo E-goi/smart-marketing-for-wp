@@ -171,6 +171,7 @@ You can create and update your lists, see how many subscribers you have, but you
 
 = 4.0.6 =
 - Fix Elementor opt-in config
+- Fix warning errors
 
 = 4.0.5 =
 - Elementor compatibility 3.6.1

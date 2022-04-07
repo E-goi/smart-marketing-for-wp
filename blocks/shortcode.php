@@ -21,7 +21,7 @@ function efwp_shortcode_block_init() {
 
 	$index_js = './build/shortcode.js';
 	wp_register_script( 'shortcode-block-editor', plugins_url( $index_js, __FILE__ ), array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ), filemtime( "$dir/$index_js" ) );
-	wp_localize_script( 'shortcode-block-editor', 'ajax_url', admin_url( 'admin-ajax.php' ) );
+	wp_localize_script( 'shortcode-block-editor', 'ajax_url', array(admin_url( 'admin-ajax.php' )));
 	register_block_type( 'egoi-for-wp/shortcode', array( 'editor_script' => 'shortcode-block-editor' ) );
 }
 add_action( 'init', 'efwp_shortcode_block_init' );
