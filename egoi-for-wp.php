@@ -186,16 +186,9 @@ add_action( 'save_post', 'efwp_process_content_page', 10, 3 );
 function efwp_process_content_page( $post_id, $post, $update ) {
 
 	preg_match_all( '/\[egoi-simple-form .*=".*"\]/', $post->post_content, $matches );
-
-	if ( ! empty( $matches ) ) {
-		if ( get_option( 'egoi_simple_form_post_' . $post_id ) ) {
-			update_option( 'egoi_simple_form_post_' . $post_id, count( $matches[0] ) );
-		} else {
-			update_option( 'egoi_simple_form_post_' . $post_id, count( $matches[0] ) );
-		}
+	if ( $update && ! empty( $matches ) ) {
+        update_option( 'egoi_simple_form_post_' . sanitize_key($post_id), count($matches[0]) );
 	}
-
-	return;
 
 }
 
