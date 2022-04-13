@@ -205,6 +205,15 @@ class EgoiElementorWidget extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'external_redirect_text',
+			array(
+				'label'       => __( 'External Redirect', 'egoi-for-wp' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'placeholder' => __( 'Type your external url here', 'egoi-for-wp' ),
+			)
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -252,9 +261,10 @@ class EgoiElementorWidget extends Widget_Base {
 				'type'    => \Elementor\Controls_Manager::SELECT,
 				'default' => 'egoi_elementor_button_start',
 				'options' => array(
-					'egoi_elementor_button_start'  => __( 'Beginning', 'egoi-for-wp' ),
-					'egoi_elementor_button_center' => __( 'Center', 'egoi-for-wp' ),
-					'egoi_elementor_button_end'    => __( 'End', 'egoi-for-wp' ),
+					'egoi_elementor_button_start'   => __( 'Beginning', 'egoi-for-wp' ),
+					'egoi_elementor_button_center'  => __( 'Center', 'egoi-for-wp' ),
+					'egoi_elementor_button_end'     => __( 'End', 'egoi-for-wp' ),
+					'egoi_elementor_button_full_width' => __( 'Full Width', 'egoi-for-wp' ),
 				),
 			)
 		);
@@ -384,9 +394,15 @@ class EgoiElementorWidget extends Widget_Base {
 
         <?php
 		if ( 'yes' == $settings['redirect_option'] ) {
-        ?>
-			<input type="hidden" id="egoi_redirect" name="egoi_redirect" value="<?php echo esc_url($settings['redirect_url']) ?>">
-        <?php
+			if($settings['external_redirect_text']){
+				?>
+					<input type="hidden" id="egoi_redirect" name="egoi_redirect" value="<?php echo esc_url($settings['external_redirect_text']) ?>">
+				<?php
+			}else{
+				?>
+					<input type="hidden" id="egoi_redirect" name="egoi_redirect" value="<?php echo esc_url($settings['redirect_url']) ?>">
+				<?php
+			}
         }
 
 		if ( $settings['fields'] ) {
@@ -470,6 +486,7 @@ class EgoiElementorWidget extends Widget_Base {
                             console.log(data)
                             if (data.substring(0, 5) != "ERROR") {
                                 displayMessage(data, "success")
+								
                                 if(inputData.egoi_redirect !== undefined){
                                     setTimeout(function(){
                                         window.location.href = inputData.egoi_redirect;

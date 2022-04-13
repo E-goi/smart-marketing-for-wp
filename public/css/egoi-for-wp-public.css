@@ -249,6 +249,10 @@
 	justify-content: flex-start;
 }
 
+.egoi_elementor_button_full_width > button{
+	width: 100%;
+}
+
 .egoi_elementor_button_center{
 	display: flex;
 	justify-content: center;
