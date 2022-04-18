@@ -172,6 +172,7 @@ You can create and update your lists, see how many subscribers you have, but you
 = 4.0.7 =
 - Added new button position option for E-goi forms on Elementor
 - Added the possibility for external url redirect form E-goi forms on Elementor
+- Contact Sync minor fix for sites without Woocommerce
 
 = 4.0.6 =
 - Fix Elementor opt-in config
