@@ -22,7 +22,8 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 		if ( isset( $_POST['tag-egoi'] ) && $_POST['tag-egoi'] != '' ) {
 			$data['tag'] = sanitize_text_field( $_POST['tag-egoi'] );
 		} else {
-			$new         = $this->egoiWpApi->addTag( $_POST['tag'] );
+			$egoiWpApi	 = new Egoi_For_Wp();
+			$new         = $egoiWpApi->addTag( $_POST['tag'] );
 			$data['tag'] = $new->ID;
 		}
 

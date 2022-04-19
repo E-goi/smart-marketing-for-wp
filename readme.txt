@@ -178,6 +178,7 @@ You can create and update your lists, see how many subscribers you have, but you
 - Fix Elementor opt-in config
 - Fix warning errors
 - Fix compatibility issues with YITH WooCommerce Wishlist plugin
+- Fix simple form creation
 
 = 4.0.5 =
 - Elementor compatibility 3.6.1
