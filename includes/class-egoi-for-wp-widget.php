@@ -16,16 +16,18 @@ class Egoi4Widget extends WP_Widget {
 
 		$opt = get_option( 'egoi_widget' );
 
-		$this->widget_enabled = $opt['egoi_widget']['enabled'];
-		$this->redirect       = $opt['egoi_widget']['redirect'];
-		$this->subscribed     = $opt['egoi_widget']['msg_subscribed'];
-		$this->input_width    = $opt['egoi_widget']['input_width'] ? 'width:' . $opt['egoi_widget']['input_width'] : '100%';
-		$this->btn_width      = $opt['egoi_widget']['btn_width'] ? 'width:' . $opt['egoi_widget']['btn_width'] : '';
-		$this->bcolor         = $opt['egoi_widget']['bcolor'] ? 'border: 1px solid ' . $opt['egoi_widget']['bcolor'] : '';
-		$this->listID         = $opt['egoi_widget']['list'];
-		$this->lang           = $opt['egoi_widget']['lang'];
-		$this->tag_egoi       = $opt['egoi_widget']['tag-egoi'];
-		$this->double_optin   = $opt['egoi_widget']['double_optin'];
+		if($opt){
+			$this->widget_enabled = $opt['egoi_widget']['enabled'];
+			$this->redirect       = $opt['egoi_widget']['redirect'];
+			$this->subscribed     = $opt['egoi_widget']['msg_subscribed'];
+			$this->input_width    = $opt['egoi_widget']['input_width'] ? 'width:' . $opt['egoi_widget']['input_width'] : '100%';
+			$this->btn_width      = $opt['egoi_widget']['btn_width'] ? 'width:' . $opt['egoi_widget']['btn_width'] : '';
+			$this->bcolor         = $opt['egoi_widget']['bcolor'] ? 'border: 1px solid ' . $opt['egoi_widget']['bcolor'] : '';
+			$this->listID         = $opt['egoi_widget']['list'];
+			$this->lang           = $opt['egoi_widget']['lang'];
+			$this->tag_egoi       = $opt['egoi_widget']['tag-egoi'];
+			$this->double_optin   = $opt['egoi_widget']['double_optin'];	
+		}
 
 		$widget_ops = array(
 			'classname'   => 'Egoi4Widget',

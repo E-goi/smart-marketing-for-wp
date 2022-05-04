@@ -3250,7 +3250,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function generate_mail_catcher( $exceptions = null ) {
 
-			require_once ABSPATH . '/wp-includes/class-phpmailer.php';
+			require_once ABSPATH . '/wp-includes/PHPMailer/PHPMailer.php';
 			require_once plugin_dir_path( __FILE__ ) . '../includes/transactionalemail/mail-catcher.php';
 			$mail_catcher = new MailCatcher();
 
