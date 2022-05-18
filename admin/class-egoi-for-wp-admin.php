@@ -145,6 +145,9 @@ class Egoi_For_Wp_Admin {
 		// detect conflicts with e-goi email transactional
 		add_action( 'admin_notices', array( $this, 'detect_conflicts' ) );
 
+		//run update wp_options autoload
+		add_action( 'upgrader_process_complete', array( $this, 'updateEgoiSimpleForm' ));
+
 	}
 
 	public function smsnf_main_dashboard_widget() {
@@ -2959,6 +2962,7 @@ class Egoi_For_Wp_Admin {
 
 
 	public function egoi_count_subs() {
+
 		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		$roleFilter  = sanitize_text_field( $_POST['role'] );
@@ -3334,6 +3338,16 @@ class Egoi_For_Wp_Admin {
 		require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-convert.php';
 		$converter = new \EgoiConverter( $this->options_list );
 		$converter->convertOrder( $orderid );
+	}
+
+	public function updateEgoiSimpleForm(){
+
+		global $wpdb;
+
+		$sql = "UPDATE $wpdb->options SET autoload = 'no' WHERE option_name LIKE 'egoi_simple_form_%'";
+
+		$teste = $wpdb->query( $sql );
+
 	}
 
 }
