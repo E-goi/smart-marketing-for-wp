@@ -3346,7 +3346,7 @@ class Egoi_For_Wp_Admin {
 
 		$sql = "UPDATE $wpdb->options SET autoload = 'no' WHERE option_name LIKE 'egoi_simple_form_%'";
 
-		$teste = $wpdb->query( $sql );
+		$wpdb->query( $sql );
 
 	}
 
