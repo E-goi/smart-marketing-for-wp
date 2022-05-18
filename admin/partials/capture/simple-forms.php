@@ -52,7 +52,7 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 			$options = array(
 				'option_name'  => 'egoi_simple_form_' . $id_simple_form,
 				'option_value' => $info,
-				'autoload'     => 'yes',
+				'autoload'     => 'no',
 			);
 
 			$query2 = $wpdb->insert( $table2, $options );
