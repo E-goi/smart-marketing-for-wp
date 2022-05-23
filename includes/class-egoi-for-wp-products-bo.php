@@ -362,7 +362,7 @@ class EgoiProductsBo {
 			array(
 				'title'    => 'Wordpress ' . $title,
 				'language' => $language,
-				'currency' => $currency,
+				'currency' => $currency
 			)
 		);
 		if ( ! is_numeric( $response ) ) {
@@ -397,25 +397,55 @@ class EgoiProductsBo {
 	 * @param int $page
 	 * @return mixed
 	 */
-	public function importProductsCatalog( $catalog_id, $page = 0 ) {
+	public function importProductsCatalog( $catalog_id, $page = 0, $tax = 0) {
+
+		$products = self::getDbProducts( $page );
+
+		if ( $tax > 0 ) {
+			foreach( $products as $key => $product ) {
+				if( $product['price'] ){
+					$products[$key]['price'] = (String) $product['price'] * ( (float) ($tax / 100) + 1);
+				}
+
+				if( $product['sale_price']) {
+					$product[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
+				}
+			}
+		}
+
 		delete_option( 'egoi_import_bypass' );
 		return $this->api->importProducts(
 			'POST',
 			array(
 				'mode'     => 'update',
-				'products' => self::getDbProducts( $page ),
+				'products' => $products,
 			),
 			$catalog_id
 		);
 	}
 
-	public function importProductsCatalogNoVariations( $catalog_id, $page = 0 ) {
+	public function importProductsCatalogNoVariations( $catalog_id, $page = 0, $tax = 0 ) {
+		
+		$products = self::getDbProductsNoVariations( $page );
+
+		if ( $tax > 0 ) {
+			foreach( $products as $key => $product ) {
+				if( $product['price'] ){
+					$products[$key]['price'] = (String) $product['price'] * ( (float) ($tax / 100) + 1);
+				}
+
+				if( $product['sale_price']) {
+					$product[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
+				}
+			}
+		}
+
 		delete_option( 'egoi_import_bypass' );
 		return $this->api->importProducts(
 			'POST',
 			array(
 				'mode'     => 'update',
-				'products' => self::getDbProductsNoVariations( $page ),
+				'products' => $products,
 			),
 			$catalog_id
 		);
@@ -464,6 +494,18 @@ class EgoiProductsBo {
 			foreach ( $products as $single ) {
                 $single['name'] = json_encode($single['name']);
                 $single['description'] = json_encode($single['description']);
+
+				$tax = (float) $option['tax'];
+				if( $tax > 0) {
+					if( $single['price'] ){
+						$single['price'] = $single['price'] * ( (float) ($tax / 100) + 1);
+					}
+
+					if( $single['sale_price']) {
+						$single['sale_price'] = $single['sale_price'] * ( (float) ($tax / 100) + 1);
+					}
+				}
+				
 				if ( ! $this->api->createProduct( $single, $catalog ) ) {
 					$this->api->patchProduct( $single, $catalog, $single['product_identifier'] );
 				}
@@ -751,6 +793,8 @@ private static function transformProductObjectToApi( $product, &$breadCrumbs, $b
 	}
 	$description      = $product->get_description();
 	$shot_description = $product->get_short_description();
+
+	
 	return array(
 		'product_identifier' => "{$product->get_id()}",
 		'name'               => $product->get_name(),

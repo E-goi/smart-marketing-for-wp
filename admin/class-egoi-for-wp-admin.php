@@ -2259,12 +2259,13 @@ class Egoi_For_Wp_Admin {
 		$language   = sanitize_text_field( $_POST['catalog_language'] );
 		$currency   = sanitize_text_field( $_POST['catalog_currency'] );
 		$variations = sanitize_text_field( $_POST['variations'] );
+		$tax		= sanitize_text_field( $_POST['catalog_tax'] );
 
 		if ( empty( $name ) || empty( $currency ) || empty( $language ) ) {
 			return array( 'error' => __( 'Fields can\'t be empty.', 'egoi-for-wp' ) );
 		}
 
-		$options = array( 'variations' => ! empty( $variations ) );
+		$options = array( 'variations' => ! empty( $variations ), 'tax' => $tax );
 
 		$bo = new EgoiProductsBo();
 		$id = $bo->createCatalog( $name, $language, $currency, $options );
@@ -2329,17 +2330,18 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_force_import_catalog() {
-
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$id   = EgoiValidators::validate_id( sanitize_key( $_POST['id'] ) );
 		$page = EgoiValidators::validate_page( sanitize_key( $_POST['page'] ) );
 		$bo   = new EgoiProductsBo();
 
 		$options = EgoiProductsBo::getCatalogOptions( $id );
+		$tax = $options['tax'] ?? 0;
+		
 		if ( $options['variations'] == 0 ) {
-			$resp = $bo->importProductsCatalogNoVariations( $id, $page );
+			$resp = $bo->importProductsCatalogNoVariations( $id, $page, (float) $tax);
 		} else {
-			$resp = $bo->importProductsCatalog( $id, $page );
+			$resp = $bo->importProductsCatalog( $id, $page, (float) $tax );
 		}
 		$resp = json_decode( $resp, true );
 
@@ -2358,12 +2360,13 @@ class Egoi_For_Wp_Admin {
 		$language   = sanitize_text_field( $post['catalog_language'] );
 		$currency   = sanitize_text_field( $post['catalog_currency'] );
 		$variations = sanitize_text_field( $post['variations'] );
+		$tax		= sanitize_text_field( $post['catalog_tax'] );
 
 		if ( empty( $name ) || empty( $currency ) || empty( $language ) ) {
 			return array( 'error' => __( 'Fields can\'t be empty.', 'egoi-for-wp' ) );
 		}
 
-		$options = array( 'variations' => ! empty( $variations ) );
+		$options = array( 'variations' => ! empty( $variations ), 'tax' => $tax  );
 
 		$bo       = new EgoiProductsBo();
 		$response = $bo->createCatalog( $name, $language, $currency, $options );
@@ -2383,6 +2386,34 @@ class Egoi_For_Wp_Admin {
 		if ( $data === false ) {
 			wp_send_json_error( __( 'Something went wrong fetching countries, please try again later.', 'egoi-for-wp' ) );
 		}
+
+		$all_tax_rates = [];
+		$tax_classes = WC_Tax::get_tax_classes(); // Retrieve all tax classes.
+		if ( !in_array( '', $tax_classes ) ) { // Make sure "Standard rate" (empty class name) is present.
+			array_unshift( $tax_classes, '' );
+		}
+		foreach ( $tax_classes as $tax_class ) { // For each tax class, get all rates.
+			$taxes = WC_Tax::get_rates_for_tax_class( $tax_class );
+
+			foreach ( $taxes as $tax) {
+				$new_tax = [];
+				$new_tax['name'] = empty($tax->tax_rate_class ) ? __( 'default', 'egoi-for-wp' ) : $tax->tax_rate_class;
+				$new_tax['country'] =  empty($tax->tax_rate_country ) ? __( 'all', 'egoi-for-wp' ) : $tax->tax_rate_country;
+				$new_tax['tax_rate'] = (float) $tax->tax_rate;
+
+				$all_tax_rates = array_merge( $all_tax_rates, [$new_tax] );
+			}
+
+		}
+
+		$new_tax = [];
+		$new_tax['name'] =  __( 'none', 'egoi-for-wp' );
+		$new_tax['country'] =   __( 'all', 'egoi-for-wp' );
+		$new_tax['tax_rate'] = "0";
+		$all_tax_rates = array_merge( $all_tax_rates, [$new_tax] );
+
+		$data = array_merge($data, ['tax' => $all_tax_rates]);
+
 		wp_send_json_success( $data );
 	}
 
