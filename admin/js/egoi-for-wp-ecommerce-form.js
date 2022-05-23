@@ -7,17 +7,19 @@ jQuery( document ).ready(
 			var catalog_language      = $( '#catalog_language' );
 			var catalog_currency      = $( '#catalog_currency' );
 			var create_catalog_button = $( '#create_catalog_button' );
+			var catalog_tax 		  = $( '#catalog_tax' );
 
 			// defaults
 			var default_store_country  = $( '#default-store-country' );
 			var default_store_currency = $( '#default-store-currency' );
+			var default_tax			   = "0";
 
 			var close = $( ".egoi-simple-close-x" );
 
 			create_catalog_button.on(
 				'click',
 				function (e) {
-					if ( ! valid( [catalog_name,catalog_language,catalog_currency] )) {
+					if ( ! valid( [catalog_name,catalog_language,catalog_currency, catalog_tax] )) {
 						e.preventDefault();
 					} else {
 						if ($( '#preventCatalogSubmit' ).length) {
@@ -49,6 +51,7 @@ jQuery( document ).ready(
 						}
 						populateCountry( response.countries );
 						populateCurrencies( response.currencies );
+						populateTax( response.tax );
 					}
 				);
 			}
@@ -74,6 +77,19 @@ jQuery( document ).ready(
 							catalog_language.append( $( "<option />" ).val( this.value ).text( this.name ).attr( "selected","selected" ) );
 						} else {
 							catalog_language.append( $( "<option />" ).val( this.value ).text( this.name ) );
+						}
+					}
+				);
+			}
+
+			function populateTax(taxes){
+				$.each(
+					taxes,
+					function () {
+						if (this.tax_rate == default_tax) {
+							catalog_tax.append( $( "<option />" ).val( this.tax_rate ).text( this.name + ' ('+ this.country + ' | ' + this.tax_rate + '%)' ).attr( "selected","selected" ) );
+						} else {
+							catalog_tax.append( $( "<option />" ).val( this.tax_rate ).text( this.name + ' ('+ this.country + ' | ' + this.tax_rate + '%)' ) );
 						}
 					}
 				);

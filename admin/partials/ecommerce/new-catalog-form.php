@@ -39,6 +39,16 @@
 				</div>
 			</div>
 
+			<div class="smsnf-input-group">
+				<label for="catalog_tax"><?php _e( 'Tax', 'egoi-for-wp' ); ?></label>
+				<p class="subtitle"><?php _e( 'Select the tax rate to be assigned to the products', 'egoi-for-wp' ); ?></p>
+				<div class="smsnf-wrapper">
+					<select id="catalog_tax" name="catalog_tax" class="form-select" >
+						<option value="off" selected><?php _e( 'Select the tax rate..', 'egoi-for-wp' ); ?></option>
+					</select>
+				</div>
+			</div>
+
 			<hr class="smsnf-input-group">
 
 			<div class="smsnf-input-group">
