@@ -164,8 +164,7 @@ class TrackingEngageSDK {
 	}
 
 	protected function getProductsInCart() {
-		if ( ! empty( $this->order_id ) || ! empty( $this->options['backend_order'] ) ) {
-			return false;}
+
 		$cart = WC()->cart->get_cart();
 		require_once plugin_dir_path( __FILE__ ) . '../../includes/class-egoi-for-wp-products-bo.php';
 		$options_catalogs = EgoiProductsBo::getCatalogOptions();
@@ -280,6 +279,9 @@ class TrackingEngageSDK {
 
 	private function printOrder( $order ) {
 
+		if ( ! empty( $this->options['backend_order'] ) ) {
+			return false;}
+		
 		$order_id = $order->get_id(); // Get the order ID
 		$items    = $order->get_items();
 		if ( ! is_array( $items ) ) {
