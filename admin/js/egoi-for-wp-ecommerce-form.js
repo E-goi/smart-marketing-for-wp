@@ -19,7 +19,7 @@ jQuery( document ).ready(
 			create_catalog_button.on(
 				'click',
 				function (e) {
-					if ( ! valid( [catalog_name,catalog_language,catalog_currency, catalog_tax] )) {
+					if ( ! valid( [catalog_name,catalog_language,catalog_currency] )  || !validTax(catalog_tax)) {
 						e.preventDefault();
 					} else {
 						if ($( '#preventCatalogSubmit' ).length) {
@@ -128,6 +128,17 @@ jQuery( document ).ready(
 
 				return flag;
 			};
+
+			function validTax(element){
+				var flag = true;
+					
+					if (element.val() == '' || element.val() == 'off') {
+						flag = false;
+						toggleError( element );
+					}
+
+				return flag;
+			}
 
 			function toggleError(elm){
 				elm.addClass( 'invalidjQuery' );
