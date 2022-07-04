@@ -661,6 +661,12 @@ class EgoiApiV3 {
 			'status' => $status,
 		);
 
+		$full_name = explode( ' ', $fname );
+		$fname     = $full_name[0];
+		if ( ! $lname ) {
+			$lname = $full_name[1];
+		}
+
 		// first name
 		if ( $fname ) {
 			$params['first_name'] = $fname;
