@@ -308,9 +308,15 @@ class EgoiProductsBo {
 				$return['countries'][]  = array(
 					'value' => $item['iso_code'],
 					'name'  => $item['name'],
-				);
-				$return['currencies'][] = $item['currency'];
+				);	
+
+				if ($item['name'] == 'Angola') {
+					$return['currencies'][] = 'AOA';
+				} else {
+					$return['currencies'][] = $item['currency'];
+				}
 			}
+
 			$return['currencies'] = array_unique( $return['currencies'] );
 			return $return;
 		}
