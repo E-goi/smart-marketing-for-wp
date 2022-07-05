@@ -417,11 +417,14 @@ class EgoiApiV3 {
 	public function addContact( $listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
 
 		$full_name = explode( ' ', $name );
-		$fname     = $full_name[0];
-		if ( ! $lname ) {
-			$lname = $full_name[1];
-		}
+		$fname = $name;
 
+		if(! $lname  && sizeof($full_name) > 1 ){
+
+			$lname = end($full_name);
+			$fname = implode(' ', array_slice($full_name,0,-1));
+			
+		}
 		$tel  = $ref_fields['tel'];
 		$cell = $ref_fields['cell'];
 		$bd   = $ref_fields['bd'];
@@ -662,9 +665,12 @@ class EgoiApiV3 {
 		);
 
 		$full_name = explode( ' ', $fname );
-		$fname     = $full_name[0];
-		if ( ! $lname ) {
-			$lname = $full_name[1];
+
+		if(! $lname  && sizeof($full_name) > 1 ){
+
+			$lname = end($full_name);
+			$fname = implode(' ', array_slice($full_name,0,-1));
+			
 		}
 
 		// first name
