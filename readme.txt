@@ -173,6 +173,7 @@ You can create and update your lists, see how many subscribers you have, but you
 - Fix create catalog issue
 - Fix edit contact for CF7 forms
 - Added Kwanza to catalogs currency
+- Minor Fix for Elementor that sometimes didn't load
 
 = 4.1.1 = 
 - Fix TE abandoned cart issue

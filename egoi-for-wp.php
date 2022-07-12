@@ -57,7 +57,7 @@ function egoiWPErrorHandler( $code, $message, $file, $line ) {
 }
 function egoiFatalErrorShutdownHandler() {
 	$last_error = error_get_last();
-	if ( $last_error['type'] === E_ERROR ) {
+	if ( !empty($last_error['type']) && $last_error['type'] === E_ERROR ) {
 		egoiWPErrorHandler( E_ERROR, $last_error['message'], $last_error['file'], $last_error['line'] );
 	}
 }

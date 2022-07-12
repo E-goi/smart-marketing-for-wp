@@ -1239,6 +1239,7 @@ class Egoi_For_Wp_Admin {
 			array(
 				'methods'  => 'GET',
 				'callback' => array( $this, 'egoi_products_data_return' ),
+				'permission_callback' => '__return_true',
 				'args'     => array(
 					'ids'           => array(
 						'sanitize_callback' => 'sanitize_text_field',
