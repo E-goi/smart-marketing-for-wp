@@ -660,9 +660,6 @@ class EgoiApiV3 {
 	}
 
 	public function editContact( $listID, $contact_id, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
-		$params = array(
-			'status' => $status,
-		);
 
 		$full_name = explode( ' ', $fname );
 
@@ -673,15 +670,11 @@ class EgoiApiV3 {
 			
 		}
 
-		// first name
-		if ( $fname ) {
-			$params['first_name'] = $fname;
-		}
-
-		// last name
-		if ( $lname ) {
-			$params['last_name'] = $lname;
-		}
+		$params = array(
+			'status' => $status,
+			'first_name' => $fname,
+			'last_name' => $lname
+		);
 
 		$tel  = $ref_fields['tel'];
 		$cell = $ref_fields['cell'];
