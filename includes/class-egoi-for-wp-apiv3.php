@@ -659,15 +659,12 @@ class EgoiApiV3 {
 		return $extra_fields;
 	}
 
-	public function editContact( $listID, $contact_id, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
+	public function editContact( $listID, $contact_id, $fname = '', $lname = ' ', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
 
-		$full_name = explode( ' ', $fname );
-
-		if(! $lname  && sizeof($full_name) > 1 ){
-
-			$lname = end($full_name);
-			$fname = implode(' ', array_slice($full_name,0,-1));
-			
+		if(! $lname){
+			$full_name = explode( ' ', $fname );
+			$lname =  sizeof($full_name) == 1 ? ' ' : end($full_name);
+			$fname = sizeof($full_name) > 1 ? implode(' ', array_slice($full_name,0,-1)) : $fname;
 		}
 
 		$params = array(
