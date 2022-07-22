@@ -37,7 +37,7 @@ class EgoiElementorWidget extends Widget_Base {
 	}
 
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$fields = $this->getAccountListFields();
 		$tags   = $this->getAccountListTags();
 
@@ -530,7 +530,7 @@ class EgoiElementorWidget extends Widget_Base {
 	}
 
 
-	protected function _content_template() {
+	protected function content_template() {
 		$options = get_option( Egoi_For_Wp_Admin::OPTION_NAME );
 		// $settings = $this->get_settings_for_display();
 

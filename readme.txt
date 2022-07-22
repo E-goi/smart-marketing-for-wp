@@ -169,10 +169,11 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
-= 4.1.3 = 
+= 4.1.3 =
+- Elementor compatibility with last version
 - Fix edit contact for CF7 forms
 
-= 4.1.2 = 
+= 4.1.2 =
 - Fix create catalog issue
 - Fix edit contact for CF7 forms
 - Added Kwanza to catalogs currency
