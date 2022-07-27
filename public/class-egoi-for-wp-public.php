@@ -23,7 +23,8 @@ class Egoi_For_Wp_Public {
         'p'         => [],
         'button'    => [ 'type' => [], 'style'=>[], 'class' => [], 'id' => [] ],
         'label'     => [ 'for' => [],'style'=>[] ],
-        'input'     => [ 'style' => [] ,'type' => [], 'name' => [],'id' => [], 'class' => [], 'value'=>[] ]
+        'input'     => [ 'style' => [] ,'type' => [], 'name' => [],'id' => [], 'class' => [], 'value'=>[] ],
+		'select' 	=> [ 'id'=> [], 'class'=>[], 'name'=> [] ],
     ];
 	/**
 	 * The version of this plugin.
@@ -398,9 +399,9 @@ class Egoi_For_Wp_Public {
 		</form>';
 ?>
 		<script type="text/javascript" >
-			jQuery(document).ready(function() {
-				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").empty();
-			<?php
+			 jQuery(document).ready(function() {
+			 	jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").empty();
+			 <?php
 
             $countryStore = '';
             if ( class_exists( 'woocommerce' ) ) {
@@ -410,11 +411,11 @@ class Egoi_For_Wp_Public {
 				$string = ucwords( strtolower( $value['country_pt'] ) ) . ' (+' . $value['prefix'] . ')';
 				if ( $countryStore == $key ) {// selects store country code by default
 					?>
-				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").append("<option selected value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
+				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=\"egoi_country_code\"]").append("<option selected value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
 					<?php
 				} else {
 					?>
-				 jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").append("<option value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
+				 jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=\"egoi_country_code\"]").append("<option value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
 					<?php
 				}
 			}
