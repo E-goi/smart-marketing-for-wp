@@ -411,11 +411,11 @@ class Egoi_For_Wp_Public {
 				$string = ucwords( strtolower( $value['country_pt'] ) ) . ' (+' . $value['prefix'] . ')';
 				if ( $countryStore == $key ) {// selects store country code by default
 					?>
-				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=\"egoi_country_code\"]").append("<option selected value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
+				jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").append("<option selected value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
 					<?php
 				} else {
 					?>
-				 jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=\"egoi_country_code\"]").append("<option value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
+				 jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").append("<option value=<?php echo esc_attr( $value['prefix'] ); ?>><?php echo esc_textarea( $string ); ?></option>");
 					<?php
 				}
 			}
