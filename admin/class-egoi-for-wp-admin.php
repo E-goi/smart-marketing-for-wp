@@ -788,7 +788,6 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.1
 	 */
 	public function getContactForm( $result ) {
-
 		try {
 			$opt      = get_option( 'egoi_int' );
 			$egoi_int = $opt['egoi_int'];
@@ -801,7 +800,6 @@ class Egoi_For_Wp_Admin {
 			) {
 				return false;
 			}
-
 			preg_match_all( '/\[[a-zA-Z0-9]+\*? .+\]/', $result->form, $fields_in_form );
 
 			$mapp = array();
@@ -927,9 +925,11 @@ class Egoi_For_Wp_Admin {
 			if ( empty( $get ) ) {
 				if ( $subject ) { // check if tag exists in E-goi
 					$get_tags = $apiv3->getTag( $subject );
-
+					
 					if ( isset( $get_tags->tag_id ) ) {
 						$tag = $get_tags->tag_id;
+					} else if ( isset( $get_tags['tag_id'] )){
+						$tag = $get_tags['tag_id'];
 					}
 				}
 
