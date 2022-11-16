@@ -368,31 +368,19 @@ $page  = array(
 				display: false,
 			},
 			scales: {
-				yAxes:[{
+				y:{
 					ticks: {
-						fontSize: 12,
-						padding: 20,
-						beginAtZero: true,
 						userCallback: function(label, index, labels) {
 							if (Math.floor(label) === label) {
 							return label;
 							}
 						},
 					}
-				}],
-				xAxes: [{
+				},
+				x: {
 					barPercentage: 1,
-					categoryPercentage: 1,
-					ticks: {
-						autoSkip: false,
-						beginAtZero: true,
-						maxRotation: 0,
-						minRotation: 0,
-						padding: 10,
-						fontFamily: "Helvetica, Arial, serif",
-						fontColor: "#aaaaaa",
-					}
-				}]
+					categoryPercentage: 1
+				}
 			}
 		}
 	};

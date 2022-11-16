@@ -30,7 +30,7 @@ define( 'EFWP_SELF_VERSION', '4.1.4' );
 
 function activate_egoi_for_wp() {
 
-	if ( ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
+	if ( ! version_compare( PHP_VERSION, '7.4.0', '>=' ) ) {
 		echo 'This PHP Version - ' . PHP_VERSION . ' is obsolete, please update your PHP version to run this plugin';
 		exit;
 	}
@@ -103,7 +103,7 @@ function egoi_cron_exec() {
 		switch ( $request['type'] ) {
 			case 'SOAP':
 				$api    = new SoapClient( $request['url'] );
-				$result = $api->$request['headers']( $request['body'] );
+				$result = $api->{$request['headers']}( $request['body'] );
 				break;
 			case 'GET':
 			case 'POST':
@@ -248,9 +248,9 @@ function egoi_add_tag() {
 // HOOK WEB PUSH
 function egoi_add_webpush() {
 
-	if ( ! strpos( $_SERVER['HTTP_REFERER'], 'wp-admin' ) ) { // don't show web push on admin pages
+	if ( isset($_SERVER['HTTP_REFERER']) && ! strpos( $_SERVER['HTTP_REFERER'], 'wp-admin' ) ) { // don't show web push on admin pages
 		$public_area = new Egoi_For_Wp_Public();
-		$public_area->add_webpush();
+		$public_area->add_webpushz();
 	}
 }
 add_action( 'wp_footer', 'egoi_add_webpush' );
