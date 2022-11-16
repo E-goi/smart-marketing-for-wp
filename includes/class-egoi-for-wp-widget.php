@@ -183,7 +183,7 @@ class Egoi4Widget extends WP_Widget {
 			<input type='hidden' name='egoi-list-sub<?php echo esc_attr($this->egoi_id) ?>' id='egoi-list-sub<?php echo esc_attr($this->egoi_id) ?>' value='<?php echo esc_attr($list) ?>' />
 			<input type='hidden' name='egoi-id-sub<?php echo esc_attr($this->egoi_id) ?>' id='egoi-id-sub<?php echo esc_attr($this->egoi_id) ?>' value='<?php echo esc_attr($this->egoi_id) ?>' />
 			<input type='submit' class='submit_button' name='egoi-submit-sub<?php echo esc_attr($this->egoi_id) ?>' id='egoi-submit-sub<?php echo esc_attr($this->egoi_id) ?>' value='<?php echo esc_attr($button) ?>' style='<?php echo esc_attr($this->btn_width) ?>' />
-                <p><?php echo esc_url($link) ?>></p>
+                <p><?php echo esc_url($link) ?></p>
             </form>
 			<div id='Loading_<?php echo esc_attr($this->egoi_id) ?>' class='loader' style='display:none;'>
 			</div>
