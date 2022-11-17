@@ -310,7 +310,7 @@ $page  = array(
 <script>
 
 	let listChartLabels = [<?php echo $chart_months; ?>];
-	let listChartData = [<?php echo implode( ',', $lists_chart[ $options_list ]['totals'] ); ?>];
+	let listChartData = [<?php echo isset($lists_chart[ $options_list ]) ? implode( ',', $lists_chart[ $options_list ]['totals']) : 0 ?>];
 
 	myListChartParams = {
 		type: 'bar',
