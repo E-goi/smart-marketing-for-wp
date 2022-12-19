@@ -167,26 +167,26 @@ $defaultPrefix = ! empty( $countryCodes[ $key ] ) ? $countryCodes[ $key ]['prefi
 			</div>
 			<!-- / Double Opt-In -->
 			<!-- LISTAS -->
-			<?php get_list_html( $shortcode['list'], 'list' ); ?>
+			<?php if(isset($shortcode['list'])){ get_list_html( $shortcode['list'], 'list' ); } else { get_list_html( 0, 'list' ); }?>
 			<!-- / LISTAS -->
 			<!-- lang -->
-			<?php get_lang_html( $shortcode['lang'], 'lang', empty( $shortcode['list'] ) ); ?>
+			<?php if(isset($shortcode['lang'])){ get_lang_html( $shortcode['lang'], 'lang', empty( $shortcode['list'] )); } else { get_lang_html( 'en', 'lang', true ); } ?>
 			<!-- / lang -->
 			<!-- TAGS -->
-			<?php get_tag_html( $shortcode['tag'], 'tag-egoi', empty( $shortcode['tag'] ) ); ?>
+			<?php if(isset($shortcode['tag'])){ get_tag_html( $shortcode['tag'], 'tag-egoi', empty( $shortcode['list'] )); } else { get_tag_html( '', 'tag-egoi', true ); }?>
 			<!-- / TAGS -->
 			<!-- TÍTULO -->
 			<div class="smsnf-input-group">
 				<label for="form_name"><?php _e( 'Form title', 'egoi-for-wp' ); ?></label>
 				<input  id="form_name" type="text"
 					name="title" size="30" spellcheck="true" autocomplete="off" pattern="\S.*\S"
-					value="<?php echo htmlentities( stripslashes( $shortcode['title_simple_form'] ) ); ?>"
+					value="<?php echo htmlentities( stripslashes( isset($shortcode['title_simple_form']) ? $shortcode['title_simple_form'] : '' ) ); ?>"
 					placeholder="<?php _e( 'Write here the title of your form', 'egoi-for-wp' ); ?>" />
 			</div>
 			<!-- / TÍTULO -->
 			<!-- CÓDIGO HTML -->
 			<div class="smsnf-input-group">
-			<?php $content = stripslashes( $shortcode['html_code_simple_form'] ); ?>
+			<?php $content = stripslashes( isset($shortcode['html_code_simple_form']) ? $shortcode['html_code_simple_form'] : '' ); ?>
 				<label for="sf-code"><?php _e( 'HTML code', 'egoi-for-wp' ); ?></label>
 				<div id="sf-btns" class="smsnf-btn-group">
 					<button id="sf-btn-name" class="smsnf-btn <?php echo strpos( $content, '[e_name]' ) || strpos( $content, '[/e_name]' ) ? 'active' : ''; ?>" type="button" data-lable="<?php _e( 'Name', 'egoi-for-wp' ); ?>"><?php _e( 'Name', 'egoi-for-wp' ); ?></button>
