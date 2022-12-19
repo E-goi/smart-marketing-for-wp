@@ -1,10 +1,15 @@
 <?php
 // check if have a new tag in BD
-if ( $this->bar_post['tag'] != '' ) {
-	$info = $this->egoiWpApi->getTag( $this->bar_post['tag'] );
+
+if ( isset($bar_post['tag']) && $bar_post['tag'] != '' ) {
+	$info = $this->egoiWpApi->getTag( $bar_post['tag'] );
 	$tag  = $info['ID'];
 } else {
-	$tag = $this->bar_post['tag-egoi'];
+	$tag = isset($bar_post['tag-egoi']) ? $bar_post['tag-egoi'] : 0;
+}
+
+if ( ! isset($bar_post['lang']) ) {
+	$bar_post['lang'] = 'en';
 }
 ?>
 
@@ -64,7 +69,7 @@ settings_errors();
 			<?php get_list_html( $this->bar_post['list'], 'egoi_bar_sync[list]' ); ?>
 			<!-- / LISTAS -->
 			<!-- lang -->
-			<?php get_lang_html( $this->bar_post['lang'], 'egoi_bar_sync[lang]', empty( $this->bar_post['list'] ) ); ?>
+			<?php get_lang_html( isset($this->bar_post['lang']) ? $this->bar_post['lang'] : 'en', 'egoi_bar_sync[lang]', empty( $this->bar_post['list'] ) ); ?>
 			<!-- / lang -->
 			<!-- TAGS -->
 			<?php get_tag_html( $tag, 'egoi_bar_sync[tag-egoi]' ); ?>

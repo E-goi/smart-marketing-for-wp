@@ -89,11 +89,11 @@ if ( ! isset($egoiwidget['btn_width']) ) {
 }
 
 require plugin_dir_path( __DIR__ ) . 'egoi-for-wp-admin-shortcodes.php';
-$FORM_OPTION = get_optionsform( $form_id );
+if(isset($form_id)) { $FORM_OPTION = get_optionsform( $form_id ); }
 ?>
 
 <form id="smsnf-widget-options" action="" method="post">
-	<?php settings_fields( $FORM_OPTION ); ?>
+	<?php if(isset($FORM_OPTION)) { settings_fields( $FORM_OPTION ); }?>
 
 	<input type="hidden" name="widget" value="1">
 	<input type="hidden" name="egoiform" value="egoi_widget">
