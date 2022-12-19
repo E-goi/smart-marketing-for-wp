@@ -17,16 +17,27 @@ class Egoi4Widget extends WP_Widget {
 		$opt = get_option( 'egoi_widget' );
 
 		if($opt){
-			$this->widget_enabled = $opt['egoi_widget']['enabled'];
-			$this->redirect       = $opt['egoi_widget']['redirect'];
-			$this->subscribed     = $opt['egoi_widget']['msg_subscribed'];
+			$this->widget_enabled = isset($opt['egoi_widget']['enabled']) ? $opt['egoi_widget']['enabled'] : 0;
+			$this->redirect       = isset($opt['egoi_widget']['redirect']) ? $opt['egoi_widget']['redirect'] : '';
+			$this->subscribed     = isset($opt['egoi_widget']['msg_subscribed']) ?  $opt['egoi_widget']['msg_subscribed'] : '';
 			$this->input_width    = $opt['egoi_widget']['input_width'] ? 'width:' . $opt['egoi_widget']['input_width'] : '100%';
 			$this->btn_width      = $opt['egoi_widget']['btn_width'] ? 'width:' . $opt['egoi_widget']['btn_width'] : '';
 			$this->bcolor         = $opt['egoi_widget']['bcolor'] ? 'border: 1px solid ' . $opt['egoi_widget']['bcolor'] : '';
-			$this->listID         = $opt['egoi_widget']['list'];
-			$this->lang           = $opt['egoi_widget']['lang'];
-			$this->tag_egoi       = $opt['egoi_widget']['tag-egoi'];
-			$this->double_optin   = $opt['egoi_widget']['double_optin'];	
+			$this->listID         = isset($opt['egoi_widget']['list']) ? $opt['egoi_widget']['list'] : 0;
+			$this->lang           = isset($opt['egoi_widget']['lang']) ? $opt['egoi_widget']['lang'] : 'en';
+			$this->tag_egoi       = isset($opt['egoi_widget']['tag-egoi']) ? $opt['egoi_widget']['tag-egoi'] : '';
+			$this->double_optin   = isset($opt['egoi_widget']['double_optin']) ? $opt['egoi_widget']['double_optin'] : 0;
+		} else {
+			$this->widget_enabled = 0;
+			$this->redirect       = '';
+			$this->subscribed     = '';
+			$this->input_width    = '100%';
+			$this->btn_width      = '';
+			$this->bcolor         = '';
+			$this->listID         = 0;
+			$this->lang           = 'en';
+			$this->tag_egoi       = '';
+			$this->double_optin   = 0;
 		}
 
 		$widget_ops = array(
@@ -62,7 +73,6 @@ class Egoi4Widget extends WP_Widget {
 			$mobile_label       = sanitize_text_field( $instance['mobile_label'] );
 			$mobile_placeholder = sanitize_text_field( $instance['mobile_placeholder'] );
 			$button             = sanitize_text_field( $instance['button'] );
-			$widget_tag         = sanitize_text_field( $instance['tag'] );
 			$default_tag        = sanitize_text_field( $instance['tag-egoi'] );
 			$language           = sanitize_text_field( $instance['lang'] );
 
@@ -71,13 +81,8 @@ class Egoi4Widget extends WP_Widget {
 
 			$tag = '';
 
-			// set tag defined on widget
-			if ( $widget_tag != '' ) {
-				$tag = $widget_tag;
-			}
-
 			// set default tag
-			if ( $default_tag != '' && $widget_tag == '' ) {
+			if ( $default_tag != '' ) {
 				$tag = $default_tag;
 			}
             ?>

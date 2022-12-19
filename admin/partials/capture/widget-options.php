@@ -26,16 +26,14 @@ if ( isset( $_POST['action'] ) && isset( $_POST['egoi_widget'] )  ) {
 }
 
 $opt_widget = get_option( 'egoi_widget' );
-$egoiwidget = $opt_widget['egoi_widget'];
-if ( empty( $egoiwidget ) ) {
-	$egoiwidget = array();
-}
 
-if ( $egoiwidget['tag'] != '' ) {
+$egoiwidget = isset($opt_widget['egoi_widget']) ? $opt_widget['egoi_widget'] : array() ;
+
+if ( isset($egoiwidget['tag']) && $egoiwidget['tag'] != '' ) {
 	$info = $this->egoiWpApi->getTag( $egoiwidget['tag'] );
 	$tag  = $info['ID'];
 } else {
-	$tag = $egoiwidget['tag-egoi'];
+	$tag = isset($egoiwidget['tag-egoi']) ? $egoiwidget['tag-egoi'] : 0;
 }
 
 $egoiwidget = array_map(
@@ -45,8 +43,49 @@ $egoiwidget = array_map(
 	$egoiwidget
 );
 
-if ( ! $egoiwidget['enabled'] ) {
+if ( ! isset($egoiwidget['enabled']) || ! $egoiwidget['enabled'] ) {
 	$egoiwidget['enabled'] = 0;
+}
+
+
+if ( ! isset($egoiwidget['double_optin']) || ! $egoiwidget['double_optin'] ) {
+	$egoiwidget['double_optin'] = 0;
+}
+
+if ( ! isset($egoiwidget['list']) ) {
+	$egoiwidget['list'] = 0;
+}
+
+if ( ! isset($egoiwidget['lang']) ) {
+	$egoiwidget['lang'] = 'pt';
+}
+
+if ( ! isset($egoiwidget['msg_subscribed']) ) {
+	$egoiwidget['msg_subscribed'] = '';
+}
+
+if ( ! isset($egoiwidget['msg_invalid']) ) {
+	$egoiwidget['msg_invalid'] = '';
+}
+
+if ( ! isset($egoiwidget['msg_empty']) ) {
+	$egoiwidget['msg_empty'] = '';
+}
+
+if ( ! isset($egoiwidget['msg_exists_subscribed']) ) {
+	$egoiwidget['msg_exists_subscribed'] = '';
+}
+
+if ( ! isset($egoiwidget['redirect']) ) {
+	$egoiwidget['redirect'] = '';
+}
+
+if ( ! isset($egoiwidget['input_width']) ) {
+	$egoiwidget['input_width'] = '100%';
+}
+
+if ( ! isset($egoiwidget['btn_width']) ) {
+	$egoiwidget['btn_width'] = '100%';
 }
 
 require plugin_dir_path( __DIR__ ) . 'egoi-for-wp-admin-shortcodes.php';

@@ -92,12 +92,12 @@ class Egoi_For_Wp_Public {
 		$bar_post = get_option( Egoi_For_Wp_Admin::BAR_OPTION_NAME );
 
 		// add new tag to E-goi
-		if ( $bar_post['tag'] != '' ) {
+		if ( isset($bar_post['tag']) && $bar_post['tag'] != '' ) {
 			$data = new Egoi_For_Wp();
 			$info = $data->getTag( $bar_post['tag'] );
 			$tag  = $info['ID'];
 		} else {
-			$tag = $bar_post['tag-egoi'];
+			$tag = isset($bar_post['tag-egoi']) ? $bar_post['tag-egoi'] : 0; 
 		}
 
 		// if defined some redirection
@@ -132,6 +132,10 @@ class Egoi_For_Wp_Public {
 		}
 
 		$bar_post['color_bar'] = ! empty( $bar_post['color_bar_transparent'] ) ? $bar_post['color_bar'] : 'transparent';
+
+		$bar_post['lang'] = isset($bar_post['lang'] ) ? $bar_post['lang'] : 'pt' ;
+
+		$bar_post['double_optin'] = isset($bar_post['double_optin'] ) ? $bar_post['double_optin'] : 0 ;
 
         ?>
         <!-- Smart Marketing Bar -->
@@ -239,7 +243,7 @@ class Egoi_For_Wp_Public {
             }
 
 			.egoi-close {
-                <?php echo esc_attr($tab_bar); ?>
+                <?php if(isset($tab_bar)){ echo esc_attr($tab_bar); } ?>
                 background-color:<?php echo esc_attr($css['color_bar']); ?>;
                 border-left:<?php echo esc_attr($css['border_px']); ?> solid <?php echo esc_attr($css['border_color']); ?> !important;
             }
