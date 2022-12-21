@@ -72,7 +72,7 @@ class Egoi_For_Wp_Listener {
 	private function get_default_map( $subscriber ) {
 		if ( ! empty( $subscriber['billing_country'] ) ) {
 			$country = $subscriber['billing_country'];
-		} elseif ( $subscriber['shipping_country'] ) {
+		} elseif ( isset($subscriber['shipping_country']) ) {
 			$country = $subscriber['shipping_country'];
 		} else {
 			$country = null;
