@@ -749,6 +749,8 @@ class Egoi_For_Wp_Public {
 				_e( 'ERROR: no data to insert', 'egoi-for-wp' );
 			} elseif ( $result->ERROR == 'EMAIL_ADDRESS_INVALID_MX_ERROR' ) {
 				_e( 'ERROR: e-mail address is invalid', 'egoi-for-wp' );
+			} elseif ( $result->ERROR == 'DATA_CANNOT_BE_EDITED' ) {
+				_e( 'ERROR: contact already exists but can\'t be edited', 'egoi-for-wp' );
 			} else {
 				_e( 'ERROR: invalid data submitted', 'egoi-for-wp' );
 			}
