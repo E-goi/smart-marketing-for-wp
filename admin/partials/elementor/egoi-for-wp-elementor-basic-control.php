@@ -178,13 +178,6 @@ class EgoiElementorWidget extends Widget_Base {
 		);
 
 		$this->add_control(
-			'hr3',
-			array(
-				'type' => \Elementor\Controls_Manager::DIVIDER,
-			)
-		);
-
-		$this->add_control(
 			'redirect_option',
 			array(
 				'label'        => __( 'Redirect on Success', 'egoi-for-wp' ),
