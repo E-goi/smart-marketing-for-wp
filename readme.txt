@@ -3,8 +3,8 @@ Contributors: E-goi
 Donate link:
 Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
 Requires at least: 4.7
-Tested up to: 6.1.0
-Stable tag: 4.1.6
+Tested up to: 5.9.2
+Stable tag: 4.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,6 +168,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 4.1.7 =
+- Improved Elementor forms error handling
 
 = 4.1.6 =
 - Minor Stability fix
