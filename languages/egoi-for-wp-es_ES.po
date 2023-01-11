@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2022-05-23 16:42+0000\n"
+"PO-Revision-Date: 2023-01-11 10:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -249,7 +249,7 @@ msgid "At the bottom of the page click the tab labeled \"Code\" and"
 msgstr ""
 "En la parte inferior de la página, haga clic en la pestaña \"Código\" y"
 
-#: includes/class-egoi-for-wp-products-bo.php:928
+#: includes/class-egoi-for-wp-products-bo.php:934
 msgid "Attention!"
 msgstr "¡Atención!"
 
@@ -312,7 +312,7 @@ msgstr "Antes de los detalles del pedido"
 msgid "Before Shipping Form"
 msgstr "Antes del formulario de envío"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:264
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:257
 msgid "Beginning"
 msgstr "Comenzando"
 
@@ -371,11 +371,11 @@ msgstr "y rellene las configuraciones iniciales"
 
 #: admin/partials/egoi-for-wp-admin-bar.php:290
 #: admin/partials/capture/subscription-bar.php:170
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:230
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:223
 msgid "Button Color"
 msgstr "Color del Botón"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:260
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:253
 msgid "Button Position"
 msgstr "Posición del botón"
 
@@ -386,7 +386,7 @@ msgstr "Texto del Botón"
 
 #: admin/partials/egoi-for-wp-admin-bar.php:301
 #: admin/partials/capture/subscription-bar.php:180
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:245
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:238
 msgid "Button Text Color"
 msgstr "Color del texto del Botón"
 
@@ -465,7 +465,7 @@ msgid "Categories to exclude"
 msgstr "Categorías para excluir"
 
 #: admin/partials/capture/popup.php:154
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:265
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:258
 msgid "Center"
 msgstr "Centrar"
 
@@ -594,8 +594,8 @@ msgstr ""
 msgid "Code is valid"
 msgstr "Código es valido"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:286
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:300
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:279
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:293
 msgid "Column"
 msgstr "Columna"
 
@@ -760,7 +760,7 @@ msgstr "Creado en"
 msgid "Currency"
 msgstr "Moneda"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:317
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:310
 msgid "Custom CSS"
 msgstr "CSS personalizado"
 
@@ -801,7 +801,7 @@ msgstr "Configuración de correo electrónico predeterminada."
 msgid "Delay"
 msgstr "Retrasar"
 
-#: includes/class-egoi-for-wp-products-bo.php:616
+#: includes/class-egoi-for-wp-products-bo.php:622
 #: admin/partials/capture/home.php:52 admin/partials/capture/home.php:88
 #: admin/partials/ecommerce/catalogs.php:49 admin/partials/rssfeed/home.php:54
 msgid "Delete"
@@ -1031,7 +1031,7 @@ msgstr "Email"
 msgid "Email Campaign"
 msgstr "Campaña de Email"
 
-#: public/class-egoi-for-wp-public.php:281
+#: public/class-egoi-for-wp-public.php:282
 msgid "Email can not be empty"
 msgstr "El correo electrónico no puede estar vacío"
 
@@ -1124,7 +1124,7 @@ msgstr ""
 " \t\t\t\t\t\t\t \t</span>\n"
 " \t\t\t\t\t\t\t</span>"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:266
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:259
 msgid "End"
 msgstr "Final"
 
@@ -1174,15 +1174,19 @@ msgstr "Error al enviar correo electrónico."
 msgid "Error!"
 msgstr "¡Error!"
 
-#: public/class-egoi-for-wp-public.php:746
+#: public/class-egoi-for-wp-public.php:749
+msgid "ERROR: contact already exists but can't be edited"
+msgstr "ERROR: el contacto ya existe pero no se puede editar"
+
+#: public/class-egoi-for-wp-public.php:747
 msgid "ERROR: e-mail address is invalid"
 msgstr "ERROR: el correo electrónico no es válido"
 
-#: public/class-egoi-for-wp-public.php:748
+#: public/class-egoi-for-wp-public.php:751
 msgid "ERROR: invalid data submitted"
 msgstr "ERROR: datos no válidos enviados"
 
-#: public/class-egoi-for-wp-public.php:744
+#: public/class-egoi-for-wp-public.php:745
 msgid "ERROR: no data to insert"
 msgstr "ERROR: no hay datos para insertar"
 
@@ -1200,7 +1204,7 @@ msgstr "Ejemplo: %s"
 msgid "Exclude"
 msgstr "Excluir"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:211
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:204
 msgid "External Redirect"
 msgstr "Redirección externa"
 
@@ -1208,7 +1212,7 @@ msgstr "Redirección externa"
 msgid "Features"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:296
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:289
 msgid "Field Direction"
 msgstr "Dirección de campo"
 
@@ -1246,7 +1250,7 @@ msgstr "Color de texto"
 msgid "Form"
 msgstr "Formulario"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:282
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:275
 msgid "Form Direction"
 msgstr "Dirección del formulário"
 
@@ -1291,7 +1295,7 @@ msgstr ""
 msgid "Full"
 msgstr "Completo"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:267
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:260
 #, fuzzy
 #| msgid "Form Width"
 msgid "Full Width"
@@ -1334,7 +1338,7 @@ msgstr "Integración Gravity Forms"
 msgid "GTIN"
 msgstr "GTIN"
 
-#: public/class-egoi-for-wp-public.php:741
+#: public/class-egoi-for-wp-public.php:742
 msgid "has been updated!"
 msgstr "ha sido actualizado"
 
@@ -1420,8 +1424,8 @@ msgstr ""
 "https://www.e-goi.es/caracteristicas/integraciones-y-plugins/plugin-"
 "wordpress-smart-marketing/"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:428
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:571
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:421
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:564
 msgid "I agree to"
 msgstr "Estoy de acuerdo con"
 
@@ -1469,7 +1473,7 @@ msgstr ""
 msgid "Image Size"
 msgstr "Tamaño de la imagen"
 
-#: includes/class-egoi-for-wp-products-bo.php:615
+#: includes/class-egoi-for-wp-products-bo.php:621
 msgid "Import"
 msgstr "Importar"
 
@@ -1812,7 +1816,7 @@ msgstr "Apodo"
 #: admin/partials/configuration/subscribers.php:49
 #: admin/partials/ecommerce/new-catalog-form.php:60
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:146
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:193
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:186
 #: admin/partials/integrations/contact-form-7.php:30
 #: admin/partials/integrations/contact-form-7.php:94
 #: admin/partials/integrations/gravity-forms.php:25
@@ -1871,7 +1875,7 @@ msgstr "Sin publicaciones"
 msgid "No simple forms"
 msgstr "No hay Formularios Simples"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:528
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:521
 msgid "No Tag"
 msgstr "Sin etiqueta"
 
@@ -1944,7 +1948,7 @@ msgid "Other errors"
 msgstr "Otros errores"
 
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:174
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:202
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:195
 msgid "Page Localization"
 msgstr "Posición en la página"
 
@@ -1980,8 +1984,8 @@ msgstr "Seleccione al menos una categoría o se mostrarán TODAS"
 msgid "Please select at least one Tag or All will be displayed"
 msgstr "Seleccione al menos una Tag o se mostrarán TODAS"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:377
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:538
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:370
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:531
 msgid "Please set up a list in E-goi Plugin panel before creating a form."
 msgstr ""
 "Configure una lista en el panel E-goi Plugin antes de crear un formulario."
@@ -2079,7 +2083,7 @@ msgstr "Pon tu e-mail aquí."
 msgid "Recommended"
 msgstr "Recomendado"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:190
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:183
 msgid "Redirect on Success"
 msgstr "Redirigir al éxito"
 
@@ -2109,8 +2113,8 @@ msgstr "Imagen derecha"
 msgid "Right Side"
 msgstr "Lado derecho"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:287
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:301
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:280
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:294
 msgid "Row"
 msgstr "Fila"
 
@@ -2585,7 +2589,7 @@ msgstr "Comenzar"
 msgid "Status"
 msgstr "Estado"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:222
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:215
 msgid "Style"
 msgstr "Estilo"
 
@@ -2629,7 +2633,7 @@ msgstr "El suscriptor ya existe"
 msgid "Subscriber Bar"
 msgstr "Barra de Suscriptores"
 
-#: public/class-egoi-for-wp-public.php:739
+#: public/class-egoi-for-wp-public.php:740
 msgid "Subscriber data from"
 msgstr "Datos del suscriptor de"
 
@@ -2743,8 +2747,8 @@ msgstr "Tasa de Impuesto"
 msgid "Telephone"
 msgstr "Teléfono"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:428
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:571
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:421
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:564
 msgid "terms & conditions"
 msgstr "Términos y condiciones"
 
@@ -3020,7 +3024,7 @@ msgstr ""
 msgid "Type"
 msgstr "Tipo"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:213
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:206
 msgid "Type your external url here"
 msgstr "Escriba su url externa aquí"
 
@@ -3090,7 +3094,7 @@ msgid ""
 "time for cron is higher than current time"
 msgstr ""
 
-#: public/class-egoi-for-wp-public.php:737
+#: public/class-egoi-for-wp-public.php:738
 msgid "was successfully registered!"
 msgstr "fue registrado exitosamente"
 
@@ -3237,7 +3241,7 @@ msgstr ""
 #: admin/partials/ecommerce/catalogs.php:61
 #: admin/partials/ecommerce/new-catalog-form.php:60
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:145
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:192
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:185
 #: admin/partials/integrations/contact-form-7.php:29
 #: admin/partials/integrations/contact-form-7.php:93
 #: admin/partials/integrations/gravity-forms.php:24
@@ -3265,12 +3269,12 @@ msgstr "Usted está aquí:"
 msgid "You can choose to divide the popup with an image"
 msgstr "Puede elegir dividir la ventana emergente con una imagen"
 
-#: includes/class-egoi-for-wp-products-bo.php:929
+#: includes/class-egoi-for-wp-products-bo.php:935
 #, php-format
 msgid "You have %d products behind in synchronization!"
 msgstr "¡Tienes %d productos detrás en sincronización!"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:555
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:548
 msgid "You have configured repeated fields!"
 msgstr "¡Ha configurado campos repetidos!"
 
@@ -3295,7 +3299,7 @@ msgstr "Tiene popups utilizando el formulario que está intentando eliminar."
 msgid "You have too much WP Users to be assigned in bulk!"
 msgstr "¡Tienes demasiados Usuarios WP para ser asignados a granel!"
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:479
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:472
 msgid "You must agree with terms & conditions."
 msgstr "Debe aceptar los términos y condiciones."
 
