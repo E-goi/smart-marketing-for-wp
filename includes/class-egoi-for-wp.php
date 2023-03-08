@@ -1930,17 +1930,19 @@ class Egoi_For_Wp {
 				}
 			}
 		} elseif ( ! empty( $country ) && ! empty( self::COUNTRY_DIAL[ strtoupper( $country ) ] ) ) {
-			$phone       = preg_replace( '/\(|\)|\ /', '', $phone );
-			$phone_array = explode( '-', $phone );
-			if ( count( $phone_array ) == 2 ) {
-				foreach ( self::COUNTRY_DIAL as  $code => $dial ) {
-					if ( $dial == $phone_array[0] ) {
-						return $phone;}
-				}
-			} else {
-				return self::COUNTRY_DIAL[ strtoupper( $country ) ] . '-' . implode( '', $phone_array );
+
+			// Replace non-numeric characters with an empty string
+			$phone = preg_replace("/[^0-9]/", "", $phone);
+
+			// Remove the leading country code
+			if (substr($phone, 0, strlen(self::COUNTRY_DIAL[ strtoupper( $country ) ])) == self::COUNTRY_DIAL[ strtoupper( $country ) ]) {
+				$phone = substr($phone, strlen(self::COUNTRY_DIAL[ strtoupper( $country ) ]));
 			}
+
+			return self::COUNTRY_DIAL[ strtoupper( $country ) ] . '-' . $phone;
+
 		} else {
+			
 			$phone       = preg_replace( '/\(|\)|\ /', '', $phone );
 			$phone_array = explode( '-', $phone );
 
