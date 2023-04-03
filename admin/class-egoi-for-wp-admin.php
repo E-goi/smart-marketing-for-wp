@@ -195,7 +195,7 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		wp_register_script( $this->plugin_name . 'select2', plugin_dir_url( __FILE__ ) . 'js/font_awesome/select2.min.js', array( 'jquery' ), true );
+		wp_register_script( $this->plugin_name . 'select2', plugin_dir_url( __FILE__ ) . 'js/font_awesome/select2.full.min.js', array( 'jquery' ), true );
 		wp_enqueue_script( $this->plugin_name . 'select2' );
 
 		if ( strpos( get_current_screen()->id, 'egoi-4-wp-rssfeed' ) !== false ) {
