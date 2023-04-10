@@ -169,6 +169,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 4.1.9 =
+- Minor fix in product variations
+
 = 4.1.8 =
 - Minor fix in convert order via backend
 
