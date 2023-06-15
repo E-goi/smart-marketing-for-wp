@@ -1,6 +1,18 @@
 <?php
 // cria/atualiza widget
-if ( isset( $_POST['action'] ) && isset( $_POST['egoi_widget'] )  ) {
+if ( isset( $_POST['egoi_widget'] )  ) {
+
+	if( !isset($_POST['egoi_widget']['bcolor_success'])){
+		$_POST['egoi_widget']['bcolor_success'] = '#00ff00';
+	}
+
+	if( !isset($_POST['egoi_widget']['bcolor_error'])){
+		$_POST['egoi_widget']['bcolor_error'] = '#ff0000';
+	}
+
+	if( !isset($_POST['egoi_widget']['bcolor'])){
+		$_POST['egoi_widget']['bcolor'] = '#000000';
+	}
 
 	update_option( sanitize_key($_POST['egoiform']), [
             'egoi_widget' => [
@@ -43,17 +55,13 @@ $egoiwidget = array_map(
 	$egoiwidget
 );
 
-if ( ! isset($egoiwidget['enabled']) || ! $egoiwidget['enabled'] ) {
+if ( ! isset($egoiwidget['enabled']) || $egoiwidget['enabled'] == null ) {
 	$egoiwidget['enabled'] = 0;
 }
 
 
-if ( ! isset($egoiwidget['double_optin']) || ! $egoiwidget['double_optin'] ) {
+if ( ! isset($egoiwidget['double_optin']) || $egoiwidget['double_optin'] == null ) {
 	$egoiwidget['double_optin'] = 0;
-}
-
-if ( ! isset($egoiwidget['list']) ) {
-	$egoiwidget['list'] = 0;
 }
 
 if ( ! isset($egoiwidget['lang']) ) {
@@ -80,6 +88,10 @@ if ( ! isset($egoiwidget['redirect']) ) {
 	$egoiwidget['redirect'] = '';
 }
 
+if( ! isset($egoiwidget['hide_form']) ){
+	$egoiwidget['hide_form'] = 0;
+}
+
 if ( ! isset($egoiwidget['input_width']) ) {
 	$egoiwidget['input_width'] = '100%';
 }
@@ -92,7 +104,7 @@ require plugin_dir_path( __DIR__ ) . 'egoi-for-wp-admin-shortcodes.php';
 if(isset($form_id)) { $FORM_OPTION = get_optionsform( $form_id ); }
 ?>
 
-<form id="smsnf-widget-options" action="" method="post">
+<form id="smsnf-widget-options" action="#" method="post">
 	<?php if(isset($FORM_OPTION)) { settings_fields( $FORM_OPTION ); }?>
 
 	<input type="hidden" name="widget" value="1">
@@ -115,7 +127,7 @@ if(isset($form_id)) { $FORM_OPTION = get_optionsform( $form_id ); }
 		<p class="subtitle"><?php _e( 'If you activate the double opt-in, a confirmation e-mail will be send to the subscribers.', 'egoi-for-wp' ); ?></p>
 		<div class="form-group switch-yes-no">
 			<label class="form-switch">
-				<?php $double_optin_enable = $egoiwidget['double_optin'] == 1 || $egoiwidget['list'] == 0; ?>
+				<?php $double_optin_enable = $egoiwidget['double_optin'] == 1 || (isset($egoiwidget['list']) && $egoiwidget['list'] == 0); ?>
 				<input id="widget_double_optin" name="egoi_widget[double_optin]" value="1" <?php checked( $double_optin_enable, 1 ); ?> type="checkbox">
 				<i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
 			</label>
@@ -136,7 +148,7 @@ if(isset($form_id)) { $FORM_OPTION = get_optionsform( $form_id ); }
 	<div id="smsnf-configuration" class="smsnf-tab-content smsnf-grid active">
 		<div>
 			<!-- LIST -->
-			<?php get_list_html( $egoiwidget['list'], 'egoi_widget[list]' ); ?>
+			<?php get_list_html( isset($egoiwidget['list']) ? $egoiwidget['list'] : null, 'egoi_widget[list]' ); ?>
 			<!-- / LIST -->
 			<!-- lang -->
 			<?php get_lang_html( $egoiwidget['lang'], 'egoi_widget[lang]', empty( $egoiwidget['list'] ) ); ?>

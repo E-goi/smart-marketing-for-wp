@@ -58,7 +58,7 @@ class Egoi4Widget extends WP_Widget {
 			extract( $args );
 			$this->egoi_id = ! empty( $args['widget_id'] ) ? sanitize_key( $args['widget_id'] ) : sanitize_key( $instance['widget_id'] );
 
-			$title              = apply_filters( 'widget_title', $instance['title'] );
+			$title              = sanitize_text_field( $instance['title'] );
 			$list               = $this->listID ? sanitize_key( $this->listID ) : sanitize_key( $instance['list'] );
 			$fname              = sanitize_text_field( $instance['fname'] );
 			$fname_label        = sanitize_text_field( $instance['fname_label'] );
@@ -149,10 +149,11 @@ class Egoi4Widget extends WP_Widget {
             ?>
 
 			<form name="egoi_contact" id="egoi-widget-form-<?php echo esc_attr($this->egoi_id) ?>" action="" method="post">
-				<input type="hidden" id="egoi-list" name="egoi-list" value="<?php echo esc_attr($list_id) ?>">
-				<input type="hidden" id="egoi-lang" name="egoi-lang" value="<?php echo esc_attr($language) ?>">
-				<input type="hidden" id="egoi-tag" name="egoi-tag" value="<?php echo esc_attr($tag) ?>">
-				<input type="hidden" id="egoi-double-optin" name="egoi-double-optin" value="<?php echo esc_attr($this->double_optin) ?>">
+				<input type="hidden" id="egoi-title" name="egoi-title" value="<?php echo esc_attr($title) ?>"/>
+				<input type="hidden" id="egoi-list" name="egoi-list" value="<?php echo esc_attr($list_id) ?>"/>
+				<input type="hidden" id="egoi-lang" name="egoi-lang" value="<?php echo esc_attr($language) ?>"/>
+				<input type="hidden" id="egoi-tag" name="egoi-tag" value="<?php echo esc_attr($tag) ?>"/>
+				<input type="hidden" id="egoi-double-optin" name="egoi-double-optin" value="<?php echo esc_attr($this->double_optin) ?>"/>
 
             <?php
 
@@ -184,6 +185,7 @@ class Egoi4Widget extends WP_Widget {
 			require_once dirname( __DIR__ ) . '/admin/index.php';
 			out( $arr );
 			$link = ( array_key_exists( $language, $arr ) ) ?  $arr[ $language ] : $arr['en'] ;
+			
             ?>
 			<input type='hidden' name='egoi-list-sub<?php echo esc_attr($this->egoi_id) ?>' id='egoi-list-sub<?php echo esc_attr($this->egoi_id) ?>' value='<?php echo esc_attr($list) ?>' />
 			<input type='hidden' name='egoi-id-sub<?php echo esc_attr($this->egoi_id) ?>' id='egoi-id-sub<?php echo esc_attr($this->egoi_id) ?>' value='<?php echo esc_attr($this->egoi_id) ?>' />
@@ -316,43 +318,10 @@ class Egoi4Widget extends WP_Widget {
 				}
 			}
             ?>
-			<script>
-			jQuery(document).ready(function ($){
-				$('input[data-attribute="fname_id"]').click(function (){
-					if($(this).is(":checked")) {
-						$('input[data-attribute="fname_label"]').show();
-						$('input[data-attribute="fname_placeholder"]').show();
-					}else{
-						$('input[data-attribute="fname_label"]').hide();
-						$('input[data-attribute="fname_placeholder"]').hide();
-					}
-				});
-				
-				$('input[data-attribute="lname_id"]').click(function (){
-					if($(this).is(":checked")) {
-						$('input[data-attribute="lname_label"]').show();
-						$('input[data-attribute="lname_placeholder"]').show();
-					}else{
-						$('input[data-attribute="lname_label"]').hide();
-						$('input[data-attribute="lname_placeholder"]').hide();
-					}
-				});
-				
-				
-				$('input[data-attribute="mobile_id"]').click(function (){
-					if($(this).is(":checked")) {
-						$('input[data-attribute="mobile_label"]').show();
-						$('input[data-attribute="mobile_placeholder"]').show();
-					}else{
-						$('input[data-attribute="mobile_label"]').hide();
-						$('input[data-attribute="mobile_placeholder"]').hide();
-					}
-				});
-			});
-			</script>
+
 			<p>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ) ?>"><?php _e( 'Widget Title', 'egoi-for-wp' ) ?></label>
-				<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ) ?>" name="<?php echo esc_attr( $this->get_field_id( 'title' ) ) ?>" type="text" value="<?php echo esc_attr( $title ) ?>" />
+				<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ) ?>" id="<?php echo esc_attr( $this->get_field_name( 'title' ) ) ?>"  value="<?php echo esc_attr( $title ) ?>" />
 			</p>
 
             <?php
@@ -364,12 +333,12 @@ class Egoi4Widget extends WP_Widget {
 			}
             ?>
             <p>
-			<input class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'fname' ) ) ?>" name="<?php echo esc_attr( $this->get_field_id( 'fname' ) ) ?>" type="checkbox" value="First Name" data-attribute="fname_id" <?php checked($checked_fname, 1) ?> />
+			<input class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'fname' ) ) ?>" name="<?php echo esc_attr( $this->get_field_name( 'fname' ) ) ?>" type="checkbox" value="First Name" data-attribute="fname_id" <?php checked($checked_fname, 1) ?> />
 				<label for="<?php echo esc_attr( $this->get_field_id( 'fname' ) ) ?>"><?php _e( 'First Name', 'egoi-for-wp' ) ?></label>
 
-                <input type="text" name="<?php echo esc_attr( $this->get_field_id( 'fname_label' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'fname_label' ) ) ?>" placeholder="<?php _e( 'Label', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr($fname_label) ?>" data-attribute="fname_label" style="width:100%;<?php echo esc_attr( $style_fname ) ?>">';
+                <input type="text" name="<?php echo esc_attr( $this->get_field_name( 'fname_label' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'fname_label' ) ) ?>" placeholder="<?php _e( 'Label', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr($fname_label) ?>" data-attribute="fname_label" style="width:100%;margin-bottom:10px"/>
 
-                <input type="text" name="<?php echo esc_attr( $this->get_field_id( 'fname_placeholder' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'fname_placeholder' ) ) ?>" placeholder="Placeholder" value="<?php echo esc_attr($fname_placeholder) ?>" data-attribute="fname_placeholder" style="width:100%;<?php echo esc_attr( $style_fname ) ?>">';
+                <input type="text" name="<?php echo esc_attr( $this->get_field_name( 'fname_placeholder' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'fname_placeholder' ) ) ?>" placeholder="Placeholder" value="<?php echo esc_attr($fname_placeholder) ?>" data-attribute="fname_placeholder" style="width:100%;"/>
 			</p>
             <?php
 			$checked_lname = 0;
@@ -380,13 +349,13 @@ class Egoi4Widget extends WP_Widget {
 			}
             ?>
 			<p>
-                <input class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'lname' ) ) ?>" name="<?php echo esc_attr( $this->get_field_id( 'lname' ) ) ?>" type="checkbox" value="Last Name" data-attribute="lname_id" <?php checked($checked_lname, 1) ?> />
+                <input class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'lname' ) ) ?>" name="<?php echo esc_attr( $this->get_field_name( 'lname' ) ) ?>" type="checkbox" value="Last Name" data-attribute="lname_id" <?php checked($checked_lname, 1) ?> />
 
-                <label for="<?php echo esc_attr( $this->get_field_id( 'lname' ) ) ?>"><?php _e( 'Last Name', 'egoi-for-wp' ) ?></label>
+                <label for="<?php echo esc_attr( $this->get_field_name( 'lname' ) ) ?>"><?php _e( 'Last Name', 'egoi-for-wp' ) ?></label>
 
-                <input type="text" name="<?php echo esc_attr( $this->get_field_id( 'lname_label' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'lname_label' ) ) ?>" placeholder="<?php _e( 'Label', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $lname_label ) ?>" data-attribute="lname_label" style="width:100%;<?php echo esc_attr( $style_lname ) ?>">
+                <input type="text" name="<?php echo esc_attr( $this->get_field_name( 'lname_label' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'lname_label' ) ) ?>" placeholder="<?php _e( 'Label', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $lname_label ) ?>" data-attribute="lname_label" style="width:100%;margin-bottom:10px"/>
 
-                <input type="text" name="<?php echo esc_attr( $this->get_field_id( 'lname_placeholder' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'lname_placeholder' ) ) ?>" placeholder="Placeholder" value="<?php echo esc_attr( $lname_placeholder ) ?>" data-attribute="lname_placeholder" style="width:100%;<?php echo esc_attr( $style_lname ) ?>">
+                <input type="text" name="<?php echo esc_attr( $this->get_field_name( 'lname_placeholder' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'lname_placeholder' ) ) ?>" placeholder="Placeholder" value="<?php echo esc_attr( $lname_placeholder ) ?>" data-attribute="lname_placeholder" style="width:100%;"/>
             </p>
             <?php
 			if ( ! $email ) {
@@ -395,14 +364,14 @@ class Egoi4Widget extends WP_Widget {
             ?>
 
 			<p>
-				<input class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'email' ) ) ?>" name="<?php echo esc_attr( $this->get_field_id( 'email' ) ) ?>" <?php checked(!empty($email)); ?> type="checkbox" checked="checked" value="Email" disabled="disabled"/>
+				<input class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'email' ) ) ?>" name="<?php echo esc_attr( $this->get_field_name( 'email' ) ) ?>" <?php checked(!empty($email)); ?> type="checkbox" checked="checked" value="Email" disabled="disabled"/>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'email' ) ) ?>">
                 <?php _e( 'Email:', 'egoi-for-wp' ); ?>
                 </label>
 
-                <input type="text" name="<?php echo esc_attr( $this->get_field_id( 'email_label' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'email_label' ) ) ?>" placeholder="<?php _e( 'Label', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $email_label ) ?>" style="width:100%;">';
+                <input type="text" name="<?php echo esc_attr( $this->get_field_name( 'email_label' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'email_label' ) ) ?>" placeholder="<?php _e( 'Label', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $email_label ) ?>" style="width:100%;margin-bottom:10px"/>
 
-			    <input type="text" name="<?php echo esc_attr( $this->get_field_id( 'email_placeholder' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'email_placeholder' ) ) ?>" placeholder="Placeholder" value="<?php echo esc_attr( $email_placeholder ) ?>" style="width:100%;">';
+			    <input type="text" name="<?php echo esc_attr( $this->get_field_name( 'email_placeholder' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'email_placeholder' ) ) ?>" placeholder="Placeholder" value="<?php echo esc_attr( $email_placeholder ) ?>" style="width:100%;"/>
 			</p>
 
             <?php
@@ -416,12 +385,12 @@ class Egoi4Widget extends WP_Widget {
             ?>
 
             <p>
-                <input class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'mobile' ) ) ?>" name="<?php echo esc_attr( $this->get_field_id( 'mobile' ) ) ?>" type="checkbox" value="Mobile" data-attribute="mobile_id" <?php checked($checked_mobile, 1); ?> />
+                <input class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'mobile' ) ) ?>" name="<?php echo esc_attr( $this->get_field_name( 'mobile' ) ) ?>" type="checkbox" value="Mobile" data-attribute="mobile_id" <?php checked($checked_mobile, 1); ?> />
 				<label for="<?php echo esc_attr( $this->get_field_id( 'mobile' ) ) ?>"><?php _e( 'Mobile', 'egoi-for-wp' ) ?></label>
 
-                <input type="text" name="<?php echo esc_attr( $this->get_field_id( 'mobile_label' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'mobile_label' ) ) ?>" placeholder="<?php _e( 'Label', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $mobile_label ) ?>" data-attribute="mobile_label" style="width:100%;<?php echo esc_attr( $style_mobile ) ?>">';
+                <input type="text" name="<?php echo esc_attr( $this->get_field_name( 'mobile_label' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'mobile_label' ) ) ?>" placeholder="<?php _e( 'Label', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $mobile_label ) ?>" data-attribute="mobile_label" style="width:100%;margin-bottom:10px"/>
 
-                <input type="text" name="<?php echo esc_attr( $this->get_field_id( 'mobile_placeholder' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'mobile_placeholder' ) ) ?>" placeholder="Placeholder" value="<?php echo esc_attr( $mobile_placeholder ) ?>" data-attribute="mobile_placeholder" style="width:100%;<?php echo esc_attr( $style_mobile ) ?>">';
+                <input type="text" name="<?php echo esc_attr( $this->get_field_name( 'mobile_placeholder' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'mobile_placeholder' ) ) ?>" placeholder="Placeholder" value="<?php echo esc_attr( $mobile_placeholder ) ?>" data-attribute="mobile_placeholder" style="width:100%;"/>
             </p>
             <p>
             <?php
@@ -446,14 +415,14 @@ class Egoi4Widget extends WP_Widget {
             }
             ?>
 
-			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'tag' ) ) ?>" id="<?php echo esc_attr( $this->get_field_name( 'tag' ) ) ?>" placeholder="<?php _e( 'Tag Name', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr($tag) ?>" style="width:100%;">
+			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'tag' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'tag' ) ) ?>" placeholder="<?php _e( 'Tag Name', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr($tag) ?>" style="width:100%;"/>
 			</p>
 			<p>
             <?php
 
             if ( $this->lang != '' ) {
                 ?>
-				<label>' . __( 'Languages', 'egoi-for-wp' ) . '</label><span class="e-goi-tooltip">
+				<label> <?php __( 'Languages', 'egoi-for-wp' ) ?></label><span class="e-goi-tooltip">
 						 <span class="dashicons dashicons-info"></span>
 					  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
                              <?php _e( 'List', 'egoi-for-wp' ) ?>:
@@ -476,7 +445,7 @@ class Egoi4Widget extends WP_Widget {
             }
             ?>
 
-			<select id="<?php echo esc_attr( $this->get_field_name( 'widget_lang' ) ) ?>" name="<?php echo esc_attr( $this->get_field_name( 'widget_lang' ) ) ?>" type="text" >
+			<select id="<?php echo esc_attr( $this->get_field_id( 'widget_lang' ) ) ?>" name="<?php echo esc_attr( $this->get_field_name( 'widget_lang' ) ) ?>" type="text" >
 			<option value="" selected disabled><?php _e( 'Select a language', 'egoi-for-wp' ) ?></option>
 
             <?php
@@ -490,8 +459,8 @@ class Egoi4Widget extends WP_Widget {
 			</select>
 			</p>
 			<p>
-				<label for="<?php echo esc_attr( $this->get_field_name( 'button' ) ) ?>"><?php _e( 'Subscribe Button', 'egoi-for-wp' ) ?></label>';
-			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'button' ) ) ?>" id="<?php echo esc_attr( $this->get_field_name( 'button' ) ) ?>" placeholder="<?php _e( 'Subscribe', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $button ) ?>" style="width:100%;">
+				<label for="<?php echo esc_attr( $this->get_field_name( 'button' ) ) ?>"><?php _e( 'Subscribe Button', 'egoi-for-wp' ) ?></label>
+			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'button' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'button' ) ) ?>" placeholder="<?php _e( 'Subscribe', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $button ) ?>" style="width:100%;"/>
 			</p>
             <?php
 		} else {
