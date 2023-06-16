@@ -14,6 +14,10 @@ if ( isset( $_POST['egoi_widget'] )  ) {
 		$_POST['egoi_widget']['bcolor'] = '#000000';
 	}
 
+	if ( !isset($_POST['egoi_widget']['hide_form']) ) {
+		$_POST['egoi_widget']['hide_form'] = 0;
+	}
+
 	update_option( sanitize_key($_POST['egoiform']), [
             'egoi_widget' => [
                 'enabled' => sanitize_key($_POST['egoi_widget']['enabled']),
@@ -28,6 +32,7 @@ if ( isset( $_POST['egoi_widget'] )  ) {
                 'redirect' => esc_url($_POST['egoi_widget']['redirect']),
                 'input_width' => sanitize_text_field($_POST['egoi_widget']['input_width']),
                 'btn_width' => sanitize_text_field($_POST['egoi_widget']['btn_width']),
+				'hide_form' => sanitize_text_field($_POST['egoi_widget']['hide_form']),
                 'bcolor' => sanitize_text_field($_POST['egoi_widget']['bcolor']),
                 'bcolor_success' => sanitize_text_field($_POST['egoi_widget']['bcolor_success']),
                 'bcolor_error' => sanitize_text_field($_POST['egoi_widget']['bcolor_error']),
