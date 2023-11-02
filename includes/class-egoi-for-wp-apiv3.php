@@ -40,7 +40,9 @@ class EgoiApiV3 {
 		'getConnectedSite'         => '/connectedsites/{domain}',
 		'convertOrder'             => '/{domain}/orders',
 		'convertCart'              => '/{domain}/carts',
+		'ping'					   => '/ping',
 	);
+
 	protected $apiKey;
 	protected $headers;
 	public function __construct( $apiKey ) {
@@ -49,9 +51,17 @@ class EgoiApiV3 {
 	}
 
 	public function getCountriesCurrencies( $cellphone = '' ) {
+		
 		$phone_add = empty( $cellphone ) ? '' : "?phone=$cellphone";
+
+		$url = self::APIV3 . self::APIURLS[ __FUNCTION__ ] . $phone_add;
+
+		if ( $this->_hasCachedResponse( $url ) ) {
+			return $this->_cachedResponse( $url );
+		}
+
 		$client    = new ClientHttp(
-			self::APIV3 . self::APIURLS[ __FUNCTION__ ] . $phone_add,
+			$url,
 			'GET',
 			$this->headers
 		);
@@ -60,7 +70,11 @@ class EgoiApiV3 {
 			return false;
 		}
 
-		return json_decode( $client->getResponse(), true );
+		$response = json_decode( $client->getResponse(), true );
+
+		$this->_cacheCreatorHandler( $url, $response );
+
+		return $response;
 	}
 
 	/*
@@ -282,9 +296,14 @@ class EgoiApiV3 {
 	 * @return false|string
 	 */
 	public function getSenders( $channel = 'email' ) {
-		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{channel}', $channel );
+		$url   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{channel}', $channel );
+
+		if ( $this->_hasCachedResponse( $url ) ) {
+			return $this->_cachedResponse( $url );
+		}
+
 		$client = new ClientHttp(
-			$path,
+			$url,
 			'GET',
 			$this->headers
 		);
@@ -293,9 +312,14 @@ class EgoiApiV3 {
 			return $this->processErrors( $client->getError() );
 		}
 		$resp = json_decode( $client->getResponse(), true );
-		return $client->getCode() == 200 && isset( $resp['items'] )
-			? wp_json_encode( $resp['items'] )
-			: $this->processErrors( $client->getResponse() );
+
+		if($client->getCode() == 200 && isset( $resp['items'] )){
+			$return = wp_json_encode( $resp['items'] );
+			$this->_cacheCreatorHandler( $url, $return );
+			return $return;
+		} else {
+			return $this->processErrors( $client->getResponse() );
+		}
 	}
 
 	/**
@@ -323,11 +347,15 @@ class EgoiApiV3 {
 	/**
 	 * @return false|string
 	 */
-	public function getMyAccount() {
-		$path = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+	public function getMyAccount( $clientId = true) {
+		$url = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+
+		if ( $this->_hasCachedResponse( $url ) ) {
+			return $this->_cachedResponse( $url );
+		}
 
 		$client = new ClientHttp(
-			$path,
+			$url,
 			'GET',
 			$this->headers
 		);
@@ -337,10 +365,46 @@ class EgoiApiV3 {
 		}
 
 		$resp = json_decode( $client->getResponse(), true );
-		return $client->getCode() == 200 && isset( $resp['general_info']['client_id'] )
-			? $resp['general_info']['client_id']
-			: $this->processErrors();
+
+		if($client->getCode() == 200 && isset( $resp['general_info']['client_id'])){
+			$return = $clientId ? $resp['general_info']['client_id'] : $resp;
+			$this->_cacheCreatorHandler( $url, $return );
+			return $return;
+		} else {
+			return $this->processErrors();
+		}
 	}
+
+	public function ping( ) {
+
+		$url = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+
+		if ( $this->_hasCachedResponse( $url ) ) {
+			return $this->_cachedResponse( $url );
+		}
+
+		try {
+			wp_remote_post(
+				$url,
+				array(
+					'body'    => wp_json_encode( array() ),
+					'headers' => array(
+						'Content-Type' => 'application/json',
+						'Pluginkey'    => self::PLUGINKEY,
+						'Apikey'       => $this->apiKey,
+					),
+				)
+			);
+
+			$this->_cacheCreatorHandler( $url, true );
+	
+			return true;
+
+		} catch ( Exception $e ) {
+			return false;
+		}
+	}
+
 
 	/**
 	 * @param $data
@@ -892,6 +956,77 @@ class EgoiApiV3 {
 	private function privReplaceUrl( $url, $search, $replace ) {
 		return preg_replace( "/$search/", "$replace", $url );
 	}
+
+	private function _cacheCreatorHandler( $url, $body ) {
+		$this->_saveCache( $url, $body );
+	}
+
+	private function _cachedResponse( $url ) {
+		$cached = get_option( self::generateCacheKey( $url ) );
+		return empty( $cached['data'] ) ? array() : $cached['data'];
+	}
+
+	private function _hasCachedResponse( $url ) {
+
+		$cached = get_option( self::generateCacheKey( $url ) );
+
+		if( $cached && isset( $cached['ttl'] ) && $cached['ttl'] < time() ){
+			$this->_purgeCache( $url );
+			return false;
+		}
+
+		return ! empty( $cached ) && $cached['ttl'] > time();
+	}
+
+	private function _saveCache( $url, $resp, $ttl = 3600 ) {
+		$key = self::generateCacheKey( $url );
+		update_option(
+			$key,
+			array(
+				'data' => $resp,
+				'ttl'  => time() + $ttl,
+			)
+		);
+	}
+
+	private function _purgeCache( $url ) {
+		delete_option(
+			self::generateCacheKey( $url )
+		);
+	}
+
+	private static function generateCacheKey( $url ) {
+		return 'egoi:cache:' . hash( 'sha256', $url );
+	}
+
+	/**
+	 * @param $url
+	 * @param array $headers
+	 * @return string
+	 */
+	protected function _getContent( $url, $headers = array() ) {
+
+		if ( $this->_hasCachedResponse( $url ) ) {
+			return $this->_cachedResponse( $url );
+		}
+
+		$res = wp_remote_request(
+			$url,
+			array(
+				'method'  => 'GET',
+				'timeout' => 30,
+				'headers' => $headers,
+			)
+		);
+
+		if ( is_wp_error( $res ) ) {
+			return '{}';
+		}
+
+		$this->_cacheCreatorHandler( $url, $res['body'] );
+		return $res['body'];
+	}
+
 
 }
 require_once plugin_dir_path( __FILE__ ) . 'class-egoi-for-wp-lazy.php';
