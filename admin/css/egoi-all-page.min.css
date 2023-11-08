@@ -1,0 +1,143 @@
+.smsnf-dashboard-account__content__table {
+	color: #00313d;
+}
+
+.smsnf-dashboard-account__content__table hr {
+	border: .05rem solid #efefef !important;
+	margin-left: 12px;
+	margin-right: 12px;
+	margin-top: -2px;
+}
+
+.smsnf-dashboard-account__content__table .table {
+	background-color: #fff;
+	border-collapse: unset;
+	padding: 12px 12px;
+}
+
+.table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	text-align: left;
+	width: 100%;
+}
+
+.smsnf-dashboard-account__content__table .smsnf-dashboard-account__content__table--total {
+	font-size: 1rem;
+	font-weight: 500;
+	text-align: left;
+}
+
+.smsnf-dashboard-account__content__table td {
+	font-size: 1rem;
+}
+
+.smsnf-dashboard-account__content__table td:last-child {
+	text-align: right;
+}
+
+.smsnf-dashboard-account__content__table .smsnf-dashboard-account__content__table--cash {
+	border: 1px solid #93bd4d;
+	border-radius: 2px;
+	color: #93bd4d;
+	padding: 3px 10px;
+}
+
+
+.smsnf-dashboard-account__content__table--subtitle {
+	color: #00313d;
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 26px;
+	margin-bottom: 0;
+	margin-top: 19px;
+	padding-left: 12px;
+	text-align: left;
+}
+
+.smsnf-dashboard-account__content__table hr {
+	border: .05rem solid #efefef !important;
+}
+
+
+.smsnf-wpdash-table--head {
+	align-items: center;
+	background-color: #00aeda;
+	display: flex;
+	display: -ms-flexbox;
+	-ms-flex-align: center;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-ms-flex-pack: start;
+	justify-content: flex-start;
+}
+
+.smsnf-wpdash-table--head img {
+	margin-left: 11px;
+	width: 40px;
+}
+
+.smsnf-wpdash-table--head p {
+	color: white;
+	font-family: "Montserrat", Helvetica, "Roboto", Sans-serif;
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 18px;
+	margin-left: 11px;
+	text-align: left;
+}
+
+.smsnf-wpdash--table td {
+	padding: .6rem 0rem;
+}
+
+
+.smsnf-dashboard-plugin-sms {
+	background-color: #fff;
+	padding: 20px;
+	text-align: center;
+}
+
+.smsnf-dashboard-plugin-sms .smsnf-dashboard-plugin-sms__img {
+	height: auto;
+	max-width: 100%;
+	width: 100%;
+}
+
+.smsnf-dashboard-plugin-sms .smsnf-dashboard-plugin-sms__text {
+	font-size: 1rem;
+	line-height: 24px;
+	padding: 20px;
+}
+
+.smsnf-dashboard-ads {
+	height: 490px;
+}
+
+
+.button-smsnf-primary {
+	-webkit-appearance: inherit !important;
+	-moz-appearance: inherit !important;
+	background-color: #00aeda !important;
+	border-radius: 5px !important;
+	color: #fff !important;
+	font-family: "Montserrat", sans-serif;
+	font-size: 1rem !important;
+	font-weight: 500;
+	padding: 10px 18px !important;
+	text-decoration: none !important;
+	text-transform: uppercase !important;
+}
+
+.button-smsnf-primary:hover {
+	background-color: #00718e !important;
+}
+
+.column-egoi_newsletter{
+	width: 90px;
+}
+
+.wp-menu-image > img{
+	width: 20px;
+	height: auto;
+}
