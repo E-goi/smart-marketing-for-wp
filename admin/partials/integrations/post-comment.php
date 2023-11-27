@@ -13,12 +13,12 @@
 				<label for="egoi_int"><?php _e( 'Enable Post Comment Integration', 'egoi-for-wp' ); ?></label>
 				<p class="subtitle"><?php _e( 'Select "yes" to enable Post Comment Integration.', 'egoi-for-wp' ); ?></p>
 				<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
-					<label><input type="radio"  name="egoi_int[enable_pc]" <?php checked( $egoint['enable_pc'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
-					<label><input type="radio" name="egoi_int[enable_pc]" <?php checked( $egoint['enable_pc'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+					<label><input type="radio"  name="egoi_int[enable_pc]" <?php if(isset($egoint['enable_pc'])) {checked( $egoint['enable_pc'], 1 ); } ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+					<label><input type="radio" name="egoi_int[enable_pc]" <?php if(isset($egoint['enable_pc'])) {checked( $egoint['enable_pc'], 0 ); } ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
 				</div>
 			</div>
 
-			<?php if ( $egoint['enable_pc'] ) { ?>
+			<?php if ( isset($egoint['enable_pc']) ) { ?>
 
 				<div class="smsnf-input-group">
 					<label for="list_cf"><?php _e( 'List to Subscribe', 'egoi-for-wp' ); ?></label>
@@ -33,9 +33,9 @@
 							<?php
 								$index = 1;
 							foreach ( $lists as $list ) {
-								if ( $list->title != '' ) {
+								if ( $list['public_name'] != '' ) {
 									?>
-										<option value="<?php echo esc_attr( $list->listnum ); ?>" <?php selected( $list->listnum, $egoint['list_cp'] ); ?>><?php echo esc_html( $list->title ); ?></option>
+										<option value="<?php echo esc_attr( $list['list_id'] ); ?>" <?php if(isset($egoint['list_cp'])){selected( $list['list_id'], $egoint['list_cp'] ); }?>><?php echo esc_html( $list['public_name'] ); ?></option>
 																  <?php
 								}
 								$index++;

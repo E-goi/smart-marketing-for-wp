@@ -68,6 +68,6 @@ add_thickbox();
 </div>
 
 <!-- Mapeamento dos campos -->
-<div id="egoi-for-wp-form-map" style="display:none;width:700px;">
-	<?php require dirname( __FILE__ ) . '/custom/egoi-for-wp-form-map.php'; ?>
-</div>
+<!-- <div id="egoi-for-wp-form-map" style="display:none;width:700px;">
+	<?php //require dirname( __FILE__ ) . '/custom/egoi-for-wp-form-map.php'; ?>
+</div> -->

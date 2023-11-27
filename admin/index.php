@@ -26,8 +26,10 @@ function check( &$arr ) {
 
 		foreach ( $ch as $for ) {
 
-			$lang = json_decode( get_option( 'egoi_simple_form_' . $for->ID ) )->lang;
-			$link = ( array_key_exists( $lang, $arr ) ) ? $arr[ $lang ] : $arr['en'];
+			$option = json_decode( get_option( 'egoi_simple_form_' . $for->ID ) );
+			$lang = isset($option->lang) ? $option->lang : 'pt';
+			$link = ( array_key_exists( $lang, $arr ) ) ? $arr[ $lang ] : $arr['pt'];
+
 
 			if ( strpos( $for->post_content, $link ) == false || ! isset( $link ) ) {
 				continue;
@@ -38,14 +40,13 @@ function check( &$arr ) {
 			);
 
 			$where = array( 'ID' => $for->ID );
-			$query = $wpdb->update( $table, $in, $where );
+			$wpdb->update( $table, $in, $where );
 
 		}
 		$arr = array();
 
 	}
 }
-check( $arr );
 
 
 function out( $arr ) {
@@ -60,8 +61,9 @@ function out( $arr ) {
 
 	foreach ( $ch as $for ) {
 
-		$lang = json_decode( get_option( 'egoi_simple_form_' . $for->ID ) )->lang;
-		$link = ( array_key_exists( $lang, $arr ) ) ? $arr[ $lang ] : $arr['en'];
+		$option = json_decode( get_option( 'egoi_simple_form_' . $for->ID ) );
+		$lang = isset($option->lang) ? $option->lang : 'pt';
+		$link = ( array_key_exists( $lang, $arr ) ) ? $arr[ $lang ] : $arr['pt'];
 
 		if ( strpos( $for->post_content, $link ) !== false || strpos( stripslashes( $for->post_content ), $link ) !== false || ! isset( $link ) ) {
 			continue;
@@ -72,7 +74,7 @@ function out( $arr ) {
 		);
 
 		$where = array( 'ID' => $for->ID );
-		$query = $wpdb->update( $table, $in, $where );
+		$wpdb->update( $table, $in, $where );
 	}
 }
 function getApikey() {

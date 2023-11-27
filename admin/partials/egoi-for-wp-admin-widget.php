@@ -8,8 +8,12 @@ $opt_widget = get_option( 'egoi_widget' );
 $egoiwidget = $opt_widget['egoi_widget'];
 
 if ( $egoiwidget['tag'] != '' ) {
-	$info = $this->egoiWpApi->getTag( $egoiwidget['tag'] );
-	$tag  = $info['ID'];
+	if( ! is_numeric($egoiwidget['tag']) ){
+		$info = $this->egoiWpApiV3->getTag( $egoiwidget['tag'] );
+		$tag = $info['tag_id'];
+	} else {
+		$tag  = $egoiwidget['tag'];
+	}
 } else {
 	$tag = $egoiwidget['tag-egoi'];
 }
@@ -114,7 +118,7 @@ if ( ! $egoiwidget['enabled'] ) {
 				<div id="tab-widget-settings">
 					<table class="form-table" style="table-layout: fixed;">
 
-						<!-- Config list and lang -->
+						<!-- Config list -->
 						<tr valign="top">
 							<th scope="row"><label><?php _e( 'Egoi List', 'egoi-for-wp' ); ?></label></th>
 							<td>
@@ -132,19 +136,7 @@ if ( ! $egoiwidget['enabled'] ) {
 							</td>
 						</tr>
 
-						<tr valign="top">
-							<th scope="row"><label for="egoi-lang-w"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label></th>
-							<td>
-								<span id="lang_widget" style="display: none;"><?php echo esc_textarea($egoiwidget['lang']); ?></span>
-
-								<span class="loading loading_lang-widget" style="margin-left: 10px; display: none;"></span>
-								<select name="egoi_widget[lang]"  id="e-goi-lang-widget" style="display: none;">
-
-								</select>
-							</td>
-						</tr>
-
-						<!-- END config list and language -->
+						<!-- END config list-->
 
 
 						<!-- TAGS -->
@@ -314,16 +306,11 @@ if ( ! $egoiwidget['enabled'] ) {
 
 		jQuery(document).ready(function($) {
 			if(jQuery("#e-goi-lists_ct_widget").text() != ""){
-				jQuery('#egoi-lang-w').show();
 				getListWidget(jQuery("#e-goi-lists_ct_widget").text());
 			}
 		});
 
 		jQuery("#e-goi-list-widget").change(function(){
-			jQuery('#e-goi-lang-widget').hide();
-			jQuery('#egoi-lang-w').show();
-			jQuery('#e-goi-lang-widget').empty();
-			jQuery(".loading_lang-widget").addClass('spin').show();
 
 			var listID = jQuery("#e-goi-list-widget").val();
 
@@ -336,43 +323,7 @@ if ( ! $egoiwidget['enabled'] ) {
 			};
 
 			jQuery.post(url_egoi_script.ajaxurl, data_lists, function(response) {
-
 				content = JSON.parse(response);
-
-				jQuery('#e-goi-lang-widget').show();
-
-				var idiomas = [];
-				jQuery.each(content, function(key, val) {
-
-					if(val.listnum == listID){
-						var idioma = val.idioma;
-						var idiomas_extra = val.idiomas_extra;
-
-						var idiomas = [];
-
-						idiomas.push(idioma);
-
-						if (idiomas_extra != "") {
-							jQuery.each(idiomas_extra, function(key, val){
-								idiomas.push(val);
-							});
-						}
-
-						jQuery.each(idiomas, function(key, val){
-							if(jQuery('#lang_widget').text() != "" && jQuery('#lang_widget').text() == val){
-								jQuery("#e-goi-lang-widget").append('<option selected value="' + val + '">' + val + '</option>');
-							}
-							else{
-								jQuery("#e-goi-lang-widget").append('<option value="' + val + '">' + val + '</option>');
-							}
-
-						});
-
-						jQuery(".loading_lang-widget").removeClass('spin').hide();
-					}
-
-				});
-
 			});
 		}
 
@@ -380,7 +331,7 @@ if ( ! $egoiwidget['enabled'] ) {
 
 			jQuery('#widget-submit-error').hide();
 
-			if(jQuery("#e-goi-list-widget").val() == null && jQuery("#e-goi-lang-widget").val() == null){
+			if(jQuery("#e-goi-list-widget").val() == null ){
 				jQuery('#widget-submit-error').show();
 				return false;
 			}

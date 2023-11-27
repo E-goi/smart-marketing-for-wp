@@ -50,8 +50,13 @@
 				</div>
 
 				<div class="smsnf-input-group">
-					<label for="max_characters"><?php _e( 'Maximum of characters', 'egoi-for-wp' ); ?></label>
-					<input id="max_characters" name="max_characters" type="text" placeholder="<?php _e( 'Set the maximum characters for RSS Feed text', 'egoi-for-wp' ); ?>" value="<?php echo isset( $feed ) ? $feed['max_characters'] : null; ?>" required autocomplete="off" />
+					<label for="max_characters"><?php _e( 'Maximum of Description characters', 'egoi-for-wp' ); ?></label>
+					<input id="max_characters" name="max_characters" type="text" placeholder="<?php _e( 'Set the maximum characters for RSS Feed Description', 'egoi-for-wp' ); ?>" value="<?php echo isset( $feed['max_characters']) ? $feed['max_characters'] : null; ?>" required autocomplete="off" />
+				</div>
+
+				<div class="smsnf-input-group">
+					<label for="max_characters_content"><?php _e( 'Maximum of Content characters', 'egoi-for-wp' ); ?></label>
+					<input id="max_characters_content" name="max_characters_content" type="text" placeholder="<?php _e( 'Set the maximum characters for RSS Feed Content', 'egoi-for-wp' ); ?>" value="<?php echo isset( $feed['max_characters_content'] ) ? $feed['max_characters_content'] : null; ?>" required autocomplete="off" />
 				</div>
 
 				<div class="smsnf-input-group">
@@ -86,9 +91,9 @@
 							<?php foreach ( $post_categories as $category ) { ?>
 								<option id="posts_cats_include_<?php echo $category->term_id; ?>" value="<?php echo $category->term_id; ?>"
 									<?php
-									if ( !empty($feed) && in_array( $category->term_id, $feed['categories'] ) ) {
+									if ( !empty($feed) && isset($feed['categories']) && in_array( $category->term_id, $feed['categories'] ) ) {
 										echo 'selected';
-									} elseif ( !empty($feed) && in_array( $category->term_id, $feed['categories_exclude'] ) ) {
+									} elseif ( !empty($feed) && isset($feed['categories_exclude']) && in_array( $category->term_id, $feed['categories_exclude'] ) ) {
 										echo 'disabled';
 									}
 									?>
@@ -103,9 +108,9 @@
 							<?php foreach ( $product_categories as $category ) { ?>
 								<option id="products_cats_include_<?php echo $category->term_id; ?>" value="<?php echo $category->term_id; ?>"
 									<?php
-									if ( !empty($feed) && in_array( $category->term_id, $feed['categories'] ) ) {
+									if ( !empty($feed) && isset($feed['categories']) && in_array( $category->term_id, $feed['categories'] ) ) {
 										echo 'selected';
-									} elseif ( !empty($feed) && in_array( $category->term_id, $feed['categories_exclude'] ) ) {
+									} elseif ( !empty($feed) && isset($feed['categories_exclude']) && in_array( $category->term_id, $feed['categories_exclude'] ) ) {
 										echo 'disabled';
 									}
 									?>
@@ -124,9 +129,9 @@
 							<?php foreach ( $post_categories as $category ) { ?>
 								<option id="posts_cats_exclude_<?php echo $category->term_id; ?>" value="<?php echo $category->term_id; ?>"
 									<?php
-									if ( !empty($feed) && in_array( $category->term_id, $feed['categories_exclude'] ) ) {
+									if ( !empty($feed) && isset($feed['categories_exclude']) &&  in_array( $category->term_id, $feed['categories_exclude'] ) ) {
 										echo 'selected';
-									} elseif ( !empty($feed) && in_array( $category->term_id, $feed['categories'] ) ) {
+									} elseif ( !empty($feed) && isset($feed['categories']) && in_array( $category->term_id, $feed['categories'] ) ) {
 										echo 'disabled';
 									}
 									?>
@@ -141,9 +146,9 @@
 							<?php foreach ( $product_categories as $category ) { ?>
 								<option id="products_cats_exclude_<?php echo $category->term_id; ?>" value="<?php echo $category->term_id; ?>"
 									<?php
-									if ( !empty($feed) && in_array( $category->term_id, $feed['categories_exclude'] ) ) {
+									if ( !empty($feed) && isset($feed['categories_exclude']) && in_array( $category->term_id, $feed['categories_exclude'] ) ) {
 										echo 'selected';
-									} elseif ( !empty($feed) && in_array( $category->term_id, $feed['categories'] ) ) {
+									} elseif ( !empty($feed) && isset($feed['categories']) &&  in_array( $category->term_id, $feed['categories'] ) ) {
 										echo 'disabled';
 									}
 									?>
@@ -163,9 +168,9 @@
 							<?php foreach ( $post_tags as $tag ) { ?>
 								<option id="posts_tags_include_<?php echo $tag->term_id; ?>" value="<?php echo $tag->term_id; ?>"
 									<?php
-									if ( !empty($feed) && in_array( $tag->term_id, $feed['tags'] ) ) {
+									if ( !empty($feed) && isset($feed['tags']) && in_array( $tag->term_id, $feed['tags'] ) ) {
 										echo 'selected';
-									} elseif (!empty($feed) &&  in_array( $tag->term_id, $feed['tags_exclude'] ) ) {
+									} elseif (!empty($feed) && isset($feed['tags_exclude']) &&  in_array( $tag->term_id, $feed['tags_exclude'] ) ) {
 										echo 'disabled';
 									}
 									?>
@@ -180,9 +185,9 @@
 							<?php foreach ( $product_tags as $tag ) { ?>
 								<option id="products_tags_include_<?php echo $tag->term_id; ?>" value="<?php echo $tag->term_id; ?>"
 									<?php
-									if ( !empty($feed) && in_array( $tag->term_id, $feed['tags'] ) ) {
+									if ( !empty($feed) && isset($feed['tags']) &&  in_array( $tag->term_id, $feed['tags'] ) ) {
 										echo 'selected';
-									} elseif ( !empty($feed) && in_array( $tag->term_id, $feed['tags_exclude'] ) ) {
+									} elseif ( !empty($feed) && isset($feed['tags_exclude']) &&  in_array( $tag->term_id, $feed['tags_exclude'] ) ) {
 										echo 'disabled';
 									}
 									?>
@@ -201,9 +206,9 @@
 							<?php foreach ( $post_tags as $tag ) { ?>
 								<option id="posts_tags_exclude_<?php echo $tag->term_id; ?>" value="<?php echo $tag->term_id; ?>"
 									<?php
-									if ( in_array( !empty($feed) && $tag->term_id, $feed['tags_exclude'] ) ) {
+									if ( in_array( !empty($feed) && isset($feed['tags_exclude']) &&  $tag->term_id, $feed['tags_exclude'] ) ) {
 										echo 'selected';
-									} elseif ( in_array( !empty($feed) && $tag->term_id, $feed['tags'] ) ) {
+									} elseif ( in_array( !empty($feed) && isset($feed['tags']) &&  $tag->term_id, $feed['tags'] ) ) {
 										echo 'disabled';
 									}
 									?>
@@ -218,9 +223,9 @@
 							<?php foreach ( $product_tags as $tag ) { ?>
 								<option id="products_tags_exclude_<?php echo $tag->term_id; ?>" value="<?php echo $tag->term_id; ?>"
 									<?php
-									if ( !empty($feed) && in_array( $tag->term_id, $feed['tags_exclude'] ) ) {
+									if ( !empty($feed) && isset($feed['tags_exclude']) &&  in_array( $tag->term_id, $feed['tags_exclude'] ) ) {
 										echo 'selected';
-									} elseif ( !empty($feed) && in_array( $tag->term_id, $feed['tags'] ) ) {
+									} elseif ( !empty($feed) && isset($feed['tags']) &&  in_array( $tag->term_id, $feed['tags'] ) ) {
 										echo 'disabled';
 									}
 									?>
@@ -242,10 +247,12 @@
 
 <?php } elseif ( $_GET['view'] ) { ?>
 	<?php
+
 	$feed = get_option( sanitize_text_field( $_GET['view'] ) );
 	$args = $this->get_egoi_rss_feed_args( $feed );
 
 	$query = new WP_Query( $args );
+
 	?>
 		<div style="width: 600px; margin: auto;">
 			<h3><?php echo esc_textarea( $feed['name'] ); ?></h3>
@@ -261,6 +268,10 @@
 					$content = get_the_content_feed( 'rss2' );
 
 					$all_content = implode( ' ', get_extended( get_post_field( 'post_content', get_the_ID() ) ) );
+
+					if(isset($feed['max_characters_content'])){
+						$all_content = $this->egoi_rss_feed_content( $all_content, $feed['max_characters_content']);
+					}
 
 					$description = $this->egoi_rss_feed_description( get_the_excerpt(), $feed['max_characters'] );
 					?>
@@ -289,6 +300,7 @@
 							<?php
 						}
 					}
+					
 					?>
 					<p><?php echo esc_textarea( $description ); ?> </p>
 					<?php

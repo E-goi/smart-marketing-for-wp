@@ -64,12 +64,6 @@ $wp_fields_shipping = array_filter(
 									}
 									echo '</optgroup>';
 								}
-								/*
-								foreach ($wp_fields as $key => $value) {
-									echo '<option value="'.$key.'">';
-									_e($value, 'egoi-for-wp');
-									echo '</option>';
-								}*/
 							}
 							?>
 						</select>

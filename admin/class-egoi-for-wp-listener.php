@@ -52,9 +52,15 @@ class Egoi_For_Wp_Listener {
 
 		$admin = new Egoi_For_Wp();
 
+		$api = new EgoiApiV3( $this->getApikey() );
+
 		$subscriber_tags = array();
 		if ( ! empty( $user->egoi_newsletter_active ) || ! empty( $_POST['egoi_newsletter_active'] ) ) {
-			$subscriber_tags[] = $admin->createTagVerified( Egoi_For_Wp::TAG_NEWSLETTER );
+			$tag = $api->getTag( Egoi_For_Wp::TAG_NEWSLETTER );
+
+			if(isset($tag['tag_id'])){
+				array_push($subscriber_tags, $tag['tag_id']);
+			}
 		}
 
 		$fields = $this->get_default_map( array_merge( $_POST, (array) $user->data ) );
@@ -62,11 +68,24 @@ class Egoi_For_Wp_Listener {
 			$fields = $this->mapping_extras_subscriber( $user, $user_id, $fields );
 		}
 
-		$fields['email'] = ! empty( $fields['email'] ) ? $fields['email'] : $user->user_email;
+		$fields['base']['email'] = ! empty( $fields['email'] ) ? $fields['email'] : $user->user_email;
 
-		$subscriber_tags[] = $admin->createTagVerified( $user->roles[0] );
-		$admin->addSubscriberBulk( $list, $subscriber_tags, array( $fields ) );
+		$tag = $api->getTag( $user->roles[0] );
+		if(isset($tag['tag_id'])){
+			array_push($subscriber_tags, $tag['tag_id']);
+		}
 
+		$api->addContact(
+			$list,
+			$fields['base']['email'],
+			$fields['base']['first_name'],
+			$fields['base']['last_name'],
+			$fields['extra'],
+			1,
+			array( 'cell' => $fields['base']['cellphone'] ),
+			'active',
+			$subscriber_tags
+		);
 	}
 
 	private function get_default_map( $subscriber ) {
@@ -79,17 +98,21 @@ class Egoi_For_Wp_Listener {
 		}
 
 		return ! empty($country) ? array(// basic info w/woocommerce
-			'status'     => 1,
-			'email'      => empty( $subscriber['billing_email'] ) ? $subscriber['user_email'] : $subscriber['billing_email'],
-			'cellphone'  => empty( $subscriber['billing_phone'] ) ? Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['shipping_phone'], $country ) : Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['billing_phone'], $country ),
-			'first_name' => empty( $subscriber['first_name'] ) ? $subscriber['billing_first_name'] : $subscriber['first_name'],
-			'last_name'  => empty( $subscriber['last_name'] ) ? $subscriber['billing_last_name'] : $subscriber['last_name'],
+			'base'=>[
+				'status'     => 'active',
+				'email'      => empty( $subscriber['billing_email'] ) ? $subscriber['user_email'] : $subscriber['billing_email'],
+				'cellphone'  => empty( $subscriber['billing_phone'] ) ? Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['shipping_phone'], $country ) : Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['billing_phone'], $country ),
+				'first_name' => empty( $subscriber['first_name'] ) ? $subscriber['billing_first_name'] : $subscriber['first_name'],
+				'last_name'  => empty( $subscriber['last_name'] ) ? $subscriber['billing_last_name'] : $subscriber['last_name']
+			]
 		) : 
 		array(// basic info without woocommerce
-			'status'     => 1,
-			'email'      => empty( $subscriber['email'] ) ? $subscriber['user_email'] : $subscriber['email'],
-			'first_name' => ! empty( $subscriber['first_name'] ) ?  $subscriber['first_name'] : '',
-			'last_name'  => ! empty( $subscriber['last_name'] ) ? $subscriber['last_name'] : '',
+			'base'=>[
+				'status'     => 'active',
+				'email'      => empty( $subscriber['email'] ) ? $subscriber['user_email'] : $subscriber['email'],
+				'first_name' => ! empty( $subscriber['first_name'] ) ?  $subscriber['first_name'] : '',
+				'last_name'  => ! empty( $subscriber['last_name'] ) ? $subscriber['last_name'] : ''
+			]
 		);
 	}
 
@@ -138,9 +161,9 @@ class Egoi_For_Wp_Listener {
 
 		foreach ( $woocommerce as $key => $value ) {
 			if ( isset( $user->$value ) && ! isset( $all_fields[ $value ][0] ) ) {
-				$fields[ str_replace( 'key', 'extra', $key ) ] = $user->$value;
+				$fields['extra'][ str_replace( 'key', 'extra', $key ) ] = $user->$value;
 			} elseif ( isset( $all_fields[ $value ][0] ) ) {
-				$fields[ str_replace( 'key', 'extra', $key ) ] = $all_fields[ $value ][0];
+				$fields['extra'][ str_replace( 'key', 'extra', $key ) ] = $all_fields[ $value ][0];
 			}
 		}
 
@@ -149,9 +172,9 @@ class Egoi_For_Wp_Listener {
 			if ( $row ) {
 				preg_match( '/^key_[0-9]+/', $row, $output );
 				if ( count( $output ) > 0 ) {
-					$fields[ str_replace( 'key_', 'extra_', $row ) ] = $value[0];
+					$fields['extra'][ str_replace( 'key_', 'extra_', $row ) ] = $value[0];
 				} else {
-					$fields[ $row ] = $value[0];
+					$fields['extra'][ $row ] = $value[0];
 				}
 			}
 		}
@@ -160,20 +183,13 @@ class Egoi_For_Wp_Listener {
 
 	}
 
-	public function Listen_delete( $user_id ) {
-
-		if ( $this->isActive() ) {
-			$user = get_userdata( $user_id );
-			$list = $this->options_listen['list'];
-
-			$admin    = new Egoi_For_Wp( $this->plugin_name, $this->version );
-			$del_user = $admin->delSubscriber( $list, $user->user_email );
-
-			if ( $del_user->ERROR == 'SUBSCRIBER_NOT_FOUND' ) {
-				return false;
-			}
+	private function getApikey()
+	{
+		$apikey = get_option( 'egoi_api_key' );
+		if ( ! empty( $apikey['api_key'] ) ) {
+			return $apikey['api_key'];
 		}
-
+		return false;
 	}
 
 }

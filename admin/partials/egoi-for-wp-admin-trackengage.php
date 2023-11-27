@@ -114,7 +114,7 @@ $options = $this->options_list;
 					<?php
 
 					if ( ! empty( $options['domain'] ) && ! empty( $options['list'] ) ) {
-						$api        = new EgoiApiV3( $this->get_apikey() );
+						$api        = new EgoiApiV3( $this->getApikey() );
 						$domainData = $api->getConnectedSite( $options['domain'] );
 						?>
 						<hr class="smsnf-input-group">

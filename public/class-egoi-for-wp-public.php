@@ -3,6 +3,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
+
+require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.php';
+
 /**
  * Class responsible to handle public interactions with plugin
  */
@@ -46,6 +49,13 @@ class Egoi_For_Wp_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
+		$apikey = $this->getApiKey();
+
+		if ( ! empty( $apikey ) ) {
+			$this->egoiWpApiV3 = new EgoiApiV3( $apikey );
+		}
+
+		
 		add_filter( 'shortcode_instance', array( 'Egoi_For_Wp_Public', 'get_shortcode' ) );
 	}
 
@@ -83,6 +93,20 @@ class Egoi_For_Wp_Public {
 		}
 	}
 
+	/**
+	 * Get the api key
+	 * 
+	 * @return string
+	 */
+	public function getApiKey()
+	{
+		$apikey = get_option( 'egoi_api_key' );
+		if ( ! empty( $apikey['api_key'] ) ) {
+			return $apikey['api_key'];
+		}
+		return false;
+	}
+
 	/*
 	*	Generate E-goi bar
 	*/
@@ -91,23 +115,22 @@ class Egoi_For_Wp_Public {
 			return false;}
 		$bar_post = get_option( Egoi_For_Wp_Admin::BAR_OPTION_NAME );
 
+
 		// add new tag to E-goi
-		if ( isset($bar_post['tag']) && $bar_post['tag'] != '' ) {
-			$data = new Egoi_For_Wp();
-			$info = $data->getTag( $bar_post['tag'] );
-			$tag  = $info['ID'];
+		if ( isset($bar_post['tag-egoi']) && $bar_post['tag-egoi'] != '' ) {
+			$tag  = $bar_post['tag-egoi'];
 		} else {
-			$tag = isset($bar_post['tag-egoi']) ? $bar_post['tag-egoi'] : 0; 
+			$tag = 0;
 		}
 
 		// if defined some redirection
-		if ( $bar_post['redirect'] ) {
+		if (isset($bar_post['redirect']) ) {
 			if ( $_POST['egoi_action_sub'] ) {
 				$this->subscribe();
 			}
 		}
 
-		if ( $bar_post['open'] ) {
+		if ( isset($bar_post['open']) ) {
 
 			$enable = '0';
 			$hidden = '';
@@ -124,9 +147,8 @@ class Egoi_For_Wp_Public {
 			}
 		}
 
-		if ( $bar_post['sticky'] ) {
-			$style_pos = 'style="position: fixed;"';
-			$id_tab    = 'tab_egoi_footer_fixed';
+		if ( isset($bar_post['sticky']) ) {
+			$id_tab = 'tab_egoi_footer_fixed';
 		} else {
 			$id_tab = 'tab_egoi_footer';
 		}
@@ -145,12 +167,11 @@ class Egoi_For_Wp_Public {
         <div id="smart-marketing-egoi">
         <?php
 
-		if ( $bar_post['position'] == 'top' ) {
+		if ( isset($bar_post['position']) && $bar_post['position'] == 'top' ) {
             ?>
 			<span style="display:none;" id="e-goi-bar-session"><?php echo esc_attr($enable) ?></span>
 			<div class="egoi-bar" id="egoi-bar" style="<?php echo esc_attr($hidden) ?>">
 				<input type="hidden" name="list" value="<?php echo esc_attr($bar_post['list']) ?>">
-				<input type="hidden" name="lang" value="<?php echo esc_attr($bar_post['lang']) ?>">
 				<input type="hidden" name="tag" value="<?php echo esc_attr($tag) ?>">
 				<input type="hidden" name="double_optin" value="<?php echo esc_attr($bar_post['double_optin']) ?>">
 				<label class="egoi-label" style="display:inline-block;"><?php echo esc_attr($bar_post['text_bar']) ?></label>
@@ -212,18 +233,18 @@ class Egoi_For_Wp_Public {
 	private function set_custom_css( $css ) {
 
 		$position = 'absolute';
-		if ( $css['sticky'] ) {
+		if ( isset($css['sticky']) ) {
 			$position = 'fixed';
 		}
 
-		if ( $css['position'] == 'top' ) {
+		if ( isset($css['position']) && $css['position'] == 'top' ) {
 			$top    = 'top: 0;';
 			$border = 'border-bottom';
 		} else {
 			$top      = 'bottom: 0;';
 			$border   = 'border-top';
 			$position = 'relative';
-			if ( $css['sticky'] ) {
+			if ( isset($css['sticky']) ) {
 				$position = 'fixed';
 				$tab_bar  = 'position:fixed !important; bottom:50px;';
 			}
@@ -267,7 +288,6 @@ class Egoi_For_Wp_Public {
 		}
 
 		global $error;
-		$html = '';
 		if ( $_egoiFiltersbar == true ) {
 			$_egoiFiltersbar = false;
 			$this->generate_bar( $submitted );
@@ -293,76 +313,55 @@ class Egoi_For_Wp_Public {
 		$fname = explode( '@', $email );
 		$name  = $fname[0];
 
-		$lang = $bar['lang'];
 
 		if ( isset( $bar['tag-egoi'] ) && $bar['tag-egoi'] != '' ) {
 			$tag = $bar['tag-egoi'];
-		} else {
-			$data = new Egoi_For_Wp();
-			$new  = $data->getTag( $bar['tag'] );
-			$tag  = $new['ID'];
 		}
 
 		if ( $action ) {
 
 			$error = '';
 			if ( empty( $email ) ) {
-				$error = $bar['text_error'];
+				$error = isset($bar['text_email_placeholder']) ? $bar['text_email_placeholder'] : __( 'Email can not be empty', 'egoi-for-wp' );
 			}
 
 			if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-				$error = $bar['text_invalid_email'];
+				$error = isset($bar['text_email_placeholder']) ? $bar['text_email_placeholder'] : __( 'Invalid email', 'egoi-for-wp' );
 			}
 
-			$client = new Egoi_For_Wp();
-			$get    = $client->getSubscriber( $bar['list'], $email );
+			$get = $this->egoiWpApiV3->searchContact($bar['list'], $email);
 
-			if ( $get->subscriber->ERROR == 'LIST_MISSING' ) {
-				$error = $bar['text_error'];
-			}
+			if ( ! empty( $get) ) {
+				$error = isset($bar['text_already_subscribed']) ? $bar['text_already_subscribed'] : __( 'Already subscribed', 'egoi-for-wp' );
 
-			if ( ! empty( $get->subscriber->UID ) ) {
-				switch ( $get->subscriber->STATUS ) {
-					case '3':
-					case '0':
-						if ( empty( $bar['text_waiting_for_confirmation'] ) ) {
-							$bar['text_waiting_for_confirmation'] = 'Already subscribed and waiting for confirmation e-mail';
-							update_option( Egoi_For_Wp_Admin::BAR_OPTION_NAME, $bar );
-						}
-						$error = $bar['text_waiting_for_confirmation'];
-						break;
-					default:
-						$error = $bar['text_already_subscribed'];
-						break;
+			} else {
+
+				$status = ! isset( $bar['double_optin'] ) || $bar['double_optin'] == 0 ? 'active' : 'unconfirmed';
+	
+				$add = $this->egoiWpApiV3->addContact($bar['list'], $email, $name, '', array(), 0, array(), $status, array(intval( $tag )));
+
+				if ( isset($add) && !isset($add['error'])) {
+					$client = new Egoi_For_Wp();
+					$client->smsnf_save_form_subscriber( 1, 'bar', $add, $bar['list'], $email );
+
+					$success = isset($bar['text_subscribed']) ? $bar['text_subscribed'] : __( 'Subscribed', 'egoi-for-wp' );
+
+					?>
+					<div class="egoi-bar" id="egoi-bar" style="background:<?php echo esc_attr($bar['success_bgcolor']); ?> !important;border:none!important;"><div class="egoi-bar-success"><?php echo esc_textarea($success); ?></div>
+						<span class="egoi-action-success" id="tab_egoi_submit_close"></span>
+					</div>
+					<?php
 				}
 			}
 
-			$status = ! isset( $bar['double_optin'] ) || $bar['double_optin'] == 0 ? 1 : 0;
-
-			$add = $client->addSubscriber( $bar['list'], $name, $email, $lang, $status, '', intval( $tag ) );
-			if ( ! isset( $add->ERROR ) && ! isset( $add->MODIFICATION_DATE ) ) {
-				$client->smsnf_save_form_subscriber( 1, 'bar', $add );
-			}
-
-			$success = $bar['text_subscribed'];
-
-			if ( $error ) {
+			if ( isset($error) && !empty($error)) {
                 ?>
 				<div class="egoi-bar" id="egoi-bar" style="background:<?php echo esc_attr($bar['error_bgcolor']); ?> !important;border:none!important;"><div class="egoi-bar-error"><?php echo esc_textarea($error); ?></div>
                     <span class="egoi-action-error <?php echo $bar['position'] == 'top' ?'top':'bottom' ?>" id="tab_egoi_submit_close"></span>
                 </div>
 				<?php
-			} else {
-				if ( $bar['redirect'] ) {
-					wp_redirect( $bar['redirect'] );
-				} else {
-                    ?>
-					<div class="egoi-bar" id="egoi-bar" style="background:<?php echo esc_attr($bar['success_bgcolor']); ?> !important;border:none!important;"><div class="egoi-bar-success"><?php echo esc_textarea($success); ?></div>
-                        <span class="egoi-action-success" id="tab_egoi_submit_close"></span>
-                    </div>
-					<?php
-				}
 			}
+			
 		}
 		exit;
 	}
@@ -395,7 +394,6 @@ class Egoi_For_Wp_Public {
         $content = '<form id="'.esc_attr( $simple_form ).'" class="egoi_simple_form" method="post" action="/">
 			<input type="hidden" name="egoi_simple_form" id="egoi_simple_form" value="' . esc_attr( $id ) . '">
 			<input type="hidden" name="egoi_list" id="egoi_list" value="'.esc_attr( $data->list ).'">
-			<input type="hidden" name="egoi_lang" id="egoi_lang" value="'.esc_attr( $data->lang ).'">
 			<input type="hidden" name="egoi_tag" id="egoi_tag" value="'.esc_attr( $data->tag ).'">
 			<input type="hidden" name="egoi_double_optin" id="egoi_double_optin" value="'.esc_attr( $data->double_optin ).'">
 			'. wp_kses($html_code->post_content, self::WP_KSES_OPTION_SIMPLE_FORM) . '
@@ -457,7 +455,6 @@ class Egoi_For_Wp_Public {
 				var egoi_country_code	= jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").val();
 				var egoi_mobile	= jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_mobile]").val();
 				var egoi_list = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_list]").val();
-				var egoi_lang = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_lang]").val();
 				var egoi_tag = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_tag]").val();
 				var egoi_double_optin = jQuery("#<?php echo esc_attr( $simple_form ); ?> input[name=egoi_double_optin]").val();
 
@@ -469,7 +466,6 @@ class Egoi_For_Wp_Public {
 					"egoi_country_code": egoi_country_code,
 					"egoi_mobile": egoi_mobile,
 					"egoi_list": egoi_list,
-					"egoi_lang": egoi_lang,
 					"egoi_tag": egoi_tag,
 					"egoi_double_optin" : egoi_double_optin
 				};
@@ -532,44 +528,6 @@ class Egoi_For_Wp_Public {
 	}
 
 
-	/**
-	 * Web Push Output
-	 */
-	public function add_webpush() {
-		$options       = get_option( 'egoi_webpush_code' );
-		$optionsGlobal = $this->load_options();
-
-		if ( ! empty( $optionsGlobal['domain'] ) && ( empty( $options ) || empty( $options['track'] ) || empty( $options['code'] ) ) ) {
-			return false;
-		}
-		global $_egoiFilterswebpush;
-
-		if ( ! isset( $_egoiFilterswebpush ) ) {
-			$_egoiFilterswebpush = true;
-		}
-
-		if ( isset( $options['track'] ) && $options['track'] == 1 && $_egoiFilterswebpush == true ) {
-			$_egoiFilterswebpush = false;
-			$cod                 = trim( $options['code'] );
-			?>
-				<script type="text/javascript">
-					var _egoiwp = _egoiwp || {};
-					(function(){
-					var u="https://cdn-static.egoiapp2.com/";
-					_egoiwp.code = "<?php echo esc_html( $cod ); ?>";
-					var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-					g.type='text/javascript';
-					g.defer=true;
-					g.async=true;
-					g.src=u+'webpush.js';
-					s.parentNode.insertBefore(g,s);
-					})();
-				</script>
-			<?php
-		}
-
-	}
-
 	public function add_egoi_rss_feeds() {
 		global $wpdb;
 		$table   = $wpdb->prefix . 'options';
@@ -613,7 +571,6 @@ class Egoi_For_Wp_Public {
 		}
 	}
 	public function egoi_save_account_fields_order( $order_id ) {
-		$api = new Egoi_For_Wp();
 
 		if ( is_user_logged_in() ) {
 			return;
@@ -625,11 +582,33 @@ class Egoi_For_Wp_Public {
 				$sub = $this->egoi_map_subscriber( $user, $sub );
 			}
 		}
-		$subscriber_tags = array( $api->createTagVerified( Egoi_For_Wp::GUEST_BUY ) );
-		if ( ! empty( $user_meta['egoi_newsletter_active'] ) || ! empty( $_POST['egoi_newsletter_active'] ) ) {
-			$subscriber_tags[] = $api->createTagVerified( Egoi_For_Wp::TAG_NEWSLETTER );
+		$tags = array();
+		$tag = $this->egoiWpApiV3->getTag( Egoi_For_Wp::GUEST_BUY );
+
+		if ( isset( $tag->tag_id ) ) {
+			array_push( $tags, $tag->tag_id );
 		}
-		$api->addSubscriberBulk( $options['list'], $subscriber_tags, array( $sub ) );
+
+		if ( ! empty( $user_meta['egoi_newsletter_active'] ) || ! empty( $_POST['egoi_newsletter_active'] ) ) {
+			$tag = $this->egoiWpApiV3->getTag( Egoi_For_Wp::TAG_NEWSLETTER );
+
+			if ( isset( $tag->tag_id ) ) {
+				array_push( $tags, $tag->tag_id );
+			}
+		}
+
+
+		$this->egoiWpApiV3->addContact(
+			$options['list'],
+			$sub['email'],
+			$sub['first_name'],
+			$sub['last_name'],
+			isset($sub['extra']) ? $sub['extra'] : array(),
+			isset($sub['extra']) ? 1 : 0,
+			array('cell' => $sub['cellphone']),
+			'active',
+			$tags
+		);
 	}
 
 	public function egoi_save_account_fields( $customer_id ) {
@@ -652,12 +631,11 @@ class Egoi_For_Wp_Public {
 
 	private function get_default_map( $subscriber ) {
 		if ( is_array( $subscriber ) ) {
-			return array(// basic info
-				'status'     => 1,
-				'email'      => empty( $subscriber['user_email'] ) ? $subscriber['billing_email'] : $subscriber['user_email'],
-				'cellphone'  => empty( $subscriber['billing_phone'] ) ? Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['shipping_phone'], ( empty( $subscriber['billing_country'] ) ? $subscriber['shipping_country'] : $subscriber['billing_country'] ) ) : Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['billing_phone'] ),
-				'first_name' => empty( $subscriber['first_name'] ) ? $subscriber['billing_first_name'] : $subscriber['first_name'],
-				'last_name'  => empty( $subscriber['last_name'] ) ? $subscriber['billing_last_name'] : $subscriber['last_name'],
+			return array(
+					'email'      => empty( $subscriber['user_email'] ) ? $subscriber['billing_email'] : $subscriber['user_email'],
+					'cellphone'  => empty( $subscriber['billing_phone'] ) ? Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['shipping_phone'], ( empty( $subscriber['billing_country'] ) ? $subscriber['shipping_country'] : $subscriber['billing_country'] ) ) : Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['billing_phone'] ),
+					'first_name' => empty( $subscriber['first_name'] ) ? $subscriber['billing_first_name'] : $subscriber['first_name'],
+					'last_name'  => empty( $subscriber['last_name'] ) ? $subscriber['billing_last_name'] : $subscriber['last_name'],		
 			);
 		}
 	}
@@ -684,20 +662,20 @@ class Egoi_For_Wp_Public {
 			if ( $row ) {
 				preg_match( '/^key_[0-9]+/', $row, $output );
 				if ( count( $output ) > 0 ) {
-					$defaultMap[ str_replace( 'key_', 'extra_', $row ) ] = $value;
+					$defaultMap['extra'][ str_replace( 'key_', 'extra_', $row ) ] = $value;
 				} else {
-					$defaultMap[ $row ] = $value;
+					$defaultMap['extra'][ $row ] = $value;
 				}
 			}
 		}
 
 		foreach ( $woocommerce as $key => $value ) {
 			if ( isset( $subscriber->$value ) ) {
-				$defaultMap[ str_replace( 'key', 'extra', $key ) ] = $subscriber->$value;
+				$defaultMap['extra'][ str_replace( 'key', 'extra', $key ) ] = $subscriber->$value;
 			} elseif ( isset( $subscriber[ $value ] ) && ! is_array( $subscriber[ $value ] ) ) {
-				$defaultMap[ str_replace( 'key', 'extra', $key ) ] = $subscriber[ $value ];
+				$defaultMap['extra'][ str_replace( 'key', 'extra', $key ) ] = $subscriber[ $value ];
 			} elseif ( isset( $subscriber[ $value ][0] ) ) {
-				$defaultMap[ str_replace( 'key', 'extra', $key ) ] = $subscriber[ $value ][0];
+				$defaultMap['extra'][ str_replace( 'key', 'extra', $key ) ] = $subscriber[ $value ][0];
 			}
 		}
 
@@ -716,69 +694,82 @@ class Egoi_For_Wp_Public {
 				'email'      => sanitize_email( $_POST['egoi_email'] ),
 				'cellphone'  => sanitize_text_field( $_POST['egoi_country_code'] . '-' . $_POST['egoi_mobile'] ),
 				'first_name' => sanitize_text_field( stripslashes( $_POST['egoi_name'] ) ),
-				'lang'       => sanitize_email( $_POST['egoi_lang'] ),
 				'tags'       => array( sanitize_key( $_POST['egoi_tag'] ) ),
 				'status'     => $status,
 			);
+
+			$add = $this->egoiWpApiV3->addContact(
+				sanitize_key( $_POST['egoi_list'] ),
+				$form_data['email'],
+				$form_data['first_name'],
+				'',
+				array(),
+				$status,
+				array('cell' => $form_data['cellphone']),
+				$status == 0 ? 'active' : 'unconfirmed',
+				$form_data['tags']
+			);
 		} else {
-			$_POST['status'] = $status;
-			$_POST['tags']   = array( sanitize_key( $_POST['egoi_tag'] ) );
-			// $_POST['lang'] = filter_var($_POST['egoi_lang'], FILTER_SANITIZE_EMAIL);
+			$form_data = array(
+				'email'      => sanitize_email( $_POST['email'] ),
+				'cellphone'  => isset($_POST['cellphone']) ? sanitize_text_field( $_POST['cellphone'] ) : '',
+				'first_name' => isset($_POST['first_name']) ? sanitize_text_field( stripslashes( $_POST['first_name'] ) ) : '',
+				'last_name'  => isset($_POST['last_name']) ? sanitize_text_field( stripslashes( $_POST['last_name'] ) ) : '',
+				'tags'       => isset($_POST['egoi_tag']) ? array( sanitize_key( $_POST['egoi_tag'] )) : array(),
+				'birth_date' => isset($_POST['birth_date']) ? sanitize_text_field( stripslashes( $_POST['birth_date'] ) ) : '',
+				'lang'		 => isset($_POST['lang']) ? sanitize_text_field( stripslashes( $_POST['lang'] ) ) : '',
+				'status'     => $status,
+			);
+
+			$add = $this->egoiWpApiV3->addContact(
+				sanitize_key( $_POST['egoi_list'] ),
+				$form_data['email'],
+				$form_data['first_name'],
+				$form_data['last_name'],
+				array_filter($_POST, function($val, $key){ if(preg_match('/^extra_/', $key)){return [$key => $val];}}, ARRAY_FILTER_USE_BOTH),
+				1,
+				array('cell' => $form_data['cellphone'], 'bd' => $form_data['birth_date'], 'lang' => $form_data['lang']), 
+				$status == 0 ? 'active' : 'unconfirmed',
+				$form_data['tags']
+			);
 		}
 
-		$result = $api->addSubscriberWpForm(
-			sanitize_key( $_POST['egoi_list'] ),
-			empty( $form_data ) ? $_POST : $form_data
-		);
-
-		if ( ! isset( $result->ERROR ) && ! isset( $result->MODIFICATION_DATE ) ) {
-
-			$form_id = sanitize_key( $_POST['egoi_simple_form'] );
+		if ( isset($add) && !isset($add['errors'])) {
 			if ( empty( $_POST['elementorEgoiForm'] ) ) {
-				$api->smsnf_save_form_subscriber( $form_id, 'simple-form', $result );
+				$form_id = sanitize_key( $_POST['egoi_simple_form'] );
+				$api->smsnf_save_form_subscriber( $form_id, 'simple-form', $add, $_POST['egoi_list'], $form_data['email'] );
 			}
 
-			echo esc_textarea($this->check_subscriber( $result )) . ' ';
+			echo esc_textarea($form_data['email']) . ' ';
 			_e( 'was successfully registered!', 'egoi-for-wp' );
-		} elseif ( isset( $result->MODIFICATION_DATE ) ) {
-			_e( 'Subscriber data from', 'egoi-for-wp' );
-			echo ' ' . esc_textarea($this->check_subscriber( $result )) . ' ';
-			_e( 'has been updated!', 'egoi-for-wp' );
-		} elseif ( isset( $result->ERROR ) ) {
-			if ( $result->ERROR == 'NO_DATA_TO_INSERT' ) {
-				_e( 'ERROR: no data to insert', 'egoi-for-wp' );
-			} elseif ( $result->ERROR == 'EMAIL_ADDRESS_INVALID_MX_ERROR' ) {
-				_e( 'ERROR: e-mail address is invalid', 'egoi-for-wp' );
-			} elseif ( $result->ERROR == 'DATA_CANNOT_BE_EDITED' ) {
-				_e( 'ERROR: contact already exists but can\'t be edited', 'egoi-for-wp' );
-			} else {
-				_e( 'ERROR: invalid data submitted', 'egoi-for-wp' );
-			}
+
+		} else {
+			_e( 'ERROR: invalid data submitted', 'egoi-for-wp' );
 		}
 
 		wp_die(); // this is required to terminate immediately and return a proper response
 	}
 
-	public function check_subscriber( $subscriber_data ) {
-		$data = array( 'FIRST_NAME', 'EMAIL', 'CELLPHONE' );
-        $subscriber = '';
-		foreach ( $data as $value ) {
-			if ( $subscriber_data->$value ) {
-				$subscriber = $subscriber_data->$value;
-				break;
-			}
-		}
-		return $subscriber;
-	}
-
 	public function hookEcommerce() {
+
+		if ( is_admin() ) {
+			return false;
+		}
+
+		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+			return false;
+		}
 
 		$options = $this->load_options();
 
 		$client_info     = get_option( 'egoi_client' );
-		$client_id       = $client_info->CLIENTE_ID;
+		$client_id       = isset($client_info->CLIENTE_ID) ? $client_info->CLIENTE_ID : '';
 		$track_social_id = ! empty( $options['social_track'] ) && ! empty( $options['social_track_id'] ) ? $options['social_track_id'] : null;
 
+		if(empty($client_id)){
+			return false;
+		}
+		
 		require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
 		$track = new TrackingEngageSDK( $client_id, $options['list'], false, $track_social_id );
 		if ( ! empty( $options['list'] ) && ! empty( $options['track'] ) && empty( $options['domain'] ) ) {

@@ -386,7 +386,7 @@ class Egoi_For_Wp {
 		$this->define_listen_hooks();
 
 		// Contact Form 7
-		$this->getContactFormInfo();
+		// $this->getContactFormInfo();
 
 		$this->setClient();
 
@@ -547,7 +547,6 @@ class Egoi_For_Wp {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
-		//$this->define_apikey();
 
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
@@ -571,11 +570,9 @@ class Egoi_For_Wp {
 
 		$this->loader->add_action( 'wp_ajax_egoi_synchronize_subs', $plugin_admin, 'egoi_synchronize_subs' );
 		$this->loader->add_action( 'wp_ajax_egoi_count_subs', $plugin_admin, 'egoi_count_subs' );
-		$this->loader->add_action( 'wp_ajax_egoi_list_map', $plugin_admin, 'egoi_list_map' );
 
 		// Dashboard
 		$this->loader->add_action( 'wp_ajax_smsnf_show_blog_posts', $plugin_admin, 'smsnf_show_blog_posts' );
-		$this->loader->add_action( 'wp_ajax_smsnf_kill_alert', $plugin_admin, 'smsnf_kill_alert' );
 		$this->loader->add_action( 'wp_ajax_smsnf_show_account_info_ajax', $plugin_admin, 'smsnf_show_account_info_ajax' );
 		$this->loader->add_action( 'wp_ajax_smsnf_show_last_campaigns_reports', $plugin_admin, 'smsnf_show_last_campaigns_reports' );
 
@@ -717,8 +714,6 @@ class Egoi_For_Wp {
 		$this->loader->add_action( 'user_register', $this, 'get_listener', 999 );
 		$this->loader->add_action( 'profile_update', $this, 'get_user_update', 999 );
 
-		$this->loader->add_action( 'delete_user', $this, 'get_user_del' );
-
 	}
 
 	/**
@@ -782,62 +777,6 @@ class Egoi_For_Wp {
 		if ( $result_client->Egoi_Api->getClientData->status == 'success' ) {
 			return $result_client->Egoi_Api->getClientData;
 		}
-	}
-
-	/**
-	 * @param bool $start
-	 * @param bool $limit
-	 * @param bool $list_id
-	 * @return mixed
-	 */
-	public function getLists( $start = false, $limit = false, $list_id = false ) {
-		$params = array(
-			'apikey'     => $this->_valid['api_key'],
-			'plugin_key' => $this->plugin,
-		);
-		if ( $list_id ) {
-			$params['listID'] = $list_id;
-		}
-		$url = $this->restUrl . 'getLists&' . http_build_query(
-			array(
-				'functionOptions' => $params,
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		return $result_client->Egoi_Api->getLists;
-	}
-
-	/**
-	 * @param $name
-	 * @param $lang
-	 * @return mixed
-	 */
-	public function createList( $name, $lang ) {
-
-		$url = $this->restUrl . 'createList&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'       => $this->_valid['api_key'],
-					'plugin_key'   => $this->plugin,
-					'nome'         => $name,
-					'idioma_lista' => $lang,
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		$created_list  = $result_client->Egoi_Api->createList;
-
-		if ( $created_list->ERROR ) {
-			return $created_list->ERROR;
-		}
-
-		return $created_list;
 	}
 
 	/**
@@ -917,79 +856,6 @@ class Egoi_For_Wp {
 
 	/**
 	 * @param $listID
-	 * @param string $name
-	 * @param $email
-	 * @param string $lang
-	 * @param bool   $status
-	 * @param string $mobile
-	 * @param bool   $tag
-	 * @param string $phone
-	 * @return mixed
-	 * @throws Exception
-	 */
-	public function addSubscriber( $listID, $name = '', $email='', $lang = '', $status = false, $mobile = '', $tag = false, $phone = '' ) {
-
-		$full_name = explode( ' ', $name );
-		$fname     = $full_name[0];
-		$lname     = $full_name[1];
-
-		if ( $status === false ) {
-			$status = 1;
-		}
-		if ( $tag ) {
-			if ( is_string( $tag ) ) {
-				$tag = $this->createTagVerified( $tag );
-			}
-			$url = $this->restUrl . 'addSubscriber&' . http_build_query(
-				array(
-					'functionOptions' => array(
-						'apikey'     => $this->_valid['api_key'],
-						'plugin_key' => $this->plugin,
-						'listID'     => $listID,
-						'lang'       => $lang,
-						'first_name' => $fname,
-						'last_name'  => $lname,
-						'email'      => $email,
-						'cellphone'  => $mobile,
-						'telephone'  => $phone,
-						'status'     => $status,
-						'tags'       => is_array( $tag ) ? $tag : array( $tag ),
-					),
-				),
-				'',
-				'&'
-			);
-		} else {
-			$url = $this->restUrl . 'addSubscriber&' . http_build_query(
-				array(
-					'functionOptions' => array(
-						'apikey'     => $this->_valid['api_key'],
-						'plugin_key' => $this->plugin,
-						'listID'     => $listID,
-						'lang'       => $lang,
-						'first_name' => $fname,
-						'last_name'  => $lname,
-						'email'      => $email,
-						'cellphone'  => $mobile,
-						'telephone'  => $phone,
-						'status'     => $status,
-					),
-				),
-				'',
-				'&'
-			);
-		}
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		if ( $result_client->Egoi_Api->addSubscriber->status == 'success' ) {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/includes/TrackingEngageSDK.php';
-			TrackingEngageSDK::setUidSession( $result_client->Egoi_Api->addSubscriber->UID );
-			return $result_client->Egoi_Api->addSubscriber;
-		}
-	}
-
-	/**
-	 * @param $listID
 	 * @param $tag
 	 * @param $subscriber
 	 * @return mixed
@@ -1020,310 +886,6 @@ class Egoi_For_Wp {
 	}
 
 	/**
-	 * @param $listID
-	 * @param $tag
-	 * @param array  $subscribers
-	 * @return mixed
-	 */
-	public function addSubscriberBulk( $listID, $tag, $subscribers = array() ) {
-		try {
-			if ( count( $subscribers ) == 1 ) {
-				$array = array_values( $subscribers );
-				return $this->addSubscriberSoap( $listID, $tag, array_shift( $array ) );
-			}
-			$api    = new SoapClient( $this->url );
-			$params = array(
-				'apikey'       => $this->_valid['api_key'],
-				'plugin_key'   => $this->plugin,
-				'listID'       => $listID,
-				'subscribers'  => $subscribers,
-				'compareField' => 'email',
-				'operation'    => '2',
-				'tags'         => is_array( $tag ) ? $tag : array( $tag ),
-			);
-			$result = $api->addSubscriberBulk( $params );
-		} catch ( Exception $e ) {
-			// continue
-		}
-
-		return $result;
-	}
-
-	/**
-	 * @param $listID
-	 * @param $email
-	 * @param array  $tags
-	 * @param string $name
-	 * @param string $lname
-	 * @param int    $role
-	 * @param array  $extra_fields
-	 * @param int    $option
-	 * @param array  $ref_fields
-	 * @param int    $status
-	 * @return mixed
-	 */
-	public function addSubscriberTags( $listID, $email, $tags = array(), $name = '', $lname = '', $role = 0, $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 1
-	) {
-		$full_name = explode( ' ', $name );
-		$fname     = $full_name[0];
-		if ( ! $lname ) {
-			$lname = $full_name[1];
-		}
-
-		$tel  = $ref_fields['tel'];
-		$cell = $ref_fields['cell'];
-		$bd   = $ref_fields['bd'];
-		$fax  = $ref_fields['fax'];
-		$lang = $ref_fields['lang'];
-
-		$params = array(
-			'apikey'     => $this->_valid['api_key'],
-			'plugin_key' => $this->plugin,
-			'listID'     => $listID,
-			'email'      => $email,
-			'first_name' => $fname,
-			'last_name'  => $lname,
-			'tags'       => $tags,
-			'lang'       => $lang ?: null,
-			'status'     => $status,
-		);
-
-		// telephone
-		if ( $tel ) {
-			$params['telephone'] = $tel;
-		}
-		// cellphone
-		if ( $cell ) {
-			$params['cellphone'] = $cell;
-		}
-		// birthdate
-		if ( $bd ) {
-			$params['birth_date'] = $bd;
-		}
-		// fax
-		if ( $fax ) {
-			$params['fax'] = $fax;
-		}
-
-		if ( $option ) {
-			$all_extra_fields = get_object_vars( $this->getExtraFields( $listID ) );
-			if ( $all_extra_fields ) {
-
-				foreach ( $extra_fields as $key => $value ) {
-					$filtered_key = str_replace( array( 'key_', 'extra_' ), '', $key );
-					if ( array_key_exists( 'key_' . $filtered_key, $all_extra_fields ) ) {
-						$params[ 'extra_' . $filtered_key ] = $value;
-					}
-				}
-			}
-		}
-
-		$url           = $this->restUrl . 'addSubscriber&' . http_build_query( array( 'functionOptions' => $params ), '', '&' );
-		$result_client = json_decode( $this->_getContent( $url ) );
-
-		return $result_client->Egoi_Api->addSubscriber;
-	}
-
-	/**
-	 * @param $list_id
-	 * @param $subscriber
-	 * @return mixed
-	 */
-	public function addSubscriberWpForm( $list_id, $subscriber ) {
-		$params = array_merge(
-			array(
-				'apikey'     => $this->_valid['api_key'],
-				'plugin_key' => $this->plugin,
-				'listID'     => $list_id,
-			),
-			$subscriber
-		);
-
-		$url = $this->restUrl . 'addSubscriber&' . http_build_query(
-			array(
-				'functionOptions' => $params,
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		if ( ! empty( $result_client->Egoi_Api->addSubscriber->UID ) ) {
-			require_once plugin_dir_path( __FILE__ ) . '../public/includes/TrackingEngageSDK.php';
-			TrackingEngageSDK::setUidSession( $result_client->Egoi_Api->addSubscriber->UID );
-		}
-		return $result_client->Egoi_Api->addSubscriber;
-	}
-
-	/**
-	 * @param $listID
-	 * @param $subscriber
-	 * @param int        $role
-	 * @param string     $fname
-	 * @param string     $lname
-	 * @param array      $fields
-	 * @param int        $option
-	 * @param array      $ref_fields
-	 * @param array      $tags
-	 * @return mixed
-	 * @throws Exception
-	 */
-	public function editSubscriber( $listID, $subscriber, $role = 0, $fname = '', $lname = '', $fields = array(), $option = 0, $ref_fields = array(), $tags = array() ) {
-
-		$apikey     = $this->_valid['api_key'];
-		$plugin_key = $this->plugin;
-
-		$telephone  = $ref_fields['tel'];
-		$cellphone  = $ref_fields['cell'];
-		$birth_date = $ref_fields['bd'];
-		$fax        = $ref_fields['fax'];
-		$lang       = $ref_fields['lang'];
-
-		$params         = compact(
-			'apikey',
-			'plugin_key',
-			'listID',
-			'subscriber',
-			'telephone',
-			'cellphone',
-			'birth_date',
-			'fax',
-			'lang',
-			'tags'
-		);
-		$params['tags'] = $tags;
-		// role
-		if ( $role ) {
-			$id               = $this->createTagVerified( $role );
-			$params['tags'][] = $id;
-		}
-		// first name
-		if ( $fname ) {
-			$params['first_name'] = $fname;
-		}
-		// last name
-		if ( $lname ) {
-			$params['last_name'] = $lname;
-		}
-
-		if ( $option ) {
-			foreach ( $fields as $key => $value ) {
-				$params[ str_replace( 'key_', 'extra_', $key ) ] = $value;
-			}
-		}
-
-		$url           = $this->restUrl . 'editSubscriber&' . http_build_query( array( 'functionOptions' => $params ), '', '&' );
-		$result_client = json_decode( $this->_getContent( $url ) );
-
-		return $result_client->Egoi_Api->editSubscriber;
-	}
-
-	/**
-	 * @param $listID
-	 * @param $email
-	 * @return mixed
-	 */
-	public function delSubscriber( $listID, $email ) {
-
-		$url = $this->restUrl . 'removeSubscriber&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'       => $this->_valid['api_key'],
-					'plugin_key'   => $this->plugin,
-					'listID'       => $listID,
-					'subscriber'   => $email,
-					'removeMethod' => 'API',
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		return $result_client->Egoi_Api->removeSubscriber;
-	}
-
-	/**
-	 * @param $listID
-	 * @param int    $start
-	 * @return mixed
-	 */
-	public function getAllSubscribers( $listID, $start = 0 ) {
-
-		$url = $this->restUrl . 'subscriberData&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'     => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin,
-					'listID'     => $listID,
-					'subscriber' => 'all_subscribers',
-					'limit'      => 1000,
-					'start'      => $start,
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		if ( $result_client->Egoi_Api->subscriberData->status == 'success' ) {
-			return $result_client->Egoi_Api->subscriberData;
-		}
-	}
-
-	/**
-	 * @param $listID
-	 * @param $email
-	 * @return mixed
-	 */
-	public function getSubscriber( $listID, $email ) {
-
-		$url = $this->restUrl . 'subscriberData&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'     => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin,
-					'listID'     => $listID,
-					'subscriber' => $email,
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		if ( $result_client->Egoi_Api->subscriberData->status == 'success' ) {
-			return $result_client->Egoi_Api->subscriberData;
-		}
-	}
-
-	/**
-	 * @param $listID
-	 * @param $id
-	 * @return mixed
-	 */
-	public function getSubscriberById( $listID, $id ) {
-
-		$url = $this->restUrl . 'subscriberData&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'     => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin,
-					'listID'     => $listID,
-					'subscriber' => $id,
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		if ( $result_client->Egoi_Api->subscriberData->status == 'success' ) {
-			return $result_client->Egoi_Api->subscriberData->subscriber;
-		}
-	}
-
-	/**
 	 * @param bool $listID
 	 * @param bool $option
 	 * @return mixed
@@ -1347,32 +909,6 @@ class Egoi_For_Wp {
 		return $forms;
 	}
 
-	/**
-	 * @param $listID
-	 * @param null   $plugin_key
-	 * @return string
-	 */
-	public function getExtraFields( $listID, $plugin_key = '908361f0368fd37ffa5cc7c483ffd941' ) {
-
-		$url = $this->restUrl . 'getExtraFields&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'     => $this->_valid['api_key'],
-					'plugin_key' => empty( $plugin_key ) ? $this->plugin : $plugin_key,
-					'listID'     => $listID,
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		$extra_fields  = $result_client->Egoi_Api->getExtraFields->extra_fields;
-		if ( $extra_fields == '0' ) {
-			return '';
-		}
-		return $extra_fields;
-	}
 
 	/**
 	 * @param bool $name
@@ -1409,23 +945,6 @@ class Egoi_For_Wp {
 	}
 
 	/**
-	 * @param $listID
-	 * @return int
-	 */
-	public function getEgoiSubscribers( $listID ) {
-
-		$count  = 0;
-		$result = $this->getLists();
-		foreach ( $result as $key => $value ) {
-			if ( $value->listnum == $listID ) {
-				$count = $value->subs_activos;
-			}
-		}
-
-		return $count;
-	}
-
-	/**
 	 * @param $name
 	 * @return mixed
 	 */
@@ -1449,147 +968,11 @@ class Egoi_For_Wp {
 	}
 
 	/**
-	 * @param $name
-	 * @return mixed
-	 */
-	public function getTag( $name ) {
-
-		$url = $this->restUrl . 'getTags&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'     => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin,
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		$result        = $result_client->Egoi_Api->getTags->TAG_LIST;
-
-		foreach ( $result as $key => $value ) {
-			if ( strcasecmp( $value->NAME, $name ) == 0 ) {
-				$data['NAME'] = $value->NAME;
-				$data['ID']   = $value->ID;
-			}
-		}
-
-		if ( empty( $data ) ) {
-			$rest             = $this->addTag( $name );
-			$data['NEW_ID']   = $rest->ID;
-			$data['NEW_NAME'] = $rest->NAME;
-		}
-
-		return $data;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getTags() {
-
-		$url = $this->restUrl . 'getTags&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'     => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin,
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		$result        = $result_client->Egoi_Api->getTags;
-
-		return $result;
-	}
-
-	/**
-	 * @param $data
-	 * @param $apikey
-	 * @param bool   $option
-	 * @return string
-	 */
-	private function callClient( $data, $apikey, $option = false ) {
-
-		return $this->checkUser( $data, $apikey, $option );
-	}
-
-	private static function _methodIsCachable( $method ) {
-		return in_array( $method, self::CACHED_CALLS );
-	}
-
-	private static function _methodIsPurgeble( $method ) {
-		return in_array( $method, self::PURGE_CACHE_CALLS );
-	}
-
-	private function _cacheCreatorHandler( $url, $body ) {
-		$params = array();
-		parse_str( $url, $params );
-		if ( empty( $params['method'] ) ) {
-			return;
-		}
-		if ( self::_methodIsCachable( $params['method'] ) ) {
-			$this->_saveCache( $url, $body );
-		}
-		if ( self::_methodIsPurgeble( $params['method'] ) ) {
-			$this->_purgeCache( $url );
-		}
-	}
-
-	private function _cachedResponse( $url ) {
-		$params = array();
-		parse_str( $url, $params );
-		if ( empty( $params['method'] ) || ! self::_methodIsCachable( $params['method'] ) ) {
-			return false;
-		}
-		$cached = get_option( self::generateCacheKey( $url ) );
-		return empty( $cached['data'] ) ? array() : $cached['data'];
-	}
-
-	private function _hasCachedResponse( $url ) {
-		$params = array();
-		parse_str( $url, $params );
-		if ( empty( $params['method'] ) || ! self::_methodIsCachable( $params['method'] ) ) {
-			return false;
-		}
-		$cached = get_option( self::generateCacheKey( $url ) );
-		return ! empty( $cached ) && $cached['ttl'] > time();
-	}
-
-	private function _saveCache( $url, $resp, $ttl = 3600 ) {
-		$key = self::generateCacheKey( $url );
-		update_option(
-			$key,
-			array(
-				'data' => $resp,
-				'ttl'  => time() + $ttl,
-			)
-		);
-	}
-
-	private function _purgeCache( $url ) {
-		delete_option(
-			self::generateCacheKey( $url )
-		);
-	}
-
-	private static function generateCacheKey( $url ) {
-		return 'egoi:cache:' . hash( 'sha256', $url );
-	}
-
-	/**
 	 * @param $url
 	 * @param array $headers
 	 * @return string
 	 */
 	protected function _getContent( $url, $headers = array() ) {
-
-		if ( $this->_hasCachedResponse( $url ) ) {
-			return $this->_cachedResponse( $url );
-		}
 
 		$res = wp_remote_request(
 			$url,
@@ -1604,7 +987,6 @@ class Egoi_For_Wp {
 			return '{}';
 		}
 
-		$this->_cacheCreatorHandler( $url, $res['body'] );
 		return $res['body'];
 	}
 
@@ -1625,18 +1007,6 @@ class Egoi_For_Wp {
 		$listen = new Egoi_For_Wp_Listener( $this->get_plugin_name(), $this->get_version() );
 		if ( $user_id ) {
 			$listen->init( $user_id );
-		}
-
-	}
-
-	/**
-	 * @param $user_id
-	 */
-	public function get_user_del( $user_id ) {
-
-		$listen = new Egoi_For_Wp_Listener( $this->get_plugin_name(), $this->get_version() );
-		if ( $user_id ) {
-			$listen->Listen_delete( $user_id );
 		}
 
 	}
@@ -1776,36 +1146,6 @@ class Egoi_For_Wp {
 	}
 
 	/**
-	 * @param $id
-	 * @return mixed
-	 */
-	public function getTagByID( $id ) {
-
-		$url = $this->restUrl . 'getTags&' . http_build_query(
-			array(
-				'functionOptions' => array(
-					'apikey'     => $this->_valid['api_key'],
-					'plugin_key' => $this->plugin,
-				),
-			),
-			'',
-			'&'
-		);
-
-		$result_client = json_decode( $this->_getContent( $url ) );
-		$result        = $result_client->Egoi_Api->getTags->TAG_LIST;
-
-		foreach ( $result as $key => $value ) {
-			if ( $value->ID == $id ) {
-				$data['NAME'] = $value->NAME;
-				$data['ID']   = $value->ID;
-			}
-		}
-
-		return $data;
-	}
-
-	/**
 	 * Get E-goi client campaigns
 	 *
 	 * @return mixed
@@ -1861,13 +1201,14 @@ class Egoi_For_Wp {
 	/**
 	 * @param $form_id
 	 * @param $form_type
-	 * @param $subscriber_data
-	 * @param null            $form_title
+	 * @param $contactId
+	 * @param $listId
+	 * @param $email
+	 * 
 	 * @return mixed
+	 * @throws Exception
 	 */
-	public function smsnf_save_form_subscriber( $form_id, $form_type, $subscriber_data, $form_title = null ) {
-
-		$list = $this->getLists( false, false, $subscriber_data->LIST );
+	public function smsnf_save_form_subscriber( $form_id, $form_type, $contactId, $listId, $email ) {
 
 		global $wpdb;
 
@@ -1876,17 +1217,15 @@ class Egoi_For_Wp {
 		$subscriber = array(
 			'form_id'          => $form_id,
 			'form_type'        => $form_type,
-			'subscriber_id'    => sanitize_text_field( $subscriber_data->UID ),
-			'subscriber_name'  => sanitize_text_field( $subscriber_data->FIRST_NAME ),
-			'subscriber_email' => sanitize_email( $subscriber_data->EMAIL ),
-			'list_id'          => $subscriber_data->LIST,
-			'list_title'       => empty( $list->key_0->title ) ? $subscriber_data->LIST : $list->key_0->title,
+			'subscriber_id'    => sanitize_text_field( $contactId ),
+			'subscriber_name'  => '',
+			'subscriber_email' => sanitize_email( $email ),
+			'list_id'          => $listId,
+			'list_title'       => '',
 			'created_at'       => current_time( 'mysql' ),
 		);
 
-		if ( $form_title ) {
-			$subscriber['form_title'] = $form_title;
-		} elseif ( $form_type == 'simple-form' ) {
+		if ( $form_type == 'simple-form' ) {
 			$subscriber['form_title'] = get_post( $form_id )->post_title;
 		} elseif ( $form_type == 'bar' ) {
 			$subscriber['form_title'] = 'Subscriber Bar';
@@ -2001,21 +1340,24 @@ class Egoi_For_Wp {
 	 * @return array
 	 */
 	public static function getAccountTags() {
-		$Egoi4WpBuilderObject = new Egoi_For_Wp();
-		$tag_list             = json_decode( wp_json_encode( $Egoi4WpBuilderObject->getTags() ), true );
-
-		if ( empty( $tag_list['TAG_LIST'] ) || ! is_array( $tag_list['TAG_LIST'] ) ) {
-			return array();
+		$apikey = get_option( 'egoi_api_key' );
+		if ( ! empty( $apikey['api_key'] ) ) {
+			$api = new EgoiApiV3( $apikey['api_key'] );
+			$tagList = json_decode($api->getTags(), true );
+	
+			if ( empty( $tagList ) || ! is_array( $tagList ) ) {
+				return array();
+			}
+	
+			$parsedList = array();
+			foreach ( $tagList as $tag ) {
+				$parsedList[ $tag['tag_id'] ] = $tag['name'];
+			}
+	
+			return $parsedList;
 		}
 
-		$tag_list = $tag_list['TAG_LIST'];
-
-		$parsed_list = array();
-		foreach ( $tag_list as $tag ) {
-			$parsed_list[ $tag['ID'] ] = $tag['NAME'];
-		}
-
-		return $parsed_list;
+		return array();
 	}
 
 	/**
@@ -2025,28 +1367,30 @@ class Egoi_For_Wp {
 	public static function getFullListFields( $plugin_key = null ) {
 
 		$options = get_option( Egoi_For_Wp_Admin::OPTION_NAME );
+		$apikey = get_option( 'egoi_api_key' );
+		if ( ! empty( $apikey['api_key'] ) ) {
+			$api = new EgoiApiV3( $apikey['api_key'] );
+			$extra = $api->getExtraFields( empty( $options['list'] ) ? $options->list : $options['list'], 'obj' );
 
-		$Egoi4WpBuilderObject = new Egoi_For_Wp();
-		$extra                = (array) $Egoi4WpBuilderObject->getExtraFields( empty( $options['list'] ) ? $options->list : $options['list'], $plugin_key );
-
-		$egoi_fields = array(
-			'first_name' => __( 'First name', 'egoi-for-wp' ),
-			'last_name'  => __( 'Last name', 'egoi-for-wp' ),
-			'cellphone'  => __( 'Mobile', 'egoi-for-wp' ),
-			'email'      => __( 'Email', 'egoi-for-wp' ),
-			'telephone'  => __( 'Telephone', 'egoi-for-wp' ),
-			'birth_date' => __( 'Birth Date', 'egoi-for-wp' ),
-			'lang'       => __( 'Language', 'egoi-for-wp' ),
-		);
-
-		if ( ( ! empty( $options->list ) || ! empty( $options['list'] ) ) && $extra ) {
-
-			foreach ( $extra as $key => $extra_field ) {
-				$egoi_extra_field_key                 = str_replace( 'key_', 'extra_', $key );
-				$egoi_fields[ $egoi_extra_field_key ] = $extra_field->NAME;
+			$egoi_fields = array(
+				'first_name' => __( 'First name', 'egoi-for-wp' ),
+				'last_name'  => __( 'Last name', 'egoi-for-wp' ),
+				'cellphone'  => __( 'Mobile', 'egoi-for-wp' ),
+				'email'      => __( 'Email', 'egoi-for-wp' ),
+				'telephone'  => __( 'Telephone', 'egoi-for-wp' ),
+				'birth_date' => __( 'Birth Date', 'egoi-for-wp' ),
+				'lang'       => __( 'Language', 'egoi-for-wp' ),
+			);
+	
+			if ( ( ! empty( $options->list ) || ! empty( $options['list'] ) ) && $extra ) {
+	
+				foreach ( $extra as $extra_field ) {
+					$egoi_fields[ 'extra_' . $extra_field['field_id'] ] = $extra_field['name'];
+				}
 			}
+	
+			return $egoi_fields;
 		}
-
-		return $egoi_fields;
 	}
+
 }

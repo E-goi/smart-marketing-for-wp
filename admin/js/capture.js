@@ -86,13 +86,11 @@
     var select_lists    = $('#list_to_subscribe');
     var select_forms    = $('#form_list');
     var select_tags     = $('#form_tag');
-    var select_lang     = $('#form_lang');
     var new_tag_submit  = $('#new_tag_submit');
 
     var list_id     = select_lists.attr('data-egoi-list');
     var form_id     = select_forms.attr('data-egoi-form');
     var tag_id      = select_tags.attr('data-egoi-tag');
-    var lang_id     = select_lang.attr('data-egoi-lang');
 
     $(document).on('data-attribute-changed', function() {
         if (select_tags.attr('data-egoi-tag') != '') {
@@ -108,8 +106,8 @@
             var lists = JSON.parse(response);
 
             $.each(lists, function(key, val) {
-                if(typeof val.listnum != 'undefined') {
-                    select_lists.append(`<option value="${val.listnum}">${val.title}</option>`);
+                if(typeof val['list_id'] != 'undefined') {
+                    select_lists.append(`<option value="${ val['list_id']}">${ val['public_name']}</option>`);
                 }
             });
 
@@ -161,59 +159,13 @@
         });
     }
 
-    /* Get lang from e-goi */
-    if (select_lists.length && select_lang.length) {
-
-        function get_list_lang_from_egoi(list_id) {
-            if (list_id == '') {
-                return;
-            }
-
-            $('#form_lang_wrapper').slideDown();
-            $('#form_tag_wrapper').slideDown();
-
-            $.post(url_egoi_script.ajaxurl, {action: 'egoi_get_lists'}, function(response) {
-                var langs = JSON.parse(response);
-                var idiomas = [];
-
-                $.each(langs, function(key, val) {
-                    if (val.listnum != list_id) return;
-
-                    idiomas.push(val.idioma);
-
-                    $.each(val.idiomas_extra, function(key, val) {
-                        idiomas.push(val);
-                    });
-                });
-
-                select_lang.find("option").remove();
-
-                $.each(idiomas, function(key, val) {
-                    select_lang.append(`<option value="${val}">${val}</option>`);
-                });
-
-                select_lang.prop('disabled', false);
-                select_lang.val(lang_id == '' ? idiomas[0] : lang_id);
-                
-            });
-        }
-
-        get_list_lang_from_egoi(list_id);
-
-        select_lists.change(function() {
-            select_lang.prop('disabled', true);
-            lang_id = '';
-            get_list_lang_from_egoi($(this).find('option:checked').val());
-        });
-    }
-
     function get_list_tag_from_egoi() {
 
         $.post(url_egoi_script.ajaxurl, {action: 'egoi_get_tags'}, function(response) {
             var tags = JSON.parse(response);
 
-            $.each(tags.TAG_LIST, function(key, val) {
-                select_tags.append(`<option value="${val.ID}">${val.NAME}</option>`);
+            $.each(tags, function(key, val) {
+                select_tags.append(`<option value="${val.tag_id}">${val.name}</option>`);
             });
 
             select_tags.prop('disabled', false);
@@ -297,11 +249,6 @@
         var input;
 
         input = form.find('#list_to_subscribe');
-        if (input.find('option:selected').val() == '') {
-            input.addClass('error');
-        }
-
-        input = form.find('#form_lang');
         if (input.find('option:selected').val() == '') {
             input.addClass('error');
         }
@@ -481,9 +428,9 @@
         };
         $.post(url_egoi_script.ajaxurl, data, function(response) {
             var tag = JSON.parse(response);
-            select_tags.append(`<option value="${tag.ID}">${tag.NAME}</option>`);
+            select_tags.append(`<option value="${tag['tag_id']}">${tag['name']}</option>`);
             $(this).prop('disabled', false);
-            select_tags.val(tag.ID);
+            select_tags.val(tag['tag_id']);
             $('#create-new-tag').hide();
         });
 

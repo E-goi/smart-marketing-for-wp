@@ -125,7 +125,7 @@ class TransactionalEmailHelper {
 	 */
 	public function get_email_senders() {
 
-		$apikey = $this->get_apikey();
+		$apikey = $this->getApikey();
 
 		$api = new EgoiApiV3( $apikey );
 		return json_decode( $api->getSenders() );
@@ -202,7 +202,7 @@ class TransactionalEmailHelper {
 	/**
 	 * Obtain the api_key
 	 */
-	private function get_apikey() {
+	private function getApikey() {
 		$apikey = get_option( 'egoi_api_key' );
 		if ( ! empty( $apikey['api_key'] ) ) {
 			return $apikey['api_key'];

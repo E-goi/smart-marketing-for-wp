@@ -21,12 +21,12 @@ $mapped        = Egoi_For_Wp::getGravityFormsInfo();
 					<label for="egoi_int"><?php _e( 'Enable Gravity Forms Integration', 'egoi-for-wp' ); ?></label>
 					<p class="subtitle"><?php _e( 'Select "yes" to enable Gravity Form Integration.', 'egoi-for-wp' ); ?></p>
 					<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
-						<label><input type="radio"  name="egoi_int[enable_gf]" <?php checked( $egoint['enable_gf'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
-						<label><input type="radio" name="egoi_int[enable_gf]" <?php checked( $egoint['enable_gf'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+						<label><input type="radio"  name="egoi_int[enable_gf]" <?php if(isset($egoint['enable_gf'])) {checked( $egoint['enable_gf'], 1 ); } ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+						<label><input type="radio" name="egoi_int[enable_gf]" <?php if(isset($egoint['enable_gf'])) {checked( $egoint['enable_gf'], 0 ); } ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
 					</div>
 				</div>
 
-				<?php if ( $egoint['enable_gf'] ) { ?>
+				<?php if ( isset($egoint['enable_gf'])  ) { ?>
 
 					<div class="smsnf-input-group">
 						<label for="egoi_map_trigger"><?php _e( 'Contact Form Name', 'egoi-for-wp' ); ?></label>
@@ -59,8 +59,8 @@ $mapped        = Egoi_For_Wp::getGravityFormsInfo();
 						<label for="edit_gf"><?php _e( 'Update Subscriber', 'egoi-for-wp' ); ?></label>
 						<p class="subtitle"><?php _e( 'Select "yes" to edit the subscriber if already exists in E-goi List.', 'egoi-for-wp' ); ?></p>
 						<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
-							<label><input type="radio"  name="egoi_int[edit_gf]" <?php checked( $egoint['edit_gf'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
-							<label><input type="radio" name="egoi_int[edit_gf]" <?php checked( $egoint['edit_gf'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+							<label><input type="radio"  name="egoi_int[edit_gf]" <?php  if(isset($egoint['edit_gf'])) {checked( $egoint['edit_gf'], 1 ); } ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+							<label><input type="radio" name="egoi_int[edit_gf]" <?php if(isset($egoint['edit_gf'])) {checked( $egoint['edit_gf'], 0 ); } ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
 						</div>
 					</div>
 

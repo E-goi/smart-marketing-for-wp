@@ -39,7 +39,7 @@ if ( isset( $_POST['action'] ) ) {
 	echo get_notification( __( 'Success', 'egoi-for-wp' ), __( 'Integrations Settings Updated!', 'egoi-for-wp' ) );
 }
 
-$lists = $this->egoiWpApi->getLists();
+$lists = $this->egoiWpApiV3->getLists();
 
 $opt    = get_option( 'egoi_int' );
 $egoint = $opt['egoi_int'];

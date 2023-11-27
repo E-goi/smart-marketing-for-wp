@@ -125,7 +125,6 @@
 
 									if (tabsToSend.includes( tab )) {
 										// save step state with action: egoi_wizard_step
-										console.log( "time to send" )
 										saveStepWizard( tab,cleanFormObject( $( "#form-" + tab ).serializeArray() ) );
 									}
 
@@ -185,8 +184,6 @@
 					}
 				)
 
-				console.log( data );
-
 				return $.post( egoi_config_ajax_object_core.ajax_url, data );
 			}
 
@@ -217,8 +214,6 @@
 					data,
 					function(response) {
 						if ( ! response.success) {
-
-							console.log( response.data )
 							finishImport()
 						}
 						if (response.data && response.data.next) {
@@ -323,8 +318,8 @@
 					$.each(
 						lists,
 						function(key, val) {
-							if (val.listnum) {
-								$( "#list" ).append( `<option value = "${val.listnum}"> ${val.title} </option>` );
+							if (val['list_id']) {
+								$( "#list" ).append( `<option value = "${val['list_id']}"> ${val['public_name']} </option>` );
 							}
 						}
 					);

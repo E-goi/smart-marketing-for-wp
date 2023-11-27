@@ -8,12 +8,6 @@ add_thickbox();
 ?>
 
 <div class="egoi-box" style="background-color: transparent; padding: 0;width:250px;">
-	<?php
-		require_once dirname( __DIR__ ) . '/partials/egoi-for-wp-admin-alert.php';
-	if ( ! empty( $alert ) ) {
-		echo $alert;
-	}
-	?>
 
 	<embed>
 		<div class="pub-body">

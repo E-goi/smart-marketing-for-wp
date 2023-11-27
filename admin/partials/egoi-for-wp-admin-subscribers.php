@@ -13,10 +13,12 @@ $page = array(
 
 add_thickbox();
 
-$lists         = $this->egoiWpApi->getLists();
+$lists = $this->egoiWpApiV3->getLists();
+
 $mapped_fields = $this->egoiWpApi->getMappedFields();
 
-$extra       = $this->egoiWpApi->getExtraFields( $this->options_list['list'] );
+$extra       = $this->egoiWpApiV3->getExtraFields( $this->options_list['list'], 'obj' );
+
 $egoi_fields = array(
 	'first_name' => 'First name',
 	'last_name'  => 'Last name',
@@ -37,9 +39,9 @@ $positions = array(
 );
 
 if ( $this->options_list['list'] ) {
-	if ( $extra ) {
+	if ( isset($extra) ) {
 		foreach ( $extra as $key => $extra_field ) {
-			$egoi_fields[ $key ] = $extra_field->NAME;
+			$egoi_fields[ $extra_field['field_id'] ] = $extra_field['name'];
 		}
 	}
 }

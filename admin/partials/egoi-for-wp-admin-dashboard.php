@@ -206,7 +206,7 @@ $page  = array(
 													<!-- <p style="font-size: 11px; margin: 0;">Seleccione a Lista</p> -->
 													<select id="chart_list">
 														<?php foreach ( $lists as $list ) { ?>
-															<option value="<?php echo esc_attr( implode( ',', $lists_chart[ $list->list_id ]['totals'] ) ); ?>" <?php selected( $list->list_id, $options_list ); ?> >
+															<option value="<?php echo isset($lists_chart[ $list->list_id ]) ?  esc_attr( implode( ',', $lists_chart[ $list->list_id ]['totals'] ) ) : "NaN"?>" <?php selected( $list->list_id, $options_list ); ?> >
 																<?php echo esc_html( $list->title ); ?>
 															</option>
 														<?php } ?>

@@ -19,9 +19,8 @@ if ( ! empty( $_POST ) ) {
 	if ( isset( $_POST['egoi_wp_createlist'] ) && ( ! empty( $_POST['egoi_wp_title'] ) ) ) {
 
 		$name = sanitize_text_field( $_POST['egoi_wp_title'] );
-		$lang = sanitize_text_field( $_POST['egoi_wp_lang'] );
 
-		$new_list = $this->egoiWpApi->createList( $name, $lang );
+		$new_list = $this->egoiWpApiV3->createList( $name );
 
 		if ( is_string( $new_list ) ) {
 			echo get_notification( __( 'Error', 'egoi-for-wp' ), __( 'No more lists allowed in your account!', 'egoi-for-wp' ) );
@@ -34,10 +33,11 @@ if ( ! empty( $_POST ) ) {
 	}
 }
 
+
 	$opt = get_option( 'egoi_data' );
     $apikey = get_option( 'egoi_api_key' );
     if ( isset( $apikey['api_key'] ) && ( $apikey['api_key'] ) ) {
-        $lists = $this->egoiWpApi->getLists();
+        $lists = $this->egoiWpApiV3->getLists();
     }
 ?>
 
@@ -240,7 +240,7 @@ if ( ! empty( $_POST ) ) {
 					<?php
 
 					// Display lists ERROR
-					if ( isset( $lists->ERROR ) && ( $lists->ERROR ) ) {
+					if ( ! isset( $lists ) ) {
 
 						update_option( 'egoi_has_list', 0 );
 						?>
@@ -293,10 +293,8 @@ if ( ! empty( $_POST ) ) {
 
 					} else {
 						// Display valid lists
-						if ( empty( $lists->response ) || $lists->response != 'NO_USERNAME_AND_PASSWORD_AND_APIKEY' ) {
-							update_option( 'egoi_has_list', 1 );
-							include 'egoi-for-wp-admin-lists.php';
-						}
+						update_option( 'egoi_has_list', 1 );
+						include 'egoi-for-wp-admin-lists.php';						
 					}
 					?>
 

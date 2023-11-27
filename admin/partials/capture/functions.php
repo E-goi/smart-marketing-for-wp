@@ -24,29 +24,6 @@ function get_next_adv_form_id() {
 	return null;
 }
 
-// obtem os formulários avançados
-function get_adv_forms() {
-	$forms = array();
-
-	for ( $i = 1; $i <= 5; $i++ ) {
-		$form = get_option( 'egoi_form_sync_' . $i );
-
-		if ( ! $form['egoi_form_sync']['form_id'] ) {
-			continue;
-		}
-
-		$forms[] = array(
-			'id'        => $i,
-			'shortcode' => "[egoi_form_sync_$i]",
-			'title'     => $form['egoi_form_sync']['form_name'],
-			'state'     => $form['egoi_form_sync']['enabled'],
-			'type'      => $form['egoi_form_sync']['egoi'],
-		);
-	}
-
-	return $forms;
-}
-
 // obtem os formulários simples
 function get_simple_forms() {
 	global $wpdb;
@@ -77,20 +54,8 @@ function delete_simple_form( $id ) {
 		<p class="subtitle"><?php _e( 'Select the list to which visitors should be subscribed.', 'egoi-for-wp' ); ?></p>
 		<div class="smsnf-wrapper">
 			<select id="list_to_subscribe" name="<?php echo ! empty( $name ) ? esc_attr( $name ) : ''; ?>" class="form-select" <?php echo 'data-egoi-list="' . esc_attr( $selected_list ) . '"'; ?> disabled>
-				<option value="" selected disabled hidden><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
+				<option value="" selected disabled><?php _e( 'Select a list..', 'egoi-for-wp' ); ?></option>
 			</select>
-			<div class="loading"></div>
-		</div>
-	</div>
-	<?php
-}
-
-function get_lang_html( $selected_lang, $name, $hide ) {
-	?>
-	<div id="form_lang_wrapper" class="smsnf-input-group" <?php echo ! empty( $hide ) ? 'style="display: none"' : ''; ?>>
-		<label for="form_lang"><?php _e( 'E-goi List Language', 'egoi-for-wp' ); ?></label>
-		<div class="smsnf-wrapper">
-			<select name="<?php echo ! empty( $name ) ? esc_attr( $name ) : ''; ?>" id="form_lang" class="form-select" data-egoi-lang="<?php echo ! empty( $selected_lang ) ? esc_attr( $selected_lang ) : ''; ?>"  disabled required></select>
 			<div class="loading"></div>
 		</div>
 	</div>
@@ -100,10 +65,10 @@ function get_lang_html( $selected_lang, $name, $hide ) {
 function get_tag_html( $selected_tag, $name, $hide = false ) {
 	?>
 	<div id="form_tag_wrapper" class="smsnf-input-group" style="<?php echo $hide ? 'display: none;' : ''; ?>" >
-		<label for="form_tag"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label><a data-modal="create-new-tag"><?php _e( 'Create new tag +', 'egoi-for-wp' ); ?></a>
+		<label for="form_tag"><?php _e( 'Select a tag', 'egoi-for-wp' ); ?></label>
 		<div class="smsnf-wrapper">
 			<select name="<?php echo ! empty( $name ) ? esc_attr( $name ) : ''; ?>" id="form_tag" class="form-select" data-egoi-tag="<?php echo ! empty( $selected_tag ) ? esc_attr( $selected_tag ) : ''; ?>"  disabled>
-				<option value="" selected disabled hidden><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
+				<option value="" selected disabled><?php _e( 'Select a tag..', 'egoi-for-wp' ); ?></option>
 			</select>
 			<div class="loading"></div>
 		</div>
@@ -146,20 +111,3 @@ function get_small_mapping_html( $name, $app, $hide = false ) {
 	</div>
 	<?php
 }
-
-function get_form_html( $selected_form, $name, $hide ) {
-	?>
-	<div id="form_list_group" class="smsnf-input-group" <?php echo ! empty( $hide ) ? 'style="display: none"' : ''; ?>>
-		<label for="form_list"><?php _e( 'E-goi Form to Subscribe', 'egoi-for-wp' ); ?></span></label>
-		<p class="subtitle"><?php _e( 'Need a iframe form? Simply select a form (which already exists in E-goi) and copy the shortcode to display this form on your website or blog', 'egoi-for-wp' ); ?></p>
-		<div class="form-group">
-			<div class="smsnf-wrapper">
-				<select id="form_list" class="form-select" name="<?php echo ! empty( $name ) ? esc_attr( $name ) : ''; ?>" <?php echo 'data-egoi-form="' . esc_attr( $selected_form ) . '"'; ?> disabled>
-					<option value="" selected disabled hidden><?php _e( 'Select your form', 'egoi-for-wp' ); ?></option>
-				</select>
-				<div class="loading"></div>
-			</div>
-			<p id="empty-forms" class="error-msg"><?php _e( 'There are no forms on E-goi.', 'egoi-for-wp' ); ?></p>
-		</div>
-	</div>
-<?php } ?>

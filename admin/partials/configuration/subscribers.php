@@ -92,13 +92,13 @@
 								$array_list = '';
 								foreach ( $lists as $list ) {
 
-									if ( $list->title ) {
+									if ( $list['public_name'] ) {
 										?>
-										<option value="<?php echo esc_textarea( $list->listnum ); ?>" <?php selected( $this->options_list['list'], $list->listnum ); ?>>
-											<?php echo esc_textarea( $list->title ); ?>
+										<option value="<?php echo esc_textarea( $list['list_id'] ); ?>" <?php selected( $this->options_list['list'], $list['list_id'] ); ?>>
+											<?php echo esc_textarea($list['public_name'] ); ?>
 										</option>
 										<?php
-										$array_list .= $list->listnum . ' - ';
+										$array_list .= $list['list_id'] . ' - ';
 									}
 								}
 								?>

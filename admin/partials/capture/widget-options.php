@@ -18,12 +18,15 @@ if ( isset( $_POST['egoi_widget'] )  ) {
 		$_POST['egoi_widget']['hide_form'] = 0;
 	}
 
+	if ( !isset($_POST['egoi_widget']['double_optin']) ) {
+		$_POST['egoi_widget']['double_optin'] = 0;
+	}
+
 	update_option( sanitize_key($_POST['egoiform']), [
             'egoi_widget' => [
                 'enabled' => sanitize_key($_POST['egoi_widget']['enabled']),
                 'double_optin' => sanitize_key($_POST['egoi_widget']['double_optin']),
                 'list' =>  sanitize_key($_POST['egoi_widget']['list']),
-                'lang' => sanitize_text_field($_POST['egoi_widget']['lang']),
                 'tag-egoi' => sanitize_key($_POST['egoi_widget']['tag-egoi']),
                 'msg_subscribed' => sanitize_text_field($_POST['egoi_widget']['msg_subscribed']),
                 'msg_invalid' => sanitize_text_field($_POST['egoi_widget']['msg_invalid']),
@@ -47,8 +50,12 @@ $opt_widget = get_option( 'egoi_widget' );
 $egoiwidget = isset($opt_widget['egoi_widget']) ? $opt_widget['egoi_widget'] : array() ;
 
 if ( isset($egoiwidget['tag']) && $egoiwidget['tag'] != '' ) {
-	$info = $this->egoiWpApi->getTag( $egoiwidget['tag'] );
-	$tag  = $info['ID'];
+	if( ! is_numeric($egoiwidget['tag']) ){
+		$info = $this->egoiWpApiV3->getTag( $egoiwidget['tag'] );
+		$tag = $info['tag_id'];
+	} else {
+		$tag  = $egoiwidget['tag'];
+	}
 } else {
 	$tag = isset($egoiwidget['tag-egoi']) ? $egoiwidget['tag-egoi'] : 0;
 }
@@ -105,6 +112,18 @@ if ( ! isset($egoiwidget['btn_width']) ) {
 	$egoiwidget['btn_width'] = '100%';
 }
 
+if ( ! isset($egoiwidget['bcolor']) ) {
+	$egoiwidget['bcolor'] = '#000000';
+}
+
+if ( ! isset($egoiwidget['bcolor_success']) ) {
+	$egoiwidget['bcolor_success'] = '#00ff00';
+}
+
+if ( ! isset($egoiwidget['bcolor_error']) ) {
+	$egoiwidget['bcolor_error'] = '#ff0000';
+}
+
 require plugin_dir_path( __DIR__ ) . 'egoi-for-wp-admin-shortcodes.php';
 if(isset($form_id)) { $FORM_OPTION = get_optionsform( $form_id ); }
 ?>
@@ -155,9 +174,6 @@ if(isset($form_id)) { $FORM_OPTION = get_optionsform( $form_id ); }
 			<!-- LIST -->
 			<?php get_list_html( isset($egoiwidget['list']) ? $egoiwidget['list'] : null, 'egoi_widget[list]' ); ?>
 			<!-- / LIST -->
-			<!-- lang -->
-			<?php get_lang_html( $egoiwidget['lang'], 'egoi_widget[lang]', empty( $egoiwidget['list'] ) ); ?>
-			<!-- / lang -->
 			<!-- tag -->
 			<?php get_tag_html( $tag, 'egoi_widget[tag-egoi]' ); ?>
 			<!-- / tag -->
