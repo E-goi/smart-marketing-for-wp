@@ -13,7 +13,6 @@ class Egoi4Widget extends WP_Widget {
 	private $egoi_id;
 
 	public function __construct() {
-
 		$opt = get_option( 'egoi_widget' );
 
 		if($opt){
@@ -24,7 +23,7 @@ class Egoi4Widget extends WP_Widget {
 			$this->btn_width      = $opt['egoi_widget']['btn_width'] ? 'width:' . $opt['egoi_widget']['btn_width'] : '';
 			$this->bcolor         = $opt['egoi_widget']['bcolor'] ? 'border: 1px solid ' . $opt['egoi_widget']['bcolor'] : '';
 			$this->listID         = isset($opt['egoi_widget']['list']) ? $opt['egoi_widget']['list'] : 0;
-			$this->lang           = isset($opt['egoi_widget']['lang']) ? $opt['egoi_widget']['lang'] : 'en';
+			$this->lang           = isset($opt['egoi_widget']['lang']) ? $opt['egoi_widget']['lang'] : 'pt';
 			$this->tag_egoi       = isset($opt['egoi_widget']['tag-egoi']) ? $opt['egoi_widget']['tag-egoi'] : '';
 			$this->double_optin   = isset($opt['egoi_widget']['double_optin']) ? $opt['egoi_widget']['double_optin'] : 0;
 		} else {
@@ -184,7 +183,7 @@ class Egoi4Widget extends WP_Widget {
             }
 			require_once dirname( __DIR__ ) . '/admin/index.php';
 			out( $arr );
-			$link = ( array_key_exists( $language, $arr ) ) ?  $arr[ $language ] : $arr['en'] ;
+			$link = ( array_key_exists( $language, $arr ) ) ?  $arr[ $language ] : $arr['pt'] ;
 			
             ?>
 			<input type='hidden' name='egoi-list-sub<?php echo esc_attr($this->egoi_id) ?>' id='egoi-list-sub<?php echo esc_attr($this->egoi_id) ?>' value='<?php echo esc_attr($list) ?>' />
@@ -223,20 +222,22 @@ class Egoi4Widget extends WP_Widget {
 		$instance['tag_name']           = sanitize_text_field( $new_instance['tag_name'] );
 		$instance['tag-egoi']           = sanitize_text_field( $this->tag_egoi );
 
-		if ( $new_instance['tag'] ) {
-			$api  = new Egoi_For_Wp();
-			$tags = $api->getTag( $instance['tag'] );
+		if ( isset($instance['tag_name']) ) {
 
-			if ( $tags['NEW_ID'] ) {
-				$instance['tag']      = $tags['NEW_ID'];
-				$instance['tag_name'] = $tags['NEW_NAME'];
-			} else {
-				$instance['tag']      = $tags['ID'];
-				$instance['tag_name'] = $tags['NAME'];
+			$apikey = $this->getApikey();
+			if ( ! empty( $apikey ) ) {
+				$this->egoiWpApiV3 = new EgoiApiV3( $apikey );
+			}
+
+			$getTag = $this->egoiWpApiV3->getTag( $instance['tag_name'] );
+
+			if ( isset( $getTag->tag_id ) ) {
+				$instance['tag'] = $getTag->tag_id;
+				$instance['tag_name'] = $getTag->name;
 			}
 		}
 
-		if ( $new_instance['widget_lang'] ) {
+		if ( isset($new_instance['widget_lang']) ) {
 			$instance['lang'] = strip_tags( $new_instance['widget_lang'] );
 		} else {
 			$instance['lang'] = $this->lang;
@@ -294,29 +295,24 @@ class Egoi4Widget extends WP_Widget {
 			$button             = sanitize_text_field( $instance['button'] );
 
 			$tag         = sanitize_text_field( $instance['tag_name'] );
-			$lang_widget = sanitize_text_field( $instance['lang'] );
 
 			$default_tag = '';
 
-			$api = new Egoi_For_Wp();
-			if ( $instance['tag-egoi'] != '' ) {
-				$default_tag = $api->getTagByID( $instance['tag-egoi'] );
-			} else {
-				$default_tag = $api->getTagByID( $this->tag_egoi );
-			}
 
-			$lists = $api->getLists();
+			if ( isset($instance['tag-egoi']) ) {
 
-			$languages = array();
-			foreach ( $lists as $key => $value ) {
-				if ( $this->listID == $value->listnum ) {
-					$languages[] = $value->idioma;
+				$apikey = $this->getApikey();
+				if ( ! empty( $apikey ) ) {
+					$this->egoiWpApiV3 = new EgoiApiV3( $apikey );
+				}
 
-					foreach ( $value->idiomas_extra as $lang ) {
-						$languages[] = $lang;
-					}
+				$getTag = $this->egoiWpApiV3->getTagById( $instance['tag-egoi'] );
+	
+				if ( isset( $getTag->tag_id ) ) {
+					$default_tag = $getTag->name;
 				}
 			}
+			
             ?>
 
 			<p>
@@ -397,13 +393,13 @@ class Egoi4Widget extends WP_Widget {
 			if ( ! $button ) {
 				$button = __( 'Subscribe', 'egoi-for-wp' );
 			}
-            if ( $default_tag ) {
+            if ( isset($default_tag) ) {
             ?>
 				<label><?php _e( 'Tag', 'egoi-for-wp' ) ?><span class="e-goi-tooltip">
 						 <span class="dashicons dashicons-info"></span>
 					  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
                              <?php _e( 'Tag set by default', 'egoi-for-wp' ) ?>:
-                             <?php echo esc_textarea( $default_tag['NAME'] ); ?>
+                             <?php echo esc_textarea( $default_tag ); ?>
 					 	</span>
 					</span>
 				</label>
@@ -418,48 +414,8 @@ class Egoi4Widget extends WP_Widget {
 			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'tag' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'tag' ) ) ?>" placeholder="<?php _e( 'Tag Name', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr($tag) ?>" style="width:100%;"/>
 			</p>
 			<p>
-            <?php
 
-            if ( $this->lang != '' ) {
-                ?>
-				<label> <?php __( 'Languages', 'egoi-for-wp' ) ?></label><span class="e-goi-tooltip">
-						 <span class="dashicons dashicons-info"></span>
-					  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
-                             <?php _e( 'List', 'egoi-for-wp' ) ?>:
-                             <?php echo esc_attr($this->listID) ?>
-                             <br>
-                             <?php _e( 'Language set by default', 'egoi-for-wp' ) ?>:
-                             <?php echo esc_attr(esc_attr( $this->lang )) ?>
-					 	</span>
-					</span>
-				</label>
-                <br>
-            <?php
-            } else {
-                ?>
-				<label><?php _e( 'Languages for list', 'egoi-for-wp' ) ?>:
-                    <?php echo esc_attr( $this->listID ) ?>
-                </label>
-                <br>
-			<?php
-            }
-            ?>
-
-			<select id="<?php echo esc_attr( $this->get_field_id( 'widget_lang' ) ) ?>" name="<?php echo esc_attr( $this->get_field_name( 'widget_lang' ) ) ?>" type="text" >
-			<option value="" selected disabled><?php _e( 'Select a language', 'egoi-for-wp' ) ?></option>
-
-            <?php
-			foreach ( $languages as $value ) {
-				?>
-                <option <?php selected($value, $lang_widget) ?> value="<?php echo esc_attr( $value ) ?>"><?php echo esc_textarea( $value ) ?></option>
-                <?php
-			}
-            ?>
-
-			</select>
-			</p>
-			<p>
-				<label for="<?php echo esc_attr( $this->get_field_name( 'button' ) ) ?>"><?php _e( 'Subscribe Button', 'egoi-for-wp' ) ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'button' ) ) ?>"><?php _e( 'Subscribe Button', 'egoi-for-wp' ) ?></label>
 			<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'button' ) ) ?>" id="<?php echo esc_attr( $this->get_field_id( 'button' ) ) ?>" placeholder="<?php _e( 'Subscribe', 'egoi-for-wp' ) ?>" value="<?php echo esc_attr( $button ) ?>" style="width:100%;"/>
 			</p>
             <?php
@@ -471,6 +427,14 @@ class Egoi4Widget extends WP_Widget {
             </p>
 		    <?php
         }
+	}
+
+	private function getApikey() {
+		$apikey = get_option( 'egoi_api_key' );
+		if ( ! empty( $apikey['api_key'] ) ) {
+			return $apikey['api_key'];
+		}
+		return false;
 	}
 }
 
@@ -484,7 +448,6 @@ function egoi_widget_request() {
 		$fname = sanitize_text_field( $_POST['widget_fname'] );
 		$lname = sanitize_text_field( $_POST['widget_lname'] );
 
-		$lang = sanitize_text_field( $_POST['widget_lang'] );
 		$tag  = sanitize_key( $_POST['widget_tag'] );
 
 		$opt     = get_option( 'egoi_widget' );
@@ -518,7 +481,7 @@ function egoi_widget_request() {
 		if ( isset( $_POST['widget_mobile'] ) ) {
 
 			if ( $_POST['widget_mobile'] != '' ) {
-				$mobile = sanitize_email( $_POST['widget_mobile'] );
+				$mobile = Egoi_For_Wp::smsnf_get_valid_phone( $_POST['widget_mobile'] );
 			} else {
                 ?>
 				<div class='egoi-widget-error error<?php echo esc_attr( $id ) ?>'>
@@ -529,50 +492,58 @@ function egoi_widget_request() {
 			}
 		}
 
-		$name = $fname . ' ' . $lname;
+		$apikey = get_option( 'egoi_api_key' );
+		if ( ! empty( $apikey['api_key'] ) ) {
+				$egoiWpApiV3 = new EgoiApiV3( $apikey['api_key'] );
+	
+				$status = ! isset( $_POST['widget_double_optin'] ) || $_POST['widget_double_optin'] == 0 ? 'active' : 'unconfirmed';
 
-		$api = new Egoi_For_Wp();
-		$get = $api->getSubscriber( $list, $email );
+				$refFields = array();
 
-		if ( ( ! $get->subscriber->REMOVE_METHOD ) && ( $get->subscriber->UID ) ) {
-            ?>
-			<div style='<?php echo esc_attr($bcolor_error) ?>' class='egoi-widget-error error <?php echo esc_attr( $id ) ?>'><?php echo esc_html( $Egoi4WP['msg_exists_subscribed'] ) ?></div>
-            <?php
-            exit;
-        } else {
-
-			$status = ! isset( $_POST['widget_double_optin'] ) || $_POST['widget_double_optin'] == 0 ? 1 : 0;
-
-			$result = $api->addSubscriber( $list, $name, $email, $lang, $status, $mobile, intval( $tag ) );
-
-			if ( ! isset( $result->ERROR ) && ! isset( $result->MODIFICATION_DATE ) ) {
-				$form_id = explode( '-', $id );
-				$api->smsnf_save_form_subscriber( $form_id[1], 'widget', $result );
-			}
-
-			if ( $result ) {
-
-				$redirect  = $Egoi4WP['redirect'];
-				$hide_form = $Egoi4WP['hide_form'];
-				if ( $redirect ) {
-					echo 'redirect';
-				} else {
-
-					if ( $hide_form ) {
-						echo 'hide';
-					} else {
-						?>
-                        <div style='<?php echo esc_attr($bcolor_success) ?>' class='egoi-widget-success <?php echo esc_attr( $id ) ?>'><?php echo esc_html( $Egoi4WP['msg_subscribed'] ) ; ?></div>
-					    <?php
-                    }
+				if(isset($mobile)){
+					$refFields['cell'] = $mobile;
 				}
-				exit;
-			} else {
-                ?>
+
+				$add = $egoiWpApiV3->addContact(
+					$list,
+					$email,
+					$fname,
+					$lname,
+					array(),
+					0,
+					$refFields,
+					$status,
+					array( intval( $tag ) )
+				);
+
+
+				if ( isset($add) && !isset($add['error'])) {
+					$client = new Egoi_For_Wp();
+					$form_id = explode( '-', $id );
+
+					$client->smsnf_save_form_subscriber( $form_id[1], 'widget', $add, $list, $email );
+
+					$redirect  = $Egoi4WP['redirect'];
+					$hide_form = $Egoi4WP['hide_form'];
+					if ( isset($redirect) ) {
+						echo 'redirect';
+					} else {
+	
+						if ( isset($hide_form) ) {
+							echo 'hide';
+						} else {
+							?>
+							<div style='<?php echo esc_attr($bcolor_success) ?>' class='egoi-widget-success <?php echo esc_attr( $id ) ?>'><?php echo esc_html( $Egoi4WP['msg_subscribed'] ) ; ?></div>
+							<?php
+						}
+					}
+					exit;
+				}
+
+				?>
 				<div style='<?php echo esc_attr($bcolor_error) ?>' class='egoi-widget-error error <?php echo esc_attr( $id ) ?>'><?php echo esc_html( $Egoi4WP['msg_error'] ) ; ?></div>
 				<?php
-                exit;
-			}
+				exit;
 		}
 	}
 }

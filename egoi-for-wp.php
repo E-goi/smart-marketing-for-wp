@@ -163,21 +163,23 @@ function process_egoi_simple_form( $atts ) {
 	global $post;
 	$public_area = new Egoi_For_Wp_Public();
 
-	$qt   = (int) get_option( 'egoi_simple_form_post_increment_' . $post->ID );
-	$size = (int) get_option( 'egoi_simple_form_post_' . $post->ID );
-
-	if ( ! isset( $qt ) && isset( $size ) ) {
-		$qt = add_option( 'egoi_simple_form_post_increment_' . $post->ID, 1, 'no' );
-		return $public_area->subscribe_egoi_simple_form( $atts, $qt );
-	} elseif ( isset( $qt ) && isset( $size ) && $qt <= $size ) {
-		if ( $qt == $size ) {
-			update_option( 'egoi_simple_form_post_increment_' . $post->ID, 1, 'no' );
+	if(isset($post)){
+		$qt   = (int) get_option( 'egoi_simple_form_post_increment_' . $post->ID );
+		$size = (int) get_option( 'egoi_simple_form_post_' . $post->ID );
+	
+		if ( ! isset( $qt ) && isset( $size ) ) {
+			$qt = add_option( 'egoi_simple_form_post_increment_' . $post->ID, 1, 'no' );
+			return $public_area->subscribe_egoi_simple_form( $atts, $qt );
+		} elseif ( isset( $qt ) && isset( $size ) && $qt <= $size ) {
+			if ( $qt == $size ) {
+				update_option( 'egoi_simple_form_post_increment_' . $post->ID, 1, 'no' );
+			} else {
+				update_option( 'egoi_simple_form_post_increment_' . $post->ID, $qt + 1, 'no' );
+			}
+			return $public_area->subscribe_egoi_simple_form( $atts, $qt );
 		} else {
-			update_option( 'egoi_simple_form_post_increment_' . $post->ID, $qt + 1, 'no' );
+			return $public_area->subscribe_egoi_simple_form( $atts );
 		}
-		return $public_area->subscribe_egoi_simple_form( $atts, $qt );
-	} else {
-		return $public_area->subscribe_egoi_simple_form( $atts );
 	}
 }
 add_shortcode( 'egoi-simple-form', 'process_egoi_simple_form' );
@@ -244,16 +246,6 @@ function egoi_add_tag() {
 	$admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
 	$admin->add_tag( isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '' );
 }
-
-// HOOK WEB PUSH
-function egoi_add_webpush() {
-
-	if ( isset($_SERVER['HTTP_REFERER']) && ! strpos( $_SERVER['HTTP_REFERER'], 'wp-admin' ) ) { // don't show web push on admin pages
-		$public_area = new Egoi_For_Wp_Public();
-		$public_area->add_webpush();
-	}
-}
-add_action( 'wp_footer', 'egoi_add_webpush' );
 
 add_action( 'elementor/widgets/widgets_registered', 'egoi_register_widgets_elementor' );
 function egoi_register_widgets_elementor() {

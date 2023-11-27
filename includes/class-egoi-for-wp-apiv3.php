@@ -13,6 +13,238 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class EgoiApiV3 {
 
+	const EFWP_COUNTRY_CODES      = array(
+		'+93’, 
+		’+27',
+		'+355',
+		'+49',
+		'+213',
+		'+376',
+		'+244',
+		'+12684',
+		'+1268',
+		'+966',
+		'+54',
+		'+374',
+		'+297',
+		'+61',
+		'+43',
+		'+994',
+		'+1242',
+		'+973',
+		'+880',
+		'+1246',
+		'+32',
+		'+501',
+		'+229',
+		'+1441',
+		'+375',
+		'+591',
+		'+599',
+		'+387',
+		'+267',
+		'+55',
+		'+673',
+		'+359',
+		'+226',
+		'+257',
+		'+975',
+		'+238',
+		'+237',
+		'+855',
+		'+1',
+		'+7',
+		'+235',
+		'+56',
+		'+86',
+		'+357',
+		'+379',
+		'+57',
+		'+269',
+		'+243',
+		'+242',
+		'+850',
+		'+82',
+		'+225',
+		'+506',
+		'+385',
+		'+53',
+		'+599',
+		'+246',
+		'+45',
+		'+1767',
+		'+20',
+		'+503',
+		'+971',
+		'+593',
+		'+291',
+		'+421',
+		'+386',
+		'+34',
+		'+372',
+		'+251',
+		'+1',
+		'+679',
+		'+63',
+		'+358',
+		'+33',
+		'+241',
+		'+220',
+		'+233',
+		'+995',
+		'+350',
+		'+1473',
+		'+30',
+		'+299',
+		'+590',
+		'+1671',
+		'+502',
+		'+592',
+		'+594',
+		'+224',
+		'+240',
+		'+245',
+		'+509',
+		'+504',
+		'+852',
+		'+36',
+		'+967',
+		'+44',
+		'+1345',
+		'+682',
+		'+500',
+		'+298',
+		'+1670',
+		'+692',
+		'+677',
+		'+1340',
+		'+1284',
+		'+91',
+		'+62',
+		'+98',
+		'+964',
+		'+353',
+		'+354',
+		'+972',
+		'+39',
+		'+1876',
+		'+81',
+		'+253',
+		'+962',
+		'+965',
+		'+856',
+		'+266',
+		'+371',
+		'+961',
+		'+231',
+		'+218',
+		'+423',
+		'+370',
+		'+352',
+		'+853',
+		'+389',
+		'+261',
+		'+60',
+		'+265',
+		'+960',
+		'+223',
+		'+356',
+		'+212',
+		'+596',
+		'+230',
+		'+222',
+		'+262',
+		'+52',
+		'+95',
+		'+691',
+		'+258',
+		'+373',
+		'+377',
+		'+976',
+		'+382',
+		'+1664',
+		'+264',
+		'+674',
+		'+977',
+		'+505',
+		'+227',
+		'+234',
+		'+683',
+		'+47',
+		'+687',
+		'+64',
+		'+968',
+		'+31',
+		'+680',
+		'+970',
+		'+507',
+		'+675',
+		'+92',
+		'+595',
+		'+51',
+		'+689',
+		'+48',
+		'+351',
+		'+1',
+		'+974',
+		'+254',
+		'+7',
+		'+686',
+		'+44',
+		'+236',
+		'+420',
+		'+1',
+		'+262',
+		'+40',
+		'+250',
+		'+7',
+		'+290',
+		'+1869',
+		'+508',
+		'+685',
+		'+1684',
+		'+1758',
+		'+378',
+		'+239',
+		'+1784',
+		'+248',
+		'+221',
+		'+232',
+		'+381',
+		'+65',
+		'+599',
+		'+963',
+		'+252',
+		'+94',
+		'+268',
+		'+249',
+		'+46',
+		'+41',
+		'+597',
+		'+66',
+		'+886',
+		'+992',
+		'+255',
+		'+670',
+		'+228',
+		'+676',
+		'+1868',
+		'+216',
+		'+1649',
+		'+993',
+		'+90',
+		'+688',
+		'+380',
+		'+256',
+		'+598',
+		'+998',
+		'+678',
+		'+58',
+		'+84',
+		'+681',
+		'+260',
+		'+263',
+	);
 	const LAZY_METHODS = array( 'createProduct', 'patchProduct', 'convertOrder', 'convertCart' );
 	const APIV3        = 'https://api.egoiapp.com';
 	const PLUGINKEY    = '908361f0368fd37ffa5cc7c483ffd941';
@@ -20,7 +252,8 @@ class EgoiApiV3 {
 		'deployEmailRssCampaign'   => '/campaigns/email/rss/{campaign_hash}/actions/enable',
 		'createEmailRssCampaign'   => '/campaigns/email/rss',
 		'getSenders'               => '/senders/{channel}?status=active',
-		'getLists'                 => '/lists?limit=10&order=desc&order_by=list_id',
+		'getLists'                 => '/lists?limit=100&order=desc&order_by=list_id',
+		'createList'               => '/lists',
 		'createWebPushRssCampaign' => '/campaigns/webpush/rss',
 		'deployWebPushRssCampaign' => '/campaigns/webpush/rss/{campaign_hash}/actions/enable',
 		'getWebPushSites'          => '/webpush/sites',
@@ -40,6 +273,7 @@ class EgoiApiV3 {
 		'getConnectedSite'         => '/connectedsites/{domain}',
 		'convertOrder'             => '/{domain}/orders',
 		'convertCart'              => '/{domain}/carts',
+		'importContactsBulk'       => '/lists/{list_id}/contacts/actions/import-bulk',
 		'ping'					   => '/ping',
 	);
 
@@ -75,6 +309,43 @@ class EgoiApiV3 {
 		$this->_cacheCreatorHandler( $url, $response );
 
 		return $response;
+	}
+
+	/**
+     * @param $cellphone
+     * @return array|mixed|string|string[]
+     */
+	public function advinhometerCellphoneCode( $cellphone ) {
+		if ( empty( $cellphone ) ) {
+			return '';
+		}
+
+		preg_match( '/[0-9]{1,3}-/', $cellphone, $pregged );
+		if ( ! empty( $pregged ) ) {
+			return $cellphone;
+		}
+
+		if ( strpos( $cellphone, '+' ) !== false ) {
+			foreach ( self::EFWP_COUNTRY_CODES as $code ) {
+				if ( strpos( $cellphone, $code ) !== false ) {
+					$cellphone = str_replace( $code, $code . '-', $cellphone );
+					return $cellphone;
+				}
+			}
+		}
+
+		$data = $this->getCountriesCurrencies( $cellphone );
+		if ( empty( $data ) ) {
+			return $cellphone;
+		}
+		$language = get_option( 'WPLANG' );
+		foreach ( $data['items'] as $country ) {
+			if ( strpos( $language, $country['iso_code'] ) !== false ) {
+				return $country['country_code'] . '-' . $cellphone;
+			}
+		}
+
+		return $cellphone;
 	}
 
 	/*
@@ -153,6 +424,14 @@ class EgoiApiV3 {
 		return true;
 	}
 
+	/**
+	 * Creates a product in the E-goi API.
+	 *
+	 * @param array  $data    The data of the product to be created.
+	 * @param string $catalog The ID of the catalog where the product will be created.
+	 *
+	 * @return bool Returns true if the product was created successfully, false otherwise.
+	 */
 	public function createProduct( $data, $catalog ) {
 
 		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{catalog_id}', $catalog );
@@ -327,8 +606,14 @@ class EgoiApiV3 {
 	 */
 	public function getLists() {
 
+		$url = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+
+		if ( $this->_hasCachedResponse( $url ) && ! empty( $this->_cachedResponse( $url ) ) ) {
+			return $this->_cachedResponse( $url );
+		}
+
 		$client = new ClientHttp(
-			self::APIV3 . self::APIURLS[ __FUNCTION__ ],
+			$url,
 			'GET',
 			$this->headers
 		);
@@ -338,9 +623,14 @@ class EgoiApiV3 {
 		}
 
 		$resp = json_decode( $client->getResponse(), true );
-		return $client->getCode() == 200 && isset( $resp['items'] )
-			? wp_json_encode( $resp['items'] )
-			: $this->processErrors();
+
+		if($client->getCode() == 200 && isset( $resp['items'] )){
+			$return = $resp['items'];
+			$this->_cacheCreatorHandler( $url, $return );
+			return $return;
+		} else {
+			return $this->processErrors( $client->getResponse() );
+		}
 
 	}
 
@@ -475,9 +765,70 @@ class EgoiApiV3 {
 			: false;
 	}
 
-		/**
-		 * Add contact using API v3
-		 */
+	/**
+	 * Import Contacts Bulk
+	 * @param $listId
+	 * @param $data
+	 * @return false|string
+	 */
+	public function importContactsBulk( $listId, $data ) {
+		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{list_id}', $listId );
+
+		$client = new ClientHttp(
+			$path,
+			'POST',
+			$this->headers,
+			$data
+		);
+
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+
+		return $client->getCode() == 200
+			? $client->getResponse()
+			: $this->processErrors( $client->getResponse() );
+	}
+
+	/**
+	 * Create List
+	 * @param $name
+	 * @return false|string
+	 */
+	public function createList( $name )
+	{
+		$path   = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+		$client = new ClientHttp(
+			$path,
+			'POST',
+			$this->headers,
+			array(
+				'internal_name' => $name,
+				'public_name'   => $name,
+			)
+		);
+
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+		$resp = json_decode( $client->getResponse(), true );
+
+		if($client->getCode() == 201 && isset( $resp['list_id'] )){
+			$urlGetLists = self::APIV3 . self::APIURLS[ 'getLists' ];
+
+			if ( $this->_hasCachedResponse( $urlGetLists ) && ! empty( $this->_cachedResponse( $urlGetLists ) ) ) {
+				$this->_purgeCache( $urlGetLists );
+			}
+
+			return $resp['list_id'];
+		} else {
+			return $this->processErrors( $client->getResponse() );
+		}
+	}
+
+	/**
+	 * Add contact using API v3
+	*/
 	public function addContact( $listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
 
 		$full_name = explode( ' ', $name );
@@ -489,10 +840,10 @@ class EgoiApiV3 {
 			$fname = implode(' ', array_slice($full_name,0,-1));
 			
 		}
-		$tel  = $ref_fields['tel'];
-		$cell = $ref_fields['cell'];
-		$bd   = $ref_fields['bd'];
-		$lang = $ref_fields['lang'];
+		$tel  = isset($ref_fields['tel']) ? $this->advinhometerCellphoneCode($ref_fields['tel']) : '';
+		$cell = isset($ref_fields['cell']) ? $this->advinhometerCellphoneCode($ref_fields['cell']) : '';
+		$bd   = isset($ref_fields['bd']) ? $ref_fields['bd'] : '';
+		$lang = isset($ref_fields['lang']) ? $ref_fields['lang'] : '';
 
 		$params = array(
 			'email'      => $email,
@@ -502,19 +853,19 @@ class EgoiApiV3 {
 		);
 
 		// telephone
-		if ( $tel ) {
+		if ( !empty($tel) ) {
 			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if ( $cell && ! $tel ) {
+		if ( !empty($cell) && empty($tel) ) {
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
-		if ( $bd ) {
+		if ( !empty($bd) ) {
 			$params['birth_date'] = $bd;
 		}
 		// language
-		if ( $lang ) {
+		if ( !empty($lang) ) {
 			$params['language'] = $lang;
 		}
 
@@ -554,8 +905,14 @@ class EgoiApiV3 {
 		if ( $client->success() !== true ) {
 			return $this->processErrors( $client->getError() );
 		}
-
+	
 		$resp = json_decode( $client->getResponse(), true );
+
+		if(isset($resp) && isset($resp['status']) && $resp['status'] == 409){
+			return $this->editContact( $listID, $resp['errors']['contacts'][0], $name, $lname, $extra_fields, $option, $ref_fields, $status, $tags );
+		} else if(isset($resp) && isset($resp['status']) && $resp['status'] == 422){
+			return $resp;
+		}
 
 		if ( ! empty( $tags ) && isset( $resp['contact_id'] ) ) {
 			$this->attachTag( $listID, $resp['contact_id'], $tags );
@@ -564,9 +921,6 @@ class EgoiApiV3 {
 		return $resp['contact_id'];
 	}
 
-	/**
-	 * Attach tag to a contact using API V3
-	 */
 	public function attachTag( $list_id, $contact_id, $tags = array() ) {
 		$url = self::APIV3 . '/lists/' . $list_id . '/contacts/actions/attach-tag';
 
@@ -603,6 +957,27 @@ class EgoiApiV3 {
 
 			if ( empty( $data ) ) {
 				return $this->addTag( $name );
+			}
+
+			return $data;
+		}
+	}
+
+	/**
+	 * Get Tag
+	 * If doesnt exists creates one tag
+	 */
+	public function getTagById( $id ) {
+		$tags = json_decode( $this->getTags() );
+
+		$data = array();
+		if ( isset( $tags['status'] ) || isset( $tags['error'] ) ) {
+			return $data;
+		} else {
+			foreach ( $tags as $key => $value ) {
+				if ( strcasecmp( $value->tag_id, $id ) == 0 ) {
+					$data = $value;
+				}
 			}
 
 			return $data;
@@ -649,9 +1024,9 @@ class EgoiApiV3 {
 	}
 
 
-		/**
-		 * Check if a contact exists using API V3
-		 */
+	/**
+	 * Check if a contact exists using API V3
+	 */
 	public function searchContact( $listID, $email ) {
 		$url = self::APIV3 . '/contacts/search?type=email&contact=' . $email;
 
@@ -700,10 +1075,10 @@ class EgoiApiV3 {
 		return $result;
 	}
 
-	   /**
+	/**
 		* Check if a contact exists using API V3
-		*/
-	public function getExtraFields( $listID ) {
+	*/
+	public function getExtraFields( $listID, $type = 'id' ) {
 		$url = self::APIV3 . '/lists/' . $listID . '/fields';
 
 		$client = new ClientHttp( $url, 'GET', $this->headers );
@@ -716,8 +1091,10 @@ class EgoiApiV3 {
 
 		$extra_fields = array();
 		foreach ( $result_client as $fields ) {
-			if ( $fields['type'] == 'extra' ) {
+			if ( $fields['type'] == 'extra' && $type == 'id' ) {
 				array_push( $extra_fields, $fields['field_id'] );
+			} else if ( $fields['type'] == 'extra' ){
+				array_push( $extra_fields, $fields );
 			}
 		}
 		return $extra_fields;
@@ -737,25 +1114,25 @@ class EgoiApiV3 {
 			'last_name' => $lname
 		);
 
-		$tel  = $ref_fields['tel'];
-		$cell = $ref_fields['cell'];
-		$bd   = $ref_fields['bd'];
-		$lang = $ref_fields['lang'];
+		$tel  = isset($ref_fields['tel']) ? $ref_fields['tel'] : '';
+		$cell = isset($ref_fields['cell']) ? $ref_fields['cell'] : '';
+		$bd   = isset($ref_fields['bd']) ? $ref_fields['bd'] : '';
+		$lang = isset($ref_fields['lang']) ? $ref_fields['lang'] : '';
 
 		// telephone
-		if ( $tel ) {
+		if ( !empty($tel) ) {
 			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if ( $cell && ! $tel ) {
+		if ( !empty($cell) && empty($tel) ) {
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
-		if ( $bd ) {
+		if ( !empty($bd) ) {
 			$params['birth_date'] = $bd;
 		}
 		// language
-		if ( $lang ) {
+		if ( !empty($lang) ) {
 			$params['language'] = $lang;
 		}
 
@@ -916,6 +1293,19 @@ class EgoiApiV3 {
         return false;
     }
 
+	public function getTotalContacts( $listId )
+	{
+		$url = self::APIV3 . '/lists/' . $listId . '/contacts?limit=1';
+
+		$client = new ClientHttp( $url, 'GET', $this->headers );
+		if ( $client->success() !== true ) {
+			return $this->processErrors( $client->getError() );
+		}
+
+		$result_client = json_decode( $client->getResponse(), true );
+
+		return $client->getCode() == 200 && isset( $result_client['total_items'] ) ? $result_client['total_items'] : $this->processErrors();
+	} 
 
 
 	/**

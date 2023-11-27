@@ -37,12 +37,6 @@ class EgoiPopUp {
 	}
 
 	public static function savePostPopup( $post ) {
-
-		// if(!self::isValidPreviewPost($post)){
-		// return false;
-		// }
-		// $post = self::createConfigFromPost($post['data']);
-
 		if ( $post['popup_id'] == 'new' ) {
 			$post['popup_id'] = self::generateNextPopupId();
 		}

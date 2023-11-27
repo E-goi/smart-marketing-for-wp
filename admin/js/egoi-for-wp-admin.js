@@ -56,7 +56,6 @@ jQuery( document ).ready(
 								egoi_key: key
 							}),
 						success:function(data, status) {
-							console.log( [data,status] )
 							if (status == '404' || (data.data && data.data.ERROR) ) {
 								$( ".icon-error" ).show();
 								$( ".icon-valid" ).hide();

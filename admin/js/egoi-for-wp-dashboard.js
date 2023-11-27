@@ -28,7 +28,6 @@
 					'action': 'smsnf_show_blog_posts'
 				},
 				function(response) {
-					console.log( response )
 					$( '#blog_posts_content_loading' ).remove();
 					$( '.smsnf-dashboard-blog-last-post' ).append( response );
 				}

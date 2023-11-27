@@ -26,12 +26,12 @@ $contact_forms = $this->egoiWpApi->getContactFormInfo();
 						<p class="subtitle"><?php _e( 'See how to configure ', 'egoi-for-wp' ); ?><a target="_blank" rel="noopener noreferrer" href="https://helpdesk.e-goi.com/514759-Integrating-E-goi-with-Contact-Form-7"><?php _e( 'here', 'egoi-for-wp' ); ?></a></p>
 					<?php } ?>
 					<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
-						<label><input type="radio"  name="egoi_int[enable_cf]" <?php checked( $egoint['enable_cf'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
-						<label><input type="radio" name="egoi_int[enable_cf]" <?php checked( $egoint['enable_cf'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+						<label><input type="radio"  name="egoi_int[enable_cf]" <?php if(isset($egoint['enable_cf'])) {checked( $egoint['enable_cf'], 1 ); }?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+						<label><input type="radio" name="egoi_int[enable_cf]" <?php if(isset($egoint['enable_cf'])) {checked( $egoint['enable_cf'], 0 ); } ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
 					</div>
 				</div>
 
-				<?php if ( $egoint['enable_cf'] ) { ?>
+				<?php if ( isset($egoint['enable_cf']) ) { ?>
 
 					<div class="smsnf-input-group">
 						<label for="egoi4wp-forms"><?php _e( 'Contact Form Name', 'egoi-for-wp' ); ?></label>
@@ -46,7 +46,7 @@ $contact_forms = $this->egoiWpApi->getContactFormInfo();
 										?>
 										<option value="<?php echo esc_attr( $form->ID ); ?>" 
 																  <?php
-																	if ( is_array( $opt['contact_form'] ) ) {
+																	if ( isset($opt['contact_form']) && is_array( $opt['contact_form'] ) ) {
 																		selected( in_array( $form->ID, $opt['contact_form'] ) );
 																	}
 																	echo '>' . esc_html( $form->post_title );
@@ -73,9 +73,9 @@ $contact_forms = $this->egoiWpApi->getContactFormInfo();
 								<?php
 									$index = 1;
 								foreach ( $lists as $list ) {
-									if ( $list->title != '' ) {
+									if ( $list['public_name'] != '' ) {
 										?>
-											<option value="<?php echo esc_attr( $list->listnum ); ?>" <?php selected( $list->listnum, $egoint['list_cf'] ); ?>><?php echo esc_html( $list->title ); ?></option>
+											<option value="<?php echo esc_attr( $list['list_id'] ); ?>" <?php if(isset($egoint['list_cf'])){selected( $list['list_id'], $egoint['list_cf'] );} ?>><?php echo esc_html( $list['public_name'] ); ?></option>
 																	  <?php
 									}
 									$index++;
@@ -90,8 +90,8 @@ $contact_forms = $this->egoiWpApi->getContactFormInfo();
 						<label for="edit"><?php _e( 'Update Subscriber', 'egoi-for-wp' ); ?></label>
 						<p class="subtitle"><?php _e( 'Select "yes" to edit the subscriber if already exists in E-goi List.', 'egoi-for-wp' ); ?></p>
 						<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
-							<label><input type="radio"  name="egoi_int[edit]" <?php checked( $egoint['edit'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
-							<label><input type="radio" name="egoi_int[edit]" <?php checked( $egoint['edit'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+							<label><input type="radio"  name="egoi_int[edit]" <?php if(isset($egoint['edit'])) {checked( $egoint['edit'], 1 );} ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+							<label><input type="radio" name="egoi_int[edit]" <?php if(isset($egoint['edit'])) {checked( $egoint['edit'], 0 );} ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
 						</div>
 					</div>
 

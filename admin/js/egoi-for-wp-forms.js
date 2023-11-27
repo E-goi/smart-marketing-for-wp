@@ -32,7 +32,7 @@ jQuery( document ).ready(
 					function(response) {
 						$( ".loading_lists" ).removeClass( 'spin' ).hide();
 						current_lists = JSON.parse( response );
-						if (current_lists.ERROR) {
+						if (!current_lists) {
 							$( '.e-goi-lists_not_found' ).show();
 
 							select_lists_frm.hide();
@@ -51,19 +51,19 @@ jQuery( document ).ready(
 								current_lists,
 								function(key, val) {
 
-									if (typeof val.listnum != 'undefined') {
-										select_lists_frm.append( $( '<option />' ).val( val.listnum ).text( val.title ) );
-										select_lists_bar.append( $( '<option />' ).val( val.listnum ).text( val.title ) );
+									if (typeof val['list_id'] != 'undefined') {
+										select_lists_frm.append( $( '<option />' ).val( val['list_id'] ).text( val['public_name'] ) );
+										select_lists_bar.append( $( '<option />' ).val( val['list_id'] ).text( val['public_name'] ) );
 
-										if (lists_count_frm.text() === val.listnum) {
-											select_lists_frm.val( val.listnum );
+										if (lists_count_frm.text() === val['list_id']) {
+											select_lists_frm.val( val['list_id'] );
 											if (form_to_subscriber.text() != '') {
 												select_form.append( $( '<option />' ).val( form_to_subscriber.text() ).text( form_to_subscriber.text() ) );
 											}
 										}
 
-										if (lists_count_bar.text() === val.listnum) {
-											select_lists_bar.val( val.listnum );
+										if (lists_count_bar.text() === val['list_id']) {
+											select_lists_bar.val( val['list_id'] );
 										}
 									}
 								}

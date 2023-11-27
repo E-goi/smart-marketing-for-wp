@@ -14,61 +14,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<th><?php echo _e( 'List ID', 'egoi-for-wp' ); ?></th>
 					<th><?php echo _e( 'Public Title', 'egoi-for-wp' ); ?></th>
 					<th><?php echo _e( 'Internal Title', 'egoi-for-wp' ); ?></th>
-					<th>
-					<?php
-					echo _e(
-						'Active Contacts 
- 							<span class="e-goi-tooltip">
- 								 <span class="dashicons dashicons-editor-help"></span>
- 							  	 <span class="e-goi-tooltiptext e-goi-tooltiptext--active">
- 							  	 	What are the available subscription statuses for my contacts in E-goi? <a target="_blank" href="https://helpdesk.e-goi.com/797063-Vejo-contatos-com-diferentes-estados-de-subscri%C3%A7%C3%A3o-O-que-%C3%A9-isso">Look here!</a>
- 							 	</span>
- 							</span>',
-						'egoi-for-wp'
-					);
-					?>
-					</th>
-					<th><?php echo _e( 'All Contacts', 'egoi-for-wp' ); ?></th>
-					<th><?php echo _e( 'Language', 'egoi-for-wp' ); ?></th>
 					<th><?php echo _e( 'Settings', 'egoi-for-wp' ); ?></th>
 				</tr>
 			</thead>
 			<?php
-			foreach ( $lists as $key_list => $value_list ) {
+			foreach ( $lists as $list ) {
 
-				if ( isset( $value_list->listnum ) ) {
+				if ( isset( $list['list_id'] ) ) {
 					?>
 					<tr>
 						<td>
-							<?php echo ! empty( $value_list->listnum ) ? esc_html( $value_list->listnum ) : 0; ?>
+							<?php echo ! empty( $list['list_id'] ) ? esc_html( $list['list_id']) : 0; ?>
 						</td>
 						<td>
-							<?php echo ! empty( $value_list->title ) ? esc_html( $value_list->title ) : ''; ?>
+							<?php echo ! empty( $list['public_name'] ) ? esc_html( $list['public_name'] ) : ''; ?>
 						</td>
 						<td>
-							<?php echo ! empty( $value_list->title_ref ) ? esc_html( $value_list->title_ref ) : ''; ?>
+							<?php echo ! empty( $list['internal_name'] ) ? esc_html( $list['internal_name'] ) : ''; ?>
 						</td>
 						<td>
-							<?php echo ! empty( $value_list->subs_activos ) ? esc_html( $value_list->subs_activos ) : 0; ?>
-						</td>
-						<td>
-							<?php echo ! empty( $value_list->subs_total ) ? esc_html( $value_list->subs_total ) : 0; ?>
-						</td>
-						<td>
-						<?php
-						if ( strcmp( $value_list->idioma, 'pt' ) == 0 ) {
-							echo 'Português (Portugal)';
-						} elseif ( strcmp( $value_list->idioma, 'br' ) == 0 ) {
-							echo 'Português (Brasil)';
-						} elseif ( strcmp( $value_list->idioma, 'es' ) == 0 ) {
-							echo 'Español';
-						} else {
-							echo 'English';
-						}
-						?>
-						</td>
-						<td>
-							<a href="https://login.egoiapp.com/#/login/?action=login&menu=sec&from=%2F%3Faction%3Dlista_definicoes_principal%26list%3D<?php echo esc_attr( $value_list->listnum ); ?>%26menu%3Dsec" class='smsnf-btn' style="min-width:125px;" target="_blank" />
+							<a href="https://login.egoiapp.com/#/login/?action=login&menu=sec&from=%2F%3Faction%3Dlista_definicoes_principal%26list%3D<?php echo esc_attr( $list['list_id'] ); ?>%26menu%3Dsec" class='smsnf-btn' style="min-width:125px;" target="_blank" />
 							<?php _e( 'Change in E-goi', 'egoi-for-wp' ); ?>
 						</a>
 						</td>
@@ -95,19 +60,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</span>
 							<span>
 								<input type='text' size='60' name='egoi_wp_title' autofocus required="required" />
-							</span>
-						</div>
-						<div class="e-goi-account-lists--create-lang e-goi-fcenter">
-							<label for="egoi_wp_lang"><?php echo _e( 'Language', 'egoi-for-wp' ); ?></label>
-							<select name='egoi_wp_lang'>
-								<option value='en'><?php echo _e( 'English', 'egoi-for-wp' ); ?></option>
-								<option value='pt'><?php echo _e( 'Portuguese', 'egoi-for-wp' ); ?></option>
-								<option value='br'><?php echo _e( 'Portuguese (Brasil)', 'egoi-for-wp' ); ?></option>
-								<option value='es'><?php echo _e( 'Spanish', 'egoi-for-wp' ); ?></option>
-							</select>
-							<span class="e-goi-account-lists--create-lang--help-text">
-								<span><i><?php echo _e( "The emails you send for contacts of this list will then have E-goi's <br>header and footer automatically translated into their language", 'egoi-for-wp' ); ?>
-								</i></span>
 							</span>
 						</div>
 

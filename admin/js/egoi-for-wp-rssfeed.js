@@ -497,15 +497,15 @@ jQuery( document ).ready(
 			jQuery.post(
 				egoi_config_ajax_object.ajax_url,
 				obj,
-				function(response) {
+				function(response) {					
 					response = JSON.parse( response );
 					jQuery.each(
 						response,
 						function (index, value) {
-							if (typeof value.listnum == 'undefined') {
+							if (typeof value['list_id'] == 'undefined') {
 								return true;
 							}
-							list_place.append( jQuery( "<option />" ).val( value.listnum ).text( decodeHTML( value.title ) ) );
+							list_place.append( jQuery( "<option />" ).val( value['list_id']).text( decodeHTML( value['public_name'] ) ) );
 						}
 					);
 					jQuery( "#egoi_list_loading" ).hide();

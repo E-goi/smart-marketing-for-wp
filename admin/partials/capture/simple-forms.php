@@ -9,12 +9,11 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 		$date      = date( 'Y-m-d H:i:s' );
 		$post_name = preg_replace( '~[^0-9a-z]+~i', '-', preg_replace( '~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities( str_replace( ' ', '-', strtolower( sanitize_title( $_POST['title'] ) ) ), ENT_QUOTES, 'UTF-8' ) ) );
 
-		// to save simple form options: listId and language
+		// to save simple form options: listId
 		$table2 = $wpdb->prefix . 'options';
 
 		$data = array(
 			'list'         => sanitize_key( $_POST['list'] ),
-			'lang'         => sanitize_text_field( $_POST['lang'] ),
 			'double_optin' => empty( $_POST['double_optin'] ) ? '0' : '1',
 		);
 
@@ -22,9 +21,9 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 		if ( isset( $_POST['tag-egoi'] ) && $_POST['tag-egoi'] != '' ) {
 			$data['tag'] = sanitize_text_field( $_POST['tag-egoi'] );
 		} else {
-			$egoiWpApi	 = new Egoi_For_Wp();
-			$new         = $egoiWpApi->addTag( $_POST['tag'] );
-			$data['tag'] = $new->ID;
+			$egoiWpApiv3 = new EgoiApiV3( sanitize_text_field( get_option( 'egoi_api_key' ) ) );
+			$new         = $egoiWpApiv3->getTag( $_POST['tag'] );
+			$data['tag'] = $new['tag_id'];
 		}
 
 		$info = wp_json_encode( $data );
@@ -45,7 +44,7 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 				'post_type'         => 'egoi-simple-form',
 			);
 
-			$query          = $wpdb->insert( $table, $post );
+			$wpdb->insert( $table, $post );
 			$id_simple_form = $wpdb->insert_id;
 
 			// insert simple form options
@@ -55,7 +54,7 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 				'autoload'     => 'no',
 			);
 
-			$query2 = $wpdb->insert( $table2, $options );
+			$wpdb->insert( $table2, $options );
 
 		} else {
 
@@ -70,7 +69,7 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 			);
 
 			$where          = array( 'ID' => sanitize_key( $_POST['id_simple_form'] ) );
-			$query          = $wpdb->update( $table, $post, $where );
+			$wpdb->update( $table, $post, $where );
 			$id_simple_form = sanitize_key( $_POST['id_simple_form'] );
 
 			// update simple form options
@@ -80,7 +79,7 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 
 			$where2 = array( 'option_name' => 'egoi_simple_form_' . $id_simple_form );
 
-			$query2 = $wpdb->update( $table2, $options, $where2 );
+			$wpdb->update( $table2, $options, $where2 );
 		}
 
 		$shortcode = '[egoi-simple-form id="' . $id_simple_form . '"]';
@@ -91,7 +90,6 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 			'title_simple_form'     => sanitize_text_field( $_POST['title'] ),
 			'html_code_simple_form' => wp_kses_normalize_entities( $_POST['html_code'] ),
 			'list'                  => sanitize_key( $_POST['list'] ),
-			'lang'                  => sanitize_text_field( $_POST['lang'] ),
 			'tag'                   => isset( $_POST['tag-egoi'] ) ? sanitize_key( $_POST['tag-egoi'] ) : $new->ID,
 			'double_optin'          => empty( $_POST['double_optin'] ) ? '0' : '1',
 		);
@@ -117,7 +115,6 @@ if ( isset( $_POST['id_simple_form'] ) ) {
 		$info = json_decode( $data );
 
 		$shortcode['list']         = $info->list;
-		$shortcode['lang']         = $info->lang;
 		$shortcode['tag']          = $info->tag;
 		$shortcode['double_optin'] = $info->double_optin;
 
@@ -167,13 +164,10 @@ $defaultPrefix = ! empty( $countryCodes[ $key ] ) ? $countryCodes[ $key ]['prefi
 			</div>
 			<!-- / Double Opt-In -->
 			<!-- LISTAS -->
-			<?php if(isset($shortcode['list'])){ get_list_html( $shortcode['list'], 'list' ); } else { get_list_html( 0, 'list' ); }?>
+			<?php if(isset($shortcode['list'])){ get_list_html( $shortcode['list'], 'list' ); } else { get_list_html( '', 'list' ); }?>
 			<!-- / LISTAS -->
-			<!-- lang -->
-			<?php if(isset($shortcode['lang'])){ get_lang_html( $shortcode['lang'], 'lang', empty( $shortcode['list'] )); } else { get_lang_html( 'en', 'lang', true ); } ?>
-			<!-- / lang -->
 			<!-- TAGS -->
-			<?php if(isset($shortcode['tag'])){ get_tag_html( $shortcode['tag'], 'tag-egoi', empty( $shortcode['list'] )); } else { get_tag_html( '', 'tag-egoi', true ); }?>
+			<?php if(isset($shortcode['tag'])){ get_tag_html( $shortcode['tag'], 'tag-egoi', empty( $shortcode['list'] )); } else { get_tag_html( '', 'tag-egoi', false ); }?>
 			<!-- / TAGS -->
 			<!-- TÍTULO -->
 			<div class="smsnf-input-group">

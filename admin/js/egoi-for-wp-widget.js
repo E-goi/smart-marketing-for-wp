@@ -70,7 +70,7 @@ jQuery( document ).ready(
 						$( ".loading_lists-widget" ).removeClass( 'spin' ).hide();
 						current_lists = JSON.parse( response );
 
-						if (current_lists.ERROR) {
+						if (!current_lists) {
 							$( '.e-goi-lists_not_found' ).show();
 
 							select_lists_widget.hide();
@@ -84,13 +84,13 @@ jQuery( document ).ready(
 								current_lists,
 								function(key, val) {
 
-									if (typeof val.listnum != 'undefined') {
-										var field_text = jQuery( '<option />' ).html( val.title ).text();
+									if (typeof val['list_id'] != 'undefined') {
+										var field_text = jQuery( '<option />' ).html( val['list_id'] ).text();
 
-										select_lists_widget.append( $( '<option />' ).val( val.listnum ).text( field_text ) );
+										select_lists_widget.append( $( '<option />' ).val( val['list_id'] ).text( field_text ) );
 
-										if (lists_count_widget.text() === val.listnum) {
-											select_lists_widget.val( val.listnum );
+										if (lists_count_widget.text() === val['list_id']) {
+											select_lists_widget.val( val['list_id'] );
 
 										}
 
@@ -129,7 +129,7 @@ function getTags(){
 			tags = JSON.parse( response );
 			jQuery( ".loading_tags-widget" ).removeClass( 'spin' ).hide();
 
-			if (tags.ERROR) {
+			if (!tags) {
 				jQuery( '.egoi-tags_not_found' ).show();
 				select_tags.hide();
 
@@ -140,16 +140,16 @@ function getTags(){
 				jQuery( '.e-goi-tags_not_found' ).hide();
 
 				jQuery.each(
-					tags['TAG_LIST'],
+					tags,
 					function(key, val) {
 
-						if (typeof val.ID != 'undefined') {
-							var field_text = jQuery( '<option />' ).html( val.NAME ).text();
+						if (typeof val.tag_id != 'undefined') {
+							var field_text = jQuery( '<option />' ).html( val.name ).text();
 
-							select_tags.append( jQuery( '<option />' ).val( val.ID ).text( field_text ) );
+							select_tags.append( jQuery( '<option />' ).val( val.tag_id ).text( field_text ) );
 
-							if (lists_count_tags.text() === val.ID) {
-								select_tags.val( val.ID );
+							if (lists_count_tags.text() === val.tag_id) {
+								select_tags.val( val.tag_id );
 
 							}
 						}

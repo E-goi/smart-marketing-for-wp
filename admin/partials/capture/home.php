@@ -1,7 +1,6 @@
 <?php
 require_once plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-popup.php';
 $simple_forms = get_simple_forms();
-// $adv_forms    = get_adv_forms();
 $popups = EgoiPopUp::getSavedPopUps();
 ?>
 
@@ -79,7 +78,7 @@ $popups = EgoiPopUp::getSavedPopUps();
 			$edit_link   = sprintf( '?page=egoi-4-wp-form&sub=popup&popup_id=%d', sanitize_key($form) );
 			$delete_link = sprintf( '?page=egoi-4-wp-form&del_popup=%d', sanitize_key($form) );
 			?>
-			<tr <?php echo $form == $_GET['highlight'] ? 'class="pulse-highlight"' : ''; ?>>
+			<tr <?php if(isset($_GET['highlight'])) {echo $form == $_GET['highlight'] ? 'class="pulse-highlight"' : ''; }?>>
 				<td><?php echo esc_textarea($form); ?></td>
 				<td><?php _e( 'Popup', 'egoi-for-wp' ); ?></td>
 				<td><?php echo esc_textarea($popup_data['title']); ?></td>
