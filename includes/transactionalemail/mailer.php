@@ -1,9 +1,6 @@
 <?php
 
 
-
-use MailCatcherInterface;
-
 /**
  * Class Mailer.
  */

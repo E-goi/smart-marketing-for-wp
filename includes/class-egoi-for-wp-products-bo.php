@@ -220,7 +220,8 @@ class EgoiProductsBo {
 	 *
 	 * @param WC_Product $product
 	 * @return bool
-	 */public function syncProduct( $product ) {
+	 */
+	public function syncProduct( $product ) {
 		$breadCumbs = self::getBreadcrumb();
 		$catalogs   = self::getCatalogsToSync();// apply rules if needed here (which products to sync)
 		$products   = self::preTransformArrayAbstractProductToApiBoth(
@@ -238,8 +239,8 @@ class EgoiProductsBo {
 				$products = $products['variations'];
 			}
 			foreach ( $products as $single ) {
-                $single['name'] = json_encode($single['name']);
-                $single['description'] = json_encode($single['description']);
+                $single['name'] = $single['name'];
+                $single['description'] = $single['description'];
 
 				$tax = (float) $option['tax'];
 				if( $tax > 0) {

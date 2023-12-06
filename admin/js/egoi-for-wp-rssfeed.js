@@ -204,13 +204,12 @@ jQuery( document ).ready(
 					campaign,
 					function(response) {
 						loading.hide();
-						response = JSON.parse( response );
-						if (typeof response.campaign_hash == 'undefined') {
+						if (typeof response.data.campaign_hash == 'undefined') {
 							console.log( 'error' );
 							return false;
 						}
 						button.hide();
-						jQuery( "#campaign_hash_deploy" ).val( response.campaign_hash );
+						jQuery( "#campaign_hash_deploy" ).val( response.data.campaign_hash );
 						jQuery( "#campaign_list_id_deploy" ).val( list.val() );
 
 						var edit = jQuery( "#egoi_edit_campaign" );
@@ -273,7 +272,7 @@ jQuery( document ).ready(
 					egoi_config_ajax_object.ajax_url,
 					campaign,
 					function(response) {
-						response = JSON.parse( response );
+                        console.log(response)
 						if (typeof response.error != 'undefined') {
 							onOffForm( true );
 							clearForm();

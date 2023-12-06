@@ -183,11 +183,11 @@ jQuery(document).ready(function() {
             });
         }
 
-        function syncCatalog(data,obj){
+        function syncCatalog(data2,obj){
             var data = {
                 security:       ajaxObj.ajax_nonce,
                 action:         'egoi_sync_catalog',
-                data:           data
+                data:           data2
             };
             
             if(typeof scopeAjaxSync != "undefined")

@@ -698,6 +698,12 @@ class Egoi_For_Wp_Public {
 				'status'     => $status,
 			);
 
+			$refFields = array();
+
+			if(isset($form_data['cellphone']) && ($form_data['cellphone'] != '-' || !empty($form_data['cellphone']))){
+				$refFields['cell'] = $form_data['cellphone'];
+			}
+
 			$add = $this->egoiWpApiV3->addContact(
 				sanitize_key( $_POST['egoi_list'] ),
 				$form_data['email'],
@@ -705,7 +711,7 @@ class Egoi_For_Wp_Public {
 				'',
 				array(),
 				$status,
-				array('cell' => $form_data['cellphone']),
+				$refFields,
 				$status == 0 ? 'active' : 'unconfirmed',
 				$form_data['tags']
 			);

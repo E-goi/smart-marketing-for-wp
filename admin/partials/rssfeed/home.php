@@ -47,7 +47,7 @@ if ( ! isset( $_GET['add'] ) && ! isset( $_GET['edit'] ) && ! isset( $_GET['view
 					<td style="vertical-align: middle;"><input type="text" id="url_<?php echo $option->option_name; ?>" class="copy-input" value="<?php echo get_home_url() . '/?feed=' . $option->option_name; ?>" readonly
 															   style="width: 100%;border: none;background-image:none;background-color:transparent;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></td>
 					<td style="vertical-align: middle;" width="130">
-						<button type="button" class="copy_url smsnf-btn" data-rss-feed="url_<?php echo $option->option_name; ?>"><?php _e( 'Copy URL', 'egoi-for-wp' ); ?></button>
+						<button type="button" class="copy_url smsnf-btn" data-rss-feed="url_<?php echo $option->option_name; ?>" onclick="copyToClipboard('url_<?php echo $option->option_name; ?>')"><?php _e( 'Copy URL', 'egoi-for-wp' ); ?></button>
 					</td>
 					<td style="vertical-align: middle;" align="right" width="70" nowrap>
 						<nobr>
@@ -70,3 +70,11 @@ if ( ! isset( $_GET['add'] ) && ! isset( $_GET['edit'] ) && ! isset( $_GET['view
 
 
 <?php } ?>
+
+<script>
+    function copyToClipboard(elementId) {
+        var copyText = document.getElementById(elementId);
+        copyText.select();
+        document.execCommand("copy");
+    }
+</script>

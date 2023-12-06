@@ -5,6 +5,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $lists = $this->smsnf_get_form_subscriber_total_by( 'list' );
 
+$listsTitle = $this->getLists();
+
+$listsObject = [];
+
+foreach ($lists as $item1) {
+    foreach ($listsTitle as $item2) {
+        if ($item1->list_id == $item2['list_id']) {
+            $listsObject[$item1->list_id] = $item2['internal_name'];
+            break; 
+        }
+    }
+}
+
 $lists_chart  = $this->smsnf_get_form_subscribers_list( null, 12 );
 $chart_months = '"' . implode( '","', $lists_chart['months'] ) . '"';
 
@@ -167,7 +180,6 @@ $page  = array(
 								<table class="table <?php echo count( $last_subscribers ) == 0 ? 'd-none' : null; ?>">
 									<thead>
 										<tr>
-											<th><?php _e( 'Name', 'egoi-for-wp' ); ?></th>
 											<th class="hide-xs"><?php _e( 'Email', 'egoi-for-wp' ); ?></th>
 											<th class="hide-xs"><?php _e( 'Form ID', 'egoi-for-wp' ); ?></th>
 											<th class="hide-xs"><?php _e( 'Form', 'egoi-for-wp' ); ?></th>
@@ -178,12 +190,12 @@ $page  = array(
 									<tbody>
 									<?php foreach ( $last_subscribers as $subscriber ) { ?>
 										<tr>
-											<td><?php echo ! empty( $subscriber->subscriber_name ) ? esc_html( $subscriber->subscriber_name ) : ''; ?></td>
 											<td class="hide-xs"><?php echo ! empty( $subscriber->subscriber_email ) ? esc_html( $subscriber->subscriber_email ) : ''; ?></td>
 											<td class="hide-xs"><?php echo ! empty( $subscriber->form_id ) ? esc_html( $subscriber->form_id ) : ''; ?></td>
 											<td class="hide-xs"><?php echo ! empty( $subscriber->form_title ) ? esc_html( $subscriber->form_title ) : ''; ?></td>
 											<td class="hide-xs"><?php echo ! empty( $subscriber->created_at ) ? esc_html( date( 'Y/m/d H\hm', strtotime( $subscriber->created_at ) ) ) : ''; ?></td>
-											<td><?php echo ! empty( $subscriber->list_title ) ? esc_html( $subscriber->list_title ) : ''; ?></td>
+											<td><?php echo ! empty( $subscriber->list_id ) ? esc_html( '(ID - ' . $subscriber->list_id . ') ' .  $listsObject[$subscriber->list_id] ) 
+											: ''; ?></td>
 										</tr>
 									<?php } ?>
 									</tbody>
@@ -207,7 +219,7 @@ $page  = array(
 													<select id="chart_list">
 														<?php foreach ( $lists as $list ) { ?>
 															<option value="<?php echo isset($lists_chart[ $list->list_id ]) ?  esc_attr( implode( ',', $lists_chart[ $list->list_id ]['totals'] ) ) : "NaN"?>" <?php selected( $list->list_id, $options_list ); ?> >
-																<?php echo esc_html( $list->title ); ?>
+																<?php echo esc_html( '(ID - ' . $list->list_id . ') ' . $listsObject[$list->list_id]); ?>
 															</option>
 														<?php } ?>
 													</select>

@@ -12,14 +12,6 @@
 		$options = $wpdb->get_results( ' SELECT * FROM ' . $table . " WHERE option_name LIKE 'egoi_rssfeed_%' ORDER BY option_id DESC " );
 	?>
 
-<ul class="tab">
-	<li class="tab-item active">
-		<a href="#" tab-target="smsnf-email"><?php echo _e( 'E-mail', 'egoi-for-wp' ); ?></a>
-	</li>
-	<li class="tab-item">
-		<a href="#" tab-target="smsnf-webpush"><?php echo _e( 'Webpush', 'egoi-for-wp' ); ?></a>
-	</li>
-</ul>
 
 <div id="smsnf-email" class="smsnf-tab-content active">
 	<div class="smsnf-grid">

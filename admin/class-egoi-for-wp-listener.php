@@ -58,8 +58,8 @@ class Egoi_For_Wp_Listener {
 		if ( ! empty( $user->egoi_newsletter_active ) || ! empty( $_POST['egoi_newsletter_active'] ) ) {
 			$tag = $api->getTag( Egoi_For_Wp::TAG_NEWSLETTER );
 
-			if(isset($tag['tag_id'])){
-				array_push($subscriber_tags, $tag['tag_id']);
+			if(isset($tag->tag_id)){
+				array_push($subscriber_tags, $tag->tag_id);
 			}
 		}
 
@@ -71,8 +71,8 @@ class Egoi_For_Wp_Listener {
 		$fields['base']['email'] = ! empty( $fields['email'] ) ? $fields['email'] : $user->user_email;
 
 		$tag = $api->getTag( $user->roles[0] );
-		if(isset($tag['tag_id'])){
-			array_push($subscriber_tags, $tag['tag_id']);
+		if(isset($tag->tag_id)){
+			array_push($subscriber_tags, $tag->tag_id);
 		}
 
 		$api->addContact(

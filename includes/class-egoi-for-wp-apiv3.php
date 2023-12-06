@@ -608,10 +608,6 @@ class EgoiApiV3 {
 
 		$url = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
 
-		if ( $this->_hasCachedResponse( $url ) && ! empty( $this->_cachedResponse( $url ) ) ) {
-			return $this->_cachedResponse( $url );
-		}
-
 		$client = new ClientHttp(
 			$url,
 			'GET',
@@ -626,7 +622,6 @@ class EgoiApiV3 {
 
 		if($client->getCode() == 200 && isset( $resp['items'] )){
 			$return = $resp['items'];
-			$this->_cacheCreatorHandler( $url, $return );
 			return $return;
 		} else {
 			return $this->processErrors( $client->getResponse() );
@@ -840,8 +835,9 @@ class EgoiApiV3 {
 			$fname = implode(' ', array_slice($full_name,0,-1));
 			
 		}
-		$tel  = isset($ref_fields['tel']) ? $this->advinhometerCellphoneCode($ref_fields['tel']) : '';
-		$cell = isset($ref_fields['cell']) ? $this->advinhometerCellphoneCode($ref_fields['cell']) : '';
+
+		$tel  = (isset($ref_fields['tel']) && !empty($ref_fields['tel']) && $ref_fields['tel'] != '-') ? $this->advinhometerCellphoneCode($ref_fields['tel']) : '';
+		$cell = (isset($ref_fields['cell']) && !empty($ref_fields['cell']) && $ref_fields['cell'] != '-' ) ? $this->advinhometerCellphoneCode($ref_fields['cell']) : '';
 		$bd   = isset($ref_fields['bd']) ? $ref_fields['bd'] : '';
 		$lang = isset($ref_fields['lang']) ? $ref_fields['lang'] : '';
 
