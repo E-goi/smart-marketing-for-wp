@@ -69,7 +69,7 @@ $next_adv_form_id = get_next_adv_form_id();
 					   href="<?php echo $next_adv_form_id == null ? '#' : '?page=egoi-4-wp-form&sub=adv-forms&form=' . $next_adv_form_id; ?>"><?php _e( 'Advanced Forms', 'egoi-for-wp' ); ?></a></li>
 				<li><a class="<?php echo $page['subscription bar'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-form&sub=subscription-bar"><?php _e( 'Subscriber Bar', 'egoi-for-wp' ); ?></a></li>
 				<li><a class="<?php echo $page['widget options'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-form&sub=widget-options"><?php _e( 'Widget Options', 'egoi-for-wp' ); ?></a></li>
-				<li><a class="<?php echo $page['popup'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-form&sub=popup"><?php _e( 'Popup', 'egoi-for-wp' ); ?>&nbsp;<?php echo sprintf( '<span style="background-color: green !important;" class="egoi-new-tag">%s</span>', __( 'New!', 'egoi-for-wp' ) ); ?></a></li>
+				<li><a class="<?php echo $page['popup'] ? '-select' : ''; ?>" href="?page=egoi-4-wp-form&sub=popup"><?php _e( 'Popup', 'egoi-for-wp' ); ?></a></li>
 			</ul>
 		</nav>
 	</header>

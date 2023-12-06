@@ -105,7 +105,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			if ( wp_next_scheduled( 'egoi_cron_hook' ) > time() + 60 ) {
 				?>
 				<span class="dashicons dashicons-warning"></span>
-				<span><?php _e( 'Warning: looks something is missing in your corn configuration, scheduled time for cron is higher than current time', 'egoi-for-wp' ); ?></span>
+				<span><?php _e( 'Warning: looks something is missing in your cron configuration, scheduled time for cron is higher than current time', 'egoi-for-wp' ); ?></span>
 				<?php
 			} else {
 				?>

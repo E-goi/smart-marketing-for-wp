@@ -1190,6 +1190,10 @@ class Egoi_For_Wp_Admin {
 		wp_die();
 	}
 
+	public function getLists(){
+		return $this->egoiWpApiV3->getLists();
+	}
+
 	public function get_tags() {
 
 		if ( ! empty( $_POST ) ) {
@@ -2198,9 +2202,6 @@ class Egoi_For_Wp_Admin {
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$data = array();
 
-		if ( empty( $_POST['data'] ) || ! is_array( $_POST['data'] ) ) {
-			wp_send_json_error( __( 'Invalid data type.', 'egoi-for-wp' ) );
-		}
 
 		foreach ( $_POST['data'] as $key => $val ) {
 			$data[ sanitize_key( $key ) ] = sanitize_text_field( $val );
