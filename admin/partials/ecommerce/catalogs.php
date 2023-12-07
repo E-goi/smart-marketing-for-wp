@@ -1,5 +1,5 @@
 <?php if ( ! empty( $table ) ) { ?>
-	<div class="container">
+	<div class="container" style="overflow: auto;">
 		<table border="0" class="smsnf-table" style="margin-bottom: 54px;">
 			<thead>
 			<tr>
@@ -53,7 +53,7 @@
 				<span><?php _e( 'All imported products will be removed from E-goi if you delete this catalog!', 'egoi-for-wp' ); ?></span>
 				<div style="display: flex;"><h4><?php _e( 'Are you sure?', 'egoi-for-wp' ); ?></h4></div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer flex-centered sun-margin">
 				<button type="button" class="button" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true"><?php _e( 'Cancel', 'egoi-for-wp' ); ?></span>
 				</button>

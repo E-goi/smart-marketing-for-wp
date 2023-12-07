@@ -123,13 +123,13 @@ class Egoi4Widget extends WP_Widget {
 								success: function(response) {
 									$("#Loading_<?php echo esc_attr($this->egoi_id) ?>").hide();
 									if(response == "hide"){
-										$("#<?php echo esc_attr($this->egoi_id) ?>").html("<div class='egoi-success'><?php echo esc_attr($this->subscribed) ?></div>");
+										<?php echo get_notification( __( 'Saved Configurations', 'egoi-for-wp' ), __( 'Widget configurations saved with success.', 'egoi-for-wp' ) );?>
 									}else{
 										$(".egoi-widget-error").remove();
 										$(response).appendTo($("#<?php echo esc_attr($this->egoi_id) ?>"));
 									}
 									if(response == "redirect"){
-										$("#<?php echo esc_attr($this->egoi_id) ?>").html("<div class='egoi-success'><?php echo esc_attr($this->subscribed) ?></div>");
+										<?php echo get_notification( __( 'Saved Configurations', 'egoi-for-wp' ), __( 'Widget configurations saved with success.', 'egoi-for-wp' ) );?>
 										window.location.href="<?php echo esc_attr($this->redirect) ?>";
 									}
 								}

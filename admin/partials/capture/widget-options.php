@@ -133,6 +133,17 @@ if(isset($form_id)) { $FORM_OPTION = get_optionsform( $form_id ); }
 
 	<input type="hidden" name="widget" value="1">
 	<input type="hidden" name="egoiform" value="egoi_widget">
+
+	<!-- TAB -->
+		<ul class="tab">
+		<li class="tab-item active">
+			<a href="#" tab-target="smsnf-configuration"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
+		</li>
+		<li class="tab-item">
+			<a href="#" tab-target="smsnf-appearance"><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
+		</li>
+	</ul>
+	<!-- / TAB -->
 	
 	<!-- enable widget -->
 	<div class="smsnf-input-group">
@@ -158,16 +169,6 @@ if(isset($form_id)) { $FORM_OPTION = get_optionsform( $form_id ); }
 		</div>
 	</div>
 	<!-- / Double Opt-In -->
-	<!-- TAB -->
-	<ul class="tab">
-		<li class="tab-item active">
-			<a href="#" tab-target="smsnf-configuration"><?php _e( 'Settings', 'egoi-for-wp' ); ?></a>
-		</li>
-		<li class="tab-item">
-			<a href="#" tab-target="smsnf-appearance"><?php _e( 'Appearance', 'egoi-for-wp' ); ?></a>
-		</li>
-	</ul>
-	<!-- / TAB -->
 	<!-- Configuration -->
 	<div id="smsnf-configuration" class="smsnf-tab-content smsnf-grid active">
 		<div>

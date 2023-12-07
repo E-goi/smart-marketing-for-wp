@@ -31,7 +31,7 @@
 
 			<div class="smsnf-input-group">
 				<label for="catalog_currency"><?php _e( 'Currency', 'egoi-for-wp' ); ?></label>
-				<p class="subtitle"><?php _e( 'Select the list to which visitors should be subscribed.', 'egoi-for-wp' ); ?></p>
+				<p class="subtitle"><?php _e( 'Select the currency to be assign to the products', 'egoi-for-wp' ); ?></p>
 				<div class="smsnf-wrapper">
 					<select id="catalog_currency" name="catalog_currency" class="form-select" >
 						<option value="off" selected><?php _e( 'Select a currency..', 'egoi-for-wp' ); ?></option>
