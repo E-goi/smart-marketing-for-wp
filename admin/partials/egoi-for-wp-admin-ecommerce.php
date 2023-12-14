@@ -37,6 +37,7 @@ $page = array(
 	'home'        => ! isset( $_GET['subpage'] ),
 	'new_catalog' => isset( $_GET['subpage'] ) && $_GET['subpage'] == 'new_catalog',
 );
+
 ?>
 
 

@@ -39,11 +39,12 @@
 	getProductImportModal();
 ?>
 
+
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="egoi-modal-header modal-header">
-				<button type="button" class="close no-border-button" data-dismiss="modal" aria-label="Close">
+				<button id="close_modal_catalog" type="button" class="close no-border-button" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h2 class="modal-title" id="modalLabel"><?php _e( 'Delete', 'egoi-for-wp' ); ?></h2>
@@ -54,13 +55,16 @@
 				<div style="display: flex;"><h4><?php _e( 'Are you sure?', 'egoi-for-wp' ); ?></h4></div>
 			</div>
 			<div class="modal-footer flex-centered sun-margin">
-				<button type="button" class="button" data-dismiss="modal" aria-label="Close">
+				<button id="cancel_modal_catalog" type="button" class="button" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true"><?php _e( 'Cancel', 'egoi-for-wp' ); ?></span>
 				</button>
 				<button id="verified-delete-catalog" type="button" class="button egoi-remove-button" data-dismiss="modal">
-					<span aria-hidden="true"><?php _e( 'Yes', 'egoi-for-wp' ); ?></span>
+					<?php echo getLoaderNew( 'delete_catalog_loader', false ); ?>
+					<span id="verified-delete-catalog-span" aria-hidden="true"><?php _e( 'Yes', 'egoi-for-wp' ); ?></span>
 				</button>
 			</div>
 		</div>
 	</div>
 </div>
+
+

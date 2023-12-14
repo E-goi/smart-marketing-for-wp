@@ -11,6 +11,32 @@ jQuery.fn.rotate = function(degrees) {
 	return jQuery( this );
 };
 
+jQuery(document).ready(function ($) {
+
+    $('.cd-popup-trigger-del').on('click', function (e) {
+        e.preventDefault();
+    
+        // Get the data attributes
+        var idForm = $(this).data('id-form');
+        var typeForm = $(this).data('type-form');
+    
+
+        var data = {
+            action: 'egoi_remove_rss',
+            rssId: idForm
+        };
+
+        $.post(
+            url_egoi_script.ajaxurl,
+            data,
+            function(response) {
+                location.reload();
+            }
+        );
+    });
+    
+});
+
 jQuery( document ).ready(
 	function() {
 

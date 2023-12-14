@@ -30,7 +30,10 @@
 			<form id="egoi_simple_form" method="post" action="<?php echo esc_url($this->prepareUrl( '&sub=rss-feed&edit=egoi_rssfeed_' . $code )); ?>">
 				<?php
 				settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
-				settings_errors();
+				if(get_settings_errors()){
+					echo get_notification( __( 'Saved Configurations', 'egoi-for-wp' ), __( 'Rss Feed configurations saved with success.', 'egoi-for-wp' ) );
+				}
+		
 				?>
 				<input name="code" type="hidden" value="<?php echo $code; ?>">
 
@@ -39,7 +42,7 @@
 						<label for="campaign_subject"><?php _e( 'URL', 'egoi-for-wp' ); ?></label>
 						<div class="smsnf-wrapper" style="display: flex;">
 							<input id="input_<?php echo $code; ?>" name="input_url" value="<?php echo get_home_url() . '/?feed=egoi_rssfeed_' . $code; ?>" readonly type="text" />
-							<button type="button" class="copy_url button button--custom" style="padding: 0 5px; height: 40px !important; line-height: 0 !important;margin-top: 12px;" data-rss-feed="input_<?php echo $code; ?>"><i class="far fa-copy"></i></button>
+							<button type="button" class="copy_url button button--custom" style="padding: 0 5px; height: 40px !important; line-height: 0 !important;margin-top: 12px;" onclick="copyToClipboard('input_<?php echo $code; ?>')" data-rss-feed="input_<?php echo $code; ?>"><i class="far fa-copy"></i></button>
 						</div>
 					</div>
 				<?php } ?>
@@ -309,3 +312,11 @@
 			?>
 		</div>
 <?php } ?>
+
+<script>
+    function copyToClipboard(elementId) {
+        var copyText = document.getElementById(elementId);
+        copyText.select();
+        document.execCommand("copy");
+    }
+</script>

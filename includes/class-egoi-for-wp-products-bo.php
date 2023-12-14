@@ -131,6 +131,7 @@ class EgoiProductsBo {
 			'DELETE',
 			$id
 		);
+
 		$this->api->updateSocialTrack( 'update' );
 
 		return $response;

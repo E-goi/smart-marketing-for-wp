@@ -8,7 +8,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 		$this->options_list[ $field ] = sanitize_key( $_POST[ $field ] );
 	}
 	update_option( 'egoi_sync', $this->options_list );
-	echo get_notification( __( 'Saved Form', 'egoi-for-wp' ), __( 'Form saved with success.', 'egoi-for-wp' ) );
+	echo get_notification( __( 'Saved Configuration', 'egoi-for-wp' ), __( 'Advanced configurations saved with success.', 'egoi-for-wp' ) );
 }
 
 	require_once plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-lazy.php';

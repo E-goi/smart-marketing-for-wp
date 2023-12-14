@@ -22,7 +22,8 @@ if ( ! empty( $_POST ) ) {
 
 		$new_list = $this->egoiWpApiV3->createList( $name );
 
-		if ( is_string( $new_list ) ) {
+
+		if ( isset($new_list) && isset($new_list->error) ) {
 			echo get_notification( __( 'Error', 'egoi-for-wp' ), __( 'No more lists allowed in your account!', 'egoi-for-wp' ) );
 		} else {
 			echo get_notification( __( 'Success', 'egoi-for-wp' ), __( 'New list created successfully!', 'egoi-for-wp' ) );
@@ -42,6 +43,8 @@ if ( ! empty( $_POST ) ) {
 ?>
 
 <script type="text/javascript">
+
+	
 	function hide_show_apikey(){
 		var apikey = document.getElementById('apikey');
 		var span = document.getElementById('api_key_span');
@@ -151,10 +154,16 @@ if ( ! empty( $_POST ) ) {
 											<?php echo substr( esc_attr( $api_key ), 0, 30 ) . '**********'; ?>
 										</span>
 
-											<input type="text" class="e-goi-account-apikey--grp--form__input" style="display:none;" autofocus size="55" maxlength="40" id="apikey" name="egoi_api_key[api_key]" value="<?php echo $api_key; ?>">
+											
+											<span class="has-icon-right">
+												<input type="text" class="e-goi-account-apikey--grp--form__input" style="display:none;" autofocus size="55" maxlength="40" id="apikey" name="egoi_api_key[api_key]" value="<?php echo $api_key; ?>" >
+												<i class="form-icon icon icon-check icon-valid text-success" style="margin-right: 30px; display: none;"></i>
+												<i class="form-icon icon icon-cross icon-error text-error" style="margin-right: 30px; display: none;"></i>
+												<i class="form-icon loading icon-load text-primary" style="margin-right: 30px; display: none;"></i>
+											</span>
 											<input type="hidden" id="old_apikey" value="<?php echo esc_attr( $api_key ); ?>">
 
-											<span id="save_apikey" class="button-primary button-primary--custom" style="display:none;">
+											<span id="save_apikey" class="button-primary button-primary--custom disabled" style="display:none;">
 											<?php echo __( 'Save', 'egoi-for-wp' ); ?>
 										</span>
 

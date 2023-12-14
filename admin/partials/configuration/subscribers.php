@@ -3,7 +3,9 @@
 		<?php
 
 		settings_fields( Egoi_For_Wp_Admin::OPTION_NAME );
-		settings_errors();
+		if(get_settings_errors()){
+			echo get_notification( __( 'Saved Configurations', 'egoi-for-wp' ), __( 'Subscribers configurations saved with success.', 'egoi-for-wp' ) );
+		}
 
 		if ( $this->options_list['list'] !== '' ) {
 			?>

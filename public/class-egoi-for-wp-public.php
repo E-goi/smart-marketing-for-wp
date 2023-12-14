@@ -686,7 +686,7 @@ class Egoi_For_Wp_Public {
 		$api = new Egoi_For_Wp();
 
 		// double opt-in
-		$status    = sanitize_key( $_POST['egoi_double_optin'] ) == '1' ? 0 : 1;
+		$status    = sanitize_key( $_POST['egoi_double_optin'] ) == '1' ? 1 : 0;
 		$form_data = array();
 
 		if ( empty( $_POST['elementorEgoiForm'] ) ) {// old simple forms
