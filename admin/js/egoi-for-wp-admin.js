@@ -32,10 +32,97 @@ jQuery( document ).ready(
 			document.body.removeChild( el );
 		}
 
+
+		$( ".e-goi-account-apikey--grp--form__input" ).on(
+			'input',
+			function() {
+				var btn_submit = $( "#save_apikey" );
+				btn_submit[0].classList.add( 'disabled' );
+                btn_submit.unbind( 'click' );
+                $( ".icon-error" ).hide();
+
+				var key = $( this ).val();
+				if (key.length == 40) {
+
+					$( ".icon-load" ).show();
+					$( ".icon-valid" ).hide();
+					$( ".icon-error" ).hide();
+
+					$.ajax(
+						{
+							url: egoi_config_ajax_object.ajax_url,
+							type: 'POST',
+							data:({
+								security:   egoi_config_ajax_object.ajax_nonce,
+								action:     'egoi_change_api_key',
+								egoi_key: key
+							}),
+						success:function(data, status) {
+							if (status == '404' || (data.data && data.data.ERROR) ) {
+								$( ".icon-error" ).show();
+								$( ".icon-valid" ).hide();
+								$( ".icon-load" ).hide();
+							} else {
+								$( ".icon-valid" ).show();
+								$( ".icon-error" ).hide();
+								$( ".icon-load" ).hide();
+								btn_submit[0].classList.remove( 'disabled' );
+                                btn_submit.bind( 'click', 			function(e){
+                                    e.preventDefault();
+                    
+                                    if ($( '#apikey' ).val() != $( '#old_apikey' ).val()) {
+                                        var confirmation = confirm( $( '#confirm_text' ).text() );
+                                        if (confirmation) {
+                    
+                                            var data = {
+                                                security:   egoi_config_ajax_object_core.ajax_nonce,
+                                                action: 'efwp_apikey_changes'
+                                            };
+                    
+                                            $.post(
+                                                egoi_config_ajax_object_core.ajax_url,
+                                                data,
+                                                function(response) {
+                                                    response = JSON.parse( response );
+                                                    if (response.result == 'ok' && $( '#apikey' ).val() != '') {
+                                                        $( 'form[name="egoi_apikey_form"]' ).submit();
+                                                    }else{
+                                                        window.location.reload()
+                                                    }
+                                                }
+                                            );
+                    
+                                        } else {
+                                            return false;
+                                        }
+                                    } else {
+                                        $( 'form[name="egoi_apikey_form"]' ).submit();
+                                    }
+                                } );
+							}
+						},
+							error:function(status){
+								if (status) {
+									$( ".icon-valid" ).hide();
+									$( ".icon-error" ).show();
+									$( ".icon-load" ).hide();
+									$( "#api-save-text" ).show();
+								}
+							}
+						}
+					);
+
+				} else {
+					$( "#save_apikey" ).prop( 'disabled', true );
+					$( "#valid" ).hide();
+				}
+
+			}
+		);
+
 		$( "#egoi_api_key_input" ).on(
 			'input',
 			function() {
-
 				var btn_submit = $( "#egoi_4_wp_login" );
 				btn_submit.prop( 'disabled', true );
 

@@ -6,8 +6,11 @@
     var track = $("#track");
     var domain_group = $("#domain_group")
     var notification = $(".smsnf-notification")
+    var saveButton = $("#save_connected_sites")
+
 
     track.on('change', (e) => {
+        saveButton.attr( 'disabled', false );
         if(!e.target.checked){
             domain_group.hide()
         }else{

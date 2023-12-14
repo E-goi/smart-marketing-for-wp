@@ -2069,6 +2069,19 @@ class Egoi_For_Wp_Admin {
 
 	}
 
+	public function egoi_remove_rss() {
+		global $wpdb;
+		$rssId =  $_POST[ 'rssId' ];
+
+		if( isset( $rssId ) && !empty( $rssId ) ){
+			$sql = "DELETE FROM  $wpdb->options WHERE option_name = '$rssId'";
+
+			$wpdb->query( $sql );
+		}
+		wp_send_json_success($rssId);
+		
+	}
+
 	public function egoi_get_email_senders() {
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 

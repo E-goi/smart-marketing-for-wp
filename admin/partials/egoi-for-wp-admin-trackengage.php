@@ -106,7 +106,7 @@ $options = $this->options_list;
 
 						<div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
 							<div class="smsnf-input-group">
-								<input type="submit" value="<?php _e( 'Save', 'egoi-for-wp' ); ?>" />
+								<input id="save_connected_sites" type="submit" value="<?php _e( 'Save', 'egoi-for-wp' ); ?>" disabled/>
 							</div>
 						</div>
 
@@ -116,6 +116,7 @@ $options = $this->options_list;
 					if ( ! empty( $options['domain'] ) && ! empty( $options['list'] ) ) {
 						$api        = new EgoiApiV3( $this->getApikey() );
 						$domainData = $api->getConnectedSite( $options['domain'] );
+
 						?>
 						<hr class="smsnf-input-group">
 						<h5><?php _e( 'Features', 'egoi-for-wp' ); ?></h5>

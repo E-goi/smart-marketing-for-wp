@@ -24,7 +24,9 @@ if( isset($this->bar_post['tag-egoi'])){
 <form id="smsnf-subscriber-bar" method="post" name="bar_options" action="<?php echo admin_url( 'options.php' ); ?>">
 <?php
 settings_fields( Egoi_For_Wp_Admin::BAR_OPTION_NAME );
-settings_errors();
+if(get_settings_errors()){
+	echo get_notification( __( 'Saved Configurations', 'egoi-for-wp' ), __( 'Subscription bar configurations saved with success.', 'egoi-for-wp' ) );
+}
 ?>
 	<div id="smsnf-configuration" class="smsnf-tab-content smsnf-grid active">
 		<div>
@@ -132,7 +134,7 @@ settings_errors();
 
 				<div class="colorpicker-wrapper">
 					<div style="background-color:<?php echo esc_attr( $this->bar_post['color_bar'] ); ?>" class="view" ></div>
-					<input id="bar-background-color" type="text" name="egoi_bar_sync[color_bar]" value="<?php echo ! empty( $this->bar_post['color_bar'] ) ? esc_attr( $this->bar_post['color_bar'] ) : ''; ?>"  autocomplete="off" />
+					<input id="bar-background-color" type="text" name="egoi_bar_sync[color_bar]" value="<?php echo ! empty( $this->bar_post['color_bar'] ) ? esc_attr( $this->bar_post['color_bar'] ) : '#ffffff'; ?>"  autocomplete="off" />
 					<p><?php _e( 'Select Color', 'egoi-for-wp' ); ?></p>
 				</div>
 			</div>

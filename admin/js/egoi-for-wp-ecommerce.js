@@ -8,7 +8,7 @@ jQuery(document).ready(function() {
         var requests_needed = 0;
 
         var anim            = 300;
-        var loader          = $('#egoi-loader');
+        var loader          = $('#delete_catalog_loader');
         var loader_nr_prod  = $('#egoi-loader-products');
 
         var modal_import    = $('#importModal');
@@ -38,6 +38,7 @@ jQuery(document).ready(function() {
         //delete
         var s_delete_catalog    = $('#selected-delete-catalog');
         var verified_delete     = $('#verified-delete-catalog');
+        var span_delete_catalog = $('#verified-delete-catalog-span');
         var to_delete;
 
         //successs messsage
@@ -49,6 +50,16 @@ jQuery(document).ready(function() {
         var egoi_alert_message  = $('#egoi-alert-message');
         var close               = $(".egoi-simple-close-x");
 
+        var close_modal_catalog = $('#close_modal_catalog')
+        var cancel_modal_catalog = $('#cancel_modal_catalog')
+
+        close_modal_catalog.on('click', function () {
+            modal_delete.modal('hide');
+        });
+
+        cancel_modal_catalog.on('click', function () {
+            modal_delete.modal('hide');
+        });
 
         sync_catalog.change(function () {
             syncCatalog(getCatalogsToSync());
@@ -160,6 +171,8 @@ jQuery(document).ready(function() {
         }
 
         function deleteCatalog(id,obj){
+            console.log('deleting catalog: '+id)
+
             var data = {
                 security:       ajaxObj.ajax_nonce,
                 action:         'egoi_delete_catalog',
@@ -167,19 +180,21 @@ jQuery(document).ready(function() {
             };
 
             loader.show();
+            span_delete_catalog.hide();
             $(obj).attr("disabled", true);
             $.post(ajaxObj.ajax_url, data, function(response) {
                 loader.hide();
+                span_delete_catalog.show();
+                
                 $(obj).attr("disabled", false);
                 response = parseResponse(response);
+
+                console.log(response)
                 if(response === false)
                     return false;
-                $($($(obj).parent()[0]).parent()[0]).remove();
-                setTimeout(function () {
-                    sync_catalog.trigger("change");
-                    if(table.children().length === 'undefined' || table.children().length < 1)
-                        location.reload();
-                },200);
+
+                modal_delete.modal('hide');
+                location.reload();
             });
         }
 

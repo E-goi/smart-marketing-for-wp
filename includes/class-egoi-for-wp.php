@@ -582,6 +582,7 @@ class Egoi_For_Wp {
 		$this->loader->add_action( 'wp_ajax_egoi_rss_campaign_webpush', $plugin_admin, 'egoi_rss_campaign_webpush' );
 		$this->loader->add_action( 'wp_ajax_egoi_rss_campaign', $plugin_admin, 'egoi_rss_campaign' );
 		$this->loader->add_action( 'wp_ajax_egoi_get_email_senders', $plugin_admin, 'egoi_get_email_senders' );
+		$this->loader->add_action( 'wp_ajax_egoi_remove_rss', $plugin_admin, 'egoi_remove_rss' );
 
 		// E-commerce
 		$this->loader->add_action( 'wp_ajax_egoi_sync_catalog', $plugin_admin, 'egoi_sync_catalog' );
