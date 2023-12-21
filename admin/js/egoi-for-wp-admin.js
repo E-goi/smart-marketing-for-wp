@@ -37,8 +37,10 @@ jQuery( document ).ready(
 			'input',
 			function() {
 				var btn_submit = $( "#save_apikey" );
-				btn_submit[0].classList.add( 'disabled' );
-                btn_submit.unbind( 'click' );
+                if(btn_submit.length != 0){
+                    btn_submit[0].classList.add( 'disabled' );
+                    btn_submit.unbind( 'click' );
+                }
                 $( ".icon-error" ).hide();
 
 				var key = $( this ).val();
@@ -66,39 +68,41 @@ jQuery( document ).ready(
 								$( ".icon-valid" ).show();
 								$( ".icon-error" ).hide();
 								$( ".icon-load" ).hide();
-								btn_submit[0].classList.remove( 'disabled' );
-                                btn_submit.bind( 'click', 			function(e){
-                                    e.preventDefault();
-                    
-                                    if ($( '#apikey' ).val() != $( '#old_apikey' ).val()) {
-                                        var confirmation = confirm( $( '#confirm_text' ).text() );
-                                        if (confirmation) {
-                    
-                                            var data = {
-                                                security:   egoi_config_ajax_object_core.ajax_nonce,
-                                                action: 'efwp_apikey_changes'
-                                            };
-                    
-                                            $.post(
-                                                egoi_config_ajax_object_core.ajax_url,
-                                                data,
-                                                function(response) {
-                                                    response = JSON.parse( response );
-                                                    if (response.result == 'ok' && $( '#apikey' ).val() != '') {
-                                                        $( 'form[name="egoi_apikey_form"]' ).submit();
-                                                    }else{
-                                                        window.location.reload()
+                                if(btn_submit.length != 0){
+                                    btn_submit[0].classList.remove( 'disabled' );
+                                    btn_submit.bind( 'click', 			function(e){
+                                        e.preventDefault();
+                        
+                                        if ($( '#apikey' ).val() != $( '#old_apikey' ).val()) {
+                                            var confirmation = confirm( $( '#confirm_text' ).text() );
+                                            if (confirmation) {
+                        
+                                                var data = {
+                                                    security:   egoi_config_ajax_object_core.ajax_nonce,
+                                                    action: 'efwp_apikey_changes'
+                                                };
+                        
+                                                $.post(
+                                                    egoi_config_ajax_object_core.ajax_url,
+                                                    data,
+                                                    function(response) {
+                                                        response = JSON.parse( response );
+                                                        if (response.result == 'ok' && $( '#apikey' ).val() != '') {
+                                                            $( 'form[name="egoi_apikey_form"]' ).submit();
+                                                        }else{
+                                                            window.location.reload()
+                                                        }
                                                     }
-                                                }
-                                            );
-                    
+                                                );
+                        
+                                            } else {
+                                                return false;
+                                            }
                                         } else {
-                                            return false;
+                                            $( 'form[name="egoi_apikey_form"]' ).submit();
                                         }
-                                    } else {
-                                        $( 'form[name="egoi_apikey_form"]' ).submit();
-                                    }
-                                } );
+                                    } );
+                                }
 							}
 						},
 							error:function(status){

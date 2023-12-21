@@ -525,7 +525,7 @@ function egoi_widget_request() {
 
 					$redirect  = $Egoi4WP['redirect'];
 					$hide_form = $Egoi4WP['hide_form'];
-					if ( isset($redirect) ) {
+					if ( isset($redirect) && !empty($redirect)) {
 						echo 'redirect';
 					} else {
 	

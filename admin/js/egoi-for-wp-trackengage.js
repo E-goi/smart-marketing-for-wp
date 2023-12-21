@@ -12,8 +12,10 @@
     track.on('change', (e) => {
         saveButton.attr( 'disabled', false );
         if(!e.target.checked){
+            track.value = '0';
             domain_group.hide()
         }else{
+            track.value = '1';
             domain_group.show()
         }
     })
@@ -34,10 +36,12 @@
             }
             data[el.name] = el.value
         })
-
+        
         if(!data['track']){
             data['track'] = 0
             data['domain'] = ''
+        } else if (data['track'] === 'on'){
+            data['track'] = 1
         }
 
         jQuery.post(egoi_config_ajax_object_core.ajax_url, data, function(response) {
