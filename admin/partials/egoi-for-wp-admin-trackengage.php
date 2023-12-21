@@ -92,7 +92,7 @@ $options = $this->options_list;
 							<label for="track"><?php _e( 'Activate Connected Sites', 'egoi-for-wp' ); ?></label>
 							<div class="form-group switch-yes-no">
 								<label class="form-switch">
-									<input id="track" type="checkbox" name="track" value="0" <?php checked( ! empty( $options['domain'] ) ); ?>>
+									<input id="track" type="checkbox" name="track" <?php checked( ! empty( $options['domain'] ) ); ?>>
 									<i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?> <span style="font-size: small;font-weight: 100;color: black;opacity: 50%">(<?php _e( 'Recommended', 'egoi-for-wp' ); ?>)</span></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
 								</label>
 							</div>

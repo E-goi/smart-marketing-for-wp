@@ -86,6 +86,7 @@ function egoi_add_cron_interval( $schedules ) {
 }
 
 add_action( 'egoi_cron_hook', 'egoi_cron_exec' );
+
 function egoi_cron_exec() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-lazy.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-apiv3.php';

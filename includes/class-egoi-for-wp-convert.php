@@ -42,10 +42,11 @@ class EgoiConverter {
 
 	public function getContactObjectFromOrder( $orderObj ) {
 		$orderData = $orderObj->get_data();
+	
 		return array(
 			'base' => array(
 				'email'      => self::getFromBillingOrShipping( $orderData, 'email' ),
-				'cellphone'  => Egoi_For_Wp::smsnf_get_valid_phone( self::getFromBillingOrShipping( $orderData, 'phone' ), self::getFromBillingOrShipping( $orderData, 'country' ) ),
+				'cellphone'  => !empty( self::getFromBillingOrShipping( $orderData, 'phone' )) ? Egoi_For_Wp::smsnf_get_valid_phone( self::getFromBillingOrShipping( $orderData, 'phone' ), self::getFromBillingOrShipping( $orderData, 'country' ) ) : '',
 				'first_name' => self::getFromBillingOrShipping( $orderData, 'first_name' ),
 				'last_name'  => self::getFromBillingOrShipping( $orderData, 'last_name' ),
 			),

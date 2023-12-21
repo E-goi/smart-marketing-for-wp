@@ -125,7 +125,7 @@ class Egoi_For_Wp_Public {
 
 		// if defined some redirection
 		if (isset($bar_post['redirect']) ) {
-			if ( $_POST['egoi_action_sub'] ) {
+			if ( isset($_POST['egoi_action_sub']) ) {
 				$this->subscribe();
 			}
 		}
