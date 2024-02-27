@@ -54,6 +54,11 @@ class Egoi_For_Wp {
 	protected $host;
 
 	/**
+	 * @var string
+	 */
+	protected $debug;
+
+	/**
 	 * The default options to be created.
 	 *
 	 * @var array
@@ -928,7 +933,7 @@ class Egoi_For_Wp {
 		}
 		$rows = $wpdb->get_results( $sql );
 
-		return $rows[0]->egoi;
+		return isset($rows[0]) ? $rows[0] : false;
 	}
 
 	/**

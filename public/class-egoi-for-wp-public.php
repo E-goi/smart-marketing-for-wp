@@ -11,6 +11,8 @@ require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.
  */
 class Egoi_For_Wp_Public {
 
+	protected $egoiWpApiV3;
+	
 	/**
 	 *
 	 * @since    1.0.0
