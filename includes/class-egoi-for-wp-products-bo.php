@@ -243,7 +243,7 @@ class EgoiProductsBo {
                 $single['name'] = $single['name'];
                 $single['description'] = $single['description'];
 
-				$tax = (float) $option['tax'];
+				$tax = isset($option['tax']) ? (float) $option['tax'] : 0;
 				if( $tax > 0) {
 					if( $single['price'] ){
 						$single['price'] = $single['price'] * ( (float) ($tax / 100) + 1);

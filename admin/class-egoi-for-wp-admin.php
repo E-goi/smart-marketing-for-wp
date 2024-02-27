@@ -76,6 +76,11 @@ class Egoi_For_Wp_Admin {
 
 	protected $egoiWpApiV3;
 
+	protected $load_api;
+
+	protected $options_list;
+	protected $bar_post;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -656,6 +661,7 @@ class Egoi_For_Wp_Admin {
 				$listID      = $_POST['listID'];
 				$count_users = count_users();
 				$users       = array();
+				$woocommerce = array();
 
 				if ( $count_users['total_users'] > $this->limit_subs ) {
 					global $wpdb;
@@ -708,16 +714,16 @@ class Egoi_For_Wp_Admin {
 						} else {
 							$name      = $user->display_name ? $user->display_name : $user->user_login;
 							$full_name = explode( ' ', $name );
-							$fname     = $full_name[0];
-							$lname     = $full_name[1];
+							$fname     = isset($full_name[0]) ? $full_name[0] : '';
+							$lname     = isset($full_name[1]) ? $full_name[1] : '';
 						}
 
 						$email = $user->user_email;
 						$url   = $user->user_url;
 					} else {
 						$full_name = explode( ' ', $user['name'] );
-						$fname     = $full_name[0];
-						$lname     = $full_name[1];
+						$fname     = isset($full_name[0]) ? $full_name[0] : '';
+						$lname     = isset($full_name[1]) ? $full_name[1] : '';
 						$email     = $user['email'];
 					}
 
@@ -726,17 +732,21 @@ class Egoi_For_Wp_Admin {
 					$subscribers['base']['first_name'] = $fname;
 					$subscribers['base']['last_name']  = $lname;
 
-
-					foreach ( $woocommerce as $key => $value ) {
-						if ( isset( $user->$value ) ) {
-							$subscribers['extra'][] = [ 'field_id' => $key, 'value' => $user->$value ];
-						} elseif ( isset( $user_meta[ $value ][0] ) ) {
-							$subscribers['extra'][] = [ 'field_id' => $key, 'value' => $user_meta[ $value ][0] ];
+					if(isset($woocommerce)){
+						foreach ( $woocommerce as $key => $value ) {
+							if ( isset( $user->$value ) ) {
+								$subscribers['extra'][] = [ 'field_id' => $key, 'value' => $user->$value ];
+							} elseif ( isset( $user_meta[ $value ][0] ) ) {
+								$subscribers['extra'][] = [ 'field_id' => $key, 'value' => $user_meta[ $value ][0] ];
+							}
 						}
 					}
 
 					if( isset( $user_meta['billing_phone'][0] ) && !empty($user_meta['billing_phone'][0]) ){
-						$subscribers['base']['cellphone'] = Egoi_For_Wp::smsnf_get_valid_phone($user_meta['billing_phone'][0], ! empty( $user_meta['billing_country'][0] ) ? $user_meta['billing_country'][0] : $user_meta['shipping_country'][0] );
+						$subscribers['base']['cellphone'] = Egoi_For_Wp::smsnf_get_valid_phone(
+							$user_meta['billing_phone'][0], 
+							! empty( $user_meta['billing_country'][0] ) ? $user_meta['billing_country'][0] :
+							( !empty($user_meta['shipping_country'][0]) ? $user_meta['shipping_country'][0] : '' ));
 					}
 
 					$subs[] = $subscribers;
@@ -778,6 +788,7 @@ class Egoi_For_Wp_Admin {
 			$opt      = get_option( 'egoi_int' );
 			$egoi_int = $opt['egoi_int'];
 			$form_id  = sanitize_key( $_POST['_wpcf7'] );
+			$extra_fields = array();
 
 			if (
 				! class_exists( 'WPCF7_ContactForm' ) ||
@@ -983,7 +994,7 @@ class Egoi_For_Wp_Admin {
 	public function insertCommentHook( $id, $approved = false, $data = [] ) {
 
 		$opt      = get_option( 'egoi_int' );
-		$egoi_int = $opt['egoi_int'];
+		$egoi_int = isset($opt) ? $opt['egoi_int'] : array();
 
 		if ( isset($egoi_int['enable_pc']) ) {
 
@@ -1288,7 +1299,6 @@ class Egoi_For_Wp_Admin {
 				$sale            = get_post_meta( $product->ID, '_sale_price', true );
 				$sale_dates_from = get_post_meta( $product->ID, '_sale_price_dates_from', true );
 				$sale_dates_to   = get_post_meta( $product->ID, '_sale_price_dates_to', true );
-				$image_gallery   = $image[0];
 				$upsell_ids      = get_post_meta( $product->ID, '_upsell_ids', true );
 				$crosssell_ids   = get_post_meta( $product->ID, '_crosssell_ids', true );
 				$manage_stock    = get_post_meta( $product->ID, '_manage_stock', true );
@@ -2041,18 +2051,6 @@ class Egoi_For_Wp_Admin {
 		return $reports;
 	}
 
-	public function egoi_deploy_rss_webpush() {
-		check_ajax_referer( 'egoi_create_campaign', 'security' );
-
-		if ( ! isset( $_POST['campaing_hash'] ) ) {
-            wp_send_json_error( __( 'The campaing_hash can\'t be empty!', 'egoi-for-wp' ) );
-		}
-
-		$api = new EgoiApiV3( $apikey );
-
-		wp_send_json_success(json_decode($this->egoiWpApiV3->deployWebPushRssCampaign( sanitize_key( trim( $_POST['campaing_hash'] ) ) ), true ));
-	}
-
 	public function egoi_deploy_rss() {
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
@@ -2576,6 +2574,14 @@ class Egoi_For_Wp_Admin {
 		$campaigns = $this->smsnf_last_campaigns_reports();
 
 		foreach ( $output as $type => $value ) {
+			if(empty($campaigns[ $type ])){
+				continue;
+			}
+
+			if(isset($campaigns[ $type ]['chart']) && !is_array($campaigns[ $type ]['chart'])){
+				continue;
+			}
+
 			$campaign_chart   = implode( ',', $campaigns[ $type ]['chart'] );
 			$type_clean       = str_replace( '_premium', '', $type );
 			$output[ $type ] .= '
@@ -2670,6 +2676,8 @@ class Egoi_For_Wp_Admin {
                 </script>
                 ';
 			}
+
+
 		}
 
 		echo wp_json_encode( $output );
@@ -3184,12 +3192,12 @@ class Egoi_For_Wp_Admin {
 				$subs = array_chunk( $subs, $this->limit_subs, true );
 				for ( $x = 0; $x <= 9; $x++ ) {
 					$data['contacts'] = $subs[ $x ];
-					$this->egoiWpApiV3->importContactsBulk( $listID, $data );
+					$this->egoiWpApiV3->importContactsBulk( $this->options_list['list'], $data );
 				}
 			} else {
 				$data['contacts'] = $subs;
 
-				$this->egoiWpApiV3->importContactsBulk( $listID, $data );
+				$this->egoiWpApiV3->importContactsBulk( $this->options_list['list'], $data );
 			}
 			
 			wp_send_json_success(

@@ -80,7 +80,7 @@ class Egoi_For_Wp_Listener {
 			$fields['base']['email'],
 			$fields['base']['first_name'],
 			$fields['base']['last_name'],
-			$fields['extra'],
+			isset($fields['extra']) ? $fields['extra'] : array(),
 			1,
 			array( 'cell' => $fields['base']['cellphone'] ),
 			'active',
@@ -111,7 +111,8 @@ class Egoi_For_Wp_Listener {
 				'status'     => 'active',
 				'email'      => empty( $subscriber['email'] ) ? $subscriber['user_email'] : $subscriber['email'],
 				'first_name' => ! empty( $subscriber['first_name'] ) ?  $subscriber['first_name'] : '',
-				'last_name'  => ! empty( $subscriber['last_name'] ) ? $subscriber['last_name'] : ''
+				'last_name'  => ! empty( $subscriber['last_name'] ) ? $subscriber['last_name'] : '',
+				'cellphone'  => ''
 			]
 		);
 	}
