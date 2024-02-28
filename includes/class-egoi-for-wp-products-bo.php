@@ -243,7 +243,7 @@ class EgoiProductsBo {
                 $single['name'] = $single['name'];
                 $single['description'] = $single['description'];
 
-				$tax = isset($option['tax']) ? (float) $option['tax'] : 0;
+				$tax = !empty($option['tax']) ? (float) $option['tax'] : 0;
 				if( $tax > 0) {
 					if( $single['price'] ){
 						$single['price'] = $single['price'] * ( (float) ($tax / 100) + 1);
@@ -474,24 +474,7 @@ public static function preTransformArrayAbstractProductToApiBoth( $arr, &$breadC
 		'variations'    => self::transformArrayAbstractProductToApi( $arr, $breadCrumbs ),
 	);
 }
-/*
-	private static function getProductsCategoryNumbers($productNumbers=[]){
-		$productNumbers = implode(',',$productNumbers);
 
-		global $wpdb;
-		$term_taxonomy      = $wpdb->prefix."term_taxonomy";
-		$term_relationships = $wpdb->prefix."term_relationships";
-		$posts              = $wpdb->prefix."posts";
-
-		$sql = "SELECT ID,$term_taxonomy.term_id FROM $posts
-				inner join $term_relationships on $posts.ID = $term_relationships.object_id
-				inner join $term_taxonomy on $term_relationships.term_taxonomy_id = $term_taxonomy.term_id
-				where $posts.post_type = 'product' AND $posts.post_status = 'publish' AND $term_taxonomy.taxonomy = 'product_cat' and ID in($productNumbers)
-				order by ID ASC;";
-
-		return $wpdb->get_results($sql,ARRAY_A);
-	}
-*/
 	/**
 	 * Generates array with id => breadcrumb of categories
 	 *
