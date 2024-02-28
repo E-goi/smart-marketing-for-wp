@@ -80,7 +80,7 @@ class Egoi_For_Wp_Listener {
 			$fields['base']['email'],
 			$fields['base']['first_name'],
 			$fields['base']['last_name'],
-			isset($fields['extra']) ? $fields['extra'] : array(),
+			!empty($fields['extra']) ? $fields['extra'] : array(),
 			1,
 			array( 'cell' => $fields['base']['cellphone'] ),
 			'active',

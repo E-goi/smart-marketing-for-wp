@@ -695,9 +695,19 @@ class Egoi_For_Wp_Admin {
 				}
 
 				foreach ( $users as $user ) {
+					if (!is_object($user)) {
+						$user = (object)$user;
+					}
+
+					// Check if the object has the user_email property
+					if (!property_exists($user, 'user_email') && !property_exists($user, 'ID')) {
+						continue;
+					}
+
 					if ( $current_email == $user->user_email ) {
 						continue;
 					}
+
 					$subscribers = array();
 					$user_meta   = get_user_meta( $user->ID );
 
@@ -714,17 +724,17 @@ class Egoi_For_Wp_Admin {
 						} else {
 							$name      = $user->display_name ? $user->display_name : $user->user_login;
 							$full_name = explode( ' ', $name );
-							$fname     = isset($full_name[0]) ? $full_name[0] : '';
-							$lname     = isset($full_name[1]) ? $full_name[1] : '';
+							$fname     = !empty($full_name[0]) ? $full_name[0] : '';
+							$lname     = !empty($full_name[1]) ? $full_name[1] : '';
 						}
 
 						$email = $user->user_email;
 						$url   = $user->user_url;
 					} else {
-						$full_name = explode( ' ', $user['name'] );
-						$fname     = isset($full_name[0]) ? $full_name[0] : '';
-						$lname     = isset($full_name[1]) ? $full_name[1] : '';
-						$email     = $user['email'];
+						$full_name = explode( ' ', $user->name );
+						$fname     = !empty($full_name[0]) ? $full_name[0] : '';
+						$lname     = !empty($full_name[1]) ? $full_name[1] : '';
+						$email     = $user->email;
 					}
 
 					$subscribers['base']['status']     = 'active';
@@ -732,17 +742,17 @@ class Egoi_For_Wp_Admin {
 					$subscribers['base']['first_name'] = $fname;
 					$subscribers['base']['last_name']  = $lname;
 
-					if(isset($woocommerce)){
+					if(!empty($woocommerce)){
 						foreach ( $woocommerce as $key => $value ) {
-							if ( isset( $user->$value ) ) {
+							if ( !empty( $user->$value ) ) {
 								$subscribers['extra'][] = [ 'field_id' => $key, 'value' => $user->$value ];
-							} elseif ( isset( $user_meta[ $value ][0] ) ) {
+							} elseif ( !empty( $user_meta[ $value ][0] ) ) {
 								$subscribers['extra'][] = [ 'field_id' => $key, 'value' => $user_meta[ $value ][0] ];
 							}
 						}
 					}
 
-					if( isset( $user_meta['billing_phone'][0] ) && !empty($user_meta['billing_phone'][0]) ){
+					if( !empty($user_meta['billing_phone'][0]) ){
 						$subscribers['base']['cellphone'] = Egoi_For_Wp::smsnf_get_valid_phone(
 							$user_meta['billing_phone'][0], 
 							! empty( $user_meta['billing_country'][0] ) ? $user_meta['billing_country'][0] :
@@ -994,7 +1004,7 @@ class Egoi_For_Wp_Admin {
 	public function insertCommentHook( $id, $approved = false, $data = [] ) {
 
 		$opt      = get_option( 'egoi_int' );
-		$egoi_int = isset($opt) ? $opt['egoi_int'] : array();
+		$egoi_int = !empty($opt['egoi_int']) ? $opt['egoi_int'] : array();
 
 		if ( isset($egoi_int['enable_pc']) ) {
 
@@ -2021,26 +2031,40 @@ class Egoi_For_Wp_Admin {
 			$reports[ $channel ] = array(
 				'name'          => str_replace( '"', '', $campaign[0]['name'] ),
 				'internal_name' => str_replace( '"', '', $campaign[0]['internal_name'] ),
+				'id'            => '',
+				'list'          => '',
+				'sent'          => 0,
+				'chart'         => array(
+					'opens'         => 0,
+					'clicks'        => 0,
+					'bounces'       => 0,
+					'removes'       => 0,
+					'complains'     => 0,
+					'delivered'     => 0,
+					'not_delivered' => 0,
+				),
 			);
 
 			foreach ( $campaign as $key => $value ) {
 				$report                       = $this->egoiWpApi->getReport( $value['hash'] );
-				$reports[ $channel ]['id']   .= $value['id'] . ' | ';
-				$reports[ $channel ]['list'] .= $value['list'] . ' | ';
-				if ( ! isset( $report->ERROR ) ) {
-					$reports[ $channel ]['sent'] += $report->SENT;
-					if ( $channel == 'email' ) {
-						$reports[ $channel ]['chart']['opens']     += $report->UNIQUE_VIEWS;
-						$reports[ $channel ]['chart']['clicks']    += $report->UNIQUE_CLICKS;
-						$reports[ $channel ]['chart']['bounces']   += $report->RETURNED;
-						$reports[ $channel ]['chart']['removes']   += $report->TOTAL_REMOVES;
-						$reports[ $channel ]['chart']['complains'] += $report->COMPLAIN;
-					} elseif ( $channel == 'sms_premium' ) {
-						$reports[ $channel ]['chart']['delivered']     += $report->DELIVERED;
-						$reports[ $channel ]['chart']['not_delivered'] += $report->NOT_DELIVERED;
+				if(isset($report)){
+					$reports[ $channel ]['id']   .= $value['id'] . ' | ';
+					$reports[ $channel ]['list'] .= $value['list'] . ' | ';
+					if ( ! isset( $report->ERROR ) ) {
+						$reports[ $channel ]['sent'] += $report->SENT;
+						if ( $channel == 'email' ) {
+							$reports[ $channel ]['chart']['opens']     += $report->UNIQUE_VIEWS;
+							$reports[ $channel ]['chart']['clicks']    += $report->UNIQUE_CLICKS;
+							$reports[ $channel ]['chart']['bounces']   += $report->RETURNED;
+							$reports[ $channel ]['chart']['removes']   += $report->TOTAL_REMOVES;
+							$reports[ $channel ]['chart']['complains'] += $report->COMPLAIN;
+						} elseif ( $channel == 'sms_premium' ) {
+							$reports[ $channel ]['chart']['delivered']     += $report->DELIVERED;
+							$reports[ $channel ]['chart']['not_delivered'] += $report->NOT_DELIVERED;
+						}
+					} else {
+						$reports[ $channel ]['sent'] = $report->ERROR;
 					}
-				} else {
-					$reports[ $channel ]['sent'] = $report->ERROR;
 				}
 			}
 
@@ -2578,7 +2602,7 @@ class Egoi_For_Wp_Admin {
 				continue;
 			}
 
-			if(isset($campaigns[ $type ]['chart']) && !is_array($campaigns[ $type ]['chart'])){
+			if(!empty($campaigns[ $type ]['chart']) && !is_array($campaigns[ $type ]['chart'])){
 				continue;
 			}
 

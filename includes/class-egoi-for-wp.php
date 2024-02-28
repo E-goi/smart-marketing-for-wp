@@ -933,7 +933,7 @@ class Egoi_For_Wp {
 		}
 		$rows = $wpdb->get_results( $sql );
 
-		return isset($rows[0]) ? $rows[0] : false;
+		return !empty($rows[0]) ? $rows[0] : false;
 	}
 
 	/**
@@ -945,9 +945,7 @@ class Egoi_For_Wp {
 
 		$table = $wpdb->prefix . 'egoi_map_fields';
 		$sql   = "SELECT * FROM $table order by id DESC";
-		$rows  = $wpdb->get_results( $sql );
-
-		return $rows;
+        return $wpdb->get_results($sql );
 	}
 
 	/**
@@ -1174,7 +1172,7 @@ class Egoi_For_Wp {
 		$result        = $result_client->Egoi_Api->getCampaigns;
 
 		foreach ( $result as $key => $value ) {
-			if ( $value->INTERNAL_NAME == '' ) { // remove the double opt-in "campaigns"
+			if ( is_object($value) && $value->INTERNAL_NAME == '' ) { // remove the double opt-in "campaigns"
 				unset( $result->$key );
 			}
 		}
