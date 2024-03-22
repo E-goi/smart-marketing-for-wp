@@ -652,7 +652,7 @@ class Egoi_For_Wp_Public {
 			foreach ( $wc->get_customer_meta_fields() as $key => $value_field ) {
 				foreach ( $value_field['fields'] as $key_value => $label ) {
 					$row_new_value = $api->getFieldMap( 0, $key_value );
-					if ( $row_new_value ) {
+					if ( isset($row_new_value) ) {
 						$woocommerce[ $row_new_value ] = $key_value;
 					}
 				}
@@ -661,7 +661,7 @@ class Egoi_For_Wp_Public {
 
 		foreach ( $subscriber as $key => $value ) {
 			$row = $api->getFieldMap( 0, $key );
-			if ( $row ) {
+			if ( isset($row) ) {
 				preg_match( '/^key_[0-9]+/', $row, $output );
 				if ( count( $output ) > 0 ) {
 					$defaultMap['extra'][ str_replace( 'key_', 'extra_', $row ) ] = $value;
