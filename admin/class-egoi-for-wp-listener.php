@@ -101,9 +101,9 @@ class Egoi_For_Wp_Listener {
 			'base'=>[
 				'status'     => 'active',
 				'email'      => empty( $subscriber['billing_email'] ) ? $subscriber['user_email'] : $subscriber['billing_email'],
-				'cellphone'  => empty( $subscriber['billing_phone'] ) ? Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['shipping_phone'], $country ) : Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['billing_phone'], $country ),
-				'first_name' => empty( $subscriber['first_name'] ) ? $subscriber['billing_first_name'] : $subscriber['first_name'],
-				'last_name'  => empty( $subscriber['last_name'] ) ? $subscriber['billing_last_name'] : $subscriber['last_name']
+				'cellphone'  => empty( $subscriber['billing_phone'] ) ? (empty($subscriber['shipping_phone']) ? '' : Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['shipping_phone'], $country )) : Egoi_For_Wp::smsnf_get_valid_phone( $subscriber['billing_phone'], $country ),
+				'first_name' => empty( $subscriber['first_name'] ) ? (empty($subscriber['billing_first_name']) ?  : $subscriber['billing_first_name']) : $subscriber['first_name'],
+				'last_name'  => empty( $subscriber['last_name'] ) ? (empty($subscriber['billing_last_name']) ? '' : $subscriber['billing_last_name'] ) : $subscriber['last_name']
 			]
 		) : 
 		array(// basic info without woocommerce
