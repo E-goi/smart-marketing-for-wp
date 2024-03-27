@@ -115,29 +115,30 @@ class TrackingEngageSDK {
 				$price = $product->get_variation_price( 'min', false );
 			}
 		}
+		$graph = array(
+			"@context" => "https://schema.org",
+			"@type" => "Product",
+			"productID" => esc_attr($product->get_id()),
+			"name" => esc_attr(addslashes($product->get_name())),
+			"description" => esc_attr(addslashes(wp_strip_all_tags(do_shortcode($product->get_short_description() ? $product->get_short_description() : $product->get_description())))),
+			"url" => esc_url($product->get_permalink()),
+			"image" => esc_url(wp_get_attachment_image_url($product->get_image_id(), 'full')),
+			"brand" => esc_attr($product->get_meta('_egoi_brand')),
+			"offers" => array(
+				array(
+					"@type" => "Offer",
+					"price" => esc_attr($price),
+					"priceCurrency" => esc_attr(get_woocommerce_currency()),
+					"itemCondition" => "https://schema.org/NewCondition",
+					"availability" => esc_url('http://schema.org/' . ($product->is_in_stock() ? 'InStock' : 'OutOfStock'))
+				)
+			)
+		);
 		?>
 		<script type="application/ld+json" class="egoi-smart-marketing">
-			{
-			"@context":"https://schema.org",
-			"@type":"Product",
-			"productID":"<?php echo esc_attr($product->get_id()); ?>",
-			"name":"<?php echo esc_attr(addslashes( $product->get_name() )); ?>",
-			"description":"<?php echo esc_attr(addslashes( wp_strip_all_tags( do_shortcode( $product->get_short_description() ? $product->get_short_description() : $product->get_description() ) ) )); ?>",
-			"url":"<?php echo esc_url($product->get_permalink()); ?>",
-			"image":"<?php echo esc_url(wp_get_attachment_image_url( $product->get_image_id(), 'full' )); ?>",
-			"brand":"<?php echo esc_attr($product->get_meta( '_egoi_brand' )); ?>",
-			"offers": [
-				{
-				"@type": "Offer",
-				"price": "<?php echo esc_attr($price); ?>",
-				"priceCurrency": "<?php echo esc_attr(get_woocommerce_currency()); ?>",
-				"itemCondition": "https://schema.org/NewCondition",
-				"availability": "<?php echo esc_url('http://schema.org/' . ( $product->is_in_stock() ? 'InStock' : 'OutOfStock' )); ?>"
-				}
-			]
-			}
-			</script>
-			<script>var egoi_product = { 'id':'<?php echo esc_attr($product->get_id()); ?>', 'client_id':'<?php echo esc_attr($this->client_id); ?>','name':'<?php echo esc_attr(addslashes( $product->get_name() )); ?>','price':'<?php echo esc_attr($price); ?>'};</script>
+		<?php echo wp_json_encode($graph, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>
+		</script>
+		<script>var egoi_product = { 'id':'<?php echo esc_attr($product->get_id()); ?>', 'client_id':'<?php echo esc_attr($this->client_id); ?>','name':'<?php echo esc_attr(addslashes( $product->get_name() )); ?>','price':'<?php echo esc_attr($price); ?>'};</script>
 		<?php
 	}
 
