@@ -182,8 +182,8 @@ class Egoi_For_Wp_Listener {
             if(!empty($row)) {
                 if(is_array($row) && !empty($row['egoi'])) {
                     $row = $row['egoi'];
-                } elseif(is_object($row_new_value) && !empty($row_new_value->egoi)) {
-                    $row = $row_new_value->egoi;
+                } elseif(is_object($row) && !empty($row->egoi)) {
+                    $row = $row->egoi;
                 }
             }
 
