@@ -153,9 +153,17 @@ class Egoi_For_Wp_Listener {
 			foreach ( $wc->get_customer_meta_fields() as $key => $value_field ) {
 				foreach ( $value_field['fields'] as $key_value => $label ) {
 					$row_new_value = $admin->getFieldMap( 0, $key_value );
-					if ( $row_new_value ) {
-						$woocommerce[ $row_new_value ] = $key_value;
-					}
+
+                    if(!empty($row_new_value)) {
+                        if(is_array($row_new_value) && !empty($row_new_value['egoi'])) {
+                            $woocommerce[ $row_new_value['egoi'] ] = $key_value;
+                        } elseif(is_object($row_new_value) && !empty($row_new_value->egoi)) {
+                            $woocommerce[ $row_new_value->egoi ] = $key_value;
+                        } elseif ( !is_array($row_new_value) && !is_object($row_new_value)) {
+                            $woocommerce[ $row_new_value ] = $key_value;
+                        }
+                    }
+
 				}
 			}
 		}
@@ -170,7 +178,16 @@ class Egoi_For_Wp_Listener {
 
 		foreach ( $all_fields as $key => $value ) {
 			$row = $admin->getFieldMap( 0, $key );
-			if ( $row ) {
+
+            if(!empty($row)) {
+                if(is_array($row) && !empty($row['egoi'])) {
+                    $row = $row['egoi'];
+                } elseif(is_object($row_new_value) && !empty($row_new_value->egoi)) {
+                    $row = $row_new_value->egoi;
+                }
+            }
+
+			if ( !empty($row) && !is_array($row) && !is_object($row)) {
 				preg_match( '/^key_[0-9]+/', $row, $output );
 				if ( count( $output ) > 0 ) {
 					$fields['extra'][ str_replace( 'key_', 'extra_', $row ) ] = $value[0];
