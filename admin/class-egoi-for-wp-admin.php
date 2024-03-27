@@ -687,9 +687,17 @@ class Egoi_For_Wp_Admin {
 					foreach ( $wc->get_customer_meta_fields() as $key => $value_field ) {
 						foreach ( $value_field['fields'] as $key_value => $label ) {
 							$row_new_value = $this->egoiWpApi->getFieldMap( 0, $key_value );
-							if ( $row_new_value ) {
-								$woocommerce[ $row_new_value ] = $key_value;
-							}
+
+                            if(!empty($row_new_value)) {
+                                if(is_array($row_new_value) && !empty($row_new_value['egoi'])) {
+                                    $woocommerce[ $row_new_value['egoi'] ] = $key_value;
+                                } elseif(is_object($row_new_value) && !empty($row_new_value->egoi)) {
+                                    $woocommerce[ $row_new_value->egoi ] = $key_value;
+                                } elseif ( !is_array($row_new_value) && !is_object($row_new_value)) {
+                                    $woocommerce[ $row_new_value ] = $key_value;
+                                }
+                            }
+
 						}
 					}
 				}
@@ -3144,9 +3152,17 @@ class Egoi_For_Wp_Admin {
 				foreach ( $wc->get_customer_meta_fields() as $key => $value_field ) {
 					foreach ( $value_field['fields'] as $key_value => $label ) {
 						$row_new_value = $this->egoiWpApi->getFieldMap( 0, $key_value );
-						if ( $row_new_value ) {
-							$woocommerce[ $row_new_value ] = $key_value;
-						}
+
+                        if(!empty($row_new_value)) {
+                            if(is_array($row_new_value) && !empty($row_new_value['egoi'])) {
+                                $woocommerce[ $row_new_value['egoi'] ] = $key_value;
+                            } elseif(is_object($row_new_value) && !empty($row_new_value->egoi)) {
+                                $woocommerce[ $row_new_value->egoi ] = $key_value;
+                            } elseif ( !is_array($row_new_value) && !is_object($row_new_value)) {
+                                $woocommerce[ $row_new_value ] = $key_value;
+                            }
+                        }
+
 					}
 				}
 			}
