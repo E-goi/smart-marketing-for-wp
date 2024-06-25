@@ -54,7 +54,7 @@
 
 				<div class="smsnf-input-group">
 					<label for="egoi_sync"><?php _e( '"Subscribe to Newsletter" default', 'egoi-for-wp' ); ?></label>
-					<p class="subtitle"><?php _e( 'By activating this option, the Newsletter checkbox will be active by default, which could lead to legal issues under the GDPR.', 'egoi-for-wp' ); ?></p>
+					<p class="subtitle"><?php _e( 'By activating this option, the Newsletter checkbox will be active by default, which could lead to legal issues under the GDPR', 'egoi-for-wp' ); ?></p>
 					<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
 						<label><input type="radio"  name="egoi_sync[egoi_newsletter_active]" <?php checked( $this->options_list['egoi_newsletter_active'], 1 ); ?> value="1"><?php _e( 'On', 'egoi-for-wp' ); ?></label> &nbsp;
 						<label><input type="radio" name="egoi_sync[egoi_newsletter_active]" <?php checked( $this->options_list['egoi_newsletter_active'], 0 ); ?> value="0"><?php _e( 'Off', 'egoi-for-wp' ); ?></label>
