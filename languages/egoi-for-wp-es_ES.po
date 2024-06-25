@@ -863,6 +863,10 @@ msgstr ""
 "Edite el valor seleccionado de datos en el campo móvil con el código de país "
 "deseado para preseleccionar"
 
+#: /Users/pemaia/workspace/plugin_E-goi_wordpress/smart-marketing-for-wp/egoi-for-wp.php:195
+msgid "Please fill out all required fields(*)."
+msgstr "Por favor, complete todos los campos obligatorios(*)."
+
 #: admin/partials/capture/subscription-bar.php:242
 msgid "Eg. List Missing from E-goi"
 msgstr "e.j: Falta la lista de E-goi"
