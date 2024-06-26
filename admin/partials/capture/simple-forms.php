@@ -201,18 +201,18 @@ $defaultPrefix = ! empty( $countryCodes[ $key ] ) ? $countryCodes[ $key ]['prefi
 			<?php if ( $id_simple_form != 0 ) : ?>
 				<!-- SHORTCODE -->
 				<div class="smsnf-input-group">
-						<label for="smsnf-af-shortcode">Shortcode</label>
-						<div
-							class="eg_tooltip shortcode -copy"
-							type="text"
-							data-clipboard-text="<?php echo esc_html( '[egoi-simple-form id="' . $id_simple_form . '"]' ); ?>"
-							data-before="<?php _e( 'Click to copy', 'egoi-for-wp' ); ?>"
-							data-after="<?php _e( 'Copied', 'egoi-for-wp' ); ?>"
-							data-tooltip="<?php _e( 'Click to copy', 'egoi-for-wp' ); ?>"
-							><?php echo esc_html( '[egoi-simple-form id="' . $id_simple_form . '"]' ); ?></div>
-						<p class="subtitle"><?php _e( 'Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp' ); ?></p>
-					</div>
-					<!-- / SHORTCODE -->
+					<label for="smsnf-af-shortcode">Shortcode</label>
+					<div
+						class="eg_tooltip shortcode -copy"
+						type="text"
+						data-clipboard-text="<?php echo esc_html( '[egoi-simple-form id="' . $id_simple_form . '"]' ); ?>"
+						data-before="<?php _e( 'Click to copy', 'egoi-for-wp' ); ?>"
+						data-after="<?php _e( 'Copied', 'egoi-for-wp' ); ?>"
+						data-tooltip="<?php _e( 'Click to copy', 'egoi-for-wp' ); ?>"
+						><?php echo esc_html( '[egoi-simple-form id="' . $id_simple_form . '"]' ); ?></div>
+					<p class="subtitle"><?php _e( 'Use this shortcode to display this form inside of your site or blog', 'egoi-for-wp' ); ?></p>
+				</div>
+				<!-- / SHORTCODE -->
 			<?php endif; ?>
 		</div>
 	</div>

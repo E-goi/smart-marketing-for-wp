@@ -794,6 +794,10 @@ msgid ""
 "preselect"
 msgstr ""
 
+#: /Users/pemaia/workspace/plugin_E-goi_wordpress/smart-marketing-for-wp/egoi-for-wp.php:195
+msgid "Please fill out all required fields(*)."
+msgstr ""
+
 #: admin/partials/capture/subscription-bar.php:242
 msgid "Eg. List Missing from E-goi"
 msgstr ""
