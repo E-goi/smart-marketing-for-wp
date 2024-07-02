@@ -769,20 +769,41 @@ class EgoiApiV3 {
 	public function importContactsBulk( $listId, $data ) {
 		$path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{list_id}', $listId );
 
-		$client = new ClientHttp(
-			$path,
-			'POST',
-			$this->headers,
-			$data
-		);
+      $ch = curl_init();
 
-		if ( $client->success() !== true ) {
-			return $this->processErrors( $client->getError() );
-		}
+      // Set the URL
+      curl_setopt($ch, CURLOPT_URL, $path);
 
-		return $client->getCode() == 200
-			? $client->getResponse()
-			: $this->processErrors( $client->getResponse() );
+      // Set the request method
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+
+      // Set the timeout
+      curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+      // Set the request body if provided
+      if (!empty($data)) {
+         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+      }
+
+      // Set headers if provided
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+
+
+      // Return the response instead of outputting it
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+      // Execute the request
+      curl_exec($ch);
+
+      // Get the HTTP status code
+      $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+      // Close the cURL session
+      curl_close($ch);
+
+		return $httpCode == 200
+			? true
+			: false;
 	}
 
 	/**
