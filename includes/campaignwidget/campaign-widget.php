@@ -642,6 +642,7 @@ class CampaignWidget {
     }
 
 	public function get_webpush_info( $webpushsite, $lists ) {
+
 		$webpush_info = array();
 
 		// get all websites - make request API v3
@@ -649,28 +650,29 @@ class CampaignWidget {
 		$api     = new EgoiApiV3( $apikey );
 		$w_sites = json_decode( $api->getWebPushSites() );
 
-		if ( ! isset( $w_sites->status ) ) {
+        if(!empty($w_sites)) {
+            if (!empty($w_sites->status) && !empty($webpushsite['code'])) {
+                foreach ($w_sites as $w_site) {
+                    if ($w_site->app_code == $webpushsite['code']) {
+                        $webpush_info['site_id'] = $w_site->site_id;
+                        $webpush_info['site'] = $w_site->site;
+                        $webpush_info['list_id'] = $w_site->list_id;
+                    }
+                }
+            }
 
-			foreach ( $w_sites as $w_site ) {
-				if ( $w_site->app_code == $webpushsite['code'] ) {
-					$webpush_info['site_id'] = $w_site->site_id;
-					$webpush_info['site']    = $w_site->site;
-					$webpush_info['list_id'] = $w_site->list_id;
-				}
-			}
-		}
+            if (!empty($webpush_info) && !empty($webpush_info['list_id'])) {
+                foreach ($lists as $list) {
+                    if ($list['list_id'] == $webpush_info['list_id']) {
+                        $webpush_info['list'] = $list['public_name'];
 
-		if ( ! empty( $webpush_info ) ) {
-			foreach ( $lists as $list ) {
-				if ( $list['list_id'] == $webpush_info['list_id'] ) {
-					$webpush_info['list'] = $list['public_name'];
+                        return $webpush_info;
+                    }
+                }
+            }
+        }
 
-					return $webpush_info;
-				}
-			}
-		}
-
-		return;
+		return [];
 	}
 
 	public function was_post_restored_from_trash( $old_status, $new_status ) {

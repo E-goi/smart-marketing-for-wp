@@ -833,12 +833,12 @@ class Egoi_For_Wp_Admin {
 			if ( strpos( $result->form, $key_name ) !== false ) {
 				$name = sanitize_text_field( $_POST[ $key_name ] );
 			} else {
-				if ( $_POST['first_name'] ) {
+				if (!empty($_POST['first_name'])) {
 					$name = sanitize_text_field( $_POST['first_name'] );
 				}
 			}
 
-			if ( $_POST['last_name'] ) {
+			if (!empty($_POST['last_name'])) {
 				$lname = sanitize_text_field( $_POST['last_name'] );
 			}
 
@@ -858,8 +858,12 @@ class Egoi_For_Wp_Admin {
 
 			// telephone
 			$bo  = new EgoiProductsBo();
-			$tel = $bo->advinhometerCellphoneCode( sanitize_key( $_POST[ $mapp['tel'] ] ) );
+            $tel = '';
+            if(!empty($mapp['tel']) && !empty($_POST[$mapp['tel']])) {
+			    $tel = $bo->advinhometerCellphoneCode( sanitize_key( $_POST[$mapp['tel']] ) );
+            }
 
+            $cell = '';
 			// cellphone
 			foreach ( $_POST as $key_cell => $value_cell ) {
 				$cell = strpos( $key_cell, 'cell' );
@@ -867,18 +871,23 @@ class Egoi_For_Wp_Admin {
 					$mobile[] = sanitize_key( $value_cell );
 				}
 			}
-			$cell = $bo->advinhometerCellphoneCode( sanitize_key( $mobile[0] ) );
+            if(!empty($mobile[0])) {
+			    $cell = $bo->advinhometerCellphoneCode( sanitize_key( $mobile[0] ) );
+            }
 
 			// birthdate
-			$bd = sanitize_key( $_POST[ $mapp['date'] ] );
+            $bd = '';
+            if(!empty($mapp['date']) && !empty($_POST[$mapp['date']])) {
+			    $bd = sanitize_key($_POST[$mapp['date']]);
+            }
 
 			// fax
-			if ( $_POST['egoi-fax'] ) {
+			if (!empty($_POST['egoi-fax'])) {
 				$fax = sanitize_key( $_POST['egoi-fax'] );
 			}
 
 			// lang
-			if ( $_POST['egoi-lang'] ) {
+			if (!empty($_POST['egoi-lang'])) {
 				$lang = sanitize_text_field( $_POST['egoi-lang'] );
 			}
 
@@ -909,7 +918,9 @@ class Egoi_For_Wp_Admin {
 				'lang' => $lang,
 			);
 
-			$subject = sanitize_text_field( $_POST['your-subject'] );
+            if (!empty($_POST['your-subject'])) {
+			    $subject = sanitize_text_field( $_POST['your-subject'] );
+            }
 
 			if ( isset( $_POST['status-egoi'] ) ) {
 				if ( $_POST['status-egoi'] == 1 || $_POST['status-egoi'] == '1' ) {
@@ -946,21 +957,21 @@ class Egoi_For_Wp_Admin {
 				}
 
 				// check if tag cf7 exists in E-goi
+                $cf7tag = '';
 				$get_tg = $this->egoiWpApiV3->getTag( $cf7[0]->post_title );
-
 				if ( isset( $get_tg->tag_id ) ) {
 					$cf7tag = $get_tg->tag_id;
 				}
 
 				$this->egoiWpApiV3->addContact(
 					$egoi_int['list_cf'],
-					$email,
-					$name,
-					$lname,
-					$extra_fields,
-					$option,
-					$ref_fields,
-					$status,
+					!empty($email) ? $email : '',
+					!empty($name) ? $name : '',
+					!empty($lname) ? $lname : '',
+					!empty($extra_fields) ? $extra_fields : array(),
+					!empty($option) ? $option : 0,
+					!empty($ref_fields) ? $ref_fields : array(),
+					!empty($status) ? $status : 'active',
 					! empty( $tag ) ? array( $tag, $cf7tag ) : ( ! empty( $cf7tag ) ? array( $cf7tag ) : array() )
 				);
 			} else {
@@ -1014,7 +1025,7 @@ class Egoi_For_Wp_Admin {
 		$opt      = get_option( 'egoi_int' );
 		$egoi_int = !empty($opt['egoi_int']) ? $opt['egoi_int'] : array();
 
-		if ( isset($egoi_int['enable_pc']) ) {
+		if ( !empty($egoi_int['enable_pc']) ) {
 
 			$name  = $data['comment_author'];
 			$email = $data['comment_author_email'];
@@ -1064,7 +1075,7 @@ class Egoi_For_Wp_Admin {
 		$opt      = get_option( 'egoi_int' );
 		$egoi_int = $opt['egoi_int'];
 
-		if ( $egoi_int['enable_pc'] ) {
+		if ( !empty($egoi_int['enable_pc']) ) {
 			$check = "<p class='comment-form-check-newsletter'><label for='check_newsletter'>" . __( 'I want to receive newsletter', 'egoi-for-wp' ) . "</label>
 						<input type='checkbox' name='check_newsletter' id='check_newsletter'><p>";
 			echo $check;

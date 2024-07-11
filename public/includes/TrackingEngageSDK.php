@@ -251,7 +251,7 @@ class TrackingEngageSDK {
 			return array( 'contact_id' => $value );
 		}
 
-		if ( $_GET['eg_sub'] && strlen( $_GET['eg_sub'] ) == 10 ) {
+		if (!empty($_GET['eg_sub']) && strlen( $_GET['eg_sub'] ) == 10 ) {
 			return array( 'contact_id' => sanitize_key( $_GET['eg_sub'] ) );
 		}
 

@@ -240,23 +240,23 @@ class EgoiProductsBo {
 				$products = $products['variations'];
 			}
 			foreach ( $products as $single ) {
-                $single['name'] = $single['name'];
-                $single['description'] = $single['description'];
+                $single['name'] =  !empty($single['name']) ? $single['name'] : '';
+                $single['description'] = !empty($single['description']) ? $single['description'] : '';
 
 				$tax = !empty($option['tax']) ? (float) $option['tax'] : 0;
-				if( $tax > 0) {
-					if( $single['price'] ){
-						$single['price'] = $single['price'] * ( (float) ($tax / 100) + 1);
-					}
+                if ($tax > 0) {
+                    if (!empty($single['price'])) {
+                        $single['price'] = $single['price'] * ((float)($tax / 100) + 1);
+                    }
 
-					if( $single['sale_price']) {
-						$single['sale_price'] = $single['sale_price'] * ( (float) ($tax / 100) + 1);
-					}
-				}
-				
-				if ( ! $this->api->createProduct( $single, $catalog ) ) {
-					$this->api->patchProduct( $single, $catalog, $single['product_identifier'] );
-				}
+                    if (!empty($single['sale_price'])) {
+                        $single['sale_price'] = $single['sale_price'] * ((float)($tax / 100) + 1);
+                    }
+                }
+
+                if (!$this->api->createProduct($single, $catalog)) {
+                    $this->api->patchProduct($single, $catalog, $single['product_identifier']);
+                }
 			}
 		}
 
