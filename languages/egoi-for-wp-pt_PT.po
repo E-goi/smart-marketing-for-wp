@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2024-06-25 15:33+0000\n"
+"PO-Revision-Date: 2024-07-26 10:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português\n"
 "Language: pt-PT\n"
@@ -22,7 +22,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: pt_PT\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.6; wp-6.4.2\n"
+"X-Loco-Version: 2.6.11; wp-6.6.1\n"
 "X-Loco-Parser: loco_parse_po"
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:73
@@ -565,6 +565,9 @@ msgstr "Integração Contact Form 7"
 #: admin/partials/integrations/gravity-forms.php:32
 msgid "Contact Form Name"
 msgstr "Nome do Formulário de Contacto"
+
+msgid "Contact was successfully registered!"
+msgstr "O contacto foi registado com sucesso!"
 
 #: includes/campaignwidget/campaign-widget.php:181
 msgid "Contacts:"
