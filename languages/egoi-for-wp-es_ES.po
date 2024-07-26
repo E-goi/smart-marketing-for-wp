@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2024-06-25 15:41+0000\n"
+"PO-Revision-Date: 2024-07-26 10:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es-ES\n"
@@ -22,7 +22,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: es_ES\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.10; wp-6.5.5\n"
+"X-Loco-Version: 2.6.11; wp-6.6.1\n"
 "X-Loco-Parser: loco_parse_po"
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:73
@@ -567,6 +567,9 @@ msgstr "Integración del Contact Form 7"
 msgid "Contact Form Name"
 msgstr "Nombre del formulario de contacto"
 
+msgid "Contact was successfully registered!"
+msgstr "El contacto se ha registrado correctamente!"
+
 #: includes/campaignwidget/campaign-widget.php:181
 msgid "Contacts:"
 msgstr "Lista:"
@@ -862,10 +865,6 @@ msgid ""
 msgstr ""
 "Edite el valor seleccionado de datos en el campo móvil con el código de país "
 "deseado para preseleccionar"
-
-#: Users/pemaia/workspace/plugin_E-goi_wordpress/smart-marketing-for-wp/egoi-for-wp.php:195
-msgid "Please fill out all required fields(*)."
-msgstr "Por favor, complete todos los campos obligatorios(*)."
 
 #: admin/partials/capture/subscription-bar.php:242
 msgid "Eg. List Missing from E-goi"
@@ -1736,6 +1735,10 @@ msgstr "Elige una imagen de tu galería"
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:66
 msgid "Placeholder"
 msgstr "Marcador de posición"
+
+#: Users/pemaia/workspace/plugin_E-goi_wordpress/smart-marketing-for-wp/egoi-for-wp.php:195
+msgid "Please fill out all required fields(*)."
+msgstr "Por favor, complete todos los campos obligatorios(*)."
 
 #: admin/partials/rssfeed/feed-rss.php:91
 msgid "Please select at least one Category or All will be displayed"
