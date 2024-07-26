@@ -188,7 +188,9 @@ $defaultPrefix = ! empty( $countryCodes[ $key ] ) ? $countryCodes[ $key ]['prefi
 					<button id="sf-btn-phone" class="smsnf-btn <?php echo strpos( $content, '[e_mobile]' ) || strpos( $content, '[/e_mobile]' ) ? 'active' : ''; ?>" type="button" data-lable="<?php _e( 'Mobile', 'egoi-for-wp' ); ?>"><?php _e( 'Mobile', 'egoi-for-wp' ); ?></button>
 					<button id="sf-btn-submit" class="smsnf-btn <?php echo strpos( $content, '[e_submit]' ) || strpos( $content, '[/e_submit]' ) ? 'active' : ''; ?>" type="button" data-lable="<?php _e( 'Submit Button', 'egoi-for-wp' ); ?>"><?php _e( 'Submit Button', 'egoi-for-wp' ); ?></button>
 				</div>
-				<p class="subtitle"><?php _e( 'Edit data-selected value in mobile field with the desired country code to preselect', 'egoi-for-wp' ); ?></p>
+				<p class="subtitle"><?php _e( 'NOTES:<br>
+- You can edit the value in the mobile phone field with the desired country code to be pre-selected<br>
+- To make it a mandatory field, add the * character, e.g."&lt;label for=&quot;egoi_name&quot;&gt;Nome: *&lt;/label&gt;"', 'egoi-for-wp' ); ?></p>
 				<textarea id="sf-code" rows="11" name="html_code" placeholder="<?php _e( 'HTML code of your form', 'egoi-for-wp' ); ?>"><?php echo esc_html($content); ?></textarea>
 			</div>
 			<!-- / CÓDIGO HTML -->
