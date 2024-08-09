@@ -915,27 +915,54 @@ class EgoiApiV3 {
 			);
 		}
 
-		$url = self::APIV3 . '/lists/' . $listID . '/contacts';
+		$path = self::APIV3 . '/lists/' . $listID . '/contacts';
 
-		$client = new ClientHttp( $url, 'POST', $this->headers, $body );
-
-		if ( $client->success() !== true ) {
-			return $this->processErrors( $client->getError() );
+		$ch = curl_init();
+  
+		// Set the URL
+		curl_setopt($ch, CURLOPT_URL, $path);
+  
+		// Set the request method
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+  
+		// Set the timeout
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  
+		// Set the request body if provided
+		if (!empty($body)) {
+		   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
 		}
-	
-		$resp = json_decode( $client->getResponse(), true );
+  
+		// Set headers if provided
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+  
+  
+		// Return the response instead of outputting it
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  
+		// Execute the request
+		$resp = curl_exec($ch);
 
-		if(isset($resp) && isset($resp['status']) && $resp['status'] == 409){
-			return $this->editContact( $listID, $resp['errors']['contacts'][0], $name, $lname, $extra_fields, $option, $ref_fields, $status, $tags );
-		} else if(isset($resp) && isset($resp['status']) && $resp['status'] == 422){
-			return $resp;
+		$resp = json_decode($resp, true);
+  
+		// Get the HTTP status code
+		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  
+		// Close the cURL session
+		curl_close($ch);
+  
+		if($httpCode == 409){
+			return  $this->editContact( $listID, $resp['errors']['contacts'][0], $name, $lname, $extra_fields, $option, $ref_fields, $status, $tags );
+		} elseif ( $httpCode == 200){
+			if ( ! empty( $tags ) && isset( $resp['contact_id'] ) ) {
+				$this->attachTag( $listID, $resp['contact_id'], $tags );
+			}
+			return $resp['contact_id'];
 		}
 
-		if ( ! empty( $tags ) && isset( $resp['contact_id'] ) ) {
-			$this->attachTag( $listID, $resp['contact_id'], $tags );
-		}
-
-		return $resp['contact_id'];
+			
+		return false;
+		
 	}
 
 	public function attachTag( $list_id, $contact_id, $tags = array() ) {
