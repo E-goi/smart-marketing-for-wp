@@ -882,11 +882,13 @@ class Egoi_For_Wp_Admin {
             }
 
 			// fax
+			$fax = '';
 			if (!empty($_POST['egoi-fax'])) {
 				$fax = sanitize_key( $_POST['egoi-fax'] );
 			}
 
 			// lang
+			$lang = '';
 			if (!empty($_POST['egoi-lang'])) {
 				$lang = sanitize_text_field( $_POST['egoi-lang'] );
 			}
@@ -918,6 +920,7 @@ class Egoi_For_Wp_Admin {
 				'lang' => $lang,
 			);
 
+			$subject = '';
             if (!empty($_POST['your-subject'])) {
 			    $subject = sanitize_text_field( $_POST['your-subject'] );
             }
