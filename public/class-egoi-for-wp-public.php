@@ -369,7 +369,7 @@ class Egoi_For_Wp_Public {
 	}
 
 	// Simple form shortcode output
-	public function subscribe_egoi_simple_form( $atts, $qt = 1, $valid = true ) {
+	public function subscribe_egoi_simple_form( $atts, $qt = 1 ) {
 		global $wpdb;
 
 
@@ -403,7 +403,6 @@ class Egoi_For_Wp_Public {
 			<div id="'.esc_attr( $simple_form_result ).'" class="egoi_simple_form_success_wrapper" style="margin:10px 0px; padding:12px; display:none;"></div>
 		</form>';
 ?>
-
 		<script type="text/javascript" >
 			 jQuery(document).ready(function() {
 			 	jQuery("#<?php echo esc_attr( $simple_form ); ?> select[name=egoi_country_code]").empty();
@@ -425,9 +424,8 @@ class Egoi_For_Wp_Public {
 					<?php
 				}
 			}
-			?><?php
-			if($valid){
 			?>
+
 			jQuery("#<?php echo esc_attr( $simple_form ); ?>").submit(function(event) {
 
 				var simple_form = jQuery(this);
@@ -450,7 +448,6 @@ class Egoi_For_Wp_Public {
 						i=2;
 					}
 				}, 400);
-
 
 				jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).hide();
 
@@ -476,42 +473,41 @@ class Egoi_For_Wp_Public {
 					"egoi_double_optin" : egoi_double_optin
 				};
 
-					var posting = jQuery.post(ajaxurl, data);
+				var posting = jQuery.post(ajaxurl, data);
 
-					posting.done(function( data ) {
-						if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
+				posting.done(function( data ) {
+					if (data.substring(0, 5) != "ERROR" && data.substring(0, 4) != "ERRO") {
 
-							var event = new Event("<?php echo esc_attr( $simple_form ); ?>");
-							var elem = document.getElementsByTagName("html");
-							elem[0].dispatchEvent(event);
+						var event = new Event("<?php echo esc_attr( $simple_form ); ?>");
+						var elem = document.getElementsByTagName("html");
+						elem[0].dispatchEvent(event);
 
-							jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).css({
-								"color": "#4F8A10",
-								"background-color": "#DFF2BF"
-							});
+						jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).css({
+							"color": "#4F8A10",
+							"background-color": "#DFF2BF"
+						});
 
-							jQuery( "#<?php echo esc_attr( $simple_form ); ?>" )[0].reset();
+						jQuery( "#<?php echo esc_attr( $simple_form ); ?>" )[0].reset();
 
-						} else {
-							jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).css({
-								"color": "#9F6000",
-								"background-color": "#FFD2D2"
-							});
-						}
+					} else {
+						jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).css({
+							"color": "#9F6000",
+							"background-color": "#FFD2D2"
+						});
+					}
 
-						jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).empty().append( data ).slideDown( "slow" );
-						clearInterval(button_effect);
-						if (button_original_style) {
-							button_obj.prop("disabled",false).attr("style", button_original_style).html(button_text);
-						} else {
-							button_obj.prop("disabled",false).removeAttr("style").html(button_text);
-						}
-					});
+					jQuery( "#<?php echo esc_attr( $simple_form_result ); ?>" ).empty().append( data ).slideDown( "slow" );
+					clearInterval(button_effect);
+					if (button_original_style) {
+						button_obj.prop("disabled",false).attr("style", button_original_style).html(button_text);
+					} else {
+						button_obj.prop("disabled",false).removeAttr("style").html(button_text);
+					}
+				});
+
+
 
 			});
-			<?php
-			}
-			?>
         });
 		</script>
 		<?php
@@ -711,7 +707,6 @@ class Egoi_For_Wp_Public {
 		$form_data = array();
 
 		if ( empty( $_POST['elementorEgoiForm'] ) ) {// old simple forms
-
 			$form_data = array(
 				'email'      => sanitize_email( $_POST['egoi_email'] ),
 				'cellphone'  => empty($_POST['egoi_mobile']) ? '' : sanitize_text_field( $_POST['egoi_country_code'] . '-' . $_POST['egoi_mobile'] ),

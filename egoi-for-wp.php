@@ -164,76 +164,57 @@ function process_egoi_simple_form( $atts ) {
 	global $post;
 	$public_area = new Egoi_For_Wp_Public();
 
-	// Validation of required fields with JavaScript
-	?>
-	<script>
-	document.addEventListener('DOMContentLoaded', function() {
-		// Select all forms whose ID starts with "egoi_simple_form"
-		var forms = document.querySelectorAll('form[id^="egoi_simple_form"]');
-		
-		forms.forEach(function(form) {
-			// Ensure we don't add multiple listeners to the same form
-			if (!form.dataset.listenerAdded) {
-				form.dataset.listenerAdded = 'true';
+        // Validation of required fields with JavaScript
+		?>
+			<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				// Select all forms whose ID starts with "egoi_simple_form"
+				var forms = document.querySelectorAll('form[id^="egoi_simple_form"]');
+				
+				forms.forEach(function(form) {
+					form.addEventListener('submit', function(event) {
+						var currentForm = this;
+						var fields = currentForm.querySelectorAll('input, select, textarea');
+						var isValid = true;
 	
-				form.addEventListener('submit', function(event) {
+						fields.forEach(function(field) {
+							var label = currentForm.querySelector('label[for="' + field.id + '"]');
 	
-					var validationStatus = document.createElement('input');
-					validationStatus.type = 'hidden';
-					validationStatus.name = 'validation_status';
-					validationStatus.value = 'valid';
-					form.appendChild(validationStatus);
-	
-					var currentForm = this;
-					var fields = currentForm.querySelectorAll('input, select, textarea');
-					var isValid = true;
-	
-					fields.forEach(function(field) {
-						var label = currentForm.querySelector('label[for="' + field.id + '"]');
-	
-						if (label && label.textContent.includes('*')) {
-							if (field.value.trim() === '') {
-								isValid = false;
-								label.style.color = 'red'; // Highlight label in red if the field is empty
-							} else {
-								label.style.color = ''; // Remove highlight if filled correctly
+							if (label && label.textContent.includes('*')) {
+								if (field.value.trim() === '') {
+									isValid = false;
+									label.style.color = 'red'; // Highlight label in red if the field is empty
+								} else {
+									label.style.color = ''; // Remove highlight if filled correctly
+								}
 							}
+						});
+	
+						if (!isValid) {
+							event.preventDefault();
+							alert('<?php _e( 'Please fill out all required fields(*).', 'egoi-for-wp' ); ?>');
 						}
 					});
-	
-					if (!isValid) {
-						event.preventDefault(); // Prevent form submission
-						alert('<?php _e( 'Please fill out all required fields(*).', 'egoi-for-wp' ); ?>');
-						validationStatus.value = 'invalid';
-					} 
 				});
-			}
-		});
-	});
-	</script>
-	<?php
+			});
+			</script>
+		<?php
 
 	if(isset($post)){
-
-		$valid = true;
-		if ($_POST['validation_status'] !== 'valid') {
-			$valid = false;
-		}
-
 		$qt   = (int) get_option( 'egoi_simple_form_post_increment_' . $post->ID );
 		$size = (int) get_option( 'egoi_simple_form_post_' . $post->ID );
 		if ( ! isset( $qt ) && isset( $size ) ) {
 			$qt = add_option( 'egoi_simple_form_post_increment_' . $post->ID, 1, 'no' );
-			return $public_area->subscribe_egoi_simple_form( $atts, $qt, $valid);
+			return $public_area->subscribe_egoi_simple_form( $atts, $qt );
 		} elseif ( isset( $qt ) && isset( $size ) && $qt <= $size ) {
 			if ( $qt == $size ) {
 				update_option( 'egoi_simple_form_post_increment_' . $post->ID, 1, 'no' );
 			} else {
 				update_option( 'egoi_simple_form_post_increment_' . $post->ID, $qt + 1, 'no' );
 			}
-			return $public_area->subscribe_egoi_simple_form( $atts, $qt, $valid );
+			return $public_area->subscribe_egoi_simple_form( $atts, $qt );
 		} else {
-			return $public_area->subscribe_egoi_simple_form( $atts, 1, $valid );
+			return $public_area->subscribe_egoi_simple_form( $atts );
 		}
 	}
 }
