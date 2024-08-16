@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2024-07-26 15:38+0000\n"
+"PO-Revision-Date: 2024-06-25 15:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português\n"
 "Language: pt-PT\n"
@@ -22,7 +22,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: pt_PT\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.11; wp-6.6.1\n"
+"X-Loco-Version: 2.6.6; wp-6.4.2\n"
 "X-Loco-Parser: loco_parse_po"
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:73
@@ -153,7 +153,7 @@ msgstr ""
 msgid "All roles"
 msgstr "Todas as categorias"
 
-#: public/class-egoi-for-wp-public.php:337
+#: public/class-egoi-for-wp-public.php:335
 #: admin/partials/egoi-for-wp-admin-widget.php:198
 #: admin/partials/capture/widget-options.php:201
 #: admin/partials/capture/subscription-bar.php:226
@@ -198,7 +198,7 @@ msgstr "Tem a certeza que pretende eliminar este RSS Feed?"
 msgid "Are you sure?"
 msgstr "Você tem certeza?"
 
-#: includes/class-egoi-for-wp-products-bo.php:659
+#: includes/class-egoi-for-wp-products-bo.php:676
 msgid "Attention!"
 msgstr "Atenção!"
 
@@ -272,7 +272,7 @@ msgstr "Melhor<br>dia"
 msgid "Biographical Info"
 msgstr "informação Biográfica"
 
-#: includes/class-egoi-for-wp.php:1385
+#: includes/class-egoi-for-wp.php:1382
 msgid "Birth Date"
 msgstr "Aniversário"
 
@@ -294,7 +294,7 @@ msgstr "Tamanho do contorno"
 msgid "Bottom"
 msgstr "Fundo"
 
-#: egoi-for-wp.php:353
+#: egoi-for-wp.php:317
 msgid "Brand"
 msgstr "Marca"
 
@@ -853,6 +853,14 @@ msgstr "Editar API key"
 msgid "Edit Campaign in E-goi"
 msgstr "Editar Campanha no E-goi"
 
+#: admin/partials/capture/simple-forms.php:191
+msgid ""
+"Edit data-selected value in mobile field with the desired country code to "
+"preselect"
+msgstr ""
+"Edite o valor selecionado pelos dados no campo telemóvel com o código do "
+"país desejado para pré-selecionar"
+
 #: admin/partials/capture/subscription-bar.php:242
 msgid "Eg. List Missing from E-goi"
 msgstr "Ex: Lista em falta no E-goi"
@@ -866,7 +874,7 @@ msgstr "E-goi Form"
 msgid "Egoi List"
 msgstr "Lista E-goi"
 
-#: includes/class-egoi-for-wp.php:1383
+#: includes/class-egoi-for-wp.php:1380
 #: admin/partials/egoi-for-wp-admin-dashboard.php:183
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:91
 #: admin/partials/capture/simple-forms.php:187
@@ -878,8 +886,8 @@ msgstr "E-mail"
 msgid "Email Campaign"
 msgstr "Campanha de E-mail"
 
-#: public/class-egoi-for-wp-public.php:308
-#: public/class-egoi-for-wp-public.php:327
+#: public/class-egoi-for-wp-public.php:306
+#: public/class-egoi-for-wp-public.php:325
 msgid "Email can not be empty"
 msgstr "E-mail não pode estar vazio"
 
@@ -981,7 +989,7 @@ msgstr "Inglês"
 msgid "Enter the API key of your E-goi account"
 msgstr "Insira a sua API key "
 
-#: egoi-for-wp.php:355
+#: egoi-for-wp.php:319
 msgid "Enter the brand of the product"
 msgstr "Insira a Marca do produto"
 
@@ -989,7 +997,7 @@ msgstr "Insira a Marca do produto"
 msgid "Enter the E-goi account and open the forms tab."
 msgstr "Entre na Conta E-goi e abra a tab/menu de Formulários."
 
-#: egoi-for-wp.php:331
+#: egoi-for-wp.php:295
 msgid "Enter the Global Trade Item Number (UPC,EAN,ISBN)"
 msgstr "Coloque o Global Trade Item Number (UPC,EAN,ISBN)"
 
@@ -1008,7 +1016,7 @@ msgstr "Erro a enviar o e-mail"
 msgid "Error!"
 msgstr "Erro!"
 
-#: public/class-egoi-for-wp-public.php:770
+#: public/class-egoi-for-wp-public.php:753
 msgid "ERROR: invalid data submitted"
 msgstr "ERRO: dados inseridos inválidos"
 
@@ -1055,7 +1063,7 @@ msgstr "Ajustes finais"
 msgid "First Name"
 msgstr "Nome"
 
-#: includes/class-egoi-for-wp.php:1380
+#: includes/class-egoi-for-wp.php:1377
 msgid "First name"
 msgstr "Primeiro Nome"
 
@@ -1148,7 +1156,7 @@ msgstr "Gravity Forms"
 msgid "Gravity Forms Integration"
 msgstr "Integração Gravity Forms"
 
-#: egoi-for-wp.php:329
+#: egoi-for-wp.php:293
 msgid "GTIN"
 msgstr "GTIN"
 
@@ -1314,7 +1322,7 @@ msgstr "Título interno"
 msgid "Invalid e-mail"
 msgstr "E-mail inválido"
 
-#: public/class-egoi-for-wp-public.php:331
+#: public/class-egoi-for-wp-public.php:329
 msgid "Invalid email"
 msgstr "E-mail inválido"
 
@@ -1343,7 +1351,7 @@ msgstr "Base de Conhecimentos"
 msgid "Label"
 msgstr "Etiqueta"
 
-#: includes/class-egoi-for-wp.php:1386
+#: includes/class-egoi-for-wp.php:1383
 #: admin/partials/egoi-for-wp-admin-display.php:281
 #: admin/partials/ecommerce/new-catalog-form.php:23
 #: admin/partials/ecommerce/catalogs.php:8
@@ -1359,7 +1367,7 @@ msgstr "Grande"
 msgid "Last Name"
 msgstr "Apelido"
 
-#: includes/class-egoi-for-wp.php:1381
+#: includes/class-egoi-for-wp.php:1378
 msgid "Last name"
 msgstr "Último Nome"
 
@@ -1518,7 +1526,7 @@ msgid "Messages"
 msgstr "Mensagens"
 
 #: includes/class-egoi-for-wp-widget.php:385
-#: includes/class-egoi-for-wp.php:1382
+#: includes/class-egoi-for-wp.php:1379
 #: admin/partials/capture/simple-forms.php:188
 #: admin/partials/capture/simple-forms.php:188
 #: admin/partials/capture/popup.php:136
@@ -1636,20 +1644,6 @@ msgstr "Sem Tag"
 msgid "No tags found, <a href=\"%s\">are you connected to Egoi</a>?"
 msgstr "Nenhuma Tag encontrada, <a href=\"%s\">estás conectado no E-goi</a>?"
 
-#: admin/partials/capture/simple-forms.php:191
-msgid ""
-"NOTES:<br>\n"
-"- You can edit the value in the mobile phone field with the desired country "
-"code to be pre-selected<br>\n"
-"- To make it a mandatory field, add the * character, e.g.\"&lt;label "
-"for=&quot;egoi_name&quot;&gt;Nome: *&lt;/label&gt;\""
-msgstr ""
-"NOTAS:<br>\n"
-"- Podera editar o valor no campo telemóvel com o código do país desejado "
-"para ficar pré-selecionado<br>\n"
-"- Para ser um campo obrigatório de ser preenchido, adicione o caractere *, "
-"exemplo \"&lt;label for=&quot;egoi_name&quot;&gt;Nome: *&lt;/label&gt;\""
-
 #: admin/partials/egoi-for-wp-admin-trackengage.php:135
 msgid "Nothing here yet."
 msgstr "Ainda não há nada aqui."
@@ -1730,7 +1724,7 @@ msgstr "Escolha uma imagem"
 msgid "Placeholder"
 msgstr "Placeholder"
 
-#: egoi-for-wp.php:195
+#: Users/pemaia/workspace/plugin_E-goi_wordpress/smart-marketing-for-wp/egoi-for-wp.php:195
 msgid "Please fill out all required fields(*)."
 msgstr "Por favor, preencha todos os campos obrigatórios(*)."
 
@@ -2342,11 +2336,11 @@ msgstr "Subscrever"
 msgid "Subscribe Button"
 msgstr "Botão de Subscrição"
 
-#: includes/class-egoi-for-wp.php:1253
+#: includes/class-egoi-for-wp.php:1250
 msgid "Subscribe to newsletter"
 msgstr "Subscrever newsletter"
 
-#: public/class-egoi-for-wp-public.php:349
+#: public/class-egoi-for-wp-public.php:347
 msgid "Subscribed"
 msgstr "Subscrito"
 
@@ -2472,7 +2466,7 @@ msgstr "Páginas a usar"
 msgid "Tax"
 msgstr "Taxa de Impostos"
 
-#: includes/class-egoi-for-wp.php:1384
+#: includes/class-egoi-for-wp.php:1381
 msgid "Telephone"
 msgstr "Telefone"
 
@@ -2784,7 +2778,7 @@ msgstr ""
 "Atenção: parece que falta algo na configuração do cron, a hora agendada para "
 "o cron é superior à hora atual"
 
-#: public/class-egoi-for-wp-public.php:767
+#: public/class-egoi-for-wp-public.php:750
 msgid "was successfully registered!"
 msgstr "foi registado com sucesso!"
 
@@ -2912,7 +2906,7 @@ msgstr "Está aqui:"
 msgid "You can choose to divide the popup with an image"
 msgstr "Pode optar por colocar uma imagem no popup"
 
-#: includes/class-egoi-for-wp-products-bo.php:660
+#: includes/class-egoi-for-wp-products-bo.php:677
 msgid "You have %d products behind in synchronization!"
 msgstr "Tem %d produtos em sincronização"
 

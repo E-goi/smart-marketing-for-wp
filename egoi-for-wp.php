@@ -164,6 +164,42 @@ function process_egoi_simple_form( $atts ) {
 	global $post;
 	$public_area = new Egoi_For_Wp_Public();
 
+        // Validation of required fields with JavaScript
+		?>
+			<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				// Select all forms whose ID starts with "egoi_simple_form"
+				var forms = document.querySelectorAll('form[id^="egoi_simple_form"]');
+				
+				forms.forEach(function(form) {
+					form.addEventListener('submit', function(event) {
+						var currentForm = this;
+						var fields = currentForm.querySelectorAll('input, select, textarea');
+						var isValid = true;
+	
+						fields.forEach(function(field) {
+							var label = currentForm.querySelector('label[for="' + field.id + '"]');
+	
+							if (label && label.textContent.includes('*')) {
+								if (field.value.trim() === '') {
+									isValid = false;
+									label.style.color = 'red'; // Highlight label in red if the field is empty
+								} else {
+									label.style.color = ''; // Remove highlight if filled correctly
+								}
+							}
+						});
+	
+						if (!isValid) {
+							event.preventDefault();
+							alert('<?php _e( 'Please fill out all required fields(*).', 'egoi-for-wp' ); ?>');
+						}
+					});
+				});
+			});
+			</script>
+		<?php
+
 	if(isset($post)){
 
 		$qt   = (int) get_option( 'egoi_simple_form_post_increment_' . $post->ID );
