@@ -768,7 +768,8 @@ class Egoi_For_Wp_Public {
 				$api->smsnf_save_form_subscriber( $form_id, 'simple-form', $add, $_POST['egoi_list'], $form_data['email'] );
 			}
 
-			_e( 'Contact was successfully registered!', 'egoi-for-wp' );
+			echo esc_textarea($form_data['email']) . ' ';
+			_e( 'was successfully registered!', 'egoi-for-wp' );
 
 		} else {
 			_e( 'ERROR: invalid data submitted', 'egoi-for-wp' );

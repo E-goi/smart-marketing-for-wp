@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2024-07-26 10:49+0000\n"
+"PO-Revision-Date: 2024-06-25 15:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português do Brasil\n"
 "Language: pt-BR\n"
@@ -571,9 +571,6 @@ msgstr "Integração Contact Form 7"
 msgid "Contact Form Name"
 msgstr "Nome do Formulário de Contato"
 
-msgid "Contact was successfully registered!"
-msgstr "O contato foi registrado com êxito!"
-
 #: includes/campaignwidget/campaign-widget.php:181
 msgid "Contacts:"
 msgstr "Lista:"
@@ -868,6 +865,10 @@ msgid ""
 msgstr ""
 "Edite o valor selecionado pelos dados no campo móvel com o código do país "
 "desejado para pré-selecionar"
+
+#: Users/pemaia/workspace/plugin_E-goi_wordpress/smart-marketing-for-wp/egoi-for-wp.php:195
+msgid "Please fill out all required fields(*)."
+msgstr "Por favor, preencha todos os campos obrigatórios(*)."
 
 #: admin/partials/capture/subscription-bar.php:242
 msgid "Eg. List Missing from E-goi"
@@ -1738,10 +1739,6 @@ msgstr "Escolha uma imagem"
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:66
 msgid "Placeholder"
 msgstr "Placeholder"
-
-#: Users/pemaia/workspace/plugin_E-goi_wordpress/smart-marketing-for-wp/egoi-for-wp.php:195
-msgid "Please fill out all required fields(*)."
-msgstr "Por favor, preencha todos os campos obrigatórios(*)."
 
 #: admin/partials/rssfeed/feed-rss.php:91
 msgid "Please select at least one Category or All will be displayed"
