@@ -372,7 +372,6 @@ class Egoi_For_Wp_Public {
 	public function subscribe_egoi_simple_form( $atts, $qt = 1 ) {
 		global $wpdb;
 
-
 		if ( empty( $atts['id'] ) || wp_is_json_request()) {
 			return;
 		}
@@ -709,7 +708,7 @@ class Egoi_For_Wp_Public {
 		if ( empty( $_POST['elementorEgoiForm'] ) ) {// old simple forms
 			$form_data = array(
 				'email'      => sanitize_email( $_POST['egoi_email'] ),
-				'cellphone'  => empty($_POST['egoi_mobile']) ? '' : sanitize_text_field( $_POST['egoi_country_code'] . '-' . $_POST['egoi_mobile'] ),
+				'cellphone'  => sanitize_text_field( $_POST['egoi_country_code'] . '-' . $_POST['egoi_mobile'] ),
 				'first_name' => sanitize_text_field( stripslashes( $_POST['egoi_name'] ) ),
 				'tags'       => array( sanitize_key( $_POST['egoi_tag'] ) ),
 				'status'     => $status,
