@@ -5,6 +5,7 @@ admin/js/egoi-for-wp-forms.js
 admin/js/egoi-for-wp-map.js
 admin/js/egoi-for-wp-widget.js
 .idea
+.vscode
 admin/spectre/node_modules/
 package-lock.json
 /node_modules
