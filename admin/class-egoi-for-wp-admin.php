@@ -300,6 +300,14 @@ class Egoi_For_Wp_Admin {
 			wp_enqueue_script( $this->plugin_name, 'egoi-for-wp-rssfeed-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-rssfeed.js', array( 'jquery' ) );
 			wp_localize_script(
 				$this->plugin_name,
+				'egoi_config_ajax_object_rss',
+				array(
+					'ajax_url'   => admin_url( 'admin-ajax.php' ),
+					'ajax_nonce' => wp_create_nonce( 'egoi_rss_manage' ),
+				)
+			);
+            wp_localize_script(
+				$this->plugin_name,
 				'egoi_config_ajax_object',
 				array(
 					'ajax_url'   => admin_url( 'admin-ajax.php' ),
@@ -2111,6 +2119,8 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_remove_rss() {
+        check_ajax_referer( 'egoi_rss_manage', 'security' );
+
 		global $wpdb;
 		$rssId =  $_POST[ 'rssId' ];
 
