@@ -22,12 +22,13 @@ jQuery(document).ready(function ($) {
     
 
         var data = {
+            security: egoi_config_ajax_object_rss.ajax_nonce,
             action: 'egoi_remove_rss',
             rssId: idForm
         };
 
         $.post(
-            url_egoi_script.ajaxurl,
+            egoi_config_ajax_object_rss.ajax_url,
             data,
             function(response) {
                 location.reload();
