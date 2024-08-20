@@ -45,7 +45,7 @@ function efwp_get_egoi_forms() {
 	for ( $i = 1; $i <= 5; $i++ ) {
 		$form = get_option( 'egoi_form_sync_' . $i );
 
-		if ( ! $form['egoi_form_sync']['form_id'] ) {
+		if (!isset($form['egoi_form_sync']) || !$form['egoi_form_sync']['form_id'] ) {
 			continue;
 		}
 
