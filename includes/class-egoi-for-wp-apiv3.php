@@ -1177,39 +1177,52 @@ class EgoiApiV3 {
 		return $extra_fields;
 	}
 
-	public function editContact( $listID, $contact_id, $fname = '', $lname = ' ', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
+	public function editContact( $listID, $contact_id, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
 
 		if(! $lname){
 			$full_name = explode( ' ', $fname );
 			$lname =  sizeof($full_name) == 1 ? ' ' : end($full_name);
 			$fname = sizeof($full_name) > 1 ? implode(' ', array_slice($full_name,0,-1)) : $fname;
+			$lname = trim($lname);
+			$fname = trim($fname);
 		}
 
-		$params = array(
-			'status' => $status,
-			'first_name' => $fname,
-			'last_name' => $lname
-		);
+		$params = array();
 
 		$tel  = isset($ref_fields['tel']) ? $ref_fields['tel'] : '';
 		$cell = isset($ref_fields['cell']) ? $ref_fields['cell'] : '';
 		$bd   = isset($ref_fields['bd']) ? $ref_fields['bd'] : '';
 		$lang = isset($ref_fields['lang']) ? $ref_fields['lang'] : '';
 
+		//status
+		if(!empty($status)) {
+			$params['status'] = $status;
+		}
+
+		// first name
+		if(!empty($fname)) {
+			$params['first_name'] = $fname;
+		}
+
+		// last name
+		if(!empty($lname)) {
+			$params['last_name'] = $lname;
+		}
+
 		// telephone
-		if ( !empty($tel) ) {
+		if (!empty($tel) ) {
 			$params['cellphone'] = $tel;
 		}
 		// cellphone
-		if ( !empty($cell) && empty($tel) ) {
+		if (!empty($cell) && empty($tel) ) {
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
-		if ( !empty($bd) ) {
+		if (!empty($bd) ) {
 			$params['birth_date'] = $bd;
 		}
 		// language
-		if ( !empty($lang) ) {
+		if (!empty($lang) ) {
 			$params['language'] = $lang;
 		}
 
@@ -1233,6 +1246,7 @@ class EgoiApiV3 {
 			}
 		}
 
+
 		if ( empty( $params_extra ) ) {
 			$body = array( 'base' => $params );
 		} else {
@@ -1241,6 +1255,7 @@ class EgoiApiV3 {
 				'extra' => $params_extra,
 			);
 		}
+
 
 		$url = self::APIV3 . '/lists/' . $listID . '/contacts/' . $contact_id;
 
