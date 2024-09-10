@@ -1,12 +1,13 @@
- === Plugin Name ===
-Contributors: E-goi
+ === Smart Marketing SMS and Newsletters Forms ===
+Contributors: egoi
 Donate link:
-Tags: Newsletter, Subscribe, E-goi, Widget, Subscribe Newsletter, Newsletter Populator, Send Newsletter, Marketing Automation, E-Mail Gatherer, egoi, Mailing List, E-mail Marketing, Email Marketing, Marketing
+Tags: Email Marketing, Newsletter, Marketing Automation, E-goi, Ecommerce
 Requires at least: 4.7
-Tested up to: 6.4.2
-Stable tag: 5.0.7
+Tested up to: 6.6.1
+Stable tag: 5.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Save Time, Increase Traffic, and Transform Business Opportunities (Leads) into Trusted Customers!
 
 == Description ==
 
@@ -169,14 +170,20 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 5.0.8 =
+- Fix save not working when plugin is enabled
+- Change readme to match wordpress.org specs
+- Bumped version tag
+- Bumped Tested up to tag
+
 = 5.0.7 =
--  Minor contact sync improvements
+- Minor contact sync improvements
 
 = 5.0.6 = 
--  Minor Stability improvs
+- Minor Stability improvs
 
 = 5.0.5 = 
--  Added required fields on simple forms
+- Added required fields on simple forms
 
 = 5.0.4 =
 - Remove some warnings

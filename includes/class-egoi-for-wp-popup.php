@@ -180,7 +180,7 @@ class EgoiPopUp {
 					<div style="padding: 20px;border-radius: inherit;">
 						<?php
 						echo wp_kses_post(stripslashes( $config['content'] ));
-						self::getFormShortCodeById( $config['form_id'], $config );
+						self::getFormShortCodeById( $config, $config['form_id']);
 						?>
 					</div>
 					<?php if ( $config['popup_layout'] == 'right_image' ) { ?>
@@ -355,7 +355,7 @@ class EgoiPopUp {
 		return;
 	}
 
-	private static function getFormShortCodeById( $id = 'new', $config ) {
+	private static function getFormShortCodeById( $config, $id = 'new' ) {
 		if ( empty( $id ) || $id == 'new' ) {
 			?>
 			<?php

@@ -373,6 +373,8 @@ class Egoi_For_Wp {
 	);
 	const CACHED_CALLS      = array( 'getLists', 'getTags' );
 	const PURGE_CACHE_CALLS = array( 'createList', 'addTag' );
+
+    protected $_valid = [];
 	/**
 	 * Constructor
 	 *
