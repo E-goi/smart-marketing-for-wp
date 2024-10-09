@@ -30,7 +30,7 @@ $mapped        = Egoi_For_Wp::getGravityFormsInfo();
 
 					<div class="smsnf-input-group">
 						<label for="egoi_map_trigger"><?php _e( 'Contact Form Name', 'egoi-for-wp' ); ?></label>
-						<p class="subtitle"><?php _e( 'Select the language your products are setup.', 'egoi-for-wp' ); ?></p>
+						<p class="subtitle"><?php _e( 'Select the form you want to sync.', 'egoi-for-wp' ); ?></p>
 						<div class="smsnf-wrapper">
 							<?php if ( empty( $contact_forms ) ) { ?>
 								<span><?php _e( 'Cannot locate any forms from Gravity Forms', 'egoi-for-wp' ); ?></span>
