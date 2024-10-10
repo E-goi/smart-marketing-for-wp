@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2024-10-09 10:21+0000\n"
+"PO-Revision-Date: 2024-10-10 14:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português do Brasil\n"
-"Language: pt-BR\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2116,7 +2116,7 @@ msgstr "Selecione o feed que será usado em sua campanha"
 #: admin/partials/ecommerce/new-catalog-form.php:24
 #: admin/partials/integrations/contact-form-7.php:38
 msgid "Select the form you want to sync contacts on."
-msgstr "Selecione o formulário que você deseja sincronizar os contatos."
+msgstr "Selecione o formulário que você deseja."
 
 #: admin/partials/integrations/gravity-forms.php:33
 msgid "Select the form you want to sync."
@@ -2135,8 +2135,7 @@ msgstr "Selecione a lista na qual cada subscritor será inserido"
 #: admin/partials/integrations/contact-form-7.php:70
 msgid ""
 "Select the list to which who submit in Contact Form 7 should be subscribed"
-msgstr ""
-"Selecione a lista na qual os que enviam no Contact Form 7 devem ser inscritos"
+msgstr "Selecione a lista para qual os contatos devem ser sincronizados."
 
 #: admin/partials/integrations/post-comment.php:30
 msgid ""

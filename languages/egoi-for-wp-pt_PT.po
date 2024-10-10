@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2024-10-09 14:06+0000\n"
+"PO-Revision-Date: 2024-10-10 14:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português\n"
-"Language: pt-PT\n"
+"Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1671,14 +1671,14 @@ msgstr "Nº Subscritores"
 #: admin/partials/integrations/home.php:22
 #: admin/partials/integrations/home.php:35
 msgid "Off"
-msgstr "Off"
+msgstr "Desactivar"
 
 #: admin/partials/configuration/subscribers.php:59
 #: admin/partials/integrations/home.php:11
 #: admin/partials/integrations/home.php:24
 #: admin/partials/integrations/home.php:37
 msgid "On"
-msgstr "On"
+msgstr "Activar"
 
 #: admin/partials/capture/popup.php:107
 msgid "On Leave"
@@ -2106,7 +2106,7 @@ msgstr "Selecione o feed para utilizar na sua campanha"
 #: admin/partials/ecommerce/new-catalog-form.php:24
 #: admin/partials/integrations/contact-form-7.php:38
 msgid "Select the form you want to sync contacts on."
-msgstr "Selecione o formulário que pretende sincronizar os contactos."
+msgstr "Selecione o formulário que pretende."
 
 #: admin/partials/integrations/gravity-forms.php:33
 msgid "Select the form you want to sync."
@@ -2125,7 +2125,7 @@ msgstr "Selecione a lista na qual cada subscritor será inserido."
 #: admin/partials/integrations/contact-form-7.php:70
 msgid ""
 "Select the list to which who submit in Contact Form 7 should be subscribed"
-msgstr "selecione a lista para qual os contactos devem entrar."
+msgstr "Selecione a lista para qual os contactos devem ser sincronizados."
 
 #: admin/partials/integrations/post-comment.php:30
 msgid ""
