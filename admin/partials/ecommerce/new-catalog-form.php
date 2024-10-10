@@ -21,7 +21,7 @@
 
 			<div class="smsnf-input-group">
 				<label for="catalog_language"><?php _e( 'Language', 'egoi-for-wp' ); ?></label>
-				<p class="subtitle"><?php _e( 'Select the language your products are setup.', 'egoi-for-wp' ); ?></p>
+				<p class="subtitle"><?php _e( 'Select the form you want to sync contacts on.', 'egoi-for-wp' ); ?></p>
 				<div class="smsnf-wrapper">
 					<select id="catalog_language" name="catalog_language" class="form-select" >
 						<option value="off" selected><?php _e( 'Select a language..', 'egoi-for-wp' ); ?></option>

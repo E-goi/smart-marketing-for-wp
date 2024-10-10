@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing SMS and Newsletters Forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-21 12:27+0000\n"
+"POT-Creation-Date: 2024-10-09 10:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Activate"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:92 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:92
 #: admin/partials/wizard/connected-sites.php:17
 msgid "Activate Connected Sites"
 msgstr ""
@@ -130,19 +130,19 @@ msgid ""
 "All imported products will be removed from E-goi if you delete this catalog!"
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:120 
+#: admin/partials/configuration/subscribers.php:120
 #: admin/partials/wizard/subscribers.php:32
 msgid "All roles"
 msgstr ""
 
-#: public/class-egoi-for-wp-public.php:335 
-#: admin/partials/egoi-for-wp-admin-widget.php:198 
-#: admin/partials/capture/widget-options.php:201 
+#: public/class-egoi-for-wp-public.php:337
+#: admin/partials/egoi-for-wp-admin-widget.php:198
 #: admin/partials/capture/subscription-bar.php:226
+#: admin/partials/capture/widget-options.php:201
 msgid "Already subscribed"
 msgstr ""
 
-#: admin/partials/capture/subscription-bar.php:233 
+#: admin/partials/capture/subscription-bar.php:233
 #: admin/partials/capture/subscription-bar.php:234
 msgid "Already subscribed and waiting for confirmation e-mail"
 msgstr ""
@@ -159,10 +159,10 @@ msgid ""
 "href=\"admin.php?page=egoi-4-wp-account\">here</a>"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:115 
-#: admin/partials/capture/widget-options.php:143 
-#: admin/partials/capture/subscription-bar.php:17 
+#: admin/partials/egoi-for-wp-admin-widget.php:115
 #: admin/partials/capture/popup.php:39
+#: admin/partials/capture/subscription-bar.php:17
+#: admin/partials/capture/widget-options.php:143
 msgid "Appearance"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
-#: includes/class-egoi-for-wp-products-bo.php:676
+#: includes/class-egoi-for-wp-products-bo.php:659
 msgid "Attention!"
 msgstr ""
 
@@ -182,20 +182,20 @@ msgstr ""
 msgid "Attention! If you change your form you will lose the settings."
 msgstr ""
 
-#: admin/partials/capture/subscription-bar.php:121 
 #: admin/partials/capture/popup.php:182
+#: admin/partials/capture/subscription-bar.php:121
 msgid "Background Color"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:286 
-#: admin/partials/capture/widget-options.php:268 
+#: admin/partials/egoi-for-wp-admin-widget.php:286
 #: admin/partials/capture/subscription-bar.php:200
+#: admin/partials/capture/widget-options.php:268
 msgid "Background Color on Error"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:274 
-#: admin/partials/capture/widget-options.php:257 
+#: admin/partials/egoi-for-wp-admin-widget.php:274
 #: admin/partials/capture/subscription-bar.php:190
+#: admin/partials/capture/widget-options.php:257
 msgid "Background Color on Success"
 msgstr ""
 
@@ -245,13 +245,13 @@ msgstr ""
 msgid "Biographical Info"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1382
+#: includes/class-egoi-for-wp.php:1387
 msgid "Birth Date"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:262 
-#: admin/partials/capture/widget-options.php:247 
+#: admin/partials/egoi-for-wp-admin-widget.php:262
 #: admin/partials/capture/subscription-bar.php:160
+#: admin/partials/capture/widget-options.php:247
 msgid "Border Color"
 msgstr ""
 
@@ -267,7 +267,7 @@ msgstr ""
 msgid "Bottom"
 msgstr ""
 
-#: egoi-for-wp.php:317
+#: egoi-for-wp.php:360
 msgid "Brand"
 msgstr ""
 
@@ -275,8 +275,8 @@ msgstr ""
 msgid "Button"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:223 
 #: admin/partials/capture/subscription-bar.php:170
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:223
 msgid "Button Color"
 msgstr ""
 
@@ -288,21 +288,27 @@ msgstr ""
 msgid "Button Text"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:238 
 #: admin/partials/capture/subscription-bar.php:180
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:238
 msgid "Button Text Color"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:250 
+#: admin/partials/egoi-for-wp-admin-widget.php:250
 #: admin/partials/capture/widget-options.php:240
 msgid "Button Width"
+msgstr ""
+
+#: admin/partials/configuration/subscribers.php:57
+msgid ""
+"By activating this option, the Newsletter checkbox will be active by default,"
+" which could lead to legal issues under the GDPR"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-rssfeed.php:45
 msgid "Campaign Rss"
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:109 
+#: admin/partials/rssfeed/campaign-rss.php:109
 #: admin/partials/rssfeed/campaign-rss.php:185
 msgid "Campaign sent successfully!"
 msgstr ""
@@ -326,12 +332,12 @@ msgid ""
 "target=\"_blank\">here!</a>"
 msgstr ""
 
-#: admin/partials/rssfeed/home.php:38 admin/partials/ecommerce/catalogs.php:59 
 #: admin/partials/capture/advanced-forms.php:49
+#: admin/partials/ecommerce/catalogs.php:59 admin/partials/rssfeed/home.php:38
 msgid "Cancel"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-lists.php:67 
+#: admin/partials/egoi-for-wp-admin-lists.php:67
 #: admin/partials/egoi-for-wp-admin-display.php:295
 msgid "Cancelar"
 msgstr ""
@@ -360,8 +366,8 @@ msgstr ""
 msgid "Categories to exclude"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:258 
 #: admin/partials/capture/popup.php:154
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:258
 msgid "Center"
 msgstr ""
 
@@ -377,27 +383,27 @@ msgstr ""
 msgid "Change the color of the Widget border"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:291 
+#: admin/partials/egoi-for-wp-admin-widget.php:291
 #: admin/partials/capture/widget-options.php:274
 msgid "Change the color of the Widget Error message"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:279 
+#: admin/partials/egoi-for-wp-admin-widget.php:279
 #: admin/partials/capture/widget-options.php:263
 msgid "Change the color of the Widget Success message"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:243 
+#: admin/partials/egoi-for-wp-admin-widget.php:243
 #: admin/partials/capture/widget-options.php:235
 msgid "Change the input width in px, otherwise leave empty if you want to 100%"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:255 
+#: admin/partials/egoi-for-wp-admin-widget.php:255
 #: admin/partials/capture/widget-options.php:242
 msgid "Change the subscriber button width in px"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:186 
+#: admin/partials/egoi-for-wp-admin-widget.php:186
 #: admin/partials/capture/widget-options.php:190
 msgid "Check, please, if you wrote your e-mail address correctly."
 msgstr ""
@@ -418,7 +424,7 @@ msgstr ""
 msgid "Choose a subject for your campaign"
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:72 
+#: admin/partials/rssfeed/campaign-rss.php:72
 #: admin/partials/rssfeed/campaign-rss.php:163
 msgid "Choose a title for your newsletter"
 msgstr ""
@@ -431,7 +437,7 @@ msgstr ""
 msgid "Choose form to configure"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-sidebar.php:15 
+#: admin/partials/egoi-for-wp-admin-sidebar.php:15
 #: admin/partials/capture/advanced-forms.php:27
 msgid "Choose the desired form."
 msgstr ""
@@ -454,8 +460,8 @@ msgid ""
 "minute)</p>"
 msgstr ""
 
-#: admin/partials/capture/simple-forms.php:209 
 #: admin/partials/capture/simple-forms.php:211
+#: admin/partials/capture/simple-forms.php:213
 msgid "Click to copy"
 msgstr ""
 
@@ -463,15 +469,15 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:279 
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:279
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:293
 msgid "Column"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-subscribers.php:124 
-#: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:26 
-#: admin/partials/egoi-for-wp-admin-transactional-email.php:29 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:29 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:29
+#: admin/partials/egoi-for-wp-admin-transactional-email.php:29
+#: admin/partials/egoi-for-wp-admin-subscribers.php:124
+#: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:26
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:125
 msgid "Configuration"
 msgstr ""
@@ -484,15 +490,15 @@ msgstr ""
 msgid "Configure rules for target page <b>URL</b>"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-display.php:327 
-#: admin/partials/rssfeed/home.php:35 
+#: admin/partials/egoi-for-wp-admin-display.php:327
 #: admin/partials/capture/advanced-forms.php:48
+#: admin/partials/rssfeed/home.php:35
 msgid "Confirm"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:39 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:24 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:24
 #: admin/partials/egoi-for-wp-admin-trackengage.php:63
+#: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:39
 msgid "Connected Sites"
 msgstr ""
 
@@ -515,22 +521,26 @@ msgstr ""
 msgid "Contact Form 7 Integration"
 msgstr ""
 
-#: admin/partials/integrations/contact-form-7.php:37 
 #: admin/partials/integrations/gravity-forms.php:32
+#: admin/partials/integrations/contact-form-7.php:37
 msgid "Contact Form Name"
+msgstr ""
+
+#: public/class-egoi-for-wp-public.php:792
+msgid "Contact was successfully registered!"
 msgstr ""
 
 #: includes/campaignwidget/campaign-widget.php:181
 msgid "Contacts:"
 msgstr ""
 
-#: admin/partials/configuration/advanced.php:25 
+#: admin/partials/configuration/advanced.php:25
 #: admin/partials/wizard/final-tweaks.php:6
 msgid "Convert orders via backend"
 msgstr ""
 
-#: admin/partials/capture/simple-forms.php:210 
 #: admin/partials/capture/home.php:39
+#: admin/partials/capture/simple-forms.php:212
 msgid "Copied"
 msgstr ""
 
@@ -538,9 +548,9 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-#: admin/partials/configuration/advanced.php:86 
-#: admin/partials/configuration/advanced.php:95 
-#: admin/partials/capture/home.php:37 admin/partials/capture/home.php:38 
+#: admin/partials/configuration/advanced.php:86
+#: admin/partials/configuration/advanced.php:95
+#: admin/partials/capture/home.php:37 admin/partials/capture/home.php:38
 #: admin/partials/capture/home.php:42
 msgid "Copy"
 msgstr ""
@@ -563,23 +573,23 @@ msgstr ""
 msgid "Create a new tag to which visitors should be associated"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-ecommerce.php:56 
-#: admin/partials/wizard/products.php:54 admin/partials/wizard/products.php:72 
+#: admin/partials/egoi-for-wp-admin-ecommerce.php:56
 #: admin/partials/ecommerce/new-catalog-form.php:69
+#: admin/partials/wizard/products.php:54 admin/partials/wizard/products.php:72
 msgid "Create Catalog"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-lists.php:49 
+#: admin/partials/egoi-for-wp-admin-lists.php:49
 #: admin/partials/egoi-for-wp-admin-display.php:264
 msgid "Create List +"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-forms.php:103 
+#: admin/partials/egoi-for-wp-admin-forms.php:103
 #: admin/partials/integrations/gravity-forms.php:87
 msgid "Create New Tag"
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:95 
+#: admin/partials/rssfeed/campaign-rss.php:95
 #: admin/partials/rssfeed/campaign-rss.php:172
 msgid "Create RSS Campaign +"
 msgstr ""
@@ -596,8 +606,8 @@ msgstr ""
 msgid "Created At"
 msgstr ""
 
-#: admin/partials/ecommerce/new-catalog-form.php:33 
 #: admin/partials/ecommerce/catalogs.php:9
+#: admin/partials/ecommerce/new-catalog-form.php:33
 msgid "Currency"
 msgstr ""
 
@@ -617,11 +627,11 @@ msgstr ""
 msgid "Customize Email Campaign content"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:45 
-#: admin/partials/egoi-for-wp-admin-header.php:6 
-#: admin/partials/egoi-for-wp-admin-header.php:15 
-#: admin/partials/egoi-for-wp-admin-header.php:26 
-#: admin/partials/egoi-for-wp-admin-header.php:33 
+#: admin/partials/egoi-for-wp-admin-dashboard.php:45
+#: admin/partials/egoi-for-wp-admin-header.php:6
+#: admin/partials/egoi-for-wp-admin-header.php:15
+#: admin/partials/egoi-for-wp-admin-header.php:26
+#: admin/partials/egoi-for-wp-admin-header.php:33
 #: admin/partials/egoi-for-wp-admin-header.php:38
 msgid "Dashboard"
 msgstr ""
@@ -638,9 +648,9 @@ msgstr ""
 msgid "Delay"
 msgstr ""
 
-#: includes/class-egoi-for-wp-products-bo.php:364 
-#: admin/partials/rssfeed/home.php:54 admin/partials/ecommerce/catalogs.php:50 
+#: includes/class-egoi-for-wp-products-bo.php:364
 #: admin/partials/capture/home.php:51 admin/partials/capture/home.php:87
+#: admin/partials/ecommerce/catalogs.php:50 admin/partials/rssfeed/home.php:54
 msgid "Delete"
 msgstr ""
 
@@ -687,12 +697,12 @@ msgstr ""
 msgid "Do you want to make WebPush campaigns?"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:102 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:102
 #: admin/partials/wizard/connected-sites.php:9
 msgid "Domain"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:103 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:103
 #: admin/partials/wizard/connected-sites.php:10
 msgid "Domain that will be connected"
 msgstr ""
@@ -756,12 +766,12 @@ msgid ""
 "goi."
 msgstr ""
 
-#: admin/partials/transactionalemail/home.php:52 
+#: admin/partials/transactionalemail/home.php:52
 #: admin/partials/transactionalemail/send-email-test.php:38
 msgid "E-goi Transactional Email OFF"
 msgstr ""
 
-#: admin/partials/transactionalemail/home.php:41 
+#: admin/partials/transactionalemail/home.php:41
 #: admin/partials/transactionalemail/send-email-test.php:26
 msgid "E-goi Transactional Email ON"
 msgstr ""
@@ -774,8 +784,8 @@ msgstr ""
 msgid "Ecommerce"
 msgstr ""
 
-#: admin/partials/rssfeed/home.php:55 admin/partials/capture/home.php:50 
-#: admin/partials/capture/home.php:86
+#: admin/partials/capture/home.php:50 admin/partials/capture/home.php:86
+#: admin/partials/rssfeed/home.php:55
 msgid "Edit"
 msgstr ""
 
@@ -783,19 +793,9 @@ msgstr ""
 msgid "Edit API Key"
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:104 
+#: admin/partials/rssfeed/campaign-rss.php:104
 #: admin/partials/rssfeed/campaign-rss.php:180
 msgid "Edit Campaign in E-goi"
-msgstr ""
-
-#: admin/partials/capture/simple-forms.php:191
-msgid ""
-"Edit data-selected value in mobile field with the desired country code to "
-"preselect"
-msgstr ""
-
-#: /Users/pemaia/workspace/plugin_E-goi_wordpress/smart-marketing-for-wp/egoi-for-wp.php:195
-msgid "Please fill out all required fields(*)."
 msgstr ""
 
 #: admin/partials/capture/subscription-bar.php:242
@@ -806,16 +806,16 @@ msgstr ""
 msgid "Egoi Form"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:123 
+#: admin/partials/egoi-for-wp-admin-widget.php:123
 #: admin/partials/capture/functions.php:53
 msgid "Egoi List"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1380 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:183 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:91 
-#: admin/partials/capture/simple-forms.php:187 
+#: includes/class-egoi-for-wp.php:1385
+#: admin/partials/egoi-for-wp-admin-dashboard.php:183
 #: admin/partials/capture/simple-forms.php:187
+#: admin/partials/capture/simple-forms.php:187
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:91
 msgid "Email"
 msgstr ""
 
@@ -823,8 +823,8 @@ msgstr ""
 msgid "Email Campaign"
 msgstr ""
 
-#: public/class-egoi-for-wp-public.php:306 
-#: public/class-egoi-for-wp-public.php:325
+#: public/class-egoi-for-wp-public.php:308
+#: public/class-egoi-for-wp-public.php:327
 msgid "Email can not be empty"
 msgstr ""
 
@@ -836,7 +836,7 @@ msgstr ""
 msgid "Email Sender"
 msgstr ""
 
-#: admin/partials/transactionalemail/home.php:46 
+#: admin/partials/transactionalemail/home.php:46
 #: admin/partials/transactionalemail/send-email-test.php:31
 msgid "Email sender: "
 msgstr ""
@@ -853,7 +853,7 @@ msgstr ""
 msgid "Empty data!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:191 
+#: admin/partials/egoi-for-wp-admin-widget.php:191
 #: admin/partials/capture/widget-options.php:195
 msgid "Empty email address"
 msgstr ""
@@ -870,10 +870,10 @@ msgstr ""
 msgid "Enable Contact Form 7 Integration"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:97 
-#: admin/partials/capture/simple-forms.php:155 
-#: admin/partials/capture/widget-options.php:161 
+#: admin/partials/egoi-for-wp-admin-widget.php:97
+#: admin/partials/capture/simple-forms.php:155
 #: admin/partials/capture/subscription-bar.php:55
+#: admin/partials/capture/widget-options.php:161
 msgid "Enable Double Opt-In?"
 msgstr ""
 
@@ -915,7 +915,7 @@ msgstr ""
 msgid "Enter the API key of your E-goi account"
 msgstr ""
 
-#: egoi-for-wp.php:319
+#: egoi-for-wp.php:362
 msgid "Enter the brand of the product"
 msgstr ""
 
@@ -923,12 +923,12 @@ msgstr ""
 msgid "Enter the E-goi account and open the forms tab."
 msgstr ""
 
-#: egoi-for-wp.php:295
+#: egoi-for-wp.php:338
 msgid "Enter the Global Trade Item Number (UPC,EAN,ISBN)"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-forms.php:30 
-#: admin/partials/egoi-for-wp-admin-display.php:27 
+#: admin/partials/egoi-for-wp-admin-forms.php:30
+#: admin/partials/egoi-for-wp-admin-display.php:27
 #: admin/partials/egoi-for-wp-admin-display.php:33
 msgid "Error"
 msgstr ""
@@ -937,16 +937,16 @@ msgstr ""
 msgid "Error on sending email."
 msgstr ""
 
-#: includes/transactionalemail/transactional-email-helper.php:187 
+#: includes/transactionalemail/transactional-email-helper.php:187
 #: includes/transactionalemail/transactional-email-helper.php:197
 msgid "Error!"
 msgstr ""
 
-#: public/class-egoi-for-wp-public.php:753
+#: public/class-egoi-for-wp-public.php:795
 msgid "ERROR: invalid data submitted"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:225 
+#: admin/partials/egoi-for-wp-admin-widget.php:225
 #: admin/partials/capture/widget-options.php:222
 #, php-format
 msgid "Example: %s"
@@ -984,12 +984,12 @@ msgstr ""
 msgid "Final Tweaks"
 msgstr ""
 
-#: includes/class-egoi-for-wp-widget.php:333 
+#: includes/class-egoi-for-wp-widget.php:333
 #: admin/partials/custom/egoi-for-wp-form-map.php:37
 msgid "First Name"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1377
+#: includes/class-egoi-for-wp.php:1382
 msgid "First name"
 msgstr ""
 
@@ -997,7 +997,7 @@ msgstr ""
 msgid "Font Color"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:185 
+#: admin/partials/egoi-for-wp-admin-dashboard.php:185
 #: admin/partials/capture/popup.php:59
 msgid "Form"
 msgstr ""
@@ -1014,7 +1014,7 @@ msgstr ""
 msgid "Form Fields"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:184 
+#: admin/partials/egoi-for-wp-admin-dashboard.php:184
 #: admin/partials/egoi-for-wp-admin-dashboard.php:264
 msgid "Form ID"
 msgstr ""
@@ -1031,12 +1031,12 @@ msgstr ""
 msgid "Form saved with success."
 msgstr ""
 
-#: admin/partials/capture/simple-forms.php:174 
+#: admin/partials/capture/simple-forms.php:174
 #: admin/partials/capture/popup.php:50
 msgid "Form title"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-forms.php:24 
+#: admin/partials/egoi-for-wp-admin-forms.php:24
 #: admin/partials/egoi-for-wp-admin-forms.php:33
 msgid "Form was successfully deleted!"
 msgstr ""
@@ -1049,7 +1049,7 @@ msgstr ""
 msgid "Full Width"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:50 
+#: admin/partials/egoi-for-wp-admin-dashboard.php:50
 #: admin/partials/egoi-for-wp-admin-display.php:82
 msgid "General"
 msgstr ""
@@ -1082,7 +1082,7 @@ msgstr ""
 msgid "Gravity Forms Integration"
 msgstr ""
 
-#: egoi-for-wp.php:293
+#: egoi-for-wp.php:336
 msgid "GTIN"
 msgstr ""
 
@@ -1090,8 +1090,8 @@ msgstr ""
 msgid "Help?"
 msgstr ""
 
-#: admin/partials/integrations/contact-form-7.php:22 
-#: admin/partials/integrations/contact-form-7.php:24 
+#: admin/partials/integrations/contact-form-7.php:22
+#: admin/partials/integrations/contact-form-7.php:24
 #: admin/partials/integrations/contact-form-7.php:26
 msgid "here"
 msgstr ""
@@ -1100,12 +1100,12 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:206 
+#: admin/partials/egoi-for-wp-admin-widget.php:206
 #: admin/partials/capture/widget-options.php:208
 msgid "Hide form after successful sign-up"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:80 
+#: admin/partials/egoi-for-wp-admin-dashboard.php:80
 #: admin/partials/egoi-for-wp-admin-dashboard.php:101
 msgid "Hide notification"
 msgstr ""
@@ -1130,7 +1130,7 @@ msgstr ""
 msgid "HTML code"
 msgstr ""
 
-#: admin/partials/capture/simple-forms.php:192
+#: admin/partials/capture/simple-forms.php:194
 msgid "HTML code of your form"
 msgstr ""
 
@@ -1157,7 +1157,7 @@ msgid ""
 "smart-marketing-e-goi/"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:421 
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:421
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:564
 msgid "I agree to"
 msgstr ""
@@ -1166,10 +1166,10 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:107 
-#: admin/partials/capture/simple-forms.php:156 
-#: admin/partials/capture/widget-options.php:162 
+#: admin/partials/egoi-for-wp-admin-widget.php:107
+#: admin/partials/capture/simple-forms.php:156
 #: admin/partials/capture/subscription-bar.php:56
+#: admin/partials/capture/widget-options.php:162
 msgid ""
 "If you activate the double opt-in, a confirmation e-mail will be send to the "
 "subscribers."
@@ -1212,7 +1212,7 @@ msgstr ""
 msgid "Information from your E-goi mailing lists"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:238 
+#: admin/partials/egoi-for-wp-admin-widget.php:238
 #: admin/partials/capture/widget-options.php:233
 msgid "Input Width"
 msgstr ""
@@ -1237,13 +1237,13 @@ msgstr ""
 msgid "Invalid e-mail"
 msgstr ""
 
-#: public/class-egoi-for-wp-public.php:329
+#: public/class-egoi-for-wp-public.php:331
 msgid "Invalid email"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:184 
-#: admin/partials/capture/widget-options.php:189 
+#: admin/partials/egoi-for-wp-admin-widget.php:184
 #: admin/partials/capture/subscription-bar.php:220
+#: admin/partials/capture/widget-options.php:189
 msgid "Invalid email address"
 msgstr ""
 
@@ -1259,17 +1259,17 @@ msgstr ""
 msgid "Knowledge Base"
 msgstr ""
 
-#: includes/class-egoi-for-wp-widget.php:335 
-#: includes/class-egoi-for-wp-widget.php:352 
-#: includes/class-egoi-for-wp-widget.php:368 
+#: includes/class-egoi-for-wp-widget.php:335
+#: includes/class-egoi-for-wp-widget.php:352
+#: includes/class-egoi-for-wp-widget.php:368
 #: includes/class-egoi-for-wp-widget.php:387
 msgid "Label"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1383 
-#: admin/partials/egoi-for-wp-admin-display.php:281 
-#: admin/partials/ecommerce/new-catalog-form.php:23 
+#: includes/class-egoi-for-wp.php:1388
+#: admin/partials/egoi-for-wp-admin-display.php:281
 #: admin/partials/ecommerce/catalogs.php:8
+#: admin/partials/ecommerce/new-catalog-form.php:23
 msgid "Language"
 msgstr ""
 
@@ -1277,12 +1277,12 @@ msgstr ""
 msgid "Large"
 msgstr ""
 
-#: includes/class-egoi-for-wp-widget.php:350 
+#: includes/class-egoi-for-wp-widget.php:350
 #: admin/partials/custom/egoi-for-wp-form-map.php:38
 msgid "Last Name"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1378
+#: includes/class-egoi-for-wp.php:1383
 msgid "Last name"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: admin/partials/configuration/advanced.php:63 
+#: admin/partials/configuration/advanced.php:63
 #: admin/partials/wizard/final-tweaks.php:19
 msgid "Lazy conversion"
 msgstr ""
@@ -1321,7 +1321,7 @@ msgid ""
 "including <code>http://</code>."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:226 
+#: admin/partials/egoi-for-wp-admin-widget.php:226
 #: admin/partials/capture/widget-options.php:221
 msgid "Leave empty for no redirect. Otherwise, use complete (absolute) URLs."
 msgstr ""
@@ -1330,7 +1330,7 @@ msgstr ""
 msgid "Left Image"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:187 
+#: admin/partials/egoi-for-wp-admin-dashboard.php:187
 #: admin/partials/rssfeed/campaign-rss.php:36
 msgid "List"
 msgstr ""
@@ -1339,13 +1339,13 @@ msgstr ""
 msgid "List ID"
 msgstr ""
 
-#: admin/partials/integrations/contact-form-7.php:64 
 #: admin/partials/integrations/post-comment.php:24
+#: admin/partials/integrations/contact-form-7.php:64
 msgid "List to Subscribe"
 msgstr ""
 
-#: admin/partials/integrations/contact-form-7.php:66 
 #: admin/partials/integrations/post-comment.php:26
+#: admin/partials/integrations/contact-form-7.php:66
 #, php-format
 msgid "Lists not found, <a href=\"%s\">are you connected to egoi</a>?"
 msgstr ""
@@ -1377,7 +1377,7 @@ msgstr ""
 
 #: admin/partials/integrations/contact-form-7.php:13
 msgid ""
-"Make sure you have Contact Form 7 installed before trying to configure the "
+"Make sure you have b gg 7 installed before trying to configure the "
 "integration."
 msgstr ""
 
@@ -1391,7 +1391,7 @@ msgstr ""
 msgid "Make sure you have it on!"
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:141 
+#: admin/partials/configuration/subscribers.php:141
 #: admin/partials/configuration/subscribers.php:152
 msgid "Manual Sync"
 msgstr ""
@@ -1432,24 +1432,24 @@ msgstr ""
 msgid "Messages"
 msgstr ""
 
-#: includes/class-egoi-for-wp-widget.php:385 
-#: includes/class-egoi-for-wp.php:1379 
-#: admin/partials/capture/simple-forms.php:188 
-#: admin/partials/capture/simple-forms.php:188 
+#: includes/class-egoi-for-wp.php:1384
+#: includes/class-egoi-for-wp-widget.php:385
+#: admin/partials/capture/simple-forms.php:188
+#: admin/partials/capture/simple-forms.php:188
 #: admin/partials/capture/popup.php:136
 msgid "Mobile"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-forms.php:110 
-#: admin/partials/egoi-for-wp-admin-lists.php:59 
-#: admin/partials/egoi-for-wp-admin-display.php:273 
-#: admin/partials/rssfeed/feed-rss.php:51 admin/partials/rssfeed/home.php:12 
-#: admin/partials/ecommerce/new-catalog-form.php:16 
-#: admin/partials/ecommerce/catalogs.php:7 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:113 
-#: admin/partials/capture/simple-forms.php:186 
-#: admin/partials/capture/simple-forms.php:186 
+#: admin/partials/egoi-for-wp-admin-lists.php:59
+#: admin/partials/egoi-for-wp-admin-forms.php:110
+#: admin/partials/egoi-for-wp-admin-display.php:273
+#: admin/partials/capture/simple-forms.php:186
+#: admin/partials/capture/simple-forms.php:186
+#: admin/partials/ecommerce/catalogs.php:7
+#: admin/partials/ecommerce/new-catalog-form.php:16
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:113
 #: admin/partials/integrations/gravity-forms.php:94
+#: admin/partials/rssfeed/home.php:12 admin/partials/rssfeed/feed-rss.php:51
 msgid "Name"
 msgstr ""
 
@@ -1473,29 +1473,29 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-display.php:324 
-#: admin/partials/egoi-for-wp-admin-widget.php:86 
-#: admin/partials/egoi-for-wp-admin-widget.php:214 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:96 
-#: admin/partials/transactionalemail/home.php:70 
-#: admin/partials/configuration/advanced.php:30 
-#: admin/partials/configuration/advanced.php:68 
-#: admin/partials/configuration/subscribers.php:51 
-#: admin/partials/wizard/connected-sites.php:22 
-#: admin/partials/wizard/final-tweaks.php:11 
-#: admin/partials/wizard/final-tweaks.php:24 
-#: admin/partials/ecommerce/new-catalog-form.php:60 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:146 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:186 
-#: admin/partials/capture/widget-options.php:154 
-#: admin/partials/capture/widget-options.php:167 
-#: admin/partials/capture/widget-options.php:213 
-#: admin/partials/capture/popup.php:126 
-#: admin/partials/integrations/contact-form-7.php:30 
-#: admin/partials/integrations/contact-form-7.php:94 
-#: admin/partials/integrations/gravity-forms.php:25 
-#: admin/partials/integrations/gravity-forms.php:63 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:96
+#: admin/partials/egoi-for-wp-admin-display.php:324
+#: admin/partials/egoi-for-wp-admin-widget.php:86
+#: admin/partials/egoi-for-wp-admin-widget.php:214
+#: admin/partials/configuration/advanced.php:30
+#: admin/partials/configuration/advanced.php:68
+#: admin/partials/configuration/subscribers.php:51
+#: admin/partials/capture/popup.php:126
+#: admin/partials/capture/widget-options.php:154
+#: admin/partials/capture/widget-options.php:167
+#: admin/partials/capture/widget-options.php:213
+#: admin/partials/ecommerce/new-catalog-form.php:60
+#: admin/partials/wizard/connected-sites.php:22
+#: admin/partials/wizard/final-tweaks.php:11
+#: admin/partials/wizard/final-tweaks.php:24
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:146
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:186
 #: admin/partials/integrations/post-comment.php:17
+#: admin/partials/integrations/gravity-forms.php:25
+#: admin/partials/integrations/gravity-forms.php:63
+#: admin/partials/integrations/contact-form-7.php:30
+#: admin/partials/integrations/contact-form-7.php:94
+#: admin/partials/transactionalemail/home.php:70
 msgid "No"
 msgstr ""
 
@@ -1547,6 +1547,15 @@ msgstr ""
 msgid "No tags found, <a href=\"%s\">are you connected to Egoi</a>?"
 msgstr ""
 
+#: admin/partials/capture/simple-forms.php:191
+msgid ""
+"NOTES:<br>\n"
+"- You can edit the value in the mobile phone field with the desired country "
+"code to be pre-selected<br>\n"
+"- To make it a mandatory field, add the * character, e.g.\"&lt;label "
+"for=&quot;egoi_name&quot;&gt;Nome: *&lt;/label&gt;\""
+msgstr ""
+
 #: admin/partials/egoi-for-wp-admin-trackengage.php:135
 msgid "Nothing here yet."
 msgstr ""
@@ -1555,16 +1564,16 @@ msgstr ""
 msgid "Nº Subscribers"
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:60 
-#: admin/partials/integrations/home.php:9 
-#: admin/partials/integrations/home.php:22 
+#: admin/partials/configuration/subscribers.php:60
+#: admin/partials/integrations/home.php:9
+#: admin/partials/integrations/home.php:22
 #: admin/partials/integrations/home.php:35
 msgid "Off"
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:59 
-#: admin/partials/integrations/home.php:11 
-#: admin/partials/integrations/home.php:24 
+#: admin/partials/configuration/subscribers.php:59
+#: admin/partials/integrations/home.php:11
+#: admin/partials/integrations/home.php:24
 #: admin/partials/integrations/home.php:37
 msgid "On"
 msgstr ""
@@ -1605,7 +1614,7 @@ msgstr ""
 msgid "Other errors"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:174 
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:174
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:195
 msgid "Page Localization"
 msgstr ""
@@ -1626,6 +1635,10 @@ msgstr ""
 msgid "Placeholder"
 msgstr ""
 
+#: egoi-for-wp.php:197 public/class-egoi-for-wp-public.php:452
+msgid "Please fill out all required fields(*)."
+msgstr ""
+
 #: admin/partials/rssfeed/feed-rss.php:91
 msgid "Please select at least one Category or All will be displayed"
 msgstr ""
@@ -1634,7 +1647,7 @@ msgstr ""
 msgid "Please select at least one Tag or All will be displayed"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:370 
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:370
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:531
 msgid "Please set up a list in E-goi Plugin panel before creating a form."
 msgstr ""
@@ -1643,12 +1656,12 @@ msgstr ""
 msgid "Please, choose the list."
 msgstr ""
 
-#: admin/partials/integrations/contact-form-7.php:12 
 #: admin/partials/integrations/gravity-forms.php:14
+#: admin/partials/integrations/contact-form-7.php:12
 msgid "Plugin missing"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-forms.php:72 
+#: admin/partials/egoi-for-wp-admin-forms.php:72
 #: admin/partials/capture/home.php:83
 msgid "Popup"
 msgstr ""
@@ -1673,7 +1686,7 @@ msgstr ""
 msgid "Popup was successfully deleted!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-forms.php:40 
+#: admin/partials/egoi-for-wp-admin-forms.php:40
 #: admin/partials/capture/popup.php:8 admin/partials/capture/popup.php:14
 msgid "Popups"
 msgstr ""
@@ -1702,7 +1715,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:40 
+#: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:40
 #: admin/partials/rssfeed/feed-rss.php:85
 msgid "Products"
 msgstr ""
@@ -1723,9 +1736,9 @@ msgstr ""
 msgid "Put your e-mail here."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:96 
-#: admin/partials/wizard/connected-sites.php:22 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:96
 #: admin/partials/ecommerce/new-catalog-form.php:60
+#: admin/partials/wizard/connected-sites.php:22
 msgid "Recommended"
 msgstr ""
 
@@ -1733,7 +1746,7 @@ msgstr ""
 msgid "Redirect on Success"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:223 
+#: admin/partials/egoi-for-wp-admin-widget.php:223
 #: admin/partials/capture/widget-options.php:220
 msgid "Redirect to URL after a successful sign-up"
 msgstr ""
@@ -1754,15 +1767,15 @@ msgstr ""
 msgid "Right Side"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:280 
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:280
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:294
 msgid "Row"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:38 
-#: admin/partials/rssfeed/home.php:7 
-#: admin/partials/rssfeed/campaign-rss.php:20 
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:38
+#: admin/partials/rssfeed/campaign-rss.php:20
 #: admin/partials/rssfeed/campaign-rss.php:145
+#: admin/partials/rssfeed/home.php:7
 msgid "RSS Feed"
 msgstr ""
 
@@ -1778,21 +1791,21 @@ msgstr ""
 msgid "RSS Feed saved!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-lists.php:66 
-#: admin/partials/egoi-for-wp-admin-display.php:167 
-#: admin/partials/egoi-for-wp-admin-display.php:213 
-#: admin/partials/egoi-for-wp-admin-display.php:294 
-#: admin/partials/egoi-for-wp-admin-widget.php:297 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:109 
-#: admin/partials/custom/egoi-for-wp-form-map.php:93 
-#: admin/partials/configuration/advanced.php:123 
-#: admin/partials/rssfeed/feed-rss.php:244 
-#: admin/partials/capture/simple-forms.php:197 
-#: admin/partials/capture/widget-options.php:282 
-#: admin/partials/capture/subscription-bar.php:254 
-#: admin/partials/integrations/contact-form-7.php:108 
-#: admin/partials/integrations/gravity-forms.php:78 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:109
+#: admin/partials/egoi-for-wp-admin-lists.php:66
+#: admin/partials/egoi-for-wp-admin-display.php:167
+#: admin/partials/egoi-for-wp-admin-display.php:213
+#: admin/partials/egoi-for-wp-admin-display.php:294
+#: admin/partials/egoi-for-wp-admin-widget.php:297
+#: admin/partials/configuration/advanced.php:123
+#: admin/partials/capture/simple-forms.php:199
+#: admin/partials/capture/subscription-bar.php:254
+#: admin/partials/capture/widget-options.php:282
 #: admin/partials/integrations/post-comment.php:56
+#: admin/partials/integrations/gravity-forms.php:78
+#: admin/partials/integrations/contact-form-7.php:108
+#: admin/partials/custom/egoi-for-wp-form-map.php:93
+#: admin/partials/rssfeed/feed-rss.php:244
 msgid "Save"
 msgstr ""
 
@@ -1800,9 +1813,9 @@ msgstr ""
 msgid "Save all changes."
 msgstr ""
 
-#: admin/partials/transactionalemail/home.php:101 
-#: admin/partials/configuration/subscribers.php:192 
+#: admin/partials/configuration/subscribers.php:192
 #: admin/partials/capture/popup.php:298
+#: admin/partials/transactionalemail/home.php:101
 msgid "Save Changes"
 msgstr ""
 
@@ -1814,9 +1827,9 @@ msgstr ""
 msgid "Saved Configuration"
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:7 
-#: admin/partials/rssfeed/feed-rss.php:34 
+#: admin/partials/configuration/subscribers.php:7
 #: admin/partials/capture/subscription-bar.php:28
+#: admin/partials/rssfeed/feed-rss.php:34
 msgid "Saved Configurations"
 msgstr ""
 
@@ -1824,8 +1837,8 @@ msgstr ""
 msgid "Saved Form"
 msgstr ""
 
-#: admin/partials/integrations/contact-form-7.php:22 
-#: admin/partials/integrations/contact-form-7.php:24 
+#: admin/partials/integrations/contact-form-7.php:22
+#: admin/partials/integrations/contact-form-7.php:24
 #: admin/partials/integrations/contact-form-7.php:26
 msgid "See how to configure "
 msgstr ""
@@ -1840,8 +1853,8 @@ msgstr ""
 msgid "Select \"yes\" if you want the plugin to send all WordPress emails."
 msgstr ""
 
-#: admin/partials/integrations/contact-form-7.php:91 
 #: admin/partials/integrations/gravity-forms.php:60
+#: admin/partials/integrations/contact-form-7.php:91
 msgid "Select \"yes\" to edit the subscriber if already exists in E-goi List."
 msgstr ""
 
@@ -1857,7 +1870,7 @@ msgstr ""
 msgid "Select \"yes\" to enable Post Comment Integration."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:217 
+#: admin/partials/egoi-for-wp-admin-widget.php:217
 #: admin/partials/capture/widget-options.php:209
 msgid "Select \"yes\" to hide the form after successful sign-up."
 msgstr ""
@@ -1882,7 +1895,7 @@ msgstr ""
 msgid "Select a default size for RSS feed images."
 msgstr ""
 
-#: admin/partials/capture/functions.php:88 
+#: admin/partials/capture/functions.php:88
 #: admin/partials/capture/functions.php:96
 msgid "Select a field.."
 msgstr ""
@@ -1895,9 +1908,9 @@ msgstr ""
 msgid "Select a language.."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:133 
-#: admin/partials/wizard/subscribers.php:13 
+#: admin/partials/egoi-for-wp-admin-widget.php:133
 #: admin/partials/capture/functions.php:57
+#: admin/partials/wizard/subscribers.php:13
 msgid "Select a list.."
 msgstr ""
 
@@ -1905,17 +1918,17 @@ msgstr ""
 msgid "Select a sender..."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:144 
+#: admin/partials/egoi-for-wp-admin-widget.php:144
 #: admin/partials/capture/functions.php:68
 msgid "Select a tag"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:163 
+#: admin/partials/egoi-for-wp-admin-widget.php:163
 #: admin/partials/capture/functions.php:71
 msgid "Select a tag.."
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:24 
+#: admin/partials/rssfeed/campaign-rss.php:24
 #: admin/partials/rssfeed/campaign-rss.php:149
 msgid "Select an feed..."
 msgstr ""
@@ -1924,17 +1937,17 @@ msgstr ""
 msgid "Select an list..."
 msgstr ""
 
-#: admin/partials/capture/widget-options.php:251 
-#: admin/partials/capture/widget-options.php:261 
-#: admin/partials/capture/widget-options.php:272 
-#: admin/partials/capture/subscription-bar.php:138 
-#: admin/partials/capture/subscription-bar.php:148 
-#: admin/partials/capture/subscription-bar.php:164 
-#: admin/partials/capture/subscription-bar.php:174 
-#: admin/partials/capture/subscription-bar.php:184 
-#: admin/partials/capture/subscription-bar.php:194 
-#: admin/partials/capture/subscription-bar.php:204 
 #: admin/partials/capture/popup.php:186 admin/partials/capture/popup.php:195
+#: admin/partials/capture/subscription-bar.php:138
+#: admin/partials/capture/subscription-bar.php:148
+#: admin/partials/capture/subscription-bar.php:164
+#: admin/partials/capture/subscription-bar.php:174
+#: admin/partials/capture/subscription-bar.php:184
+#: admin/partials/capture/subscription-bar.php:194
+#: admin/partials/capture/subscription-bar.php:204
+#: admin/partials/capture/widget-options.php:251
+#: admin/partials/capture/widget-options.php:261
+#: admin/partials/capture/widget-options.php:272
 msgid "Select Color"
 msgstr ""
 
@@ -1966,27 +1979,30 @@ msgstr ""
 msgid "Select the E-goi's catalog for your store."
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:80 
+#: admin/partials/configuration/subscribers.php:80
 #: admin/partials/wizard/subscribers.php:9
 msgid "Select the E-goi's list for your subscribers."
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:21 
+#: admin/partials/rssfeed/campaign-rss.php:21
 #: admin/partials/rssfeed/campaign-rss.php:146
 msgid "Select the feed which will be used in your campaign."
 msgstr ""
 
-#: admin/partials/ecommerce/new-catalog-form.php:24 
-#: admin/partials/integrations/contact-form-7.php:38 
+#: admin/partials/ecommerce/new-catalog-form.php:24
+#: admin/partials/integrations/contact-form-7.php:38
+msgid "Select the form you want to sync contacts on."
+msgstr ""
+
 #: admin/partials/integrations/gravity-forms.php:33
-msgid "Select the language your products are setup."
+msgid "Select the form you want to sync."
 msgstr ""
 
 #: admin/partials/configuration/subscribers.php:108
 msgid "Select the list to synchronize your WordPress user base with."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:135 
+#: admin/partials/egoi-for-wp-admin-widget.php:135
 #: admin/partials/capture/functions.php:54
 msgid "Select the list to which visitors should be subscribed."
 msgstr ""
@@ -2009,7 +2025,7 @@ msgstr ""
 msgid "Select the position it will be displayed in your checkout form."
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:117 
+#: admin/partials/configuration/subscribers.php:117
 #: admin/partials/wizard/subscribers.php:29
 msgid "Select the role to synchronize your Subscribers with."
 msgstr ""
@@ -2050,7 +2066,7 @@ msgid ""
 "to activate Connected Sites.<br>You will find this option in "
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:106 
+#: admin/partials/rssfeed/campaign-rss.php:106
 #: admin/partials/rssfeed/campaign-rss.php:182
 msgid "Send Campaign >"
 msgstr ""
@@ -2071,7 +2087,7 @@ msgstr ""
 msgid "Send Email Test"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-banner.php:18 
+#: admin/partials/egoi-for-wp-admin-banner.php:18
 #: admin/partials/egoi-for-wp-admin-banner-h.php:15
 msgid ""
 "Send SMS notifications to your buyers and admins for each change to the "
@@ -2111,11 +2127,11 @@ msgstr ""
 msgid "Set this to \"no\" for no background color."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-lists.php:17 
-#: admin/partials/egoi-for-wp-admin-widget.php:113 
-#: admin/partials/capture/widget-options.php:140 
-#: admin/partials/capture/subscription-bar.php:14 
+#: admin/partials/egoi-for-wp-admin-lists.php:17
+#: admin/partials/egoi-for-wp-admin-widget.php:113
 #: admin/partials/capture/popup.php:36
+#: admin/partials/capture/subscription-bar.php:14
+#: admin/partials/capture/widget-options.php:140
 msgid "Settings"
 msgstr ""
 
@@ -2173,10 +2189,10 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: admin/partials/configuration/advanced.php:112 
-#: admin/partials/ecommerce/catalogs.php:10 
-#: admin/partials/integrations/home.php:7 
-#: admin/partials/integrations/home.php:20 
+#: admin/partials/configuration/advanced.php:112
+#: admin/partials/ecommerce/catalogs.php:10
+#: admin/partials/integrations/home.php:7
+#: admin/partials/integrations/home.php:20
 #: admin/partials/integrations/home.php:33
 msgid "Status"
 msgstr ""
@@ -2185,7 +2201,7 @@ msgstr ""
 msgid "Style"
 msgstr ""
 
-#: admin/partials/transactionalemail/send-email-test.php:55 
+#: admin/partials/transactionalemail/send-email-test.php:55
 #: admin/partials/rssfeed/campaign-rss.php:58
 msgid "Subject"
 msgstr ""
@@ -2198,7 +2214,7 @@ msgstr ""
 msgid "Submit Button"
 msgstr ""
 
-#: includes/class-egoi-for-wp-widget.php:394 
+#: includes/class-egoi-for-wp-widget.php:394
 #: includes/class-egoi-for-wp-widget.php:419
 msgid "Subscribe"
 msgstr ""
@@ -2207,11 +2223,11 @@ msgstr ""
 msgid "Subscribe Button"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1250
+#: includes/class-egoi-for-wp.php:1255
 msgid "Subscribe to newsletter"
 msgstr ""
 
-#: public/class-egoi-for-wp-public.php:347
+#: public/class-egoi-for-wp-public.php:349
 msgid "Subscribed"
 msgstr ""
 
@@ -2247,9 +2263,9 @@ msgstr ""
 msgid "Subscription bar configurations saved with success."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-rssfeed.php:21 
-#: admin/partials/egoi-for-wp-admin-display.php:29 
-#: admin/partials/egoi-for-wp-admin-integrations.php:39 
+#: admin/partials/egoi-for-wp-admin-rssfeed.php:21
+#: admin/partials/egoi-for-wp-admin-display.php:29
+#: admin/partials/egoi-for-wp-admin-integrations.php:39
 #: admin/partials/capture/subscription-bar.php:214
 msgid "Success"
 msgstr ""
@@ -2258,19 +2274,19 @@ msgstr ""
 msgid "Success Subscribed"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:14 
-#: includes/transactionalemail/transactional-email-helper.php:177 
+#: includes/transactionalemail/transactional-email-helper.php:177
 #: includes/transactionalemail/transactional-email-helper.php:195
+#: admin/partials/egoi-for-wp-admin-trackengage.php:14
 msgid "Success!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:177 
+#: admin/partials/egoi-for-wp-admin-widget.php:177
 #: admin/partials/capture/widget-options.php:183
 msgid "Successfully subscribed"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-subscribers.php:119 
 #: admin/partials/egoi-for-wp-admin-trackengage.php:51
+#: admin/partials/egoi-for-wp-admin-subscribers.php:119
 msgid "Sync Contacts"
 msgstr ""
 
@@ -2286,12 +2302,12 @@ msgstr ""
 msgid "Sync products with this catalog"
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:79 
+#: admin/partials/configuration/subscribers.php:79
 #: admin/partials/wizard/subscribers.php:8
 msgid "Sync users with this list"
 msgstr ""
 
-#: admin/partials/configuration/subscribers.php:116 
+#: admin/partials/configuration/subscribers.php:116
 #: admin/partials/wizard/subscribers.php:28
 msgid "Sync users with this role"
 msgstr ""
@@ -2308,7 +2324,7 @@ msgstr ""
 msgid "Syncronization ON"
 msgstr ""
 
-#: includes/class-egoi-for-wp-widget.php:398 
+#: includes/class-egoi-for-wp-widget.php:398
 #: includes/class-egoi-for-wp-widget.php:409
 msgid "Tag"
 msgstr ""
@@ -2337,11 +2353,11 @@ msgstr ""
 msgid "Tax"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1381
+#: includes/class-egoi-for-wp.php:1386
 msgid "Telephone"
 msgstr ""
 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:421 
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:421
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:564
 msgid "terms & conditions"
 msgstr ""
@@ -2350,7 +2366,7 @@ msgstr ""
 msgid "Text Color"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:200 
+#: admin/partials/egoi-for-wp-admin-widget.php:200
 #: admin/partials/capture/widget-options.php:202
 msgid "The email address already exists in your list of contacts."
 msgstr ""
@@ -2383,12 +2399,12 @@ msgstr ""
 msgid "The plugin is currently not listening to any changes in your users."
 msgstr ""
 
-#: admin/partials/transactionalemail/home.php:53 
+#: admin/partials/transactionalemail/home.php:53
 #: admin/partials/transactionalemail/send-email-test.php:39
 msgid "The plugin is currently not sending WordPress emails."
 msgstr ""
 
-#: admin/partials/transactionalemail/home.php:42 
+#: admin/partials/transactionalemail/home.php:42
 #: admin/partials/transactionalemail/send-email-test.php:27
 msgid "The plugin is currently sending all WordPress emails."
 msgstr ""
@@ -2425,7 +2441,7 @@ msgstr ""
 msgid "The text that shows when the email is empty."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:201 
+#: admin/partials/egoi-for-wp-admin-widget.php:201
 #: admin/partials/capture/widget-options.php:203
 msgid ""
 "The text that shows when the given email is already subscribed to the "
@@ -2456,7 +2472,7 @@ msgstr ""
 msgid "This feature is only available for WooCommerce stores!"
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:71 
+#: admin/partials/rssfeed/campaign-rss.php:71
 #: admin/partials/rssfeed/campaign-rss.php:162
 msgid "This is the campaign title inside"
 msgstr ""
@@ -2491,10 +2507,10 @@ msgstr ""
 msgid "Time in seconds here"
 msgstr ""
 
-#: admin/partials/rssfeed/campaign-rss.php:70 
-#: admin/partials/rssfeed/campaign-rss.php:161 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:57 
 #: admin/partials/capture/home.php:17 admin/partials/capture/home.php:69
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:57
+#: admin/partials/rssfeed/campaign-rss.php:70
+#: admin/partials/rssfeed/campaign-rss.php:161
 msgid "Title"
 msgstr ""
 
@@ -2555,8 +2571,8 @@ msgstr ""
 msgid "Tutorial Here"
 msgstr ""
 
-#: admin/partials/rssfeed/feed-rss.php:81 admin/partials/rssfeed/home.php:13 
-#: admin/partials/capture/home.php:68
+#: admin/partials/capture/home.php:68 admin/partials/rssfeed/home.php:13
+#: admin/partials/rssfeed/feed-rss.php:81
 msgid "Type"
 msgstr ""
 
@@ -2576,12 +2592,12 @@ msgstr ""
 msgid "Update account information"
 msgstr ""
 
-#: admin/partials/integrations/contact-form-7.php:90 
 #: admin/partials/integrations/gravity-forms.php:59
+#: admin/partials/integrations/contact-form-7.php:90
 msgid "Update Subscriber"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:83 
+#: admin/partials/egoi-for-wp-admin-dashboard.php:83
 #: admin/partials/egoi-for-wp-admin-dashboard.php:104
 msgid "Upgrade"
 msgstr ""
@@ -2590,18 +2606,12 @@ msgstr ""
 msgid "Upload Image"
 msgstr ""
 
-#: admin/partials/rssfeed/feed-rss.php:42 admin/partials/rssfeed/home.php:14
+#: admin/partials/rssfeed/home.php:14 admin/partials/rssfeed/feed-rss.php:42
 msgid "URL"
 msgstr ""
 
-#: admin/partials/capture/simple-forms.php:213
+#: admin/partials/capture/simple-forms.php:215
 msgid "Use this shortcode to display this form inside of your site or blog"
-msgstr ""
-
-#: admin/partials/configuration/subscribers.php:57
-msgid ""
-"By activating this option, the Newsletter checkbox will be active by default,"
-" which could lead to legal issues under the GDPR"
 msgstr ""
 
 #: admin/partials/ecommerce/catalogs.php:11
@@ -2616,10 +2626,6 @@ msgstr ""
 msgid ""
 "Warning: looks something is missing in your cron configuration, scheduled "
 "time for cron is higher than current time"
-msgstr ""
-
-#: public/class-egoi-for-wp-public.php:750
-msgid "was successfully registered!"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-sidebar.php:41
@@ -2660,7 +2666,7 @@ msgstr ""
 msgid "Will convert event and signups in cron job (next: at "
 msgstr ""
 
-#: admin/partials/configuration/advanced.php:26 
+#: admin/partials/configuration/advanced.php:26
 #: admin/partials/wizard/final-tweaks.php:7
 msgid "Will convert your Tracking events via api in the backend"
 msgstr ""
@@ -2669,7 +2675,7 @@ msgstr ""
 msgid "Will inject Connected Sites script in your website"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-banner.php:17 
+#: admin/partials/egoi-for-wp-admin-banner.php:17
 #: admin/partials/egoi-for-wp-admin-banner-h.php:14
 msgid "WooCommerce SMS"
 msgstr ""
@@ -2686,7 +2692,7 @@ msgstr ""
 msgid "Write here the name of your catalog"
 msgstr ""
 
-#: admin/partials/capture/simple-forms.php:178 
+#: admin/partials/capture/simple-forms.php:178
 #: admin/partials/capture/popup.php:54
 msgid "Write here the title of your form"
 msgstr ""
@@ -2695,35 +2701,35 @@ msgstr ""
 msgid "write in px, vh or %"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:104 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:104
 #: admin/partials/wizard/connected-sites.php:11
 msgid "Write website domain"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-display.php:320 
-#: admin/partials/egoi-for-wp-admin-widget.php:82 
-#: admin/partials/egoi-for-wp-admin-widget.php:210 
-#: admin/partials/egoi-for-wp-admin-trackengage.php:96 
-#: admin/partials/transactionalemail/home.php:69 
-#: admin/partials/configuration/advanced.php:30 
-#: admin/partials/configuration/advanced.php:68 
-#: admin/partials/configuration/subscribers.php:50 
-#: admin/partials/wizard/connected-sites.php:22 
-#: admin/partials/wizard/final-tweaks.php:11 
-#: admin/partials/wizard/final-tweaks.php:24 
-#: admin/partials/ecommerce/new-catalog-form.php:60 
-#: admin/partials/ecommerce/catalogs.php:63 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:145 
-#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:185 
-#: admin/partials/capture/widget-options.php:154 
-#: admin/partials/capture/widget-options.php:167 
-#: admin/partials/capture/widget-options.php:213 
-#: admin/partials/capture/popup.php:125 
-#: admin/partials/integrations/contact-form-7.php:29 
-#: admin/partials/integrations/contact-form-7.php:93 
-#: admin/partials/integrations/gravity-forms.php:24 
-#: admin/partials/integrations/gravity-forms.php:62 
+#: admin/partials/egoi-for-wp-admin-trackengage.php:96
+#: admin/partials/egoi-for-wp-admin-display.php:320
+#: admin/partials/egoi-for-wp-admin-widget.php:82
+#: admin/partials/egoi-for-wp-admin-widget.php:210
+#: admin/partials/configuration/advanced.php:30
+#: admin/partials/configuration/advanced.php:68
+#: admin/partials/configuration/subscribers.php:50
+#: admin/partials/capture/popup.php:125
+#: admin/partials/capture/widget-options.php:154
+#: admin/partials/capture/widget-options.php:167
+#: admin/partials/capture/widget-options.php:213
+#: admin/partials/ecommerce/catalogs.php:63
+#: admin/partials/ecommerce/new-catalog-form.php:60
+#: admin/partials/wizard/connected-sites.php:22
+#: admin/partials/wizard/final-tweaks.php:11
+#: admin/partials/wizard/final-tweaks.php:24
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:145
+#: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:185
 #: admin/partials/integrations/post-comment.php:16
+#: admin/partials/integrations/gravity-forms.php:24
+#: admin/partials/integrations/gravity-forms.php:62
+#: admin/partials/integrations/contact-form-7.php:29
+#: admin/partials/integrations/contact-form-7.php:93
+#: admin/partials/transactionalemail/home.php:69
 msgid "Yes"
 msgstr ""
 
@@ -2731,7 +2737,7 @@ msgstr ""
 msgid "You are almost reaching the limit of your Plan!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-header.php:10 
+#: admin/partials/egoi-for-wp-admin-header.php:10
 #: admin/partials/egoi-for-wp-admin-header.php:28
 msgid "You are here: "
 msgstr ""
@@ -2740,7 +2746,7 @@ msgstr ""
 msgid "You can choose to divide the popup with an image"
 msgstr ""
 
-#: includes/class-egoi-for-wp-products-bo.php:677
+#: includes/class-egoi-for-wp-products-bo.php:660
 msgid "You have %d products behind in synchronization!"
 msgstr ""
 
@@ -2748,8 +2754,8 @@ msgstr ""
 msgid "You have configured repeated fields!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:177 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:212 
+#: admin/partials/egoi-for-wp-admin-dashboard.php:177
+#: admin/partials/egoi-for-wp-admin-dashboard.php:212
 #: admin/partials/egoi-for-wp-admin-dashboard.php:259
 msgid "You have no subscribers yet"
 msgstr ""
@@ -2774,7 +2780,7 @@ msgstr ""
 msgid "Your account"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:193 
+#: admin/partials/egoi-for-wp-admin-widget.php:193
 #: admin/partials/capture/widget-options.php:196
 msgid "Your e-mail field is empty!"
 msgstr ""
@@ -2791,7 +2797,7 @@ msgstr ""
 msgid "Your popup was saved successfully"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-widget.php:179 
+#: admin/partials/egoi-for-wp-admin-widget.php:179
 #: admin/partials/capture/widget-options.php:184
 msgid "Your request has been successfully submitted. Thank you."
 msgstr ""

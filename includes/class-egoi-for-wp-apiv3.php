@@ -953,7 +953,7 @@ class EgoiApiV3 {
   
 		if($httpCode == 409){
 			return  $this->editContact( $listID, $resp['errors']['contacts'][0], $name, $lname, $extra_fields, $option, $ref_fields, $status, $tags );
-		} elseif ( $httpCode == 200){
+		} elseif ( $httpCode == 201){
 			if ( ! empty( $tags ) && isset( $resp['contact_id'] ) ) {
 				$this->attachTag( $listID, $resp['contact_id'], $tags );
 			}

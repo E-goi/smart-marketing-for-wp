@@ -170,6 +170,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
+= 5.0.9 =
+- Fix tag not entry with new contact on contact form 7
+
 = 5.0.8 =
 - Fix save not working when plugin is enabled
 - Change readme to match wordpress.org specs
