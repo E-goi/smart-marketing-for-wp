@@ -10,7 +10,7 @@ $contact_forms = $this->egoiWpApi->getContactFormInfo();
 			<div class="container" style="display: flex;justify-content: center;align-items: center;flex-direction: column;min-height: 100%;">
 				<div>
 					<h2><?php _e( 'Plugin missing', 'egoi-for-wp' ); ?></h2>
-					<h4><?php _e( 'Make sure you have b gg 7 installed before trying to configure the integration.', 'egoi-for-wp' ); ?></h4>
+					<h4><?php _e( 'Make sure you have Contact Form 7 installed before trying to configure the integration.', 'egoi-for-wp' ); ?></h4>
 				</div>
 			<div>
 			<?php } else { ?>
