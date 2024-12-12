@@ -375,7 +375,9 @@ class Egoi_For_Wp {
 	const PURGE_CACHE_CALLS = array( 'createList', 'addTag' );
 
     protected $_valid = [];
-	/**
+    private $pluginkey = '908361f0368fd37ffa5cc7c483ffd941';
+
+    /**
 	 * Constructor
 	 *
 	 * @param bool $debug
@@ -427,7 +429,7 @@ class Egoi_For_Wp {
 
 		if ( ! is_admin() ) {
 			if ( ! get_option( 'egoi_client' ) ) {
-				add_option( 'egoi_client', $this->getClient() );
+				add_option( 'egoi_client', $this->getAccountEgoi() );
 			}
 		}
 	}
@@ -547,7 +549,6 @@ class Egoi_For_Wp {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-
 		$plugin_admin = new Egoi_For_Wp_Admin( $this->get_plugin_name(), $this->get_version(), $this, $this->debug );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -787,7 +788,37 @@ class Egoi_For_Wp {
 		}
 	}
 
-	/**
+    /**
+     * @param bool $apikey
+     * @return mixed
+     */
+    public function getAccountEgoi($apikey = false)
+    {
+        $url = $this->restUrlv3 . '/my-account';
+
+        $headers = [
+            'ApiKey: ' . ($apikey ?: $this->_valid['api_key']),
+            'PluginKey: ' . $this->pluginkey,
+            'Content-Type: application/json',
+        ];
+
+        $result_client = json_decode($this->_getContent($url, $headers));
+        if ($result_client->title === 'Unauthorized') {
+            return (object) [
+                'ERROR' => 'UNAUTHORIZED',
+                'status' => 'error',
+            ];
+        } elseif ($result_client->title === 'Forbidden') {
+            return (object) [
+                'ERROR' => 'FORBIDDEN',
+                'status' => 'error',
+            ];
+        } else {
+            return $result_client;
+        }
+    }
+
+    /**
 	 * Check if a tag exists, if not creates, returns id
 	 *
 	 * @param string $tag
@@ -978,7 +1009,7 @@ class Egoi_For_Wp {
 	 * @param array $headers
 	 * @return string
 	 */
-	protected function _getContent( $url, $headers = array() ) {
+	protected function _getContent( $url, $headers = array()) {
 
 		$res = wp_remote_request(
 			$url,
@@ -991,10 +1022,22 @@ class Egoi_For_Wp {
 
 		if ( is_wp_error( $res ) ) {
 			return '{}';
-		}
+
+        } elseif ($res['response']['code'] == 403) {
+            do_action( 'api_error_notice' );
+            update_option('api_error_status', array('active' => true, 'code' => 403));
+
+            return $res['body'];
+        }
 
 		return $res['body'];
 	}
+
+    public function register_api_error_notice() {
+        add_action( 'api_error_notice', function() {
+            echo '<div class="error"><p>Erro 403 na API. Verifique suas credenciais.</p></div>';
+        } );
+    }
 
 	public function get_listener( $user_id ) {
 

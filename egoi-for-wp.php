@@ -10,7 +10,7 @@
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           5.0.9
+ * Version:           5.0.10
 
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 
-define( 'EFWP_SELF_VERSION', '5.0.9' );
+define( 'EFWP_SELF_VERSION', '5.0.10' );
 
 function activate_egoi_for_wp() {
 
@@ -132,6 +132,9 @@ if ( ! wp_next_scheduled( 'egoi_cron_hook' ) ) {// check next time hook will run
 // HOOK GET LISTS
 add_action( 'wp_ajax_egoi_get_lists', 'egoi_get_lists' );
 function egoi_get_lists() {
+    if (!current_user_can('manage_options')) {
+        wp_die( 'You do not have sufficient permissions to access this page.' );
+    }
 	$admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
 	return $admin->get_lists();
 }
@@ -139,6 +142,9 @@ function egoi_get_lists() {
 // HOOK E-GOI LIST GET FORM
 add_action( 'wp_ajax_efwp_get_form_from_list', 'efwp_get_form_from_list' );
 function efwp_get_form_from_list() {
+    if (!current_user_can('manage_options')) {
+        wp_die( 'You do not have sufficient permissions to access this page.' );
+    }
 	$admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
 	return $admin->get_form_processed();
 }
@@ -279,6 +285,9 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/class-egoi-for-wp-widget.ph
 // HOOK GET TAGS
 add_action( 'wp_ajax_egoi_get_tags', 'egoi_get_tags' );
 function egoi_get_tags() {
+    if (!current_user_can('manage_options')) {
+        wp_die( 'You do not have sufficient permissions to access this page.' );
+    }
 	$admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
 	return $admin->get_tags();
 }
@@ -286,6 +295,9 @@ function egoi_get_tags() {
 // HOOK ADD TAG
 add_action( 'wp_ajax_egoi_add_tag', 'egoi_add_tag' );
 function egoi_add_tag() {
+    if (!current_user_can('manage_options')) {
+        wp_die( 'You do not have sufficient permissions to access this page.' );
+    }
 	$admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
 	$admin->add_tag( isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '' );
 }
@@ -318,6 +330,9 @@ add_action( 'init', 'register_egoi_rss_feeds' );
 
 
 function egoi_rss_feeds() {
+    if (!current_user_can('manage_options')) {
+        wp_die( 'You do not have sufficient permissions to access this page.' );
+    }
 	$admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
 	$admin->egoi_rss_feeds_content();
 }

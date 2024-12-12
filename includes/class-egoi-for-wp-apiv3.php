@@ -1152,30 +1152,47 @@ class EgoiApiV3 {
 		return $result;
 	}
 
-	/**
-		* Check if a contact exists using API V3
-	*/
-	public function getExtraFields( $listID, $type = 'id' ) {
-		$url = self::APIV3 . '/lists/' . $listID . '/fields';
+    /**
+     * Check if a contact exists using API V3
+     */
+    public function getExtraFields($listID, $type = 'id') {
+        $url = self::APIV3 . '/lists/' . $listID . '/fields';
 
-		$client = new ClientHttp( $url, 'GET', $this->headers );
+        // Realiza a requisição HTTP
+        $client = new ClientHttp($url, 'GET', $this->headers);
 
-		if ( $client->success() !== true ) {
-			return $this->processErrors( $client->getError() );
-		}
+        // Verifica se houve erro na requisição
+        if ($client->success() !== true) {
+            return $this->processErrors($client->getError());
+        }
 
-		$result_client = json_decode( $client->getResponse(), true );
+        // Decodifica a resposta da API
+        $result_client = json_decode($client->getResponse(), true);
 
-		$extra_fields = array();
-		foreach ( $result_client as $fields ) {
-			if ( $fields['type'] == 'extra' && $type == 'id' ) {
-				array_push( $extra_fields, $fields['field_id'] );
-			} else if ( $fields['type'] == 'extra' ){
-				array_push( $extra_fields, $fields );
-			}
-		}
-		return $extra_fields;
-	}
+        // Verifica se o resultado é um array
+        if (!is_array($result_client)) {
+            return $this->processErrors('Invalid response from API');
+        }
+
+        $extra_fields = array();
+
+        // Itera pelos campos retornados, verificando a estrutura
+        foreach ($result_client as $fields) {
+            if (!is_array($fields)) {
+                continue; // Ignora entradas inválidas
+            }
+
+            if (isset($fields['type']) && $fields['type'] == 'extra') {
+                if ($type == 'id' && isset($fields['field_id'])) {
+                    $extra_fields[] = $fields['field_id'];
+                } else {
+                    $extra_fields[] = $fields;
+                }
+            }
+        }
+
+        return $extra_fields;
+    }
 
 	public function editContact( $listID, $contact_id, $fname = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
 
@@ -1543,7 +1560,7 @@ class ClientHttp {
 			$this->http_code = 400;
 			$this->response  = '{}';
 			$this->headers   = array();
-		} else {
+        }else {
 			$this->http_code = $res['response']['code'];
 			$this->response  = $res['body'];
 			$this->headers   = $res['headers'];
@@ -1582,5 +1599,4 @@ class ClientHttp {
 			)
 		);
 	}
-
 }
