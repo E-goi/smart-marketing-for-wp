@@ -174,7 +174,6 @@ You can create and update your lists, see how many subscribers you have, but you
 - Fix Api Validation for E-goi Go Send Plan
 - Add Webpush Campaigns Functionality
 - Fix Vulnerability on Ajax Actions
-- Fix SMS Sending on Order Status Update
 
 = 5.0.9 =
 - Fix tag not entry with new contact on contact form 7
