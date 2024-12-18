@@ -2919,8 +2919,6 @@ class Egoi_For_Wp_Admin {
 	public function smsnf_show_account_info( $destination ) {
 		$customer = $this->smsnf_get_account_info();
 
-		$output['notifications']  = $this->smsnf_show_notifications( $customer );
-
 		if ( $destination == 'wp-dashboard' ) {
 			$table_class       = 'table smsnf-wpdash--table';
 			$output['account'] = '
@@ -2944,8 +2942,9 @@ class Egoi_For_Wp_Admin {
                     <tr>
 						<td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Current Balance', 'egoi-for-wp' ) . '</span></td>
 						<td><span class="smsnf-dashboard-account__content__table--cash">' . $customer->balance_info->balance . ' ' .$customer->balance_info->currency .'</span></td>
-                    </tr>'
-                    ;
+                    </tr>
+                </tbody>
+            </table>';
 
 		$plugins       = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 		$sms_installed = false;
