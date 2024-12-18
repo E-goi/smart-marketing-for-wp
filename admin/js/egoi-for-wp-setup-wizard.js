@@ -10,13 +10,16 @@
 		cs: [
 			"#domain"
 		],
+		orders: [
+			"input[name='egoi_sync[order_sync_method]']",
+		],
 		products: [
 			"#catalog"
 		],
 		tweaks:[]
 	}
 
-	const tabsToSend = [ "subscribers", "cs", "tweaks"]
+	const tabsToSend = [ "subscribers", "cs", "orders", "tweaks"]
 
 	$( document ).ready(
 		function() {
@@ -279,6 +282,17 @@
 								if( $("#force_catalog_glob").length == 0 ){
 									valid = true;
 									return;
+								}
+								break;
+
+							case 'orders':
+								if (!$("input[name='egoi_sync[order_sync_method]']:checked").length) {
+									valid = false;
+									toggleError(element);
+								} else {
+									// Explicitly save the selected order sync method
+									let selectedMethod = $("input[name='egoi_sync[order_sync_method]']:checked").val();
+									saveStepWizard(step, { order_sync_method: selectedMethod });
 								}
 								break;
 						}

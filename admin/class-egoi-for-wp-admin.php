@@ -324,7 +324,7 @@ class Egoi_For_Wp_Admin {
 			}
 
 			if ( get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-setup-wizard' ) {
-				wp_register_script( $this->plugin_name . 'setup-wizard', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-setup-wizard.min.js', array( 'jquery' ), true );
+				wp_register_script( $this->plugin_name . 'setup-wizard', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-setup-wizard.js', array( 'jquery' ), true );
 				wp_enqueue_script( $this->plugin_name . 'setup-wizard' );
 
 				wp_enqueue_script( $this->plugin_name . 'ecommerce-form', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-ecommerce-form.js', array( 'jquery' ), $this->version, false );
@@ -2368,6 +2368,9 @@ class Egoi_For_Wp_Admin {
 				break;
 			case 'products':
 				// not needed
+				break;
+            case 'orders':
+				$this->options_list['order_sync_method'] = sanitize_text_field($_POST['order_sync_method']);
 				break;
 			case 'tweaks':
 				$this->options_list['backend_order'] = sanitize_text_field( $_POST['backend_order'] );
