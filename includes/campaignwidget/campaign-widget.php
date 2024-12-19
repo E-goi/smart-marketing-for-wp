@@ -213,7 +213,79 @@ class CampaignWidget {
 					</select>
 					</label>
 				</div>         
-			</div>          
+			</div>
+
+            <!-- Web Push Campaign -->
+            <div>
+                <div style="padding-bottom:10px; padding-top:10px;">
+                    <label style="font-size: 14px;font-weight: bold;"><?php _e( 'WebPush Campaign', 'egoi-for-wp' ); ?></label>
+                </div>
+
+                <?php if ( ! empty( $webpush_info ) ) { ?>
+
+                    <div id="div_webpush_campaign_widget">
+                        <label>
+                            <input type="checkbox" id="webpush_campaign_widget" name="webpush_campaign_widget" value="true"
+                                <?php
+                                if ( $webpush_campaign_widget_checked ) {
+                                    echo 'checked';
+                                }
+                                ?>
+                            ></input>
+
+                            <?php
+                            if ( $post->post_status === 'publish' ) {
+                                echo _e( 'Send Webpush Campaign on update', 'egoi-for-wp' );
+                            } else {
+                                echo _e( 'Send Webpush Campaign on publish', 'egoi-for-wp' );
+
+                            }
+                            ?>
+                        </label>
+                    </div>
+
+                    <div id="webpush_campaign_widget_preferences">
+                        <input type="checkbox" id="webpush_campaign_widget_modify_content" value="true" name="webpush_campaign_widget_modify_content"
+                            <?php
+                            if ( $webpush_campaign_widget_custom_contents_checked ) {
+                                echo 'checked';
+                            }
+                            ?>
+                        ></input> <?php _e( 'Customize Webpush Campaign content', 'egoi-for-wp' ); ?></label>
+
+                        <div id="webpush_campaign_widget_custom_contents" style="display:none;padding-top:10px;">
+                            <div>
+                                <label><?php _e( 'Campaign Title', 'egoi-for-wp' ); ?><br/>
+                                    <input type="text" size="16"  name="webpush_campaign_widget_custom_heading" value="
+                                    <?php
+                                    echo esc_attr( $webpush_campaign_widget_custom_heading );
+                                    ?>
+                                    " id="webpush_campaign_widget_custom_heading" placeholder="<?php _e( 'Campaign Title', 'egoi-for-wp' ); ?>"></input>
+                                </label>
+                            </div>
+                            <div>
+                                <label><?php _e( 'Campaign Subject', 'egoi-for-wp' ); ?><br/>
+                                    <input type="text" size="16"  name="webpush_campaign_widget_custom_content" value="
+                                    <?php
+                                    echo esc_attr( $webpush_campaign_widget_custom_content );
+                                    ?>
+                                    " id="webpush_campaign_widget_custom_content" placeholder="<?php _e( 'The Post\'s Current Title', 'egoi-for-wp' ); ?>"></input>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php } else { ?>
+                    <div id="webpush_campaing_widget_link">
+                        <p>
+                            <a class="webpush_campaign_external_link" href="<?php echo admin_url( 'admin.php?page=egoi-4-wp-webpush' ); ?>" target="_blank" >
+                                <?php _e( 'Create Webpush here so you can send the Webpush Campaign.', 'egoi-for-wp' ); ?>
+                            </a>
+                        </p>
+                    </div>
+
+                <?php } ?>
+            </div>
 
 		<?php
 	}
