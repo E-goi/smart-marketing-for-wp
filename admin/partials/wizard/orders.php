@@ -34,7 +34,7 @@
                 <p class="subtitle"><?php _e('Uses a script to process order synchronization.', 'egoi-for-wp'); ?></p>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
-                        <input id="order_sync_script" type="radio" name="egoi_sync[order_sync_method]" value="script">
+                        <input id="orders" type="radio" name="egoi_sync[order_sync_method]" value="script">
                         <i class="form-icon"></i>
                         <div class="yes"><?php _e('Yes', 'egoi-for-wp'); ?></div>
                     </label>

@@ -204,7 +204,7 @@ class TrackingEngageSDK {
 	}
 
 	public function getOrder() {
-		if ( empty( $this->order_id ) || ! empty( $this->options['backend_order'] ) ) {
+        if ( empty( $this->order_id ) || ! empty( $this->options['backend_order'] ) ||  $this->options['order_sync_method'] !== 'script' ) {
 			return false;
 		}
 
@@ -228,7 +228,7 @@ class TrackingEngageSDK {
 	}
 
 	public function setOrder() {
-		if ( empty( $this->order_id ) || ! empty( $this->options['backend_order'] ) ) {
+		if ( empty( $this->order_id ) || ! empty( $this->options['backend_order'] ) ||  $this->options['order_sync_method'] !== 'script' ) {
 			return false;
 		}
 		$order = wc_get_order( $this->order_id );

@@ -1307,10 +1307,17 @@ class EgoiApiV3 {
 
 		$products = self::getProductsFromOrder( $order );
 
+        //Map Order Status
+        $getOrderStatus = $this->getOrderStatus($order);
+        var_dump("getOrderStatus");
+        var_dump( $getOrderStatus );
+
 		$payload = array(
 			'order_total' => number_format( $order->get_total(), 2 ),
 			'order_id'    => $order->get_id(),
 			'cart_id'     => '',
+            'order_status' => $getOrderStatus,
+            'order_date'   => $order->get_date_created(),
 			'contact'     => $contact,
 			'products'    => $products,
 		);
@@ -1397,7 +1404,43 @@ class EgoiApiV3 {
 		$result_client = json_decode( $client->getResponse(), true );
 
 		return $client->getCode() == 200 && isset( $result_client['total_items'] ) ? $result_client['total_items'] : $this->processErrors();
-	} 
+	}
+
+    /**
+     * @param $order
+     * @return null|string|string[]
+     */
+    private function getOrderStatus( $order) {
+
+        $wooStatus = $order->get_status();
+        var_dump( $wooStatus );
+
+        switch ( $wooStatus ) {
+            // Map Egoi Created Status
+            case 'on-hold':
+            case 'processing':
+                return 'created';
+
+            // Map Egoi Pending Status
+            case 'pending':
+            case 'failed':
+                return 'pending';
+
+            // Map Egoi Completed Status
+            case 'completed':
+                return 'completed';
+
+            // Map Egoi Cancelled Status
+            case 'cancelled':
+            case 'trash':
+            case 'refunded':
+                return 'cancelled';
+
+            // Default case
+            default:
+                return 'created'; // Fallback to "created" if the status is unrecognized
+        }
+    }
 
 
 	/**

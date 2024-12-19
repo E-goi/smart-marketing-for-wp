@@ -27,12 +27,11 @@ class EgoiConverter {
 	public function convertOrder( $orderid ) {
 		$orderObj = wc_get_order( $orderid );
 		require_once plugin_dir_path( __FILE__ ) . '../public/includes/TrackingEngageSDK.php';
-		$orderHasStatus = $orderObj->has_status( str_replace( 'wc-', '', $this->options['backend_order_state'] ) ) || $orderObj->has_status( $this->options['backend_order_state'] );
-		
-		if ( empty( $this->options['backend_order'] ) || ! $orderHasStatus ) {
-			// ignore conversion until order has status
-			return false;
-		}
+        //Track by backend
+        $orderSyncBackend = $this->options['order_sync_method'];
+        if($orderSyncBackend !== ['backend']){
+            return false;
+        }
 
 		require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-apiv3.php';
 		$api = new EgoiApiV3( $this->getApikey() );
