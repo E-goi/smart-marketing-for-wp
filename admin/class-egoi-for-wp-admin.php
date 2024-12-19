@@ -179,6 +179,9 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
 		wp_enqueue_style( $this->plugin_name . 'popup', plugin_dir_url( __FILE__ ) . 'css/egoi-for-wp-pop.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'allpage', plugin_dir_url( __FILE__ ) . 'css/egoi-all-page.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'select2css', plugin_dir_url( __FILE__ ) . 'js/font_awesome/select2.min.css', array(), $this->version, 'all' );
@@ -209,6 +212,9 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
 
 		wp_register_script( $this->plugin_name . 'select2', plugin_dir_url( __FILE__ ) . 'js/font_awesome/select2.full.min.js', array( 'jquery' ), true );
 		wp_enqueue_script( $this->plugin_name . 'select2' );
@@ -384,6 +390,9 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
 		$bypass      = EgoiProductsBo::getProductsToBypass();
 		$bypassCount = count( ! is_array( $bypass ) ? array() : $bypass );
 
@@ -2122,6 +2131,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_remove_rss() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
         check_ajax_referer( 'egoi_rss_manage', 'security' );
 
 		global $wpdb;
@@ -2622,6 +2634,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function smsnf_show_last_campaigns_reports() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
 		$output = array(
 			'email'       => '',
 			'sms_premium' => '',
@@ -2949,6 +2964,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function smsnf_show_account_info_ajax() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
 		$output = $this->smsnf_show_account_info( 'smart-marketing-dashboard' );
 		wp_send_json_success($output);
 	}
@@ -3038,6 +3056,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_change_api_key() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
 		if ( empty( $_POST['egoi_key'] ) ) {
@@ -3053,6 +3074,9 @@ class Egoi_For_Wp_Admin {
 
 
 	public function egoi_count_subs() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
 
 		check_ajax_referer( 'egoi_core_actions', 'security' );
 
@@ -3092,6 +3116,9 @@ class Egoi_For_Wp_Admin {
 	}
 
     public function efwp_remove_data(){
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
         check_ajax_referer( 'egoi_core_actions', 'security' );
 
         $rmdata = sanitize_text_field($_POST['rmdata']);
@@ -3103,6 +3130,9 @@ class Egoi_For_Wp_Admin {
     }
 
     public function efwp_apikey_changes() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
         check_ajax_referer( 'egoi_core_actions', 'security' );
         if(Egoi_For_Wp::removeData( true, true )){
             wp_send_json_success();
@@ -3111,6 +3141,9 @@ class Egoi_For_Wp_Admin {
     }
 
     public function efwp_apikey_save(){
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
         check_ajax_referer( 'egoi_core_actions', 'security' );
         $apikey2save = sanitize_key( $_POST['apikey'] );
         $accountData = $this->egoiWpApi->getClient( $apikey2save );
@@ -3143,7 +3176,6 @@ class Egoi_For_Wp_Admin {
     }
 
 	public function egoi_synchronize_subs() {
-
 		check_ajax_referer( 'egoi_core_actions', 'security' );
 		$page = sanitize_text_field( $_POST['page'] );
 
