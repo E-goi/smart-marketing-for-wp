@@ -102,7 +102,7 @@ if ( ! empty( $_POST ) ) {
 
 							$api_key = $apikey['api_key'];
 
-							$api_client = $this->egoiWpApi->getClient();
+                            $api_client = $this->egoiWpApiV3->getClient();
 							if ( ! empty( $api_client->response ) && $api_client->response == 'INVALID' ) {
 								?>
 

@@ -275,7 +275,8 @@ class EgoiApiV3 {
 		'convertCart'              => '/{domain}/carts',
 		'importContactsBulk'       => '/lists/{list_id}/contacts/actions/import-bulk',
 		'ping'					   => '/ping',
-	);
+        'getClient'             => '/my-account',
+    );
 
 	protected $apiKey;
 	protected $headers;
@@ -600,6 +601,49 @@ class EgoiApiV3 {
 			return $this->processErrors( $client->getResponse() );
 		}
 	}
+
+    /**
+     * Retrieve client information.
+     *
+     * @param bool $apikey Optional API key flag.
+     * @return mixed The client information or error response.
+     */
+    public function getClient($apikey = false) {
+        $url = self::APIV3 . self::APIURLS[__FUNCTION__];
+
+        $client = new ClientHttp(
+            $url,
+            'GET',
+            $this->headers
+        );
+
+        if (!$client->success()) {
+            return $this->processErrors($client->getError());
+        }
+
+        $response = json_decode($client->getResponse(), true);
+
+        if ($client->getCode() === 200 && isset($response['general_info'])) {
+            return $response;
+        }
+
+        $responseError = json_decode($client->getResponse(), true);
+
+        if (isset($responseError['title'])) {
+            switch ($responseError['title']) {
+                case 'Unauthorized':
+                    return (object)[
+                        'ERROR'  => 'UNAUTHORIZED',
+                        'status' => 'error',
+                    ];
+                case 'Forbidden':
+                    return (object)[
+                        'ERROR'  => 'FORBIDDEN',
+                        'status' => 'error',
+                    ];
+            }
+        }
+    }
 
 	/**
 	 * @return false|string
@@ -1547,6 +1591,10 @@ class ClientHttp {
 			$this->http_code = $res['response']['code'];
 			$this->response  = $res['body'];
 			$this->headers   = $res['headers'];
+            if ( $res['response']['code'] == 403 ) {
+                do_action( 'api_error_notice' );
+                update_option( 'api_error_status', array( 'active' => true, 'code' => 403 ) );
+            }
 		}
 
 	}

@@ -35,6 +35,7 @@ class Egoi_For_Wp_Admin {
 	const FORM_OPTION_3   = 'egoi_form_sync_3';
 	const FORM_OPTION_4   = 'egoi_form_sync_4';
 	const FORM_OPTION_5   = 'egoi_form_sync_5';
+    Const Name_of_Plugin = 'Smart Marketing SMS and Newsletters Forms';
 
 	const BATCH_SIZE = 1000;
 
@@ -163,7 +164,25 @@ class Egoi_For_Wp_Admin {
 		//run update wp_options autoload
 		add_action( 'upgrader_process_complete', array( $this, 'updateEgoiSimpleForm' ));
 
+        // admin notifications for api error
+        add_action( 'api_error_notice', array( $this, 'show_api_error_notice' ) );
+
 	}
+
+    public function show_api_error_notice() {
+        if (!current_user_can('manage_options')) {
+            wp_die( 'You do not have sufficient permissions to access this page.' );
+        }
+
+        $error_status = get_option('api_error_status', array('active' => false));
+        if (!$error_status['active'] || $error_status['code'] !== 403) {
+            return;
+        }
+
+       echo '<div class="notice notice-error is-dismissible">
+            <p><strong>' . esc_html(self::Name_of_Plugin) . ':</strong> Access has been denied. Check your API key settings or contact E-goi support.</p>
+          </div>';
+    }
 
 	public function smsnf_main_dashboard_widget() {
 		wp_add_dashboard_widget(
@@ -2817,7 +2836,7 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function smsnf_get_account_info() {
-		$customer = $this->egoiWpApi->getClient();
+		$customer = $this->egoiWpApiV3->getClient();
 
 		return $customer;
 	}
@@ -2826,9 +2845,6 @@ class Egoi_For_Wp_Admin {
 		$customer = $this->smsnf_get_account_info();
 
 		$output['notifications']  = $this->smsnf_show_notifications( $customer );
-		$email_limit              = $customer->PLAN_EMAIL_LIMIT != 0 ? $customer->PLAN_EMAIL_LIMIT : __( 'Unlimited', 'egoi-for-wp' );
-		$sms_limit                = $customer->PLAN_SMS_LIMIT != 0 ? $customer->PLAN_SMS_LIMIT : __( 'Unlimited', 'egoi-for-wp' );
-		$transactionalEmailOption = get_option( 'transactional_email_option' );
 
 		if ( $destination == 'wp-dashboard' ) {
 			$table_class       = 'table smsnf-wpdash--table';
@@ -2848,54 +2864,12 @@ class Egoi_For_Wp_Admin {
                 <tbody>
 					<tr>
 						<td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Plan', 'egoi-for-wp' ) . '</span></td>
-						<td><span class="">' . $customer->CONTRACT . '</span></td>
+						<td><span class="">' . strtoupper($customer->plan_info->type) . '</span></td>
                     </tr>
                     <tr>
 						<td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Current Balance', 'egoi-for-wp' ) . '</span></td>
-						<td><span class="smsnf-dashboard-account__content__table--cash">' . $customer->CREDITS . '</span></td>
+						<td><span class="smsnf-dashboard-account__content__table--cash">' . $customer->balance_info->balance . ' ' .$customer->balance_info->currency . '</span></td>
                     </tr>';
-
-		if ( $customer->CONTRACT_EXPIRE_DATE ) {
-			$output['account'] .= '
-                        <tr>
-                            <td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Expires in', 'egoi-for-wp' ) . '</span></td>
-                            <td><span class="">' . $customer->CONTRACT_EXPIRE_DATE . '</span></td>
-                        </tr>
-                        ';
-		}
-
-		$output['account'] .= '
-                </tbody>
-			</table>
-            <p class="smsnf-dashboard-account__content__table--subtitle">' . __( 'Your current plan includes', 'egoi-for-wp' ) . '</p>
-            <table class="' . $table_class . '">
-                <tbody>
-                    <tr>
-                        <td>Email/Push</td>
-                        <td><span class="">' . $email_limit . '</span></td>
-                    </tr>
-                    <tr>
-                        <td>SMS</td>
-                        <td><span class="">' . $sms_limit . '</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="smsnf-dashboard-account__content__table--subtitle">' . __( 'Total sent', 'egoi-for-wp' ) . '</p>
-            <table class="' . $table_class . '">
-                <tbody>
-                    <tr>
-                        <td>Email/Push</td>
-                        <td><span class="">' . $customer->PLAN_EMAIL_SENT . '</span></td>
-                    </tr>
-                    <tr>
-                        <td>SMS</td>
-                        <td><span class="">' . $customer->PLAN_SMS_SENT . '</span></td>
-                    </tr>
-                    <tr>
-                        <td>' . __( 'Transactional Email', 'egoi-for-wp' ) . '</td>
-                        <td><span class="">' . $transactionalEmailOption['sent'] . '</span></td>
-                    </tr>
-        ';
 
 		$plugins       = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 		$sms_installed = false;
