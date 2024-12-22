@@ -59,54 +59,6 @@ $page  = array(
 			<div class="smsnf-dashboard">
 				<div class="container">
 					<div class="columns">
-
-						<!-- Notifications | Upgrade Account -->
-						<div class="column col-12 d-none" id="notification_upgrade_account">
-							<div class="smsnf-dashboard-notifications notice is-dismissible">
-								<div class="smsnf-dashboard-notifications__img">
-									<figure class="avatar avatar-xl smsnf-dashboard-notifications__img--upgrade"></figure>
-								</div>
-								<div class="smsnf-dashboard-notifications__copy">
-									<h3>
-										<?php
-										_e( 'Do you have a free 5001 plan? This plan has some limitations', 'egoi-for-wp' );
-										_e( ' (<a href="https://helpdesk.e-goi.com/265487-Signing-up-for-the-free-5001-plan" target="_blank">learn more</a>)', 'egoi-for-wp' );
-										?>
-									</h3>
-									<p><?php _e( 'To overcome these limitations, upgrade to a subscription plan.', 'egoi-for-wp' ); ?></p>
-								</div>
-								<div class="smsnf-dashboard-notifications__btn">
-									<a class="hide-sm hide-xs hide-notification-button" type="button" data-notification="upgrade-account">
-										<?php _e( 'Hide notification', 'egoi-for-wp' ); ?>
-									</a>
-									<a href="https://login.egoiapp.com/login?from=%2F%3Faction%3Dconta-corrente_carregamentos%26doadd%3Dyes%26tipo%3Demail%26category_level1%3Demail_plan%26limitsubsinterval%3D5001_10000%26category_level2%3D304%26period%3Dmensal" type="button" id="" class="button-smsnf-primary" target="_blank">
-										<?php _e( 'Upgrade', 'egoi-for-wp' ); ?>
-									</a>
-								</div>
-							</div>
-						</div>
-
-						<!-- Notifications | Account Limit -->
-						<div class="column col-12 d-none" id="notification_account_limit">
-							<div class="smsnf-dashboard-notifications notice is-dismissible">
-								<div class="smsnf-dashboard-notifications__img">
-									<figure class="avatar avatar-xl smsnf-dashboard-notifications__img--limit"></figure>
-								</div>
-								<div class="smsnf-dashboard-notifications__copy">
-									<h3><?php _e( 'You are almost reaching the limit of your Plan!', 'egoi-for-wp' ); ?></h3>
-									<p><?php _e( 'To prevent this from happening, upgrade to a higher plan.', 'egoi-for-wp' ); ?></p>
-								</div>
-								<div class="smsnf-dashboard-notifications__btn">
-									<a class="hide-sm hide-xs hide-notification-button" type="button" data-notification="account-limit">
-										<?php _e( 'Hide notification', 'egoi-for-wp' ); ?>
-									</a>
-									<a href="https://login.egoiapp.com/login?from=%2F%3Faction%3Dconta-corrente_carregamentos%26doadd%3Dyes%26tipo%3Demail%26category_level1%3Demail_plan%26limitsubsinterval%3D10001_25000%26category_level2%3D306%26period%3Dmensal" type="button" id="" class="button-smsnf-primary" target="_blank">
-										<?php _e( 'Upgrade', 'egoi-for-wp' ); ?>
-									</a>
-								</div>
-							</div>
-						</div>
-
 						<!-- Column Left Start -->
 						<!-- Last Subscribers table / Subscribers by List / Subscribers by Form / Last Email Campaign /  Last SMS Campaign  -->
 						<div class="column col-12 col-md-8 col-xs-8 mt-3">
