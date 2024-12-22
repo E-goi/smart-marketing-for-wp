@@ -11,14 +11,10 @@
 				},
 				function(response) {
 					var output = jQuery.parseJSON( response.data );
-					if (output.notifications.upgrade) {
-						$( '#notification_upgrade_account' ).removeClass( 'd-none' );
+					if (output){
+						$( '#account_content_loading' ).remove();
+						$( '.smsnf-dashboard-account__content__table' ).append( output.account );
 					}
-					if (output.notifications.limit) {
-						$( '#notification_account_limit' ).removeClass( 'd-none' );
-					}
-					$( '#account_content_loading' ).remove();
-					$( '.smsnf-dashboard-account__content__table' ).append( output.account );
 				}
 			);
 
