@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing SMS and Newsletters Forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-09 10:02+0000\n"
+"POT-Creation-Date: 2024-12-23 17:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,12 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.2.2; wp-5.1.1"
-
-#: admin/partials/egoi-for-wp-admin-dashboard.php:73
-msgid ""
-" (<a href=\"https://helpdesk.e-goi.com/265487-Signing-up-for-the-free-5001-"
-"plan\" target=\"_blank\">learn more</a>)"
-msgstr ""
 
 #: admin/partials/configuration/advanced.php:64
 msgid " with (%d) events)."
@@ -231,13 +225,13 @@ msgstr ""
 msgid "Beginning"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:156
+#: admin/partials/egoi-for-wp-admin-dashboard.php:108
 msgid ""
 "Best day of subscribers registered\n"
 "directly in the plugin"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:155
+#: admin/partials/egoi-for-wp-admin-dashboard.php:107
 msgid "Best<br>day"
 msgstr ""
 
@@ -245,7 +239,7 @@ msgstr ""
 msgid "Biographical Info"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1387
+#: includes/class-egoi-for-wp.php:1405
 msgid "Birth Date"
 msgstr ""
 
@@ -313,15 +307,18 @@ msgstr ""
 msgid "Campaign sent successfully!"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:168
+#: includes/campaignwidget/campaign-widget.php:163
+#: includes/campaignwidget/campaign-widget.php:262
 msgid "Campaign Subject"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:159
+#: includes/campaignwidget/campaign-widget.php:154
+#: includes/campaignwidget/campaign-widget.php:253
+#: includes/campaignwidget/campaign-widget.php:258
 msgid "Campaign Title"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:164
+#: includes/campaignwidget/campaign-widget.php:159
 msgid "Campaign title"
 msgstr ""
 
@@ -530,7 +527,7 @@ msgstr ""
 msgid "Contact was successfully registered!"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:181
+#: includes/campaignwidget/campaign-widget.php:176
 msgid "Contacts:"
 msgstr ""
 
@@ -598,6 +595,10 @@ msgstr ""
 msgid "Create RSS Feed +"
 msgstr ""
 
+#: includes/campaignwidget/campaign-widget.php:277
+msgid "Create Webpush here so you can send the Webpush Campaign."
+msgstr ""
+
 #: admin/partials/ecommerce/catalogs.php:27
 msgid "Create your first catalog"
 msgstr ""
@@ -623,8 +624,12 @@ msgstr ""
 msgid "Customize"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:155
+#: includes/campaignwidget/campaign-widget.php:150
 msgid "Customize Email Campaign content"
+msgstr ""
+
+#: includes/campaignwidget/campaign-widget.php:249
+msgid "Customize Webpush Campaign content"
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:45
@@ -636,7 +641,7 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:186
+#: admin/partials/egoi-for-wp-admin-dashboard.php:138
 msgid "Date"
 msgstr ""
 
@@ -683,10 +688,6 @@ msgstr ""
 
 #: admin/partials/capture/popup.php:147
 msgid "Display Position"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-dashboard.php:72
-msgid "Do you have a free 5001 plan? This plan has some limitations"
 msgstr ""
 
 #: admin/partials/capture/popup.php:123
@@ -811,15 +812,15 @@ msgstr ""
 msgid "Egoi List"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1385
-#: admin/partials/egoi-for-wp-admin-dashboard.php:183
+#: includes/class-egoi-for-wp.php:1403
+#: admin/partials/egoi-for-wp-admin-dashboard.php:135
 #: admin/partials/capture/simple-forms.php:187
 #: admin/partials/capture/simple-forms.php:187
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:91
 msgid "Email"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:124
+#: includes/campaignwidget/campaign-widget.php:119
 msgid "Email Campaign"
 msgstr ""
 
@@ -989,7 +990,7 @@ msgstr ""
 msgid "First Name"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1382
+#: includes/class-egoi-for-wp.php:1400
 msgid "First name"
 msgstr ""
 
@@ -997,7 +998,7 @@ msgstr ""
 msgid "Font Color"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:185
+#: admin/partials/egoi-for-wp-admin-dashboard.php:137
 #: admin/partials/capture/popup.php:59
 msgid "Form"
 msgstr ""
@@ -1014,12 +1015,12 @@ msgstr ""
 msgid "Form Fields"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:184
-#: admin/partials/egoi-for-wp-admin-dashboard.php:264
+#: admin/partials/egoi-for-wp-admin-dashboard.php:136
+#: admin/partials/egoi-for-wp-admin-dashboard.php:216
 msgid "Form ID"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:265
+#: admin/partials/egoi-for-wp-admin-dashboard.php:217
 msgid "Form Name"
 msgstr ""
 
@@ -1103,11 +1104,6 @@ msgstr ""
 #: admin/partials/egoi-for-wp-admin-widget.php:206
 #: admin/partials/capture/widget-options.php:208
 msgid "Hide form after successful sign-up"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-dashboard.php:80
-#: admin/partials/egoi-for-wp-admin-dashboard.php:101
-msgid "Hide notification"
 msgstr ""
 
 #: admin/partials/capture/popup.php:282
@@ -1266,7 +1262,7 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1388
+#: includes/class-egoi-for-wp.php:1406
 #: admin/partials/egoi-for-wp-admin-display.php:281
 #: admin/partials/ecommerce/catalogs.php:8
 #: admin/partials/ecommerce/new-catalog-form.php:23
@@ -1282,23 +1278,23 @@ msgstr ""
 msgid "Last Name"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1383
+#: includes/class-egoi-for-wp.php:1401
 msgid "Last name"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:281
+#: admin/partials/egoi-for-wp-admin-dashboard.php:233
 msgid "Last Sent Email Campaign"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:247
+#: admin/partials/egoi-for-wp-admin-dashboard.php:199
 msgid "Last Sent SMS Campaign"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:311
+#: admin/partials/egoi-for-wp-admin-dashboard.php:263
 msgid "Latest Blog Entries"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:174
+#: admin/partials/egoi-for-wp-admin-dashboard.php:126
 msgid "Latest Subscribers"
 msgstr ""
 
@@ -1330,7 +1326,7 @@ msgstr ""
 msgid "Left Image"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:187
+#: admin/partials/egoi-for-wp-admin-dashboard.php:139
 #: admin/partials/rssfeed/campaign-rss.php:36
 msgid "List"
 msgstr ""
@@ -1377,7 +1373,7 @@ msgstr ""
 
 #: admin/partials/integrations/contact-form-7.php:13
 msgid ""
-"Make sure you have b gg 7 installed before trying to configure the "
+"Make sure you have Contact Form 7 installed before trying to configure the "
 "integration."
 msgstr ""
 
@@ -1432,7 +1428,7 @@ msgstr ""
 msgid "Messages"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1384
+#: includes/class-egoi-for-wp.php:1402
 #: includes/class-egoi-for-wp-widget.php:385
 #: admin/partials/capture/simple-forms.php:188
 #: admin/partials/capture/simple-forms.php:188
@@ -1560,7 +1556,7 @@ msgstr ""
 msgid "Nothing here yet."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:266
+#: admin/partials/egoi-for-wp-admin-dashboard.php:218
 msgid "Nº Subscribers"
 msgstr ""
 
@@ -2075,11 +2071,11 @@ msgstr ""
 msgid "Send Email"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:140
+#: includes/campaignwidget/campaign-widget.php:135
 msgid "Send Email Campaign on publish"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:138
+#: includes/campaignwidget/campaign-widget.php:133
 msgid "Send Email Campaign on update"
 msgstr ""
 
@@ -2099,11 +2095,19 @@ msgstr ""
 msgid "Send To"
 msgstr ""
 
+#: includes/campaignwidget/campaign-widget.php:235
+msgid "Send Webpush Campaign on publish"
+msgstr ""
+
+#: includes/campaignwidget/campaign-widget.php:233
+msgid "Send Webpush Campaign on update"
+msgstr ""
+
 #: admin/partials/rssfeed/campaign-rss.php:47
 msgid "Sender"
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:199
+#: includes/campaignwidget/campaign-widget.php:194
 msgid "Sender:"
 msgstr ""
 
@@ -2223,7 +2227,7 @@ msgstr ""
 msgid "Subscribe Button"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1255
+#: includes/class-egoi-for-wp.php:1273
 msgid "Subscribe to newsletter"
 msgstr ""
 
@@ -2247,11 +2251,11 @@ msgstr ""
 msgid "Subscribers"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:256
+#: admin/partials/egoi-for-wp-admin-dashboard.php:208
 msgid "Subscribers by Form"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:209
+#: admin/partials/egoi-for-wp-admin-dashboard.php:161
 msgid "Subscribers by Lists"
 msgstr ""
 
@@ -2353,7 +2357,7 @@ msgstr ""
 msgid "Tax"
 msgstr ""
 
-#: includes/class-egoi-for-wp.php:1386
+#: includes/class-egoi-for-wp.php:1404
 msgid "Telephone"
 msgstr ""
 
@@ -2415,7 +2419,8 @@ msgid ""
 "your WP users with the selected E-goi list."
 msgstr ""
 
-#: includes/campaignwidget/campaign-widget.php:173
+#: includes/campaignwidget/campaign-widget.php:168
+#: includes/campaignwidget/campaign-widget.php:267
 msgid "The Post's Current Title"
 msgstr ""
 
@@ -2528,20 +2533,12 @@ msgid ""
 "do-I-use-it\">here</a>."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:76
-msgid "To overcome these limitations, upgrade to a subscription plan."
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-dashboard.php:97
-msgid "To prevent this from happening, upgrade to a higher plan."
-msgstr ""
-
 #: admin/partials/configuration/advanced.php:79
 msgid ""
 "To take the maximum from this feature we advise to setup a crontab execution."
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:119
+#: admin/partials/egoi-for-wp-admin-dashboard.php:71
 msgid "Today's<br>subscribers"
 msgstr ""
 
@@ -2549,13 +2546,13 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:137
+#: admin/partials/egoi-for-wp-admin-dashboard.php:89
 msgid ""
 "Total subscribers registered\n"
 "directly in the plugin"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:136
+#: admin/partials/egoi-for-wp-admin-dashboard.php:88
 msgid "Total<br>Subscribers"
 msgstr ""
 
@@ -2588,18 +2585,13 @@ msgstr ""
 msgid "Until Submission"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:298
+#: admin/partials/egoi-for-wp-admin-dashboard.php:250
 msgid "Update account information"
 msgstr ""
 
 #: admin/partials/integrations/gravity-forms.php:59
 #: admin/partials/integrations/contact-form-7.php:90
 msgid "Update Subscriber"
-msgstr ""
-
-#: admin/partials/egoi-for-wp-admin-dashboard.php:83
-#: admin/partials/egoi-for-wp-admin-dashboard.php:104
-msgid "Upgrade"
 msgstr ""
 
 #: admin/partials/capture/popup.php:265
@@ -2634,6 +2626,10 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-sidebar.php:59
 msgid "We have some resources available to help you in the right direction."
+msgstr ""
+
+#: includes/campaignwidget/campaign-widget.php:216
+msgid "WebPush Campaign"
 msgstr ""
 
 #: admin/partials/custom/egoi-for-wp-form-map.php:42
@@ -2733,10 +2729,6 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:96
-msgid "You are almost reaching the limit of your Plan!"
-msgstr ""
-
 #: admin/partials/egoi-for-wp-admin-header.php:10
 #: admin/partials/egoi-for-wp-admin-header.php:28
 msgid "You are here: "
@@ -2754,9 +2746,9 @@ msgstr ""
 msgid "You have configured repeated fields!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:177
-#: admin/partials/egoi-for-wp-admin-dashboard.php:212
-#: admin/partials/egoi-for-wp-admin-dashboard.php:259
+#: admin/partials/egoi-for-wp-admin-dashboard.php:129
+#: admin/partials/egoi-for-wp-admin-dashboard.php:164
+#: admin/partials/egoi-for-wp-admin-dashboard.php:211
 msgid "You have no subscribers yet"
 msgstr ""
 
@@ -2776,7 +2768,7 @@ msgstr ""
 msgid "You really want to change your API Key? You will lose all data!"
 msgstr ""
 
-#: admin/partials/egoi-for-wp-admin-dashboard.php:296
+#: admin/partials/egoi-for-wp-admin-dashboard.php:248
 msgid "Your account"
 msgstr ""
 
