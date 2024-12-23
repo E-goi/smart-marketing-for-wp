@@ -811,7 +811,7 @@ class Egoi_For_Wp_Public {
 		$options = $this->load_options();
 
 		$client_info     = get_option( 'egoi_client' );
-		$client_id       = isset($client_info->CLIENTE_ID) ? $client_info->CLIENTE_ID : '';
+        $client_id       = isset($client_info->general_info->client_id) ? $client_info->general_info->client_id : '';
 		$track_social_id = ! empty( $options['social_track'] ) && ! empty( $options['social_track_id'] ) ? $options['social_track_id'] : null;
 
 		if(empty($client_id)){
@@ -841,7 +841,7 @@ class Egoi_For_Wp_Public {
 		if ( empty( $options['list'] ) || empty( $options['track'] ) ) {
 			return false;} //list && tracking&engage setup check
 		$client_info = get_option( 'egoi_client' );
-		$client_id   = $client_info->CLIENTE_ID;
+		$client_id   = $client_info->general_info->client_id;
 
 		require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
 		$track = new TrackingEngageSDK( $client_id, $options['list'], $order_id );
@@ -891,7 +891,7 @@ class Egoi_For_Wp_Public {
 		} //list && tracking&engage setup check
 
 		$client_info = get_option( 'egoi_client' );
-		$client_id   = $client_info->CLIENTE_ID;
+		$client_id   = $client_info->general_info->client_id;
 		require_once plugin_dir_path( __FILE__ ) . 'includes/TrackingEngageSDK.php';
 		$track = new TrackingEngageSDK( $client_id, $options['list'], $order_id );
 		$track->getOrder();
