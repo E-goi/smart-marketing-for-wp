@@ -273,7 +273,7 @@ class CampaignWidget {
                 <?php } else { ?>
                     <div id="webpush_campaing_widget_link">
                         <p>
-                            <a class="webpush_campaign_external_link" href="<?php echo admin_url( 'admin.php?page=egoi-4-wp-webpush' ); ?>" target="_blank" >
+                            <a class="webpush_campaign_external_link" href="https://bo.egoiapp.com/#/messages/broadcasts/list?channel=webPush" target="_blank" >
                                 <?php _e( 'Create Webpush here so you can send the Webpush Campaign.', 'egoi-for-wp' ); ?>
                             </a>
                         </p>
