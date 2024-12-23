@@ -4,7 +4,7 @@ Donate link:
 Tags: Email Marketing, Newsletter, Marketing Automation, E-goi, Ecommerce
 Requires at least: 4.7
 Tested up to: 6.6.1
-Stable tag: 5.0.8
+Stable tag: 5.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Save Time, Increase Traffic, and Transform Business Opportunities (Leads) into Trusted Customers!
@@ -169,6 +169,11 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+5.0.10 =
+- Fix Api Validation for E-goi Go Send Plan
+- Add Webpush Campaigns Functionality
+- Fix Vulnerability on Ajax Actions
 
 = 5.0.9 =
 - Fix tag not entry with new contact on contact form 7

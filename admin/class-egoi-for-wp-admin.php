@@ -2836,14 +2836,13 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function smsnf_get_account_info() {
-		$customer = $this->egoiWpApiV3->getClient();
+		$customer = $this->egoiWpApi->getAccountEgoi();
 
 		return $customer;
 	}
 
 	public function smsnf_show_account_info( $destination ) {
 		$customer = $this->smsnf_get_account_info();
-		//$output['notifications']  = $this->smsnf_show_notifications( $customer );
 
 		if ( $destination == 'wp-dashboard' ) {
 			$table_class       = 'table smsnf-wpdash--table';
@@ -2863,11 +2862,11 @@ class Egoi_For_Wp_Admin {
                 <tbody>
 					<tr>
 						<td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Plan', 'egoi-for-wp' ) . '</span></td>
-						<td><span class="">' . strtoupper($customer['plan_info']['type']) . '</span></td>
+                        <td><span class="">' . strtoupper($customer->plan_info->type) . '</span></td>
                     </tr>
                     <tr>
 						<td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Current Balance', 'egoi-for-wp' ) . '</span></td>
-						<td><span class="smsnf-dashboard-account__content__table--cash">' . $customer['balance_info']['balance'] . ' ' .$customer['balance_info']['currency'] . '</span></td>
+						<td><span class="smsnf-dashboard-account__content__table--cash">' . $customer->balance_info->balance . ' ' .$customer->balance_info->currency . '</span></td>
                     </tr>';
 
 		$plugins       = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
@@ -3038,7 +3037,8 @@ class Egoi_For_Wp_Admin {
 			wp_send_json_error( __( 'Apikey is required', 'egoi-for-wp' ) );
 		}
 
-		$clientData = $this->egoiWpApi->getClient( $_POST['egoi_key'] );
+        $clientData = $this->egoiWpApi->getAccountEgoi( $_POST['egoi_key'] );
+
 		if ( empty( $clientData ) ) {
 			wp_send_json_error( __( 'Apikey not valid', 'egoi-for-wp' ) );
 		}
@@ -3119,7 +3119,7 @@ class Egoi_For_Wp_Admin {
         }
         check_ajax_referer( 'egoi_core_actions', 'security' );
         $apikey2save = sanitize_key( $_POST['apikey'] );
-        $accountData = $this->egoiWpApi->getClient( $apikey2save );
+        $accountData = $this->egoiWpApi->getAccountEgoi( $apikey2save );
 
         if ( empty( $apikey2save ) || empty( $accountData ) ) {
             wp_send_json_error( __( 'Invalid API Key!', 'egoi-for-wp' ) );
@@ -3143,9 +3143,6 @@ class Egoi_For_Wp_Admin {
         }
 
         wp_send_json_success(['message' => __( 'API Key updated!', 'egoi-for-wp' )]);
-
-
-
     }
 
 	public function egoi_synchronize_subs() {
