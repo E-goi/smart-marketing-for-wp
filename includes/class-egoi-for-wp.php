@@ -1010,11 +1010,11 @@ class Egoi_For_Wp {
 
     public function register_api_error_notice() {
         add_action( 'api_error_notice', function() {
-            echo '<div class="error"><p>Erro 403 na API. Verifique suas credenciais.</p></div>';
+            echo '<div class="error"><p>' . esc_html( 'Access has been denied. Check your API key settings or contact E-goi support.' ) . '</p></div>';
         } );
     }
 
-	public function get_listener( $user_id ) {
+    public function get_listener( $user_id ) {
 
 		$listen = new Egoi_For_Wp_Listener( $this->get_plugin_name(), $this->get_version() );
 		if ( $user_id ) {
