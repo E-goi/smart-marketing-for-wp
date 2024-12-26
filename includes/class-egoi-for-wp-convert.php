@@ -29,7 +29,8 @@ class EgoiConverter {
 		require_once plugin_dir_path( __FILE__ ) . '../public/includes/TrackingEngageSDK.php';
         //Track by backend
         $orderSyncBackend = $this->options['order_sync_method'];
-        if($orderSyncBackend !== ['backend']){
+
+        if ($orderSyncBackend !== 'backend') {
             return false;
         }
 

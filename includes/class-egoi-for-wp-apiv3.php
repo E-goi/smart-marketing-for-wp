@@ -274,6 +274,7 @@ class EgoiApiV3 {
 		'convertOrder'             => '/{domain}/orders',
 		'convertCart'              => '/{domain}/carts',
 		'importContactsBulk'       => '/lists/{list_id}/contacts/actions/import-bulk',
+        'importOrdersBulk'         => '/lists/{list_id}/orders',
 		'ping'					   => '/ping',
 	);
 
@@ -806,6 +807,52 @@ class EgoiApiV3 {
 			: false;
 	}
 
+    /**
+     * Import Orders Bulk
+     * @param $listId
+     * @param $data
+     * @return false|string
+     */
+    public function importOrdersBulk( $listId, $data ) {
+        $path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{list_id}', $listId );
+
+        $ch = curl_init();
+
+        // Set the URL
+        curl_setopt($ch, CURLOPT_URL, $path);
+
+        // Set the request method
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+
+        // Set the timeout
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+        // Set the request body if provided
+        if (!empty($data)) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        }
+
+        // Set headers if provided
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+
+
+        // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute the request
+        curl_exec($ch);
+
+        // Get the HTTP status code
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Close the cURL session
+        curl_close($ch);
+
+        return $httpCode == 201
+            ? true
+            : false;
+    }
+
 	/**
 	 * Create List
 	 * @param $name
@@ -1302,38 +1349,42 @@ class EgoiApiV3 {
 		return $output;
 	}
 
-	public function convertOrder( $order, $contact, $domain ) {
-		$path = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{domain}', $domain );
+    public function convertOrder( $order, $contact, $domain ) {
+        $path = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{domain}', $domain );
 
-		$products = self::getProductsFromOrder( $order );
+        $products = self::getProductsFromOrder( $order );
 
-        //Map Order Status
-        $getOrderStatus = $this->getOrderStatus($order);
-        var_dump("getOrderStatus");
-        var_dump( $getOrderStatus );
+        $order_status = self::getOrderStatus( $order );
 
-		$payload = array(
-			'order_total' => number_format( $order->get_total(), 2 ),
-			'order_id'    => $order->get_id(),
-			'cart_id'     => '',
-            'order_status' => $getOrderStatus,
-            'order_date'   => $order->get_date_created(),
-			'contact'     => $contact,
-			'products'    => $products,
-		);
+        $payload = array(
+            'order_total' => number_format( $order->get_total(), 2 ),
+            'order_id'    => $order->get_id(),
+            'order_status' => $order_status,
+            'cart_id'     => '',
+            'order_date'  => $order->get_date_created(),
+            'contact'     => $contact,
+            'products'    => $products,
+        );
 
-		$client = new ClientHttp(
-			$path,
-			'POST',
-			$this->headers,
-			$payload
-		);
+        // Configurar o cabeçalho para JSON
+        $headers = $this->headers;
+        $headers['Content-Type'] = 'application/json';
 
-		if ( $client->success() !== true || $client->getCode() != 202 ) {
-			return false;
-		}
-		return json_decode( $client->getResponse(), true );
-	}
+        // Converter o payload para JSON
+        $jsonPayload = json_encode( $payload );
+
+        $client = new ClientHttp(
+            $path,
+            'POST',
+            $headers,
+            $jsonPayload // Enviar o payload como JSON
+        );
+
+        if ( $client->success() !== true || $client->getCode() != 202 ) {
+            return false;
+        }
+        return json_decode( $client->getResponse(), true );
+    }
 
 	private static function getProductsFromCart( $cartObj, $variations = false ) {
 		$cart = array(
@@ -1413,7 +1464,6 @@ class EgoiApiV3 {
     private function getOrderStatus( $order) {
 
         $wooStatus = $order->get_status();
-        var_dump( $wooStatus );
 
         switch ( $wooStatus ) {
             // Map Egoi Created Status

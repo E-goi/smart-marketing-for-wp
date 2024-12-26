@@ -54,7 +54,8 @@ if ( class_exists( 'Woocommerce' ) ) {
 		}
 	}
 }
-
+$orders = wc_get_orders( $args );
+$count_orders = count( $orders );
 $count_users = count_users();
 ?>
 
@@ -105,6 +106,27 @@ jQuery(document).ready(function($) {
 			}, 5000);
 		});
 	});
+
+    $('#update_orders').click(function() {
+        $('#e-goi_import_valid').hide();
+        $('#load').show();
+
+        var data = {
+            action: 'efwp_add_orders', // Identificador da ação para sincronizar encomendas
+            listID: listID,
+            submit: 1
+        };
+
+        jQuery.post(ajaxurl, data, function(response) {
+            $('#load').hide();
+
+            if (response.success) {
+                $('#e-goi_import_valid').show();
+            } else {
+                $('#e-goi_import_error').show();
+            }
+        });
+    });
 
 	$('#wpfooter').hide();
 

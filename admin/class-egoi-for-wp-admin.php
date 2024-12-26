@@ -45,6 +45,13 @@ class Egoi_For_Wp_Admin {
 	 */
 	private $limit_subs = 10000;
 
+    /**
+	 * Limit Orders
+	 *
+	 * @var integer
+	 */
+	private $limit_orders = 10000;
+
 	/**
 	 * The version of this plugin.
 	 *
@@ -802,6 +809,120 @@ class Egoi_For_Wp_Admin {
 
 		wp_die();
 	}
+
+    public function orders_queue() {
+        if ( isset( $_POST['submit'] ) && $_POST['submit'] ) {
+            try {
+                $orders = [];
+                $batches = [];
+                $listId = $_POST['listID'];
+
+                if ( class_exists( 'WooCommerce' ) ) {
+                    $args = [
+                        'limit'   => 200,
+                        'orderby' => 'date',
+                        'order'   => 'DESC',
+                    ];
+
+                    $orders = wc_get_orders( $args );
+                }
+
+                foreach ( $orders as $order ) {
+                    if ( ! is_a( $order, 'WC_Order' ) ) {
+                        continue;
+                    }
+
+                    $order_data = [
+                        'order_id'   => (string) $order->get_id(),
+                        'order_status' => self::getOrderStatus($order),
+                        'contact_id' => $order->get_billing_email() ?: 'anonymous@e-goi.com',
+                        'revenue'    => (float) $order->get_total(),
+                        'store_url'  => get_site_url(),
+                        'date'       => $order->get_date_created() ? $order->get_date_created()->date('Y-m-d H:i:s') : null,
+                        'items'      => [],
+                    ];
+
+                    foreach ( $order->get_items() as $item_id => $item ) {
+                        $product = $item->get_product();
+
+                        if ( $product ) {
+                            $order_data['items'][] = [
+                                'id'       => $item_id,
+                                'name'     => $item->get_name(),
+                                'category' => implode(', ', $product->get_category_ids()),
+                                'price'    => $item->get_total(),
+                                'quantity' => $item->get_quantity(),
+                            ];
+                        }
+                    }
+
+                    $batches[] = $order_data;
+
+                    // Enviar em lotes de 200
+                    if ( count( $batches ) === 200 ) {
+                        try {
+                            $this->egoiWpApiV3->importOrdersBulk( $listId, $batches );
+                        } catch ( Exception $e ) {
+                            $this->sendError( 'API ERROR', $e->getMessage() );
+                        }
+
+                        $batches = [];
+                    }
+                }
+
+                if ( ! empty( $batches ) ) {
+                    try {
+                        $this->egoiWpApiV3->importOrdersBulk( $listId, $batches );
+                    } catch ( Exception $e ) {
+                        $this->sendError( 'API ERROR', $e->getMessage() );
+                    }
+                }
+
+            } catch ( Exception $e ) {
+                $this->sendError( 'Order Sync ERROR', $e->getMessage() );
+            }
+        }
+
+        wp_die();
+    }
+
+    /**
+     * @param $order
+     * @return null|string|string[]
+     */
+    private function getOrderStatus( $order) {
+
+        $wooStatus = $order->get_status();
+
+        switch ( $wooStatus ) {
+            // Map Egoi Created Status
+            case 'on-hold':
+            case 'processing':
+                return 'created';
+
+            // Map Egoi Pending Status
+            case 'pending':
+            case 'failed':
+                return 'pending';
+
+            // Map Egoi Completed Status
+            case 'completed':
+                return 'completed';
+
+            // Map Egoi Cancelled Status
+            case 'cancelled':
+            case 'trash':
+            case 'refunded':
+                return 'cancelled';
+
+            // Default case
+            default:
+                return 'created'; // Fallback to "created" if the status is unrecognized
+        }
+    }
+
+
+
 
 	/**
 	 * Process data from ContactForm7 POST events.
