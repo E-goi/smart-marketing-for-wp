@@ -180,7 +180,7 @@ class Egoi_For_Wp_Admin {
         }
 
        echo '<div class="notice notice-error is-dismissible">
-            <p><strong>' . esc_html(self::Name_of_Plugin) . ':</strong> Access has been denied. Check your API key settings or contact E-goi support.</p>
+            <p><strong>' . esc_html( self::Name_of_Plugin ) . ':</strong> ' . esc_html( 'Access has been denied. Check your API key settings or contact E-goi support.' ) . '</p>
           </div>';
     }
 
