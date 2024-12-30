@@ -152,7 +152,6 @@
 								<button type="button" class="smsnf-btn" id="update_users"><?php echo _e( 'Manual Sync', 'egoi-for-wp' ); ?></button>
 								<?php echo getLoader( 'load', false ); ?>
 								<span id="e-goi_import_valid" class="dashicons dashicons-yes" style="display: none;"></span>
-
 							</div>
 
 							<div id="e-goi_import_error" style="display:none;">
@@ -193,7 +192,7 @@
                 <div class="smsnf-wrapper">
                     <?php
 
-                    if ( $count_orders > '100000' ) {
+                    if ( $count_orders > '10000000' ) {
                         ?>
 
                         <button type="button" class="smsnf-btn smsnf-btn-mt10" disabled><?php echo _e( 'Manual Sync', 'egoi-for-wp' ); ?></button>
@@ -208,12 +207,11 @@
                         ?>
                         <div class="smsnf-btn-mt10" style="display: flex;align-items: center;">
                             <button type="button" class="smsnf-btn" id="update_orders"><?php echo _e( 'Manual Sync', 'egoi-for-wp' ); ?></button>
-                            <?php echo getLoader( 'load', false ); ?>
-                            <span id="e-goi_import_valid" class="dashicons dashicons-yes" style="display: none;"></span>
-
+                            <?php echo getLoader( 'load_orders', false ); ?>
+                            <span id="e-goi_import_orders_valid" class="dashicons dashicons-yes" style="display: none;"></span>
                         </div>
 
-                        <div id="e-goi_import_error" style="display:none;">
+                        <div id="e-goi_import_orders_error" style="display:none;">
                             <span class="dashicons dashicons-no-alt"></span>
                         </div>
                         <p class="subtitle">
@@ -224,14 +222,6 @@
                         <?php
                     }
                     ?>
-                </div>
-
-                <div class="smsnf-input-group">
-                    <div class="smsnf-wrapper">
-                        <p class="subtitle">
-                            <?php echo sprintf( __( 'You have a total of %d WooCommerce orders.', 'egoi-for-wp' ), $count_orders ); ?>
-                        </p>
-                    </div>
                 </div>
             </div>
 		</div>

@@ -810,81 +810,101 @@ class Egoi_For_Wp_Admin {
 		wp_die();
 	}
 
-    public function orders_queue() {
-        if ( isset( $_POST['submit'] ) && $_POST['submit'] ) {
+   public function orders_queue() {
+        if (isset($_POST['submit']) && $_POST['submit']) {
             try {
-                $orders = [];
-                $batches = [];
                 $listId = $_POST['listID'];
+                $batches = [];
+                $page = 1;
 
-                if ( class_exists( 'WooCommerce' ) ) {
-                    $args = [
-                        'limit'   => 200,
-                        'orderby' => 'date',
-                        'order'   => 'DESC',
-                    ];
+                if (class_exists('WooCommerce')) {
+                    do {
+                        $args = [
+                            'limit'   => 500,
+                            'orderby' => 'date',
+                            'order'   => 'DESC',
+                            'paged'   => $page,
+                        ];
 
-                    $orders = wc_get_orders( $args );
-                }
+                        $orders = wc_get_orders($args);
 
-                foreach ( $orders as $order ) {
-                    if ( ! is_a( $order, 'WC_Order' ) ) {
-                        continue;
-                    }
+                        foreach ($orders as $order) {
+                            if (!is_a($order, 'WC_Order')) {
+                                continue;
+                            }
 
-                    $order_data = [
-                        'order_id'   => (string) $order->get_id(),
-                        'order_status' => self::getOrderStatus($order),
-                        'contact_id' => $order->get_billing_email() ?: 'anonymous@e-goi.com',
-                        'revenue'    => (float) $order->get_total(),
-                        'store_url'  => get_site_url(),
-                        'date'       => $order->get_date_created() ? $order->get_date_created()->date('Y-m-d H:i:s') : null,
-                        'items'      => [],
-                    ];
+                            $email = $order->get_billing_email();
+                            if (empty($email)) {
+                                continue; // ignore orders without email
+                            }
 
-                    foreach ( $order->get_items() as $item_id => $item ) {
-                        $product = $item->get_product();
+                            $revenue = (float) $order->get_total();
+                            if ($revenue <= 0) {
+                                continue; // ignore orders with revenue <=0
+                            }
 
-                        if ( $product ) {
-                            $order_data['items'][] = [
-                                'id'       => $item_id,
-                                'name'     => $item->get_name(),
-                                'category' => implode(', ', $product->get_category_ids()),
-                                'price'    => $item->get_total(),
-                                'quantity' => $item->get_quantity(),
+                            $order_data = [
+                                'order_id'     => (string) $order->get_id(),
+                                'order_status' => self::getOrderStatus($order),
+                                'contact_id'   => $email,
+                                'revenue'      => $revenue,
+                                'store_url'    => get_site_url(),
+                                'date'         => $order->get_date_created() ? $order->get_date_created()->date('Y-m-d H:i:s') : null,
+                                'items' => []
                             ];
+
+                            foreach ($order->get_items() as $item_id => $item) {
+                                $product = $item->get_product();
+                                if ($product) {
+                                    $order_data['items'][] = [
+                                        'id'       => (string) $product->get_id(),
+                                        'name'     => $product->get_name(),
+                                        'category' => (string) ($product->get_category_ids()[0] ?? ''),
+                                        'price'    => (float) $item->get_total(),
+                                        'quantity' => (int) $item->get_quantity(),
+                                    ];
+                                }
+                            }
+
+                            // Ignore orders if items is empty
+                            if (empty($order_data['items'])) {
+                                continue;
+                            }
+
+                            $batches[] = $order_data;
+
+                            // Send 500 orders in each time
+                            if (count($batches) === 500) {
+                                try {
+                                    $this->egoiWpApiV3->importOrdersBulk($listId, $batches);
+                                } catch (Exception $e) {
+                                    $this->sendError('API ERROR', $e->getMessage());
+                                }
+
+                                $batches = [];
+                            }
                         }
-                    }
 
-                    $batches[] = $order_data;
+                        $page++;
 
-                    // Enviar em lotes de 200
-                    if ( count( $batches ) === 200 ) {
+                    } while (!empty($orders));
+
+                    if (!empty($batches)) {
                         try {
-                            $this->egoiWpApiV3->importOrdersBulk( $listId, $batches );
-                        } catch ( Exception $e ) {
-                            $this->sendError( 'API ERROR', $e->getMessage() );
+                            $this->egoiWpApiV3->importOrdersBulk($listId, $batches);
+                        } catch (Exception $e) {
+                            $this->sendError('API ERROR', $e->getMessage());
                         }
-
-                        $batches = [];
                     }
                 }
-
-                if ( ! empty( $batches ) ) {
-                    try {
-                        $this->egoiWpApiV3->importOrdersBulk( $listId, $batches );
-                    } catch ( Exception $e ) {
-                        $this->sendError( 'API ERROR', $e->getMessage() );
-                    }
-                }
-
-            } catch ( Exception $e ) {
-                $this->sendError( 'Order Sync ERROR', $e->getMessage() );
+            } catch (Exception $e) {
+                $this->sendError('Order Sync ERROR', $e->getMessage());
             }
         }
 
-        wp_die();
-    }
+    wp_die();
+
+   }
 
     /**
      * @param $order
