@@ -217,35 +217,35 @@ class EgoiElementorWidget extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
-			'button_color',
-			array(
-				'label'     => __( 'Button Color', 'egoi-for-wp' ),
-				'type'      => \Elementor\Controls_Manager::COLOR,
-				'scheme'    => array(
-					'type'  => class_exists('Elementor\\Scheme_Color')?\Elementor\Scheme_Color::get_type():\Elementor\Core\Schemes\Color::get_type(),
-					'value' => class_exists('Elementor\\Scheme_Color')?\Elementor\Scheme_Color::COLOR_1:\Elementor\Core\Schemes\Color::COLOR_1,
-				),
-				'selectors' => array(
-					'{{WRAPPER}} .button_title' => 'color: {{VALUE}}',
-				),
-			)
-		);
+        $this->add_control(
+            'button_color',
+            array(
+                'label'     => __( 'Button Color', 'egoi-for-wp' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'scheme'    => array(
+                    'type'  => class_exists('\Elementor\Scheme_Color') ? \Elementor\Scheme_Color::get_type() : (class_exists('\Elementor\Core\Schemes\Color')),
+                    'value' => class_exists('\Elementor\Scheme_Color') ? \Elementor\Scheme_Color::COLOR_1 : (class_exists('\Elementor\Core\Schemes\Color')),
+                ),
+                'selectors' => array(
+                    '{{WRAPPER}} .button_title' => 'color: {{VALUE}}',
+                ),
+            )
+        );
 
-		$this->add_control(
-			'button_text_color',
-			array(
-				'label'     => __( 'Button Text Color', 'egoi-for-wp' ),
-				'type'      => \Elementor\Controls_Manager::COLOR,
-				'scheme'    => array(
-					'type'  => class_exists('Elementor\\Scheme_Color')?\Elementor\Scheme_Color::get_type():\Elementor\Core\Schemes\Color::get_type(),
-					'value' => class_exists('Elementor\\Scheme_Color')?\Elementor\Scheme_Color::COLOR_1:\Elementor\Core\Schemes\Color::COLOR_1,
-				),
-				'selectors' => array(
-					'{{WRAPPER}} .button_title' => 'color: {{VALUE}}',
-				),
-			)
-		);
+        $this->add_control(
+            'button_text_color',
+            array(
+                'label'     => __( 'Button Text Color', 'egoi-for-wp' ),
+                'type'      => \Elementor\Controls_Manager::COLOR,
+                'scheme'    => array(
+                    'type'  => class_exists('\Elementor\Scheme_Color') ? \Elementor\Scheme_Color::get_type() : (class_exists('\Elementor\Core\Schemes\Color')),
+                    'value' => class_exists('\Elementor\Scheme_Color') ? \Elementor\Scheme_Color::COLOR_1 : (class_exists('\Elementor\Core\Schemes\Color')),
+                ),
+                'selectors' => array(
+                    '{{WRAPPER}} .button_title' => 'color: {{VALUE}}',
+                ),
+            )
+        );
 
 		$this->add_control(
 			'position_button',
