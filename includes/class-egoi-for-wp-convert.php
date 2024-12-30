@@ -27,10 +27,10 @@ class EgoiConverter {
 	public function convertOrder( $orderid ) {
 		$orderObj = wc_get_order( $orderid );
 		require_once plugin_dir_path( __FILE__ ) . '../public/includes/TrackingEngageSDK.php';
-        //Track by backend
-        $orderSyncBackend = $this->options['order_sync_method'];
 
-        if ($orderSyncBackend !== 'backend') {
+        // Track by backend
+        $orderSyncBackend = $this->options['backend_order_method'];
+        if ($orderSyncBackend !== "true") {
             return false;
         }
 

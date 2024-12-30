@@ -1,6 +1,6 @@
 <?php
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-	foreach ( array( 'lazy_sync', 'backend_order', 'backend_order_state' ) as $field ) {
+	foreach ( array( 'lazy_sync', 'backend_order', 'backend_order_state', 'backend_order_method' ) as $field ) {
 		if ( ! isset( $_POST[ $field ] ) ) {
 			$this->options_list[ $field ] = false;
 			continue;
@@ -18,6 +18,25 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 <div>
 	<form method="post" action="#">
+		<?php if ( class_exists( 'WooCommerce' ) ) { ?>
+			<h5> <?php _e( 'Ecommerce', 'egoi-for-wp' ); ?> </h5>
+            <div class="egoi-sub-form-ident">
+                <div class="smsnf-input-group">
+                    <label for="backend_order">· <?php _e( 'Convert orders via backend', 'egoi-for-wp' ); ?></label>
+                    <p class="subtitle"><?php _e( 'Will convert your Tracking events via API in the backend', 'egoi-for-wp' ); ?></p>
+                    <div class="form-group switch-yes-no">
+                        <label class="form-switch">
+                            <input id="backend_order" type="checkbox" name="backend_order_method" value="true"
+                                <?php checked( $this->options_list['backend_order_method'], 'true' ); ?>>
+                            <i class="form-icon"></i>
+                            <div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div>
+                            <div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+		<?php } ?>
 		<h5 style="display: flex;flex-direction: row;align-items: center;"> <?php _e( 'Lazy Sync', 'egoi-for-wp' ); ?> <p class="subtitle" style="padding-left: 10px;">(<?php _e( 'Optional', 'egoi-for-wp' ); ?>)</p> </h5>
 		<div class="egoi-sub-form-ident">
 			<div class="smsnf-input-group">
