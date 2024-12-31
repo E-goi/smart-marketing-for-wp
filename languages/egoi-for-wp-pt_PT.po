@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2024-12-31 12:21+0000\n"
+"PO-Revision-Date: 2024-12-31 12:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português\n"
 "Language: pt_PT\n"
@@ -22,7 +22,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: pt_PT\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.11; wp-6.6.2\n"
+"X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Loco-Parser: loco_parse_po"
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:73
@@ -1295,7 +1295,7 @@ msgstr "A incluir"
 
 #: admin/partials/wizard/orders.php:10
 msgid "Includes all order statuses."
-msgstr ""
+msgstr "Inclui todos os status do pedido."
 
 #: admin/partials/egoi-for-wp-admin-lists.php:9
 msgid "Information from your E-goi mailing lists"
@@ -2454,11 +2454,11 @@ msgstr "Sincronizar variações"
 
 #: admin/partials/wizard/orders.php:7
 msgid "Synchronize via Backend (Recommended)"
-msgstr ""
+msgstr "Sincronizar via backend (Recomendado)"
 
 #: admin/partials/wizard/orders.php:26
 msgid "Synchronize via Script"
-msgstr ""
+msgstr "Sincronizar via Script"
 
 #: admin/partials/configuration/subscribers.php:22
 msgid "Syncronization OFF"
