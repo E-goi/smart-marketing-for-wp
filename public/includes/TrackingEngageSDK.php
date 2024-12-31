@@ -206,7 +206,7 @@ class TrackingEngageSDK {
 
     public function getOrder() {
         $orderSyncBackend = $this->options['backend_order_method'];
-        if ($orderSyncBackend !== "false"  ||  empty($this->order_id)) {
+        if ($orderSyncBackend === "true" || empty($this->order_id)) {
             return false;
         }
 
@@ -231,7 +231,7 @@ class TrackingEngageSDK {
 
     public function setOrder() {
         $orderSyncBackend = $this->options['backend_order_method'];
-        if ($orderSyncBackend !== "false"  ||  empty($this->order_id)) {
+        if ($orderSyncBackend === "true" || empty($this->order_id)) {
             return false;
         }
 
@@ -283,7 +283,7 @@ class TrackingEngageSDK {
 
     private function printOrder( $order ) {
         $orderSyncBackend = $this->options['backend_order_method'];
-        if ($orderSyncBackend !== "false"  ||  empty($this->order_id)) {
+        if ($orderSyncBackend === "true"  ||  empty($this->order_id)) {
             return false;
         }
 

@@ -1366,18 +1366,16 @@ class EgoiApiV3 {
             'products'    => $products,
         );
 
-        // Configurar o cabeçalho para JSON
         $headers = $this->headers;
         $headers['Content-Type'] = 'application/json';
 
-        // Converter o payload para JSON
         $jsonPayload = json_encode( $payload );
 
         $client = new ClientHttp(
             $path,
             'POST',
             $headers,
-            $jsonPayload // Enviar o payload como JSON
+            $jsonPayload
         );
 
         if ( $client->success() !== true || $client->getCode() != 202 ) {
