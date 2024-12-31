@@ -38,7 +38,7 @@
 		}
 		?>
 		<input name="egoi_sync[lazy_sync]" value="<?php echo $this->options_list['lazy_sync']; ?>" hidden>
-        <input name="egoi_sync[backend_order_sync]" value="<?php echo $this->options_list['backend_order_method']; ?>" hidden>
+        <input name="egoi_sync[backend_order_sync]" value="<?php echo $this->options_list['backend_order_sync']; ?>" hidden>
         <div class="smsnf-grid">
 			<div>
 
