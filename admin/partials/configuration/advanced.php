@@ -23,7 +23,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             <div class="egoi-sub-form-ident">
                 <div class="smsnf-input-group">
                     <label for="backend_order">· <?php _e( 'Convert orders via backend', 'egoi-for-wp' ); ?></label>
-                    <p class="subtitle"><?php _e( 'Will convert your Tracking events via API in the backend', 'egoi-for-wp' ); ?></p>
+                    <p class="subtitle"><?php _e( 'Will convert your Tracking events via API in the backend. Includes all order statuses.', 'egoi-for-wp' ); ?></p>
                     <div class="form-group switch-yes-no">
                         <label class="form-switch">
                             <input id="backend_order" type="checkbox" name="backend_order_method" value="true"
