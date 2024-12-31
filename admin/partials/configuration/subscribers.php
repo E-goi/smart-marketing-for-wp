@@ -38,9 +38,8 @@
 		}
 		?>
 		<input name="egoi_sync[lazy_sync]" value="<?php echo $this->options_list['lazy_sync']; ?>" hidden>
-		<input name="egoi_sync[backend_order]" value="<?php echo $this->options_list['backend_order']; ?>" hidden>
-		<input name="egoi_sync[backend_order_state]" value="<?php echo $this->options_list['backend_order_state']; ?>" hidden>
-		<div class="smsnf-grid">
+        <input name="egoi_sync[backend_order_sync]" value="<?php echo $this->options_list['backend_order_sync']; ?>" hidden>
+        <div class="smsnf-grid">
 			<div>
 
 				<div class="smsnf-input-group">
@@ -152,7 +151,6 @@
 								<button type="button" class="smsnf-btn" id="update_users"><?php echo _e( 'Manual Sync', 'egoi-for-wp' ); ?></button>
 								<?php echo getLoader( 'load', false ); ?>
 								<span id="e-goi_import_valid" class="dashicons dashicons-yes" style="display: none;"></span>
-
 							</div>
 
 							<div id="e-goi_import_error" style="display:none;">
@@ -187,6 +185,44 @@
 				}
 				?>
 			</div>
+
+            <div class="smsnf-input-group">
+                <label for="role"><?php _e( 'Sync existing WP Orders', 'egoi-for-wp' ); ?></label>
+                <div class="smsnf-wrapper">
+                    <?php
+
+                    if ( $count_orders > '10000000' ) {
+                        ?>
+
+                        <button type="button" class="smsnf-btn smsnf-btn-mt10" disabled><?php echo _e( 'Manual Sync', 'egoi-for-wp' ); ?></button>
+                        <p class="subtitle">
+                            <?php
+                            _e( 'You have too much WP Orders to be assigned in bulk!', 'egoi-for-wp' );
+                            ?>
+                        </p>
+                        <?php
+
+                    } else {
+                        ?>
+                        <div class="smsnf-btn-mt10" style="display: flex;align-items: center;">
+                            <button type="button" class="smsnf-btn" id="update_orders"><?php echo _e( 'Manual Sync', 'egoi-for-wp' ); ?></button>
+                            <?php echo getLoader( 'load_orders', false ); ?>
+                            <span id="e-goi_import_orders_valid" class="dashicons dashicons-yes" style="display: none;"></span>
+                        </div>
+
+                        <div id="e-goi_import_orders_error" style="display:none;">
+                            <span class="dashicons dashicons-no-alt"></span>
+                        </div>
+                        <p class="subtitle">
+                            <?php
+                            _e( 'When manual sync is loading you should not do anything in this page but you can navigate to other pages in another window/tab', 'egoi-for-wp' );
+                            ?>
+                        </p>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
 		</div>
 		<div class="smsnf-input-group">
 			<input type="submit" id="save_sync_button" value="<?php _e( 'Save Changes', 'egoi-for-wp' ); ?>" />

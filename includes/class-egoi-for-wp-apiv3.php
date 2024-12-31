@@ -274,6 +274,7 @@ class EgoiApiV3 {
 		'convertOrder'             => '/{domain}/orders',
 		'convertCart'              => '/{domain}/carts',
 		'importContactsBulk'       => '/lists/{list_id}/contacts/actions/import-bulk',
+        'importOrdersBulk'         => '/lists/{list_id}/orders',
 		'ping'					   => '/ping',
 	);
 
@@ -806,6 +807,52 @@ class EgoiApiV3 {
 			: false;
 	}
 
+    /**
+     * Import Orders Bulk
+     * @param $listId
+     * @param $data
+     * @return false|string
+     */
+    public function importOrdersBulk( $listId, $data ) {
+        $path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{list_id}', $listId );
+
+        $ch = curl_init();
+
+        // Set the URL
+        curl_setopt($ch, CURLOPT_URL, $path);
+
+        // Set the request method
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+
+        // Set the timeout
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+        // Set the request body if provided
+        if (!empty($data)) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        }
+
+        // Set headers if provided
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+
+
+        // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute the request
+        curl_exec($ch);
+
+        // Get the HTTP status code
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Close the cURL session
+        curl_close($ch);
+
+        return $httpCode == 201
+            ? true
+            : false;
+    }
+
 	/**
 	 * Create List
 	 * @param $name
@@ -1302,31 +1349,36 @@ class EgoiApiV3 {
 		return $output;
 	}
 
-	public function convertOrder( $order, $contact, $domain ) {
-		$path = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{domain}', $domain );
+    public function convertOrder( $order, $contact, $domain ) {
+        $path = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{domain}', $domain );
 
-		$products = self::getProductsFromOrder( $order );
+        $products = self::getProductsFromOrder( $order );
 
-		$payload = array(
-			'order_total' => number_format( $order->get_total(), 2 ),
-			'order_id'    => $order->get_id(),
-			'cart_id'     => '',
-			'contact'     => $contact,
-			'products'    => $products,
-		);
+        $order_status = self::getOrderStatus( $order );
+        $order_date = $order->get_date_created();
 
-		$client = new ClientHttp(
-			$path,
-			'POST',
-			$this->headers,
-			$payload
-		);
+        $payload = array(
+            'order_total' => number_format( $order->get_total(), 2 ),
+            'order_id'    => $order->get_id(),
+            'order_status' => $order_status,
+            'cart_id'     => '',
+            'order_date'  => $order_date ? $order_date->format('Y-m-d H:i:s') : null,
+            'contact'     => $contact,
+            'products'    => $products,
+        );
 
-		if ( $client->success() !== true || $client->getCode() != 202 ) {
-			return false;
-		}
-		return json_decode( $client->getResponse(), true );
-	}
+        $client = new ClientHttp(
+            $path,
+            'POST',
+            $this->headers,
+            $payload
+        );
+
+        if ( $client->success() !== true || $client->getCode() != 202 ) {
+            return false;
+        }
+        return json_decode( $client->getResponse(), true );
+    }
 
 	private static function getProductsFromCart( $cartObj, $variations = false ) {
 		$cart = array(
@@ -1397,7 +1449,42 @@ class EgoiApiV3 {
 		$result_client = json_decode( $client->getResponse(), true );
 
 		return $client->getCode() == 200 && isset( $result_client['total_items'] ) ? $result_client['total_items'] : $this->processErrors();
-	} 
+	}
+
+    /**
+     * @param $order
+     * @return null|string|string[]
+     */
+    private function getOrderStatus( $order) {
+
+        $wooStatus = $order->get_status();
+
+        switch ( $wooStatus ) {
+            // Map Egoi Created Status
+            case 'on-hold':
+            case 'processing':
+                return 'created';
+
+            // Map Egoi Pending Status
+            case 'pending':
+            case 'failed':
+                return 'pending';
+
+            // Map Egoi Completed Status
+            case 'completed':
+                return 'completed';
+
+            // Map Egoi Cancelled Status
+            case 'cancelled':
+            case 'trash':
+            case 'refunded':
+                return 'cancelled';
+
+            // Default case
+            default:
+                return 'created'; // Fallback to "created" if the status is unrecognized
+        }
+    }
 
 
 	/**

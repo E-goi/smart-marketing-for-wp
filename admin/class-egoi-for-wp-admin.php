@@ -45,6 +45,13 @@ class Egoi_For_Wp_Admin {
 	 */
 	private $limit_subs = 10000;
 
+    /**
+	 * Limit Orders
+	 *
+	 * @var integer
+	 */
+	private $limit_orders = 10000;
+
 	/**
 	 * The version of this plugin.
 	 *
@@ -324,7 +331,7 @@ class Egoi_For_Wp_Admin {
 			}
 
 			if ( get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-setup-wizard' ) {
-				wp_register_script( $this->plugin_name . 'setup-wizard', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-setup-wizard.min.js', array( 'jquery' ), true );
+				wp_register_script( $this->plugin_name . 'setup-wizard', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-setup-wizard.js', array( 'jquery' ), true );
 				wp_enqueue_script( $this->plugin_name . 'setup-wizard' );
 
 				wp_enqueue_script( $this->plugin_name . 'ecommerce-form', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-ecommerce-form.js', array( 'jquery' ), $this->version, false );
@@ -802,6 +809,140 @@ class Egoi_For_Wp_Admin {
 
 		wp_die();
 	}
+
+   public function orders_queue() {
+        if (isset($_POST['submit']) && $_POST['submit']) {
+            try {
+                $listId = $_POST['listID'];
+                $batches = [];
+                $page = 1;
+
+                if (class_exists('WooCommerce')) {
+                    do {
+                        $args = [
+                            'limit'   => 500,
+                            'orderby' => 'date',
+                            'order'   => 'DESC',
+                            'paged'   => $page,
+                        ];
+
+                        $orders = wc_get_orders($args);
+
+                        foreach ($orders as $order) {
+                            if (!is_a($order, 'WC_Order')) {
+                                continue;
+                            }
+
+                            $email = $order->get_billing_email();
+                            if (empty($email)) {
+                                continue; // ignore orders without email
+                            }
+
+                            $revenue = (float) $order->get_total();
+                            if ($revenue <= 0) {
+                                continue; // ignore orders with revenue <=0
+                            }
+
+                            $order_data = [
+                                'order_id'     => (string) $order->get_id(),
+                                'order_status' => self::getOrderStatus($order),
+                                'contact_id'   => $email,
+                                'revenue'      => $revenue,
+                                'store_url'    => get_site_url(),
+                                'date'         => $order->get_date_created() ? $order->get_date_created()->date('Y-m-d H:i:s') : null,
+                                'items' => []
+                            ];
+
+                            foreach ($order->get_items() as $item_id => $item) {
+                                $product = $item->get_product();
+                                if ($product) {
+                                    $order_data['items'][] = [
+                                        'id'       => (string) $product->get_id(),
+                                        'name'     => $product->get_name(),
+                                        'category' => (string) ($product->get_category_ids()[0] ?? ''),
+                                        'price'    => (float) $item->get_total(),
+                                        'quantity' => (int) $item->get_quantity(),
+                                    ];
+                                }
+                            }
+
+                            // Ignore orders if items is empty
+                            if (empty($order_data['items'])) {
+                                continue;
+                            }
+
+                            $batches[] = $order_data;
+
+                            // Send 500 orders in each time
+                            if (count($batches) === 500) {
+                                try {
+                                    $this->egoiWpApiV3->importOrdersBulk($listId, $batches);
+                                } catch (Exception $e) {
+                                    $this->sendError('API ERROR', $e->getMessage());
+                                }
+
+                                $batches = [];
+                            }
+                        }
+
+                        $page++;
+
+                    } while (!empty($orders));
+
+                    if (!empty($batches)) {
+                        try {
+                            $this->egoiWpApiV3->importOrdersBulk($listId, $batches);
+                        } catch (Exception $e) {
+                            $this->sendError('API ERROR', $e->getMessage());
+                        }
+                    }
+                }
+            } catch (Exception $e) {
+                $this->sendError('Order Sync ERROR', $e->getMessage());
+            }
+        }
+
+    wp_die();
+
+   }
+
+    /**
+     * @param $order
+     * @return null|string|string[]
+     */
+    private function getOrderStatus( $order) {
+
+        $wooStatus = $order->get_status();
+
+        switch ( $wooStatus ) {
+            // Map Egoi Created Status
+            case 'on-hold':
+            case 'processing':
+                return 'created';
+
+            // Map Egoi Pending Status
+            case 'pending':
+            case 'failed':
+                return 'pending';
+
+            // Map Egoi Completed Status
+            case 'completed':
+                return 'completed';
+
+            // Map Egoi Cancelled Status
+            case 'cancelled':
+            case 'trash':
+            case 'refunded':
+                return 'cancelled';
+
+            // Default case
+            default:
+                return 'created'; // Fallback to "created" if the status is unrecognized
+        }
+    }
+
+
+
 
 	/**
 	 * Process data from ContactForm7 POST events.
@@ -2369,8 +2510,10 @@ class Egoi_For_Wp_Admin {
 			case 'products':
 				// not needed
 				break;
+            case 'orders':
+				$this->options_list['backend_order_sync'] = sanitize_text_field($_POST['backend_order_sync']);
+				break;
 			case 'tweaks':
-				$this->options_list['backend_order'] = sanitize_text_field( $_POST['backend_order'] );
 				$this->options_list['lazy_sync']     = sanitize_text_field( $_POST['lazy_sync'] );
 				// accepts tweak configs to save
 				break;
