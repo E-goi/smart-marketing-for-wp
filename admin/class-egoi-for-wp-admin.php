@@ -2511,7 +2511,7 @@ class Egoi_For_Wp_Admin {
 				// not needed
 				break;
             case 'orders':
-				$this->options_list['backend_order_method'] = sanitize_text_field($_POST['backend_order_method']);
+				$this->options_list['backend_order_sync'] = sanitize_text_field($_POST['backend_order_sync']);
 				break;
 			case 'tweaks':
 				$this->options_list['lazy_sync']     = sanitize_text_field( $_POST['lazy_sync'] );

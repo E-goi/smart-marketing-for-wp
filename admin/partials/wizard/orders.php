@@ -11,7 +11,7 @@
                 </p>
                 <div class="form-group switch-yes-no" style="margin-top: 10px;">
                     <label class="form-switch">
-                        <input id="orders_back" type="radio" name="egoi_sync[backend_order_method]" value="true"
+                        <input id="orders_back" type="radio" name="egoi_sync[backend_order_sync]" value="true"
                                checked>
                         <i class="form-icon"></i>
                         <div class="yes">
@@ -27,7 +27,7 @@
                 <p class="subtitle"><?php _e('Uses a script to process cart synchronization.', 'egoi-for-wp'); ?></p>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
-                        <input id="orders_script" type="radio" name="egoi_sync[backend_order_method]" value="false">
+                        <input id="orders_script" type="radio" name="egoi_sync[backend_order_sync]" value="false">
                         <i class="form-icon"></i>
                         <div class="yes"><?php _e('Yes', 'egoi-for-wp'); ?></div>
                     </label>

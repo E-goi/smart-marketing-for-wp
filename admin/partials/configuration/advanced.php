@@ -1,6 +1,6 @@
 <?php
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-	foreach ( array( 'lazy_sync', 'backend_order', 'backend_order_state', 'backend_order_method' ) as $field ) {
+	foreach ( array( 'lazy_sync', 'backend_order', 'backend_order_state', 'backend_order_sync' ) as $field ) {
 		if ( ! isset( $_POST[ $field ] ) ) {
 			$this->options_list[ $field ] = false;
 			continue;
@@ -26,8 +26,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     <p class="subtitle"><?php _e( 'Will convert your Tracking events via API in the backend. Includes all order statuses.', 'egoi-for-wp' ); ?></p>
                     <div class="form-group switch-yes-no">
                         <label class="form-switch">
-                            <input id="backend_order" type="checkbox" name="backend_order_method" value="true"
-                                <?php checked( $this->options_list['backend_order_method'], 'true' ); ?>>
+                            <input id="backend_order" type="checkbox" name="backend_order_sync" value="true"
+                                <?php checked( $this->options_list['backend_order_sync'], 'true' ); ?>>
                             <i class="form-icon"></i>
                             <div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div>
                             <div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>

@@ -11,7 +11,7 @@
 			"#domain"
 		],
 		orders: [
-			"input[name='egoi_sync[backend_order_method]']",
+			"input[name='egoi_sync[backend_order_sync]']",
 		],
 		products: [
 			"#catalog"
@@ -286,13 +286,13 @@
 								break;
 
 							case 'orders':
-								if (!$("input[name='egoi_sync[backend_order_method]']:checked").length) {
+								if (!$("input[name='egoi_sync[backend_order_sync]']:checked").length) {
 									valid = false;
 									toggleError(element);
 								} else {
 									// Explicitly save the selected order sync method
-									let selectedMethod = $("input[name='egoi_sync[backend_order_method]']:checked").val();
-									saveStepWizard(step, { backend_order_method: selectedMethod });
+									let selectedMethod = $("input[name='egoi_sync[backend_order_sync]']:checked").val();
+									saveStepWizard(step, { backend_order_sync: selectedMethod });
 								}
 								break;
 						}

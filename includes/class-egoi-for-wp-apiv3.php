@@ -1355,13 +1355,14 @@ class EgoiApiV3 {
         $products = self::getProductsFromOrder( $order );
 
         $order_status = self::getOrderStatus( $order );
+        $order_date = $order->get_date_created();
 
         $payload = array(
             'order_total' => number_format( $order->get_total(), 2 ),
             'order_id'    => $order->get_id(),
             'order_status' => $order_status,
             'cart_id'     => '',
-            'order_date'  => $order->get_date_created(),
+            'order_date'  => $order_date ? $order_date->format('Y-m-d H:i:s') : null,
             'contact'     => $contact,
             'products'    => $products,
         );
