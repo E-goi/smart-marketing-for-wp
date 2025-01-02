@@ -2978,36 +2978,128 @@ class Egoi_For_Wp_Admin {
 		return ! empty( $user_info ) ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times-circle"></i>';
 	}
 
-	/**
+    /**
 	 *
 	 * Hook handler for Gravity Form Subscription
 	 *
 	 * @param $entry
 	 * @param $form
 	 */
-	public function egoi_gform_add_subscriber( $entry, $form ) {
-		$options = get_option( 'egoi_sync' );
-		$opt     = get_option( 'egoi_int' );
-		$egoint  = $opt['egoi_int'];
+    public function egoi_gform_add_subscriber($entry, $form) {
+        $options = get_option('egoi_sync');
+        $opt     = get_option('egoi_int');
+        $egoint  = $opt['egoi_int'];
 
-		$gravity_forms_map = Egoi_For_Wp::getGravityFormsInfo( $entry['form_id'] );
-		$gravity_forms_tag = Egoi_For_Wp::getGravityFormsTag( $entry['form_id'] );
+        $gravity_forms_map = Egoi_For_Wp::getGravityFormsInfo($entry['form_id']);
+        $gravity_forms_tag = Egoi_For_Wp::getGravityFormsTag($entry['form_id']);
 
-		if ( empty( $form['fields'] ) || ! is_array( $form['fields'] ) || empty( $options['list'] ) || empty( $gravity_forms_map ) || empty( $egoint['enable_gf'] ) ) {
-			return;
-		}
+        if (empty($form['fields']) ||
+            !is_array($form['fields']) ||
+            empty($options['list']) ||
+            empty($gravity_forms_map) ||
+            empty($egoint['enable_gf'])) {
+            return;
+        }
 
-		$subscriber = array();
-		foreach ( $gravity_forms_map as $key => $value ) {
-			if ( ! isset( $entry[ $key ] ) ) {
-				continue;
-			}
-			$subscriber[ $value ] = $entry[ $key ];
-		}
-		$subscriber['status'] = 1;
-		$this->egoiWpApi->addSubscriberArray( $options['list'], $subscriber, array( $gravity_forms_tag ), $egoint['edit_gf'] == 1 ? 2 : 1 );
+        // Validate Contact Fields
+        $contact = $this->validateContactFields($entry, $gravity_forms_map);
 
-	}
+        $option = !empty($contact['extra_fields']) ? 1 : 0;
+        // Prepare parameters for addContact
+        $params = [
+            $options['list'],
+            $contact['email'],
+            $contact['name'],
+            $contact['lname'],
+            $contact['extra_fields'],
+            $option,
+            $contact['ref_fields'],
+            $contact['status'] = 'active',
+            !empty($gravity_forms_tag) ? [$gravity_forms_tag] : []
+        ];
+        $editContact = isset($egoint['edit_gf']) && $egoint['edit_gf'] === '1';
+
+        // Add `$editContact` only if it is defined
+        if (isset($editContact)) {
+            $params[] = (bool) $editContact;
+        }
+
+        $response = call_user_func_array([$this->egoiWpApiV3, 'addContact'], $params);
+    }
+
+    /**
+     * Validates the contact fields and returns them in the format expected by the addContact method
+     *
+     * @param array $entry
+     * @param array $gravity_forms_map
+     * @return array
+     */
+    private function validateContactFields($entry, $gravity_forms_map) {
+        $contact = [
+            'email'        => '',
+            'name'         => '',
+            'lname'        => '',
+            'extra_fields' => [],
+            'ref_fields'   => [],
+        ];
+
+        foreach ($gravity_forms_map as $key => $value) {
+            if (!isset($entry[$key]) || empty($entry[$key])) {
+                continue;
+            }
+
+            $fieldValue = sanitize_text_field($entry[$key]);
+
+            switch ($value) {
+                case 'email':
+                    $contact['email'] = sanitize_email($fieldValue);
+                    break;
+                case 'first_name':
+                    $contact['name'] = $fieldValue;
+                    break;
+                case 'last_name':
+                    $contact['lname'] = $fieldValue;
+                    break;
+                case 'telephone':
+                    $contact['ref_fields']['tel'] = $this->egoiWpApiV3->advinhometerCellphoneCode($fieldValue);
+                    break;
+                case 'cellphone':
+                    $contact['ref_fields']['cell'] = $this->egoiWpApiV3->advinhometerCellphoneCode($fieldValue);
+                    break;
+                case 'birth_date':
+                    $contact['ref_fields']['bd'] = $this->formatDateField($fieldValue);
+                    break;
+                case 'language':
+                    $contact['ref_fields']['lang'] = $this->validateLanguage($fieldValue);
+                    break;
+                default:
+                    $extraKey = str_replace(['key_', 'extra_'], '', $value);
+                    $contact['extra_fields'][$extraKey] = $fieldValue;
+                    break;
+            }
+        }
+
+        return $contact;
+    }
+
+    /**
+     * Format Birth_Date
+     */
+    private function formatDateField($date) {
+        $formattedDate = DateTime::createFromFormat('Y-m-d', $date) ?: DateTime::createFromFormat('d/m/Y', $date);
+
+        return $formattedDate ? $formattedDate->format('Y-m-d') : '';
+    }
+
+    /**
+     * Validate language
+     */
+    private function validateLanguage($language) {
+        $supportedLanguages = ['pt', 'en', 'es', 'fr', 'de'];
+        $lang = strtolower(substr($language, 0, 2));
+
+        return in_array($lang, $supportedLanguages) ? $lang : 'en';
+    }
 
 	/*
 	 * Used to fetch mapped fields and mappable
