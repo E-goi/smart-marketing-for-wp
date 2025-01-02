@@ -847,8 +847,7 @@ class EgoiApiV3 {
 	/**
 	 * Add contact using API v3
 	*/
-	public function addContact( $listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array() ) {
-
+	public function addContact( $listID, $email, $name = '', $lname = '', $extra_fields = array(), $option = 0, $ref_fields = array(), $status = 'active', $tags = array(), $editContact = true ) {
 		$full_name = explode( ' ', $name );
 		$fname = $name;
 
@@ -856,7 +855,7 @@ class EgoiApiV3 {
 
 			$lname = end($full_name);
 			$fname = implode(' ', array_slice($full_name,0,-1));
-			
+
 		}
 
 		$tel  = (isset($ref_fields['tel']) && !empty($ref_fields['tel']) && $ref_fields['tel'] != '-') ? $this->advinhometerCellphoneCode($ref_fields['tel']) : '';
@@ -920,40 +919,40 @@ class EgoiApiV3 {
 		$path = self::APIV3 . '/lists/' . $listID . '/contacts';
 
 		$ch = curl_init();
-  
+
 		// Set the URL
 		curl_setopt($ch, CURLOPT_URL, $path);
-  
+
 		// Set the request method
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-  
+
 		// Set the timeout
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-  
+
 		// Set the request body if provided
 		if (!empty($body)) {
 		   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
 		}
-  
+
 		// Set headers if provided
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
-  
-  
+
+
 		// Return the response instead of outputting it
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  
+
 		// Execute the request
 		$resp = curl_exec($ch);
 
 		$resp = json_decode($resp, true);
-  
+
 		// Get the HTTP status code
 		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  
+
 		// Close the cURL session
 		curl_close($ch);
-  
-		if($httpCode == 409){
+
+		if($httpCode == 409 && $editContact == 'true'){
 			return  $this->editContact( $listID, $resp['errors']['contacts'][0], $name, $lname, $extra_fields, $option, $ref_fields, $status, $tags );
 		} elseif ( $httpCode == 201){
 			if ( ! empty( $tags ) && isset( $resp['contact_id'] ) ) {
@@ -962,9 +961,9 @@ class EgoiApiV3 {
 			return $resp['contact_id'];
 		}
 
-			
+
 		return false;
-		
+
 	}
 
 	public function attachTag( $list_id, $contact_id, $tags = array() ) {
