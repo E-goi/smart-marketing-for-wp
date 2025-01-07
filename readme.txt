@@ -13,16 +13,16 @@ Save Time, Increase Traffic, and Transform Business Opportunities (Leads) into T
 
 **Poupe Tempo, Aumente Tráfego e Transforme Oportunidades de Negócio (Leads) em Clientes Fiéis!**
 
-É muito fácil personalizar as cores, o botão e os tipo de letra do seu formulário e até pode posicioná-lo onde quiser!
+É muito fácil personalizar as cores, o botão e o tipo de letra do seu formulário e até pode posicioná-lo onde quiser!
 
 Está disponível neste plugin a instalação no seu site, de forma muito simples, um sistema de Web Push para aumentar o alcance da sua comunicação e enviar mensagens que são realmente abertas no navegador dos seus clientes! E ainda pode escolher as categorias ou tags que quiser para personalizar os conteúdos ou produtos que quer enviar por email ou Web Push para os seus subscritores ou clientes!
 
 **Usa Woocommerce?**
 
-Então não deixe de activar o Track & Engage, um sistema para rastrear todo o comportamento dos clientes no seu e-commerce que pode aproveitar para realizar campanhas em tempo real! (ex: carrinho abandonado, retargeting, up selling e cross selling, etc)
+Então não deixe de ativar o Track & Engage, um sistema para rastrear todo o comportamento dos clientes no seu e-commerce que pode aproveitar para realizar campanhas em tempo real! (ex: carrinho abandonado, retargeting, up selling e cross selling, etc)
 
 **Novidades**
-* E-goi Email Transacional (SMTP) -  Envio todos os emails do seu WordPress pelo E-goi
+* E-goi E-mail Transacional (SMTP) - Envio todos os e-mails do seu WordPress pelo E-goi
 
 **Funcionalidades:**
 * 100% Gratuito
