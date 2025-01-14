@@ -198,9 +198,6 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-        if (!current_user_can('manage_options')) {
-            wp_die( 'You do not have sufficient permissions to access this page.' );
-        }
 		wp_enqueue_style( $this->plugin_name . 'popup', plugin_dir_url( __FILE__ ) . 'css/egoi-for-wp-pop.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'allpage', plugin_dir_url( __FILE__ ) . 'css/egoi-all-page.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name . 'select2css', plugin_dir_url( __FILE__ ) . 'js/font_awesome/select2.min.css', array(), $this->version, 'all' );
@@ -231,9 +228,6 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-        if (!current_user_can('manage_options')) {
-            wp_die( 'You do not have sufficient permissions to access this page.' );
-        }
 
 		wp_register_script( $this->plugin_name . 'select2', plugin_dir_url( __FILE__ ) . 'js/font_awesome/select2.full.min.js', array( 'jquery' ), true );
 		wp_enqueue_script( $this->plugin_name . 'select2' );
@@ -409,9 +403,6 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
-        if (!current_user_can('manage_options')) {
-            wp_die( 'You do not have sufficient permissions to access this page.' );
-        }
 		$bypass      = EgoiProductsBo::getProductsToBypass();
 		$bypassCount = count( ! is_array( $bypass ) ? array() : $bypass );
 
