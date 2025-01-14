@@ -177,7 +177,7 @@ You can create and update your lists, see how many subscribers you have, but you
 - Fix Scheme Color for new Elementor Version
 - Fix contact not entry with new contact on gravity form
 
-5.0.10 =
+= 5.0.10 =
 - Fix Api Validation for E-goi Go Send Plan
 - Add Webpush Campaigns Functionality
 - Fix Vulnerability on Ajax Actions
