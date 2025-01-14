@@ -1344,7 +1344,8 @@ class EgoiApiV3 {
 				'product_identifier' => $item->get_product_id(),
 				'name'               => $item->get_name(),
 				'price'              => number_format( $item->get_subtotal(), 2 ),
-			);
+                'quantity'           => $item->get_quantity(),
+            );
 		}
 		return $output;
 	}
