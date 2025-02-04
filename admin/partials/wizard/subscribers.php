@@ -1,6 +1,7 @@
 <div class="tab-pane fade show active" id="v-pills-subscribers" role="tabpanel" aria-labelledby="v-pills-subscribers-tab">
-	<p>Setup list infos here, mapping and contact sync</p>
-	<form id="form-subscribers" method="post" action="#">
+    <p><?php _e( 'Setup list infos here, mapping and contact sync', 'egoi-for-wp' ); ?></p>
+
+    <form id="form-subscribers" method="post" action="#">
 
 		<div class="smsnf-grid">
 			<div>

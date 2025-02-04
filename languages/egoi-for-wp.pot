@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Smart Marketing SMS and Newsletters Forms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-31 12:20+0000\n"
+"POT-Creation-Date: 2025-02-04 11:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -131,7 +131,7 @@ msgid ""
 msgstr ""
 
 #: admin/partials/configuration/subscribers.php:119
-#: admin/partials/wizard/subscribers.php:32
+#: admin/partials/wizard/subscribers.php:33
 msgid "All roles"
 msgstr ""
 
@@ -1178,6 +1178,15 @@ msgid ""
 "subscribers."
 msgstr ""
 
+#: admin/partials/configuration/advanced.php:26
+msgid ""
+"If you deactivate this option, all orders will be processed via the "
+"Track&Engage script. In this case, the contacts will be synchronized using "
+"this method (if they don't already exist in the list) and the respective "
+"orders will be added to the E-goi list with the status “Created”, which will "
+"remain unchanged even if the order is updated."
+msgstr ""
+
 #: admin/partials/transactionalemail/home.php:78
 msgid "If you enable E-goi Transactional Email select the email sender."
 msgstr ""
@@ -1209,10 +1218,6 @@ msgstr ""
 
 #: admin/partials/capture/popup.php:83
 msgid "Include"
-msgstr ""
-
-#: admin/partials/wizard/orders.php:10
-msgid "Includes all order statuses."
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-lists.php:9
@@ -1914,7 +1919,7 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-widget.php:133
 #: admin/partials/capture/functions.php:57
-#: admin/partials/wizard/subscribers.php:13
+#: admin/partials/wizard/subscribers.php:14
 msgid "Select a list.."
 msgstr ""
 
@@ -1980,7 +1985,7 @@ msgid "Select the E-goi's catalog for your store."
 msgstr ""
 
 #: admin/partials/configuration/subscribers.php:79
-#: admin/partials/wizard/subscribers.php:9
+#: admin/partials/wizard/subscribers.php:10
 msgid "Select the E-goi's list for your subscribers."
 msgstr ""
 
@@ -2026,7 +2031,7 @@ msgid "Select the position it will be displayed in your checkout form."
 msgstr ""
 
 #: admin/partials/configuration/subscribers.php:116
-#: admin/partials/wizard/subscribers.php:29
+#: admin/partials/wizard/subscribers.php:30
 msgid "Select the role to synchronize your Subscribers with."
 msgstr ""
 
@@ -2137,6 +2142,10 @@ msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:21
 msgid "Setup"
+msgstr ""
+
+#: admin/partials/wizard/subscribers.php:2
+msgid "Setup list infos here, mapping and contact sync"
 msgstr ""
 
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:164
@@ -2307,12 +2316,12 @@ msgid "Sync products with this catalog"
 msgstr ""
 
 #: admin/partials/configuration/subscribers.php:78
-#: admin/partials/wizard/subscribers.php:8
+#: admin/partials/wizard/subscribers.php:9
 msgid "Sync users with this list"
 msgstr ""
 
 #: admin/partials/configuration/subscribers.php:115
-#: admin/partials/wizard/subscribers.php:28
+#: admin/partials/wizard/subscribers.php:29
 msgid "Sync users with this role"
 msgstr ""
 
@@ -2324,7 +2333,7 @@ msgstr ""
 msgid "Synchronize via Backend (Recommended)"
 msgstr ""
 
-#: admin/partials/wizard/orders.php:26
+#: admin/partials/wizard/orders.php:25
 msgid "Synchronize via Script"
 msgstr ""
 
@@ -2376,6 +2385,15 @@ msgstr ""
 
 #: admin/partials/capture/subscription-bar.php:144
 msgid "Text Color"
+msgstr ""
+
+#: admin/partials/wizard/orders.php:9
+msgid ""
+"The backend, via the API, is responsible for synchronizing orders. Whenever "
+"an order is synchronized using this method, the respective contact (if they "
+"don't already exist in the list) will be added to the E-goi list, and the "
+"order statuses will be updated whenever there is a change in the order "
+"status."
 msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-widget.php:200
@@ -2466,6 +2484,15 @@ msgstr ""
 
 #: admin/partials/capture/subscription-bar.php:75
 msgid "The text to appear before the email field."
+msgstr ""
+
+#: admin/partials/wizard/orders.php:26
+msgid ""
+"The Track&Engage script is responsible for synchronizing orders. Whenever an "
+"order is synchronized using this method, the respective contact (if it "
+"doesn't already exist in the list) and the respective order will be added to "
+"the E-goi list with the status “Created”, which will remain unchanged even "
+"if the order is updated."
 msgstr ""
 
 #: admin/partials/ecommerce/catalogs.php:26
@@ -2626,14 +2653,6 @@ msgstr ""
 msgid "Use this shortcode to display this form inside of your site or blog"
 msgstr ""
 
-#: admin/partials/wizard/orders.php:27
-msgid "Uses a script to process cart synchronization."
-msgstr ""
-
-#: admin/partials/wizard/orders.php:9
-msgid "Uses the backend to process order synchronization."
-msgstr ""
-
 #: admin/partials/ecommerce/catalogs.php:11
 msgid "Variations"
 msgstr ""
@@ -2687,12 +2706,6 @@ msgstr ""
 msgid "Will convert event and signups in cron job (next: at "
 msgstr ""
 
-#: admin/partials/configuration/advanced.php:26
-msgid ""
-"Will convert your Tracking events via API in the backend. Includes all order "
-"statuses."
-msgstr ""
-
 #: admin/partials/wizard/connected-sites.php:18
 msgid "Will inject Connected Sites script in your website"
 msgstr ""
@@ -2743,7 +2756,7 @@ msgstr ""
 #: admin/partials/ecommerce/new-catalog-form.php:60
 #: admin/partials/wizard/connected-sites.php:22
 #: admin/partials/wizard/final-tweaks.php:10
-#: admin/partials/wizard/orders.php:18 admin/partials/wizard/orders.php:32
+#: admin/partials/wizard/orders.php:17 admin/partials/wizard/orders.php:31
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:145
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:185
 #: admin/partials/integrations/post-comment.php:16

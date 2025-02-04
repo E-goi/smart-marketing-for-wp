@@ -6,8 +6,7 @@
             <div class="smsnf-input-group">
                 <label for="order_sync_backend">· <?php _e('Synchronize via Backend (Recommended)', 'egoi-for-wp'); ?></label>
                 <p class="subtitle">
-                    <?php _e('Uses the backend to process order synchronization.', 'egoi-for-wp'); ?>
-                    <?php _e('Includes all order statuses.', 'egoi-for-wp'); ?>
+                    <?php _e("The backend, via the API, is responsible for synchronizing orders. Whenever an order is synchronized using this method, the respective contact (if they don't already exist in the list) will be added to the E-goi list, and the order statuses will be updated whenever there is a change in the order status.", 'egoi-for-wp'); ?>
                 </p>
                 <div class="form-group switch-yes-no" style="margin-top: 10px;">
                     <label class="form-switch">
@@ -24,7 +23,7 @@
             <!-- Option to sync by script -->
             <div class="smsnf-input-group">
                 <label for="order_sync_script">· <?php _e('Synchronize via Script', 'egoi-for-wp'); ?></label>
-                <p class="subtitle"><?php _e('Uses a script to process cart synchronization.', 'egoi-for-wp'); ?></p>
+                <p class="subtitle"><?php _e("The Track&Engage script is responsible for synchronizing orders. Whenever an order is synchronized using this method, the respective contact (if it doesn't already exist in the list) and the respective order will be added to the E-goi list with the status “Created”, which will remain unchanged even if the order is updated.", 'egoi-for-wp'); ?></p>
                 <div class="form-group switch-yes-no">
                     <label class="form-switch">
                         <input id="orders_script" type="radio" name="egoi_sync[backend_order_sync]" value="false">

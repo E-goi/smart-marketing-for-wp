@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2024-12-31 12:23+0000\n"
+"PO-Revision-Date: 2025-02-04 11:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -22,7 +22,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: es_ES\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.14; wp-6.7.1\n"
+"X-Loco-Version: 2.7.1; wp-6.7.1\n"
 "X-Loco-Parser: loco_parse_po"
 
 #: admin/partials/egoi-for-wp-admin-dashboard.php:73
@@ -151,7 +151,7 @@ msgstr ""
 "catálogo!"
 
 #: admin/partials/configuration/subscribers.php:119
-#: admin/partials/wizard/subscribers.php:32
+#: admin/partials/wizard/subscribers.php:33
 msgid "All roles"
 msgstr "Todos los papeles"
 
@@ -1261,6 +1261,20 @@ msgstr ""
 "Si activa el doble opt-in, se enviará un correo electrónico de confirmación "
 "a los suscriptores."
 
+#: admin/partials/configuration/advanced.php:26
+msgid ""
+"If you deactivate this option, all orders will be processed via the "
+"Track&Engage script. In this case, the contacts will be synchronized using "
+"this method (if they don't already exist in the list) and the respective "
+"orders will be added to the E-goi list with the status “Created”, which will "
+"remain unchanged even if the order is updated."
+msgstr ""
+"Si desactiva esta opción, todos los pedidos se procesarán a través del "
+"script Track&Engage. En este caso, los contactos se sincronizarán mediante "
+"este método (si no existen ya en la lista) y los pedidos respectivos se "
+"añadirán a la lista de E-goi con el estado «Creado», que permanecerá "
+"inalterado aunque se actualice el pedido."
+
 #: admin/partials/transactionalemail/home.php:78
 msgid "If you enable E-goi Transactional Email select the email sender."
 msgstr ""
@@ -1299,10 +1313,6 @@ msgstr "Importar catálogo:"
 #: admin/partials/capture/popup.php:83
 msgid "Include"
 msgstr "Incluir"
-
-#: admin/partials/wizard/orders.php:10
-msgid "Includes all order statuses."
-msgstr "Incluye todos los estados de los pedidos."
 
 #: admin/partials/egoi-for-wp-admin-lists.php:9
 msgid "Information from your E-goi mailing lists"
@@ -2041,7 +2051,7 @@ msgstr "Selecciona un idioma."
 
 #: admin/partials/egoi-for-wp-admin-widget.php:133
 #: admin/partials/capture/functions.php:57
-#: admin/partials/wizard/subscribers.php:13
+#: admin/partials/wizard/subscribers.php:14
 msgid "Select a list.."
 msgstr "Seleccione una lista .."
 
@@ -2108,7 +2118,7 @@ msgid "Select the E-goi's catalog for your store."
 msgstr "Seleccione el catálogo E-goi para su tienda."
 
 #: admin/partials/configuration/subscribers.php:79
-#: admin/partials/wizard/subscribers.php:9
+#: admin/partials/wizard/subscribers.php:10
 msgid "Select the E-goi's list for your subscribers."
 msgstr ""
 "Seleccione la lista de E-goi para sus suscriptores.\n"
@@ -2158,7 +2168,7 @@ msgid "Select the position it will be displayed in your checkout form."
 msgstr "Seleccione la posición que se mostrará en su formulario de pago."
 
 #: admin/partials/configuration/subscribers.php:116
-#: admin/partials/wizard/subscribers.php:29
+#: admin/partials/wizard/subscribers.php:30
 msgid "Select the role to synchronize your Subscribers with."
 msgstr "Seleccione lo papel para sincronizar sus suscriptores con"
 
@@ -2283,6 +2293,12 @@ msgstr "Configuraciones"
 #: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:21
 msgid "Setup"
 msgstr "Configuraciones"
+
+#: admin/partials/wizard/subscribers.php:2
+msgid "Setup list infos here, mapping and contact sync"
+msgstr ""
+"Configurar aquí la información de la lista, la cartografía y la "
+"sincronización de contactos"
 
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:164
 msgid "Show"
@@ -2456,12 +2472,12 @@ msgid "Sync products with this catalog"
 msgstr "Sincronizar productos con este catálogo"
 
 #: admin/partials/configuration/subscribers.php:78
-#: admin/partials/wizard/subscribers.php:8
+#: admin/partials/wizard/subscribers.php:9
 msgid "Sync users with this list"
 msgstr "Sincronizar los usuarios con esta lista"
 
 #: admin/partials/configuration/subscribers.php:115
-#: admin/partials/wizard/subscribers.php:28
+#: admin/partials/wizard/subscribers.php:29
 msgid "Sync users with this role"
 msgstr "Sincronizar los usuarios con este papel"
 
@@ -2474,7 +2490,7 @@ msgstr ""
 msgid "Synchronize via Backend (Recommended)"
 msgstr "Sincronizar a través de backend (recomendado)"
 
-#: admin/partials/wizard/orders.php:26
+#: admin/partials/wizard/orders.php:25
 msgid "Synchronize via Script"
 msgstr "Sincronizar mediante script"
 
@@ -2527,6 +2543,20 @@ msgstr "Términos y condiciones"
 #: admin/partials/capture/subscription-bar.php:144
 msgid "Text Color"
 msgstr "Color de texto"
+
+#: admin/partials/wizard/orders.php:9
+msgid ""
+"The backend, via the API, is responsible for synchronizing orders. Whenever "
+"an order is synchronized using this method, the respective contact (if they "
+"don't already exist in the list) will be added to the E-goi list, and the "
+"order statuses will be updated whenever there is a change in the order "
+"status."
+msgstr ""
+"El backend, a través de la API, se encarga de sincronizar los pedidos. "
+"Siempre que se sincronice un pedido mediante este método, el contacto "
+"correspondiente (si no existe ya en la lista) se añadirá a la lista de E-goi,"
+" y los estados de los pedidos se actualizarán siempre que haya un cambio en "
+"el estado del pedido."
 
 #: admin/partials/egoi-for-wp-admin-widget.php:200
 #: admin/partials/capture/widget-options.php:202
@@ -2629,6 +2659,20 @@ msgstr "El texto que aparecerá como un Título."
 #: admin/partials/capture/subscription-bar.php:75
 msgid "The text to appear before the email field."
 msgstr "El texto que aparezca antes de que el campo de e-mail."
+
+#: admin/partials/wizard/orders.php:26
+msgid ""
+"The Track&Engage script is responsible for synchronizing orders. Whenever an "
+"order is synchronized using this method, the respective contact (if it "
+"doesn't already exist in the list) and the respective order will be added to "
+"the E-goi list with the status “Created”, which will remain unchanged even "
+"if the order is updated."
+msgstr ""
+"El script Track&Engage se encarga de sincronizar los pedidos. Siempre que se "
+"sincronice un pedido mediante este método, el contacto correspondiente (si "
+"no existe ya en la lista) y el pedido correspondiente se añadirán a la lista "
+"de E-goi con el estado «Creado», que permanecerá inalterado aunque se "
+"actualice el pedido."
 
 #: admin/partials/ecommerce/catalogs.php:26
 msgid "There are no Catalogs!"
@@ -2811,16 +2855,6 @@ msgstr ""
 "Utilice este código abreviado para mostrar este formulario dentro de su "
 "sitio o blog"
 
-#: admin/partials/wizard/orders.php:27
-#, fuzzy
-#| msgid "Uses a script to process order synchronization."
-msgid "Uses a script to process cart synchronization."
-msgstr "Utiliza un script para procesar la sincronización de órdenes."
-
-#: admin/partials/wizard/orders.php:9
-msgid "Uses the backend to process order synchronization."
-msgstr "Utiliza el backend para procesar la sincronización de pedidos."
-
 #: admin/partials/ecommerce/catalogs.php:11
 msgid "Variations"
 msgstr "Variaciones"
@@ -2883,14 +2917,6 @@ msgstr "Convertirá eventos y registros en cron job (siguiente: "
 msgid "Will convert event and signups in cron job (next: at "
 msgstr "Convertirá eventos y registros en cron job (siguiente: en "
 
-#: admin/partials/configuration/advanced.php:26
-msgid ""
-"Will convert your Tracking events via API in the backend. Includes all order "
-"statuses."
-msgstr ""
-"Convertirá sus eventos de Seguimiento vía API en el backend. Incluye todos "
-"los estados de pedido."
-
 #: admin/partials/wizard/connected-sites.php:18
 msgid "Will inject Connected Sites script in your website"
 msgstr "Inyectará el script Connected Sites en su website"
@@ -2942,7 +2968,7 @@ msgstr "Escribir dominio web"
 #: admin/partials/ecommerce/new-catalog-form.php:60
 #: admin/partials/wizard/connected-sites.php:22
 #: admin/partials/wizard/final-tweaks.php:10
-#: admin/partials/wizard/orders.php:18 admin/partials/wizard/orders.php:32
+#: admin/partials/wizard/orders.php:17 admin/partials/wizard/orders.php:31
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:145
 #: admin/partials/elementor/egoi-for-wp-elementor-basic-control.php:185
 #: admin/partials/integrations/post-comment.php:16
@@ -2988,7 +3014,7 @@ msgstr "Tiene popups utilizando el formulario que está intentando eliminar."
 
 #: admin/partials/configuration/subscribers.php:200
 msgid "You have too much WP Orders to be assigned in bulk!"
-msgstr ""
+msgstr "Tienes demasiados pedidos de WP para que te los asignen en bloque."
 
 #: admin/partials/configuration/subscribers.php:143
 msgid "You have too much WP Users to be assigned in bulk!"

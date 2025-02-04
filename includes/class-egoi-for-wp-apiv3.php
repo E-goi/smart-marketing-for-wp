@@ -1475,11 +1475,11 @@ class EgoiApiV3 {
             case 'completed':
                 return 'completed';
 
-            // Map Egoi Cancelled Status
-            case 'cancelled':
+            // Map Egoi Canceled Status
+            case 'canceled':
             case 'trash':
             case 'refunded':
-                return 'cancelled';
+                return 'canceled';
 
             // Default case
             default:

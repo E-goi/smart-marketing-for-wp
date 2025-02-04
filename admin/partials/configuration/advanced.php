@@ -23,7 +23,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
             <div class="egoi-sub-form-ident">
                 <div class="smsnf-input-group">
                     <label for="backend_order">· <?php _e( 'Convert orders via backend', 'egoi-for-wp' ); ?></label>
-                    <p class="subtitle"><?php _e( 'Will convert your Tracking events via API in the backend. Includes all order statuses.', 'egoi-for-wp' ); ?></p>
+                    <p class="subtitle"><?php _e( "If you deactivate this option, all orders will be processed via the Track&Engage script. In this case, the contacts will be synchronized using this method (if they don't already exist in the list) and the respective orders will be added to the E-goi list with the status “Created”, which will remain unchanged even if the order is updated.", 'egoi-for-wp' ); ?></p>
                     <div class="form-group switch-yes-no">
                         <label class="form-switch">
                             <input id="backend_order" type="checkbox" name="backend_order_sync" value="true"
