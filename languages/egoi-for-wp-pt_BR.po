@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2025-02-04 11:40+0000\n"
+"PO-Revision-Date: 2025-02-04 12:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português do Brasil\n"
 "Language: pt_BR\n"
@@ -1261,20 +1261,6 @@ msgid ""
 msgstr ""
 "Se você ativar o double opt-in, será enviado um e-mail de confirmação para "
 "os subscritores. "
-
-#: admin/partials/configuration/advanced.php:26
-msgid ""
-"If you deactivate this option, all orders will be processed via the "
-"Track&Engage script. In this case, the contacts will be synchronized using "
-"this method (if they don't already exist in the list) and the respective "
-"orders will be added to the E-goi list with the status “Created”, which will "
-"remain unchanged even if the order is updated."
-msgstr ""
-"Ao desativar esta opção todas as encomendas serão processadas através do "
-"script Track&Engage. Neste caso, os contactos serão sincronizados através "
-"deste método (caso ainda não exista na lista) e as respetivas encomendas "
-"serão adicionadas à lista do E-goi com o estado \"Criado\", que permanecerá "
-"inalterado mesmo que a encomenda seja atualizada.\n"
 
 #: admin/partials/transactionalemail/home.php:78
 msgid "If you enable E-goi Transactional Email select the email sender."
@@ -2872,6 +2858,18 @@ msgstr ""
 #: admin/partials/custom/egoi-for-wp-form-map.php:42
 msgid "Website"
 msgstr "Website"
+
+#: admin/partials/configuration/advanced.php:26
+msgctxt ""
+"When enabled, this option processes all orders via Backend (API). If "
+"disabled, orders will be processed via the Track&Engage script."
+msgid ""
+"When enabled, this option processes all orders via Backend (API). If "
+"disabled, orders will be processed via the Track&Engage script."
+msgstr ""
+"Quando ativada, esta opção processa todas as encomendas via Backend (API). "
+"Se desativada, as encomendas serão processadas através do script "
+"Track&Engage."
 
 #: admin/partials/configuration/subscribers.php:161
 #: admin/partials/configuration/subscribers.php:218
