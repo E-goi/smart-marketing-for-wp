@@ -4,7 +4,7 @@
 		<?php if ( class_exists( 'WooCommerce' ) ) { ?>
 		<div class="smsnf-input-group">
 			<label for="egoi_sync[backend_order]">· <?php _e( 'Convert orders via backend', 'egoi-for-wp' ); ?></label>
-			<p class="subtitle"><?php _e( 'Will convert your Tracking events via api in the backend', 'egoi-for-wp' ); ?></p>
+			<p class="subtitle"><?php _e( 'The backend, through the API, is responsible for order synchronization. Whenever an order is synchronized using this method, the respective contact will be added to the E-goi list if it does not already exist, and the order status will be updated whenever there is a change to the order.', 'egoi-for-wp' ); ?></p>
 			<div class="form-group switch-yes-no">
 				<label class="form-switch">
 					<input id="egoi_sync[backend_order]" type="checkbox" name="egoi_sync[backend_order]" value="1" checked>
