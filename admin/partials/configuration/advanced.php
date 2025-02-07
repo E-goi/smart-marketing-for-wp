@@ -23,34 +23,12 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			<div class="egoi-sub-form-ident">
 				<div class="smsnf-input-group">
 					<label for="backend_order">· <?php _e( 'Convert orders via backend', 'egoi-for-wp' ); ?></label>
-					<p class="subtitle"><?php _e( 'Will convert your Tracking events via api in the backend', 'egoi-for-wp' ); ?></p>
+					<p class="subtitle"><?php _e( "If you deactivate this option, all orders will be processed via the Track&Engage script. In this case, the contacts will be synchronized using this method (if they don't already exist in the list) and the respective orders will be added to the E-goi list with the status “Created”, which will remain unchanged even if the order is updated.", 'egoi-for-wp' ); ?></p>
 					<div class="form-group switch-yes-no">
 						<label class="form-switch">
 							<input id="backend_order" type="checkbox" name="backend_order" value="1" <?php checked( $this->options_list['backend_order'] ); ?>>
 							<i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
 						</label>
-					</div>
-				</div>
-
-				<div class="smsnf-input-group">
-					<label for="backend_order_state">· <?php _e( 'Order status to be converted', 'egoi-for-wp' ); ?></label>
-					<p class="subtitle"><?php _e( 'Select order status.', 'egoi-for-wp' ); ?></p>
-					<div class="smsnf-wrapper">
-						<select id="backend_order_state" name="backend_order_state" class="form-select" >
-							<option disabled value="" selected>
-								<?php
-								_e( 'Select a conversion state', 'egoi-for-wp' );
-								?>
-								</option>
-								<?php
-								foreach ( wc_get_order_statuses() as $key => $status ) {
-									?>
-									<option value="<?php echo $key; ?>" <?php selected( $this->options_list['backend_order_state'], $key ); ?> > <?php echo $status; ?> </option>
-									<?php
-								}
-								?>
-						</select>
-
 					</div>
 				</div>
 

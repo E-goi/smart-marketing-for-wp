@@ -276,6 +276,7 @@ class EgoiApiV3 {
 		'importContactsBulk'       => '/lists/{list_id}/contacts/actions/import-bulk',
 		'ping'					   => '/ping',
         'getClient'             => '/my-account',
+        'importOrdersBulk'         => '/lists/{list_id}/orders'
     );
 
 	protected $apiKey;
@@ -808,6 +809,52 @@ class EgoiApiV3 {
 			: false;
 	}
 
+    /**
+     * Import Orders Bulk
+     * @param $listId
+     * @param $data
+     * @return false|string
+     */
+    public function importOrdersBulk( $listId, $data ) {
+        $path   = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{list_id}', $listId );
+
+        $ch = curl_init();
+
+        // Set the URL
+        curl_setopt($ch, CURLOPT_URL, $path);
+
+        // Set the request method
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+
+        // Set the timeout
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+        // Set the request body if provided
+        if (!empty($data)) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        }
+
+        // Set headers if provided
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+
+
+        // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute the request
+        curl_exec($ch);
+
+        // Get the HTTP status code
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Close the cURL session
+        curl_close($ch);
+
+        return $httpCode == 201
+            ? true
+            : false;
+    }
+
 	/**
 	 * Create List
 	 * @param $name
@@ -1308,15 +1355,23 @@ class EgoiApiV3 {
 
 		$products = self::getProductsFromOrder( $order );
 
-		$payload = array(
-			'order_total' => number_format( $order->get_total(), 2 ),
-			'order_id'    => $order->get_id(),
-			'cart_id'     => '',
-			'contact'     => $contact,
-			'products'    => $products,
-		);
+        $order_status = self::getOrderStatus( $order );
+        $order_date = $order->get_date_created();
 
-		$client = new ClientHttp(
+        $payload = array(
+            'order_total' => number_format( $order->get_total(), 2 ),
+            'order_id'    => $order->get_id(),
+            'order_status' => $order_status,
+            'cart_id'     => '',
+            'order_date'  => $order_date ? $order_date->format('Y-m-d H:i:s') : null,
+            'contact'     => $contact,
+            'products'    => $products,
+        );
+
+        error_log('oaquii' . print_r($payload, true));
+
+
+        $client = new ClientHttp(
 			$path,
 			'POST',
 			$this->headers,
@@ -1328,6 +1383,41 @@ class EgoiApiV3 {
 		}
 		return json_decode( $client->getResponse(), true );
 	}
+
+    /**
+     * @param $order
+     * @return null|string|string[]
+     */
+    private function getOrderStatus( $order) {
+
+        $wooStatus = $order->get_status();
+
+        switch ( $wooStatus ) {
+            // Map Egoi Created Status
+            case 'on-hold':
+                return 'created';
+
+            // Map Egoi Pending Status
+            case 'pending':
+            case 'processing':
+                return 'pending';
+
+            // Map Egoi Completed Status
+            case 'completed':
+                return 'completed';
+
+            // Map Egoi Canceled Status
+            case 'canceled':
+            case 'checkout-draft':
+            case 'refunded':
+            case 'failed':
+                return 'canceled';
+
+            // Default case
+            default:
+                return 'created'; // Fallback to "created" if the status is unrecognized
+        }
+    }
 
 	private static function getProductsFromCart( $cartObj, $variations = false ) {
 		$cart = array(
