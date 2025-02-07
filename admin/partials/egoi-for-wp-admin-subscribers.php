@@ -55,6 +55,16 @@ if ( class_exists( 'Woocommerce' ) ) {
 	}
 }
 
+if ( class_exists( 'WooCommerce' ) ) {
+    $args = array(
+        'limit' => -1,
+    );
+    $orders = wc_get_orders( $args );
+}
+
+$count_orders = count( $orders );
+
+
 $count_users = count_users();
 ?>
 
@@ -105,6 +115,22 @@ jQuery(document).ready(function($) {
 			}, 5000);
 		});
 	});
+
+    $('#update_orders').click(function() {
+        $('#e-goi_import_orders_valid').hide();
+        $('#load_orders').show();
+
+        var data = {
+            action: 'efwp_add_orders',
+            listID: listID,
+            submit: 1
+        };
+
+        jQuery.post(ajaxurl, data, function(response) {
+            $('#load_orders').hide();
+            $('#e-goi_import_orders_valid').show();
+        });
+    });
 
 	$('#wpfooter').hide();
 

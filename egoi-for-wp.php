@@ -69,6 +69,13 @@ function efwp_add_users() {
 	return $admin->users_queue();
 }
 
+// HOOK SYNC ORDERS
+add_action( 'wp_ajax_efwp_add_orders', 'efwp_add_orders' );
+function efwp_add_orders() {
+    $admin = new Egoi_For_Wp_Admin( 'smart-marketing-for-wp', EFWP_SELF_VERSION );
+    return $admin->orders_queue();
+}
+
 // add_filter( 'wp_default_editor', 'force_default_editor' );
 // function force_default_editor() {
 	// allowed: tinymce, html, test
