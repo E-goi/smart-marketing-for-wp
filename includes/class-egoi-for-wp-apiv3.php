@@ -1415,7 +1415,7 @@ class EgoiApiV3 {
 
             // Default case
             default:
-                return 'created'; // Fallback to "created" if the status is unrecognized
+                return 'unknown'; // Fallback to "created" if the status is unrecognized
         }
     }
 
