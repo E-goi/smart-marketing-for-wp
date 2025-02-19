@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Smart Marketing for Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-02 13:51+0000\n"
-"PO-Revision-Date: 2025-02-07 10:10+0000\n"
+"PO-Revision-Date: 2025-02-19 15:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: Português\n"
 "Language: pt_PT\n"
@@ -22,7 +22,7 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Loco-Target-Locale: pt_PT\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.11; wp-6.6.2\n"
+"X-Loco-Version: 2.7.1; wp-6.7.2\n"
 "X-Loco-Parser: loco_parse_po"
 
 #: admin/partials/configuration/advanced.php:42
@@ -1251,9 +1251,14 @@ msgid ""
 "If you deactivate this option, all orders will be processed via the "
 "Track&Engage script. In this case, the contacts will be synchronized using "
 "this method (if they don't already exist in the list) and the respective "
-"orders will be added to the E-goi list with the status “Created”, which will "
+"orders will be added to the E-goi list with the status “Unknown”, which will "
 "remain unchanged even if the order is updated."
 msgstr ""
+"Se desativar esta opção, todas as encomendas serão processadas através do "
+"script Track&Engage. Neste caso, os contactos serão sincronizados através "
+"deste método (caso ainda não existam na lista) e as respectivas encomendas "
+"serão adicionadas à lista do E-goi com o estado “Desconhecido”, que se "
+"manterá inalterado mesmo que a encomenda seja actualizada."
 
 #: admin/partials/transactionalemail/home.php:78
 msgid "If you enable E-goi Transactional Email select the email sender."
@@ -1563,6 +1568,9 @@ msgstr "Criar Catálogo"
 #: admin/partials/egoi-for-wp-admin-display.php:29
 msgid "New list created successfully!"
 msgstr "Nova lista criada com sucesso!"
+
+msgid "New message"
+msgstr ""
 
 #: admin/partials/egoi-for-wp-admin-subscribers-wizard.php:56
 msgid "Next"
@@ -2429,7 +2437,7 @@ msgstr "Sincronizar campos personalizados"
 
 #: admin/partials/configuration/subscribers.php:191
 msgid "Sync existing WP Orders"
-msgstr ""
+msgstr "Sincronizar Encomendas WP"
 
 #: admin/partials/configuration/subscribers.php:134
 msgid "Sync existing WP Users"

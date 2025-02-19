@@ -1394,21 +1394,22 @@ class EgoiApiV3 {
 
         switch ( $wooStatus ) {
             // Map Egoi Created Status
-            case 'on-hold':
+            case 'checkout-draft':
                 return 'created';
 
             // Map Egoi Pending Status
+            case 'on-hold':
             case 'pending':
             case 'processing':
                 return 'pending';
 
             // Map Egoi Completed Status
             case 'completed':
+            case 'refunded':
                 return 'completed';
 
             // Map Egoi Canceled Status
-            case 'canceled':
-            case 'checkout-draft':
+            case 'cancelled':
             case 'refunded':
             case 'failed':
                 return 'canceled';
