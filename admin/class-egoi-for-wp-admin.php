@@ -929,28 +929,29 @@ class Egoi_For_Wp_Admin {
 
         switch ( $wooStatus ) {
             // Map Egoi Created Status
-            case 'on-hold':
-            case 'processing':
+            case 'checkout-draft':
                 return 'created';
 
             // Map Egoi Pending Status
+            case 'on-hold':
             case 'pending':
-            case 'failed':
+            case 'processing':
                 return 'pending';
 
             // Map Egoi Completed Status
             case 'completed':
+            case 'refunded':
                 return 'completed';
 
-            // Map Egoi Cancelled Status
+            // Map Egoi Canceled Status
             case 'cancelled':
-            case 'trash':
             case 'refunded':
-                return 'cancelled';
+            case 'failed':
+                return 'canceled';
 
             // Default case
             default:
-                return 'created'; // Fallback to "created" if the status is unrecognized
+                return 'unknown'; // Fallback to "created" if the status is unrecognized
         }
     }
 
