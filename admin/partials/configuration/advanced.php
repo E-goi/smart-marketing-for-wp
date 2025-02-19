@@ -1,19 +1,19 @@
 <?php
 if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-	foreach ( array( 'lazy_sync', 'backend_order', 'backend_order_state' ) as $field ) {
-		if ( ! isset( $_POST[ $field ] ) ) {
-			$this->options_list[ $field ] = false;
-			continue;
-		}
-		$this->options_list[ $field ] = sanitize_key( $_POST[ $field ] );
-	}
-	update_option( 'egoi_sync', $this->options_list );
-	echo get_notification( __( 'Saved Configuration', 'egoi-for-wp' ), __( 'Advanced configurations saved with success.', 'egoi-for-wp' ) );
+    foreach ( array( 'lazy_sync', 'backend_order', 'backend_order_state' ) as $field ) {
+        if ( ! isset( $_POST[ $field ] ) ) {
+            $this->options_list[ $field ] = false;
+            continue;
+        }
+        $this->options_list[ $field ] = sanitize_key( $_POST[ $field ] );
+    }
+    update_option( 'egoi_sync', $this->options_list );
+    echo get_notification( __( 'Saved Configuration', 'egoi-for-wp' ), __( 'Advanced configurations saved with success.', 'egoi-for-wp' ) );
 }
 
-	require_once plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-lazy.php';
-	$converter     = new \EgoiLazyConverter();
-	$countRequests = $converter->countRequestsWaiting();
+require_once plugin_dir_path( __FILE__ ) . '../../../includes/class-egoi-for-wp-lazy.php';
+$converter     = new \EgoiLazyConverter();
+$countRequests = $converter->countRequestsWaiting();
 ?>
 
 <div>
@@ -22,7 +22,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 			<h5> <?php _e( 'Ecommerce', 'egoi-for-wp' ); ?> </h5>
 			<div class="egoi-sub-form-ident">
 				<div class="smsnf-input-group">
-					<label for="backend_order">· <?php _e( 'Convert orders via backend', 'egoi-for-wp' ); ?></label>
+                    <label for="backend_order">· <?php _e( 'Convert orders via backend', 'egoi-for-wp' ); ?></label>
 					<p class="subtitle"><?php _e( "If you deactivate this option, all orders will be processed via the Track&Engage script. In this case, the contacts will be synchronized using this method (if they don't already exist in the list) and the respective orders will be added to the E-goi list with the status “Unknown”, which will remain unchanged even if the order is updated.", 'egoi-for-wp' ); ?></p>
 					<div class="form-group switch-yes-no">
 						<label class="form-switch">

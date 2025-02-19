@@ -1350,10 +1350,15 @@ class EgoiApiV3 {
 		return $output;
 	}
 
-	public function convertOrder( $order, $contact, $domain ) {
-		$path = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{domain}', $domain );
+    public function convertOrder( $order, $contact, $domain ) {
 
-		$products = self::getProductsFromOrder( $order );
+        $path = self::APIV3 . $this->replaceUrl( self::APIURLS[ __FUNCTION__ ], '{domain}', $domain );
+
+        $products = self::getProductsFromOrder( $order );
+        if ( empty( $products ) ) {
+            return false;
+        }
+
 
         $order_status = self::getOrderStatus( $order );
         $order_date = $order->get_date_created();
@@ -1368,21 +1373,20 @@ class EgoiApiV3 {
             'products'    => $products,
         );
 
-        error_log('oaquii' . print_r($payload, true));
 
 
         $client = new ClientHttp(
-			$path,
-			'POST',
-			$this->headers,
-			$payload
-		);
+            $path,
+            'POST',
+            $this->headers,
+            $payload
+        );
 
-		if ( $client->success() !== true || $client->getCode() != 202 ) {
-			return false;
-		}
-		return json_decode( $client->getResponse(), true );
-	}
+        if ( $client->success() !== true || $client->getCode() != 202 ) {
+            return false;
+        }
+        return json_decode( $client->getResponse(), true );
+    }
 
     /**
      * @param $order
