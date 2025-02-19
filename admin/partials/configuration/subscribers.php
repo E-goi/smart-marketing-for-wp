@@ -40,9 +40,12 @@
 		<input name="egoi_sync[lazy_sync]" value="<?php echo $this->options_list['lazy_sync']; ?>" hidden>
 		<input name="egoi_sync[backend_order]" value="<?php echo $this->options_list['backend_order']; ?>" hidden>
 		<input name="egoi_sync[backend_order_state]" value="<?php echo $this->options_list['backend_order_state']; ?>" hidden>
-		<div class="smsnf-grid">
-			<div>
+        <input name="egoi_sync[domain]" value="<?php echo $this->options_list['domain']; ?>" hidden>
+        <input name="egoi_sync[list]" value="<?php echo $this->options_list['list']; ?>" hidden>
 
+
+        <div class="smsnf-grid">
+			<div>
 				<div class="smsnf-input-group">
 					<label for="egoi_sync"><?php _e( 'Enable Auto-Sync', 'egoi-for-wp' ); ?></label>
 					<p class="subtitle"><?php _e( 'Select "yes" if you want the plugin to "listen" to all changes in your WordPress user base and auto-sync them with the selected Egoi list', 'egoi-for-wp' ); ?></p>
