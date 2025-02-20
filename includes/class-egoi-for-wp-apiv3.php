@@ -1414,7 +1414,6 @@ class EgoiApiV3 {
 
             // Map Egoi Canceled Status
             case 'cancelled':
-            case 'refunded':
             case 'failed':
                 return 'canceled';
 
