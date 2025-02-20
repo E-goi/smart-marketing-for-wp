@@ -952,7 +952,6 @@ class Egoi_For_Wp_Admin {
 
             // Map Egoi Canceled Status
             case 'cancelled':
-            case 'refunded':
             case 'failed':
                 return 'canceled';
 
