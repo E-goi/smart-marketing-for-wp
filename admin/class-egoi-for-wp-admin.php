@@ -416,7 +416,14 @@ class Egoi_For_Wp_Admin {
 
 			add_submenu_page( $this->plugin_name, __( 'Capture Contacts', 'egoi-for-wp' ), __( 'Capture Contacts', 'egoi-for-wp' ), $capability, 'egoi-4-wp-form', array( $this, 'display_plugin_subscriber_form' ) );
 
-			add_submenu_page( $this->plugin_name, __( 'Configuration', 'egoi-for-wp' ), __( 'Configuration', 'egoi-for-wp' ), $capability, 'egoi-4-wp-subscribers', array( $this, 'display_plugin_subscriber_page' ) );
+            add_submenu_page(
+                $this->plugin_name,
+                __( 'Configuration', 'egoi-for-wp' ),
+                sprintf( '%s <span class="awaiting-mod" style="	background-color: #28a745;">New</span>', __( 'Configuration', 'egoi-for-wp' ) ),
+                $capability,
+                'egoi-4-wp-subscribers',
+                array( $this, 'display_plugin_subscriber_page' )
+            );
 
 			add_submenu_page( $this->plugin_name, __( 'E-commerce', 'egoi-for-wp' ), __( 'E-commerce', 'egoi-for-wp' ) , $capability, 'egoi-4-wp-ecommerce', array( $this, 'display_plugin_subscriber_ecommerce' ) );
 
