@@ -23,7 +23,7 @@ $countRequests = $converter->countRequestsWaiting();
 			<div class="egoi-sub-form-ident">
 				<div class="smsnf-input-group">
                     <label for="backend_order">· <?php _e( 'Convert orders via backend', 'egoi-for-wp' ); ?></label>
-					<p class="subtitle"><?php _e( "If you deactivate this option, all orders will be processed via the Track&Engage script. In this case, the contacts will be synchronized using this method (if they don't already exist in the list) and the respective orders will be added to the E-goi list with the status “Unknown”, which will remain unchanged even if the order is updated.", 'egoi-for-wp' ); ?></p>
+					<p class="subtitle"><?php _e( "If you deactivate this option, all orders will be processed via the Track&Engage script. In this case, the contacts will be synchronized using this method (if they don't already exist in the list) and the respective orders will be added to the E-goi list with the status “Created”, which will remain unchanged even if the order is updated.", 'egoi-for-wp' ); ?></p>
 					<div class="form-group switch-yes-no">
 						<label class="form-switch">
 							<input id="backend_order" type="checkbox" name="backend_order" value="1" <?php checked( $this->options_list['backend_order'] ); ?>>
