@@ -880,7 +880,7 @@ class Egoi_For_Wp_Admin {
                                         'id'       => (string) $product->get_id(),
                                         'name'     => $product->get_name(),
                                         'category' => (string) ($product->get_category_ids()[0] ?? ''),
-                                        'price'    => (float) $item->get_total(),
+                                        'price' => (float) $product->get_price(),
                                         'quantity' => (int) $item->get_quantity(),
                                     ];
                                 }

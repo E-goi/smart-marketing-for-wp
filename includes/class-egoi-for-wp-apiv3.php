@@ -1341,10 +1341,12 @@ class EgoiApiV3 {
 			$items = array();
 		}
 		foreach ( $items as $item ) {
-			$output[] = array(
+            $product = $item->get_product();
+            $output[] = array(
+
 				'product_identifier' => $item->get_product_id(),
 				'name'               => $item->get_name(),
-				'price'              => number_format( $item->get_subtotal(), 2 ),
+                'price'              => number_format( $product->get_price(), 2 ),
 			);
 		}
 		return $output;
