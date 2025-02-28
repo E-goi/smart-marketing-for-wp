@@ -40,9 +40,12 @@
 		<input name="egoi_sync[lazy_sync]" value="<?php echo $this->options_list['lazy_sync']; ?>" hidden>
 		<input name="egoi_sync[backend_order]" value="<?php echo $this->options_list['backend_order']; ?>" hidden>
 		<input name="egoi_sync[backend_order_state]" value="<?php echo $this->options_list['backend_order_state']; ?>" hidden>
-		<div class="smsnf-grid">
-			<div>
+        <input name="egoi_sync[domain]" value="<?php echo $this->options_list['domain']; ?>" hidden>
+        <input name="egoi_sync[list]" value="<?php echo $this->options_list['list']; ?>" hidden>
 
+
+        <div class="smsnf-grid">
+			<div>
 				<div class="smsnf-input-group">
 					<label for="egoi_sync"><?php _e( 'Enable Auto-Sync', 'egoi-for-wp' ); ?></label>
 					<p class="subtitle"><?php _e( 'Select "yes" if you want the plugin to "listen" to all changes in your WordPress user base and auto-sync them with the selected Egoi list', 'egoi-for-wp' ); ?></p>
@@ -186,6 +189,49 @@
 					<?php
 				}
 				?>
+
+                <div class="smsnf-input-group">
+                    <label for="role">
+                        <span style="display: inline-flex; align-items: center;">
+                            <?php _e( 'Sincronizar Encomendas WP', 'egoi-for-wp' ); ?>
+                            <span class="wp-ui-notification wp-ui-highlight" style="margin-left: 5px !important; background-color: #28a745 !important; padding: 3px !important; border-radius: 5px !important;"><?php _e( 'New', 'egoi-for-wp' ); ?></span>
+                        </span>
+                    </label>
+                    <div class="smsnf-wrapper">
+                        <?php
+
+                        if ( $count_orders > '10000000' ) {
+                            ?>
+
+                            <button type="button" class="smsnf-btn smsnf-btn-mt10" disabled><?php echo _e( 'Manual Sync', 'egoi-for-wp' ); ?></button>
+                            <p class="subtitle">
+                                <?php
+                                _e( 'You have too much WP Orders to be assigned in bulk!', 'egoi-for-wp' );
+                                ?>
+                            </p>
+                            <?php
+
+                        } else {
+                            ?>
+                            <div class="smsnf-btn-mt10" style="display: flex;align-items: center;">
+                                <button type="button" class="smsnf-btn" id="update_orders"><?php echo _e( 'Manual Sync', 'egoi-for-wp' ); ?></button>
+                                <?php echo getLoader( 'load_orders', false ); ?>
+                                <span id="e-goi_import_orders_valid" class="dashicons dashicons-yes" style="display: none;"></span>
+                            </div>
+
+                            <div id="e-goi_import_orders_error" style="display:none;">
+                                <span class="dashicons dashicons-no-alt"></span>
+                            </div>
+                            <p class="subtitle">
+                                <?php
+                                _e( 'When manual sync is loading you should not do anything in this page but you can navigate to other pages in another window/tab', 'egoi-for-wp' );
+                                ?>
+                            </p>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
 			</div>
 		</div>
 		<div class="smsnf-input-group">

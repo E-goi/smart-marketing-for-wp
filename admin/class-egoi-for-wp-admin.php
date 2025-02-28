@@ -416,7 +416,14 @@ class Egoi_For_Wp_Admin {
 
 			add_submenu_page( $this->plugin_name, __( 'Capture Contacts', 'egoi-for-wp' ), __( 'Capture Contacts', 'egoi-for-wp' ), $capability, 'egoi-4-wp-form', array( $this, 'display_plugin_subscriber_form' ) );
 
-			add_submenu_page( $this->plugin_name, __( 'Configuration', 'egoi-for-wp' ), __( 'Configuration', 'egoi-for-wp' ), $capability, 'egoi-4-wp-subscribers', array( $this, 'display_plugin_subscriber_page' ) );
+            add_submenu_page(
+                $this->plugin_name,
+                __( 'Configuration', 'egoi-for-wp' ),
+                sprintf( '%s <span class="awaiting-mod" style="	background-color: #28a745;">New</span>', __( 'Configuration', 'egoi-for-wp' ) ),
+                $capability,
+                'egoi-4-wp-subscribers',
+                array( $this, 'display_plugin_subscriber_page' )
+            );
 
 			add_submenu_page( $this->plugin_name, __( 'E-commerce', 'egoi-for-wp' ), __( 'E-commerce', 'egoi-for-wp' ) , $capability, 'egoi-4-wp-ecommerce', array( $this, 'display_plugin_subscriber_ecommerce' ) );
 
@@ -821,6 +828,138 @@ class Egoi_For_Wp_Admin {
 
 		wp_die();
 	}
+
+
+   public function orders_queue() {
+        if (isset($_POST['submit']) && $_POST['submit']) {
+            try {
+                $listId = $_POST['listID'];
+                $batches = [];
+                $page = 1;
+
+                if (class_exists('WooCommerce')) {
+                    do {
+                        $args = [
+                            'limit'   => 500,
+                            'orderby' => 'date',
+                            'order'   => 'DESC',
+                            'paged'   => $page,
+                        ];
+
+                        $orders = wc_get_orders($args);
+
+                        foreach ($orders as $order) {
+                            if (!is_a($order, 'WC_Order')) {
+                                continue;
+                            }
+
+                            $email = $order->get_billing_email();
+                            if (empty($email)) {
+                                continue; // ignore orders without email
+                            }
+
+                            $revenue = (float) $order->get_total();
+                            if ($revenue <= 0) {
+                                continue; // ignore orders with revenue <=0
+                            }
+
+                            $order_data = [
+                                'order_id'     => (string) $order->get_id(),
+                                'order_status' => self::getOrderStatus($order),
+                                'contact_id'   => $email,
+                                'revenue'      => $revenue,
+                                'store_url'    => get_site_url(),
+                                'date'         => $order->get_date_created() ? $order->get_date_created()->date('Y-m-d H:i:s') : null,
+                                'items' => []
+                            ];
+
+                            foreach ($order->get_items() as $item_id => $item) {
+                                $product = $item->get_product();
+                                if ($product) {
+                                    $order_data['items'][] = [
+                                        'id'       => (string) $product->get_id(),
+                                        'name'     => $product->get_name(),
+                                        'category' => (string) ($product->get_category_ids()[0] ?? ''),
+                                        'price' => (float) $product->get_price(),
+                                        'quantity' => (int) $item->get_quantity(),
+                                    ];
+                                }
+                            }
+
+                            // Ignore orders if items is empty
+                            if (empty($order_data['items'])) {
+                                continue;
+                            }
+
+                            $batches[] = $order_data;
+
+                            // Send 500 orders in each time
+                            if (count($batches) === 500) {
+                                try {
+                                    $this->egoiWpApiV3->importOrdersBulk($listId, $batches);
+                                } catch (Exception $e) {
+                                    $this->sendError('API ERROR', $e->getMessage());
+                                }
+
+                                $batches = [];
+                            }
+                        }
+
+                        $page++;
+
+                    } while (!empty($orders));
+
+                    if (!empty($batches)) {
+                        try {
+                            $this->egoiWpApiV3->importOrdersBulk($listId, $batches);
+                        } catch (Exception $e) {
+                            $this->sendError('API ERROR', $e->getMessage());
+                        }
+                    }
+                }
+            } catch (Exception $e) {
+                $this->sendError('Order Sync ERROR', $e->getMessage());
+            }
+        }
+
+    wp_die();
+
+   }
+
+    /**
+     * @param $order
+     * @return null|string|string[]
+     */
+    private function getOrderStatus( $order) {
+
+        $wooStatus = $order->get_status();
+
+        switch ( $wooStatus ) {
+            // Map Egoi Created Status
+            case 'checkout-draft':
+                return 'created';
+
+            // Map Egoi Pending Status
+            case 'on-hold':
+            case 'pending':
+            case 'processing':
+                return 'pending';
+
+            // Map Egoi Completed Status
+            case 'completed':
+            case 'refunded':
+                return 'completed';
+
+            // Map Egoi Canceled Status
+            case 'cancelled':
+            case 'failed':
+                return 'canceled';
+
+            // Default case
+            default:
+                return 'unknown'; // Fallback to "created" if the status is unrecognized
+        }
+    }
 
 	/**
 	 * Process data from ContactForm7 POST events.
@@ -3511,6 +3650,7 @@ class Egoi_For_Wp_Admin {
 
 	public function hookEcommerceOrderBackend( $orderid ) {
 		require_once plugin_dir_path( __FILE__ ) . '../includes/class-egoi-for-wp-convert.php';
+
 		$converter = new \EgoiConverter( $this->options_list );
 		$converter->convertOrder( $orderid );
 	}

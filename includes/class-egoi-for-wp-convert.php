@@ -27,10 +27,8 @@ class EgoiConverter {
 	public function convertOrder( $orderid ) {
 		$orderObj = wc_get_order( $orderid );
 		require_once plugin_dir_path( __FILE__ ) . '../public/includes/TrackingEngageSDK.php';
-		$orderHasStatus = $orderObj->has_status( str_replace( 'wc-', '', $this->options['backend_order_state'] ) ) || $orderObj->has_status( $this->options['backend_order_state'] );
-		
-		if ( empty( $this->options['backend_order'] ) || ! $orderHasStatus ) {
-			// ignore conversion until order has status
+
+		if ( empty( $this->options['backend_order'] )) {
 			return false;
 		}
 
