@@ -171,9 +171,9 @@
 							<?php foreach ( $post_tags as $tag ) { ?>
 								<option id="posts_tags_include_<?php echo $tag->term_id; ?>" value="<?php echo $tag->term_id; ?>"
 									<?php
-									if ( !empty($feed) && isset($feed['tags']) && in_array( $tag->term_id, $feed['tags'] ) ) {
+                                    if (!empty($feed) && isset($feed['tags']) && is_array($feed['tags']) && in_array($tag->term_id, $feed['tags'])) {
 										echo 'selected';
-									} elseif (!empty($feed) && isset($feed['tags_exclude']) &&  in_array( $tag->term_id, $feed['tags_exclude'] ) ) {
+                                    } elseif (!empty($feed) && isset($feed['tags_exclude']) && is_array($feed['tags_exclude']) && in_array($tag->term_id, $feed['tags_exclude'])) {
 										echo 'disabled';
 									}
 									?>
@@ -209,9 +209,9 @@
 							<?php foreach ( $post_tags as $tag ) { ?>
 								<option id="posts_tags_exclude_<?php echo $tag->term_id; ?>" value="<?php echo $tag->term_id; ?>"
 									<?php
-									if ( in_array( !empty($feed) && isset($feed['tags_exclude']) &&  $tag->term_id, $feed['tags_exclude'] ) ) {
+                                    if ( !empty($feed) && isset($feed['tags_exclude']) && in_array($tag->term_id, $feed['tags_exclude']) ) {
 										echo 'selected';
-									} elseif ( in_array( !empty($feed) && isset($feed['tags']) &&  $tag->term_id, $feed['tags'] ) ) {
+                                    } elseif ( !empty($feed) && isset($feed['tags']) && in_array($tag->term_id, $feed['tags']) ) {
 										echo 'disabled';
 									}
 									?>
