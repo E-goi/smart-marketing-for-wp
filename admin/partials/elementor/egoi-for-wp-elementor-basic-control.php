@@ -377,6 +377,11 @@ class EgoiElementorWidget extends Widget_Base {
 		$classes_fields  = $settings['direction_field'];
 		$classes_form    = $settings['direction_form'];
 		$position_button = $settings['position_button'];
+
+        $nonce = uniqid('egoi_validator_');
+        set_transient('egoi_validator_' . $nonce, true, 3600);
+
+
         ?>
 		<form id="elementor-egoi-form" method="post" action="/">
 		<div class="egoi_elementor_form_wrapper_custom <?php echo esc_attr($classes_form) ?>" >
@@ -384,8 +389,9 @@ class EgoiElementorWidget extends Widget_Base {
 		<input type="hidden" id="elementorEgoiForm" name="elementorEgoiForm" value="<?php echo esc_attr($widget_id) ?>">
 		<input type="hidden" id="egoi_list" name="egoi_list" value="<?php echo esc_attr($options['list']) ?>">
 		<input type="hidden" id="egoi_double_optin" name="egoi_double_optin" value="<?php echo esc_attr($settings['double_optin']) ?>">
+        <input type="hidden" name="security" id="security"  value="<?php echo $nonce ?>">
 
-        <?php
+            <?php
 		if ( 'yes' == $settings['redirect_option'] ) {
 			if($settings['external_redirect_text']){
 				?>

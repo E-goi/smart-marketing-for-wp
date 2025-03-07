@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 
-define( 'EFWP_SELF_VERSION', '5.0.12' );
+define( 'EFWP_SELF_VERSION', '5.0.13' );
 
 function activate_egoi_for_wp() {
 
