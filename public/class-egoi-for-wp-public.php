@@ -759,6 +759,20 @@ class Egoi_For_Wp_Public {
 				$form_data['tags']
 			);
 		} else {
+            if (empty($_POST['security'])) {
+                _e('ERROR: invalid data submitted', 'egoi-for-wp');
+                exit;
+            }
+            $nonce = $_POST['security'];
+            $nonce_used = get_transient('egoi_validator_' . $nonce);
+
+            if (!$nonce_used) {
+                _e( 'ERROR: invalid data submitted', 'egoi-for-wp' );
+                exit;
+            }
+
+            delete_transient('egoi_validator_' . $_POST['security']);
+
 			$form_data = array(
 				'email'      => sanitize_email( $_POST['email'] ),
 				'cellphone'  => isset($_POST['cellphone']) ? sanitize_text_field( $_POST['cellphone'] ) : '',
