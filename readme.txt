@@ -171,7 +171,7 @@ You can create and update your lists, see how many subscribers you have, but you
 == Changelog ==
 
 = 5.0.13 =
-- Fix Elementos form submission
+- Fix Elementor form submission
 
 = 5.0.12 =
 - Fix Admin Validation
