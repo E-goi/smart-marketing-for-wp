@@ -155,7 +155,7 @@ class EgoiProductsBo {
 				}
 
 				if( $product['sale_price']) {
-					$product[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
+					$products[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
 				}
 			}
 		}
@@ -182,7 +182,7 @@ class EgoiProductsBo {
 				}
 
 				if( $product['sale_price']) {
-					$product[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
+					$products[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
 				}
 			}
 		}
