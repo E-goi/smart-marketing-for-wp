@@ -194,7 +194,7 @@
                     <label for="role">
                         <span style="display: inline-flex; align-items: center;">
                             <?php _e( 'Sincronizar Encomendas WP', 'egoi-for-wp' ); ?>
-                            <span class="wp-ui-notification wp-ui-highlight" style="margin-left: 5px !important; background-color: #28a745 !important; padding: 3px !important; border-radius: 5px !important;"><?php _e( 'New', 'egoi-for-wp' ); ?></span>
+                            <span class="wp-ui-notification wp-ui-highlight" style="margin-left: 5px !important; background-color: #28a745 !important; padding: 3px !important; border-radius: 5px !important;"><?php _e( 'BETA', 'egoi-for-wp' ); ?></span>
                         </span>
                     </label>
                     <div class="smsnf-wrapper">

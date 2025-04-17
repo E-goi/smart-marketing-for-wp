@@ -419,7 +419,7 @@ class Egoi_For_Wp_Admin {
             add_submenu_page(
                 $this->plugin_name,
                 __( 'Configuration', 'egoi-for-wp' ),
-                sprintf( '%s <span class="awaiting-mod" style="	background-color: #28a745;">New</span>', __( 'Configuration', 'egoi-for-wp' ) ),
+                sprintf( '%s <span class="awaiting-mod" style="font-size: 10px;	background-color: #28a745;">BETA</span>', __( 'Configuration', 'egoi-for-wp' ) ),
                 $capability,
                 'egoi-4-wp-subscribers',
                 array( $this, 'display_plugin_subscriber_page' )
