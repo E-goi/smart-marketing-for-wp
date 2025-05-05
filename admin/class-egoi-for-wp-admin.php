@@ -970,7 +970,7 @@ class Egoi_For_Wp_Admin {
 	public function getContactForm( $result ) {
 		try {
 			$opt      = get_option( 'egoi_int' );
-			$egoi_int = $opt['egoi_int'];
+			$egoi_int = $egoi_int = !empty($opt['egoi_int']) ? $opt['egoi_int'] : array();
 			$form_id  = sanitize_key( $_POST['_wpcf7'] );
 			$extra_fields = array();
 
@@ -1241,8 +1241,10 @@ class Egoi_For_Wp_Admin {
 	 */
 	public function checkNewsletterPostComment() {
 
+		
 		$opt      = get_option( 'egoi_int' );
-		$egoi_int = $opt['egoi_int'];
+		$egoi_int = $egoi_int = !empty($opt['egoi_int']) ? $opt['egoi_int'] : array();
+		
 
 		if ( !empty($egoi_int['enable_pc']) ) {
 			$check = "<p class='comment-form-check-newsletter'><label for='check_newsletter'>" . __( 'I want to receive newsletter', 'egoi-for-wp' ) . "</label>
