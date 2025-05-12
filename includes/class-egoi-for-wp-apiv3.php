@@ -337,12 +337,20 @@ class EgoiApiV3 {
 			}
 		}
 
-		$data = $this->getCountriesCurrencies( $cellphone );
+		$data = $this->getCountriesCurrencies();
 		if ( empty( $data ) ) {
 			return $cellphone;
 		}
-		$language = get_option( 'WPLANG' );
-		foreach ( $data['items'] as $country ) {
+
+        $wplang = get_option( 'WPLANG' );
+        if ( !empty($wplang) ) {
+            $language = $wplang;
+        } else {
+            $raw_locale = get_locale();
+            $parts        = preg_split( '/[_-]/', $raw_locale );
+            $language = isset( $parts[1] ) ? strtoupper( $parts[1] ) : strtoupper( $parts[0] );
+        }
+        foreach ( $data['items'] as $country ) {
 			if ( strpos( $language, $country['iso_code'] ) !== false ) {
 				return $country['country_code'] . '-' . $cellphone;
 			}
@@ -904,7 +912,6 @@ class EgoiApiV3 {
 			$fname = implode(' ', array_slice($full_name,0,-1));
 
 		}
-
 		$tel  = (isset($ref_fields['tel']) && !empty($ref_fields['tel']) && $ref_fields['tel'] != '-') ? $this->advinhometerCellphoneCode($ref_fields['tel']) : '';
 		$cell = (isset($ref_fields['cell']) && !empty($ref_fields['cell']) && $ref_fields['cell'] != '-' ) ? $this->advinhometerCellphoneCode($ref_fields['cell']) : '';
 		$bd   = isset($ref_fields['bd']) ? $ref_fields['bd'] : '';
@@ -917,6 +924,8 @@ class EgoiApiV3 {
 			'status'     => $status,
 		);
 
+        $cell = $this->advinhometerCellphoneCode($tel);
+        var_dump($cell);
 		// telephone
 		if ( !empty($tel) ) {
 			$params['cellphone'] = $tel;
@@ -1237,8 +1246,8 @@ class EgoiApiV3 {
 
 		$params = array();
 
-		$tel  = isset($ref_fields['tel']) ? $ref_fields['tel'] : '';
-		$cell = isset($ref_fields['cell']) ? $ref_fields['cell'] : '';
+        $tel  = (isset($ref_fields['tel']) && !empty($ref_fields['tel']) && $ref_fields['tel'] != '-') ? $this->advinhometerCellphoneCode($ref_fields['tel']) : '';
+        $cell = (isset($ref_fields['cell']) && !empty($ref_fields['cell']) && $ref_fields['cell'] != '-' ) ? $this->advinhometerCellphoneCode($ref_fields['cell']) : '';
 		$bd   = isset($ref_fields['bd']) ? $ref_fields['bd'] : '';
 		$lang = isset($ref_fields['lang']) ? $ref_fields['lang'] : '';
 
