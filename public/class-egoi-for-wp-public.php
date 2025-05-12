@@ -765,7 +765,6 @@ class Egoi_For_Wp_Public {
             }
             $nonce = $_POST['security'];
             $nonce_used = get_transient('egoi_validator_' . $nonce);
-
             if (!$nonce_used) {
                 _e( 'ERROR: invalid data submitted', 'egoi-for-wp' );
                 exit;
@@ -776,7 +775,8 @@ class Egoi_For_Wp_Public {
 			$form_data = array(
 				'email'      => sanitize_email( $_POST['email'] ),
 				'cellphone'  => isset($_POST['cellphone']) ? sanitize_text_field( $_POST['cellphone'] ) : '',
-				'first_name' => isset($_POST['first_name']) ? sanitize_text_field( stripslashes( $_POST['first_name'] ) ) : '',
+                'telephone'  => isset($_POST['telephone']) ? sanitize_text_field( $_POST['telephone'] ) : '',
+                'first_name' => isset($_POST['first_name']) ? sanitize_text_field( stripslashes( $_POST['first_name'] ) ) : '',
 				'last_name'  => isset($_POST['last_name']) ? sanitize_text_field( stripslashes( $_POST['last_name'] ) ) : '',
 				'tags'       => isset($_POST['egoi_tag']) ? array( sanitize_key( $_POST['egoi_tag'] )) : array(),
 				'birth_date' => isset($_POST['birth_date']) ? sanitize_text_field( stripslashes( $_POST['birth_date'] ) ) : '',
@@ -791,10 +791,11 @@ class Egoi_For_Wp_Public {
 				$form_data['last_name'],
 				array_filter($_POST, function($val, $key){ if(preg_match('/^extra_/', $key)){return [$key => $val];}}, ARRAY_FILTER_USE_BOTH),
 				1,
-				array('cell' => $form_data['cellphone'], 'bd' => $form_data['birth_date'], 'lang' => $form_data['lang']), 
+				array('tel' => $form_data['telephone'], 'cell' => $form_data['cellphone'], 'bd' => $form_data['birth_date'], 'lang' => $form_data['lang']),
 				$status == 0 ? 'active' : 'unconfirmed',
 				$form_data['tags']
 			);
+            var_dump($add);
 		}
 
 		if ( isset($add) && !isset($add['errors'])) {
