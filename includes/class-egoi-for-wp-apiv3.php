@@ -924,14 +924,12 @@ class EgoiApiV3 {
 			'status'     => $status,
 		);
 
-        $cell = $this->advinhometerCellphoneCode($tel);
-        var_dump($cell);
-		// telephone
+        // telephone
 		if ( !empty($tel) ) {
-			$params['cellphone'] = $tel;
+			$params['phone'] = $tel;
 		}
 		// cellphone
-		if ( !empty($cell) && empty($tel) ) {
+		if ( !empty($cell)) {
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
@@ -1011,7 +1009,7 @@ class EgoiApiV3 {
 		if($httpCode == 409 && $editContact == 'true'){
 			return  $this->editContact( $listID, $resp['errors']['contacts'][0], $name, $lname, $extra_fields, $option, $ref_fields, $status, $tags );
 		} elseif ( $httpCode == 201){
-			if ( ! empty( $tags ) && isset( $resp['contact_id'] ) ) {
+            if ( ! empty( $tags ) && isset( $resp['contact_id'] ) && $tags[0] !== "0" ) {
 				$this->attachTag( $listID, $resp['contact_id'], $tags );
 			}
 			return $resp['contact_id'];

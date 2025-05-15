@@ -795,7 +795,6 @@ class Egoi_For_Wp_Public {
 				$status == 0 ? 'active' : 'unconfirmed',
 				$form_data['tags']
 			);
-            var_dump($add);
 		}
 
 		if ( isset($add) && !isset($add['errors'])) {
