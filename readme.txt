@@ -169,6 +169,10 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+= 5.1.03 =
+- Add new Validation for warning in contact forms
+- Ensured consistent behavior of the newsletter subscription checkbox selection
+
 = 5.1.02 =
 - Add a ReplyTo to mailer
 
