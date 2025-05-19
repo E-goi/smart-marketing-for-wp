@@ -1237,20 +1237,22 @@ class Egoi_For_Wp_Admin {
 	/**
 	 * Check if form is available for newsletter.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function checkNewsletterPostComment() {
+		$options = get_option( Egoi_For_Wp_Admin::OPTION_NAME );
 
-		$opt      = get_option( 'egoi_int' );
-		$egoi_int = !empty($opt['egoi_int']) ? $opt['egoi_int'] : array();		
+		$fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
+		global $current_user;
 
-		if ( !empty($egoi_int['enable_pc']) ) {
-			$check = "<p class='comment-form-check-newsletter'><label for='check_newsletter'>" . __( 'I want to receive newsletter', 'egoi-for-wp' ) . "</label>
-						<input type='checkbox' name='check_newsletter' id='check_newsletter'><p>";
-			echo $check;
-			return '';
+		foreach ( $fields as $key => $field_args ) {
+			if ( $current_user ) {
+				$checked = get_user_meta( $current_user->ID, $key, true );
+			}
+			woocommerce_form_field( $key, $field_args, ( ( empty( $checked ) ? 0 : true ) || ( ! empty( $options[ $key ] ) ) ) );
 		}
 	}
+
 
 	/**
 	 * Map custom fields with Core / Woocommerce to E-goi.
