@@ -180,6 +180,7 @@ You can create and update your lists, see how many subscribers you have, but you
 - Add a “Telephone” field to the Elementor form.
 - Add a validation on the configuration page if WooCommerce is not installed.
 - Enforce proper formatting when validating phone numbers.
+- Ensured consistent behavior of the newsletter subscription checkbox selection
 
 = 5.1.00 =
 - Add new Functionality to track all order status by Api
