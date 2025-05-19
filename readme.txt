@@ -169,6 +169,10 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+= 5.1.02 =
+- Add new Validation for warning in contact forms
+- Ensured consistent behavior of the newsletter subscription checkbox selection
+
 = 5.1.01 =
 - Add a “Telephone” field to the Elementor form.
 - Add a validation on the configuration page if WooCommerce is not installed.
