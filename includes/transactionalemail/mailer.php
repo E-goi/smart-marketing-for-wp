@@ -87,6 +87,7 @@ class Mailer {
 				'bcc' => $this->phpmailer->getBccAddresses(),
 			)
 		);
+        $this->set_reply_to($this->phpmailer->getReplyToAddresses());
 		$this->set_from( $transactionalEmailOption['fromId'], $transactionalEmailOption['fromname'] );
 		$this->set_subject( $this->phpmailer->Subject );
 		$this->set_content( $this->phpmailer->Body, $this->phpmailer->ContentType );
@@ -134,7 +135,34 @@ class Mailer {
 		}
 	}
 
-	/**
+    /**
+     * set the reply to
+     */
+    public function set_reply_to( $replyTo ) {
+        if ( empty( $replyTo ) || ! is_array( $replyTo ) ) {
+            return;
+        }
+
+        $email = array_key_first( $replyTo );
+        $info  = $replyTo[ $email ];
+
+        if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+            return;
+        }
+
+        $name = $info[1] ?? '';
+
+        $data = [
+            'replyTo' => [
+                'email' => $email,
+                'name'  => ! empty( $name ) ? $name : $email,
+            ],
+        ];
+
+        $this->set_body_param( $data );
+    }
+
+    /**
 	 * set the attributes to, cc and bcc
 	 */
 	public function set_recipients( $recipients ) {
