@@ -2132,7 +2132,7 @@ class Egoi_For_Wp_Admin {
 						'title'    => $item->get_title(),
 						'date'     => $item->get_date( 'd/m/Y' ),
 						'link'     => $item->get_permalink(),
-						'category' => $item->get_category()->term,
+						'category' => $item->get_category() ? $item->get_category()->term : '',
 						'excerpt'  => $excerpt,
 					);
 				}

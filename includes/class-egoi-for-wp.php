@@ -779,19 +779,21 @@ class Egoi_For_Wp {
         ];
 
         $result_client = json_decode($this->_getContent($url, $headers));
-        if ($result_client->title === 'Unauthorized') {
-            return (object) [
-                'ERROR' => 'UNAUTHORIZED',
-                'status' => 'error',
-            ];
-        } elseif ($result_client->title === 'Forbidden') {
-            return (object) [
-                'ERROR' => 'FORBIDDEN',
-                'status' => 'error',
-            ];
-        } else {
-            return $result_client;
-        }
+        $title = isset($result_client->title) ? $result_client->title : '';
+
+		if ($title === 'Unauthorized') {
+			return (object) [
+				'ERROR' => 'UNAUTHORIZED',
+				'status' => 'error',
+			];
+		} elseif ($title === 'Forbidden') {
+			return (object) [
+				'ERROR' => 'FORBIDDEN',
+				'status' => 'error',
+			];
+		}
+		return $result_client;
+
     }
 
 	/**
