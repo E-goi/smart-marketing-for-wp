@@ -1198,7 +1198,7 @@ class Egoi_For_Wp_Admin {
 
 			$name  = $data['comment_author'];
 			$email = $data['comment_author_email'];
-			$check = sanitize_text_field( $_POST['check_newsletter'] );
+            $check = isset($_POST['check_newsletter']) ? sanitize_text_field($_POST['check_newsletter']) : '';
 
 			if ( $check == 'on' ) {
 
@@ -1240,17 +1240,33 @@ class Egoi_For_Wp_Admin {
 	 * @since 1.0.0
 	 */
 	public function checkNewsletterPostComment() {
-		$options = get_option( Egoi_For_Wp_Admin::OPTION_NAME );
 
+        $opt      = get_option( 'egoi_int' );
+		$egoi_int = !empty($opt['egoi_int']) ? $opt['egoi_int'] : array();
+
+        $options = get_option( Egoi_For_Wp_Admin::OPTION_NAME );
 		$fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
 		global $current_user;
 
 		foreach ( $fields as $key => $field_args ) {
-			if ( $current_user ) {
-				$checked = get_user_meta( $current_user->ID, $key, true );
-			}
-			woocommerce_form_field( $key, $field_args, ( ( empty( $checked ) ? 0 : true ) || ( ! empty( $options[ $key ] ) ) ) );
-		}
+            if ( !empty($egoi_int['enable_pc']) ) {
+                if ( $current_user ) {
+                    $checked = get_user_meta( $current_user->ID, 'check_newsletter', true );
+                }
+
+                $checked_attr = (( empty( $checked ) ? 0 : true ) || ( ! empty( $options[ $key ] ))) ? "checked" : "";
+
+                $check = "<p class='comment-form-check-newsletter'>
+                            <input type='checkbox' name='check_newsletter' id='check_newsletter' $checked_attr>
+                            <label for='check_newsletter'>" . __( 'Subscribe to newsletter (optional)', 'egoi-for-wp' ) . "</label>
+                          </p>";
+
+                echo $check;
+                return '';
+            }
+
+        }
+
 	}
 
 
