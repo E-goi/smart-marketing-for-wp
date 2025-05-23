@@ -173,6 +173,7 @@ You can create and update your lists, see how many subscribers you have, but you
 - Fix the behaviour of the newletter option in the Post Comment section
 - Add new Validation for warning in contact forms
 - Ensured consistent behavior of the newsletter subscription checkbox selection
+- Added validation to prevent warnings.
 
 = 5.1.02 =
 - Add a ReplyTo to mailer
