@@ -107,10 +107,12 @@ $page  = array(
 												<?php _e( 'Best<br>day', 'egoi-for-wp' ); ?>
 												<?php $string = __( "Best day of subscribers registered\ndirectly in the plugin", 'egoi-for-wp' ); ?>
 												<button class="smsnf-dashboard-subs-stats__content--result btn eg_tooltip" data-tooltip="<?php echo $string; ?>">
-													<?php
-														$best_day = $this->smsnf_get_form_subscribers_best_day()->date;
-														echo $best_day ? esc_html( date( 'd M Y', strtotime( $best_day ) ) ) : '-';
-													?>
+												<?php
+													$best_day_data = $this->smsnf_get_form_subscribers_best_day();
+													$best_day = isset($best_day_data->date) ? $best_day_data->date : null;
+													echo $best_day ? esc_html( date( 'd M Y', strtotime( $best_day ) ) ) : '-';
+												?>
+
 												</button>
 											</h3>
 										</div>
@@ -142,12 +144,27 @@ $page  = array(
 									<tbody>
 									<?php foreach ( $last_subscribers as $subscriber ) { ?>
 										<tr>
-											<td class="hide-xs"><?php echo ! empty( $subscriber->subscriber_email ) ? esc_html( $subscriber->subscriber_email ) : ''; ?></td>
-											<td class="hide-xs"><?php echo ! empty( $subscriber->form_id ) ? esc_html( $subscriber->form_id ) : ''; ?></td>
-											<td class="hide-xs"><?php echo ! empty( $subscriber->form_title ) ? esc_html( $subscriber->form_title ) : ''; ?></td>
-											<td class="hide-xs"><?php echo ! empty( $subscriber->created_at ) ? esc_html( date( 'Y/m/d H\hm', strtotime( $subscriber->created_at ) ) ) : ''; ?></td>
-											<td><?php echo ! empty( $subscriber->list_id ) ? esc_html( '(ID - ' . $subscriber->list_id . ') ' .  $listsObject[$subscriber->list_id] ) 
-											: ''; ?></td>
+											<td class="hide-xs">
+												<?php echo !empty($subscriber->subscriber_email) ? esc_html($subscriber->subscriber_email) : ''; ?>
+											</td>
+											<td class="hide-xs">
+												<?php echo !empty($subscriber->form_id) ? esc_html($subscriber->form_id) : ''; ?>
+											</td>
+											<td class="hide-xs">
+												<?php echo !empty($subscriber->form_title) ? esc_html($subscriber->form_title) : ''; ?>
+											</td>
+											<td class="hide-xs">
+												<?php echo !empty($subscriber->created_at) ? esc_html(date('Y/m/d H\hi', strtotime($subscriber->created_at))) : ''; ?>
+											</td>
+											<td>
+												<?php
+												if (!empty($subscriber->list_id) && isset($listsObject[$subscriber->list_id])) {
+													echo esc_html('(ID - ' . $subscriber->list_id . ') ' . $listsObject[$subscriber->list_id]);
+												} else {
+													echo esc_html('(ID - ' . ($subscriber->list_id ?? 'N/A') . ') Lista desconhecida');
+												}
+												?>
+											</td>
 										</tr>
 									<?php } ?>
 									</tbody>
@@ -169,23 +186,47 @@ $page  = array(
 												<div>
 													<!-- <p style="font-size: 11px; margin: 0;">Seleccione a Lista</p> -->
 													<select id="chart_list">
-														<?php foreach ( $lists as $list ) { ?>
-															<option value="<?php echo isset($lists_chart[ $list->list_id ]) ?  esc_attr( implode( ',', $lists_chart[ $list->list_id ]['totals'] ) ) : "NaN"?>" <?php selected( $list->list_id, $options_list ); ?> >
-																<?php echo esc_html( '(ID - ' . $list->list_id . ') ' . $listsObject[$list->list_id]); ?>
-															</option>
-														<?php } ?>
+													<?php foreach ( $lists as $list ) { 
+														$list_id = $list->list_id;
+
+														$value = isset($lists_chart[$list_id]['totals'])
+															? esc_attr(implode(',', $lists_chart[$list_id]['totals']))
+															: 'NaN';
+
+														$label = isset($listsObject[$list_id])
+															? esc_html('(ID - ' . $list_id . ') ' . $listsObject[$list_id])
+															: esc_html('(ID - ' . $list_id . ') Lista desconhecida');
+													?>
+														<option value="<?php echo $value; ?>" <?php selected( $list_id, $options_list ); ?>>
+															<?php echo $label; ?>
+														</option>
+													<?php } ?>
+
 													</select>
 												</div>
 
 												<div>Total:
 													<span class="smsnf-dashboard-subscribers-by-lists__content--total" id="list_subscribers_total">
-														<?php
+													<?php
 														$total = 0;
-														foreach ( $lists as $list ) {
-															$total = $list->list_id == $options_list ? $list->total : null;
+
+														if (!empty($lists) && is_array($lists)) {
+															foreach ($lists as $list) {
+																if (isset($list->list_id) && $list->list_id == $options_list) {
+																	$total = isset($list->total) ? $list->total : 0;
+																	break;
+																}
+															}
+
+															// Se $total continuar 0, tenta usar o primeiro total, se existir
+															if ($total == 0 && isset($lists[0]) && isset($lists[0]->total)) {
+																$total = $lists[0]->total;
+															}
 														}
-														echo $total == 0 ? esc_html( $lists[0]->total ) : esc_html( $total );
-														?>
+
+														echo esc_html($total);
+													?>
+
 													</span>
 												</div>
 
