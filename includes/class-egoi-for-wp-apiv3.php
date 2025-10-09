@@ -1633,13 +1633,31 @@ class ClientHttp {
 			$this->headers   = array();
 			return;
 		}
+
+		// Convert headers from array format 'Header: value' to associative array
+		$formatted_headers = array();
+		if ( is_array( $headers ) ) {
+			foreach ( $headers as $header ) {
+				if ( is_string( $header ) && strpos( $header, ':' ) !== false ) {
+					list( $key, $value ) = explode( ':', $header, 2 );
+					$formatted_headers[ trim( $key ) ] = trim( $value );
+				}
+			}
+		}
+
+		// Convert body to JSON if it's an array
+		$request_body = $body;
+		if ( is_array( $body ) && ! empty( $body ) ) {
+			$request_body = wp_json_encode( $body );
+		}
+
 		$res = wp_remote_request(
 			$url,
 			array(
 				'method'  => $method,
 				'timeout' => 30,
-				'body'    => $body,
-				'headers' => $headers,
+				'body'    => $request_body,
+				'headers' => $formatted_headers,
 			)
 		);
 
