@@ -4,7 +4,7 @@ Donate link:
 Tags: Email Marketing, Newsletter, Marketing Automation, E-goi, Ecommerce
 Requires at least: 4.7
 Tested up to: 6.7.1
-Stable tag: 5.1.03
+Stable tag: 5.1.04
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Save Time, Increase Traffic, and Transform Business Opportunities (Leads) into Trusted Customers!
@@ -169,6 +169,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+= 5.1.04 =
+- Add related products to synchronization
+
 = 5.1.03 =
 - Fix the behaviour of the newletter option in the Post Comment section
 - Add new Validation for warning in contact forms
