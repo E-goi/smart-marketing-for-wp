@@ -39,24 +39,16 @@ jQuery( document ).ready(
 				}
 			);
 
-			// Toggle related products type field visibility
 			related_products.on(
 				'change',
 				function () {
-					console.log('Related products toggle changed:', $( this ).is( ':checked' ));
 					if ( $( this ).is( ':checked' ) ) {
-						console.log('Showing related products type');
 						related_products_type_wrapper.slideDown();
 					} else {
-						console.log('Hiding related products type');
 						related_products_type_wrapper.slideUp();
 					}
 				}
 			);
-
-			// Debug: log if elements are found
-			console.log('Related products checkbox found:', related_products.length);
-			console.log('Related products type wrapper found:', related_products_type_wrapper.length);
 
 			getDtaAjax();
 			function getDtaAjax(){
