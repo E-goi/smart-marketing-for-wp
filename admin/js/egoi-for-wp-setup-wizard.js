@@ -37,6 +37,7 @@
 			var loading_subs_import      = $( '#loading-subs-import' );
 			var progressbar_subs_import  = $( '#progressbar-subs-import' );
 			var count_users              = 0;
+			var count_products           = -1;
 			var subs_progress            = $( "#subs-progress" );
 
 			loader.show();
@@ -255,6 +256,10 @@
 								}
 								break;
 							case 'subscribers':
+								if (count_users === 0) {
+									// No subscribers, skip synchronization
+									return;
+								}
 								if (list_selected.val() && loading_subs_import.css( 'display' ) === 'none') {
 									saveStepWizard( step, {list: list_selected.val(), role: role_select.val()} ).then(
 										(response) => {
@@ -266,19 +271,50 @@
 								}
 								break;
 							case 'products':
-								if (catalog_selected.val() && ! catalog_glob_status.val() || catalog_selected.val() && catalog_selected.val() !== selected_catalog_input.val()) {
-									selected_catalog_input.val( catalog_selected.val() )
-									force_catalog_glob.attr( 'idgoi', catalog_selected.val() )
-									force_catalog_glob.trigger( "click" );
-									valid = false;
-									return;
-								}
-								if (catalog_glob_status.val()) {
-									return;// trigger
-								}
 								if( $("#force_catalog_glob").length == 0 ){
 									valid = true;
 									return;
+								}
+								if (catalog_selected.val() && ! catalog_glob_status.val() || catalog_selected.val() && catalog_selected.val() !== selected_catalog_input.val()) {
+									// Check if catalog has products before opening import modal
+									if (count_products === -1) {
+										// First time, count products
+										loader.show();
+										$.get(
+											egoi_config_ajax_object_ecommerce.ajax_url,
+											{action: 'egoi_count_products', catalog: catalog_selected.val()},
+											function(response) {
+												loader.hide();
+												if (response.success && response.data) {
+													count_products = parseInt(response.data);
+													if (count_products === 0) {
+														// No products, show alert and skip to next step
+														alert('No products found in WooCommerce. Skipping product synchronization.');
+														catalog_glob_status.val(1);
+														nextButton.trigger('click');
+													} else {
+														selected_catalog_input.val( catalog_selected.val() )
+														force_catalog_glob.attr( 'idgoi', catalog_selected.val() )
+														force_catalog_glob.trigger( "click" );
+													}
+												}
+											}
+										);
+										valid = false;
+										return;
+									} else if (count_products === 0) {
+										// No products, skip
+										return;
+									} else {
+										selected_catalog_input.val( catalog_selected.val() )
+										force_catalog_glob.attr( 'idgoi', catalog_selected.val() )
+										force_catalog_glob.trigger( "click" );
+										valid = false;
+										return;
+									}
+								}
+								if (catalog_glob_status.val()) {
+									return;// trigger
 								}
 								break;
 						}
