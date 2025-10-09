@@ -2445,25 +2445,12 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_sync_catalog() {
-		$json_input = file_get_contents('php://input');
-		$request_data = json_decode($json_input, true);
-
-		if (!isset($request_data['security'])) {
-			wp_send_json_error('Invalid request');
-			return;
-		}
-
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
-		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
-			wp_send_json_error('Security check failed');
-			return;
-		}
-
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$data = array();
-		if (isset($request_data['data']) && is_array($request_data['data'])) {
-			foreach ( $request_data['data'] as $key => $val ) {
-				$data[ sanitize_key( $key ) ] = sanitize_text_field( $val );
-			}
+
+
+		foreach ( $_POST['data'] as $key => $val ) {
+			$data[ sanitize_key( $key ) ] = sanitize_text_field( $val );
 		}
 
 		update_option( 'egoi_catalog_sync', wp_json_encode( $data ) );
@@ -2478,22 +2465,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_variations_catalog() {
-		$json_input = file_get_contents('php://input');
-		$request_data = json_decode($json_input, true);
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 
-		if (!isset($request_data['security'])) {
-			wp_send_json_error('Invalid request');
-			return;
-		}
-
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
-		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
-			wp_send_json_error('Security check failed');
-			return;
-		}
-
-		$catalogId = sanitize_text_field( $request_data['catalog_id'] );
-		$status    = sanitize_text_field( $request_data['status'] );
+		$catalogId = sanitize_text_field( $_POST['catalog_id'] );
+		$status    = sanitize_text_field( $_POST['status'] );
 
 		$bo = new EgoiProductsBo();
 		$bo->setCatalogOptions( $catalogId, array( 'variations' => $status === 'true' || $status === true ) );
@@ -2502,22 +2477,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_related_products_catalog() {
-		$json_input = file_get_contents('php://input');
-		$request_data = json_decode($json_input, true);
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 
-		if (!isset($request_data['security'])) {
-			wp_send_json_error('Invalid request');
-			return;
-		}
-
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
-		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
-			wp_send_json_error('Security check failed');
-			return;
-		}
-
-		$catalogId = sanitize_text_field( $request_data['catalog_id'] );
-		$status    = sanitize_text_field( $request_data['status'] );
+		$catalogId = sanitize_text_field( $_POST['catalog_id'] );
+		$status    = sanitize_text_field( $_POST['status'] );
 
 		$bo = new EgoiProductsBo();
 		$currentOptions = $bo->getCatalogOptions( $catalogId );
@@ -2528,22 +2491,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_related_products_type_catalog() {
-		$json_input = file_get_contents('php://input');
-		$request_data = json_decode($json_input, true);
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 
-		if (!isset($request_data['security'])) {
-			wp_send_json_error('Invalid request');
-			return;
-		}
-
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
-		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
-			wp_send_json_error('Security check failed');
-			return;
-		}
-
-		$catalogId = sanitize_text_field( $request_data['catalog_id'] );
-		$type      = sanitize_text_field( $request_data['type'] );
+		$catalogId = sanitize_text_field( $_POST['catalog_id'] );
+		$type      = sanitize_text_field( $_POST['type'] );
 
 		$bo = new EgoiProductsBo();
 		$currentOptions = $bo->getCatalogOptions( $catalogId );
@@ -2554,21 +2505,8 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_delete_catalog() {
-		$json_input = file_get_contents('php://input');
-		$request_data = json_decode($json_input, true);
-
-		if (!isset($request_data['security'])) {
-			wp_send_json_error('Invalid request');
-			return;
-		}
-
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
-		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
-			wp_send_json_error('Security check failed');
-			return;
-		}
-
-		$id = EgoiValidators::validate_id( sanitize_key( $request_data['id'] ) );
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+		$id = EgoiValidators::validate_id( sanitize_key( $_POST['id'] ) );
 		$bo = new EgoiProductsBo();
 
 		$result = $bo->deleteCatalog( $id );
@@ -2664,22 +2602,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_force_import_catalog() {
-		$json_input = file_get_contents('php://input');
-		$request_data = json_decode($json_input, true);
-
-		if (!isset($request_data['security'])) {
-			wp_send_json_error('Invalid request');
-			return;
-		}
-
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
-		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
-			wp_send_json_error('Security check failed');
-			return;
-		}
-
-		$id   = EgoiValidators::validate_id( sanitize_key( $request_data['id'] ) );
-		$page = EgoiValidators::validate_page( sanitize_key( $request_data['page'] ) );
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+		$id   = EgoiValidators::validate_id( sanitize_key( $_POST['id'] ) );
+		$page = EgoiValidators::validate_page( sanitize_key( $_POST['page'] ) );
 		$bo   = new EgoiProductsBo();
 
 		$options = EgoiProductsBo::getCatalogOptions( $id );
@@ -2786,21 +2711,7 @@ class Egoi_For_Wp_Admin {
 	 * Get Countries and Currencies Utility
 	 */
 	public function egoi_count_products() {
-		$json_input = file_get_contents('php://input');
-		$request_data = json_decode($json_input, true);
-
-		if (!isset($request_data['security'])) {
-			wp_send_json_error('Invalid request');
-			return;
-		}
-
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
-		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
-			wp_send_json_error('Security check failed');
-			return;
-		}
-
-		$catalog_id = sanitize_key( $request_data['catalog'] );
+		$catalog_id = sanitize_key( $_GET['catalog'] );
 		$a          = EgoiProductsBo::getCatalogOptions( $catalog_id );
 
 		switch ( $a['variations'] ) {
