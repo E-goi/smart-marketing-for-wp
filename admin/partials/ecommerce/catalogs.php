@@ -9,6 +9,8 @@
 				<th><?php _e( 'Currency', 'egoi-for-wp' ); ?></th>
 				<th><?php _e( 'Status', 'egoi-for-wp' ); ?></th>
 				<th><?php _e( 'Variations', 'egoi-for-wp' ); ?></th>
+				<th><?php _e( 'Related Products', 'egoi-for-wp' ); ?></th>
+				<th><?php _e( 'Related Products Type', 'egoi-for-wp' ); ?></th>
 				<th><?php _e( 'Operations', 'egoi-for-wp' ); ?></th>
 				<th><?php _e( 'Created At', 'egoi-for-wp' ); ?></th>
 			</tr>

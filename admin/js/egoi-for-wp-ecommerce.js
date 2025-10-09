@@ -81,6 +81,52 @@ jQuery(document).ready(function() {
             });
         })
 
+        // Related products toggle handler
+        $(document).on('change', '.related_products_catalog', function(e) {
+            e = $(e.target)
+            const catalogId = e.attr('idgoi');
+            const isChecked = e[0].checked;
+
+            console.log('Related products toggle changed:', isChecked);
+
+            // Enable/disable the corresponding dropdown
+            const dropdown = $('select.related_products_type_catalog[idgoi="' + catalogId + '"]');
+            if (isChecked) {
+                dropdown.prop('disabled', false);
+            } else {
+                dropdown.prop('disabled', true);
+            }
+
+            let data = {
+                security:       ajaxObj.ajax_nonce,
+                action:         'egoi_related_products_catalog',
+                catalog_id:     catalogId,
+                status:         isChecked ? 'true' : 'false'
+            };
+
+            $.post(ajaxObj.ajax_url, data, function(response) {
+                console.log('Related products toggle saved:', response);
+            });
+        });
+
+        // Related products type dropdown handler
+        $(document).on('change', '.related_products_type_catalog', function(e) {
+            e = $(e.target)
+            const catalogId = e.attr('idgoi');
+            const type = e.val();
+
+            let data = {
+                security:       ajaxObj.ajax_nonce,
+                action:         'egoi_related_products_type_catalog',
+                catalog_id:     catalogId,
+                type:           type
+            };
+
+            $.post(ajaxObj.ajax_url, data, function(response) {
+                console.log('Related products type saved');
+            });
+        });
+
         verified_delete.on('click', function(){
             deleteCatalog(s_delete_catalog.val(),to_delete);
         });

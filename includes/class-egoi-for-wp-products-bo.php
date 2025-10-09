@@ -144,9 +144,9 @@ class EgoiProductsBo {
 	 * @param int $page
 	 * @return mixed
 	 */
-	public function importProductsCatalog( $catalog_id, $page = 0, $tax = 0) {
+	public function importProductsCatalog( $catalog_id, $page = 0, $tax = 0, $syncRelatedProducts = false, $relatedProductsType = '') {
 
-		$products = self::getDbProducts( $page );
+		$products = self::getDbProducts( $page, 100, $syncRelatedProducts, $relatedProductsType );
 
 		if ( $tax > 0 ) {
 			foreach( $products as $key => $product ) {
@@ -157,6 +157,13 @@ class EgoiProductsBo {
 				if( $product['sale_price']) {
 					$products[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
 				}
+			}
+		}
+
+		// Remove related_products if sync is disabled
+		if (!$syncRelatedProducts) {
+			foreach($products as $key => $product) {
+				unset($products[$key]['related_products']);
 			}
 		}
 
@@ -171,9 +178,9 @@ class EgoiProductsBo {
 		);
 	}
 
-	public function importProductsCatalogNoVariations( $catalog_id, $page = 0, $tax = 0 ) {
-		
-		$products = self::getDbProductsNoVariations( $page );
+	public function importProductsCatalogNoVariations( $catalog_id, $page = 0, $tax = 0, $syncRelatedProducts = false, $relatedProductsType = '') {
+
+		$products = self::getDbProductsNoVariations( $page, 100, $syncRelatedProducts, $relatedProductsType );
 
 		if ( $tax > 0 ) {
 			foreach( $products as $key => $product ) {
@@ -184,6 +191,13 @@ class EgoiProductsBo {
 				if( $product['sale_price']) {
 					$products[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
 				}
+			}
+		}
+
+		// Remove related_products if sync is disabled
+		if (!$syncRelatedProducts) {
+			foreach($products as $key => $product) {
+				unset($products[$key]['related_products']);
 			}
 		}
 
@@ -225,20 +239,32 @@ class EgoiProductsBo {
 	public function syncProduct( $product ) {
 		$breadCumbs = self::getBreadcrumb();
 		$catalogs   = self::getCatalogsToSync();// apply rules if needed here (which products to sync)
-		$products   = self::preTransformArrayAbstractProductToApiBoth(
-			array(
-				array( 'ID' => $product->get_id() ),
-			),
-			$breadCumbs
-		);
 
 		foreach ( $catalogs as $catalog ) {
 			$option = self::getCatalogOptions( $catalog );
+
+			// Get related products settings
+			$syncRelated = $option['related_products'] ?? false;
+			$syncRelatedType = '';
+			if ($syncRelated && !empty($option['related_products_type'])) {
+				$syncRelatedType = $option['related_products_type'];
+			}
+
+			$products = self::preTransformArrayAbstractProductToApiBoth(
+				array(
+					array( 'ID' => $product->get_id() ),
+				),
+				$breadCumbs,
+				$syncRelated,
+				$syncRelatedType
+			);
+
 			if ( $option['variations'] == 0 ) {
 				$products = $products['no_variations'];
 			} else {
 				$products = $products['variations'];
 			}
+
 			foreach ( $products as $single ) {
                 $single['name'] =  !empty($single['name']) ? $single['name'] : '';
                 $single['description'] = !empty($single['description']) ? $single['description'] : '';
@@ -253,6 +279,11 @@ class EgoiProductsBo {
                         $single['sale_price'] = $single['sale_price'] * ((float)($tax / 100) + 1);
                     }
                 }
+
+				// Remove related_products if sync is disabled
+				if (!$syncRelated) {
+					unset($single['related_products']);
+				}
 
                 if (!$this->api->createProduct($single, $catalog)) {
                     $this->api->patchProduct($single, $catalog, $single['product_identifier']);
@@ -352,6 +383,23 @@ public static function genTableCatalog( $catalog ) {
                 </label>
                 </div>";
 
+	// Related products toggle switch
+	$checkedRelatedProducts = ! empty( $catalog['options']['related_products'] ) ? 'checked' : '';
+	$switchRelatedProducts = "<div class='switch-yes-no'>
+                 <label class=\"form-switch\">
+                <input $checkedRelatedProducts type=\"checkbox\" idgoi='{$catalog['catalog_id']}' class='related_products_catalog'>
+                <i class=\"form-icon\"></i>
+                </label>
+                </div>";
+
+	// Related products type dropdown
+	$currentType = ! empty( $catalog['options']['related_products_type'] ) ? $catalog['options']['related_products_type'] : 'upsells';
+	$disabled = empty( $catalog['options']['related_products'] ) ? 'disabled' : '';
+	$relatedProductsTypeSelect = "<select idgoi='{$catalog['catalog_id']}' class='related_products_type_catalog' $disabled>
+                <option value='upsells' " . ( $currentType === 'upsells' ? 'selected' : '' ) . ">" . __( 'Upsells', 'egoi-for-wp' ) . "</option>
+                <option value='cross-sells' " . ( $currentType === 'cross-sells' ? 'selected' : '' ) . ">" . __( 'Cross-sells', 'egoi-for-wp' ) . "</option>
+                </select>";
+
 	return "<tr>
                 <td>{$catalog['catalog_id']}</td>
                 <td>{$catalog['title']}</td>
@@ -359,6 +407,8 @@ public static function genTableCatalog( $catalog ) {
                 <td>{$catalog['currency']}</td>
                 <td>{$switch}</td>
                 <td>{$switchVariations}</td>
+                <td>{$switchRelatedProducts}</td>
+                <td>{$relatedProductsTypeSelect}</td>
                 <td class='flex-centered sun-margin'>
                     <div class=\"smsnf-btn " . $blinck . " force_catalog\" idgoi=\"{$catalog['catalog_id']}\">" . __( 'Import', 'egoi-for-wp' ) . "</div>
                     <div class=\"smsnf-btn delete-adv-form remove_catalog\" idgoi=\"{$catalog['catalog_id']}\">" . __( 'Delete', 'egoi-for-wp' ) . '</div>
@@ -416,7 +466,7 @@ public static function getProductsToBypass() {
 	 * @param int $limit
 	 * @return array
 	 */
-private static function getDbProducts( $page = 0, $limit = 100 ) {
+private static function getDbProducts( $page = 0, $limit = 100, $syncRelatedProducts = false, $relatedProductsType = '' ) {
 
 	global $wpdb;
 	$page  = $page * $limit;
@@ -425,10 +475,10 @@ private static function getDbProducts( $page = 0, $limit = 100 ) {
 	$rows  = $wpdb->get_results( $sql, ARRAY_A );
 
 	$breadCrumbs = self::getBreadcrumb();
-	return self::transformArrayAbstractProductToApi( $rows, $breadCrumbs );
+	return self::transformArrayAbstractProductToApi( $rows, $breadCrumbs, true, $syncRelatedProducts, $relatedProductsType );
 }
 
-private static function getDbProductsNoVariations( $page = 0, $limit = 100 ) {
+private static function getDbProductsNoVariations( $page = 0, $limit = 100, $syncRelatedProducts = false, $relatedProductsType = '') {
 	global $wpdb;
 	$page  = $page * $limit;
 	$table = $wpdb->prefix . 'posts';
@@ -436,7 +486,7 @@ private static function getDbProductsNoVariations( $page = 0, $limit = 100 ) {
 	$rows  = $wpdb->get_results( $sql, ARRAY_A );
 
 	$breadCrumbs = self::getBreadcrumb();
-	return self::transformArrayAbstractProductToApi( $rows, $breadCrumbs, false );
+	return self::transformArrayAbstractProductToApi( $rows, $breadCrumbs, false, $syncRelatedProducts, $relatedProductsType );
 }
 
 	/**
@@ -445,21 +495,21 @@ private static function getDbProductsNoVariations( $page = 0, $limit = 100 ) {
 	 * @param bool        $variations
 	 * @return array
 	 */
-public static function transformArrayAbstractProductToApi( $arr, &$breadCrumbs, $variations = true ) {
+public static function transformArrayAbstractProductToApi( $arr, &$breadCrumbs, $variations = true, $syncRelatedProducts = false, $relatedProductsType = '' ) {
 	$mappedProducts = array();
 	foreach ( $arr as $product ) {
 		$prod = wc_get_product( $product['ID'] );
 		if ( $prod instanceof WC_Product_Variable ) {
 			if ( $variations ) {
-				$data = self::transformProductVariableObjectToApi( $prod, $breadCrumbs );
+				$data = self::transformProductVariableObjectToApi( $prod, $breadCrumbs, $syncRelatedProducts, $relatedProductsType );
 				foreach ( $data as $productVariation ) {
 					$mappedProducts[] = self::transformToCleanArray( $productVariation );
 				}
 			} else {
-				$mappedProducts[] = self::transformProductVariableObjectToApiNoVariations( $prod, $breadCrumbs );
+				$mappedProducts[] = self::transformProductVariableObjectToApiNoVariations( $prod, $breadCrumbs, $syncRelatedProducts, $relatedProductsType );
 			}
 		} elseif ( $prod instanceof WC_Product && ! $prod instanceof WC_Product_Variation ) {
-			$p = self::transformProductObjectToApi( $prod, $breadCrumbs );
+			$p = self::transformProductObjectToApi( $prod, $breadCrumbs, false, $syncRelatedProducts, $relatedProductsType );
 			if ( ! empty( $p ) ) {
 				$mappedProducts[] = self::transformToCleanArray( $p );
 			}
@@ -468,10 +518,10 @@ public static function transformArrayAbstractProductToApi( $arr, &$breadCrumbs, 
 	return $mappedProducts;
 }
 
-public static function preTransformArrayAbstractProductToApiBoth( $arr, &$breadCrumbs ) {
+public static function preTransformArrayAbstractProductToApiBoth( $arr, &$breadCrumbs, $syncRelatedProducts = false, $relatedProductsType = '' ) {
 	return array(
-		'no_variations' => self::transformArrayAbstractProductToApi( $arr, $breadCrumbs, false ),
-		'variations'    => self::transformArrayAbstractProductToApi( $arr, $breadCrumbs ),
+		'no_variations' => self::transformArrayAbstractProductToApi( $arr, $breadCrumbs, false, $syncRelatedProducts, $relatedProductsType ),
+		'variations'    => self::transformArrayAbstractProductToApi( $arr, $breadCrumbs, true, $syncRelatedProducts, $relatedProductsType ),
 	);
 }
 
@@ -515,7 +565,7 @@ private static function getBreadcrumb( $delimiter = '>' ) {
 	 * @param bool        $bypass
 	 * @return array|null
 	 */
-private static function transformProductObjectToApi( $product, &$breadCrumbs, $bypass = false ) {
+private static function transformProductObjectToApi( $product, &$breadCrumbs, $bypass = false, $syncRelatedProducts = false, $relatedProductsType = '' ) {
 
 	if ( ! $bypass ) {
 		if ( ! $product instanceof WC_Product || empty( $product->get_regular_price() ) ) {
@@ -525,7 +575,19 @@ private static function transformProductObjectToApi( $product, &$breadCrumbs, $b
 	$description      = $product->get_description();
 	$shot_description = $product->get_short_description();
 
-	
+	// Get related products based on type
+	$related_products = array();
+	if ($syncRelatedProducts) {
+		if ($relatedProductsType === 'upsells') {
+			$related_products = $product->get_upsell_ids();
+		} elseif ($relatedProductsType === 'cross-sells') {
+			$related_products = $product->get_cross_sell_ids();
+		} else {
+			// Default: merge both
+			$related_products = array_unique( array_merge( $product->get_upsell_ids(), $product->get_cross_sell_ids() ) );
+		}
+	}
+
 	return array(
 		'product_identifier' => "{$product->get_id()}",
 		'name'               => $product->get_name(),
@@ -541,7 +603,7 @@ private static function transformProductObjectToApi( $product, &$breadCrumbs, $b
 		'sale_price'         => $product->get_sale_price(),
 		'brand'              => $product->get_meta( '_egoi_brand' ),
 		'categories'         => self::transformArrayIdsToArrayBreadCrumbs( $product->get_category_ids(), $breadCrumbs ),
-		'related_products'   => array_unique( array_merge( $product->get_upsell_ids(), $product->get_cross_sell_ids() ) ),
+		'related_products'   => $related_products,
 	);
 
 }
@@ -553,12 +615,12 @@ private static function transformProductObjectToApi( $product, &$breadCrumbs, $b
 	 * @param $breadCrumbs
 	 * @return array
 	 */
-private static function transformProductVariableObjectToApi( $product, &$breadCrumbs ) {
+private static function transformProductVariableObjectToApi( $product, &$breadCrumbs, $syncRelatedProducts = false, $relatedProductsType = '' ) {
 	if ( ! $product instanceof WC_Product_Variable ) {
 		return array();
 	}
 
-	$base = self::transformProductObjectToApi( $product, $breadCrumbs, true );
+	$base = self::transformProductObjectToApi( $product, $breadCrumbs, true, $syncRelatedProducts, $relatedProductsType );
 
 	$variations = $product->get_available_variations();
 
@@ -572,7 +634,7 @@ private static function transformProductVariableObjectToApi( $product, &$breadCr
 			continue;
 		}
 		$prod        = wc_get_product( $variation['variation_id'] );
-		$prod_mapped = self::transformProductObjectToApi( $prod, $breadCrumbs, true );
+		$prod_mapped = self::transformProductObjectToApi( $prod, $breadCrumbs, true, $syncRelatedProducts, $relatedProductsType );
 
 		if ( empty( $prod_mapped ) ) {
 			continue;
@@ -584,18 +646,19 @@ private static function transformProductVariableObjectToApi( $product, &$breadCr
 		if ( empty( $prod_mapped['description'] ) ) {
 			$prod_mapped['description'] = ! empty( $prod->get_short_description() ) ? $prod->get_short_description() : $product->get_short_description();
 		}
+		$prod_mapped['related_products'] = $base['related_products'];
 
 		$output[] = $prod_mapped;
 	}
 	return $output;
 }
 
-private static function transformProductVariableObjectToApiNoVariations( $product, &$breadCrumbs ) {
+private static function transformProductVariableObjectToApiNoVariations( $product, &$breadCrumbs, $syncRelatedProducts = false, $relatedProductsType = '' ) {
 	if ( ! $product instanceof WC_Product_Variable ) {
 		return array();
 	}
 
-	$base          = self::transformProductObjectToApi( $product, $breadCrumbs, true );
+	$base          = self::transformProductObjectToApi( $product, $breadCrumbs, true, $syncRelatedProducts, $relatedProductsType );
 	$base['price'] = $product->get_variation_price();
 	if ( $base['price'] != $product->get_variation_sale_price() ) {
 		$base['sale_price'] = $product->get_variation_sale_price();
