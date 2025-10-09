@@ -52,6 +52,7 @@ jQuery(document).ready(function() {
 
         var close_modal_catalog = $('#close_modal_catalog')
         var cancel_modal_catalog = $('#cancel_modal_catalog')
+        var close_import_modal = $('#close-import-modal')
 
         close_modal_catalog.on('click', function () {
             modal_delete.modal('hide');
@@ -59,6 +60,10 @@ jQuery(document).ready(function() {
 
         cancel_modal_catalog.on('click', function () {
             modal_delete.modal('hide');
+        });
+
+        close_import_modal.on('click', function () {
+            modal_import.modal('hide');
         });
 
         sync_catalog.change(function () {

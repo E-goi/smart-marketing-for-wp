@@ -18,7 +18,7 @@ function getProductImportModal() {
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="egoi-modal-header modal-header">
-						<button type="button" class="close no-border-button" data-dismiss="modal" aria-label="Close">
+						<button type="button" class="close no-border-button" data-dismiss="modal" aria-label="Close" id="close-import-modal">
 							&times;
 						</button>
 						<h2 class="modal-title" id="modalLabel"><?php _e( 'Import Catalog: ', 'egoi-for-wp' ); ?> <span id="display-selected"></span></h2>
