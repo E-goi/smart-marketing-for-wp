@@ -594,6 +594,8 @@ class Egoi_For_Wp {
 		// E-commerce
 		$this->loader->add_action( 'wp_ajax_egoi_sync_catalog', $plugin_admin, 'egoi_sync_catalog' );
 		$this->loader->add_action( 'wp_ajax_egoi_variations_catalog', $plugin_admin, 'egoi_variations_catalog' );
+		$this->loader->add_action( 'wp_ajax_egoi_related_products_catalog', $plugin_admin, 'egoi_related_products_catalog' );
+		$this->loader->add_action( 'wp_ajax_egoi_related_products_type_catalog', $plugin_admin, 'egoi_related_products_type_catalog' );
 		$this->loader->add_action( 'wp_ajax_egoi_force_import_catalog', $plugin_admin, 'egoi_force_import_catalog' );
 		$this->loader->add_action( 'wp_ajax_egoi_create_catalog', $plugin_admin, 'egoi_create_catalog' );
 		$this->loader->add_action( 'wp_ajax_egoi_delete_catalog', $plugin_admin, 'egoi_delete_catalog' );

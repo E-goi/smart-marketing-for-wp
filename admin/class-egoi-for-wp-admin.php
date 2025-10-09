@@ -2445,12 +2445,25 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_sync_catalog() {
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+		$json_input = file_get_contents('php://input');
+		$request_data = json_decode($json_input, true);
+
+		if (!isset($request_data['security'])) {
+			wp_send_json_error('Invalid request');
+			return;
+		}
+
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
+		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
+			wp_send_json_error('Security check failed');
+			return;
+		}
+
 		$data = array();
-
-
-		foreach ( $_POST['data'] as $key => $val ) {
-			$data[ sanitize_key( $key ) ] = sanitize_text_field( $val );
+		if (isset($request_data['data']) && is_array($request_data['data'])) {
+			foreach ( $request_data['data'] as $key => $val ) {
+				$data[ sanitize_key( $key ) ] = sanitize_text_field( $val );
+			}
 		}
 
 		update_option( 'egoi_catalog_sync', wp_json_encode( $data ) );
@@ -2465,23 +2478,112 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_variations_catalog() {
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
+		$json_input = file_get_contents('php://input');
+		$request_data = json_decode($json_input, true);
 
-		$catalogId = sanitize_text_field( $_POST['catalog_id'] );
-		$status    = sanitize_text_field( $_POST['status'] );
+		if (!isset($request_data['security'])) {
+			wp_send_json_error('Invalid request');
+			return;
+		}
+
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
+		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
+			wp_send_json_error('Security check failed');
+			return;
+		}
+
+		$catalogId = sanitize_text_field( $request_data['catalog_id'] );
+		$status    = sanitize_text_field( $request_data['status'] );
 
 		$bo = new EgoiProductsBo();
-		$bo->setCatalogOptions( $catalogId, array( 'variations' => $status === 'true' ) );
+		$bo->setCatalogOptions( $catalogId, array( 'variations' => $status === 'true' || $status === true ) );
+
+		wp_send_json_success();
+	}
+
+	public function egoi_related_products_catalog() {
+		$json_input = file_get_contents('php://input');
+		$request_data = json_decode($json_input, true);
+
+		if (!isset($request_data['security'])) {
+			wp_send_json_error('Invalid request');
+			return;
+		}
+
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
+		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
+			wp_send_json_error('Security check failed');
+			return;
+		}
+
+		$catalogId = sanitize_text_field( $request_data['catalog_id'] );
+		$status    = sanitize_text_field( $request_data['status'] );
+
+		$bo = new EgoiProductsBo();
+		$currentOptions = $bo->getCatalogOptions( $catalogId );
+		$currentOptions['related_products'] = $status === 'true';
+		$bo->setCatalogOptions( $catalogId, $currentOptions );
+
+		wp_send_json_success();
+	}
+
+	public function egoi_related_products_type_catalog() {
+		$json_input = file_get_contents('php://input');
+		$request_data = json_decode($json_input, true);
+
+		if (!isset($request_data['security'])) {
+			wp_send_json_error('Invalid request');
+			return;
+		}
+
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
+		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
+			wp_send_json_error('Security check failed');
+			return;
+		}
+
+		$catalogId = sanitize_text_field( $request_data['catalog_id'] );
+		$type      = sanitize_text_field( $request_data['type'] );
+
+		$bo = new EgoiProductsBo();
+		$currentOptions = $bo->getCatalogOptions( $catalogId );
+		$currentOptions['related_products_type'] = $type;
+		$bo->setCatalogOptions( $catalogId, $currentOptions );
 
 		wp_send_json_success();
 	}
 
 	public function egoi_delete_catalog() {
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
-		$id = EgoiValidators::validate_id( sanitize_key( $_POST['id'] ) );
+		$json_input = file_get_contents('php://input');
+		$request_data = json_decode($json_input, true);
+
+		if (!isset($request_data['security'])) {
+			wp_send_json_error('Invalid request');
+			return;
+		}
+
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
+		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
+			wp_send_json_error('Security check failed');
+			return;
+		}
+
+		$id = EgoiValidators::validate_id( sanitize_key( $request_data['id'] ) );
 		$bo = new EgoiProductsBo();
 
-		wp_send_json_success( $bo->deleteCatalog( $id ) );
+		$result = $bo->deleteCatalog( $id );
+
+		// Remove catalog from egoi_catalogs_options
+		$catalog_options = get_option( 'egoi_catalogs_options', array() );
+		if ( ! empty( $catalog_options ) ) {
+			$catalog_options = json_decode( $catalog_options, true );
+			if ( is_array( $catalog_options ) && isset( $catalog_options[ $id ] ) ) {
+				unset( $catalog_options[ $id ] );
+				update_option( 'egoi_catalogs_options', wp_json_encode( $catalog_options ) );
+			}
+		}
+
+		wp_send_json_success( $result );
 	}
 
 	public function egoi_create_catalog() {
@@ -2562,18 +2664,42 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_force_import_catalog() {
-		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
-		$id   = EgoiValidators::validate_id( sanitize_key( $_POST['id'] ) );
-		$page = EgoiValidators::validate_page( sanitize_key( $_POST['page'] ) );
+		$json_input = file_get_contents('php://input');
+		$request_data = json_decode($json_input, true);
+
+		if (!isset($request_data['security'])) {
+			wp_send_json_error('Invalid request');
+			return;
+		}
+
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
+		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
+			wp_send_json_error('Security check failed');
+			return;
+		}
+
+		$id   = EgoiValidators::validate_id( sanitize_key( $request_data['id'] ) );
+		$page = EgoiValidators::validate_page( sanitize_key( $request_data['page'] ) );
 		$bo   = new EgoiProductsBo();
 
 		$options = EgoiProductsBo::getCatalogOptions( $id );
 		$tax = $options['tax'] ?? 0;
-		
+        $syncRelated = false;
+        $syncRelatedType = '';
+
+
+        // Validate if relatedProducts is enabled and if has any type selected
+        if ( $options['related_products'] ?? false ) {
+            $syncRelated = true;
+            if ( !empty( $options['related_products_type'] ) ) {
+                $syncRelatedType = $options['related_products_type'];
+            }
+        }
+
 		if ( $options['variations'] == 0 ) {
-			$resp = $bo->importProductsCatalogNoVariations( $id, $page, (float) $tax);
+			$resp = $bo->importProductsCatalogNoVariations( $id, $page, (float) $tax, $syncRelated, $syncRelatedType );
 		} else {
-			$resp = $bo->importProductsCatalog( $id, $page, (float) $tax );
+			$resp = $bo->importProductsCatalog( $id, $page, (float) $tax, $syncRelated, $syncRelatedType );
 		}
 		$resp = json_decode( $resp, true );
 
@@ -2588,17 +2714,24 @@ class Egoi_For_Wp_Admin {
 		$form_id = sanitize_text_field( $post['form_id'] );
 		check_admin_referer( $form_id );
 
-		$name       = sanitize_text_field( $post['catalog_name'] );
-		$language   = sanitize_text_field( $post['catalog_language'] );
-		$currency   = sanitize_text_field( $post['catalog_currency'] );
-		$variations = sanitize_text_field( $post['variations'] );
-		$tax		= sanitize_text_field( $post['catalog_tax'] );
+		$name                  = sanitize_text_field( $post['catalog_name'] );
+		$language              = sanitize_text_field( $post['catalog_language'] );
+		$currency              = sanitize_text_field( $post['catalog_currency'] );
+		$variations            = isset( $post['variations'] ) ? sanitize_text_field( $post['variations'] ) : '';
+		$tax                   = sanitize_text_field( $post['catalog_tax'] );
+		$related_products      = isset( $post['related_products'] ) ? sanitize_text_field( $post['related_products'] ) : '';
+		$related_products_type = isset( $post['related_products_type'] ) ? sanitize_text_field( $post['related_products_type'] ) : '';
 
 		if ( empty( $name ) || empty( $currency ) || empty( $language ) ) {
 			return array( 'error' => __( 'Fields can\'t be empty.', 'egoi-for-wp' ) );
 		}
 
-		$options = array( 'variations' => ! empty( $variations ), 'tax' => $tax  );
+		$options = array(
+			'variations'            => ! empty( $variations ),
+			'tax'                   => $tax,
+			'related_products'      => ! empty( $related_products ),
+			'related_products_type' => ! empty( $related_products_type ) ? $related_products_type : ''
+		);
 
 		$bo       = new EgoiProductsBo();
 		$response = $bo->createCatalog( $name, $language, $currency, $options );
@@ -2653,7 +2786,21 @@ class Egoi_For_Wp_Admin {
 	 * Get Countries and Currencies Utility
 	 */
 	public function egoi_count_products() {
-		$catalog_id = sanitize_key( $_GET['catalog'] );
+		$json_input = file_get_contents('php://input');
+		$request_data = json_decode($json_input, true);
+
+		if (!isset($request_data['security'])) {
+			wp_send_json_error('Invalid request');
+			return;
+		}
+
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security', false );
+		if (!wp_verify_nonce($request_data['security'], 'egoi_ecommerce_actions')) {
+			wp_send_json_error('Security check failed');
+			return;
+		}
+
+		$catalog_id = sanitize_key( $request_data['catalog'] );
 		$a          = EgoiProductsBo::getCatalogOptions( $catalog_id );
 
 		switch ( $a['variations'] ) {

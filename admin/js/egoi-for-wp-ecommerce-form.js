@@ -8,6 +8,8 @@ jQuery( document ).ready(
 			var catalog_currency      = $( '#catalog_currency' );
 			var create_catalog_button = $( '#create_catalog_button' );
 			var catalog_tax 		  = $( '#catalog_tax' );
+			var related_products      = $( '#related_products' );
+			var related_products_type_wrapper = $( '#related_products_type_wrapper' );
 
 			// defaults
 			var default_store_country  = $( '#default-store-country' );
@@ -36,6 +38,25 @@ jQuery( document ).ready(
 					$( $( $( this ).parent()[0] ).parent()[0] ).hide();
 				}
 			);
+
+			// Toggle related products type field visibility
+			related_products.on(
+				'change',
+				function () {
+					console.log('Related products toggle changed:', $( this ).is( ':checked' ));
+					if ( $( this ).is( ':checked' ) ) {
+						console.log('Showing related products type');
+						related_products_type_wrapper.slideDown();
+					} else {
+						console.log('Hiding related products type');
+						related_products_type_wrapper.slideUp();
+					}
+				}
+			);
+
+			// Debug: log if elements are found
+			console.log('Related products checkbox found:', related_products.length);
+			console.log('Related products type wrapper found:', related_products_type_wrapper.length);
 
 			getDtaAjax();
 			function getDtaAjax(){

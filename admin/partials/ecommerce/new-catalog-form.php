@@ -62,8 +62,32 @@
 				</div>
 			</div>
 
+			<hr class="smsnf-input-group">
+
+			<div class="smsnf-input-group">
+				<label for="related_products"><?php _e( 'Synchronize related products', 'egoi-for-wp' ); ?></label>
+				<p class="subtitle"><?php _e( 'Select "yes" to sync related products.', 'egoi-for-wp' ); ?></p>
+				<div class="form-group switch-yes-no">
+					<label class="form-switch">
+						<input id="related_products" type="checkbox" name="related_products" value="1">
+						<i class="form-icon"></i><div class="yes"><?php _e( 'Yes', 'egoi-for-wp' ); ?></div><div class="no"><?php _e( 'No', 'egoi-for-wp' ); ?></div>
+					</label>
+				</div>
+			</div>
+
+			<div class="smsnf-input-group" id="related_products_type_wrapper" style="display: none;">
+				<label for="related_products_type"><?php _e( 'Related products type', 'egoi-for-wp' ); ?></label>
+				<p class="subtitle"><?php _e( 'Select the type of related products to sync.', 'egoi-for-wp' ); ?></p>
+				<div class="smsnf-wrapper">
+					<select id="related_products_type" name="related_products_type" class="form-select">
+                        <option disabled><?php _e( 'Select the Related Products Option', 'egoi-for-wp' ); ?></option>
+                        <option value="upsells"><?php _e( 'Upsells', 'egoi-for-wp' ); ?></option>
+						<option value="cross-sells"><?php _e( 'Cross-sells', 'egoi-for-wp' ); ?></option>
+					</select>
+				</div>
+			</div>
+
 		</div>
-	</div>
 	<div class="egoi-undertable-button-wrapper" style="bottom: 0;position: absolute;right: 30px;">
 		<div class="smsnf-input-group">
 			<input type="submit" id="create_catalog_button" value="<?php _e( 'Create Catalog', 'egoi-for-wp' ); ?>" />
