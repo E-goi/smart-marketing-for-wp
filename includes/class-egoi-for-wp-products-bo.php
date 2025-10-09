@@ -102,13 +102,15 @@ class EgoiProductsBo {
      * @param $options
      * @return bool
      */
-	public function createCatalog( $title, $language, $currency, $options ) {
+	public function createCatalog( $title, $language, $currency, $options, $domain = '' ) {
 		$response = $this->api->createCatalog(
 			'POST',
 			array(
 				'title'    => 'Wordpress ' . $title,
 				'language' => $language,
-				'currency' => $currency
+				'currency' => $currency,
+                'domain'   => $domain,
+                'default'  => false,
 			)
 		);
 		if ( ! is_numeric( $response ) ) {
@@ -160,13 +162,6 @@ class EgoiProductsBo {
 			}
 		}
 
-		// Remove related_products if sync is disabled
-		if (!$syncRelatedProducts) {
-			foreach($products as $key => $product) {
-				unset($products[$key]['related_products']);
-			}
-		}
-
 		delete_option( 'egoi_import_bypass' );
 		return $this->api->importProducts(
 			'POST',
@@ -191,13 +186,6 @@ class EgoiProductsBo {
 				if( $product['sale_price']) {
 					$products[$key]['sale_price'] = (String) $product['sale_price'] * ( (float) ($tax / 100) + 1);
 				}
-			}
-		}
-
-		// Remove related_products if sync is disabled
-		if (!$syncRelatedProducts) {
-			foreach($products as $key => $product) {
-				unset($products[$key]['related_products']);
 			}
 		}
 
@@ -279,11 +267,6 @@ class EgoiProductsBo {
                         $single['sale_price'] = $single['sale_price'] * ((float)($tax / 100) + 1);
                     }
                 }
-
-				// Remove related_products if sync is disabled
-				if (!$syncRelated) {
-					unset($single['related_products']);
-				}
 
                 if (!$this->api->createProduct($single, $catalog)) {
                     $this->api->patchProduct($single, $catalog, $single['product_identifier']);
@@ -582,9 +565,6 @@ private static function transformProductObjectToApi( $product, &$breadCrumbs, $b
 			$related_products = $product->get_upsell_ids();
 		} elseif ($relatedProductsType === 'cross-sells') {
 			$related_products = $product->get_cross_sell_ids();
-		} else {
-			// Default: merge both
-			$related_products = array_unique( array_merge( $product->get_upsell_ids(), $product->get_cross_sell_ids() ) );
 		}
 	}
 
@@ -672,9 +652,14 @@ private static function transformProductVariableObjectToApiNoVariations( $produc
 private static function transformToCleanArray( $array ) {
 	return array_filter(
 		$array,
-		function( $value ) {
+		function( $value, $key ) {
+			// Always keep related_products field even if empty
+			if ( $key === 'related_products' ) {
+				return true;
+			}
 			return ! empty( $value );
-		}
+		},
+		ARRAY_FILTER_USE_BOTH
 	);
 }
 

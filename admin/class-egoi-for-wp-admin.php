@@ -2532,6 +2532,8 @@ class Egoi_For_Wp_Admin {
 		$currency   = sanitize_text_field( $_POST['catalog_currency'] );
 		$variations = sanitize_text_field( $_POST['variations'] );
 		$tax		= sanitize_text_field( $_POST['catalog_tax'] );
+        $domain     = $this->options_list['domain'] = sanitize_text_field( $_POST['domain'] );
+
 
 		if ( empty( $name ) || empty( $currency ) || empty( $language ) ) {
 			return array( 'error' => __( 'Fields can\'t be empty.', 'egoi-for-wp' ) );
@@ -2540,7 +2542,7 @@ class Egoi_For_Wp_Admin {
 		$options = array( 'variations' => ! empty( $variations ), 'tax' => $tax );
 
 		$bo = new EgoiProductsBo();
-		$id = $bo->createCatalog( $name, $language, $currency, $options );
+		$id = $bo->createCatalog( $name, $language, $currency, $options,  $domain);
 
 		if ( ! empty( $id ) ) {
 			wp_send_json_success(
@@ -2642,7 +2644,8 @@ class Egoi_For_Wp_Admin {
 		$name                  = sanitize_text_field( $post['catalog_name'] );
 		$language              = sanitize_text_field( $post['catalog_language'] );
 		$currency              = sanitize_text_field( $post['catalog_currency'] );
-		$variations            = isset( $post['variations'] ) ? sanitize_text_field( $post['variations'] ) : '';
+		$domain                = sanitize_text_field( $this->options_list['domain']  );
+        $variations            = isset( $post['variations'] ) ? sanitize_text_field( $post['variations'] ) : '';
 		$tax                   = sanitize_text_field( $post['catalog_tax'] );
 		$related_products      = isset( $post['related_products'] ) ? sanitize_text_field( $post['related_products'] ) : '';
 		$related_products_type = isset( $post['related_products_type'] ) ? sanitize_text_field( $post['related_products_type'] ) : '';
@@ -2659,7 +2662,7 @@ class Egoi_For_Wp_Admin {
 		);
 
 		$bo       = new EgoiProductsBo();
-		$response = $bo->createCatalog( $name, $language, $currency, $options );
+		$response = $bo->createCatalog( $name, $language, $currency, $options, $domain);
 		if ( $response !== false ) {
 			return array( 'success' => __( 'Catalog successfully created!', 'egoi-for-wp' ) );
 		} else {
