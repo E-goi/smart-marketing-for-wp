@@ -92,8 +92,6 @@ jQuery(document).ready(function() {
             const catalogId = e.attr('idgoi');
             const isChecked = e[0].checked;
 
-            console.log('Related products toggle changed:', isChecked);
-
             // Enable/disable the corresponding dropdown
             const dropdown = $('select.related_products_type_catalog[idgoi="' + catalogId + '"]');
             if (isChecked) {
@@ -108,10 +106,6 @@ jQuery(document).ready(function() {
                 catalog_id:     catalogId,
                 status:         isChecked ? 'true' : 'false'
             };
-
-            $.post(ajaxObj.ajax_url, data, function(response) {
-                console.log('Related products toggle saved:', response);
-            });
         });
 
         // Related products type dropdown handler
@@ -126,10 +120,6 @@ jQuery(document).ready(function() {
                 catalog_id:     catalogId,
                 type:           type
             };
-
-            $.post(ajaxObj.ajax_url, data, function(response) {
-                console.log('Related products type saved');
-            });
         });
 
         verified_delete.on('click', function(){
