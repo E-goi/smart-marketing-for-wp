@@ -5,7 +5,7 @@ Tags: Email Marketing, SMS Marketing, Newsletter, Marketing Automation, E-goi, E
 Requires at least: 4.7
 Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 5.1.03
+Stable tag: 5.1.04
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 E-commerce Automation Engine: Product sync, Track & Engage, and abandoned cart recovery via Email and SMS for WooCommerce stores.
