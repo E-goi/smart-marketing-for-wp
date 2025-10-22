@@ -5,7 +5,7 @@ Tags: Email Marketing, SMS Marketing, Newsletter, Marketing Automation, E-goi, E
 Requires at least: 4.7
 Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 5.1.04
+Stable tag: 5.1.05
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -209,6 +209,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+= 5.1.05 =
+- Update Onboarding to create catalog with related products option
+
 = 5.1.04 =
 - Add related products to synchronization
 
