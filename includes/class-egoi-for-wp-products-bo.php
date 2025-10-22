@@ -489,7 +489,7 @@ public static function transformArrayAbstractProductToApi( $arr, &$breadCrumbs, 
 					$mappedProducts[] = self::transformToCleanArray( $productVariation );
 				}
 			} else {
-				$mappedProducts[] = self::transformProductVariableObjectToApiNoVariations( $prod, $breadCrumbs, $syncRelatedProducts, $relatedProductsType );
+				$mappedProducts[] = self::transformToCleanArray( self::transformProductVariableObjectToApiNoVariations( $prod, $breadCrumbs, $syncRelatedProducts, $relatedProductsType ) );
 			}
 		} elseif ( $prod instanceof WC_Product && ! $prod instanceof WC_Product_Variation ) {
 			$p = self::transformProductObjectToApi( $prod, $breadCrumbs, false, $syncRelatedProducts, $relatedProductsType );
