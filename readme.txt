@@ -8,11 +8,12 @@ Requires PHP: 5.6
 Stable tag: 5.1.04
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
 E-commerce Automation Engine: Product sync, Track & Engage, and abandoned cart recovery via Email and SMS for WooCommerce stores.
 
 == Description ==
 
-🇵🇹 VERSÃO EM PORTUGUÊS (PT-PT) 🇵🇹
+= 🇵🇹 VERSÃO EM PORTUGUÊS (PT-PT) =
 
 **E-goi Smart Marketing: O Motor de Crescimento All-in-One para o Seu WordPress!**
 
@@ -20,7 +21,7 @@ Cansado de ter contactos no seu site que nunca se transformam em vendas? O plugi
 
 **Venda mais, recupere vendas perdidas e automatize a sua comunicação, tudo a partir de um só lugar!**
 
-= *PORQUÊ INICIAR OU MUDAR PARA O E-GOI SMART MARKETING?* =
+= 💡 PORQUÊ INICIAR OU MUDAR PARA O E-GOI SMART MARKETING? =
 
 = 1. Captação Múltipla e Compatibilidade Total =
 
@@ -53,11 +54,12 @@ Mantenha a sua audiência a par das novidades, sem ter de criar e-mails manualme
 * **Campanhas Automáticas:** Transforme esses Feeds em Campanhas RSS Feed automáticas.
 * **Conformidade:** Garanta a qualidade e a segurança dos seus dados com Double Opt-in (RGPD).
 
+**Novidades:**
 
-**Novidades**
 * **Conversão de Encomendas (API Backend):** Monitorização e sincronização dos estados de encomenda ("Criada", "Pendente", "Cancelada", "Completa" e "Desconhecida") diretamente com o E-goi.
 
-**Funcionalidades**
+**Funcionalidades:**
+
 * **Geral:** 100% Gratuito, Sincronização automática de contactos, Connected Sites, E-goi Track & Engage, Bloco E-goi para Gutenberg.
 * **Captação de Leads:** Formulários Simples, Formulários Múltiplos, Barra de Subscrição, Formulários Pop-up, Formulários Widgets.
 * **Automação & E-commerce:** Conversão de encomenda por estado (API Backend), Campanha E-mail com publicação de artigo, Sincronização produtos Woocommerce.
@@ -66,19 +68,20 @@ Mantenha a sua audiência a par das novidades, sem ter de criar e-mails manualme
 * **Compatibilidade:** Integração com WooCommerce, CF7, Gravity Forms, Elementor, WPBakery Page Builder.
 * **Conformidade:** Opção de validação dos contactos com Double Opt-in (RGPD), Associação de Tags a formulários.
 
+**Add-on:**
 
-**Add-on**
 Plugin [E-goi SMS Orders Alert/Notifications](https://wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/ "SMS Orders Alert/Notifications for WooCommerce")
 
-**Requisitos**
-* **Plano E-goi pago** com acesso a sua **API Key**.
+**Requisitos:**
+
+* **Plano E-goi** com acesso a sua **API Key**.
 * WordPress na versão **4.7 ou superior**.
 
-Já tem uma conta E-goi? [Criar conta E-goi Gratuita](https://login.egoiapp.com/signup "Criar conta E-goi")
+Já tem uma conta E-goi? [Criar conta E-goi gratuita](https://login.egoiapp.com/signup "Criar conta E-goi")
 
 ---
 
-🇬🇧 ENGLISH VERSION (EN-EN) 🇬🇧
+= 🇬🇧 ENGLISH VERSION (EN-EN) =
 
 **E-goi Smart Marketing: The All-in-One Growth Engine for Your WordPress!**
 
@@ -119,10 +122,12 @@ Keep your audience up-to-date with news without having to manually create emails
 * Automatic Campaigns: Transform these Feeds into automatic RSS Feed Campaigns that are sent to your subscribers on a schedule without intervention.
 * Compliance: Ensure the quality and security of your data with the option for contact validation via Double Opt-in (GDPR).
 
-**News (EN)**
+**What's new:**
+
 * **Order Conversion (API Backend):** Monitoring and synchronization of order statuses ("Created", "Pending", "Canceled", "Completed" or "Unknown") directly with E-goi.
 
-**What you get (EN):**
+**Features:**
+
 * **Geral:** 100% Free, Automatic contact synchronization (incl. custom fields), Connected Sites, E-goi Track & Engage, Gutenberg E-goi Block.
 * **Lead Capture:** Simple Forms, Multiple Forms (via Connected Sites), Subscription Bar, Pop-up Forms (Visit and Exit Intent), Widget Forms.
 * **Automation & E-commerce:** Order sync by status (API Backend), E-mail campaign on article publication, WooCommerce product synchronization.
@@ -131,45 +136,52 @@ Keep your audience up-to-date with news without having to manually create emails
 * **Compatibility:** Integrates with WooCommerce, CF7, Gravity Forms, Elementor, WPBakery Page Builder.
 * **Compliance:** Double Opt-in contact validation (GDPR), Tag association to forms.
 
+**Add-on:**
 
-**Add-on**
 [E-goi SMS Orders Alert/Notifications](https://wordpress.org/plugins/sms-orders-alertnotifications-for-woocommerce/ "SMS Orders Alert/Notifications for WooCommerce")
 
-**Requirements**
-* **Paid E-goi Plan** with access to your **API Key**.
+**Requirements:**
+
+* **E-goi Plan** with access to your **API Key**.
 * WordPress version **4.7 or higher**.
 
 Do you need an E-goi account ? [Click and create a free E-goi account](https://login.egoiapp.com/signup "Create E-goi account")
 
 
-= 🇵🇹 anual de instruções WordPress e WooCommerce =
-
-[Manual de Instruções WordPress](https://helpdesk.e-goi.com/835325-Integrar-o-E-goi-com-o-WordPress "Manual de Instruções WordPress")
-[Manual de Instruções WooCommerce](https://helpdesk.e-goi.com/131325-Integrar-o-E-goi-com-o-WooCommerce "Manual de Instruções WooCommerce")
-
-= 🇬🇧 User Guide WordPress and WooCommerce =
-
-[WordPress User Guide](https://helpdesk.e-goi.com/242267-Integrating-E-goi-with-WordPress "WordPress User Guide")
-[WooCommerce User Guide](https://helpdesk.e-goi.com/706964-Integrating-E-goi-with-WooCommerce "WooCommerce User Guide")
-
-= 🇪🇸 Manual de Instrucciones WordPress y WooCommerce =
-
-[Manual de Instrucciones WordPress](https://helpdesk.e-goi.com/685499-Integrar-E-goi-con-WordPress "Manual de Instrucciones WordPress")
-[Manual de Instrucciones WooCommerce](https://helpdesk.e-goi.com/632398-Integrar-E-goi-con-WooCommerce "Manual de Instrucciones WooCommerce")
-
-
 == Installation ==
+
+= 🇵🇹 VERSÃO EM PORTUGUÊS (PT-PT) =
 
 1. Descarregar o plugin.
 2. Instalar o plugin no WordPress.
 3. Activar o plugin.
-4. Deve aceder ao plugin para realizar a sua configuração inicial e seguir os passos apresentados.
+4. Aceder ao plugin para realizar a configuração inicial e seguir os passos apresentados.
 
 ---
+
+= 🇬🇧 ENGLISH VERSION (EN-EN) =
+
 1. Download the plugin.
 2. Install the plugin in WordPress.
 3. Activate the plugin.
-4. You should access the plugin to perform the initial configuration and follow the presented steps.
+4. Access the plugin to perform the initial configuration and follow the steps presented.
+
+---
+
+= 🇵🇹 Manuais WordPress e WooCommerce =
+
+[Manual de Instruções WordPress](https://helpdesk.e-goi.com/835325-Integrar-o-E-goi-com-o-WordPress "Manual de Instruções WordPress")  
+[Manual de Instruções WooCommerce](https://helpdesk.e-goi.com/131325-Integrar-o-E-goi-com-o-WooCommerce "Manual de Instruções WooCommerce")
+
+= 🇬🇧 User Guides (WordPress and WooCommerce) =
+
+[WordPress User Guide](https://helpdesk.e-goi.com/242267-Integrating-E-goi-with-WordPress "WordPress User Guide")  
+[WooCommerce User Guide](https://helpdesk.e-goi.com/706964-Integrating-E-goi-with-WooCommerce "WooCommerce User Guide")
+
+= 🇪🇸 Manuales de Instrucciones (WordPress y WooCommerce) =
+
+[Manual de Instrucciones WordPress](https://helpdesk.e-goi.com/685499-Integrar-E-goi-con-WordPress "Manual de Instrucciones WordPress")  
+[Manual de Instrucciones WooCommerce](https://helpdesk.e-goi.com/632398-Integrar-E-goi-con-WooCommerce "Manual de Instrucciones WooCommerce")
 
 
 == Frequently Asked Questions ==
@@ -194,19 +206,6 @@ Yes, just activate it in the Settings page.
 
 = Can I manage my E-goi lists with this plugin? =
 You can create and update your lists, see how many subscribers you have, but you can not delete them.
-
-== Screenshots ==
-
-1 - Dashboard 
-2 - Captura de contactos
-3 - Formulários
-4 - Setup e Sync de Contactos
-5 - Ecommerce, gestão de catálogos e sync de produtos
-6 - Track & Engage
-7 - Webpush
-8 - Integração com outros plugins
-9 - RSS Feed
-10 - Campanhas RSS e Webpush
 
 
 == Changelog ==
