@@ -2533,13 +2533,20 @@ class Egoi_For_Wp_Admin {
 		$variations = sanitize_text_field( $_POST['variations'] );
 		$tax		= sanitize_text_field( $_POST['catalog_tax'] );
         $domain     = $this->options_list['domain'] = sanitize_text_field( $_POST['domain'] );
+		$related_products      = isset( $_POST['related_products'] ) ? sanitize_text_field( $_POST['related_products'] ) : '';
+		$related_products_type = isset( $_POST['related_products_type'] ) ? sanitize_text_field( $_POST['related_products_type'] ) : '';
 
 
 		if ( empty( $name ) || empty( $currency ) || empty( $language ) ) {
 			return array( 'error' => __( 'Fields can\'t be empty.', 'egoi-for-wp' ) );
 		}
 
-		$options = array( 'variations' => ! empty( $variations ), 'tax' => $tax );
+		$options = array(
+			'variations'            => ! empty( $variations ),
+			'tax'                   => $tax,
+			'related_products'      => ! empty( $related_products ),
+			'related_products_type' => ! empty( $related_products ) ? ( ! empty( $related_products_type ) ? $related_products_type : 'upsells' ) : ''
+		);
 
 		$bo = new EgoiProductsBo();
 		$id = $bo->createCatalog( $name, $language, $currency, $options,  $domain);

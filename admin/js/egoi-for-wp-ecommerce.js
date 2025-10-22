@@ -92,6 +92,7 @@ jQuery(document).ready(function() {
             const catalogId = e.attr('idgoi');
             const isChecked = e[0].checked;
 
+
             // Enable/disable the corresponding dropdown
             const dropdown = $('select.related_products_type_catalog[idgoi="' + catalogId + '"]');
             if (isChecked) {
@@ -106,6 +107,22 @@ jQuery(document).ready(function() {
                 catalog_id:     catalogId,
                 status:         isChecked ? 'true' : 'false'
             };
+
+            $.post(ajaxObj.ajax_url, data, function(response) {
+
+                // When enabling, also save the default type
+                if (isChecked) {
+                    const defaultType = dropdown.val() || 'upsells';
+                    let typeData = {
+                        security:       ajaxObj.ajax_nonce,
+                        action:         'egoi_related_products_type_catalog',
+                        catalog_id:     catalogId,
+                        type:           defaultType
+                    };
+                    $.post(ajaxObj.ajax_url, typeData, function(response) {
+                    });
+                }
+            });
         });
 
         // Related products type dropdown handler
@@ -120,6 +137,10 @@ jQuery(document).ready(function() {
                 catalog_id:     catalogId,
                 type:           type
             };
+
+            $.post(ajaxObj.ajax_url, data, function(response) {
+                console.log('Related products type saved');
+            });
         });
 
         verified_delete.on('click', function(){

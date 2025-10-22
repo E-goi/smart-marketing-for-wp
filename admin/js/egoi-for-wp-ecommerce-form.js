@@ -27,6 +27,15 @@ jQuery( document ).ready(
 						if ($( '#preventCatalogSubmit' ).length) {
 							return;
 						}
+						// Ensure related_products_type is always included when related_products is checked
+						if (related_products.is(':checked')) {
+							var relatedProductsType = $( '#related_products_type' );
+							if (!relatedProductsType.val()) {
+								relatedProductsType.val('upsells');
+							}
+							// Make sure the field is enabled for serialization
+							relatedProductsType.prop('disabled', false);
+						}
 						$( '#form-create-catalog' ).submit();
 					}
 				}

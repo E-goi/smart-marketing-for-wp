@@ -80,8 +80,7 @@
 				<p class="subtitle"><?php _e( 'Select the type of related products to sync.', 'egoi-for-wp' ); ?></p>
 				<div class="smsnf-wrapper">
 					<select id="related_products_type" name="related_products_type" class="form-select">
-                        <option disabled><?php _e( 'Select the Related Products Option', 'egoi-for-wp' ); ?></option>
-                        <option value="upsells"><?php _e( 'Upsells', 'egoi-for-wp' ); ?></option>
+                        <option value="upsells" selected><?php _e( 'Upsells', 'egoi-for-wp' ); ?></option>
 						<option value="cross-sells"><?php _e( 'Cross-sells', 'egoi-for-wp' ); ?></option>
 					</select>
 				</div>
