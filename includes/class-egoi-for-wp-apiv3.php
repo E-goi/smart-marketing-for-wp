@@ -1223,6 +1223,10 @@ class EgoiApiV3 {
 
 		$extra_fields = array();
 		foreach ( $result_client as $fields ) {
+            if (isset($fields['format']) && $fields['format'] === 'options') {
+                continue;
+            }
+
 			if ( $fields['type'] == 'extra' && $type == 'id' ) {
 				array_push( $extra_fields, $fields['field_id'] );
 			} else if ( $fields['type'] == 'extra' ){
