@@ -275,8 +275,10 @@ class EgoiApiV3 {
 		'convertCart'              => '/{domain}/carts',
 		'importContactsBulk'       => '/lists/{list_id}/contacts/actions/import-bulk',
 		'ping'					   => '/ping',
-        'getClient'             => '/my-account',
-        'importOrdersBulk'         => '/lists/{list_id}/orders'
+        'getClient'                => '/my-account',
+        'importOrdersBulk'         => '/lists/{list_id}/orders',
+        'getCampaigns'             => '/campaigns',
+        'getReports'               => '/reports/{channel}/{campaign_hash}',
     );
 
 	protected $apiKey;
@@ -639,6 +641,68 @@ class EgoiApiV3 {
 		}
 
 	}
+
+    /**
+     * @return false|string
+     */
+    public function getCampaigns() {
+
+        $url = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+
+        $client = new ClientHttp(
+            $url,
+            'GET',
+            $this->headers
+        );
+
+        if ( $client->success() !== true ) {
+            return $this->processErrors( $client->getError() );
+        }
+
+        $resp = json_decode( $client->getResponse(), true );
+
+        if($client->getCode() == 200 && isset( $resp['items'] )){
+            $return = $resp['items'];
+            return $return;
+        } else {
+            return $this->processErrors( $client->getResponse() );
+        }
+
+    }
+
+    /**
+     * @param string $channel
+     * @param string $campaign_hash
+     * @return array|false|string
+     */
+    public function getReports(string $channel, string $campaign_hash): array
+    {
+        $path = self::APIV3 . $this->replaceUrl(
+                self::APIURLS[__FUNCTION__],
+                ['{channel}', '{campaign_hash}'],
+                [$channel, $campaign_hash]
+            );
+
+        $client = new ClientHttp(
+            $path,
+            'GET',
+            $this->headers
+        );
+
+        if ($client->getCode() !== 200) {
+            return $this->processErrors(
+                $client->getError() ?: $client->getResponse()
+            );
+        }
+
+        $resp = json_decode($client->getResponse(), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $this->processErrors('Invalid JSON response');
+        }
+
+        return $resp;
+    }
 
 	/**
 	 * @return false|string

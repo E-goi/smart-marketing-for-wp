@@ -39,7 +39,7 @@
 					$( '#last_email_campaign_loading' ).remove();
 					$( '.smsnf-dashboard-last-email-campaign' ).append( output.email );
 					$( '#last_sms_campaign_loading' ).remove();
-					$( '.smsnf-dashboard-last-sms-campaign' ).append( output.sms_premium );
+					$( '.smsnf-dashboard-last-sms-campaign' ).append( output.sms );
 				}
 			);
 
