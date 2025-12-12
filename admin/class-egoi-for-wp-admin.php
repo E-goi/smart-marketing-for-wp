@@ -2183,7 +2183,6 @@ class Egoi_For_Wp_Admin {
 
         foreach ($campaigns as $campaign) {
 
-            // só campanhas enviadas
             if (($campaign['status'] ?? null) !== 'sent') {
                 continue;
             }
@@ -2194,7 +2193,6 @@ class Egoi_For_Wp_Admin {
                 continue;
             }
 
-            // já temos a última campanha deste canal
             if (isset($lastCampaigns[$channel])) {
                 continue;
             }
@@ -2262,25 +2260,19 @@ class Egoi_For_Wp_Admin {
 
                     $overall = $report['overall'];
 
-                    // SENDS (envios reais)
                     $reports[$channel]['sent'] += (int) ($overall['sends'] ?? 0);
 
-                    // OPENS
                     $reports[$channel]['chart']['opens'] += (int) ($overall['opens'] ?? 0);
 
-                    // CLICKS
                     $reports[$channel]['chart']['clicks'] += (int) ($overall['clicks'] ?? 0);
 
-                    // BOUNCES (hard + soft)
                     $reports[$channel]['chart']['bounces'] += (int) (
                         ($overall['hard_bounces'] ?? 0) +
                         ($overall['soft_bounces'] ?? 0)
                     );
 
-                    // REMOVES (unsubscriptions)
                     $reports[$channel]['chart']['removes'] += (int) ($overall['unsubscriptions'] ?? 0);
 
-                    // COMPLAINS
                     $reports[$channel]['chart']['complains'] += (int) ($overall['complaints'] ?? 0);
                 }
 
@@ -2918,7 +2910,6 @@ class Egoi_For_Wp_Admin {
 				continue;
 			}
 
-			// Extract only relevant chart values for each channel type
 			if ( $type === 'email' ) {
 				$campaign_chart = implode( ',', [
 					$campaigns[ $type ]['chart']['opens'],
