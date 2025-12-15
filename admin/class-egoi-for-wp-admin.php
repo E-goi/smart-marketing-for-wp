@@ -2170,116 +2170,138 @@ class Egoi_For_Wp_Admin {
 		wp_die();
 	}
 
-	public function smsnf_get_last_campaigns() {
-		$last_campaigns_flag = array(
-			'email'       => 0,
-			'sms_premium' => 0,
-		);
-		$last_campaigns      = array();
-		$channels            = array( 'email', 'sms_premium' );
+    public function smsnf_get_last_campaigns(): array
+    {
+        $lastCampaigns = [];
+        $channels      = ['email', 'sms'];
 
-		$campaigns = $this->egoiWpApi->getCampaigns();
+        $campaigns = $this->egoiWpApi->getCampaignsByV3();
 
-		foreach ( $campaigns as $campaign ) {
+        if (empty($campaigns) || !is_array($campaigns)) {
+            return [];
+        }
 
-			if ( $campaign->STATUS != 'finished' && $campaign->STATUS != 'archived' ) {
-				continue;
-			}
+        foreach ($campaigns as $campaign) {
 
-			if ( ! in_array( 0, $last_campaigns_flag ) ) {
-				break;
-			}
+            if (($campaign['status'] ?? null) !== 'sent') {
+                continue;
+            }
 
-			foreach ( $channels as $channel ) {
+            $channel = $campaign['channel'] ?? null;
 
-				if ( $channel == $campaign->CHANNEL ) {
+            if (!in_array($channel, $channels, true)) {
+                continue;
+            }
 
-					if ( ! isset( $last_campaigns[ $channel ] ) ||
-						(
-							isset( $campaigns_flag[ $channel ] ) &&
-							$campaigns_flag[ $channel ]['name'] == $campaign->SUBJECT &&
-							$campaigns_flag[ $channel ]['start_time'] - strtotime( $campaign->START ) < 300
-						) ) {
+            if (isset($lastCampaigns[$channel])) {
+                continue;
+            }
 
-						$last_campaigns[ $channel ][] = array(
-							'hash'          => $campaign->HASH,
-							'id'            => $campaign->REF,
-							'list'          => $campaign->LISTNUM,
-							'name'          => $this->isJson( $campaign->SUBJECT ) ? json_decode( $campaign->SUBJECT ) : $campaign->SUBJECT,
-							'internal_name' => $this->isJson( $campaign->INTERNAL_NAME ) ? json_decode( $campaign->INTERNAL_NAME ) : $campaign->INTERNAL_NAME,
-							'status'        => $campaign->STATUS,
-						);
-						$campaigns_flag[ $channel ]   = array(
-							'name'       => $campaign->SUBJECT,
-							'start_time' => strtotime( $campaign->START ),
-						);
-					} else {
-						$last_campaigns_flag[ $channel ] = 1;
-					}
-				}
-			}
-		}
-		return $last_campaigns;
-	}
+            $lastCampaigns[$channel][] = [
+                'hash'          => $campaign['campaign_hash'] ?? null,
+                'id'            => $campaign['id'] ?? null,
+                'list'          => $campaign['list_id'] ?? null,
+                'name'          => $campaign['internal_name'] ?? '',
+                'internal_name' => $campaign['internal_name'] ?? '',
+                'status'        => $campaign['status'] ?? '',
+            ];
+
+            if (count($lastCampaigns) === count($channels)) {
+                break;
+            }
+        }
+
+        return $lastCampaigns;
+    }
+
 
 	public function isJson( $string ) {
 		json_decode( $string );
 		return ( json_last_error() == JSON_ERROR_NONE );
 	}
 
-	public function smsnf_last_campaigns_reports() {
+	public function smsnf_last_campaigns_reports(): array
+    {
+        $last_campaigns = $this->smsnf_get_last_campaigns();
+        $reports        = [];
 
-		$last_campaigns = $this->smsnf_get_last_campaigns();
-		$reports        = array();
+        foreach ($last_campaigns as $channel => $campaigns) {
 
-		foreach ( $last_campaigns as $channel => $campaign ) {
+            $reports[$channel] = [
+                'name'          => str_replace('"', '', $campaigns[0]['name']),
+                'internal_name' => str_replace('"', '', $campaigns[0]['internal_name']),
+                'id'            => '',
+                'list'          => '',
+                'sent'          => 0,
+                'chart'         => [
+                    'opens'         => 0,
+                    'clicks'        => 0,
+                    'bounces'       => 0,
+                    'removes'       => 0,
+                    'complains'     => 0,
+                    'delivered'     => 0,
+                    'not_delivered' => 0,
+                ],
+            ];
 
-			$reports[ $channel ] = array(
-				'name'          => str_replace( '"', '', $campaign[0]['name'] ),
-				'internal_name' => str_replace( '"', '', $campaign[0]['internal_name'] ),
-				'id'            => '',
-				'list'          => '',
-				'sent'          => 0,
-				'chart'         => array(
-					'opens'         => 0,
-					'clicks'        => 0,
-					'bounces'       => 0,
-					'removes'       => 0,
-					'complains'     => 0,
-					'delivered'     => 0,
-					'not_delivered' => 0,
-				),
-			);
+            foreach ($campaigns as $value) {
 
-			foreach ( $campaign as $key => $value ) {
-				$report                       = $this->egoiWpApi->getReport( $value['hash'] );
-				if(isset($report)){
-					$reports[ $channel ]['id']   .= $value['id'] . ' | ';
-					$reports[ $channel ]['list'] .= $value['list'] . ' | ';
-					if ( ! isset( $report->ERROR ) ) {
-						$reports[ $channel ]['sent'] += $report->SENT;
-						if ( $channel == 'email' ) {
-							$reports[ $channel ]['chart']['opens']     += $report->UNIQUE_VIEWS;
-							$reports[ $channel ]['chart']['clicks']    += $report->UNIQUE_CLICKS;
-							$reports[ $channel ]['chart']['bounces']   += $report->RETURNED;
-							$reports[ $channel ]['chart']['removes']   += $report->TOTAL_REMOVES;
-							$reports[ $channel ]['chart']['complains'] += $report->COMPLAIN;
-						} elseif ( $channel == 'sms_premium' ) {
-							$reports[ $channel ]['chart']['delivered']     += $report->DELIVERED;
-							$reports[ $channel ]['chart']['not_delivered'] += $report->NOT_DELIVERED;
-						}
-					} else {
-						$reports[ $channel ]['sent'] = $report->ERROR;
-					}
-				}
-			}
+                $report = $this->egoiWpApi->getReportsByV3($channel, $value['hash']);
 
-			$reports[ $channel ]['id']   = substr( $reports[ $channel ]['id'], 0, -2 );
-			$reports[ $channel ]['list'] = substr( $reports[ $channel ]['list'], 0, -2 );
+                if (empty($report)) {
+                    continue;
+                }
 
-		}
-		return $reports;
-	}
+                $reports[$channel]['id']   .= $value['id'] . ' | ';
+                $reports[$channel]['list'] .= $value['list'] . ' | ';
+
+                /** EMAIL */
+                if ($channel === 'email' && isset($report['overall'])) {
+
+                    $overall = $report['overall'];
+
+                    $reports[$channel]['sent'] += (int) ($overall['sends'] ?? 0);
+
+                    $reports[$channel]['chart']['opens'] += (int) ($overall['opens'] ?? 0);
+
+                    $reports[$channel]['chart']['clicks'] += (int) ($overall['clicks'] ?? 0);
+
+                    $reports[$channel]['chart']['bounces'] += (int) (
+                        ($overall['hard_bounces'] ?? 0) +
+                        ($overall['soft_bounces'] ?? 0)
+                    );
+
+                    $reports[$channel]['chart']['removes'] += (int) ($overall['unsubscriptions'] ?? 0);
+
+                    $reports[$channel]['chart']['complains'] += (int) ($overall['complaints'] ?? 0);
+                }
+
+
+                /** SMS */
+                if ($channel === 'sms' && isset($report['overall'])) {
+
+                    $overall = $report['overall'];
+
+                    $reports[$channel]['sent']          += (int) ($overall['sends'] ?? 0);
+                    $reports[$channel]['chart']['delivered']
+                        += (int) ($overall['delivered'] ?? 0);
+
+                    $reports[$channel]['chart']['not_delivered']
+                        += (int) (
+                            ($overall['error'] ?? 0) +
+                            ($overall['invalid'] ?? 0) +
+                            ($overall['pending'] ?? 0)
+                        );
+                }
+            }
+
+            $reports[$channel]['id']   = rtrim($reports[$channel]['id'], ' |');
+            $reports[$channel]['list'] = rtrim($reports[$channel]['list'], ' |');
+        }
+
+        return $reports;
+    }
+
 
 	public function egoi_deploy_rss() {
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
@@ -2874,7 +2896,7 @@ class Egoi_For_Wp_Admin {
         }
 		$output = array(
 			'email'       => '',
-			'sms_premium' => '',
+			'sms' => '',
 		);
 
 		$campaigns = $this->smsnf_last_campaigns_reports();
@@ -2888,7 +2910,22 @@ class Egoi_For_Wp_Admin {
 				continue;
 			}
 
-			$campaign_chart   = implode( ',', $campaigns[ $type ]['chart'] );
+			if ( $type === 'email' ) {
+				$campaign_chart = implode( ',', [
+					$campaigns[ $type ]['chart']['opens'],
+					$campaigns[ $type ]['chart']['clicks'],
+					$campaigns[ $type ]['chart']['bounces'],
+					$campaigns[ $type ]['chart']['removes'],
+					$campaigns[ $type ]['chart']['complains']
+				]);
+			} elseif ( $type === 'sms' ) {
+				$campaign_chart = implode( ',', [
+					$campaigns[ $type ]['chart']['delivered'],
+					$campaigns[ $type ]['chart']['not_delivered']
+				]);
+			} else {
+				$campaign_chart = implode( ',', $campaigns[ $type ]['chart'] );
+			}
 			$type_clean       = str_replace( '_premium', '', $type );
 			$output[ $type ] .= '
                 <table class="table smsnf-dashboard-campaigns--table">
@@ -2936,7 +2973,7 @@ class Egoi_For_Wp_Admin {
                         "rgba(242, 91, 41, 0.5)",
                         "rgba(237, 60, 47, 0.7)"
                     ];
-				} elseif ( $type == 'sms_premium' ) {
+				} elseif ( $type == 'sms' ) {
 					$labels           = ['Entregues', 'Não Entregues'];
 					$background_color = ['rgba(147, 189, 77, 0.3)', 'rgba(250, 70, 19, 0.4'];
 					$border_color     = ['rgba(147, 189, 77, 0.4)', 'rgba(250, 70, 19, 0.5)'];
