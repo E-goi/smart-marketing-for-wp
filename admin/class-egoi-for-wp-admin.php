@@ -3073,17 +3073,19 @@ class Egoi_For_Wp_Admin {
 			$output['account'] = '';
 		}
 
-		$output['account'] .= '
-            <table class="' . $table_class . '">
-                <tbody>
-					<tr>
-						<td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Plan', 'egoi-for-wp' ) . '</span></td>
-                        <td><span class="">' . strtoupper($customer->plan_info->type) . '</span></td>
-                    </tr>
-                    <tr>
-						<td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Current Balance', 'egoi-for-wp' ) . '</span></td>
-						<td><span class="smsnf-dashboard-account__content__table--cash">' . $customer->balance_info->balance . ' ' .$customer->balance_info->currency . '</span></td>
-                    </tr>';
+        if(isset($customer->PLAN_INFO)){
+            $output['account'] .= '
+                <table class="' . $table_class . '">
+                    <tbody>
+                        <tr>
+                            <td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Plan', 'egoi-for-wp' ) . '</span></td>
+                            <td><span class="">' . strtoupper($customer->PLAN_INFO->type) . '</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="smsnf-dashboard-account__content__table--total">' . __( 'Current Balance', 'egoi-for-wp' ) . '</span></td>
+                            <td><span class="smsnf-dashboard-account__content__table--cash">' . $customer->balance_info->balance ?? '' . ' ' . $customer->balance_info->currency ?? '' . '</span></td>
+                        </tr>';
+        }
 
 		$plugins       = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 		$sms_installed = false;

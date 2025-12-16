@@ -104,7 +104,12 @@ function getEgoiClient() {
 	$api    = getApikey();
 	$plugin = '908361f0368fd37ffa5cc7c483ffd941';
 	$out    = json_decode( _getContent( $url, array( "ApiKey: $api", "PluginKey: $plugin" ) ), true );
-	if ( $out['plan_info']['type'] != 'free' ) {
+
+    if(isset($out['plan_info'])){
+        return 'free';
+    }
+
+    if ( $out['plan_info']['type'] != 'free' ) {
 		return 'paid';
 	} elseif ( floatval( $out['balance_info']['balance'] ) > 1 ) {
 		return 'paid';
