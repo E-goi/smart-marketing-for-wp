@@ -610,7 +610,7 @@ class EgoiProductsBo
             'brand' => $product->get_meta('_egoi_brand'),
             'categories' => self::transformArrayIdsToArrayBreadCrumbs($product->get_category_ids(), $breadCrumbs),
             'related_products' => $related_products,
-            'in_stock' => $product->get_stock_quantity() != null && $product->get_stock_quantity() > 0 ? 1 : 0,
+            'in_stock' => $product->get_stock_quantity() != null && $product->get_stock_quantity() > 0 ? true : false,
         );
 
     }
