@@ -5,7 +5,7 @@ Tags: Email Marketing, SMS Marketing, Newsletter, Marketing Automation, E-goi, E
 Requires at least: 4.7
 Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 5.1.07
+Stable tag: 5.1.08
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -209,6 +209,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+= 5.1.08 =
+- Add support to in_stock variable to API V3
+
 = 5.1.07 =
 - Add filter to get all extra fields without list fields
 - Migrate Dasboard to API V3
