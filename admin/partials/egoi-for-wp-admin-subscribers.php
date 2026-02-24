@@ -69,13 +69,10 @@ if ( class_exists( 'WooCommerce' ) && class_exists( 'WC_Admin_Profile' ) ) {
 $orders       = array();
 $count_orders = 0;
 
-if ( class_exists( 'WooCommerce' ) && function_exists( 'wc_get_orders' ) ) {
-    $orders = wc_get_orders( array( 'limit' => -1 ) );
-
-    if ( is_array( $orders ) ) {
-        $count_orders = count( $orders );
-    }
+if ( class_exists( 'WooCommerce' ) && function_exists( 'wc_orders_count' ) ) {
+	$count_orders = wc_orders_count( 'any' );
 }
+
 
 
 $count_users = count_users();
