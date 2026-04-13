@@ -83,6 +83,12 @@
 						}
 						payload[form[i].name] = form[i].value
 					}
+					
+					let domainInput = $('#domain');
+					if (domainInput.length && domainInput.val()) {
+						payload['domain'] = domainInput.val();
+					}
+					
 					loader.show();
 
 					$.post(
