@@ -56,15 +56,15 @@
 				</div>
 
 				<div class="smsnf-input-group">
-					<label for="egoi_sync"><?php _e( 'Abandoned cart recovery', 'egoi-for-wp' ); ?></label>
+					<label for="egoi_sync"><?php _e( 'Automate abandoned cart recovery', 'egoi-for-wp' ); ?></label>
 					<?php if ($this->options_list['abandoned_cart'] !== 'used_in_another_domain') { ?>
-						<p class="subtitle"><?php _e( 'Enable this to automatically create an abandoned cart recovery journey for this domain. You can then manage and edit this automation in the automations area.', 'egoi-for-wp' ); ?></p>
+						<p class="subtitle"><?php _e( 'Send automated recovery communications whenever a cart is abandoned.', 'egoi-for-wp' ); ?></p>
 						<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
 							<label><input type="radio"  name="egoi_sync[abandoned_cart]" <?php checked( $this->options_list['abandoned_cart'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
 							<label><input type="radio" name="egoi_sync[abandoned_cart]" <?php checked( $this->options_list['abandoned_cart'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
 						</div>
 					<?php } else { ?>
-						<p class="subtitle"><?php _e( 'This journey is already active in another domain. Deactivate it in that domain to be able to activate it here.', 'egoi-for-wp' ); ?></p>
+						<p class="subtitle"><?php _e( 'This configuration is already active for another domain.', 'egoi-for-wp' ); ?></p>
 					<?php } ?>
 				</div>
 
