@@ -82,6 +82,11 @@ class Egoi_For_Wp_Admin {
 	protected $options_list;
 	protected $bar_post;
 
+
+	const AUTOMATIONS_SYSTEM_TYPES = [
+		'abandoned_cart',
+	];
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -119,7 +124,7 @@ class Egoi_For_Wp_Admin {
 
 		// register options
 		register_setting( self::API_OPTION, self::API_OPTION );
-		register_setting( self::OPTION_NAME, self::OPTION_NAME );
+		register_setting( self::OPTION_NAME, self::OPTION_NAME, array( 'sanitize_callback' => array( $this, 'checkSubscribersForm' ) ) );
 		register_setting( self::BAR_OPTION_NAME, self::BAR_OPTION_NAME );
 
 		// register forms
@@ -490,6 +495,7 @@ class Egoi_For_Wp_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( 'You do not have sufficient permissions to access this page.' );
 		} else {
+			$this->loadAutomationsSystem();
 			include_once 'partials/egoi-for-wp-admin-subscribers.php';
 		}
 
@@ -3786,6 +3792,56 @@ class Egoi_For_Wp_Admin {
 
 		$wpdb->query( $sql );
 
+	}
+
+	public function loadAutomationsSystem() {
+
+		//force default
+		foreach ( self::AUTOMATIONS_SYSTEM_TYPES as $type ) {
+			$this->options_list[$type] = 0;
+		}
+
+		$respAutomationsSystem = $this->egoiWpApiV3->getAutomationsSystem();
+		$automaionsSystem = array_filter($respAutomationsSystem, function($item) {
+            return in_array($item['type'], self::AUTOMATIONS_SYSTEM_TYPES);
+        });
+
+		if (!empty($automaionsSystem)) {
+			foreach ($automaionsSystem as $automation) {
+				if ($automation['paused'] == 'true') {
+					$this->options_list[$automation['type']] = 0;
+				} else {
+					if ($automation['url'] == $this->options_list['domain']) {
+						$this->options_list[$automation['type']] = (int)!$automation['paused'];
+					} else {
+						$this->options_list[$automation['type']] = 'used_in_another_domain';
+					}
+				}
+			}
+		}
+		update_option( self::OPTION_NAME, $this->options_list );
+	}
+
+	public function checkSubscribersForm($formData) {
+		$old = get_option(self::OPTION_NAME, array());
+
+		foreach (self::AUTOMATIONS_SYSTEM_TYPES as $type) {
+			$newAutomationSystemValue = isset($formData[$type] ) ? (int) $formData[$type] : 0;
+			$oldAutomationSystemValue = isset($old[$type] ) ? (int) $old[$type] : 0;
+
+			if ($newAutomationSystemValue !== $oldAutomationSystemValue) {
+				$domain = $formData['domain'] ?? $this->options_list['domain'];
+
+				$payloadData = [
+					'type' => $type,
+					'paused' => (bool) !$newAutomationSystemValue,
+					'domain' => $domain
+				];
+				$this->egoiWpApiV3->updateAutomationsSystem($payloadData);
+			}
+		}
+
+		return $formData;
 	}
 
 }

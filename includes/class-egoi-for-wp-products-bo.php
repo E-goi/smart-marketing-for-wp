@@ -116,7 +116,7 @@ class EgoiProductsBo
                 'language' => $language,
                 'currency' => $currency,
                 'domain' => $domain,
-                'default' => false,
+                'default' => true,
             )
         );
         if (!is_numeric($response)) {

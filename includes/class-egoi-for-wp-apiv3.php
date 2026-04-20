@@ -279,6 +279,8 @@ class EgoiApiV3 {
         'importOrdersBulk'         => '/lists/{list_id}/orders',
         'getCampaigns'             => '/campaigns',
         'getReports'               => '/reports/{channel}/{campaign_hash}',
+		'getAutomationsSystem'	   => '/automations/system',
+		'updateAutomationsSystem'  => '/automations/system'
     );
 
 	protected $apiKey;
@@ -1569,7 +1571,38 @@ class EgoiApiV3 {
 		$result_client = json_decode( $client->getResponse(), true );
 
 		return $client->getCode() == 200 && isset( $result_client['total_items'] ) ? $result_client['total_items'] : $this->processErrors();
-	} 
+	}
+
+	public function getAutomationsSystem() {
+		$url = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+
+		$client = new ClientHttp( $url, 'GET', $this->headers );
+		if ($client->success() !== true) {
+			return $this->processErrors( $client->getError() );
+		}
+
+		$resp = json_decode($client->getResponse(), true);
+
+		return $client->getCode() == 200 && isset( $resp['items'] ) ? 
+			$resp['items'] :
+			$this->processErrors();
+	}
+
+	public function updateAutomationsSystem($data) {
+		$url = self::APIV3 . self::APIURLS[ __FUNCTION__ ];
+
+		$client = new ClientHttp($url, 'POST', $this->headers, $data);
+		if ($client->success() !== true) {
+			return $this->processErrors( $client->getError());
+		}
+
+		$resp = json_decode($client->getResponse(), true);
+
+		return $client->getCode() == 200 && isset($resp['type']) ? 
+			$resp :
+			$this->processErrors();
+	}
+		
 
 
 	/**

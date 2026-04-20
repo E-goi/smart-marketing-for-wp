@@ -83,6 +83,12 @@
 						}
 						payload[form[i].name] = form[i].value
 					}
+					
+					let domainInput = $('#domain');
+					if (domainInput.length && domainInput.val()) {
+						payload['domain'] = domainInput.val();
+					}
+					
 					loader.show();
 
 					$.post(
@@ -285,7 +291,7 @@
 											{action: 'egoi_count_products', catalog: catalog_selected.val()},
 											function(response) {
 												loader.hide();
-												if (response.success && response.data) {
+												if (response.success && response.data >= 0) {
 													count_products = parseInt(response.data);
 													if (count_products === 0) {
 														// No products, show alert and skip to next step
