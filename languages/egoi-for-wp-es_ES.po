@@ -3062,3 +3062,10 @@ msgstr "Tu dirección de e-mail se ha inscrito correctamente. !Hasta pronto!"
 #: admin/partials/capture/home.php:7
 msgid "Your Simple Forms list"
 msgstr "Su lista de Formularios Simples"
+
+msgid "Automate welcome"
+msgstr "Automatiza las comunicaciones de bienvenida"
+
+msgid "Send automated welcome communications."
+msgstr "Envía comunicaciones automáticas de bienvenida."
+

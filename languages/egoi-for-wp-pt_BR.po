@@ -3044,3 +3044,10 @@ msgstr "O seu pedido foi submetido com sucesso. Obrigado."
 #: admin/partials/capture/home.php:7
 msgid "Your Simple Forms list"
 msgstr "Sua lista de Formulários Simples"
+
+msgid "Automate welcome"
+msgstr "Automatize as boas-vindas"
+
+msgid "Send automated welcome communications."
+msgstr "Envie comunicações automáticas de boas-vindas."
+

@@ -69,6 +69,19 @@
 				</div>
 
 				<div class="smsnf-input-group">
+					<label for="egoi_sync"><?php _e( 'Automate welcome', 'egoi-for-wp' ); ?></label>
+					<?php if ($this->options_list['welcome'] !== 'used_in_another_domain') { ?>
+						<p class="subtitle"><?php _e( 'Send automated welcome communications.', 'egoi-for-wp' ); ?></p>
+						<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
+							<label><input type="radio"  name="egoi_sync[welcome]" <?php checked( $this->options_list['welcome'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+							<label><input type="radio" name="egoi_sync[welcome]" <?php checked( $this->options_list['welcome'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+						</div>
+					<?php } else { ?>
+						<p class="subtitle"><?php _e( 'This configuration is already active for another domain.', 'egoi-for-wp' ); ?></p>
+					<?php } ?>
+				</div>
+
+				<div class="smsnf-input-group">
 					<label for="egoi_sync"><?php _e( '"Subscribe to Newsletter" default', 'egoi-for-wp' ); ?></label>
 					<p class="subtitle"><?php _e( 'By activating this option, the Newsletter checkbox will be active by default, which could lead to legal issues under the GDPR', 'egoi-for-wp' ); ?></p>
 					<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
