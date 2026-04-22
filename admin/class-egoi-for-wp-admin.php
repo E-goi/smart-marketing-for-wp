@@ -86,6 +86,7 @@ class Egoi_For_Wp_Admin {
 	const AUTOMATIONS_SYSTEM_TYPES = [
 		'abandoned_cart',
 		'welcome',
+		'order_status_updated',
 	];
 
 	/**

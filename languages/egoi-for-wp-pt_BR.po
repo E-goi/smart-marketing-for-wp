@@ -3051,3 +3051,9 @@ msgstr "Automatize as boas-vindas"
 msgid "Send automated welcome communications."
 msgstr "Envie comunicações automáticas de boas-vindas."
 
+
+msgid "Automate order confirmation"
+msgstr "Automatize a confirmação de pedido"
+
+msgid "Send automated communications whenever an order is confirmed."
+msgstr "Envie comunicações automáticas sempre que um pedido for confirmado."
