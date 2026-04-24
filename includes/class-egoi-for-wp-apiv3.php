@@ -1148,7 +1148,7 @@ class EgoiApiV3 {
 			return $tags;
 		} else {
 			foreach ( $tags as $key => $value ) {
-				if ( strcasecmp( $value->name, $name ) == 0 ) {
+				if ( strcasecmp( $value['name'], $name ) == 0 ) {
 					$data = $value;
 				}
 			}
@@ -1173,7 +1173,7 @@ class EgoiApiV3 {
 			return $data;
 		} else {
 			foreach ( $tags as $key => $value ) {
-				if ( strcasecmp( $value->tag_id, $id ) == 0 ) {
+				if ( strcasecmp( $value['tag_id'], $id ) == 0 ) {
 					$data = $value;
 				}
 			}
