@@ -613,15 +613,15 @@ class Egoi_For_Wp_Public {
 		$tags = array();
 		$tag = $this->egoiWpApiV3->getTag( Egoi_For_Wp::GUEST_BUY );
 
-		if ( isset( $tag->tag_id ) ) {
-			array_push( $tags, $tag->tag_id );
+		if ( isset( $tag['tag_id'] ) ) {
+			array_push( $tags, $tag['tag_id'] );
 		}
 
 		if ( ! empty( $user_meta['egoi_newsletter_active'] ) || ! empty( $_POST['egoi_newsletter_active'] ) ) {
 			$tag = $this->egoiWpApiV3->getTag( Egoi_For_Wp::TAG_NEWSLETTER );
 
-			if ( isset( $tag->tag_id ) ) {
-				array_push( $tags, $tag->tag_id );
+			if ( isset( $tag['tag_id'] ) ) {
+				array_push( $tags, $tag['tag_id'] );
 			}
 		}
 

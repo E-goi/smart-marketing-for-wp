@@ -231,9 +231,9 @@ class Egoi4Widget extends WP_Widget {
 
 			$getTag = $this->egoiWpApiV3->getTag( $instance['tag_name'] );
 
-			if ( isset( $getTag->tag_id ) ) {
-				$instance['tag'] = $getTag->tag_id;
-				$instance['tag_name'] = $getTag->name;
+			if ( isset( $getTag['tag_id'] ) ) {
+				$instance['tag'] = $getTag['tag_id'];
+				$instance['tag_name'] = $getTag['name'];
 			}
 		}
 
@@ -308,8 +308,8 @@ class Egoi4Widget extends WP_Widget {
 
 				$getTag = $this->egoiWpApiV3->getTagById( $instance['tag-egoi'] );
 	
-				if ( isset( $getTag->tag_id ) ) {
-					$default_tag = $getTag->name;
+				if ( isset( $getTag['tag_id'] ) ) {
+					$default_tag = $getTag['name'];
 				}
 			}
 			
