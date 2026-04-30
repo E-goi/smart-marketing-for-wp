@@ -1124,9 +1124,7 @@ class Egoi_For_Wp_Admin {
 				if ( $subject ) { // check if tag exists in E-goi
 					$get_tags = $this->egoiWpApiV3->getTag( $subject );
 					
-					if ( isset( $get_tags->tag_id ) ) {
-						$tag = $get_tags->tag_id;
-					} else if ( isset( $get_tags['tag_id'] )){
+					 if ( isset( $get_tags['tag_id'] )){
 						$tag = $get_tags['tag_id'];
 					}
 				}
@@ -1134,8 +1132,8 @@ class Egoi_For_Wp_Admin {
 				// check if tag cf7 exists in E-goi
                 $cf7tag = '';
 				$get_tg = $this->egoiWpApiV3->getTag( $cf7[0]->post_title );
-				if ( isset( $get_tg->tag_id ) ) {
-					$cf7tag = $get_tg->tag_id;
+				if ( isset( $get_tg['tag_id'] ) ) {
+					$cf7tag = $get_tg['tag_id'];
 				}
 
 				$this->egoiWpApiV3->addContact(
@@ -1156,16 +1154,16 @@ class Egoi_For_Wp_Admin {
 					if ( $subject ) { // check if tag exists in E-goi
 						$get_tags = $this->egoiWpApiV3->getTag( $subject );
 
-						if ( isset( $get_tags->tag_id ) ) {
-							$tag = $get_tags->tag_id;
+						if ( isset( $get_tags['tag_id'] ) ) {
+							$tag = $get_tags['tag_id'];
 						}
 					}
 
 					// check if tag cf7 exists in E-goi
 					$get_tg = $this->egoiWpApiV3->getTag( $cf7[0]->post_title );
 
-					if ( isset( $get_tg->tag_id ) ) {
-						$cf7tag = $get_tg->tag_id;
+					if ( isset( $get_tg['tag_id'] ) ) {
+						$cf7tag = $get_tg['tag_id'];
 					}
 
 					$this->egoiWpApiV3->editContact(

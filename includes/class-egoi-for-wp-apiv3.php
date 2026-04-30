@@ -1126,7 +1126,7 @@ class EgoiApiV3 {
 			// Get the HTTP status code
 			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-			if($httpCode != 200){
+			if($httpCode != 202){
 				return false;
 			}
 	  
