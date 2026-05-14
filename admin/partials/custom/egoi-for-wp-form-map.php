@@ -44,6 +44,9 @@ $wp_fields_shipping = array_filter(
 							<optgroup label="About">
 								<option value="description"><?php _e( 'Biographical Info', 'egoi-for-wp' ); ?></option>
 							</optgroup>
+							<optgroup label="Newsletter">
+								<option value="newsletter">Newsletter</option>
+							</optgroup>
 							<?php
 							if ( class_exists( 'WooCommerce' ) ) {
 								if ( ! empty( $wp_fields_billing ) ) {
