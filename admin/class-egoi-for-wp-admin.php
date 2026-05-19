@@ -3800,6 +3800,12 @@ class Egoi_For_Wp_Admin {
 		}
 
 		$respAutomationsSystem = $this->egoiWpApiV3->getAutomationsSystem();
+
+		if ( ! is_array( $respAutomationsSystem ) ) {
+			error_log( 'E-goi: getAutomationsSystem returned an unexpected response type: ' . gettype( $respAutomationsSystem ) );
+			return;
+		}
+
 		$automaionsSystem = array_filter($respAutomationsSystem, function($item) {
             return in_array($item['type'], self::AUTOMATIONS_SYSTEM_TYPES);
         });
