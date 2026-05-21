@@ -10,7 +10,7 @@
  * Plugin Name:       Smart Marketing SMS and Newsletters Forms
  * Plugin URI:        https://www.e-goi.com/en/o/smart-marketing-wordpress/
  * Description:       Smart Marketing for WP adds E-goi's multichannel automation features to WordPress.
- * Version:           5.1.13
+ * Version:           5.1.14
 
  * Author:            E-goi
  * Author URI:        https://www.e-goi.com
