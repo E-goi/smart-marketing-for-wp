@@ -1419,11 +1419,14 @@ class EgoiApiV3 {
 		}
 		foreach ( $items as $item ) {
             $product = $item->get_product();
+            $qty     = $item->get_quantity();
+            $price   = $product
+                ? $product->get_price()
+                : ( $qty > 0 ? $item->get_subtotal() / $qty : 0 );
             $output[] = array(
-
 				'product_identifier' => $item->get_product_id(),
 				'name'               => $item->get_name(),
-                'price'              => number_format( $product->get_price(), 2 ),
+                'price'              => number_format( $price, 2 ),
 			);
 		}
 		return $output;
