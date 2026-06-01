@@ -3062,3 +3062,9 @@ msgstr "Tu dirección de e-mail se ha inscrito correctamente. !Hasta pronto!"
 #: admin/partials/capture/home.php:7
 msgid "Your Simple Forms list"
 msgstr "Su lista de Formularios Simples"
+
+msgid "Automate back in stock"
+msgstr "Automatiza comunicaciones de reposição de stock"
+
+msgid "Send automated back in stock communications."
+msgstr "Envía comunicaciones automáticas de reposição de stock."

@@ -21,12 +21,12 @@
  */
 
 // If this file is called directly, abort.
-if (! defined('WPINC')) {
+if ( ! defined( 'WPINC' ) ) {
 	exit;
 }
 
 
-define('EFWP_SELF_VERSION', '5.1.12');
+define( 'EFWP_SELF_VERSION', '5.1.15' );
 
 function activate_egoi_for_wp()
 {

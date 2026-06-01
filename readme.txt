@@ -212,6 +212,9 @@ You can create and update your lists, see how many subscribers you have, but you
 = 5.1.15 =
 - Fixed issue where products were not being imported to the catalog.
 
+= 5.1.15 =
+- Add system journeys (back in stock)
+
 = 5.1.14 =
 - Changed where variables are fetched to avoid conflicts with other plugins using the same hook.
 
