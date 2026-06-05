@@ -1538,8 +1538,8 @@ class Egoi_For_Wp_Admin {
 				$url             = get_permalink( $product->ID );
 
 				if ( isset( $params['decimal_space'] ) && is_numeric( $params['decimal_space'] ) ) {
-					$price = number_format( $price, $params['decimal_space'] );
-					$sale  = number_format( $sale, $params['decimal_space'] );
+					$price = number_format( (float) $price, (int) $params['decimal_space'] );
+					$sale  = number_format( (float) $sale, (int) $params['decimal_space'] );
 				}
 
 				if ( isset( $params['decimal_sep'] ) ) {

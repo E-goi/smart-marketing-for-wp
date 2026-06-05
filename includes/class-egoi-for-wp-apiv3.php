@@ -1426,7 +1426,7 @@ class EgoiApiV3 {
             $output[] = array(
 				'product_identifier' => $item->get_product_id(),
 				'name'               => $item->get_name(),
-                'price'              => number_format( $price, 2 ),
+                'price'              => number_format( (float) $price, 2 ),
 			);
 		}
 		return $output;
@@ -1446,7 +1446,7 @@ class EgoiApiV3 {
         $order_date = $order->get_date_created();
 
         $payload = array(
-            'order_total' => number_format( $order->get_total(), 2 ),
+            'order_total' => number_format( (float) $order->get_total(), 2 ),
             'order_id'    => $order->get_id(),
             'order_status' => $order_status,
             'cart_id'     => '',
@@ -1514,10 +1514,10 @@ class EgoiApiV3 {
 			$cart['products'][] = array(
 				'product_identifier' => ( $variations && ! empty( $cart_item['variation_id'] ) ) ? $cart_item['variation_id'] : $cart_item['product_id'],
 				'name'               => str_replace( '"', '\\"', $cart_item['data']->get_title() ),
-				'price'              => number_format( $cart_item['data']->get_price(), 2 ),
+				'price'              => number_format( (float) $cart_item['data']->get_price(), 2 ),
 			);
 
-			$cart['total'] += ( number_format( $cart_item['data']->get_price(), 2 ) * (int) $cart_item['quantity'] );
+			$cart['total'] += ( number_format( (float) $cart_item['data']->get_price(), 2 ) * (int) $cart_item['quantity'] );
 		}
 
 		return $cart;
