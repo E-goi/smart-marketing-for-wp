@@ -695,6 +695,11 @@ class Egoi_For_Wp_Admin {
 	* -- HOOKS ---
 	*/
 	public function users_queue() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.');
+		}
+
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		if ( isset( $_POST['submit'] ) && ( $_POST['submit'] ) ) {
 
@@ -838,6 +843,12 @@ class Egoi_For_Wp_Admin {
 
 
    public function orders_queue() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+
+		check_ajax_referer( 'egoi_core_actions', 'security' );
+
         if (isset($_POST['submit']) && $_POST['submit']) {
             try {
                 $listId = $_POST['listID'];
@@ -3697,6 +3708,12 @@ class Egoi_For_Wp_Admin {
 	public function generate_mail_catcher( $exceptions = null ) {
 
 			require_once ABSPATH . '/wp-includes/PHPMailer/PHPMailer.php';
+			if ( file_exists( ABSPATH . '/wp-includes/PHPMailer/Exception.php' ) ) {
+				require_once ABSPATH . '/wp-includes/PHPMailer/Exception.php';
+			}
+			if ( file_exists( ABSPATH . '/wp-includes/PHPMailer/SMTP.php' ) ) {
+				require_once ABSPATH . '/wp-includes/PHPMailer/SMTP.php';
+			}
 			require_once plugin_dir_path( __FILE__ ) . '../includes/transactionalemail/mail-catcher.php';
 			$mail_catcher = new MailCatcher();
 
