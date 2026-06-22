@@ -85,7 +85,8 @@ class Egoi_For_Wp_Admin {
 
 	const AUTOMATIONS_SYSTEM_TYPES = [
 		'abandoned_cart',
-		'back_in_stock'
+		'back_in_stock',
+		'price_drop'
 	];
 
 	/**
