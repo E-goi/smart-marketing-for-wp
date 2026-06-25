@@ -319,7 +319,8 @@ if ( ! $egoiwidget['enabled'] ) {
 
 		function getListWidget(listID){
 			var data_lists = {
-				action: 'egoi_get_lists'
+				action: 'egoi_get_lists',
+				security: egoi_config_ajax_object_core.ajax_nonce
 			};
 
 			jQuery.post(url_egoi_script.ajaxurl, data_lists, function(response) {

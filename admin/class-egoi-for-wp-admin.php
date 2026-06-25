@@ -1422,6 +1422,11 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function get_lists() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
+
 		if ( ! empty( $_POST ) ) {
 			$lists = $this->egoiWpApiV3->getLists();
 			
@@ -1439,6 +1444,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function get_tags() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		if ( ! empty( $_POST ) ) {
 			$tags = $this->egoiWpApiV3->getTags();
@@ -1448,6 +1457,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function add_tag( $name ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		if ( ! empty( $_POST ) ) {
 			echo wp_json_encode( $this->egoiWpApiV3->addTag( $name ) );
