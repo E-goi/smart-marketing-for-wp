@@ -598,16 +598,85 @@ class Egoi_For_Wp_Public {
 			woocommerce_form_field( $key, $field_args, ( ( empty( $checked ) ? 0 : true ) || ( ! empty( $options[ $key ] ) ) ) );
 		}
 	}
+
+	public function register_checkout_block_field() {
+		if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
+			return;
+		}
+
+		$fields = Egoi_For_Wp::egoi_subscriber_signup_fields();
+		$label  = isset( $fields['egoi_newsletter_active']['label'] ) ? $fields['egoi_newsletter_active']['label'] : __( 'Subscribe to newsletter', 'egoi-for-wp' );
+
+		$option   = Egoi_For_Wp_Admin::get_option();
+		$position = ! empty( $option['sub_button_position'] ) ? $option['sub_button_position'] : 'woocommerce_after_order_notes';
+
+		$location = 'order';
+		if ( strpos( $position, 'order' ) !== false || strpos( $position, 'notes' ) !== false ) {
+			$location = 'order';
+		} else {
+			$location = 'contact';
+		}
+
+		woocommerce_register_additional_checkout_field( array(
+			'id'       => 'egoi-for-wp/egoi_newsletter_active',
+			'label'    => $label,
+			'location' => $location,
+			'type'     => 'checkbox',
+			'required' => false,
+		) );
+	}
+
+	public function save_checkout_block_field( $key, $value, $group, $wc_object ) {
+		if ( 'egoi-for-wp/egoi_newsletter_active' === $key ) {
+			$wc_object->update_meta_data( 'egoi_newsletter_active', $value );
+		}
+	}
 	public function egoi_save_account_fields_order( $order_id ) {
 
+		$order = is_numeric( $order_id ) ? wc_get_order( $order_id ) : $order_id;
+		$is_newsletter_checked = false;
+
+		if ( ! empty( $_POST['egoi_newsletter_active'] ) ) {
+			$is_newsletter_checked = true;
+		} elseif ( $order && $order->get_meta( 'egoi_newsletter_active' ) ) {
+			$is_newsletter_checked = true;
+		}
+
 		if ( is_user_logged_in() ) {
+			if ( $is_newsletter_checked ) {
+				$user_id = get_current_user_id();
+				update_user_meta( $user_id, 'egoi_newsletter_active', 1 );
+				$listener = new Egoi_For_Wp_Listener( $this->plugin_name, $this->version );
+				$listener->init( $user_id );
+			}
 			return;
 		} else { // guest buyer
 			$options = $this->load_options();
 			$user    = $_POST;
 			$sub     = $this->get_default_map( $user );
+
+			$order_data = array();
+			if ( $order ) {
+				foreach ( $order->get_address( 'billing' ) as $key => $val ) {
+					$order_data[ 'billing_' . $key ] = $val;
+				}
+				foreach ( $order->get_address( 'shipping' ) as $key => $val ) {
+					$order_data[ 'shipping_' . $key ] = $val;
+				}
+			}
+
+			if ( ( empty( $sub ) || empty( $sub['email'] ) ) && ! empty( $order_data['billing_email'] ) ) {
+				$sub = array(
+					'email'      => $order_data['billing_email'],
+					'cellphone'  => empty( $order_data['billing_phone'] ) ? Egoi_For_Wp::smsnf_get_valid_phone( $order_data['shipping_phone'], $order_data['shipping_country'] ) : Egoi_For_Wp::smsnf_get_valid_phone( $order_data['billing_phone'], $order_data['billing_country'] ),
+					'first_name' => $order_data['billing_first_name'],
+					'last_name'  => $order_data['billing_last_name'],
+				);
+			}
+
+			$subscriber_data = array_merge( $order_data, $user );
 			if ( get_option( 'egoi_mapping' ) ) {
-				$sub = $this->egoi_map_subscriber( $user, $sub );
+				$sub = $this->egoi_map_subscriber( $subscriber_data, $sub );
 			}
 		}
 		$tags = array();
@@ -617,14 +686,13 @@ class Egoi_For_Wp_Public {
 			array_push( $tags, $tag['tag_id'] );
 		}
 
-		if ( ! empty( $user_meta['egoi_newsletter_active'] ) || ! empty( $_POST['egoi_newsletter_active'] ) ) {
+		if ( $is_newsletter_checked ) {
 			$tag = $this->egoiWpApiV3->getTag( Egoi_For_Wp::TAG_NEWSLETTER );
 
 			if ( isset( $tag['tag_id'] ) ) {
 				array_push( $tags, $tag['tag_id'] );
 			}
 		}
-
 
 		$this->egoiWpApiV3->addContact(
 			$options['list'],

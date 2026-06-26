@@ -702,6 +702,10 @@ class Egoi_For_Wp {
 		$this->loader->add_action( 'woocommerce_save_account_details', $plugin_public, 'egoi_save_account_fields', 10 );
 		$this->loader->add_action( 'woocommerce_new_order', $plugin_public, 'egoi_save_account_fields_order', 10, 1 );
 
+		// WooCommerce Blocks Checkout Field Support
+		$this->loader->add_action( 'woocommerce_init', $plugin_public, 'register_checkout_block_field' );
+		$this->loader->add_action( 'woocommerce_set_additional_field_value', $plugin_public, 'save_checkout_block_field', 10, 4 );
+
 		// Tracking&Engage
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'hookEcommerce', 99999 );
 		$this->loader->add_action( 'woocommerce_new_order', $plugin_public, 'hookEcommerceSetOrder', 99999, 1 );
