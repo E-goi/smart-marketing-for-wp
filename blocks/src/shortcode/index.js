@@ -29,7 +29,7 @@
 
 			componentDidMount() {
 				// ajax call
-				jQuery.get(ajax_url, {action: 'efwp_get_egoi_forms'}).done((data) => {
+				jQuery.get(ajax_url[0], {action: 'efwp_get_egoi_forms', security: ajax_url[1]}).done((data) => {
 					let json = JSON.parse(data)
 
 					if (json != null) {

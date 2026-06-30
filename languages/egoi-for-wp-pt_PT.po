@@ -3039,3 +3039,9 @@ msgstr "Automatize reposição de stock"
 
 msgid "Send automated back in stock communications."
 msgstr "Envie comunicações automáticas de reposição de stock."
+
+msgid "Automate price drop"
+msgstr "Automatize reposição de baixa de preço"
+
+msgid "Send automated price drop communications."
+msgstr "Envie comunicações automáticas de baixa de preço."

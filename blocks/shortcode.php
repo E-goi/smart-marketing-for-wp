@@ -21,7 +21,7 @@ function efwp_shortcode_block_init() {
 
 	$index_js = './build/shortcode.js';
 	wp_register_script( 'shortcode-block-editor', plugins_url( $index_js, __FILE__ ), array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ), filemtime( "$dir/$index_js" ) );
-	wp_localize_script( 'shortcode-block-editor', 'ajax_url', array(admin_url( 'admin-ajax.php' )));
+	wp_localize_script( 'shortcode-block-editor', 'ajax_url', array( admin_url( 'admin-ajax.php' ), wp_create_nonce( 'egoi_core_actions' ) ) );
 	register_block_type( 'egoi-for-wp/shortcode', array( 'editor_script' => 'shortcode-block-editor' ) );
 }
 add_action( 'init', 'efwp_shortcode_block_init' );
@@ -30,6 +30,11 @@ add_action( 'init', 'efwp_shortcode_block_init' );
 add_action( 'wp_ajax_efwp_get_egoi_forms', 'efwp_get_egoi_forms' );
 
 function efwp_get_egoi_forms() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'You do not have sufficient permissions to access this page.' );
+	}
+	check_ajax_referer( 'egoi_core_actions', 'security' );
+
 	global $wpdb;
 	$rows = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . "posts WHERE post_type = 'egoi-simple-form'" );
 

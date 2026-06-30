@@ -209,6 +209,10 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+= 5.1.18 =
+- Add system journeys (price drop)
+- Add security
+
 = 5.1.17 =
 - Add security
 

@@ -516,7 +516,7 @@ jQuery( document ).ready(
 
 			jQuery( "#egoi_list_loading" ).show();
 			var obj = {
-				security:   egoi_config_ajax_object.ajax_nonce,
+				security:   egoi_config_ajax_object_core.ajax_nonce,
 				action:     'egoi_get_lists',
 			};
 
