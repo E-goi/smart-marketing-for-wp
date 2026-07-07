@@ -85,6 +85,8 @@ class Egoi_For_Wp_Admin {
 
 	const AUTOMATIONS_SYSTEM_TYPES = [
 		'abandoned_cart',
+		'back_in_stock',
+		'price_drop'
 	];
 
 	/**
@@ -694,6 +696,11 @@ class Egoi_For_Wp_Admin {
 	* -- HOOKS ---
 	*/
 	public function users_queue() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.');
+		}
+
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		if ( isset( $_POST['submit'] ) && ( $_POST['submit'] ) ) {
 
@@ -837,6 +844,12 @@ class Egoi_For_Wp_Admin {
 
 
    public function orders_queue() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+
+		check_ajax_referer( 'egoi_core_actions', 'security' );
+
         if (isset($_POST['submit']) && $_POST['submit']) {
             try {
                 $listId = $_POST['listID'];
@@ -1409,6 +1422,11 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function get_lists() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
+
 		if ( ! empty( $_POST ) ) {
 			$lists = $this->egoiWpApiV3->getLists();
 			
@@ -1426,6 +1444,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function get_tags() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		if ( ! empty( $_POST ) ) {
 			$tags = $this->egoiWpApiV3->getTags();
@@ -1435,6 +1457,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function add_tag( $name ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		if ( ! empty( $_POST ) ) {
 			echo wp_json_encode( $this->egoiWpApiV3->addTag( $name ) );
@@ -3696,6 +3722,12 @@ class Egoi_For_Wp_Admin {
 	public function generate_mail_catcher( $exceptions = null ) {
 
 			require_once ABSPATH . '/wp-includes/PHPMailer/PHPMailer.php';
+			if ( file_exists( ABSPATH . '/wp-includes/PHPMailer/Exception.php' ) ) {
+				require_once ABSPATH . '/wp-includes/PHPMailer/Exception.php';
+			}
+			if ( file_exists( ABSPATH . '/wp-includes/PHPMailer/SMTP.php' ) ) {
+				require_once ABSPATH . '/wp-includes/PHPMailer/SMTP.php';
+			}
 			require_once plugin_dir_path( __FILE__ ) . '../includes/transactionalemail/mail-catcher.php';
 			$mail_catcher = new MailCatcher();
 

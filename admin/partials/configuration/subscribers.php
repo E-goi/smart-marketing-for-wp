@@ -69,6 +69,32 @@
 				</div>
 
 				<div class="smsnf-input-group">
+					<label for="egoi_sync"><?php _e( 'Automate back in stock', 'egoi-for-wp' ); ?></label>
+					<?php if ($this->options_list['back_in_stock'] !== 'used_in_another_domain') { ?>
+						<p class="subtitle"><?php _e( 'Send automated back in stock communications.', 'egoi-for-wp' ); ?></p>
+						<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
+							<label><input type="radio"  name="egoi_sync[back_in_stock]" <?php checked( $this->options_list['back_in_stock'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+							<label><input type="radio" name="egoi_sync[back_in_stock]" <?php checked( $this->options_list['back_in_stock'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+						</div>
+					<?php } else { ?>
+						<p class="subtitle"><?php _e( 'This configuration is already active for another domain.', 'egoi-for-wp' ); ?></p>
+					<?php } ?>
+				</div>
+
+				<div class="smsnf-input-group">
+					<label for="egoi_sync"><?php _e( 'Automate price drop', 'egoi-for-wp' ); ?></label>
+					<?php if ($this->options_list['price_drop'] !== 'used_in_another_domain') { ?>
+						<p class="subtitle"><?php _e( 'Send automated price drop communications.', 'egoi-for-wp' ); ?></p>
+						<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">
+							<label><input type="radio"  name="egoi_sync[price_drop]" <?php checked( $this->options_list['price_drop'], 1 ); ?> value="1"><?php _e( 'Yes', 'egoi-for-wp' ); ?></label> &nbsp;
+							<label><input type="radio" name="egoi_sync[price_drop]" <?php checked( $this->options_list['price_drop'], 0 ); ?> value="0"><?php _e( 'No', 'egoi-for-wp' ); ?></label>
+						</div>
+					<?php } else { ?>
+						<p class="subtitle"><?php _e( 'This configuration is already active for another domain.', 'egoi-for-wp' ); ?></p>
+					<?php } ?>
+				</div>
+
+				<div class="smsnf-input-group">
 					<label for="egoi_sync"><?php _e( '"Subscribe to Newsletter" default', 'egoi-for-wp' ); ?></label>
 					<p class="subtitle"><?php _e( 'By activating this option, the Newsletter checkbox will be active by default, which could lead to legal issues under the GDPR', 'egoi-for-wp' ); ?></p>
 					<div class="smsnf-wrapper" style="display: flex;align-items: flex-end;margin-top: 12px;">

@@ -3033,3 +3033,15 @@ msgstr "O seu pedido foi submetido com sucesso. Obrigado."
 #: admin/partials/capture/home.php:7
 msgid "Your Simple Forms list"
 msgstr "Lista de formulários simples"
+
+msgid "Automate back in stock"
+msgstr "Automatize reposição de stock"
+
+msgid "Send automated back in stock communications."
+msgstr "Envie comunicações automáticas de reposição de stock."
+
+msgid "Automate price drop"
+msgstr "Automatize reposição de baixa de preço"
+
+msgid "Send automated price drop communications."
+msgstr "Envie comunicações automáticas de baixa de preço."

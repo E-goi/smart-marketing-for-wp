@@ -53,7 +53,8 @@ jQuery( document ).ready(
 
 				// get E-goi lists
 				var data_lists = {
-					action: 'egoi_get_lists'
+					action: 'egoi_get_lists',
+					security: egoi_config_ajax_object_core.ajax_nonce
 				};
 
 				var select_lists_widget = $( '#e-goi-list-widget' );
@@ -112,7 +113,8 @@ jQuery( document ).ready(
 
 function getTags(){
 	var data = {
-		action: 'egoi_get_tags'
+		action: 'egoi_get_tags',
+		security: egoi_config_ajax_object_core.ajax_nonce
 	}
 
 	var select_tags = jQuery( '#e-goi-tags-widget' );

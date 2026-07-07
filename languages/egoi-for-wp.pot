@@ -2854,3 +2854,9 @@ msgstr ""
 #: admin/partials/capture/home.php:7
 msgid "Your Simple Forms list"
 msgstr ""
+
+msgid "Automate back in stock"
+msgstr ""
+
+msgid "Send automated back in stock communications."
+msgstr ""

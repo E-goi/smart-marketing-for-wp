@@ -352,7 +352,7 @@
 
 			$.post(
 				url_egoi_script.ajaxurl,
-				{action: 'egoi_get_lists'},
+				{action: 'egoi_get_lists', security: egoi_config_ajax_object_core.ajax_nonce},
 				function(response) {
 					loader.hide();
 					var lists = JSON.parse( response );

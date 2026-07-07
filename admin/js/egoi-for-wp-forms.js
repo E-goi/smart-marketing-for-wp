@@ -13,7 +13,8 @@ jQuery( document ).ready(
 			if (page == 'egoi-4-wp-form') {
 
 				var data_lists       = {
-					action: 'egoi_get_lists'
+					action: 'egoi_get_lists',
+					security: egoi_config_ajax_object_core.ajax_nonce
 				};
 				var select_lists_frm = $( '#e-goi-list-frm' );
 				var select_form      = $( '#formid_egoi' );
