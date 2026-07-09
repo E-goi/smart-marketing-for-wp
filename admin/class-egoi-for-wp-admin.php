@@ -1005,11 +1005,13 @@ class Egoi_For_Wp_Admin {
 			$mapp = array();
 			foreach ( $fields_in_form[0] as $field ) {
 				$typearr = preg_split( '/\ +/', $field );
-				$type    = ltrim( $typearr[0], '[' );
-				$type    = str_replace( '*', '', $type );
-				$key     = $typearr[1];
-				if ( empty( $mapp[ $type ] ) ) {
-					$mapp[ $type ] = $key;
+				if ( count( $typearr ) > 1 ) {
+					$type = ltrim( $typearr[0], '[' );
+					$type = str_replace( '*', '', $type );
+					$key  = rtrim( $typearr[1], ']' );
+					if ( empty( $mapp[ $type ] ) ) {
+						$mapp[ $type ] = $key;
+					}
 				}
 			}
 
@@ -1044,15 +1046,22 @@ class Egoi_For_Wp_Admin {
 			// telephone
 			$bo  = new EgoiProductsBo();
             $tel = '';
-            if(!empty($mapp['tel']) && !empty($_POST[$mapp['tel']])) {
+            if ( !empty($mapp['tel']) && !empty($_POST[$mapp['tel']]) 
+                && stripos($mapp['tel'], 'cell') === false 
+                && stripos($mapp['tel'], 'mobile') === false 
+                && stripos($mapp['tel'], 'telemovel') === false 
+                && stripos($mapp['tel'], 'telemóvel') === false ) {
 			    $tel = $bo->advinhometerCellphoneCode( sanitize_key( $_POST[$mapp['tel']] ) );
             }
 
             $cell = '';
 			// cellphone
+			$mobile = array();
 			foreach ( $_POST as $key_cell => $value_cell ) {
-				$cell = strpos( $key_cell, 'cell' );
-				if ( $cell !== false ) {
+				if ( stripos( $key_cell, 'cell' ) !== false 
+					|| stripos( $key_cell, 'mobile' ) !== false 
+					|| stripos( $key_cell, 'telemovel' ) !== false 
+					|| stripos( $key_cell, 'telemóvel' ) !== false ) {
 					$mobile[] = sanitize_key( $value_cell );
 				}
 			}

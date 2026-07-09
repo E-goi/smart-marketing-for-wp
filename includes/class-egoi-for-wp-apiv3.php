@@ -1336,10 +1336,10 @@ class EgoiApiV3 {
 
 		// telephone
 		if (!empty($tel) ) {
-			$params['cellphone'] = $tel;
+			$params['phone'] = $tel;
 		}
 		// cellphone
-		if (!empty($cell) && empty($tel) ) {
+		if (!empty($cell) ) {
 			$params['cellphone'] = $cell;
 		}
 		// birthdate
