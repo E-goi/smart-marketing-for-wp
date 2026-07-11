@@ -7,7 +7,8 @@
 			$.post(
 				smsnf_dashboard_ajax_object.ajax_url,
 				{
-					'action': 'smsnf_show_account_info_ajax'
+					'action': 'smsnf_show_account_info_ajax',
+					'security': smsnf_dashboard_ajax_object.ajax_nonce
 				},
 				function(response) {
 					var output = jQuery.parseJSON( response.data );
@@ -21,7 +22,8 @@
 			$.post(
 				smsnf_dashboard_ajax_object.ajax_url,
 				{
-					'action': 'smsnf_show_blog_posts'
+					'action': 'smsnf_show_blog_posts',
+					'security': smsnf_dashboard_ajax_object.ajax_nonce
 				},
 				function(response) {
 					$( '#blog_posts_content_loading' ).remove();
@@ -32,7 +34,8 @@
 			$.post(
 				smsnf_dashboard_ajax_object.ajax_url,
 				{
-					'action': 'smsnf_show_last_campaigns_reports'
+					'action': 'smsnf_show_last_campaigns_reports',
+					'security': smsnf_dashboard_ajax_object.ajax_nonce
 				},
 				function(response) {
 					var output = jQuery.parseJSON( response );

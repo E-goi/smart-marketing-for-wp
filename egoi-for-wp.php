@@ -409,6 +409,9 @@ function efwp_woocom_simple_product_egoi_brand_save($post_id)
 add_action('wp_ajax_egoi_preview_popup', 'efwp_popup_preview');
 function efwp_popup_preview()
 {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'You do not have sufficient permissions to access this page.' );
+	}
 	check_ajax_referer('egoi_capture_actions', 'security');
 
 	require_once plugin_dir_path(__FILE__) . 'includes/class-egoi-for-wp-popup.php';

@@ -342,7 +342,14 @@ class Egoi_For_Wp_Admin {
 			);
 
 			wp_enqueue_script( 'smsnf-notifications-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-notifications.js', array( 'jquery' ) );
-			wp_localize_script( 'smsnf-notifications-ajax-script', 'smsnf_notifications_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+			wp_localize_script(
+				'smsnf-notifications-ajax-script',
+				'smsnf_notifications_ajax_object',
+				array(
+					'ajax_url'   => admin_url( 'admin-ajax.php' ),
+					'ajax_nonce' => wp_create_nonce( 'egoi_core_actions' ),
+				)
+			);
 
 			if ( get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-dashboard' ) {
 				wp_register_script( $this->plugin_name . 'chartjs', plugin_dir_url( __FILE__ ) . 'js/chartjs/chart.min.js', array( 'jquery' ), true );
@@ -376,7 +383,14 @@ class Egoi_For_Wp_Admin {
 				|| get_current_screen()->id == 'smart-marketing_page_egoi-4-wp-ecommerce' ) {
 
 				wp_enqueue_script( 'smsnf-dashboard-ajax-script', plugin_dir_url( __FILE__ ) . 'js/egoi-for-wp-dashboard.js', array( 'jquery' ) );
-				wp_localize_script( 'smsnf-dashboard-ajax-script', 'smsnf_dashboard_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+				wp_localize_script(
+					'smsnf-dashboard-ajax-script',
+					'smsnf_dashboard_ajax_object',
+					array(
+						'ajax_url'   => admin_url( 'admin-ajax.php' ),
+						'ajax_nonce' => wp_create_nonce( 'egoi_core_actions' ),
+					)
+				);
 			}
 		}
 	}
@@ -1422,6 +1436,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function get_form_processed() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		if ( ! empty( $_POST ) ) {
 			echo wp_json_encode( $this->egoiWpApi->getForms( $_POST['listID'] ) );
@@ -2180,6 +2198,10 @@ class Egoi_For_Wp_Admin {
 		return false;
 	}
 	public function smsnf_show_blog_posts() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 		$posts  = $this->smsnf_get_blog_posts();
 		foreach ( $posts as $key => $post ) {
             ?>
@@ -2342,6 +2364,9 @@ class Egoi_For_Wp_Admin {
 
 
 	public function egoi_deploy_rss() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
 		if ( ! isset( $_POST['campaing_hash'] ) ) {
@@ -2376,6 +2401,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_get_email_senders() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
 		$apikey = $this->getApikey();
@@ -2425,6 +2453,9 @@ class Egoi_For_Wp_Admin {
     }
 
 	public function egoi_rss_campaign_webpush() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
 		$apikey = $this->getApikey();
@@ -2473,6 +2504,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_rss_campaign() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_create_campaign', 'security' );
 
 		$apikey = $this->getApikey();
@@ -2505,6 +2539,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_sync_catalog() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$data = array();
 
@@ -2525,6 +2562,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_variations_catalog() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 
 		$catalogId = sanitize_text_field( $_POST['catalog_id'] );
@@ -2537,6 +2577,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_related_products_catalog() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 
 		$catalogId = sanitize_text_field( $_POST['catalog_id'] );
@@ -2551,6 +2594,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_related_products_type_catalog() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 
 		$catalogId = sanitize_text_field( $_POST['catalog_id'] );
@@ -2565,6 +2611,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_delete_catalog() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$id = EgoiValidators::validate_id( sanitize_key( $_POST['id'] ) );
 		$bo = new EgoiProductsBo();
@@ -2585,6 +2634,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_create_catalog() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 
 		$name       = sanitize_text_field( $_POST['catalog_name'] );
@@ -2624,6 +2676,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_wizard_step() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_core_actions', 'security' );
 
 		switch ( sanitize_text_field( $_POST['step'] ) ) {
@@ -2671,6 +2726,9 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function egoi_force_import_catalog() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$id   = EgoiValidators::validate_id( sanitize_key( $_POST['id'] ) );
 		$page = EgoiValidators::validate_page( sanitize_key( $_POST['page'] ) );
@@ -2741,6 +2799,10 @@ class Egoi_For_Wp_Admin {
 	 * Get Countries and Currencies Utility
 	 * */
 	public function egoi_catalog_utilities() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$bo   = new EgoiProductsBo();
 		$data = $bo->getCountriesCurrencies();
 		if ( $data === false ) {
@@ -2781,6 +2843,10 @@ class Egoi_For_Wp_Admin {
 	 * Get Countries and Currencies Utility
 	 */
 	public function egoi_count_products() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_ecommerce_actions', 'security' );
 		$catalog_id = sanitize_key( $_GET['catalog'] );
 		$a          = EgoiProductsBo::getCatalogOptions( $catalog_id );
 
@@ -2929,9 +2995,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function smsnf_show_last_campaigns_reports() {
-        if (!current_user_can('manage_options')) {
-            wp_die( 'You do not have sufficient permissions to access this page.' );
-        }
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 		$output = array(
 			'email'       => '',
 			'sms' => '',
@@ -3078,6 +3145,10 @@ class Egoi_For_Wp_Admin {
 
 
 	public function smsnf_hide_notification() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 		$notifications                           = get_option( 'egoi_notifications' );
 		$notifications[ $_POST['notification'] ] = current_time( 'mysql' );
 		update_option( 'egoi_notifications', $notifications );
@@ -3227,9 +3298,10 @@ class Egoi_For_Wp_Admin {
 	}
 
 	public function smsnf_show_account_info_ajax() {
-        if (!current_user_can('manage_options')) {
-            wp_die( 'You do not have sufficient permissions to access this page.' );
-        }
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
 		$output = $this->smsnf_show_account_info( 'smart-marketing-dashboard' );
 		wp_send_json_success($output);
 	}
@@ -3386,6 +3458,9 @@ class Egoi_For_Wp_Admin {
 	 * Used to fetch mapped fields and mappable
 	 * */
 	public function egoi_get_mapping_n_fields() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_create_campaign', 'security' );// could: change object
 
 		if ( empty( $_POST['id'] ) ) {
