@@ -1315,6 +1315,9 @@ class Egoi_For_Wp_Admin {
 	 * @since    1.0.6
 	 */
 	public function egoi_map_fields_egoi() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
         check_ajax_referer( 'egoi_core_actions', 'security' );
 
         $id    = (int) sanitize_key( $_POST['id_egoi'] );
@@ -3604,6 +3607,9 @@ class Egoi_For_Wp_Admin {
     }
 
 	public function egoi_synchronize_subs() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
 		check_ajax_referer( 'egoi_core_actions', 'security' );
 		$page = sanitize_text_field( $_POST['page'] );
 
