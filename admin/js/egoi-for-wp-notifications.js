@@ -15,7 +15,8 @@
 
 					var data = {
 						'action' : 'smsnf_hide_notification',
-						'notification': notification.type
+						'notification': notification.type,
+						'security': smsnf_notifications_ajax_object.ajax_nonce
 					};
 
 					$.post(

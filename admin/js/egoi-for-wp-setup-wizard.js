@@ -288,7 +288,7 @@
 										loader.show();
 										$.get(
 											egoi_config_ajax_object_ecommerce.ajax_url,
-											{action: 'egoi_count_products', catalog: catalog_selected.val()},
+											{action: 'egoi_count_products', catalog: catalog_selected.val(), security: egoi_config_ajax_object_ecommerce.ajax_nonce},
 											function(response) {
 												loader.hide();
 												if (response.success && response.data >= 0) {

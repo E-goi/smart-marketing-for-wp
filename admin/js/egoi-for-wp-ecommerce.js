@@ -210,7 +210,7 @@ jQuery(document).ready(function() {
             loader_nr_prod.show();
             number_products.text('');
             left_products.text('');
-            $.get(ajaxObj.ajax_url, {action: 'egoi_count_products',catalog: id}, function(response) {
+            $.get(ajaxObj.ajax_url, {action: 'egoi_count_products',catalog: id, security: ajaxObj.ajax_nonce}, function(response) {
                 loader_nr_prod.hide();
                 response = parseResponse(response);
                 if(response === false)

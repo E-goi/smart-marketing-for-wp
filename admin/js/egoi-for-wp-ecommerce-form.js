@@ -64,7 +64,7 @@ jQuery( document ).ready(
 				loader.show();
 				$.get(
 					ajaxObj.ajax_url,
-					{action: 'egoi_catalog_utilities'},
+					{action: 'egoi_catalog_utilities', security: ajaxObj.ajax_nonce},
 					function(response) {
 						loader.hide();
 						response = parseResponse( response );
