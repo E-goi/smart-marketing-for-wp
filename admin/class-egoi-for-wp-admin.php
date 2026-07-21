@@ -1036,7 +1036,7 @@ class Egoi_For_Wp_Admin {
 				);
 
 				$key   = array_keys( $match );
-				$email = sanitize_email( $_POST[ $key[0] ] );
+				$email = ! empty( $key ) ? sanitize_email( $_POST[ $key[0] ] ) : '';
 			}
 
 			// telephone

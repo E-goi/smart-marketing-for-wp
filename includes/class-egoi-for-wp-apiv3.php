@@ -1027,6 +1027,12 @@ class EgoiApiV3 {
 			}
 		}
 
+		// Refuse to send a contact with no identifying field: an empty email/phone/cellphone
+		// and no extra fields means the caller failed to extract any real data upstream.
+		if ( empty( $email ) && empty( $tel ) && empty( $cell ) && empty( $params_extra ) ) {
+			return false;
+		}
+
 		if ( empty( $params_extra ) ) {
 			$body = array( 'base' => $params );
 		} else {

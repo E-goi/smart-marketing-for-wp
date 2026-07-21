@@ -70,7 +70,7 @@ class Egoi_For_Wp_Listener {
 			$fields = $this->mapping_extras_subscriber( $user, $user_id, $fields, $subHaveEgoiNewsletterActive );
 		}
 
-		$fields['base']['email'] = ! empty( $fields['email'] ) ? $fields['email'] : $user->user_email;
+		$fields['base']['email'] = ! empty( $fields['base']['email'] ) ? $fields['base']['email'] : $user->user_email;
 
 		$tag = $api->getTag( $user->roles[0] );
 		if(isset($tag['tag_id'])){
