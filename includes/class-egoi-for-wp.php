@@ -838,9 +838,9 @@ class Egoi_For_Wp {
 
 		$table = $wpdb->prefix . 'egoi_map_fields';
 		if ( $field ) {
-			$sql = "SELECT * FROM $table WHERE wp='$field'";
+			$sql = $wpdb->prepare( "SELECT * FROM $table WHERE wp=%s", $field );
 		} else {
-			$sql = "SELECT * FROM $table WHERE egoi='$name'";
+			$sql = $wpdb->prepare( "SELECT * FROM $table WHERE egoi=%s", $name );
 		}
 		$rows = $wpdb->get_results( $sql );
 
