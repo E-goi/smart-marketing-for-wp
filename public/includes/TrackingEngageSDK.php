@@ -270,10 +270,18 @@ class TrackingEngageSDK {
 			return self::getUserMeta();
 		}
 		if ( isset( $_SESSION[ self::SESSION_TAG ] ) ) {
-			return $_SESSION[ self::SESSION_TAG ]; }
+			return $_SESSION[ self::SESSION_TAG ];
+		}
+		foreach ( $_COOKIE as $key => $value ) {
+			preg_match( '/_pk_Subscriber[\.|_][0-9]+[\.|_][a-zA-Z0-9]{4}/', $key, $matches );
+			if ( ! empty( $matches ) && count( $matches ) === 1 ) {
+				return $value;
+			}
+		}
 		$current_user = wp_get_current_user();
 		if ( ! $current_user->exists() ) {
-			return false; }
+			return false;
+		}
 		return $current_user->user_email;
 	}
 
