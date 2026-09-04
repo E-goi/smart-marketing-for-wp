@@ -880,6 +880,22 @@ class Egoi_For_Wp_Public {
 		wp_die(); // this is required to terminate immediately and return a proper response
 	}
 
+	/**
+	 * Issues a fresh security token for the Elementor form, on demand via AJAX.
+	 *
+	 * The widget markup is rendered once and can be served from a static/page cache,
+	 * so the token can no longer be baked into the HTML at render time (BB-26982) —
+	 * it has to be requested right before submit, bypassing any page cache.
+	 */
+	public function efwp_generate_security_token() {
+		$nonce = uniqid( 'egoi_validator_' );
+		set_transient( 'egoi_validator_' . $nonce, true, 3600 );
+
+		echo esc_html( $nonce );
+
+		wp_die();
+	}
+
 	public function hookEcommerce() {
 
 		if ( is_admin() ) {
