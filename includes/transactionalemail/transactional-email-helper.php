@@ -273,21 +273,13 @@ class TransactionalEmailHelper {
 
 	public function handle_error( $response ) {
 
-		$body = $response['body'];
+		$body   = $response['body'];
+		$option = get_option( 'transactional_email_error_option' );
 
-		if ( isset( $body->detail ) ) {
-			$option = get_option( 'transactional_email_error_option' );
-			if ( ! $option['active'] ) {
-				$option['active'] = 1;
-				$option['detail'] = $body->detail;
-				update_option( 'transactional_email_error_option', $option );
-			}
-		} else {
-			if ( ! $option['active'] ) {
-				$option['active'] = 1;
-				$option['detail'] = $body->error;
-				update_option( 'transactional_email_error_option', $option );
-			}
+		if ( empty( $option['active'] ) ) {
+			$option['active'] = 1;
+			$option['detail'] = $body->detail ?? $body->error ?? '';
+			update_option( 'transactional_email_error_option', $option );
 		}
 
 	}

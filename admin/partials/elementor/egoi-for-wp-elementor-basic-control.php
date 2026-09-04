@@ -379,7 +379,7 @@ class EgoiElementorWidget extends Widget_Base {
 		$position_button = $settings['position_button'];
 
         ?>
-		<form id="elementor-egoi-form" method="post" action="/">
+		<form id="<?php echo esc_attr($form_id) ?>" method="post" action="/">
 		<div class="egoi_elementor_form_wrapper_custom <?php echo esc_attr($classes_form) ?>" >
 		<input type="hidden" id="egoi_tag" name="egoi_tag" value="<?php echo esc_attr($settings['tag_name']) ?>">
 		<input type="hidden" id="elementorEgoiForm" name="elementorEgoiForm" value="<?php echo esc_attr($widget_id) ?>">
@@ -463,7 +463,7 @@ class EgoiElementorWidget extends Widget_Base {
                              }, 5000);
                     }
                     
-                    var form = $("#elementor-egoi-form");
+                    var form = $("#<?php echo esc_attr($form_id) ?>");
                     form.submit(function(e){
                         e.preventDefault();
                         jQuery( "#<?php echo esc_attr($message_box_id) ?>" ).slideUp( "slow" );
