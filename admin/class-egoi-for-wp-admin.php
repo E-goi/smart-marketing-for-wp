@@ -3833,8 +3833,26 @@ class Egoi_For_Wp_Admin {
 				<?php
 				echo sprintf(
 					esc_html__( 'Error sending an email with E-goi Transactional Email:  %s  ', 'egoi-for-wp' ),
-					$option['detail']
+					esc_html( $option['detail'] )
 				);
+				if ( ! empty( $option['code'] ) ) {
+					echo esc_html(
+						sprintf(
+							/* translators: %s: HTTP status code returned by the API */
+							__( '(HTTP status: %s)', 'egoi-for-wp' ),
+							$option['code']
+						)
+					);
+				}
+				if ( ! empty( $option['time'] ) ) {
+					echo esc_html(
+						sprintf(
+							/* translators: %s: date/time the error was recorded */
+							__( ' — since %s', 'egoi-for-wp' ),
+							$option['time']
+						)
+					);
+				}
 				?>
 				 <a href="?transactional-email-dismissed">Dismiss</a></p>
 			</div>

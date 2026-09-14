@@ -423,6 +423,15 @@ class Mailer {
 				$this->error_message .= $error . PHP_EOL;
 			}
 
+			// Surface the connection error the same way an API error body would be surfaced,
+			// otherwise handle_error() never sees a reason (e.g. DNS/SSL/timeout failures).
+			$this->response = array(
+				'body' => (object) array(
+					'source' => 'connection',
+					'detail' => trim( $this->error_message ),
+				),
+			);
+
 			return;
 		}
 
