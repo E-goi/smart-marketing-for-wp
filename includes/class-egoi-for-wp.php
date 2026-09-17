@@ -685,6 +685,9 @@ class Egoi_For_Wp {
 		$this->loader->add_action( 'wp_ajax_egoi_simple_form_submit', $plugin_public, 'efwp_process_simple_form_add' );
 		$this->loader->add_action( 'wp_ajax_nopriv_egoi_simple_form_submit', $plugin_public, 'efwp_process_simple_form_add' );
 
+		$this->loader->add_action( 'wp_ajax_egoi_get_security_token', $plugin_public, 'efwp_generate_security_token' );
+		$this->loader->add_action( 'wp_ajax_nopriv_egoi_get_security_token', $plugin_public, 'efwp_generate_security_token' );
+
 		// Newsletter
 		$this->loader->add_action( 'woocommerce_register_form', $plugin_public, 'egoi_add_newsletter_signup', 10 );
 		$this->loader->add_action( 'woocommerce_edit_account_form', $plugin_public, 'egoi_add_newsletter_signup', 10 );
