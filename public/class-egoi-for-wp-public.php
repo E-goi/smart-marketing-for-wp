@@ -888,7 +888,13 @@ class Egoi_For_Wp_Public {
 	 * it has to be requested right before submit, bypassing any page cache.
 	 */
 	public function efwp_generate_security_token() {
-		$nonce = uniqid( 'egoi_validator_' );
+		// The request/response here carry no visitor-specific data (fixed URL, fixed
+		// POST body), so an edge/proxy cache aggressive enough to cache admin-ajax.php
+		// can serve the same cached token to every visitor, defeating BB-26982's fix.
+		// Explicit no-cache headers stop well-behaved caches from storing this response.
+		nocache_headers();
+
+		$nonce = uniqid( 'egoi_validator_', true );
 		set_transient( 'egoi_validator_' . $nonce, true, 3600 );
 
 		echo esc_html( $nonce );

@@ -477,8 +477,10 @@ class EgoiElementorWidget extends Widget_Base {
 
                         // Fetched fresh on every submit (never baked into the cached page
                         // markup) so page/CDN caching can't serve a stale, already-used
-                        // or expired token — see BB-26982.
-                        var tokenRequest = jQuery.post(ajaxurl, { action: "egoi_get_security_token" });
+                        // or expired token — see BB-26982. The "_" cache-buster keeps this
+                        // request unique per call even against caches that key purely on
+                        // URL/body and ignore the no-cache response headers.
+                        var tokenRequest = jQuery.post(ajaxurl, { action: "egoi_get_security_token", _: Date.now() + "_" + Math.random() });
 
                         tokenRequest.done(function (token) {
                             inputData["security"] = token;
