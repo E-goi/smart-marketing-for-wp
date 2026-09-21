@@ -378,6 +378,7 @@ class EgoiElementorWidget extends Widget_Base {
 		$classes_form    = $settings['direction_form'];
 		$position_button = $settings['position_button'];
 
+        $form_id = 'elementor-egoi-form-' . $widget_id;
         ?>
 		<form id="<?php echo esc_attr($form_id) ?>" method="post" action="/">
 		<div class="egoi_elementor_form_wrapper_custom <?php echo esc_attr($classes_form) ?>" >
