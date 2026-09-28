@@ -229,6 +229,15 @@
 				}
 				?>
 
+				<div class="smsnf-input-group">
+					<label for="catalog_language"><?php _e( 'Sync Orders', 'egoi-for-wp' ); ?></label>
+					<div class="smsnf-wrapper">
+						<a href="/?TB_inline?width=700&height=870&inlineId=egoi-for-wp-form-order-map&modal=true" id="map_order" class="thickbox smsnf-btn smsnf-btn-mt10">
+							<?php _e( 'Map order states', 'egoi-for-wp' ); ?>
+						</a>
+					</div>
+				</div>
+
                 <div class="smsnf-input-group">
                     <label for="role">
                         <span style="display: inline-flex; align-items: center;">
