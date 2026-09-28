@@ -16,8 +16,53 @@ add_thickbox();
 $lists = $this->egoiWpApiV3->getLists();
 
 $mapped_fields = $this->egoiWpApi->getMappedFields();
+$order_mapped_fields = $this->egoiWpApi->getOrderMappedFields();
 
 $extra       = $this->egoiWpApiV3->getExtraFields( $this->options_list['list'], 'obj' );
+
+$wpOrderStatus = [
+	'checkout-draft',
+	'on-hold',
+	'pending',
+	'processing',
+	'completed',
+	'refunded',
+	'cancelled',
+	'failed',
+	'unknown'
+];
+
+$egoiOrderStatus = [
+	'created',
+	'pending',
+	'payment_pending',
+	'payment_failed',
+	'paid',
+	'shipped',
+	'canceled',
+	'completed',
+	'unknown'
+];
+
+$defaultOrderStatusMap = [
+	'checkout-draft' => 'created',
+	'on-hold' => 'pending',
+	'pending' => 'pending',
+	'processing' => 'pending',
+	'completed' => 'completed',
+	'refunded' => 'completed',
+	'cancelled' => 'canceled',
+	'failed' => 'canceled',
+	'unknown' => 'unknown'
+];
+
+$wpEgoiOrderMap = $defaultOrderStatusMap;
+
+if ( ! empty( $order_mapped_fields ) ) {
+	foreach ( $order_mapped_fields as $order_mapped_field ) {
+		$wpEgoiOrderMap[ $order_mapped_field->wp_name ] = $order_mapped_field->egoi_name;
+	}
+}
 
 $egoi_fields = array(
 	'first_name' => 'First name',
@@ -108,6 +153,18 @@ jQuery(document).ready(function($) {
 		$('#TB_ajaxContent').prop('width', '800px');
 	});
 
+	$('#map_order').click(function() {
+		$('#TB_window').css('width', '820px');
+		$('#TB_ajaxContent').prop('width', '800px');
+		$('#error_map').hide();
+		$('#success_map').hide();
+		$('#save_order_map_fields').prop('disabled', false);
+	});
+
+	$(document).on('click', '.egoi-btn-close', function() {
+		tb_remove();
+	});
+
 	$('#update_users').click(function() {
 		$('#e-goi_import_valid').hide();
 		$('#load').show();
@@ -191,4 +248,9 @@ jQuery(document).ready(function($) {
 <!-- Mapeamento dos campos -->
 <div id="egoi-for-wp-form-map" style="display:none;width:700px;">
 	<?php require dirname( __FILE__ ) . '/custom/egoi-for-wp-form-map.php'; ?>
+</div>
+
+<!-- Mapeamento do status das orders -->
+<div id="egoi-for-wp-form-order-map" style="display:none;width:700px;">
+	<?php require dirname( __FILE__ ) . '/custom/egoi-for-wp-form-order-map.php'; ?>
 </div>

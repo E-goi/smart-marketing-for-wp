@@ -21,6 +21,16 @@ class Egoi_For_Wp_Activator {
 	public static function activate() {
 
 		self::smsnf_create_table(
+			'egoi_order_map_fields',
+			'
+	        id INT(11) NOT NULL AUTO_INCREMENT, 
+            wp_name VARCHAR(255) NOT NULL, 
+            egoi_name VARCHAR(255) NOT NULL, 
+            status INT(1) NOT NULL, 
+            PRIMARY KEY (id)'
+		);
+		
+		self::smsnf_create_table(
 			'egoi_map_fields',
 			'
 	        id INT(11) NOT NULL AUTO_INCREMENT, 

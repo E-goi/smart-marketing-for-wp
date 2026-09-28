@@ -81,6 +81,55 @@ jQuery( document ).ready(
 			}
 		);
 
+		$( '#save_order_map_fields' ).click(
+			function() {
+
+				var obj = [];
+				$('select[name="wp_order_fields[]"]').each(function(index) {
+					var valueOrderField = $(this).val();
+					var valueEgoiField = $('select[name="egoi_order_fields[]"]').eq(index).val();
+
+					obj.push({'wp_name': valueOrderField, 'egoi_name': valueEgoiField})
+				});
+
+				if (obj.length > 0) {
+
+					$( '#error_map' ).hide();
+					$( '#success_map' ).hide();
+					$( '#save_order_map_fields' ).prop( 'disabled', true );
+
+					$.ajax(
+						{
+							type: 'POST',
+							data:({
+								security: egoi_config_ajax_object_core.ajax_nonce,
+								action: 'egoi_save_order_map_fields',
+								order_map: JSON.stringify( obj )
+							}),
+							url: egoi_config_ajax_object_core.ajax_url,
+							success:function(data, status) {
+								$( '#save_order_map_fields' ).prop( 'disabled', false );
+
+								if (data == 'ERROR') {
+									$( '#error_map' ).show();
+									$( '#success_map' ).hide();
+								} else {
+									$( '#error_map' ).hide();
+									$( '#success_map' ).show();
+								}
+							},
+							error:function(status){
+								$( '#save_order_map_fields' ).prop( 'disabled', false );
+								$( '#error_map' ).show();
+								$( '#success_map' ).hide();
+							}
+						}
+					);
+				}
+
+			}
+		);
+
 		$( '.egoi_fields' ).on(
 			"click",
 			function(){
