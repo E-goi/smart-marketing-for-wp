@@ -967,6 +967,16 @@ class Egoi_For_Wp_Admin {
 
         $wooStatus = $order->get_status();
 
+        global $wpdb;
+        $table         = $wpdb->prefix . 'egoi_order_map_fields';
+        $mapped_status = $wpdb->get_var(
+            $wpdb->prepare( "SELECT egoi_name FROM $table WHERE wp_name = %s AND status = 1", $wooStatus )
+        );
+
+        if ( $mapped_status ) {
+            return $mapped_status;
+        }
+
         switch ( $wooStatus ) {
             // Map Egoi Created Status
             case 'checkout-draft':
@@ -1404,6 +1414,60 @@ class Egoi_For_Wp_Admin {
 
 			exit;
 		}
+	}
+
+	public function egoi_save_order_map_fields() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
+
+		$order_map = json_decode( wp_unslash( $_POST['order_map'] ?? '' ), true );
+
+		if ( empty( $order_map ) || ! is_array( $order_map ) ) {
+			echo 'ERROR';
+			exit;
+		}
+
+		global $wpdb;
+		$table = $wpdb->prefix . 'egoi_order_map_fields';
+
+		foreach ( $order_map as $field ) {
+			if ( ! is_array( $field ) ) {
+				continue;
+			}
+
+			$wp_name   = sanitize_text_field( $field['wp_name'] ?? '' );
+			$egoi_name = sanitize_text_field( $field['egoi_name'] ?? '' );
+
+			if ( '' === $wp_name || '' === $egoi_name ) {
+				continue;
+			}
+
+			$existing_id = $wpdb->get_var(
+				$wpdb->prepare( "SELECT id FROM $table WHERE wp_name = %s AND status = 1", $wp_name )
+			);
+
+			if ( $existing_id ) {
+				$wpdb->update(
+					$table,
+					array( 'egoi_name' => $egoi_name ),
+					array( 'id' => $existing_id )
+				);
+			} else {
+				$wpdb->insert(
+					$table,
+					array(
+						'wp_name'   => $wp_name,
+						'egoi_name' => $egoi_name,
+						'status'    => 1,
+					)
+				);
+			}
+		}
+
+		echo 'OK';
+		exit;
 	}
 
 	private function saveRMData( $post = false ) {

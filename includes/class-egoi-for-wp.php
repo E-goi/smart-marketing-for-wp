@@ -603,6 +603,7 @@ class Egoi_For_Wp {
 		$this->loader->add_action( 'wp_ajax_egoi_count_products', $plugin_admin, 'egoi_count_products' );
 		$this->loader->add_action( 'wp_ajax_egoi_wizard_step', $plugin_admin, 'egoi_wizard_step' );
         $this->loader->add_action( 'wp_ajax_egoi_map_fields_egoi', $plugin_admin, 'egoi_map_fields_egoi' );
+        $this->loader->add_action( 'wp_ajax_egoi_save_order_map_fields', $plugin_admin, 'egoi_save_order_map_fields' );
 		$this->loader->add_action( 'transition_post_status', $plugin_admin, 'egoi_product_check_delete', 10, 3 );
 		$this->loader->add_action( 'woocommerce_update_product', $plugin_admin, 'egoi_product_creation', 10 );
 
@@ -859,6 +860,15 @@ class Egoi_For_Wp {
 
 		$table = $wpdb->prefix . 'egoi_map_fields';
 		$sql   = "SELECT * FROM $table order by id DESC";
+        return $wpdb->get_results($sql );
+	}
+
+
+	public function getOrderMappedFields() {
+		global $wpdb;
+
+		$table = $wpdb->prefix . 'egoi_order_map_fields';
+		$sql   = "SELECT * FROM $table where `status` = 1";
         return $wpdb->get_results($sql );
 	}
 
