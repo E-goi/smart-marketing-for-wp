@@ -1288,6 +1288,10 @@ class EgoiApiV3 {
 		$result_client = json_decode( $client->getResponse(), true );
 
 		$extra_fields = array();
+		if ( ! is_array( $result_client ) ) {
+			return $extra_fields;
+		}
+
 		foreach ( $result_client as $fields ) {
             if (isset($fields['format']) && $fields['format'] === 'options') {
                 continue;

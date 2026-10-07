@@ -1038,6 +1038,10 @@ class Egoi_For_Wp {
 
 		$simple_map = array();
 		foreach ( $data['fields'] as $field ) {
+			if ( ! is_object( $field ) || ! method_exists( $field, 'get_entry_inputs' ) ) {
+				continue;
+			}
+
 			$inputs = $field->get_entry_inputs();
 
 			if ( is_array( $inputs ) ) {
@@ -1288,29 +1292,40 @@ class Egoi_For_Wp {
 
 		$options = get_option( Egoi_For_Wp_Admin::OPTION_NAME );
 		$apikey = get_option( 'egoi_api_key' );
-		if ( ! empty( $apikey['api_key'] ) ) {
-			$api = new EgoiApiV3( $apikey['api_key'] );
-			$extra = $api->getExtraFields( empty( $options['list'] ) ? $options->list : $options['list'], 'obj' );
 
-			$egoi_fields = array(
-				'first_name' => __( 'First name', 'egoi-for-wp' ),
-				'last_name'  => __( 'Last name', 'egoi-for-wp' ),
-				'cellphone'  => __( 'Mobile', 'egoi-for-wp' ),
-				'email'      => __( 'Email', 'egoi-for-wp' ),
-				'telephone'  => __( 'Telephone', 'egoi-for-wp' ),
-				'birth_date' => __( 'Birth Date', 'egoi-for-wp' ),
-				'lang'       => __( 'Language', 'egoi-for-wp' ),
-			);
-	
-			if ( ( ! empty( $options->list ) || ! empty( $options['list'] ) ) && $extra ) {
-	
-				foreach ( $extra as $extra_field ) {
-					$egoi_fields[ 'extra_' . $extra_field['field_id'] ] = $extra_field['name'];
-				}
-			}
-	
+		$egoi_fields = array(
+			'first_name' => __( 'First name', 'egoi-for-wp' ),
+			'last_name'  => __( 'Last name', 'egoi-for-wp' ),
+			'cellphone'  => __( 'Mobile', 'egoi-for-wp' ),
+			'email'      => __( 'Email', 'egoi-for-wp' ),
+			'telephone'  => __( 'Telephone', 'egoi-for-wp' ),
+			'birth_date' => __( 'Birth Date', 'egoi-for-wp' ),
+			'lang'       => __( 'Language', 'egoi-for-wp' ),
+		);
+
+		if ( empty( $apikey['api_key'] ) ) {
 			return $egoi_fields;
 		}
+
+		$list_id = is_array( $options ) && ! empty( $options['list'] ) ? $options['list'] : '';
+
+		if ( empty( $list_id ) ) {
+			return $egoi_fields;
+		}
+
+		$api   = new EgoiApiV3( $apikey['api_key'] );
+		$extra = $api->getExtraFields( $list_id, 'obj' );
+
+		if ( is_array( $extra ) ) {
+			foreach ( $extra as $extra_field ) {
+				if ( empty( $extra_field['field_id'] ) ) {
+					continue;
+				}
+				$egoi_fields[ 'extra_' . $extra_field['field_id'] ] = $extra_field['name'];
+			}
+		}
+
+		return $egoi_fields;
 	}
 
 }
