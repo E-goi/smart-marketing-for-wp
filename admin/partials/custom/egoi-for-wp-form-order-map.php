@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<tr>
 						<td>
 							<select name="wp_order_fields[]" id="wp_order_fields_<?= $index ?>" class="form-control" style="width: 100%;" disabled="true">
-								<option value="<?php echo $field ?>"><?php echo $field ?></option>
+								<option value="<?php echo esc_attr( $field ); ?>"><?php echo esc_html( $field ); ?></option>
 							</select>
 						</td>
 						<td style="text-align: center; vertical-align: middle;">
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										$selected = '';
 									}
 									?>
-									<option value="<?php echo $egoiField ?>" <?php echo $selected ?>><?php echo $egoiField ?></option>
+									<option value="<?php echo esc_attr( $egoiField ); ?>" <?php echo $selected; ?>><?php echo esc_html( $egoiField ); ?></option>
 								<?php endforeach; ?>
 							</select>
 						</td>

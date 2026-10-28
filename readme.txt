@@ -210,7 +210,10 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
-= 5.2.0 =
+= 5.2.0
+- Allow mapping of order status
+
+= 5.1.30 =
 - Fix Gravity Forms field mapper not opening due to fatal errors on malformed form fields or missing list configuration
 
 = 5.1.29 =

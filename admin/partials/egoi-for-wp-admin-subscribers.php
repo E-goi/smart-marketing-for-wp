@@ -19,29 +19,8 @@ $mapped_fields = $this->egoiWpApi->getMappedFields();
 
 $extra       = $this->egoiWpApiV3->getExtraFields( $this->options_list['list'], 'obj' );
 
-$wpOrderStatus = [
-	'checkout-draft',
-	'on-hold',
-	'pending',
-	'processing',
-	'completed',
-	'refunded',
-	'cancelled',
-	'failed',
-	'unknown'
-];
-
-$egoiOrderStatus = [
-	'created',
-	'pending',
-	'payment_pending',
-	'payment_failed',
-	'paid',
-	'shipped',
-	'canceled',
-	'completed',
-	'unknown'
-];
+$wpOrderStatus   = EgoiApiV3::getWooOrderStatuses();
+$egoiOrderStatus = EgoiApiV3::EGOI_ORDER_STATUSES;
 
 $wpEgoiOrderMap = EgoiApiV3::getOrderStatusMap();
 

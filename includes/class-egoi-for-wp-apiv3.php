@@ -1488,6 +1488,35 @@ class EgoiApiV3 {
         'unknown'        => 'unknown',
     );
 
+    const EGOI_ORDER_STATUSES = array(
+        'created',
+        'pending',
+        'payment_pending',
+        'payment_failed',
+        'paid',
+        'shipped',
+        'canceled',
+        'completed',
+        'unknown',
+    );
+
+    /**
+     * WooCommerce order statuses (without the wc- prefix, custom ones included) plus 'unknown'.
+     *
+     * @return array
+     */
+    public static function getWooOrderStatuses() {
+        $statuses = array();
+        if ( function_exists( 'wc_get_order_statuses' ) ) {
+            foreach ( array_keys( wc_get_order_statuses() ) as $key ) {
+                $statuses[] = 0 === strpos( $key, 'wc-' ) ? substr( $key, 3 ) : $key;
+            }
+        }
+        $statuses = array_merge( array_keys( self::DEFAULT_ORDER_STATUS_MAP ), $statuses );
+
+        return array_values( array_unique( array_merge( array_diff( $statuses, array( 'unknown' ) ), array( 'unknown' ) ) ) );
+    }
+
     /**
      * Default map merged with the user's custom map stored in wp_options.
      *
@@ -1513,7 +1542,7 @@ class EgoiApiV3 {
         $map       = self::getOrderStatusMap();
         $wooStatus = $order->get_status();
 
-        return isset( $map[ $wooStatus ] ) ? $map[ $wooStatus ] : 'unknown';
+        return $map[ $wooStatus ] ?? $map['unknown'];
     }
 
 	private static function getProductsFromCart( $cartObj, $variations = false ) {

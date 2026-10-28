@@ -1392,7 +1392,7 @@ class Egoi_For_Wp_Admin {
 			exit;
 		}
 
-		$allowed_wp   = array_keys( EgoiApiV3::DEFAULT_ORDER_STATUS_MAP );
+		$allowed_wp   = EgoiApiV3::getWooOrderStatuses();
 		$custom_map   = array();
 
 		foreach ( $order_map as $field ) {
@@ -1403,7 +1403,7 @@ class Egoi_For_Wp_Admin {
 			$wp_name   = sanitize_text_field( $field['wp_name'] ?? '' );
 			$egoi_name = sanitize_text_field( $field['egoi_name'] ?? '' );
 
-			if ( '' === $wp_name || '' === $egoi_name || ! in_array( $wp_name, $allowed_wp, true ) ) {
+			if ( '' === $wp_name || '' === $egoi_name || ! in_array( $wp_name, $allowed_wp, true ) || ! in_array( $egoi_name, EgoiApiV3::EGOI_ORDER_STATUSES, true ) ) {
 				continue;
 			}
 
