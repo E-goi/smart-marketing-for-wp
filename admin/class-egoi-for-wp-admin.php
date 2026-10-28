@@ -961,37 +961,10 @@ class Egoi_For_Wp_Admin {
 
     /**
      * @param $order
-     * @return null|string|string[]
+     * @return string
      */
-    private function getOrderStatus( $order) {
-
-        $wooStatus = $order->get_status();
-
-        switch ( $wooStatus ) {
-            // Map Egoi Created Status
-            case 'checkout-draft':
-                return 'created';
-
-            // Map Egoi Pending Status
-            case 'on-hold':
-            case 'pending':
-            case 'processing':
-                return 'pending';
-
-            // Map Egoi Completed Status
-            case 'completed':
-            case 'refunded':
-                return 'completed';
-
-            // Map Egoi Canceled Status
-            case 'cancelled':
-            case 'failed':
-                return 'canceled';
-
-            // Default case
-            default:
-                return 'unknown'; // Fallback to "created" if the status is unrecognized
-        }
+    private function getOrderStatus( $order ) {
+        return EgoiApiV3::getOrderStatus( $order );
     }
 
 	/**
@@ -1404,6 +1377,43 @@ class Egoi_For_Wp_Admin {
 
 			exit;
 		}
+	}
+
+	public function egoi_save_order_map_fields() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have sufficient permissions to access this page.' );
+		}
+		check_ajax_referer( 'egoi_core_actions', 'security' );
+
+		$order_map = json_decode( wp_unslash( $_POST['order_map'] ?? '' ), true );
+
+		if ( empty( $order_map ) || ! is_array( $order_map ) ) {
+			echo 'ERROR';
+			exit;
+		}
+
+		$allowed_wp   = EgoiApiV3::getWooOrderStatuses();
+		$custom_map   = array();
+
+		foreach ( $order_map as $field ) {
+			if ( ! is_array( $field ) ) {
+				continue;
+			}
+
+			$wp_name   = sanitize_text_field( $field['wp_name'] ?? '' );
+			$egoi_name = sanitize_text_field( $field['egoi_name'] ?? '' );
+
+			if ( '' === $wp_name || '' === $egoi_name || ! in_array( $wp_name, $allowed_wp, true ) || ! in_array( $egoi_name, EgoiApiV3::EGOI_ORDER_STATUSES, true ) ) {
+				continue;
+			}
+
+			$custom_map[ $wp_name ] = $egoi_name;
+		}
+
+		update_option( EgoiApiV3::ORDER_STATUS_MAP_OPTION, wp_json_encode( $custom_map ) );
+
+		echo 'OK';
+		exit;
 	}
 
 	private function saveRMData( $post = false ) {
