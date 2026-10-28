@@ -1474,39 +1474,46 @@ class EgoiApiV3 {
         return json_decode( $client->getResponse(), true );
     }
 
+    const ORDER_STATUS_MAP_OPTION = 'egoi_order_status_map';
+
+    const DEFAULT_ORDER_STATUS_MAP = array(
+        'checkout-draft' => 'created',
+        'on-hold'        => 'pending',
+        'pending'        => 'pending',
+        'processing'     => 'pending',
+        'completed'      => 'completed',
+        'refunded'       => 'completed',
+        'cancelled'      => 'canceled',
+        'failed'         => 'canceled',
+        'unknown'        => 'unknown',
+    );
+
+    /**
+     * Default map merged with the user's custom map stored in wp_options.
+     *
+     * @return array
+     */
+    public static function getOrderStatusMap() {
+        $custom = get_option( self::ORDER_STATUS_MAP_OPTION, array() );
+        if ( is_string( $custom ) ) {
+            $custom = json_decode( $custom, true );
+        }
+        if ( ! is_array( $custom ) ) {
+            $custom = array();
+        }
+
+        return array_merge( self::DEFAULT_ORDER_STATUS_MAP, $custom );
+    }
+
     /**
      * @param $order
-     * @return null|string|string[]
+     * @return string
      */
-    private function getOrderStatus( $order) {
-
+    public static function getOrderStatus( $order ) {
+        $map       = self::getOrderStatusMap();
         $wooStatus = $order->get_status();
 
-        switch ( $wooStatus ) {
-            // Map Egoi Created Status
-            case 'checkout-draft':
-                return 'created';
-
-            // Map Egoi Pending Status
-            case 'on-hold':
-            case 'pending':
-            case 'processing':
-                return 'pending';
-
-            // Map Egoi Completed Status
-            case 'completed':
-            case 'refunded':
-                return 'completed';
-
-            // Map Egoi Canceled Status
-            case 'cancelled':
-            case 'failed':
-                return 'canceled';
-
-            // Default case
-            default:
-                return 'unknown'; // Fallback to "created" if the status is unrecognized
-        }
+        return isset( $map[ $wooStatus ] ) ? $map[ $wooStatus ] : 'unknown';
     }
 
 	private static function getProductsFromCart( $cartObj, $variations = false ) {

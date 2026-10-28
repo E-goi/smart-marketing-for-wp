@@ -863,15 +863,6 @@ class Egoi_For_Wp {
         return $wpdb->get_results($sql );
 	}
 
-
-	public function getOrderMappedFields() {
-		global $wpdb;
-
-		$table = $wpdb->prefix . 'egoi_order_map_fields';
-		$sql   = "SELECT * FROM $table where `status` = 1";
-        return $wpdb->get_results($sql );
-	}
-
 	/**
 	 * @param $url
 	 * @param array $headers

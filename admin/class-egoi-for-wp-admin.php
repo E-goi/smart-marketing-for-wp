@@ -961,47 +961,10 @@ class Egoi_For_Wp_Admin {
 
     /**
      * @param $order
-     * @return null|string|string[]
+     * @return string
      */
-    private function getOrderStatus( $order) {
-
-        $wooStatus = $order->get_status();
-
-        global $wpdb;
-        $table         = $wpdb->prefix . 'egoi_order_map_fields';
-        $mapped_status = $wpdb->get_var(
-            $wpdb->prepare( "SELECT egoi_name FROM $table WHERE wp_name = %s AND status = 1", $wooStatus )
-        );
-
-        if ( $mapped_status ) {
-            return $mapped_status;
-        }
-
-        switch ( $wooStatus ) {
-            // Map Egoi Created Status
-            case 'checkout-draft':
-                return 'created';
-
-            // Map Egoi Pending Status
-            case 'on-hold':
-            case 'pending':
-            case 'processing':
-                return 'pending';
-
-            // Map Egoi Completed Status
-            case 'completed':
-            case 'refunded':
-                return 'completed';
-
-            // Map Egoi Canceled Status
-            case 'cancelled':
-            case 'failed':
-                return 'canceled';
-
-            // Default case
-            default:
-                return 'unknown'; // Fallback to "created" if the status is unrecognized
-        }
+    private function getOrderStatus( $order ) {
+        return EgoiApiV3::getOrderStatus( $order );
     }
 
 	/**
@@ -1429,8 +1392,8 @@ class Egoi_For_Wp_Admin {
 			exit;
 		}
 
-		global $wpdb;
-		$table = $wpdb->prefix . 'egoi_order_map_fields';
+		$allowed_wp   = array_keys( EgoiApiV3::DEFAULT_ORDER_STATUS_MAP );
+		$custom_map   = array();
 
 		foreach ( $order_map as $field ) {
 			if ( ! is_array( $field ) ) {
@@ -1440,31 +1403,14 @@ class Egoi_For_Wp_Admin {
 			$wp_name   = sanitize_text_field( $field['wp_name'] ?? '' );
 			$egoi_name = sanitize_text_field( $field['egoi_name'] ?? '' );
 
-			if ( '' === $wp_name || '' === $egoi_name ) {
+			if ( '' === $wp_name || '' === $egoi_name || ! in_array( $wp_name, $allowed_wp, true ) ) {
 				continue;
 			}
 
-			$existing_id = $wpdb->get_var(
-				$wpdb->prepare( "SELECT id FROM $table WHERE wp_name = %s AND status = 1", $wp_name )
-			);
-
-			if ( $existing_id ) {
-				$wpdb->update(
-					$table,
-					array( 'egoi_name' => $egoi_name ),
-					array( 'id' => $existing_id )
-				);
-			} else {
-				$wpdb->insert(
-					$table,
-					array(
-						'wp_name'   => $wp_name,
-						'egoi_name' => $egoi_name,
-						'status'    => 1,
-					)
-				);
-			}
+			$custom_map[ $wp_name ] = $egoi_name;
 		}
+
+		update_option( EgoiApiV3::ORDER_STATUS_MAP_OPTION, wp_json_encode( $custom_map ) );
 
 		echo 'OK';
 		exit;

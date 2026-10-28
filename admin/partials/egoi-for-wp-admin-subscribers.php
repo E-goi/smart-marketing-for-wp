@@ -16,7 +16,6 @@ add_thickbox();
 $lists = $this->egoiWpApiV3->getLists();
 
 $mapped_fields = $this->egoiWpApi->getMappedFields();
-$order_mapped_fields = $this->egoiWpApi->getOrderMappedFields();
 
 $extra       = $this->egoiWpApiV3->getExtraFields( $this->options_list['list'], 'obj' );
 
@@ -44,25 +43,7 @@ $egoiOrderStatus = [
 	'unknown'
 ];
 
-$defaultOrderStatusMap = [
-	'checkout-draft' => 'created',
-	'on-hold' => 'pending',
-	'pending' => 'pending',
-	'processing' => 'pending',
-	'completed' => 'completed',
-	'refunded' => 'completed',
-	'cancelled' => 'canceled',
-	'failed' => 'canceled',
-	'unknown' => 'unknown'
-];
-
-$wpEgoiOrderMap = $defaultOrderStatusMap;
-
-if ( ! empty( $order_mapped_fields ) ) {
-	foreach ( $order_mapped_fields as $order_mapped_field ) {
-		$wpEgoiOrderMap[ $order_mapped_field->wp_name ] = $order_mapped_field->egoi_name;
-	}
-}
+$wpEgoiOrderMap = EgoiApiV3::getOrderStatusMap();
 
 $egoi_fields = array(
 	'first_name' => 'First name',
