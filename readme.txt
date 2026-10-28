@@ -210,7 +210,7 @@ You can create and update your lists, see how many subscribers you have, but you
 
 == Changelog ==
 
-= 5.2.0
+= 5.2.0 =
 - Allow mapping of order status
 
 = 5.1.30 =
