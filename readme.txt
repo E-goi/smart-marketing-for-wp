@@ -5,7 +5,7 @@ Tags: Email Marketing, SMS Marketing, Newsletter, Marketing Automation, E-goi, E
 Requires at least: 4.7
 Tested up to: 6.7.1
 Requires PHP: 5.6
-Stable tag: 5.1.30
+Stable tag: 5.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -209,6 +209,9 @@ You can create and update your lists, see how many subscribers you have, but you
 
 
 == Changelog ==
+
+= 5.2.0 =
+- Allow mapping of order status
 
 = 5.1.30 =
 - Fix Gravity Forms field mapper not opening due to fatal errors on malformed form fields or missing list configuration

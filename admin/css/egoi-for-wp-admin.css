@@ -5940,6 +5940,36 @@ a {
   width: 60px !important;
 }
 
+/* Right-align the Close/Save actions instead of the default left alignment */
+.egoi-order-map-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin: 0 !important;
+  padding-right: 28px !important;
+}
+
+/* WordPress core (thickbox) pins #TB_closeWindowButton with position:fixed
+   and hides its label (icon-button styling); here it needs to sit inline
+   next to the Save button with its text fully visible instead */
+.egoi-order-map-actions #TB_closeWindowButton {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  overflow: visible !important;
+  text-indent: 0 !important;
+  background-image: none !important;
+  white-space: nowrap !important;
+}
+
+/* .egoi-btn-close's fixed 60px width truncates longer button labels */
+.egoi-order-map-actions .egoi-btn-close,
+.egoi-order-map-actions #save_order_map_fields {
+  width: auto !important;
+  min-width: 60px !important;
+}
+
 .egoi-map-title {
   color: #fff;
   display: block;
@@ -5950,6 +5980,21 @@ a {
   line-height: normal;
   border-bottom: 2px solid #00aeda;
   font-family: Montserrat;
+}
+
+.egoi-map-description {
+  color: #ffffff;
+  padding: 0px 32px 0px 32px !important;
+}
+
+.egoi-notice-error {
+  border-left-color: #dc3232 !important;
+  background-color: #fbeaea !important;
+}
+
+.egoi-notice-success {
+  border-left-color: #46b450 !important;
+  background-color: #eafbea !important;
 }
 
 /* Create a list */

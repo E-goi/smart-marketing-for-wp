@@ -19,6 +19,11 @@ $mapped_fields = $this->egoiWpApi->getMappedFields();
 
 $extra       = $this->egoiWpApiV3->getExtraFields( $this->options_list['list'], 'obj' );
 
+$wpOrderStatus   = EgoiApiV3::getWooOrderStatuses();
+$egoiOrderStatus = EgoiApiV3::EGOI_ORDER_STATUSES;
+
+$wpEgoiOrderMap = EgoiApiV3::getOrderStatusMap();
+
 $egoi_fields = array(
 	'first_name' => 'First name',
 	'last_name'  => 'Last name',
@@ -108,6 +113,18 @@ jQuery(document).ready(function($) {
 		$('#TB_ajaxContent').prop('width', '800px');
 	});
 
+	$('#map_order').click(function() {
+		$('#TB_window').css('width', '820px');
+		$('#TB_ajaxContent').prop('width', '800px');
+		$('#error_map').hide();
+		$('#success_map').hide();
+		$('#save_order_map_fields').prop('disabled', false);
+	});
+
+	$(document).on('click', '.egoi-btn-close', function() {
+		tb_remove();
+	});
+
 	$('#update_users').click(function() {
 		$('#e-goi_import_valid').hide();
 		$('#load').show();
@@ -191,4 +208,9 @@ jQuery(document).ready(function($) {
 <!-- Mapeamento dos campos -->
 <div id="egoi-for-wp-form-map" style="display:none;width:700px;">
 	<?php require dirname( __FILE__ ) . '/custom/egoi-for-wp-form-map.php'; ?>
+</div>
+
+<!-- Mapeamento do status das orders -->
+<div id="egoi-for-wp-form-order-map" style="display:none;width:700px;">
+	<?php require dirname( __FILE__ ) . '/custom/egoi-for-wp-form-order-map.php'; ?>
 </div>
